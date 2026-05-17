@@ -1,45 +1,89 @@
-"""Media & Consumer Showcase"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media & Consumer — Design System Category</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #ffffff; color: #111111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: #ff385c; text-decoration: none; }
+    a:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.1);padding:0 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:24px">📱</span>
+        <span style="font-weight:700;font-size:18px">Media & Consumer</span>
+      </div>
+      <div style="display:flex;gap:24px;align-items:center">
+        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Systems</a>
+        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Skills</a>
+        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Directions</a>
+        <a href="#" style="background:#ff385c;color:#fff;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:500">Explore</a>
+      </div>
+    </div>
+  </nav>
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+  <section style="padding:120px 24px 80px;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,#ff385c20 0%,transparent 70%);pointer-events:none"></div>
+    <div style="max-width:800px;margin:0 auto;position:relative">
+      <div style="font-size:64px;margin-bottom:24px">📱</div>
+      <div style="display:inline-block;background:rgba(0,0,0,0.04);padding:6px 16px;border-radius:20px;font-size:13px;color:#ff385c;margin-bottom:20px">Design System Category</div>
+      <h1 style="font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.05;margin:0 0 24px;letter-spacing:-0.03em">Media & Consumer</h1>
+      <p style="font-size:18px;color:rgba(0,0,0,0.55);line-height:1.7;margin:0 auto 40px;max-width:600px">Consumer brands and media platforms. Photography-driven, elegant, and emotionally resonant interfaces.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#" style="background:#ff385c;color:#fff;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;box-shadow:0 0 30px #ff385c44">Browse Systems</a>
+        <a href="#" style="background:rgba(0,0,0,0.04);color:#111111;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:500;border:1px solid rgba(0,0,0,0.1)">View Skills</a>
+      </div>
+    </div>
+  </section>
 
-function App() {
-  return (
-    &lt;div style={{ 
-      background: '#ffffff', 
-      color: '#111111', 
-      fontFamily: "system-ui, -apple-system, sans-serif",
-      minHeight: '100vh',
-      padding: '20px'
-    }}>
-      &lt;nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0' }}>
-        &lt;div style={{ fontWeight: 'bold', fontSize: '20px', color: '#667788' }}>Media & Consumer&lt;/div&gt;
-        &lt;div style={{ display: 'flex', gap: '20px' }}>
-          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
-          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
-          &lt;button style={{ background: '#667788', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '8px' }}>&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/nav&gt;
-      &lt;main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', padding: '40px 0' }}>
-        &lt;div&gt;
-          &lt;h1 style={{ fontSize: '48px', marginBottom: '20px', lineHeight: '1.1' }}>Media & Consumer&lt;/h1&gt;
-          &lt;p style={{ fontSize: '18px', opacity: 0.8, marginBottom: '30px' }}>Media & Consumer design system&lt;/p&gt;
-          &lt;button style={{ background: '#667788', color: 'white', border: 'none', padding: '15px 30px', borderRadius: '8px', fontSize: '16px' }}>&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;div style={{ background: '#667788', opacity: 0.15, borderRadius: '8px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          &lt;div style={{ textAlign: 'center' }}>
-            &lt;div style={{ fontSize: '14px', color: '#667788', fontWeight: 'bold' }}>&lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/main&gt;
-      &lt;section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '40px 0' }}>
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '8px' }}>&lt;/div&gt;
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '8px' }}>&lt;/div&gt;
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '8px' }}>&lt;/div&gt;
-      &lt;/section&gt;
-    &lt;/div&gt;
-  );
-}
+  <section style="padding:60px 24px">
+    <div style="max-width:1200px;margin:0 auto">
+      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px;text-align:center">Featured Systems</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Alpha System</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore alpha system within the media & consumer category</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Beta Platform</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore beta platform within the media & consumer category</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Gamma Interface</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore gamma interface within the media & consumer category</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Delta Dashboard</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore delta dashboard within the media & consumer category</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Epsilon Tools</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore epsilon tools within the media & consumer category</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
+          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Zeta Engine</h3>
+          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore zeta engine within the media & consumer category</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(&lt;App /&gt;);
+  <section style="padding:60px 24px;background:#ff385c;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <h2 style="font-size:32px;font-weight:700;margin:0 0 16px;color:#fff">Start Exploring</h2>
+      <p style="opacity:0.8;margin:0 0 28px;color:#fff">Discover all media & consumer design systems and skills.</p>
+      <a href="#" style="display:inline-block;background:#fff;color:#ff385c;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none">Browse All →</a>
+    </div>
+  </section>
+
+  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px">© 2026 Open Design Studio · Media & Consumer Category</footer>
+</body>
+</html>

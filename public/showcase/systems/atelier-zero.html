@@ -1,45 +1,115 @@
-"""Atelier Zero Showcase"""
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-
-function App() {
-  return (
-    &lt;div style={{ 
-      background: '#efe7d2', 
-      color: '#111111', 
-      fontFamily: "Georgia, serif",
-      minHeight: '100vh',
-      padding: '20px'
-    }}>
-      &lt;nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0' }}>
-        &lt;div style={{ fontWeight: 'bold', fontSize: '20px', color: '#efe7d2' }}>Atelier Zero&lt;/div&gt;
-        &lt;div style={{ display: 'flex', gap: '20px' }}>
-          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
-          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
-          &lt;button style={{ background: '#efe7d2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '0px' }}>&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/nav&gt;
-      &lt;main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', padding: '40px 0' }}>
-        &lt;div&gt;
-          &lt;h1 style={{ fontSize: '48px', marginBottom: '20px', lineHeight: '1.1' }}>Atelier Zero&lt;/h1&gt;
-          &lt;p style={{ fontSize: '18px', opacity: 0.8, marginBottom: '30px' }}>A magazine-grade, collage-driven visual system: warm paper canvas, surreal&lt;/p&gt;
-          &lt;button style={{ background: '#efe7d2', color: 'white', border: 'none', padding: '15px 30px', borderRadius: '0px', fontSize: '16px' }}>&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;div style={{ background: '#efe7d2', opacity: 0.15, borderRadius: '0px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          &lt;div style={{ textAlign: 'center' }}>
-            &lt;div style={{ fontSize: '14px', color: '#efe7d2', fontWeight: 'bold' }}>&lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/main&gt;
-      &lt;section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '40px 0' }}>
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '0px' }}>&lt;/div&gt;
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '0px' }}>&lt;/div&gt;
-        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '0px' }}>&lt;/div&gt;
-      &lt;/section&gt;
-    &lt;/div&gt;
-  );
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(&lt;App /&gt;);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier Zero — Design System Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Georgia, serif; background: #efe7d2; color: #111111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  
+  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.1);padding:0 24px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px">
+      <div style="font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#111111">Atelier Zero</div>
+      <div style="display:flex;gap:32px;align-items:center">
+        <a href="#" style="color:rgba(0,0,0,0.45);font-size:14px;text-decoration:none;font-weight:500">Product</a>
+        <a href="#" style="color:rgba(0,0,0,0.45);font-size:14px;text-decoration:none;font-weight:500">Solutions</a>
+        <a href="#" style="color:rgba(0,0,0,0.45);font-size:14px;text-decoration:none;font-weight:500">Docs</a>
+        <a href="#" style="color:rgba(0,0,0,0.45);font-size:14px;text-decoration:none;font-weight:500">Pricing</a>
+        <a href="#" style="background:#efe7d2;color:#fff;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none">Get Started</a>
+      </div>
+    </div>
+  </nav>
+  
+  <section style="padding:80px 24px;background:#efe7d2;position:relative">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:#efe7d2;margin-bottom:20px">Editorial</div>
+        <h1 style="font-size:clamp(36px,5vw,56px);font-weight:700;line-height:1.1;margin:0 0 20px;color:#111111;font-family:Georgia, serif">Atelier Zero</h1>
+        <p style="font-size:17px;color:rgba(0,0,0,0.45);line-height:1.7;margin:0 0 32px">A magazine-grade, collage-driven visual system: warm paper canvas, surreal</p>
+        <a href="#" style="color:#efe7d2;text-decoration:none;font-weight:600;font-size:15px">Read article →</a>
+      </div>
+      <div style="background:rgba(0,0,0,0.04);aspect-ratio:4/3;border-radius:8px;position:relative;overflow:hidden">
+        <div style="position:absolute;bottom:20px;left:20px;right:20px;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(0,0,0,0.45)">Atelier Zero — Visual Preview</div>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:rgba(0,0,0,0.45)">
+          <div style="font-size:48px;font-weight:200;color:#efe7d2;opacity:0.4;line-height:1">A</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section style="padding:80px 24px;background:#efe7d2">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:48px">
+        <h2 style="font-size:32px;font-weight:700;color:#111111;margin:0 0 12px;letter-spacing:-0.02em">Why Atelier Zero?</h2>
+        <p style="color:rgba(0,0,0,0.45);font-size:16px;margin:0">Built for teams that demand excellence.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+        
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:28px;transition:transform 0.2s">
+          <div style="width:40px;height:40px;background:#efe7d2;border-radius:50%;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px">⚡</div>
+          <h3 style="font-size:17px;font-weight:600;color:#111111;margin:0 0 8px">Lightning Fast</h3>
+          <p style="font-size:14px;color:rgba(0,0,0,0.45);line-height:1.6;margin:0">Unmatched performance that scales.</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:28px;transition:transform 0.2s">
+          <div style="width:40px;height:40px;background:#efe7d2;border-radius:50%;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px">🛡️</div>
+          <h3 style="font-size:17px;font-weight:600;color:#111111;margin:0 0 8px">Rock Solid</h3>
+          <p style="font-size:14px;color:rgba(0,0,0,0.45);line-height:1.6;margin:0">Enterprise-grade reliability at every level.</p>
+        </div>
+        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:28px;transition:transform 0.2s">
+          <div style="width:40px;height:40px;background:#efe7d2;border-radius:50%;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px">✨</div>
+          <h3 style="font-size:17px;font-weight:600;color:#111111;margin:0 0 8px">Beautifully Crafted</h3>
+          <p style="font-size:14px;color:rgba(0,0,0,0.45);line-height:1.6;margin:0">Every detail meticulously designed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section style="padding:60px 24px;background:#efe7d2;color:#fff">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center">
+      
+      <div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.02em">99.9%</div>
+        <div style="font-size:14px;opacity:0.8;margin-top:4px">Uptime</div>
+      </div>
+      <div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.02em">10ms</div>
+        <div style="font-size:14px;opacity:0.8;margin-top:4px">Avg Response</div>
+      </div>
+      <div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.02em">50K+</div>
+        <div style="font-size:14px;opacity:0.8;margin-top:4px">Teams Use It</div>
+      </div>
+      <div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.02em">4.9★</div>
+        <div style="font-size:14px;opacity:0.8;margin-top:4px">Rating</div>
+      </div>
+    </div>
+  </section>
+  
+  <section style="padding:80px 24px;background:#efe7d2;text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <h2 style="font-size:36px;font-weight:700;color:#111111;margin:0 0 16px;letter-spacing:-0.02em">Ready to get started?</h2>
+      <p style="color:rgba(0,0,0,0.45);font-size:16px;margin:0 0 32px;line-height:1.6">Join thousands of teams building with Atelier Zero.</p>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <a href="#" style="background:#efe7d2;color:#fff;padding:14px 32px;border-radius:8px;font-weight:600;text-decoration:none;font-size:15px">Start Free →</a>
+        <a href="#" style="color:#111111;padding:14px 32px;border-radius:8px;font-weight:500;text-decoration:none;border:1.5px solid rgba(0,0,0,0.1);font-size:15px">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer style="padding:40px 24px;background:#111111;color:rgba(255,255,255,0.7);font-size:13px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <div>© 2026 Atelier Zero. All rights reserved.</div>
+      <div style="display:flex;gap:24px"><a href="#" style="color:inherit;text-decoration:none">Privacy</a><a href="#" style="color:inherit;text-decoration:none">Terms</a><a href="#" style="color:inherit;text-decoration:none">Status</a><a href="#" style="color:inherit;text-decoration:none">Blog</a></div>
+    </div>
+  </footer>
+</body>
+</html>
