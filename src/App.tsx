@@ -43,8 +43,8 @@ function ShowcaseTab() {
       <div className="showcase-grid">
         {filtered.map(item => (
           <div key={item.id} className="showcase-card" onClick={()=>setSelected(item.id)}>
-            <div className="showcase-preview">
-              <iframe src={item.file} title={item.title} sandbox="allow-same-origin" tabIndex={-1} aria-hidden="true" />
+            <div className="showcase-preview" style={{'--preview-scale': '0.36'} as React.CSSProperties}>
+              <iframe src={item.file} title={item.title} sandbox="allow-same-origin allow-scripts" tabIndex={-1} aria-hidden="true" />
               <div className="showcase-overlay"><span>Click to expand →</span></div>
             </div>
             <div className="showcase-info">
