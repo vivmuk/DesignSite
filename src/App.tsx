@@ -79,7 +79,7 @@ const directions = [
 
 function ShowcaseTab() {
   const [selected, setSelected] = useState<string | null>(null);
-  const [section, setSection] = useState<'curated' | 'systems' | 'skills' | 'directions' | 'all'>('curated');
+  const [section, setSection] = useState('all');
   const [search, setSearch] = useState('');
   
   const getItems = () => {
@@ -117,7 +117,7 @@ function ShowcaseTab() {
         <button className={`section-tab ${section==='directions'?'active':''}`} onClick={()=>setSection('directions')}>
           Directions ({directionItems.length})
         </button>
-        <button className={`section-tab ${section==='all'?'active':''}`} onClick={()=>setSection('all')}>
+        <button className={`section-tab ${section==='all'?'active':''}`} onClick={()=>setSection('curated')}>
           All ({allShowcaseItems.length})
         </button>
       </div>
