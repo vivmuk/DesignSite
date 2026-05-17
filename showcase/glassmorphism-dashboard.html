@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism — Crypto Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0d1a;
+    --bg2: #111124;
+    --glass: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover: rgba(255,255,255,0.08);
+    --purple: #8b5cf6;
+    --cyan: #22d3ee;
+    --teal: #14b8a6;
+    --pink: #f472b6;
+    --green: #10b981;
+    --red: #f43f5e;
+    --text: #f8fafc;
+    --text-muted: rgba(248,250,252,0.5);
+    --text-dim: rgba(248,250,252,0.25);
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  /* BG ORBS */
+  .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--purple); top: -200px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: var(--cyan); bottom: -150px; left: -100px; }
+  .orb-3 { width: 300px; height: 300px; background: var(--teal); top: 40%; left: 40%; transform: translate(-50%,-50%); opacity: 0.2; }
+
+  .layout { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    padding: 24px 16px;
+    border-right: 1px solid var(--glass-border);
+    background: rgba(13,13,26,0.6);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+  }
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .logo-name { font-size: 18px; font-weight: 700; letter-spacing: -0.03em; }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    padding: 4px 12px;
+    margin-top: 8px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .nav-item:hover { background: var(--glass); color: var(--text); }
+  .nav-item.active {
+    background: var(--glass-hover);
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+  }
+  .nav-icon { font-size: 16px; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--purple);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 100px;
+  }
+  .sidebar-bottom { margin-top: auto; }
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+  }
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .user-name { font-size: 13px; font-weight: 500; }
+  .user-tier { font-size: 10px; color: var(--purple); font-weight: 600; }
+
+  /* MAIN */
+  .main { flex: 1; padding: 24px 28px; overflow-y: auto; }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .page-title { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; }
+  .page-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .header-actions { display: flex; gap: 10px; }
+  .btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    color: var(--text);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--purple), #6d28d9);
+    border-color: transparent;
+    color: white;
+  }
+
+  /* GLASS CARD */
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  /* STATS ROW */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .stat-card { padding: 18px 20px; }
+  .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 8px; }
+  .stat-value { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .change-up { color: var(--green); }
+  .change-down { color: var(--red); }
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .icon-purple { background: rgba(139,92,246,0.2); }
+  .icon-cyan { background: rgba(34,211,238,0.15); }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-pink { background: rgba(244,114,182,0.15); }
+
+  /* CHARTS ROW */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .chart-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .chart-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+  
+  /* SPARKLINE */
+  .sparkline {
+    width: 100%;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sparkline-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+  }
+  .sparkline svg { width: 100%; height: 100%; }
+  .price-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .price-label { font-size: 11px; color: var(--text-dim); }
+
+  /* ASSET LIST */
+  .asset-list-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
+  .asset-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+    gap: 12px;
+  }
+  .asset-item:last-child { border-bottom: none; }
+  .asset-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+  .btc-icon { background: rgba(247,147,26,0.2); color: #f7931a; }
+  .eth-icon { background: rgba(98,126,234,0.2); color: #627eea; }
+  .sol-icon { background: rgba(153,69,255,0.2); color: #9945ff; }
+  .bnb-icon { background: rgba(243,186,47,0.2); color: #f3ba2f; }
+  .asset-info { flex: 1; }
+  .asset-name { font-size: 13px; font-weight: 500; }
+  .asset-ticker { font-size: 11px; color: var(--text-muted); }
+  .asset-price { text-align: right; }
+  .asset-price-val { font-size: 13px; font-weight: 600; }
+  .asset-pct { font-size: 11px; font-weight: 600; }
+  .asset-bar {
+    width: 48px;
+    height: 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 1px;
+  }
+  .bar-tick {
+    width: 3px;
+    border-radius: 1px;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+  .bar-tick.down { background: var(--red); }
+
+  /* BOTTOM ROW */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">💎</div>
+      <div class="logo-name">Prism</div>
+    </div>
+
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active">
+      <span class="nav-icon">📊</span>
+      <span>Dashboard</span>
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">💼</span>
+      <span>Portfolio</span>
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">📈</span>
+      <span>Markets</span>
+      <span class="nav-badge">12</span>
+    </div>
+
+    <div class="nav-section-label">Trade</div>
+    <div class="nav-item">
+      <span class="nav-icon">⚡</span>
+      <span>Swap</span>
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">🔄</span>
+      <span>History</span>
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">🌐</span>
+      <span>DeFi</span>
+    </div>
+
+    <div class="nav-section-label">Account</div>
+    <div class="nav-item">
+      <span class="nav-icon">🔔</span>
+      <span>Alerts</span>
+    </div>
+    <div class="nav-item">
+      <span class="nav-icon">⚙️</span>
+      <span>Settings</span>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="user-card">
+        <div class="user-avatar">VG</div>
+        <div>
+          <div class="user-name">Vivek G.</div>
+          <div class="user-tier">Pro ✦</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Dashboard</div>
+        <div class="page-sub">Sunday, May 17, 2026 · Live data</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn">↓ Export</button>
+        <button class="btn-primary btn">+ Add Asset</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="glass-card stat-card">
+        <div class="stat-icon icon-purple">💎</div>
+        <div class="stat-label">Total Balance</div>
+        <div class="stat-value">$84,261</div>
+        <div class="stat-change change-up">↑ 4.8% today</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon icon-cyan">📈</div>
+        <div class="stat-label">24h P&L</div>
+        <div class="stat-value" style="color:var(--green)">+$3,841</div>
+        <div class="stat-change change-up">↑ Best day in 12d</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon icon-green">⚡</div>
+        <div class="stat-label">Assets</div>
+        <div class="stat-value">12</div>
+        <div class="stat-change" style="color:var(--text-muted)">Across 3 chains</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon icon-pink">🔥</div>
+        <div class="stat-label">BTC Dominance</div>
+        <div class="stat-value">54.2%</div>
+        <div class="stat-change change-down">↓ 0.3% from yesterday</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="glass-card">
+        <div class="chart-title">Portfolio Performance</div>
+        <div class="chart-sub">Last 30 days · Total return: <span style="color:var(--green)">+18.4%</span></div>
+        <div class="sparkline">
+          <svg viewBox="0 0 400 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0,80 L20,75 L40,78 L60,65 L80,68 L100,55 L120,52 L140,58 L160,45 L180,40 L200,42 L220,30 L240,35 L260,25 L280,20 L300,18 L320,22 L340,15 L360,10 L380,8 L400,5" 
+              fill="url(#grad1)" stroke="none"/>
+            <path d="M0,80 L20,75 L40,78 L60,65 L80,68 L100,55 L120,52 L140,58 L160,45 L180,40 L200,42 L220,30 L240,35 L260,25 L280,20 L300,18 L320,22 L340,15 L360,10 L380,8 L400,5" 
+              fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="price-labels">
+          <span class="price-label">Apr 17</span>
+          <span class="price-label">Apr 27</span>
+          <span class="price-label">May 7</span>
+          <span class="price-label">May 17</span>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="asset-list-title">Top Assets</div>
+        <div class="asset-item">
+          <div class="asset-icon btc-icon">BTC</div>
+          <div class="asset-info">
+            <div class="asset-name">Bitcoin</div>
+            <div class="asset-ticker">40.2% of portfolio</div>
+          </div>
+          <div class="asset-bar">
+            <div class="bar-tick" style="height:10px"></div>
+            <div class="bar-tick" style="height:14px"></div>
+            <div class="bar-tick" style="height:8px"></div>
+            <div class="bar-tick" style="height:16px"></div>
+            <div class="bar-tick" style="height:20px"></div>
+            <div class="bar-tick" style="height:18px"></div>
+            <div class="bar-tick" style="height:22px"></div>
+            <div class="bar-tick" style="height:24px"></div>
+          </div>
+          <div class="asset-price">
+            <div class="asset-price-val">$97,420</div>
+            <div class="asset-pct change-up">+3.1%</div>
+          </div>
+        </div>
+        <div class="asset-item">
+          <div class="asset-icon eth-icon">ETH</div>
+          <div class="asset-info">
+            <div class="asset-name">Ethereum</div>
+            <div class="asset-ticker">28.7% of portfolio</div>
+          </div>
+          <div class="asset-bar">
+            <div class="bar-tick" style="height:18px"></div>
+            <div class="bar-tick" style="height:12px"></div>
+            <div class="bar-tick" style="height:16px"></div>
+            <div class="bar-tick" style="height:14px"></div>
+            <div class="bar-tick down" style="height:10px"></div>
+            <div class="bar-tick down" style="height:12px"></div>
+            <div class="bar-tick" style="height:16px"></div>
+            <div class="bar-tick" style="height:20px"></div>
+          </div>
+          <div class="asset-price">
+            <div class="asset-price-val">$3,842</div>
+            <div class="asset-pct change-up">+1.7%</div>
+          </div>
+        </div>
+        <div class="asset-item">
+          <div class="asset-icon sol-icon">SOL</div>
+          <div class="asset-info">
+            <div class="asset-name">Solana</div>
+            <div class="asset-ticker">18.4% of portfolio</div>
+          </div>
+          <div class="asset-bar">
+            <div class="bar-tick" style="height:24px"></div>
+            <div class="bar-tick" style="height:20px"></div>
+            <div class="bar-tick" style="height:22px"></div>
+            <div class="bar-tick" style="height:16px"></div>
+            <div class="bar-tick" style="height:18px"></div>
+            <div class="bar-tick" style="height:22px"></div>
+            <div class="bar-tick" style="height:20px"></div>
+            <div class="bar-tick" style="height:24px"></div>
+          </div>
+          <div class="asset-price">
+            <div class="asset-price-val">$182.50</div>
+            <div class="asset-pct change-up">+6.4%</div>
+          </div>
+        </div>
+        <div class="asset-item">
+          <div class="asset-icon bnb-icon">BNB</div>
+          <div class="asset-info">
+            <div class="asset-name">BNB</div>
+            <div class="asset-ticker">12.7% of portfolio</div>
+          </div>
+          <div class="asset-bar">
+            <div class="bar-tick down" style="height:16px"></div>
+            <div class="bar-tick down" style="height:12px"></div>
+            <div class="bar-tick" style="height:14px"></div>
+            <div class="bar-tick" style="height:18px"></div>
+            <div class="bar-tick down" style="height:10px"></div>
+            <div class="bar-tick down" style="height:8px"></div>
+            <div class="bar-tick down" style="height:12px"></div>
+            <div class="bar-tick" style="height:14px"></div>
+          </div>
+          <div class="asset-price">
+            <div class="asset-price-val">$622.10</div>
+            <div class="asset-pct change-down">-0.9%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

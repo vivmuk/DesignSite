@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stripe-Inspired Pricing — Nexus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --white: #ffffff;
+    --bg: #f6f9fc;
+    --navy: #061b31;
+    --purple: #533afd;
+    --purple-hover: #4434d4;
+    --purple-light: #f3f1ff;
+    --body-text: #64748d;
+    --heading: #061b31;
+    --border: #dde1e7;
+    --border-light: #e8ebef;
+    --label: #273951;
+    --success: #0aa35e;
+    --shadow: 0 2px 8px rgba(50,50,93,0.1), 0 1px 3px rgba(0,0,0,0.07);
+    --shadow-md: 0 6px 20px rgba(50,50,93,0.15), 0 2px 6px rgba(0,0,0,0.09);
+    --shadow-lg: 0 20px 60px rgba(50,50,93,0.22), 0 8px 20px rgba(0,0,0,0.1);
+  }
+  body {
+    background: var(--white);
+    color: var(--heading);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border-light);
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+  }
+  .nav-logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--navy);
+  }
+  .nav-logo span { color: var(--purple); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--body-text); text-decoration: none; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+  .nav-btn { font-size: 14px; font-weight: 500; color: var(--purple); text-decoration: none; padding: 8px 16px; border-radius: 6px; border: 1.5px solid var(--purple); }
+  .nav-cta { font-size: 14px; font-weight: 600; background: var(--purple); color: white; padding: 9px 20px; border-radius: 6px; text-decoration: none; }
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 48px 48px;
+    background: var(--white);
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+    color: var(--navy);
+    margin-bottom: 20px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--body-text);
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .billing-toggle {
+    display: inline-flex;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 60px;
+  }
+  .toggle-opt {
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--body-text);
+    cursor: pointer;
+  }
+  .toggle-opt.active { background: var(--white); color: var(--navy); box-shadow: var(--shadow); }
+  .toggle-badge {
+    display: inline-block;
+    background: var(--success);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-left: 6px;
+  }
+  /* PRICING CARDS */
+  .pricing-section {
+    padding: 0 48px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+  .plan-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    background: var(--white);
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .plan-card:hover { box-shadow: var(--shadow-md); }
+  .plan-card.featured {
+    border-color: var(--purple);
+    box-shadow: var(--shadow-lg);
+  }
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--purple);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 100px;
+  }
+  .plan-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .plan-desc {
+    font-size: 14px;
+    color: var(--body-text);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .plan-price {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .price-currency { font-size: 18px; font-weight: 700; color: var(--navy); margin-top: 6px; }
+  .price-num { font-size: 52px; font-weight: 300; letter-spacing: -0.05em; color: var(--navy); line-height: 1; }
+  .price-period { font-size: 14px; color: var(--body-text); align-self: flex-end; margin-bottom: 4px; }
+  .price-note { font-size: 12px; color: var(--body-text); margin-bottom: 28px; }
+  .plan-cta {
+    width: 100%;
+    padding: 13px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--navy);
+    margin-bottom: 24px;
+    transition: all 0.15s;
+  }
+  .plan-cta:hover { border-color: var(--navy); }
+  .plan-cta.primary {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+  }
+  .plan-cta.primary:hover { background: var(--purple-hover); }
+  .plan-divider { border: none; border-top: 1px solid var(--border-light); margin-bottom: 20px; }
+  .features-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--body-text);
+    margin-bottom: 12px;
+  }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--label);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .feature-check { color: var(--success); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .feature-minus { color: var(--border); font-size: 14px; flex-shrink: 0; }
+  /* COMPARISON TABLE */
+  .compare-title {
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    border-bottom: 2px solid var(--border);
+  }
+  thead th:first-child { width: 40%; }
+  thead th.featured-col { color: var(--purple); }
+  tbody tr:nth-child(even) td { background: var(--bg); }
+  td {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: var(--body-text);
+    border-bottom: 1px solid var(--border-light);
+  }
+  td:first-child { font-weight: 500; color: var(--label); }
+  .td-check { color: var(--success); font-size: 16px; }
+  .td-x { color: var(--border); font-size: 16px; }
+  .section-row td {
+    background: var(--navy) !important;
+    color: rgba(255,255,255,0.7) !important;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border: none;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Nexus<span>Pay</span></div>
+  <div class="nav-links">
+    <a href="#">Products</a>
+    <a href="#">Developers</a>
+    <a href="#">Pricing</a>
+    <a href="#">Enterprise</a>
+    <a href="#">Docs</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="nav-btn">Log in</a>
+    <a href="#" class="nav-cta">Start for free</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Simple, transparent pricing</div>
+  <h1 class="hero-title">Pricing that scales<br>with your business</h1>
+  <p class="hero-subtitle">Start free. Pay as you grow. No hidden fees, no surprises. Switch plans any time.</p>
+  <div class="billing-toggle">
+    <div class="toggle-opt">Monthly</div>
+    <div class="toggle-opt active">Annual <span class="toggle-badge">Save 25%</span></div>
+  </div>
+</div>
+
+<div class="pricing-section">
+  <div class="pricing-grid">
+    <!-- STARTER -->
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-desc">Perfect for early-stage products and side projects with basic payment needs.</div>
+      <div class="plan-price">
+        <span class="price-currency">$</span>
+        <span class="price-num">0</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <div class="price-note">+ 2.9% + 30¢ per successful transaction</div>
+      <button class="plan-cta">Get started free</button>
+      <hr class="plan-divider">
+      <div class="features-label">What's included</div>
+      <div class="feature-item"><span class="feature-check">✓</span> $10,000/mo processing volume</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Standard checkout</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Basic fraud protection</div>
+      <div class="feature-item"><span class="feature-check">✓</span> 3 team members</div>
+      <div class="feature-item"><span class="feature-minus">—</span> Custom domain</div>
+      <div class="feature-item"><span class="feature-minus">—</span> Revenue recognition</div>
+      <div class="feature-item"><span class="feature-minus">—</span> Dedicated support</div>
+    </div>
+
+    <!-- PRO (FEATURED) -->
+    <div class="plan-card featured">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-desc">For growing businesses that need advanced payment infrastructure and reporting.</div>
+      <div class="plan-price">
+        <span class="price-currency">$</span>
+        <span class="price-num">59</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <div class="price-note">+ 2.5% + 25¢ per successful transaction</div>
+      <button class="plan-cta primary">Start 14-day trial</button>
+      <hr class="plan-divider">
+      <div class="features-label">Everything in Starter, plus</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Unlimited processing volume</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Custom checkout branding</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Advanced fraud ML</div>
+      <div class="feature-item"><span class="feature-check">✓</span> 15 team members</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Custom domain checkout</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Revenue recognition</div>
+      <div class="feature-item"><span class="feature-minus">—</span> Dedicated support</div>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="plan-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-desc">For high-volume companies with complex payment flows and compliance requirements.</div>
+      <div class="plan-price">
+        <span class="price-currency"></span>
+        <span class="price-num" style="font-size:36px;margin-top:8px">Custom</span>
+      </div>
+      <div class="price-note">Volume discounts available · Custom rates</div>
+      <button class="plan-cta">Talk to sales</button>
+      <hr class="plan-divider">
+      <div class="features-label">Everything in Pro, plus</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Custom transaction pricing</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Invoicing & subscriptions</div>
+      <div class="feature-item"><span class="feature-check">✓</span> SLA guarantees (99.99% uptime)</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Unlimited team members</div>
+      <div class="feature-item"><span class="feature-check">✓</span> White-label checkout</div>
+      <div class="feature-item"><span class="feature-check">✓</span> SOC 2 + PCI compliance</div>
+      <div class="feature-item"><span class="feature-check">✓</span> Dedicated account manager</div>
+    </div>
+  </div>
+
+  <!-- COMPARISON -->
+  <h2 class="compare-title">Compare all features</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Starter</th>
+        <th class="featured-col">Pro</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="section-row"><td colspan="4">Payments & Checkout</td></tr>
+      <tr><td>Monthly volume</td><td>Up to $10k</td><td>Unlimited</td><td>Unlimited</td></tr>
+      <tr><td>Transaction fee</td><td>2.9% + 30¢</td><td>2.5% + 25¢</td><td>Custom</td></tr>
+      <tr><td>Custom checkout</td><td class="td-x">—</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>Subscription billing</td><td class="td-x">—</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>Invoice generation</td><td class="td-x">—</td><td class="td-x">—</td><td class="td-check">✓</td></tr>
+      <tr class="section-row"><td colspan="4">Security & Compliance</td></tr>
+      <tr><td>Basic fraud protection</td><td class="td-check">✓</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>Advanced fraud ML</td><td class="td-x">—</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>PCI DSS Level 1</td><td class="td-check">✓</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>SOC 2 Type II</td><td class="td-x">—</td><td class="td-x">—</td><td class="td-check">✓</td></tr>
+      <tr class="section-row"><td colspan="4">Support</td></tr>
+      <tr><td>Documentation</td><td class="td-check">✓</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>Email support</td><td class="td-x">—</td><td class="td-check">✓</td><td class="td-check">✓</td></tr>
+      <tr><td>Dedicated account manager</td><td class="td-x">—</td><td class="td-x">—</td><td class="td-check">✓</td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

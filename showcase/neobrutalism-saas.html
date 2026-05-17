@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blockdrop — Build. Drop. Ship.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --yellow: #FFE500;
+    --black: #000000;
+    --white: #ffffff;
+    --gray: #f5f5f5;
+    --shadow: 4px 4px 0 #000;
+    --shadow-lg: 6px 6px 0 #000;
+    --shadow-xl: 8px 8px 0 #000;
+  }
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  /* NAV */
+  nav {
+    border-bottom: 3px solid var(--black);
+    padding: 0 40px;
+    display: flex;
+    align-items: stretch;
+    background: var(--yellow);
+    height: 68px;
+  }
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding-right: 32px;
+    border-right: 3px solid var(--black);
+    margin-right: 0;
+  }
+  .nav-logo span { background: var(--black); color: var(--yellow); padding: 2px 8px; margin-right: 4px; }
+  .nav-links {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+  }
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--black);
+    border-right: 2px solid rgba(0,0,0,0.15);
+    transition: background 0.1s;
+  }
+  .nav-links a:hover { background: rgba(0,0,0,0.08); }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+  .btn {
+    font-family: 'DM Sans', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2.5px solid var(--black);
+    transition: transform 0.05s, box-shadow 0.05s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:active { transform: translate(2px, 2px); box-shadow: none !important; }
+  .btn-white { background: var(--white); color: var(--black); box-shadow: var(--shadow); }
+  .btn-white:hover { box-shadow: var(--shadow-lg); }
+  .btn-black { background: var(--black); color: var(--yellow); box-shadow: 4px 4px 0 #555; }
+  .btn-black:hover { box-shadow: 6px 6px 0 #555; }
+  .btn-yellow { background: var(--yellow); color: var(--black); box-shadow: var(--shadow); }
+  .btn-yellow:hover { box-shadow: var(--shadow-lg); }
+
+  /* HERO */
+  .hero {
+    border-bottom: 3px solid var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+  }
+  .hero-left {
+    padding: 72px 60px;
+    border-right: 3px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 2.5px solid var(--black);
+    background: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 5px 14px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  h1 {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  h1 .outline {
+    -webkit-text-stroke: 3px var(--black);
+    color: transparent;
+  }
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 420px;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .hero-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .hero-note { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.5; }
+
+  .hero-right {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,229,0,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,229,0,0.1) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-blocks {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    padding: 40px;
+  }
+  .block-row { display: flex; gap: 12px; }
+  .block {
+    border: 3px solid var(--yellow);
+    background: rgba(255,229,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--yellow);
+    flex-shrink: 0;
+  }
+  .block-sm { width: 80px; height: 60px; font-size: 9px; }
+  .block-md { width: 140px; height: 60px; }
+  .block-lg { width: 220px; height: 80px; font-size: 13px; background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+  /* LOGOS */
+  .logos-bar {
+    padding: 28px 60px;
+    border-bottom: 3px solid var(--black);
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    background: var(--gray);
+  }
+  .logos-label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.4; white-space: nowrap; }
+  .logos-list { display: flex; gap: 40px; flex-wrap: wrap; }
+  .logo-text { font-size: 16px; font-weight: 900; letter-spacing: -0.02em; opacity: 0.25; }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 3px solid var(--black);
+  }
+  .feature {
+    padding: 40px;
+    border-right: 3px solid var(--black);
+  }
+  .feature:last-child { border-right: none; }
+  .feature-num {
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--yellow);
+    -webkit-text-stroke: 2px var(--black);
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  h3.feat-title {
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .feat-desc { font-size: 14px; line-height: 1.7; font-weight: 500; opacity: 0.65; }
+
+  /* HOW IT WORKS */
+  .how {
+    padding: 80px 60px;
+    border-bottom: 3px solid var(--black);
+    background: var(--black);
+    color: var(--white);
+  }
+  .how-header { margin-bottom: 48px; }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  h2.section-title {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    line-height: 0.95;
+    color: var(--white);
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    border: 3px solid #333;
+  }
+  .step {
+    padding: 32px 28px;
+    border-right: 2px solid #333;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .step-title { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 8px; color: var(--white); }
+  .step-desc { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.5); }
+
+  /* PRICING */
+  .pricing {
+    padding: 80px 60px;
+    border-bottom: 3px solid var(--black);
+  }
+  .pricing-header { margin-bottom: 48px; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .price-card {
+    border: 3px solid var(--black);
+    padding: 32px;
+    background: var(--white);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+  }
+  .price-card.hot {
+    background: var(--yellow);
+  }
+  .price-card.hot::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -16px;
+    left: 20px;
+    background: var(--black);
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    padding: 4px 12px;
+    border: 2px solid var(--black);
+  }
+  .price-name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .price-amount { font-size: 56px; font-weight: 900; letter-spacing: -0.05em; line-height: 1; margin-bottom: 4px; }
+  .price-per { font-size: 14px; font-weight: 700; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
+  .price-btn { display: block; text-align: center; text-decoration: none; }
+  .price-features { margin-top: 24px; border-top: 2.5px solid var(--black); padding-top: 20px; }
+  .price-feat { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .price-feat::before { content: '→'; font-weight: 900; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 3px solid var(--black);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo { font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--yellow); letter-spacing: -0.03em; }
+  .footer-copy { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>BD</span>Blockdrop</div>
+  <div class="nav-links">
+    <a href="#">Product</a>
+    <a href="#">Pricing</a>
+    <a href="#">Docs</a>
+    <a href="#">Blog</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="btn btn-white">Log in</a>
+    <a href="#" class="btn btn-black">Start free →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">🔥 New: AI Blocks v2.0</div>
+    <h1>
+      Build.<br>
+      <span class="outline">Drop.</span><br>
+      Ship.
+    </h1>
+    <p class="hero-desc">
+      The all-in-one tool for product teams who are done dealing with bloated platforms. Blockdrop gives you just the blocks you need—nothing more, nothing less.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#" class="btn btn-black" style="font-size:16px; padding:14px 28px; box-shadow: 6px 6px 0 #555">Start building free →</a>
+      <a href="#" class="btn btn-yellow">Watch demo ▶</a>
+    </div>
+    <div style="margin-top:20px" class="hero-note">No credit card required · Free forever tier · Cancel anytime</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-blocks">
+      <div class="block-row">
+        <div class="block block-sm">Data</div>
+        <div class="block block-lg">Blockdrop Editor</div>
+        <div class="block block-sm">AI</div>
+      </div>
+      <div class="block-row">
+        <div class="block block-md">Components</div>
+        <div class="block block-sm">⚡</div>
+        <div class="block block-md">Publish</div>
+      </div>
+      <div class="block-row">
+        <div class="block block-sm">APIs</div>
+        <div class="block block-lg" style="background:transparent;color:var(--yellow)">Preview → Live</div>
+        <div class="block block-sm">DB</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="logos-bar">
+  <div class="logos-label">Used by teams at</div>
+  <div class="logos-list">
+    <span class="logo-text">VERCEL</span>
+    <span class="logo-text">FIGMA</span>
+    <span class="logo-text">LINEAR</span>
+    <span class="logo-text">LOOM</span>
+    <span class="logo-text">RAYCAST</span>
+    <span class="logo-text">NOTION</span>
+  </div>
+</div>
+
+<div class="features">
+  <div class="feature">
+    <div class="feature-num">01</div>
+    <h3 class="feat-title">Block-First<br>Architecture</h3>
+    <p class="feat-desc">Every UI element is a composable block. Combine, nest, override. Zero lock-in, total control over your product's structure.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-num">02</div>
+    <h3 class="feat-title">Ship in<br>Minutes</h3>
+    <p class="feat-desc">From empty canvas to live product in under 10 minutes. One-click deploy, automatic CDN, instant preview URLs.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-num">03</div>
+    <h3 class="feat-title">AI That<br>Actually Works</h3>
+    <p class="feat-desc">Describe what you need. Blockdrop's AI assembles blocks, writes copy, and generates schemas. Not magic—just fast.</p>
+  </div>
+</div>
+
+<div class="how">
+  <div class="how-header">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-title">Four steps.<br>One product.</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Describe</div>
+      <div class="step-desc">Tell Blockdrop what you're building. One sentence, or a full brief. Either way works.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Block</div>
+      <div class="step-desc">AI assembles the right blocks. Drag, swap, and configure until it's exactly right.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Preview</div>
+      <div class="step-desc">Instant preview URL. Share with your team. Get feedback before a single line commits.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Drop</div>
+      <div class="step-desc">One click. Your product is live. Custom domain, SSL, CDN, analytics—included.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pricing">
+  <div class="pricing-header">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-title">No tricks.<br>Just tiers.</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-amount">$0</div>
+      <div class="price-per">Forever</div>
+      <a href="#" class="btn btn-white price-btn">Get started</a>
+      <div class="price-features">
+        <div class="price-feat">3 projects</div>
+        <div class="price-feat">100 blocks/project</div>
+        <div class="price-feat">Community support</div>
+        <div class="price-feat">blockdrop.app subdomain</div>
+      </div>
+    </div>
+    <div class="price-card hot">
+      <div class="price-name">Pro</div>
+      <div class="price-amount">$29</div>
+      <div class="price-per">/ month</div>
+      <a href="#" class="btn btn-black price-btn">Start free trial</a>
+      <div class="price-features">
+        <div class="price-feat">Unlimited projects</div>
+        <div class="price-feat">Unlimited blocks</div>
+        <div class="price-feat">AI block generation</div>
+        <div class="price-feat">Custom domain</div>
+        <div class="price-feat">Priority support</div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Team</div>
+      <div class="price-amount">$99</div>
+      <div class="price-per">/ month</div>
+      <a href="#" class="btn btn-black price-btn">Talk to us</a>
+      <div class="price-features">
+        <div class="price-feat">Everything in Pro</div>
+        <div class="price-feat">5+ seats included</div>
+        <div class="price-feat">White-label export</div>
+        <div class="price-feat">SSO + SCIM</div>
+        <div class="price-feat">Dedicated Slack</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Blockdrop</div>
+  <div class="footer-copy">© 2026 Blockdrop Inc. — Build faster or stay home.</div>
+</footer>
+
+</body>
+</html>
