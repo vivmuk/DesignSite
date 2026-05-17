@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus CLI — Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#000;--surface:#0a0a0a;--surface-el:#111;--border:rgba(255,255,255,.1);--text:#ededed;--text-sec:#888;--text-ter:#555;--accent:#fff;--green:#3dd68c;--blue:#3b82f6;--radius:6px}
+html{background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+body{font-family:'Geist',system-ui,sans-serif;display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+code,pre,.mono{font-family:'Geist Mono',monospace}
+a{color:var(--text-sec);text-decoration:none;transition:color .15s}
+a:hover{color:var(--text)}
+
+/* Sidebar */
+.sidebar{border-right:1px solid var(--border);padding:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-top{padding:20px 20px 0}
+.sidebar-logo{display:flex;align-items:center;gap:8px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo svg{width:20px;height:20px}
+.sidebar-logo span{font-weight:600;font-size:14px}
+.sidebar-version{font-family:'Geist Mono',monospace;font-size:10px;background:var(--surface-el);border:1px solid var(--border);padding:2px 6px;border-radius:3px;margin-left:auto;color:var(--text-sec)}
+.sidebar-section{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-ter);padding:12px 20px 6px}
+.sidebar-link{display:block;font-size:13px;padding:6px 20px;border-radius:0;transition:all .15s;border-left:2px solid transparent}
+.sidebar-link:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.sidebar-link.active{color:var(--text);border-left-color:var(--text)}
+.sidebar-link code{font-family:'Geist Mono',monospace;font-size:11px;background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;color:var(--text-sec)}
+
+/* Main */
+.main{min-width:0}
+/* Top bar */
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 32px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);z-index:50}
+.breadcrumbs{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-sec)}
+.breadcrumbs svg{width:12px;height:12px}
+.search-bar{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--surface-el);border:1px solid var(--border);border-radius:var(--radius);padding:6px 12px;font-size:13px;color:var(--text-sec)}
+.search-bar code{font-size:11px;background:rgba(255,255,255,.08);padding:2px 6px;border-radius:3px}
+
+/* Content */
+.content{padding:48px 64px 96px;max-width:800px}
+.callout{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:var(--radius);padding:16px 20px;margin:24px 0;font-size:14px;display:flex;gap:12px;align-items:flex-start}
+.callout svg{width:16px;height:16px;color:var(--blue);margin-top:2px;flex-shrink:0}
+.callout-title{font-weight:600;margin-bottom:4px;color:var(--text)}
+.callout p{color:var(--text-sec);line-height:1.6}
+
+h1.page-title{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+h1.page-title+p{font-size:17px;color:var(--text-sec);line-height:1.6;margin-bottom:32px;border-bottom:1px solid var(--border);padding-bottom:32px}
+h2.section{font-size:22px;font-weight:600;letter-spacing:-.02em;margin:40px 0 16px;padding-top:40px;border-top:1px solid var(--border)}
+h2.section:first-of-type{border-top:none;padding-top:0;margin-top:0}
+h3.sub{font-size:15px;font-weight:600;margin:24px 0 10px}
+p{font-size:15px;line-height:1.75;color:var(--text-sec);margin-bottom:16px}
+p strong{color:var(--text);font-weight:500}
+
+/* Code blocks */
+.code-block{background:var(--surface-el);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-ter)}
+.code-header .lang{font-family:'Geist Mono',monospace;font-size:11px}
+.copy-btn{font-size:11px;color:var(--text-sec);cursor:pointer;display:flex;align-items:center;gap:4px;transition:color .15s}
+.copy-btn:hover{color:var(--text)}
+.code-body{padding:16px;overflow-x:auto}
+.code-body pre{font-size:13px;line-height:1.7}
+.cmd{color:#3dd68c}.string{color:#f8b500}.comment{color:#555}.keyword{color:#e879f9}.fn{color:#60a5fa}.type{color:#fb923c}
+
+/* Table */
+table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0 24px}
+thead th{text-align:left;font-size:12px;font-weight:500;color:var(--text-ter);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px;border-bottom:1px solid var(--border)}
+tbody td{padding:12px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-sec);vertical-align:top}
+tbody td:first-child{color:var(--text);font-family:'Geist Mono',monospace;font-size:12px}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:32px 1fr;gap:16px;padding-bottom:32px;position:relative}
+.step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:1px;background:var(--border)}
+.step:last-child::before{display:none}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--surface-el);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;position:relative;z-index:1}
+.step-content h3{font-size:15px;font-weight:600;margin-bottom:8px;padding-top:4px}
+.step-content p{font-size:14px;color:var(--text-sec);margin-bottom:0}
+
+/* Footer */
+.doc-footer{padding:32px 64px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--text-sec)}
+.doc-footer a{color:var(--text-sec);display:flex;align-items:center;gap:8px}
+.doc-footer a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="sidebar-top">
+<div class="sidebar-logo">
+  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 14.4A6.4 6.4 0 1110 3.6a6.4 6.4 0 010 12.8z"/><path d="M10 6.4a3.6 3.6 0 100 7.2 3.6 3.6 0 000-7.2z"/></svg>
+  <span>Nexus CLI</span><span class="sidebar-version">v2.4.1</span>
+</div>
+</div>
+<a class="sidebar-section" href="#">Getting Started</a>
+<a href="#" class="sidebar-link active">Introduction</a>
+<a href="#" class="sidebar-link">Installation</a>
+<a href="#" class="sidebar-link">Quick Start</a>
+<a href="#" class="sidebar-link">Configuration</a>
+
+<a class="sidebar-section" href="#">CLI Reference</a>
+<a href="#" class="sidebar-link"><code>nexus init</code></a>
+<a href="#" class="sidebar-link"><code>nexus deploy</code></a>
+<a href="#" class="sidebar-link"><code>nexus status</code></a>
+<a href="#" class="sidebar-link"><code>nexus logs</code></a>
+<a href="#" class="sidebar-link"><code>nexus rollback</code></a>
+<a href="#" class="sidebar-link"><code>nexus env</code></a>
+
+<a class="sidebar-section" href="#">Guides</a>
+<a href="#" class="sidebar-link">Deploy from GitHub</a>
+<a href="#" class="sidebar-link">Custom Domains</a>
+<a href="#" class="sidebar-link">Environment Variables</a>
+<a href="#" class="sidebar-link">Preview Deployments</a>
+<a href="#" class="sidebar-link">Edge Functions</a>
+
+<a class="sidebar-section" href="#">API Reference</a>
+<a href="#" class="sidebar-link">REST API</a>
+<a href="#" class="sidebar-link">Webhooks</a>
+<a href="#" class="sidebar-link">Authentication</a>
+</aside>
+
+<div class="main">
+<div class="topbar">
+  <div class="breadcrumbs">
+    <span>Docs</span>
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l4 4-4 4"/></svg>
+    <span>Getting Started</span>
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l4 4-4 4"/></svg>
+    <span style="color:var(--text)">Introduction</span>
+  </div>
+  <div class="search-bar">Search documentation… <code>⌘K</code></div>
+</div>
+
+<div class="content">
+  <h1 class="page-title">Introduction</h1>
+  <p>Nexus CLI is a command-line tool for deploying, managing, and scaling your applications on the Nexus platform. It provides a streamlined workflow for developers who prefer working in the terminal.</p>
+
+  <div class="callout">
+    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm0 4a1 1 0 110 2 1 1 0 010-2zm0 3.5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 7.5z"/></svg>
+    <div><div class="callout-title">New in v2.4</div><p>Preview deployments are now available on all plans. Use <code style="font-family:'Geist Mono',monospace;font-size:12px;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px">nexus deploy --preview</code> to create shareable preview URLs for any branch.</p></div>
+  </div>
+
+  <h2 class="section">Installation</h2>
+  <p>Install the Nexus CLI globally via npm, pnpm, or Homebrew. The CLI requires <strong>Node.js 18 or later</strong>.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="lang">bash</span><span class="copy-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</span></div>
+    <div class="code-body"><pre><span class="comment"># npm</span>
+<span class="cmd">npm</span> install -g @nexus/cli
+
+<span class="comment"># pnpm</span>
+<span class="cmd">pnpm</span> add -g @nexus/cli
+
+<span class="comment"># Homebrew</span>
+<span class="cmd">brew</span> install nexus-cli</pre></div>
+  </div>
+
+  <p>Verify the installation:</p>
+  <div class="code-block">
+    <div class="code-header"><span class="lang">bash</span></div>
+    <div class="code-body"><pre><span class="cmd">nexus</span> --version
+<span class="comment"># → nexus/2.4.1 linux-x64 node-v22.0.0</span></pre></div>
+  </div>
+
+  <h2 class="section">Quick Start</h2>
+  <p>Deploy your first application in under 2 minutes:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content"><h3>Authenticate</h3><p>Log in with your Nexus account or create one if you don't have one.</p>
+      <div class="code-block" style="margin-top:10px"><div class="code-body"><pre><span class="cmd">nexus</span> login</pre></div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content"><h3>Initialize your project</h3><p>Run <code style="font-family:'Geist Mono',monospace;font-size:12px;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px">nexus init</code> in your project directory to link it to Nexus.</p>
+      <div class="code-block" style="margin-top:10px"><div class="code-body"><pre><span class="cmd">cd</span> my-project
+<span class="cmd">nexus</span> init</pre></div></div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content"><h3>Deploy</h3><p>Push your code to production with a single command.</p>
+      <div class="code-block" style="margin-top:10px"><div class="code-body"><pre><span class="cmd">nexus</span> deploy
+<span class="comment"># → Deploying to production...</span>
+<span class="comment"># → ✓ Build complete (24s)</span>
+<span class="comment"># → ✓ Live at https://my-project.nexus.app</span></pre></div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section">Command Overview</h2>
+  <table>
+    <thead><tr><th>Command</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>nexus init</td><td>Initialize a new Nexus project in the current directory</td></tr>
+      <tr><td>nexus deploy</td><td>Deploy the current project to production</td></tr>
+      <tr><td>nexus deploy --preview</td><td>Create a preview deployment on a temporary URL</td></tr>
+      <tr><td>nexus status</td><td>Show the current deployment status</td></tr>
+      <tr><td>nexus logs</td><td>Stream live logs from the current deployment</td></tr>
+      <tr><td>nexus rollback</td><td>Roll back to a previous deployment</td></tr>
+      <tr><td>nexus env add KEY=value</td><td>Add an environment variable</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="doc-footer">
+  <a href="#">← Previous</a>
+  <a href="#">Installation →</a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Still — Meditation App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f2f2f7;
+    --surface: #ffffff;
+    --surface-grouped: #f2f2f7;
+    --surface-secondary: #e5e5ea;
+    --blue: #007aff;
+    --blue-light: #cce4ff;
+    --green: #34c759;
+    --orange: #ff9500;
+    --red: #ff3b30;
+    --purple: #af52de;
+    --text: #000000;
+    --text-secondary: #3c3c43;
+    --text-tertiary: #3c3c4399;
+    --separator: #c6c6c8;
+    --fill: #78788033;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+  }
+  .device-frame {
+    width: 390px;
+    background: var(--bg);
+    border-radius: 48px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(0,0,0,0.08),
+      0 2px 8px rgba(0,0,0,0.06),
+      0 16px 48px rgba(0,0,0,0.12),
+      0 40px 80px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  .status-bar {
+    height: 54px;
+    background: var(--surface);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 28px 8px;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .status-right { display: flex; gap: 6px; align-items: center; font-size: 13px; }
+  .dynamic-island {
+    width: 120px;
+    height: 34px;
+    background: var(--text);
+    border-radius: 20px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .screen { background: var(--bg); min-height: 780px; }
+
+  /* HOME SCREEN */
+  .home-screen { padding: 0; }
+  .hero-section {
+    background: linear-gradient(160deg, #1c1c2e 0%, #2d2d5e 60%, #1a3a5c 100%);
+    padding: 40px 28px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+  }
+  .hero-bg-circle-1 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(175, 82, 222, 0.25) 0%, transparent 70%);
+    top: -100px; right: -80px;
+  }
+  .hero-bg-circle-2 {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0, 122, 255, 0.2) 0%, transparent 70%);
+    bottom: -50px; left: -50px;
+  }
+  .greeting { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .hero-title { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 4px; letter-spacing: -0.02em; }
+  .hero-subtitle { font-size: 15px; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+  .streak-bar {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(8px);
+  }
+  .streak-icon { font-size: 28px; }
+  .streak-text { flex: 1; }
+  .streak-num { font-size: 22px; font-weight: 700; color: #ffffff; }
+  .streak-label { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .streak-badge {
+    background: var(--orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .section { padding: 24px 20px 0; }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .section-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+  .section-link { font-size: 15px; color: var(--blue); font-weight: 400; }
+
+  .cards-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .session-card {
+    min-width: 160px;
+    border-radius: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .session-card-inner { padding: 18px 16px; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; }
+  .card-1 { background: linear-gradient(135deg, #5856d6, #007aff); }
+  .card-2 { background: linear-gradient(135deg, #34c759, #30d158); }
+  .card-3 { background: linear-gradient(135deg, #ff9500, #ffcc00); }
+  .card-4 { background: linear-gradient(135deg, #af52de, #5856d6); }
+  .card-icon { font-size: 28px; margin-bottom: 8px; }
+  .card-name { font-size: 14px; font-weight: 600; color: white; line-height: 1.2; }
+  .card-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+  .list-section { padding: 20px 20px 0; }
+  .list-card {
+    background: var(--surface);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 14px;
+    border-bottom: 1px solid var(--separator);
+  }
+  .list-item:last-child { border-bottom: none; }
+  .item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .icon-blue { background: var(--blue-light); }
+  .icon-green { background: #c8f7d6; }
+  .icon-purple { background: #f3d6fd; }
+  .icon-orange { background: #fff0cc; }
+  .item-text { flex: 1; }
+  .item-name { font-size: 16px; font-weight: 400; color: var(--text); }
+  .item-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+  .item-right { display: flex; align-items: center; gap: 6px; color: var(--text-tertiary); font-size: 14px; }
+  .item-badge {
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* PROGRESS RING */
+  .progress-section { padding: 20px; }
+  .progress-card {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .ring-container { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
+  .ring-svg { transform: rotate(-90deg); }
+  .ring-track { fill: none; stroke: var(--fill); stroke-width: 8; }
+  .ring-fill { fill: none; stroke: var(--blue); stroke-width: 8; stroke-linecap: round; stroke-dasharray: 188; stroke-dashoffset: 56; }
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-pct { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+  .ring-label { font-size: 9px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .progress-stats { flex: 1; }
+  .progress-title { font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+  .stat-row { display: flex; gap: 16px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 20px; font-weight: 700; color: var(--blue); }
+  .stat-label { font-size: 11px; color: var(--text-tertiary); }
+
+  /* TAB BAR */
+  .tab-bar {
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 8px 0 28px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 20px;
+    cursor: pointer;
+  }
+  .tab-icon { font-size: 22px; }
+  .tab-label { font-size: 10px; font-weight: 500; color: var(--text-tertiary); }
+  .tab.active .tab-label { color: var(--blue); }
+  .tab.active .tab-icon { filter: opacity(1); }
+</style>
+</head>
+<body>
+<div class="device-frame">
+  <div class="dynamic-island"></div>
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="width:120px"></span>
+    <div class="status-right">
+      <span>●●●●</span>
+      <span>WiFi</span>
+      <span>🔋</span>
+    </div>
+  </div>
+
+  <div class="screen home-screen">
+    <div class="hero-section">
+      <div class="hero-bg-circle hero-bg-circle-1"></div>
+      <div class="hero-bg-circle hero-bg-circle-2"></div>
+      <div class="greeting">Good morning</div>
+      <div class="hero-title">Still.</div>
+      <div class="hero-subtitle">Your mind deserves a moment</div>
+      <div class="streak-bar">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-text">
+          <div class="streak-num">14</div>
+          <div class="streak-label">Day streak</div>
+        </div>
+        <div class="streak-badge">On track</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Today</div>
+        <div class="section-link">See all</div>
+      </div>
+      <div class="cards-scroll">
+        <div class="session-card">
+          <div class="session-card-inner card-1">
+            <div class="card-icon">🌙</div>
+            <div>
+              <div class="card-name">Morning Clarity</div>
+              <div class="card-sub">10 min · Beginner</div>
+            </div>
+          </div>
+        </div>
+        <div class="session-card">
+          <div class="session-card-inner card-2">
+            <div class="card-icon">🌿</div>
+            <div>
+              <div class="card-name">Breath Reset</div>
+              <div class="card-sub">5 min · Any time</div>
+            </div>
+          </div>
+        </div>
+        <div class="session-card">
+          <div class="session-card-inner card-3">
+            <div class="card-icon">☀️</div>
+            <div>
+              <div class="card-name">Focus Flow</div>
+              <div class="card-sub">15 min · Work</div>
+            </div>
+          </div>
+        </div>
+        <div class="session-card">
+          <div class="session-card-inner card-4">
+            <div class="card-icon">🌊</div>
+            <div>
+              <div class="card-name">Deep Rest</div>
+              <div class="card-sub">20 min · Sleep</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-section">
+      <div class="list-card">
+        <div class="list-item">
+          <div class="item-icon icon-blue">😮‍💨</div>
+          <div class="item-text">
+            <div class="item-name">Breathwork</div>
+            <div class="item-sub">6 sessions this week</div>
+          </div>
+          <div class="item-right">
+            <span class="item-badge">New</span>
+            <span>›</span>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="item-icon icon-green">🧘</div>
+          <div class="item-text">
+            <div class="item-name">Body Scan</div>
+            <div class="item-sub">15 minutes</div>
+          </div>
+          <div class="item-right"><span>›</span></div>
+        </div>
+        <div class="list-item">
+          <div class="item-icon icon-purple">🌙</div>
+          <div class="item-text">
+            <div class="item-name">Sleep Stories</div>
+            <div class="item-sub">7 new stories</div>
+          </div>
+          <div class="item-right"><span>›</span></div>
+        </div>
+        <div class="list-item">
+          <div class="item-icon icon-orange">🎵</div>
+          <div class="item-text">
+            <div class="item-name">Ambient Sounds</div>
+            <div class="item-sub">Rain, Forest, Ocean</div>
+          </div>
+          <div class="item-right"><span>›</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-card">
+        <div class="ring-container">
+          <svg class="ring-svg" width="80" height="80" viewBox="0 0 80 80">
+            <circle class="ring-track" cx="40" cy="40" r="30"/>
+            <circle class="ring-fill" cx="40" cy="40" r="30"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct">70%</div>
+            <div class="ring-label">Weekly</div>
+          </div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-title">This week</div>
+          <div class="stat-row">
+            <div class="stat-item">
+              <div class="stat-num">7</div>
+              <div class="stat-label">Sessions</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">94</div>
+              <div class="stat-label">Minutes</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">14</div>
+              <div class="stat-label">Streak</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab active">
+      <div class="tab-icon">🏠</div>
+      <div class="tab-label" style="color:#007aff">Home</div>
+    </div>
+    <div class="tab">
+      <div class="tab-icon">🧭</div>
+      <div class="tab-label">Explore</div>
+    </div>
+    <div class="tab">
+      <div class="tab-icon">▶️</div>
+      <div class="tab-label">Today</div>
+    </div>
+    <div class="tab">
+      <div class="tab-icon">📊</div>
+      <div class="tab-label">Progress</div>
+    </div>
+    <div class="tab">
+      <div class="tab-icon">👤</div>
+      <div class="tab-label">Profile</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
