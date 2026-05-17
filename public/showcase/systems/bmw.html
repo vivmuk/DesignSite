@@ -1,0 +1,45 @@
+"""BMW Showcase"""
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+function App() {
+  return (
+    &lt;div style={{ 
+      background: '#ffffff', 
+      color: '#111111', 
+      fontFamily: "Georgia, serif",
+      minHeight: '100vh',
+      padding: '20px'
+    }}>
+      &lt;nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0' }}>
+        &lt;div style={{ fontWeight: 'bold', fontSize: '20px', color: '#1c69d4' }}>BMW&lt;/div&gt;
+        &lt;div style={{ display: 'flex', gap: '20px' }}>
+          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
+          &lt;a href="#" style={{ color: '#111111', textDecoration: 'none' }}>&lt;/a&gt;
+          &lt;button style={{ background: '#1c69d4', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '2px' }}>&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/nav&gt;
+      &lt;main style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', padding: '40px 0' }}>
+        &lt;div&gt;
+          &lt;h1 style={{ fontSize: '48px', marginBottom: '20px', lineHeight: '1.1' }}>BMW&lt;/h1&gt;
+          &lt;p style={{ fontSize: '18px', opacity: 0.8, marginBottom: '30px' }}>Luxury automotive. Dark premium surfaces, precise German engineering aesthetic.&lt;/p&gt;
+          &lt;button style={{ background: '#1c69d4', color: 'white', border: 'none', padding: '15px 30px', borderRadius: '2px', fontSize: '16px' }}>&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div style={{ background: '#1c69d4', opacity: 0.15, borderRadius: '2px', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          &lt;div style={{ textAlign: 'center' }}>
+            &lt;div style={{ fontSize: '14px', color: '#1c69d4', fontWeight: 'bold' }}>&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/main&gt;
+      &lt;section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '40px 0' }}>
+        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '2px' }}>&lt;/div&gt;
+        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '2px' }}>&lt;/div&gt;
+        &lt;div style={{ padding: '20px', background: 'rgba(0,0,0,0.05)', borderRadius: '2px' }}>&lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(&lt;App /&gt;);

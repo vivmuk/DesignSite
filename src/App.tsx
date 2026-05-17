@@ -7,7 +7,8 @@ import './App.css';
 // ──────────────────────────────────────────────────────────────────────────────
 // Showcase Tab
 // ──────────────────────────────────────────────────────────────────────────────
-const showcaseItems = [
+// Curated hand-crafted showcase items
+const curatedItems = [
   { id: 'stripe-saas-landing', title: 'Flux Analytics — SaaS Landing', skill: 'Frontend Design', system: 'Stripe', direction: 'Modern Minimal', desc: 'Premium fintech landing page with Stripe\'s weight-300 typography, purple accent, and navy hero.', file: '/showcase/stripe-saas-landing.html' },
   { id: 'linear-dashboard', title: 'Nexus — Analytics Dashboard', skill: 'Dashboard', system: 'Linear', direction: 'Modern Minimal', desc: 'Dark sidebar dashboard with metric cards, bar charts, and activity feed. Linear\'s dark precision.', file: '/showcase/linear-dashboard.html' },
   { id: 'brutalist-portfolio', title: 'A.RAW — Artist Portfolio', skill: 'Frontend Design', system: 'Brutalism', direction: 'Brutalist Experimental', desc: 'Heavy borders, oversized uppercase type, yellow+black palette. Confrontational and raw.', file: '/showcase/brutalist-portfolio.html' },
@@ -20,6 +21,54 @@ const showcaseItems = [
   { id: 'swiss-international', title: 'Swiss CLI — Terminal Docs', skill: 'Docs Page', system: 'Vercel', direction: 'Tech Utility', desc: 'Monochrome CLI docs with Geist Mono, command reference table, and quick start steps.', file: '/showcase/swiss-international.html' },
 ];
 
+// Generate dynamic showcase items from data
+const systemItems = openDesignSystems.map(ds => ({
+  id: `sys-${ds.id}`,
+  title: `${ds.name} — Design System`,
+  skill: ds.style,
+  system: ds.name,
+  direction: ds.category,
+  desc: ds.description,
+  file: `/showcase/systems/${ds.id}.html`,
+  type: 'system'
+}));
+
+const skillItems = openDesignSkills.map(skill => ({
+  id: `skill-${skill.id}`,
+  title: `${skill.name} — Skill`,
+  skill: skill.category,
+  system: skill.name,
+  direction: 'Skill',
+  desc: skill.description,
+  file: `/showcase/skills/${skill.id}.html`,
+  type: 'skill'
+}));
+
+const directionItems = [
+  { id: 'editorial-monocle', name: 'Editorial Monocle', subtitle: 'Monocle / FT Magazine', mood: 'Print-magazine feel. Generous whitespace, large serif headlines, restrained palette of neutral paper + ink + a single brand-justified accent.', refs: ['Monocle', 'Financial Times Weekend', 'NYT Magazine', 'It\'s Nice That'], displayFont: 'Iowan Old Style, Charter, Georgia, serif', bodyFont: 'System-UI sans', palette: { bg: '#faf9f7', surface: '#fff', fg: '#1a1510', accent: '#c94020' } },
+  { id: 'modern-minimal', name: 'Modern Minimal', subtitle: 'Linear / Vercel', mood: 'Quiet, precise, software-native. System fonts, crisp neutral foundations, small product palette so the interface feels shipped rather than greyscale.', refs: ['Linear', 'Vercel', 'Notion 2024', 'Stripe Docs'], displayFont: '-apple-system, SF Pro Display, system-ui, sans-serif', bodyFont: '-apple-system, SF Pro Text, system-ui, sans-serif', palette: { bg: '#fafafa', surface: '#fff', fg: '#111', accent: '#5566ff' } },
+  { id: 'warm-soft', name: 'Warm Soft', subtitle: 'Calm / Loom / Duolingo', mood: 'Approachable, rounded, warm neutrals. Makes users feel welcomed and safe. Friendly but not childish.', refs: ['Calm', 'Loom', 'Duolingo', 'Notion warm'], displayFont: 'Plus Jakarta Sans, system-ui, sans-serif', bodyFont: 'system-ui, sans-serif', palette: { bg: '#fdf8f2', surface: '#fff9f2', fg: '#1c1612', accent: '#e07c3c' } },
+  { id: 'tech-utility', name: 'Tech Utility', subtitle: 'Terminal / GitHub / Warp', mood: 'Monospace-heavy, data-dense, dark backgrounds. Designed for power users who live in the terminal.', refs: ['GitHub', 'Warp Terminal', 'Linear dark', 'Raycast'], displayFont: 'JetBrains Mono, SF Mono, monospace', bodyFont: 'system-ui, sans-serif', palette: { bg: '#0d0d0d', surface: '#141414', fg: '#e4e4e4', accent: '#3dd68c' } },
+  { id: 'brutalist-experimental', name: 'Brutalist Experimental', subtitle: 'Raw / Conflicted / Confrontational', mood: 'Raw HTML feel, heavy borders, oversized type, high contrast, broken grids. Design that refuses to be invisible.', refs: ['brutalistwebsites.com', 'Bloomberg', 'Balenciaga', 'Rick Owens'], displayFont: 'Impact, Arial Black, Haettenschweiler, sans-serif', bodyFont: 'system-ui, sans-serif', palette: { bg: '#fafaf0', surface: '#fff', fg: '#0a0a0a', accent: '#ffe500' } },
+].map(dir => ({
+  id: `dir-${dir.id}`,
+  title: `${dir.name} — Direction`,
+  skill: dir.subtitle,
+  system: dir.name,
+  direction: dir.subtitle,
+  desc: dir.mood,
+  file: `/showcase/directions/${dir.id}.html`,
+  type: 'direction'
+}));
+
+// All showcase items combined
+const allShowcaseItems = [
+  ...curatedItems.map(item => ({ ...item, type: 'curated' })),
+  ...systemItems,
+  ...skillItems,
+  ...directionItems
+];
+
 const directions = [
   { id: 'editorial-monocle', name: 'Editorial Monocle', subtitle: 'Monocle / FT Magazine', mood: 'Print-magazine feel. Generous whitespace, large serif headlines, restrained palette of neutral paper + ink + a single brand-justified accent.', refs: ['Monocle', 'Financial Times Weekend', 'NYT Magazine', 'It\'s Nice That'], displayFont: 'Iowan Old Style, Charter, Georgia, serif', bodyFont: 'System-UI sans', palette: { bg: '#faf9f7', surface: '#fff', fg: '#1a1510', accent: '#c94020' } },
   { id: 'modern-minimal', name: 'Modern Minimal', subtitle: 'Linear / Vercel', mood: 'Quiet, precise, software-native. System fonts, crisp neutral foundations, small product palette so the interface feels shipped rather than greyscale.', refs: ['Linear', 'Vercel', 'Notion 2024', 'Stripe Docs'], displayFont: '-apple-system, SF Pro Display, system-ui, sans-serif', bodyFont: '-apple-system, SF Pro Text, system-ui, sans-serif', palette: { bg: '#fafafa', surface: '#fff', fg: '#111', accent: '#5566ff' } },
@@ -30,16 +79,59 @@ const directions = [
 
 function ShowcaseTab() {
   const [selected, setSelected] = useState<string | null>(null);
-  const [filter, setFilter] = useState<string>('all');
-  const systems = [...new Set(showcaseItems.map(i => i.system))];
-  const filtered = filter === 'all' ? showcaseItems : showcaseItems.filter(i => i.system === filter);
-  const selectedItem = showcaseItems.find(i => i.id === selected);
+  const [section, setSection] = useState<'curated' | 'systems' | 'skills' | 'directions' | 'all'>('curated');
+  const [search, setSearch] = useState('');
+  
+  const getItems = () => {
+    let items = allShowcaseItems;
+    if (section === 'curated') items = curatedItems.map(item => ({ ...item, type: 'curated' }));
+    else if (section === 'systems') items = systemItems;
+    else if (section === 'skills') items = skillItems;
+    else if (section === 'directions') items = directionItems;
+    
+    if (search) {
+      const s = search.toLowerCase();
+      items = items.filter(i => 
+        i.title.toLowerCase().includes(s) || 
+        i.desc.toLowerCase().includes(s) ||
+        i.system.toLowerCase().includes(s)
+      );
+    }
+    return items;
+  };
+  
+  const filtered = getItems();
+  const selectedItem = allShowcaseItems.find(i => i.id === selected);
   return (
     <div className="showcase-tab">
-      <div className="showcase-filter">
-        <button className={`filter-btn ${filter==='all'?'active':''}`} onClick={()=>setFilter('all')}>All</button>
-        {systems.map(s => <button key={s} className={`filter-btn ${filter===s?'active':''}`} onClick={()=>setFilter(s)}>{s}</button>)}
+      <div className="showcase-section-tabs">
+        <button className={`section-tab ${section==='curated'?'active':''}`} onClick={()=>setSection('curated')}>
+          Curated ({curatedItems.length})
+        </button>
+        <button className={`section-tab ${section==='systems'?'active':''}`} onClick={()=>setSection('systems')}>
+          Design Systems ({systemItems.length})
+        </button>
+        <button className={`section-tab ${section==='skills'?'active':''}`} onClick={()=>setSection('skills')}>
+          Skills ({skillItems.length})
+        </button>
+        <button className={`section-tab ${section==='directions'?'active':''}`} onClick={()=>setSection('directions')}>
+          Directions ({directionItems.length})
+        </button>
+        <button className={`section-tab ${section==='all'?'active':''}`} onClick={()=>setSection('all')}>
+          All ({allShowcaseItems.length})
+        </button>
       </div>
+      
+      <div className="showcase-search">
+        <input 
+          type="text" 
+          placeholder="Search showcase..." 
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
+      </div>
+      
       <div className="showcase-grid">
         {filtered.map(item => (
           <div key={item.id} className="showcase-card" onClick={()=>setSelected(item.id)}>
@@ -1460,7 +1552,7 @@ const TABS = [
   { id: 'systems', label: 'Design Systems', emoji: '🧩', count: openDesignSystems.length },
   { id: 'skills', label: 'Skills', emoji: '⚡', count: openDesignSkills.length },
   { id: 'directions', label: 'Directions', emoji: '🧭', count: 5 },
-  { id: 'showcase', label: 'Showcase', emoji: '🔥', count: showcaseItems.length },
+  { id: 'showcase', label: 'Showcase', emoji: '🔥', count: allShowcaseItems.length },
 ];
 
 function App() {

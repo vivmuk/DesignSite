@@ -1,0 +1,27 @@
+"""Development & Code Skill Showcase"""
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+function App() {
+  return (
+    &lt;div style={{ background: '#111827', color: '#e2e8f0', minHeight: '100vh', padding: '20px', fontFamily: 'system-ui, sans-serif' }}>
+      &lt;nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        &lt;div style={{ fontWeight: 'bold', fontSize: '20px', color: '#94a3b8' }}>Development & Code&lt;/div&gt;
+        &lt;div style={{ display: 'flex', gap: '20px' }}>&lt;/div&gt;
+      &lt;/nav&gt;
+      &lt;main style={{ padding: '40px 0' }}>
+        &lt;h1 style={{ fontSize: '36px', marginBottom: '20px', color: '#94a3b8' }}>Development & Code&lt;/h1&gt;
+        &lt;p style={{ fontSize: '16px', opacity: 0.8, marginBottom: '30px' }}>Development & Code skill&lt;/p&gt;
+        &lt;div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          &lt;div style={{ padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>&lt;/div&gt;
+          &lt;div style={{ padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>&lt;/div&gt;
+          &lt;div style={{ padding: '20px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(&lt;App /&gt;);

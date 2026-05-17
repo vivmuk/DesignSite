@@ -2913,6 +2913,53 @@ body {
 }
 
 /* ============================================================
+   SHOWCASE SECTION TABS
+   ============================================================ */
+.showcase-section-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px;
+  border-bottom: 1px solid oklch(0.22 0.01 240);
+  background: oklch(0.12 0.01 240);
+  flex-wrap: wrap;
+}
+
+.section-tab {
+  padding: 8px 16px;
+  border: 1px solid oklch(0.25 0.01 240);
+  border-radius: 8px;
+  background: transparent;
+  color: oklch(0.6 0.01 240);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.section-tab:hover {
+  border-color: oklch(0.4 0.01 240);
+  color: oklch(0.9 0.01 240);
+}
+
+.section-tab.active {
+  background: oklch(0.72 0.18 155);
+  border-color: oklch(0.72 0.18 155);
+  color: #fff;
+}
+
+.showcase-search {
+  padding: 12px 24px;
+  border-bottom: 1px solid oklch(0.2 0.01 240);
+  background: oklch(0.12 0.01 240);
+}
+
+.showcase-search .search-input {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
