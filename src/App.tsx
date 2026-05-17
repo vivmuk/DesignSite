@@ -76,6 +76,248 @@ function ShowcaseTab() {
 // ──────────────────────────────────────────────────────────────────────────────
 // Design Systems Tab
 // ──────────────────────────────────────────────────────────────────────────────
+// MiniSitePreview — renders a data-driven mini webpage mockup for a design system
+// ──────────────────────────────────────────────────────────────────────────────
+function MiniSitePreview({ ds }: { ds: typeof openDesignSystems[0] }) {
+  const bg = ds.bgColor || '#ffffff';
+  const acc = ds.accentColor || '#667788';
+  const txt = ds.textColor || '#111111';
+  const isDark = ds.tags?.includes('dark');
+  const surface = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const muted = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)';
+  const border = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+
+  const isBrutalist = ds.style === 'brutalist';
+  const isEditorial = ds.style === 'editorial';
+  const isLuxury = ds.style === 'luxury';
+  const radius = isBrutalist ? '0px' : isLuxury ? '2px' : '6px';
+  const fontStyle = isEditorial ? 'Georgia, serif' : isBrutalist ? 'Impact, Arial Black, sans-serif' : 'system-ui, sans-serif';
+
+  return (
+    <div className="mini-preview" style={{ background: bg, fontFamily: fontStyle, border: `1px solid ${border}` }}>
+      {/* Nav */}
+      <div className="mp-nav" style={{ background: surface, borderBottom: `1px solid ${border}` }}>
+        <div className="mp-logo" style={{ color: acc, fontWeight: 700, fontSize: 11 }}>{ds.name}</div>
+        <div className="mp-nav-links">
+          {['Product','Pricing','Docs'].map(l => (
+            <div key={l} className="mp-nav-link" style={{ background: muted, borderRadius: radius }} />
+          ))}
+          <div className="mp-cta" style={{ background: acc, borderRadius: radius }} />
+        </div>
+      </div>
+      {/* Hero */}
+      <div className="mp-hero">
+        <div className="mp-hero-text">
+          <div className="mp-h1" style={{ background: txt, borderRadius: radius, opacity: 0.9 }} />
+          <div className="mp-h1 mp-h1-sm" style={{ background: txt, borderRadius: radius, opacity: 0.5, width: '70%' }} />
+          <div className="mp-p" style={{ background: muted, borderRadius: radius }} />
+          <div className="mp-p" style={{ background: muted, borderRadius: radius, width: '80%' }} />
+          <div style={{ display:'flex', gap:6, marginTop:8 }}>
+            <div className="mp-btn" style={{ background: acc, borderRadius: radius, border: isBrutalist ? `2px solid ${txt}` : 'none' }} />
+            <div className="mp-btn-ghost" style={{ border: `1.5px solid ${acc}`, borderRadius: radius }} />
+          </div>
+        </div>
+        <div className="mp-hero-img" style={{ background: acc, opacity: 0.15, borderRadius: radius, border: `1px solid ${acc}` }}>
+          <div style={{ width:'60%', height:6, background: acc, opacity:0.6, borderRadius:2, margin:'auto', marginTop:16 }} />
+          <div style={{ width:'80%', height:4, background: acc, opacity:0.3, borderRadius:2, margin:'6px auto 0' }} />
+          <div style={{ width:'40%', height:4, background: acc, opacity:0.3, borderRadius:2, margin:'4px auto 0' }} />
+        </div>
+      </div>
+      {/* Feature strip */}
+      <div className="mp-features">
+        {[0,1,2].map(i => (
+          <div key={i} className="mp-feature" style={{ background: surface, borderRadius: radius, border: `1px solid ${border}` }}>
+            <div className="mp-feat-icon" style={{ background: acc, borderRadius: isBrutalist ? 0 : '50%', opacity: 0.8 }} />
+            <div className="mp-feat-t" style={{ background: txt, borderRadius: 2, opacity: 0.7 }} />
+            <div className="mp-feat-p" style={{ background: muted, borderRadius: 2 }} />
+            <div className="mp-feat-p" style={{ background: muted, borderRadius: 2, width: '70%' }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// SkillPreview — layout skeleton based on skill category
+// ──────────────────────────────────────────────────────────────────────────────
+const skillPalettes: Record<string, { bg: string; acc: string; txt: string }> = {
+  design:      { bg: '#0f0a1e', acc: '#a78bfa', txt: '#e5e0f8' },
+  development: { bg: '#0a1628', acc: '#38bdf8', txt: '#e0eeff' },
+  content:     { bg: '#1a1209', acc: '#f59e0b', txt: '#fdf3dc' },
+  media:       { bg: '#0d1a12', acc: '#34d399', txt: '#d8f5ec' },
+  ai:          { bg: '#0d1117', acc: '#f472b6', txt: '#fce7f3' },
+  utility:     { bg: '#111827', acc: '#94a3b8', txt: '#e2e8f0' },
+};
+
+function SkillPreview({ skill }: { skill: typeof openDesignSkills[0] }) {
+  const p = skillPalettes[skill.category] || skillPalettes.utility;
+  const bg = p.bg, acc = p.acc, txt = p.txt;
+  const muted = 'rgba(255,255,255,0.2)';
+  const surface = 'rgba(255,255,255,0.05)';
+  const border = 'rgba(255,255,255,0.08)';
+
+  const isMagazine = skill.category === 'content';
+  const isDev = skill.category === 'development';
+  const isMedia = skill.category === 'media';
+
+  return (
+    <div className="mini-preview" style={{ background: bg, fontFamily: isDev ? 'monospace' : 'system-ui, sans-serif', border: `1px solid ${border}` }}>
+      <div className="mp-nav" style={{ background: surface, borderBottom: `1px solid ${border}` }}>
+        <div className="mp-logo" style={{ color: acc, fontWeight: 700, fontSize: 11 }}>{skill.name}</div>
+        <div className="mp-nav-links">
+          <div className="mp-nav-link" style={{ background: muted }} />
+          <div className="mp-nav-link" style={{ background: muted }} />
+          <div className="mp-cta" style={{ background: acc }} />
+        </div>
+      </div>
+      {isMedia ? (
+        <div style={{ padding: '10px 10px 6px', display:'flex', flexDirection:'column', gap:6 }}>
+          <div style={{ background: acc, opacity:0.2, borderRadius:4, height:60 }} />
+          <div style={{ display:'flex', gap:6 }}>
+            {[1,2,3].map(i=><div key={i} style={{ flex:1, background:surface, borderRadius:4, height:40, border:`1px solid ${border}` }} />)}
+          </div>
+        </div>
+      ) : isDev ? (
+        <div style={{ padding: '8px 10px', display:'flex', flexDirection:'column', gap:4 }}>
+          {['const app = build()', '  .with(design)', '  .export(html)'].map((line,i)=>(
+            <div key={i} style={{ display:'flex', gap:6, alignItems:'center' }}>
+              <div style={{ width:12, height:3, background:acc, opacity:0.4, borderRadius:1 }} />
+              <div style={{ flex:1, height:3, background: i===0?acc:muted, opacity:0.6, borderRadius:1 }} />
+            </div>
+          ))}
+          <div style={{ marginTop:4, background:'rgba(255,255,255,0.04)', borderRadius:4, padding:'6px 8px', border:`1px solid ${border}` }}>
+            {[80,60,90,50].map((w,i)=><div key={i} style={{ width:`${w}%`, height:3, background:muted, borderRadius:1, marginBottom:i<3?3:0 }} />)}
+          </div>
+        </div>
+      ) : isMagazine ? (
+        <div style={{ padding: '8px 10px', display:'flex', flexDirection:'column', gap:5 }}>
+          <div style={{ width:'85%', height:7, background:txt, opacity:0.8, borderRadius:2 }} />
+          <div style={{ width:'60%', height:5, background:acc, opacity:0.7, borderRadius:2 }} />
+          <div style={{ height:1, background:border }} />
+          {[90,100,70,85].map((w,i)=><div key={i} style={{ width:`${w}%`, height:3, background:muted, borderRadius:1 }} />)}
+        </div>
+      ) : (
+        <div className="mp-hero" style={{ paddingBottom:6 }}>
+          <div className="mp-hero-text">
+            <div className="mp-h1" style={{ background:txt, opacity:0.8 }} />
+            <div className="mp-p" style={{ background:muted }} />
+            <div className="mp-p" style={{ background:muted, width:'80%' }} />
+            <div style={{ display:'flex', gap:6, marginTop:6 }}>
+              <div className="mp-btn" style={{ background:acc }} />
+            </div>
+          </div>
+          <div className="mp-hero-img" style={{ background:acc, opacity:0.12, border:`1px solid ${acc}` }} />
+        </div>
+      )}
+      <div className="mp-features">
+        {[0,1,2].map(i=>(
+          <div key={i} className="mp-feature" style={{ background:surface, border:`1px solid ${border}` }}>
+            <div className="mp-feat-icon" style={{ background:acc, opacity:0.7 }} />
+            <div className="mp-feat-t" style={{ background:txt, opacity:0.6 }} />
+            <div className="mp-feat-p" style={{ background:muted }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// DirectionPreview — rich mini page with direction's own palette + posture
+// ──────────────────────────────────────────────────────────────────────────────
+function DirectionPreview({ dir }: { dir: typeof directions[0] }) {
+  const { bg, fg, accent } = dir.palette;
+  const isEditorial = dir.id === 'editorial-monocle';
+  const isBrutalist = dir.id === 'brutalist-experimental';
+  const isTech = dir.id === 'tech-utility';
+  const font = dir.displayFont.split(',')[0];
+  const muted = `${fg}55`;
+  const surface = isTech ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+  const border = isTech ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+  const radius = isBrutalist ? '0px' : isEditorial ? '2px' : '8px';
+
+  return (
+    <div className="mini-preview dir-mini" style={{ background: bg, fontFamily: font + ', system-ui, sans-serif', border: `1px solid ${border}` }}>
+      <div className="mp-nav" style={{ background: surface, borderBottom: `1px solid ${border}` }}>
+        <div style={{ color: accent, fontWeight: 700, fontSize: 11, letterSpacing: isEditorial?'0.05em':'-0.02em' }}>{dir.subtitle.split('/')[0].trim()}</div>
+        <div className="mp-nav-links">
+          <div className="mp-nav-link" style={{ background: muted }} />
+          <div className="mp-nav-link" style={{ background: muted }} />
+          <div className="mp-cta" style={{ background: accent, borderRadius: radius }} />
+        </div>
+      </div>
+      {isEditorial ? (
+        <div style={{ padding:'10px 10px 6px' }}>
+          <div style={{ width:4, height:16, background:accent, display:'inline-block', marginRight:6, verticalAlign:'middle' }} />
+          <div style={{ display:'inline-block', width:'70%', height:8, background:fg, opacity:0.8, verticalAlign:'middle', borderRadius:1 }} />
+          <div style={{ marginTop:6 }}>
+            {[100,90,85,70].map((w,i)=><div key={i} style={{ width:`${w}%`, height:3, background:muted, borderRadius:1, marginBottom:3 }} />)}
+          </div>
+          <div style={{ display:'flex', gap:8, marginTop:8 }}>
+            {[0,1].map(i=><div key={i} style={{ flex:1, height:40, background:surface, border:`1px solid ${border}`, borderRadius:2 }} />)}
+          </div>
+        </div>
+      ) : isBrutalist ? (
+        <div style={{ padding:'8px 10px' }}>
+          <div style={{ fontSize:0, borderBottom:`3px solid ${fg}`, paddingBottom:4, marginBottom:6 }}>
+            <div style={{ width:'90%', height:10, background:fg }} />
+          </div>
+          <div style={{ display:'flex', gap:6 }}>
+            <div style={{ flex:2, display:'flex', flexDirection:'column', gap:3 }}>
+              {[100,90,80].map((w,i)=><div key={i} style={{ width:`${w}%`, height:3, background:fg, opacity:0.7 }} />)}
+            </div>
+            <div style={{ flex:1, height:40, background:accent, border:`2px solid ${fg}` }} />
+          </div>
+          <div style={{ marginTop:8, display:'flex', gap:4 }}>
+            <div style={{ padding:'4px 10px', background:accent, border:`2px solid ${fg}`, fontSize:0, height:18 }} />
+            <div style={{ padding:'4px 10px', border:`2px solid ${fg}`, fontSize:0, height:18 }} />
+          </div>
+        </div>
+      ) : isTech ? (
+        <div style={{ padding:'8px 10px', fontFamily:'monospace' }}>
+          <div style={{ background:'rgba(255,255,255,0.04)', border:`1px solid ${border}`, borderRadius:4, padding:'6px 8px', marginBottom:6 }}>
+            {['$ design generate', '  --system terminal', '  --output ./dist'].map((l,i)=>(
+              <div key={i} style={{ display:'flex', gap:4, alignItems:'center', marginBottom:i<2?3:0 }}>
+                <div style={{ width: i===0?8:12, height:3, background: i===0?accent:muted, borderRadius:1 }} />
+                <div style={{ flex:1, height:3, background:muted, borderRadius:1 }} />
+              </div>
+            ))}
+          </div>
+          <div style={{ display:'flex', gap:6 }}>
+            {[0,1,2].map(i=><div key={i} style={{ flex:1, height:32, background:surface, border:`1px solid ${border}`, borderRadius:4 }}>
+              <div style={{ width:'60%', height:3, background:accent, opacity:0.6, borderRadius:1, margin:'8px auto 3px' }} />
+              <div style={{ width:'80%', height:2, background:muted, borderRadius:1, margin:'0 auto' }} />
+            </div>)}
+          </div>
+        </div>
+      ) : (
+        <div className="mp-hero" style={{ paddingBottom:6 }}>
+          <div className="mp-hero-text">
+            <div className="mp-h1" style={{ background:fg, opacity:0.85, borderRadius:radius }} />
+            <div className="mp-p" style={{ background:muted, borderRadius:radius }} />
+            <div className="mp-p" style={{ background:muted, borderRadius:radius, width:'80%' }} />
+            <div style={{ display:'flex', gap:6, marginTop:6 }}>
+              <div className="mp-btn" style={{ background:accent, borderRadius:radius }} />
+              <div className="mp-btn-ghost" style={{ border:`1.5px solid ${accent}`, borderRadius:radius }} />
+            </div>
+          </div>
+          <div className="mp-hero-img" style={{ background:accent, opacity:0.15, borderRadius:radius }} />
+        </div>
+      )}
+      <div className="mp-features">
+        {[0,1,2].map(i=>(
+          <div key={i} className="mp-feature" style={{ background:surface, border:`1px solid ${border}`, borderRadius:radius }}>
+            <div className="mp-feat-icon" style={{ background:accent, opacity:0.75, borderRadius:isBrutalist?0:'50%' }} />
+            <div className="mp-feat-t" style={{ background:fg, opacity:0.65 }} />
+            <div className="mp-feat-p" style={{ background:muted }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function DesignSystemsTab() {
   const [catFilter, setCatFilter] = useState('all');
   const [search, setSearch] = useState('');
@@ -99,7 +341,9 @@ function DesignSystemsTab() {
       <div className="systems-grid">
         {filtered.map(ds => (
           <div key={ds.id} className="ds-card">
-            <div className="ds-accent-bar" style={{background: ds.accentColor}} />
+            <div className="ds-preview-wrap">
+              <MiniSitePreview ds={ds} />
+            </div>
             <div className="ds-body">
               <div className="ds-head">
                 <span className="ds-name">{ds.name}</span>
@@ -145,10 +389,13 @@ function SkillsTab() {
       </div>
       <div className="skills-grid">
         {filtered.map(skill => (
-          <div key={skill.id} className="skill-card">
-            <span className="skill-icon">{catIcons[skill.category]||'🔧'}</span>
-            <div className="skill-info">
+          <div key={skill.id} className="skill-card skill-card-v">
+            <div className="skill-preview-wrap">
+              <SkillPreview skill={skill} />
+            </div>
+            <div className="skill-info skill-info-v">
               <div className="skill-head">
+                <span className="skill-icon-sm">{catIcons[skill.category]||'🔧'}</span>
                 <span className="skill-name">{skill.name}</span>
                 <span className={`skill-cat-badge cat-${skill.category}`}>{skill.category}</span>
               </div>
@@ -172,8 +419,8 @@ function DirectionsTab() {
       <div className="directions-grid">
         {directions.map(d => (
           <div key={d.id} className="direction-card" style={{'--dir-accent': d.palette.accent, '--dir-bg': d.palette.bg, '--dir-fg': d.palette.fg} as React.CSSProperties}>
-            <div className="dir-palette">
-              {Object.values(d.palette).map((c,i) => <div key={i} className="dir-swatch" style={{background:c}} />)}
+            <div className="dir-preview-wrap">
+              <DirectionPreview dir={d} />
             </div>
             <div className="dir-body">
               <span className="dir-subtitle">{d.subtitle}</span>

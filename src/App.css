@@ -2925,3 +2925,111 @@ body {
   .directions-grid { grid-template-columns: 1fr; }
   .search-input { width: 100%; }
 }
+
+/* ============================================================
+   MINI SITE PREVIEW COMPONENT
+   ============================================================ */
+.ds-preview-wrap,
+.skill-preview-wrap,
+.dir-preview-wrap {
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mini-preview {
+  width: 640px;
+  min-height: 400px;
+  transform: scale(0.352);
+  transform-origin: top left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Nav bar */
+.mp-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  height: 32px;
+}
+.mp-logo { font-size: 11px; font-weight: 700; letter-spacing: -0.02em; }
+.mp-nav-links { display: flex; gap: 8px; align-items: center; }
+.mp-nav-link { width: 32px; height: 6px; border-radius: 3px; }
+.mp-cta { width: 48px; height: 18px; border-radius: 4px; }
+
+/* Hero section */
+.mp-hero {
+  display: flex;
+  gap: 16px;
+  padding: 20px 14px 10px;
+  align-items: flex-start;
+}
+.mp-hero-text { flex: 1.2; display: flex; flex-direction: column; gap: 6px; }
+.mp-hero-img { flex: 1; height: 90px; border-radius: 8px; }
+
+.mp-h1 { width: 100%; height: 10px; border-radius: 3px; margin-bottom: 2px; }
+.mp-h1-sm { height: 8px; }
+.mp-p { width: 100%; height: 6px; border-radius: 2px; }
+.mp-btn { width: 72px; height: 22px; border-radius: 5px; }
+.mp-btn-ghost { width: 60px; height: 22px; border-radius: 5px; }
+
+/* Feature strip */
+.mp-features {
+  display: flex;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+.mp-feature {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mp-feat-icon { width: 18px; height: 18px; border-radius: 50%; margin-bottom: 2px; }
+.mp-feat-t { width: 70%; height: 6px; border-radius: 2px; }
+.mp-feat-p { width: 90%; height: 4px; border-radius: 2px; }
+
+/* Updated design system card to vertical with preview */
+.ds-card {
+  background: oklch(0.15 0.01 240);
+  border: 1px solid oklch(0.22 0.01 240);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.ds-card:hover { border-color: oklch(0.72 0.18 155); transform: translateY(-2px); box-shadow: 0 8px 24px oklch(0 0 0 / 0.3); }
+
+/* Updated skill card to vertical */
+.skill-card-v {
+  flex-direction: column !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+.skill-info-v {
+  padding: 12px 14px 14px;
+}
+.skill-head { flex-wrap: wrap; }
+.skill-icon-sm { font-size: 14px; flex-shrink: 0; }
+
+/* Updated direction card to vertical */
+.dir-preview-wrap {
+  border-radius: 0;
+}
+.dir-body { padding: 16px 20px 20px; }
+
+/* Skills grid — larger cards now they have previews */
+.skills-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+}
+
+/* Systems grid — slightly wider to fit previews well */
+.systems-grid {
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)) !important;
+}
