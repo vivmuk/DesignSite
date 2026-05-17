@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus — Dashboard Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--surface:#14141f;--surface-el:#1e1e2e;--border:#2d2d44;--text:#e4e4ef;--text-sec:#8888a8;--accent:#5e6ad2;--accent-hover:#7b7fe0;--success:#34d399;--warning:#fbbf24;--danger:#f87171;--radius:8px;--sidebar-w:240px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+
+/* Sidebar */
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);padding:20px 0;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50}
+.sidebar .logo{padding:0 20px 24px;font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px}
+.sidebar .logo svg{width:20px;height:20px;color:var(--accent)}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:10px 20px;color:var(--text-sec);font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;border-left:2px solid transparent}
+.sidebar nav a:hover,.sidebar nav a.active{color:var(--text);background:var(--surface-el);border-left-color:var(--accent)}
+.sidebar nav a svg{width:16px;height:16px}
+.sidebar .team{margin:24px 20px 0;padding-top:20px;border-top:1px solid var(--border)}
+.sidebar .team-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-sec);margin-bottom:8px}
+.sidebar .team-member{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;color:var(--text-sec)}
+.sidebar .team-member .avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);font-size:10px;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:center}
+
+/* Main */
+.main{margin-left:var(--sidebar-w);flex:1;padding:24px 32px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.topbar h1{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.topbar .actions{display:flex;gap:12px;align-items:center}
+.topbar .actions button{padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:var(--surface-el);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent)}
+.search{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;color:var(--text);font-size:13px;width:240px}
+.search::placeholder{color:var(--text-sec)}
+
+/* Metric Cards */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+@media(max-width:1024px){.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.metrics{grid-template-columns:1fr}}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color .2s}
+.metric-card:hover{border-color:var(--accent)}
+.metric-card .label{font-size:12px;color:var(--text-sec);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.metric-card .value{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.metric-card .change{font-size:12px;margin-top:4px;display:flex;align-items:center;gap:4px}
+.metric-card .change.up{color:var(--success)}
+.metric-card .change.down{color:var(--danger)}
+
+/* Chart */
+.chart-area{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:32px}
+@media(max-width:768px){.chart-area{grid-template-columns:1fr}}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.chart-card h3{font-size:14px;font-weight:600;margin-bottom:16px}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:160px;padding-top:16px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;transition:all .3s;cursor:pointer;position:relative}
+.chart-bar:hover{opacity:.8;transform:scaleY(1.05);transform-origin:bottom}
+.chart-bar .tooltip{position:absolute;top:-28px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-size:11px;padding:4px 8px;border-radius:4px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
+.chart-bar:hover .tooltip{opacity:1}
+
+/* Table */
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.table-header h3{font-size:14px;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-sec);font-weight:500;padding:12px 20px;text-align:left;border-bottom:1px solid var(--border)}
+td{font-size:13px;padding:12px 20px;border-bottom:1px solid var(--border)}
+tr:hover td{background:var(--surface-el)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500}
+.badge-success{background:rgba(52,211,153,.15);color:var(--success)}
+.badge-warning{background:rgba(251,191,36,.15);color:var(--warning)}
+.badge-danger{background:rgba(248,113,113,.15);color:var(--danger)}
+
+/* Activity */
+.activity-list{display:flex;flex-direction:column;gap:12px}
+.activity-item{display:flex;align-items:flex-start;gap:12px;font-size:13px}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.activity-dot.new{background:var(--accent)}
+.activity-dot.update{background:var(--success)}
+.activity-dot.alert{background:var(--warning)}
+.activity-text{color:var(--text-sec)}
+.activity-text strong{color:var(--text);font-weight:500}
+.activity-time{font-size:11px;color:var(--text-sec)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>Nexus</div>
+<nav>
+<a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>Analytics</a>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Live View</a>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Reports</a>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team</a>
+<a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+</nav>
+<div class="team">
+<div class="team-label">Team</div>
+<div class="team-member"><div class="avatar">AK</div>Alex Kim</div>
+<div class="team-member"><div class="avatar" style="background:#34d399">SP</div>Sara Park</div>
+<div class="team-member"><div class="avatar" style="background:#fbbf24">JD</div>Jordan Davis</div>
+</div>
+</aside>
+
+<main class="main">
+<div class="topbar">
+<div><h1>Dashboard</h1></div>
+<div class="actions">
+<input class="search" type="text" placeholder="Search metrics...">
+<button class="btn-secondary">Export</button>
+<button class="btn-primary">+ New Report</button>
+</div>
+</div>
+
+<div class="metrics">
+<div class="metric-card"><div class="label">Total Revenue</div><div class="value">$284K</div><div class="change up">↑ 12.5% vs last month</div></div>
+<div class="metric-card"><div class="label">Active Users</div><div class="value">18,429</div><div class="change up">↑ 8.2% vs last month</div></div>
+<div class="metric-card"><div class="label">Conversion Rate</div><div class="value">3.24%</div><div class="change down">↓ 0.4% vs last month</div></div>
+<div class="metric-card"><div class="label">Avg. Session</div><div class="value">4m 32s</div><div class="change up">↑ 18s vs last month</div></div>
+</div>
+
+<div class="chart-area">
+<div class="chart-card"><h3>Revenue Over Time</h3><div class="chart-bars" id="revenueBars"></div></div>
+<div class="chart-card">
+<h3>Recent Activity</h3>
+<div class="activity-list">
+<div class="activity-item"><div class="activity-dot new"></div><div><div class="activity-text"><strong>Sara Park</strong> merged PR #847</div><div class="activity-time">2 min ago</div></div></div>
+<div class="activity-item"><div class="activity-dot update"></div><div><div class="activity-text"><strong>Stripe</strong> webhook confirmed</div><div class="activity-time">14 min ago</div></div></div>
+<div class="activity-item"><div class="activity-dot alert"></div><div><div class="activity-text"><strong>Alert:</strong> CPU usage above 85%</div><div class="activity-time">32 min ago</div></div></div>
+<div class="activity-item"><div class="activity-dot new"></div><div><div class="activity-text"><strong>Jordan</strong> created new dashboard</div><div class="activity-time">1 hr ago</div></div></div>
+<div class="activity-item"><div class="activity-dot update"></div><div><div class="activity-text"><strong>Deployment</strong> v2.4.1 rolled out</div><div class="activity-time">3 hr ago</div></div></div>
+</div>
+</div>
+</div>
+
+<div class="table-card">
+<div class="table-header"><h3>Top Campaigns</h3><button class="btn-secondary" style="padding:6px 12px;font-size:12px">View All</button></div>
+<table>
+<thead><tr><th>Campaign</th><th>Status</th><th>Reach</th><th>Conversions</th><th>Revenue</th></tr></thead>
+<tbody>
+<tr><td>Q4 Launch Campaign</td><td><span class="badge badge-success">Active</span></td><td>124,500</td><td>3,200</td><td>$84,200</td></tr>
+<tr><td>Holiday Promo 2025</td><td><span class="badge badge-warning">Scheduled</span></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Product Hunt Feature</td><td><span class="badge badge-success">Active</span></td><td>89,100</td><td>2,100</td><td>$42,800</td></tr>
+<tr><td>Email Drip Series</td><td><span class="badge badge-danger">Paused</span></td><td>45,200</td><td>890</td><td>$12,400</td></tr>
+<tr><td>Blog SEO Push</td><td><span class="badge badge-success">Active</span></td><td>67,300</td><td>1,450</td><td>$28,900</td></tr>
+</tbody>
+</table>
+</div>
+</main>
+
+<script>
+// Revenue bars
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const values = [42,56,63,71,68,79,85,72,91,87,94,108];
+const max = Math.max(...values);
+const bars = document.getElementById('revenueBars');
+months.forEach((m,i)=>{
+  const pct = (values[i]/max*100);
+  const bar = document.createElement('div');
+  bar.className='chart-bar';
+  bar.style.height=pct+'%';
+  bar.style.background=i>=10?'var(--accent)':'var(--surface-el)';
+  bar.innerHTML=`<span class="tooltip">$${values[i]}K</span>`;
+  bars.appendChild(bar);
+});
+</script>
+</body>
+</html>

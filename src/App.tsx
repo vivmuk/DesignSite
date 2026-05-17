@@ -1,8 +1,203 @@
 import { useState, useEffect } from 'react';
 import { designStyles, mixedStyles, categories, type DesignStyle } from './data/designStyles';
+import { openDesignSkills, skillCategories } from './data/openDesignSkills';
+import { openDesignSystems, designSystemCategories } from './data/openDesignSystems';
 import './App.css';
 
-function App() {
+// ──────────────────────────────────────────────────────────────────────────────
+// Showcase Tab
+// ──────────────────────────────────────────────────────────────────────────────
+const showcaseItems = [
+  { id: 'stripe-saas-landing', title: 'Flux Analytics — SaaS Landing', skill: 'Frontend Design', system: 'Stripe', direction: 'Modern Minimal', desc: 'Premium fintech landing page with Stripe\'s weight-300 typography, purple accent, and navy hero.', file: '/showcase/stripe-saas-landing.html' },
+  { id: 'linear-dashboard', title: 'Nexus — Analytics Dashboard', skill: 'Dashboard', system: 'Linear', direction: 'Modern Minimal', desc: 'Dark sidebar dashboard with metric cards, bar charts, and activity feed. Linear\'s dark precision.', file: '/showcase/linear-dashboard.html' },
+  { id: 'brutalist-portfolio', title: 'A.RAW — Artist Portfolio', skill: 'Frontend Design', system: 'Brutalism', direction: 'Brutalist Experimental', desc: 'Heavy borders, oversized uppercase type, yellow+black palette. Confrontational and raw.', file: '/showcase/brutalist-portfolio.html' },
+  { id: 'apple-mobile-app', title: 'Still — iOS Meditation App', skill: 'Mobile App', system: 'Apple', direction: 'Warm Soft', desc: 'iOS-native mobile UI with SF Pro, rounded cards, streak tracking, and session cards.', file: '/showcase/apple-mobile-app.html' },
+  { id: 'glassmorphism-dashboard', title: 'Prism — Crypto Tracker', skill: 'Dashboard', system: 'Glassmorphism', direction: 'Tech Utility', desc: 'Frosted glass cards on dark bg, ambient glows, purple/cyan gradients. Crypto portfolio app.', file: '/showcase/glassmorphism-dashboard.html' },
+  { id: 'editorial-magazine', title: 'Form & Function — Design Magazine', skill: 'Magazine Article', system: 'Editorial', direction: 'Editorial Monocle', desc: 'Print-inspired editorial layout with Libre Baskerville, red pull quotes, and cream paper.', file: '/showcase/editorial-magazine.html' },
+  { id: 'neobrutalism-saas', title: 'Blockdrop — SaaS Landing', skill: 'SaaS Landing', system: 'Neobrutalism', direction: 'Brutalist Experimental', desc: 'Yellow+black neo-brutalist SaaS landing with offset shadows, heavy borders, and bold CTAs.', file: '/showcase/neobrutalism-saas.html' },
+  { id: 'notion-blog-post', title: 'Blog Post — AI Design Systems', skill: 'Blog Post', system: 'Notion', direction: 'Warm Soft', desc: 'Notion-inspired long-form blog with warm off-white, serif headings, and generous whitespace.', file: '/showcase/notion-blog-post.html' },
+  { id: 'vercel-docs-page', title: 'Nexus CLI — Documentation', skill: 'Docs Page', system: 'Vercel', direction: 'Modern Minimal', desc: 'Vercel-style dark documentation with Geist Mono code blocks, sidebar nav, and step-by-step guide.', file: '/showcase/vercel-docs-page.html' },
+  { id: 'swiss-international', title: 'Swiss CLI — Terminal Docs', skill: 'Docs Page', system: 'Vercel', direction: 'Tech Utility', desc: 'Monochrome CLI docs with Geist Mono, command reference table, and quick start steps.', file: '/showcase/swiss-international.html' },
+];
+
+const directions = [
+  { id: 'editorial-monocle', name: 'Editorial Monocle', subtitle: 'Monocle / FT Magazine', mood: 'Print-magazine feel. Generous whitespace, large serif headlines, restrained palette of neutral paper + ink + a single brand-justified accent.', refs: ['Monocle', 'Financial Times Weekend', 'NYT Magazine', 'It\'s Nice That'], displayFont: 'Iowan Old Style, Charter, Georgia, serif', bodyFont: 'System-UI sans', palette: { bg: '#faf9f7', surface: '#fff', fg: '#1a1510', accent: '#c94020' } },
+  { id: 'modern-minimal', name: 'Modern Minimal', subtitle: 'Linear / Vercel', mood: 'Quiet, precise, software-native. System fonts, crisp neutral foundations, small product palette so the interface feels shipped rather than greyscale.', refs: ['Linear', 'Vercel', 'Notion 2024', 'Stripe Docs'], displayFont: '-apple-system, SF Pro Display, system-ui, sans-serif', bodyFont: '-apple-system, SF Pro Text, system-ui, sans-serif', palette: { bg: '#fafafa', surface: '#fff', fg: '#111', accent: '#5566ff' } },
+  { id: 'warm-soft', name: 'Warm Soft', subtitle: 'Calm / Loom / Duolingo', mood: 'Approachable, rounded, warm neutrals. Makes users feel welcomed and safe. Friendly but not childish.', refs: ['Calm', 'Loom', 'Duolingo', 'Notion warm'], displayFont: 'Plus Jakarta Sans, system-ui, sans-serif', bodyFont: 'system-ui, sans-serif', palette: { bg: '#fdf8f2', surface: '#fff9f2', fg: '#1c1612', accent: '#e07c3c' } },
+  { id: 'tech-utility', name: 'Tech Utility', subtitle: 'Terminal / GitHub / Warp', mood: 'Monospace-heavy, data-dense, dark backgrounds. Designed for power users who live in the terminal.', refs: ['GitHub', 'Warp Terminal', 'Linear dark', 'Raycast'], displayFont: 'JetBrains Mono, SF Mono, monospace', bodyFont: 'system-ui, sans-serif', palette: { bg: '#0d0d0d', surface: '#141414', fg: '#e4e4e4', accent: '#3dd68c' } },
+  { id: 'brutalist-experimental', name: 'Brutalist Experimental', subtitle: 'Raw / Conflicted / Confrontational', mood: 'Raw HTML feel, heavy borders, oversized type, high contrast, broken grids. Design that refuses to be invisible.', refs: ['brutalistwebsites.com', 'Bloomberg', 'Balenciaga', 'Rick Owens'], displayFont: 'Impact, Arial Black, Haettenschweiler, sans-serif', bodyFont: 'system-ui, sans-serif', palette: { bg: '#fafaf0', surface: '#fff', fg: '#0a0a0a', accent: '#ffe500' } },
+];
+
+function ShowcaseTab() {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [filter, setFilter] = useState<string>('all');
+  const systems = [...new Set(showcaseItems.map(i => i.system))];
+  const filtered = filter === 'all' ? showcaseItems : showcaseItems.filter(i => i.system === filter);
+  const selectedItem = showcaseItems.find(i => i.id === selected);
+  return (
+    <div className="showcase-tab">
+      <div className="showcase-filter">
+        <button className={`filter-btn ${filter==='all'?'active':''}`} onClick={()=>setFilter('all')}>All</button>
+        {systems.map(s => <button key={s} className={`filter-btn ${filter===s?'active':''}`} onClick={()=>setFilter(s)}>{s}</button>)}
+      </div>
+      <div className="showcase-grid">
+        {filtered.map(item => (
+          <div key={item.id} className="showcase-card" onClick={()=>setSelected(item.id)}>
+            <div className="showcase-preview">
+              <iframe src={item.file} title={item.title} sandbox="allow-same-origin" tabIndex={-1} aria-hidden="true" />
+              <div className="showcase-overlay"><span>Click to expand →</span></div>
+            </div>
+            <div className="showcase-info">
+              <div className="showcase-tags"><span className="tag tag-system">{item.system}</span><span className="tag tag-skill">{item.skill}</span></div>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {selectedItem && (
+        <div className="showcase-modal" onClick={()=>setSelected(null)}>
+          <div className="modal-inner" onClick={e=>e.stopPropagation()}>
+            <div className="modal-header">
+              <div><h3>{selectedItem.title}</h3><div className="showcase-tags"><span className="tag tag-system">{selectedItem.system}</span><span className="tag tag-skill">{selectedItem.skill}</span><span className="tag">{selectedItem.direction}</span></div></div>
+              <div className="modal-actions">
+                <a href={selectedItem.file} target="_blank" rel="noopener noreferrer" className="modal-btn" onClick={e=>e.stopPropagation()}>Open in new tab ↗</a>
+                <button className="modal-close" onClick={()=>setSelected(null)}>✕</button>
+              </div>
+            </div>
+            <iframe src={selectedItem.file} title={selectedItem.title} className="modal-iframe" sandbox="allow-same-origin allow-scripts" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Design Systems Tab
+// ──────────────────────────────────────────────────────────────────────────────
+function DesignSystemsTab() {
+  const [catFilter, setCatFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const cats = [...new Set(openDesignSystems.map(d => d.category))];
+  const filtered = openDesignSystems
+    .filter(d => catFilter === 'all' || d.category === catFilter)
+    .filter(d => !search || d.name.toLowerCase().includes(search.toLowerCase()) || d.description.toLowerCase().includes(search.toLowerCase()));
+  return (
+    <div className="systems-tab">
+      <div className="systems-controls">
+        <input className="search-input" placeholder="Search design systems…" value={search} onChange={e=>setSearch(e.target.value)} />
+        <div className="cat-filters">
+          <button className={`filter-btn ${catFilter==='all'?'active':''}`} onClick={()=>setCatFilter('all')}>All ({openDesignSystems.length})</button>
+          {designSystemCategories.map(c => (
+            <button key={c.id} className={`filter-btn ${catFilter===c.id?'active':''}`} onClick={()=>setCatFilter(c.id)}>
+              {c.icon} {c.name}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="systems-grid">
+        {filtered.map(ds => (
+          <div key={ds.id} className="ds-card">
+            <div className="ds-accent-bar" style={{background: ds.accentColor}} />
+            <div className="ds-body">
+              <div className="ds-head">
+                <span className="ds-name">{ds.name}</span>
+                <span className={`ds-style-tag style-${ds.style}`}>{ds.style}</span>
+              </div>
+              <p className="ds-desc">{ds.description}</p>
+              <div className="ds-swatches">
+                {[ds.accentColor, ds.bgColor, ds.textColor].map((c,i) => (
+                  <div key={i} className="swatch" style={{background:c}} title={c} />
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {filtered.length === 0 && <div className="empty-state">No design systems match your search.</div>}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────��───
+// Skills Tab
+// ──────────────────────────────────────────────────────────────────────────────
+function SkillsTab() {
+  const [catFilter, setCatFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const filtered = openDesignSkills
+    .filter(s => catFilter === 'all' || s.category === catFilter)
+    .filter(s => !search || s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()));
+  const catIcons: Record<string,string> = { design:'🎨', development:'💻', content:'📝', media:'🎬', ai:'🤖', utility:'🛠️' };
+  return (
+    <div className="skills-tab">
+      <div className="systems-controls">
+        <input className="search-input" placeholder="Search skills…" value={search} onChange={e=>setSearch(e.target.value)} />
+        <div className="cat-filters">
+          <button className={`filter-btn ${catFilter==='all'?'active':''}`} onClick={()=>setCatFilter('all')}>All ({openDesignSkills.length})</button>
+          {skillCategories.map(c => (
+            <button key={c.id} className={`filter-btn ${catFilter===c.id?'active':''}`} onClick={()=>setCatFilter(c.id)}>
+              {c.icon} {c.name}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="skills-grid">
+        {filtered.map(skill => (
+          <div key={skill.id} className="skill-card">
+            <span className="skill-icon">{catIcons[skill.category]||'🔧'}</span>
+            <div className="skill-info">
+              <div className="skill-head">
+                <span className="skill-name">{skill.name}</span>
+                <span className={`skill-cat-badge cat-${skill.category}`}>{skill.category}</span>
+              </div>
+              <p className="skill-desc">{skill.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {filtered.length === 0 && <div className="empty-state">No skills match your search.</div>}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Directions Tab
+// ──────────────────────────────────────────────────────────────────────────────
+function DirectionsTab() {
+  return (
+    <div className="directions-tab">
+      <p className="directions-intro">Five curated visual directions from Open Design. Each ships a deterministic OKLCH palette, font stack, and layout posture — no model freestyle needed.</p>
+      <div className="directions-grid">
+        {directions.map(d => (
+          <div key={d.id} className="direction-card" style={{'--dir-accent': d.palette.accent, '--dir-bg': d.palette.bg, '--dir-fg': d.palette.fg} as React.CSSProperties}>
+            <div className="dir-palette">
+              {Object.values(d.palette).map((c,i) => <div key={i} className="dir-swatch" style={{background:c}} />)}
+            </div>
+            <div className="dir-body">
+              <span className="dir-subtitle">{d.subtitle}</span>
+              <h3 className="dir-name">{d.name}</h3>
+              <p className="dir-mood">{d.mood}</p>
+              <div className="dir-refs">
+                {d.refs.map(r => <span key={r} className="dir-ref">{r}</span>)}
+              </div>
+              <div className="dir-fonts">
+                <div><span className="dir-font-label">Display</span><span className="dir-font-val">{d.displayFont.split(',')[0]}</span></div>
+                <div><span className="dir-font-label">Body</span><span className="dir-font-val">{d.bodyFont.split(',')[0]}</span></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Original Design Styles Tab (renamed from App)
+// ──────────────────────────────────────────────────────────────────────────────
+function DesignStylesTab() {
   const [activeStyle, setActiveStyle] = useState<string>('swiss');
   const [activeCategory, setActiveCategory] = useState<string>('classic');
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
@@ -1006,6 +1201,46 @@ function WebsitePreview({
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────────
+// Root App with 5-tab navigation
+// ─────────────────────────────────────────────────────────────────────────────────
+const TABS = [
+  { id: 'styles', label: 'Design Styles', emoji: '🎨' },
+  { id: 'systems', label: 'Design Systems', emoji: '🧩', count: openDesignSystems.length },
+  { id: 'skills', label: 'Skills', emoji: '⚡', count: openDesignSkills.length },
+  { id: 'directions', label: 'Directions', emoji: '🧭', count: 5 },
+  { id: 'showcase', label: 'Showcase', emoji: '🔥', count: showcaseItems.length },
+];
+
+function App() {
+  const [activeTab, setActiveTab] = useState<string>('showcase');
+  return (
+    <div className="root-app">
+      <header className="root-header">
+        <div className="root-header-inner">
+          <div className="root-logo">OpenDesign<span>Studio</span></div>
+          <nav className="root-tabs">
+            {TABS.map(t => (
+              <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>setActiveTab(t.id)}>
+                <span className="tab-emoji">{t.emoji}</span>
+                <span className="tab-label">{t.label}</span>
+                {t.count && <span className="tab-count">{t.count}</span>}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+      <main className="root-main">
+        {activeTab === 'styles' && <DesignStylesTab />}
+        {activeTab === 'systems' && <DesignSystemsTab />}
+        {activeTab === 'skills' && <SkillsTab />}
+        {activeTab === 'directions' && <DirectionsTab />}
+        {activeTab === 'showcase' && <ShowcaseTab />}
+      </main>
     </div>
   );
 }

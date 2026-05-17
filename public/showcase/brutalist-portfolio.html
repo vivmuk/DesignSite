@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.RAW — PORTFOLIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #000000;
+    --white: #ffffff;
+    --yellow: #f5e642;
+    --red: #ff2200;
+  }
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Space Mono', 'Courier New', monospace;
+    cursor: crosshair;
+    overflow-x: hidden;
+  }
+  /* NAV */
+  nav {
+    border-bottom: 4px solid var(--black);
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', Impact, Arial Black, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    padding: 14px 24px;
+    border-right: 4px solid var(--black);
+    background: var(--black);
+    color: var(--white);
+  }
+  .nav-links { display: flex; align-items: stretch; }
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    border-right: 4px solid var(--black);
+    transition: background 0.05s;
+  }
+  .nav-links a:hover { background: var(--yellow); }
+  .nav-links a.active { background: var(--yellow); }
+  .nav-count {
+    margin-left: auto;
+    padding: 0 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    color: var(--black);
+    border-left: 4px solid var(--black);
+  }
+  /* HERO */
+  .hero {
+    border-bottom: 4px solid var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 340px;
+  }
+  .hero-text {
+    padding: 48px;
+    border-right: 4px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .hero-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  .hero-title {
+    font-family: 'Space Grotesk', Impact, Arial Black, sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-title span { display: block; }
+  .hero-title .outline {
+    -webkit-text-stroke: 3px var(--black);
+    color: transparent;
+  }
+  .hero-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 380px;
+    border-top: 2px solid var(--black);
+    padding-top: 16px;
+  }
+  .hero-visual {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-big-num {
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-size: 200px;
+    font-weight: 700;
+    color: var(--yellow);
+    line-height: 1;
+    opacity: 0.9;
+  }
+  .hero-tag {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 3px solid var(--white);
+  }
+  /* GRID */
+  .works-section { border-bottom: 4px solid var(--black); }
+  .section-header {
+    border-bottom: 4px solid var(--black);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--black);
+    color: var(--white);
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .section-count { font-size: 11px; opacity: 0.5; }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .work-card {
+    border-right: 4px solid var(--black);
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .work-card:nth-child(3n) { border-right: none; }
+  .work-card:nth-last-child(-n+3) { border-bottom: none; }
+  .work-thumb {
+    height: 200px;
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+  .work-thumb-1 { background: var(--yellow); }
+  .work-thumb-2 { background: var(--black); }
+  .work-thumb-3 { background: #e8e8e8; }
+  .work-thumb-4 { background: var(--red); }
+  .work-thumb-5 { background: #d4e8ff; }
+  .work-thumb-6 { background: var(--black); }
+  .thumb-shape {
+    position: absolute;
+    bottom: 0; right: 0;
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    opacity: 0.12;
+    color: inherit;
+  }
+  .thumb-shape.light { color: white; opacity: 0.15; }
+  .work-thumb-2 .thumb-shape,
+  .work-thumb-6 .thumb-shape { color: var(--yellow); opacity: 0.2; }
+  .thumb-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+  }
+  .thumb-cross::before, .thumb-cross::after {
+    content: '';
+    position: absolute;
+    background: rgba(0,0,0,0.15);
+  }
+  .thumb-cross::before { width: 4px; height: 100%; left: 50%; transform: translateX(-50%); }
+  .thumb-cross::after { width: 100%; height: 4px; top: 50%; transform: translateY(-50%); }
+  .work-info { padding: 20px 20px 16px; }
+  .work-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    opacity: 0.4;
+    margin-bottom: 4px;
+  }
+  .work-name {
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .work-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .work-tag {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 2px solid var(--black);
+    padding: 2px 6px;
+  }
+  .work-tag.red { border-color: var(--red); color: var(--red); }
+  .work-tag.filled { background: var(--black); color: var(--white); }
+  /* ABOUT SECTION */
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 4px solid var(--black);
+  }
+  .about-left {
+    padding: 48px;
+    border-right: 4px solid var(--black);
+  }
+  .about-big {
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .about-big .strike {
+    text-decoration: line-through;
+    text-decoration-thickness: 4px;
+    text-decoration-color: var(--red);
+    opacity: 0.4;
+  }
+  .about-body { font-size: 13px; line-height: 1.8; }
+  .about-right { padding: 48px; }
+  .about-right-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+  .stat { margin-bottom: 24px; border-left: 4px solid var(--black); padding-left: 16px; }
+  .stat-num {
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .stat-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; opacity: 0.5; text-transform: uppercase; }
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Space Grotesk', Impact, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+  .footer-tagline { font-size: 11px; opacity: 0.4; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+  .footer-cta {
+    background: var(--yellow);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: 3px solid var(--yellow);
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--white);
+    transition: box-shadow 0.1s;
+  }
+  .footer-cta:hover { box-shadow: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">A.RAW</div>
+  <div class="nav-links">
+    <a href="#" class="active">Work</a>
+    <a href="#">About</a>
+    <a href="#">Process</a>
+    <a href="#">Talks</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="nav-count">2019—2026</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-label">Independent Visual Artist — Berlin / Lagos</div>
+    <h1 class="hero-title">
+      <span>ART</span>
+      <span class="outline">THAT</span>
+      <span>BITES</span>
+    </h1>
+    <p class="hero-desc">
+      I make work that doesn't ask for permission. Print, digital, installation, whatever the idea needs. Clients include Red Bull, Highsnobiety, several politicians, and a Berlin water company.
+    </p>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-grid"></div>
+    <div class="hero-tag">Available for commissions</div>
+    <div class="hero-big-num">7</div>
+  </div>
+</div>
+
+<div class="works-section">
+  <div class="section-header">
+    <span class="section-title">Selected Works</span>
+    <span class="section-count">12 projects, 2019–2026</span>
+  </div>
+  <div class="works-grid">
+    <div class="work-card">
+      <div class="work-thumb work-thumb-1">
+        <div class="thumb-shape">VI</div>
+        <div class="thumb-cross"></div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">001</div>
+        <div class="work-name">Violence of Seeing</div>
+        <div class="work-tags">
+          <span class="work-tag filled">Installation</span>
+          <span class="work-tag">2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-thumb work-thumb-2">
+        <div class="thumb-shape light">BR</div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">002</div>
+        <div class="work-name">Brand Rot Series</div>
+        <div class="work-tags">
+          <span class="work-tag">Digital</span>
+          <span class="work-tag red">Ongoing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-thumb work-thumb-3">
+        <div class="thumb-shape">ΔΔ</div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">003</div>
+        <div class="work-name">Delta Delta</div>
+        <div class="work-tags">
+          <span class="work-tag filled">Print</span>
+          <span class="work-tag">2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-thumb work-thumb-4">
+        <div class="thumb-shape light">NO</div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">004</div>
+        <div class="work-name">No Noise</div>
+        <div class="work-tags">
+          <span class="work-tag">Campaign</span>
+          <span class="work-tag">2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-thumb work-thumb-5">
+        <div class="thumb-shape">∞</div>
+        <div class="thumb-cross"></div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">005</div>
+        <div class="work-name">Infinite Debt</div>
+        <div class="work-tags">
+          <span class="work-tag filled">Mixed Media</span>
+          <span class="work-tag">2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="work-thumb work-thumb-6">
+        <div class="thumb-shape light">RT</div>
+      </div>
+      <div class="work-info">
+        <div class="work-num">006</div>
+        <div class="work-name">Raw Territory</div>
+        <div class="work-tags">
+          <span class="work-tag">Photography</span>
+          <span class="work-tag red">Series</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="about-section">
+  <div class="about-left">
+    <div class="about-big">
+      <span>Who</span><br>
+      <span class="strike">is</span><br>
+      <span>A.RAW</span>
+    </div>
+    <p class="about-body">
+      A.RAW (Aisha Rawlings) works at the intersection of graphic confrontation and structural critique. Born in Lagos, based in Berlin, trained at ECAL and Central Saint Martins.
+      <br><br>
+      The work refuses legibility as a courtesy. If it makes you slightly uncomfortable, it's working.
+    </p>
+  </div>
+  <div class="about-right">
+    <div class="about-right-title">By the numbers</div>
+    <div class="stat">
+      <div class="stat-num">47</div>
+      <div class="stat-label">Projects completed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Countries exhibited</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Awards (refused one)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Studio, Mitte</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-logo">A.RAW</div>
+    <div class="footer-tagline">Visual Art — Berlin / Lagos — Est. 2019</div>
+  </div>
+  <button class="footer-cta">Start a project →</button>
+</footer>
+
+</body>
+</html>

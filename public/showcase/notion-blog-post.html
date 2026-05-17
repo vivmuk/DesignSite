@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Future of AI-Native Design Systems — Design Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-warm: #f0efe9;
+    --border: #e8e6df;
+    --text: #37352f;
+    --text-muted: #6b6b6b;
+    --text-light: #9b9b9b;
+    --accent: #2383e2;
+    --accent-warm: #e87c4d;
+    --highlight: #fef3c7;
+    --callout-bg: #f4f4f0;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .page-wrapper { max-width: 100%; }
+  .cover {
+    height: 280px;
+    background: linear-gradient(135deg, #e8ddd0 0%, #d4c8b8 50%, #c5b89a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-texture {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0,0,0,0.05) 0%, transparent 40%);
+  }
+  .cover-label {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .content-area {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+    background: var(--bg);
+  }
+  .article-header {
+    padding: 40px 0 32px;
+  }
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-sep { color: var(--text-light); }
+  .article-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface-warm);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .article-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .article-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-style: italic;
+    font-family: 'Lora', Georgia, serif;
+  }
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .author-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4a574, #c08040);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+  }
+  .meta-text { flex: 1; }
+  .author-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .meta-details { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .meta-actions { display: flex; gap: 12px; align-items: center; }
+  .meta-btn {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface-warm);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  h2 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 40px 0 16px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 28px 0 12px;
+  }
+  p {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  .pullquote {
+    border-left: 4px solid var(--accent-warm);
+    margin: 32px 0;
+    padding: 4px 0 4px 28px;
+  }
+  .pullquote p {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .pullquote cite {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+  }
+  .callout {
+    background: var(--callout-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 28px 0;
+    display: flex;
+    gap: 16px;
+  }
+  .callout-emoji { font-size: 20px; flex-shrink: 0; line-height: 1.4; }
+  .callout p { margin: 0; font-size: 15px; color: var(--text-muted); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  .highlight-text { background: var(--highlight); padding: 2px 4px; border-radius: 3px; }
+  .footnote {
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-top: 48px;
+    line-height: 1.7;
+  }
+  ul, ol { padding-left: 24px; margin-bottom: 20px; }
+  li { font-size: 16px; line-height: 1.8; color: var(--text); margin-bottom: 6px; }
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .toc-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
+  .toc ol { margin: 0; padding-left: 20px; }
+  .toc li { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="cover">
+    <div class="cover-texture"></div>
+  </div>
+
+  <div class="content-area">
+    <div class="article-header">
+      <div class="breadcrumb">
+        <a href="#">Design Notes</a>
+        <span class="breadcrumb-sep">→</span>
+        <a href="#">Essays</a>
+      </div>
+      <div class="article-tags">
+        <span class="tag">AI & Design</span>
+        <span class="tag">Design Systems</span>
+        <span class="tag">The Future</span>
+      </div>
+      <h1 class="article-title">The Future of AI-Native Design Systems</h1>
+      <p class="article-subtitle">How generative intelligence is reshaping the way we define, maintain, and evolve visual languages at scale.</p>
+      <div class="article-meta">
+        <div class="author-avatar">M</div>
+        <div class="meta-text">
+          <div class="author-name">Mira Iyer</div>
+          <div class="meta-details">May 17, 2026 · 11 min read</div>
+        </div>
+        <div class="meta-actions">
+          <span class="meta-btn">💬 34</span>
+          <span class="meta-btn">★ Save</span>
+          <span class="meta-btn">Share</span>
+        </div>
+      </div>
+
+      <div class="toc">
+        <div class="toc-header">In this essay</div>
+        <ol>
+          <li>The static design system is showing its age</li>
+          <li>What "AI-native" actually means</li>
+          <li>Living tokens: the semantic shift</li>
+          <li>Generative constraints vs. creative freedom</li>
+          <li>Who owns the design system in 2027?</li>
+        </ol>
+      </div>
+    </div>
+
+    <p>For the past decade, design systems have been fundamentally static artifacts. A team of designers defines a token set—spacing, color, typography—commits it to a Figma library and a package on npm, and maintains it through pull requests and Slack debates about whether the new button radius "feels right."</p>
+
+    <p>This model worked because the cost of inconsistency was visible: a rogue border-radius here, a misaligned icon there. The system served as shared truth, and humans were its guardians.</p>
+
+    <p>But something is shifting. The scale at which modern products need to adapt—across markets, user contexts, accessibility requirements, device capabilities, and brand moments—is outpacing what static systems can handle.</p>
+
+    <div class="pullquote">
+      <p>"The question is no longer whether AI will participate in design systems. It's whether the systems we build will be legible to the AI that will eventually use them."</p>
+      <cite>— Jonas Overbeck, Principal Designer, Systems</cite>
+    </div>
+
+    <h2>The static design system is showing its age</h2>
+
+    <p>Consider what a design system actually encodes: intent. When a tokens file says <span class="highlight-text">color.interactive.primary = #5e6ad2</span>, it's really saying "this is the color for things users should click to make things happen." The hex value is just a proxy for that semantic meaning.</p>
+
+    <p>The problem is that the proxy has become the thing. Teams spend enormous energy debating whether to update a hex code, when the real question is whether the <em>intent</em> is still being served.</p>
+
+    <div class="callout">
+      <div class="callout-emoji">💡</div>
+      <p>The most advanced teams are already treating their token structures as ontologies—meaning-first vocabularies that happen to have visual outputs, rather than the reverse.</p>
+    </div>
+
+    <h2>What "AI-native" actually means</h2>
+
+    <p>An AI-native design system isn't one that uses AI to generate images or write copy—that's just AI <em>in</em> a design workflow. An AI-native system is one whose architecture assumes that:</p>
+
+    <ol>
+      <li>Components will be generated, not assembled from a library</li>
+      <li>Tokens carry semantic meaning that AI can reason about</li>
+      <li>The system can explain its own decisions</li>
+      <li>Human review is a checkpoint, not the bottleneck</li>
+    </ol>
+
+    <p>This is a fundamentally different contract. A traditional design system says: "here are the Lego bricks, now build." An AI-native system says: "here is what we're trying to feel and accomplish, now find the best expression."</p>
+
+    <h2>Living tokens: the semantic shift</h2>
+
+    <p>The most consequential change is happening at the token layer. Instead of color values with semantic names, teams are experimenting with tokens that carry richer semantic payloads—context about when to use them, what emotional register they operate in, how they behave across surface types.</p>
+
+    <hr class="divider">
+
+    <p>Early experiments at companies like Spotify and GitHub suggest that when tokens carry enough semantic weight, AI systems can make principled decisions about composition—not just "what looks good" but "what serves the intent of this moment."</p>
+
+    <div class="pullquote">
+      <p>"The design system of 2028 will be less like a Figma file and more like a constitution—a set of principles that generative systems interpret in context."</p>
+      <cite>— From "Composable Intent," Sidebar Conference 2026</cite>
+    </div>
+
+    <h2>Who owns the design system in 2027?</h2>
+
+    <p>The uncomfortable answer is: it becomes a shared artifact between humans and machines. Designers will increasingly focus on the semantic layer—<em>what should this feel like, what should it mean</em>—while AI handles more of the compositional and variant generation work.</p>
+
+    <p>This isn't displacement. It's delegation. The hardest design work—defining intent, navigating brand values, making judgment calls about which users to serve and how—remains deeply human. But the translation of intent into pixels, at scale, becomes something AI is extraordinarily good at.</p>
+
+    <p>The design systems that will matter in five years are being built now, by teams that understand this distinction. They're writing token definitions that read like poetry as much as they compile like code. They're encoding meaning, not just values.</p>
+
+    <div class="footnote">
+      <strong>Notes on sources</strong><br>
+      Quotes attributed to Jonas Overbeck are from a private design leadership roundtable held in Amsterdam, February 2026. The "Composable Intent" paper from Sidebar Conference 2026 is available in the conference proceedings.
+    </div>
+  </div>
+</div>
+</body>
+</html>

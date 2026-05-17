@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flux Analytics — AI-Powered Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#533afd;--primary-hover:#4434d4;--navy:#061b31;--white:#fff;--ruby:#ea2261;--surface:#f6f9fc;--surface-el:#f0f4f8;--text-primary:#061b31;--text-secondary:#64748b;--text-muted:#94a3b8;--border:#e5edf5;--border-purple:#d6d9fc;--shadow-sm:0 1px 3px rgba(50,50,93,.08),0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 6px rgba(50,50,93,.12),0 2px 4px rgba(0,0,0,.04);--shadow-lg:0 10px 30px rgba(50,50,93,.15),0 4px 10px rgba(0,0,0,.06);--shadow-xl:0 20px 50px rgba(50,50,93,.18),0 8px 20px rgba(0,0,0,.08);--radius:6px;--radius-lg:8px}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--text-primary);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
+nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+nav .logo{font-weight:600;font-size:18px;letter-spacing:-.02em;color:var(--navy);display:flex;align-items:center;gap:8px}
+nav .logo svg{width:24px;height:24px}
+nav .nav-links{display:flex;gap:32px;align-items:center}
+nav .nav-links a{color:var(--text-secondary);font-size:14px;font-weight:500;transition:color .2s}
+nav .nav-links a:hover{color:var(--text-primary)}
+nav .cta-nav{background:var(--primary);color:#fff;padding:8px 20px;border-radius:var(--radius);font-size:14px;font-weight:500;transition:background .2s}
+nav .cta-nav:hover{background:var(--primary-hover)}
+
+/* Hero */
+.hero{padding:100px 0 80px;text-align:center}
+.hero h1{font-size:clamp(36px,5vw,64px);font-weight:300;letter-spacing:-.04em;line-height:1.1;margin-bottom:24px;color:var(--navy)}
+.hero h1 span{background:linear-gradient(135deg,var(--primary),var(--ruby));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(16px,2vw,20px);color:var(--text-secondary);max-width:640px;margin:0 auto 40px;line-height:1.6}
+.hero .cta-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{padding:14px 28px;border-radius:var(--radius);font-size:16px;font-weight:500;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:var(--shadow-md)}
+.btn-primary:hover{background:var(--primary-hover);box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.btn-secondary{background:var(--white);color:var(--text-primary);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{border-color:var(--border-purple);box-shadow:var(--shadow-md)}
+
+/* Stats */
+.stats{display:flex;justify-content:center;gap:64px;padding:48px 0;margin-bottom:80px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .number{font-size:48px;font-weight:600;letter-spacing:-.03em;color:var(--navy)}
+.stat .number span{color:var(--primary)}
+.stat .label{font-size:14px;color:var(--text-secondary);margin-top:4px}
+
+/* Features */
+.features{padding:80px 0}
+.section-label{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:12px}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:-.03em;margin-bottom:16px;color:var(--navy)}
+.section-desc{font-size:18px;color:var(--text-secondary);max-width:600px;margin-bottom:48px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:768px){.features-grid{grid-template-columns:1fr}}
+.feature-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all .3s}
+.feature-card:hover{box-shadow:var(--shadow-lg);border-color:var(--border-purple);transform:translateY(-2px)}
+.feature-card .icon{width:48px;height:48px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;background:var(--surface)}
+.feature-card .icon svg{width:24px;height:24px;color:var(--primary)}
+.feature-card h3{font-size:18px;font-weight:500;letter-spacing:-.01em;margin-bottom:8px;color:var(--navy)}
+.feature-card p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+/* Pricing */
+.pricing{padding:80px 0;background:var(--surface)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto}
+@media(max-width:768px){.pricing-grid{grid-template-columns:1fr}}
+.pricing-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px 32px;position:relative;transition:all .3s}
+.pricing-card.featured{border-color:var(--primary);box-shadow:var(--shadow-xl)}
+.pricing-card.featured::before{content:'Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:12px;font-weight:600;padding:4px 16px;border-radius:20px}
+.pricing-card .tier{font-size:14px;color:var(--text-secondary);font-weight:500;margin-bottom:8px}
+.pricing-card .price{font-size:48px;font-weight:300;letter-spacing:-.04em;color:var(--navy);margin-bottom:4px}
+.pricing-card .price span{font-size:16px;color:var(--text-secondary);font-weight:400}
+.pricing-card .period{font-size:14px;color:var(--text-muted);margin-bottom:24px}
+.pricing-card ul{list-style:none;margin-bottom:32px}
+.pricing-card li{font-size:14px;color:var(--text-secondary);padding:8px 0;border-bottom:1px solid var(--surface);display:flex;align-items:center;gap:8px}
+.pricing-card li svg{width:16px;height:16px;color:var(--primary);flex-shrink:0}
+.pricing-card .btn{width:100%;text-align:center}
+
+/* CTA */
+.cta{padding:100px 0;text-align:center}
+.cta h2{font-size:clamp(28px,4vw,48px);font-weight:300;letter-spacing:-.03em;margin-bottom:16px;color:var(--navy)}
+.cta p{font-size:18px;color:var(--text-secondary);margin-bottom:32px}
+
+/* Footer */
+footer{background:var(--navy);color:rgba(255,255,255,.6);padding:64px 0 32px}
+footer .footer-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:48px;margin-bottom:48px}
+@media(max-width:768px){footer .footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
+footer .footer-brand{font-size:18px;font-weight:600;color:#fff;margin-bottom:12px}
+footer .footer-desc{font-size:14px;line-height:1.6;max-width:280px}
+footer h4{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:16px}
+footer ul{list-style:none}
+footer li{margin-bottom:8px}
+footer li a{color:rgba(255,255,255,.6);font-size:14px;transition:color .2s}
+footer li a:hover{color:#fff}
+footer .copyright{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;font-size:13px;text-align:center}
+
+@media(max-width:480px){.stats{gap:32px}.hero{padding:60px 0 40px}.nav-links{display:none!important}}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+<div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Flux Analytics</div>
+<div class="nav-links">
+<a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#docs">Docs</a><a href="#" class="cta-nav">Start Free</a>
+</div></div></nav>
+
+<section class="hero"><div class="container">
+<h1>Analytics that <span>see patterns</span><br>before they emerge</h1>
+<p>Flux combines real-time data streams with predictive AI to surface insights you'd never find manually. Turn noise into clarity.</p>
+<div class="cta-group">
+<a href="#" class="btn btn-primary">Start free trial</a>
+<a href="#" class="btn btn-secondary">Watch demo →</a>
+</div></div></section>
+
+<section class="stats"><div class="container">
+<div class="stat"><div class="number">4.2<span>M</span></div><div class="label">Events processed daily</div></div>
+<div class="stat"><div class="number">99.<span>99</span>%</div><div class="label">Uptime SLA</div></div>
+<div class="stat"><div class="number">&lt;50<span>ms</span></div><div class="label">Query latency p99</div></div>
+<div class="stat"><div class="number">380<span>+</span></div><div class="label">Integrations</div></div>
+</div></section>
+
+<section class="features" id="features"><div class="container">
+<div class="section-label">Features</div>
+<h2 class="section-title">Built for the way<br>modern teams work</h2>
+<p class="section-desc">From anomaly detection to cohort analysis, every feature is designed for speed and clarity.</p>
+<div class="features-grid">
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+<h3>Real-timeStreams</h3><p>Ingest millions of events per second with sub-50ms latency. Watch your metrics update live, not after the fact.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+<h3>AI-PoweredInsights</h3><p>Predictive models surface anomalies before they become incidents. Pattern detection that works 24/7.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
+<h3>CohortBuilder</h3><p>Segment users by behavior, geography, or custom properties. Build cohorts in seconds, not hours.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+<h3>SOC2& HIPAA</h3><p>Enterprise-grade security with role-based access, audit logs, and data residency controls built in.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+<h3>AnomalyAlerts</h3><p>Machine learning models establish baselines and alert on deviations across every metric, automatically.</p>
+</div>
+<div class="feature-card">
+<div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+<h3>380+Integrations</h3><p>Connect your stack in minutes. Segment, Snowflake, BigQuery, Redshift, Kafka, and more.</p>
+</div>
+</div></div></section>
+
+<section class="pricing" id="pricing"><div class="container">
+<div class="section-label" style="text-align:center">Pricing</div>
+<h2 class="section-title" style="text-align:center">Simple, transparentpricing</h2>
+<p class="section-desc" style="text-align:center;margin:0 auto 48px">Start free. Scale when you're ready. No surprise charges.</p>
+<div class="pricing-grid">
+<div class="pricing-card">
+<div class="tier">Starter</div><div class="price">$0<span>/mo</span></div><div class="period">Free forever for small teams</div>
+<ul>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Up to 100K events/mo</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>3 dashboards</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>7-day data retention</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Community support</li></ul>
+<a href="#" class="btn btn-secondary">Get started</a>
+</div>
+<div class="pricing-card featured">
+<div class="tier">Pro</div><div class="price">$49<span>/mo</span></div><div class="period">Per seat, billed annually</div>
+<ul>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Unlimited events</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Unlimited dashboards</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>AI anomaly detection</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>1-year retention</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li></ul>
+<a href="#" class="btn btn-primary">Start free trial</a>
+</div>
+<div class="pricing-card">
+<div class="tier">Enterprise</div><div class="price">Custom</div><div class="period">Tailored for your org</div>
+<ul>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOC2 & HIPAA compliance</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Dedicated infrastructure</li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Custom SLA</li></ul>
+<a href="#" class="btn btn-secondary">Contact sales</a>
+</div>
+</div></div></section>
+
+<section class="cta"><div class="container">
+<h2>Start seeing what matters</h2>
+<p>Free for small teams. No credit card required.</p>
+<a href="#" class="btn btn-primary">Get started free →</a>
+</div></section>
+
+<footer><div class="container">
+<div class="footer-grid">
+<div><div class="footer-brand">Flux Analytics</div><p class="footer-desc">Real-time analytics powered by AI. Built for teams that move fast.</p></div>
+<div><h4>Product</h4><ul><li><a href="#">Features</a></li><li><a href="#">Pricing</a></li><li><a href="#">Integrations</a></li><li><a href="#">Changelog</a></li></ul></div>
+<div><h4>Resources</h4><ul><li><a href="#">Documentation</a></li><li><a href="#">API Reference</a></li><li><a href="#">Blog</a></li><li><a href="#">Community</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+</div>
+<div class="copyright">© 2026 Flux Analytics, Inc. All rights reserved.</div>
+</div></footer>
+</body>
+</html>

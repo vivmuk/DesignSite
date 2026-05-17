@@ -1,0 +1,4064 @@
+{
+  "skills": [
+    {
+      "id": "8-bit-orbit-video-template",
+      "name": "8-bit-orbit-video-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "example.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create a 3-page Hyperframes video deck in 8-bit retro style with advanced transitions, rich motion, and each page under 3 seconds.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "ad-creative",
+      "name": "ad-creative",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/coreyhaines31/marketingskills"
+    },
+    {
+      "id": "after-hours-editorial-template",
+      "name": "after-hours-editorial-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "true",
+      "sections": "[color, typography, layout, components]",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create a three-page HyperFrames editorial sequence in a dark haute-couture style: premium serif typography, magenta accent, elegant chapter transitions, and cinematic grain. Keep each page under 3 seconds.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "agent-browser",
+      "name": "agent-browser",
+      "description": "|",
+      "test, or automate browser behavior": "navigating pages, filling forms,",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "scenario": "validation",
+      "preview": "",
+      "type": "markdown",
+      "design_system": "",
+      "requires": "false",
+      "upstream": "https://github.com/vercel-labs/agent-browser/blob/main/skills/agent-browser/SKILL.md",
+      "capabilities_required": ""
+    },
+    {
+      "id": "ai-music-album",
+      "name": "ai-music-album",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "audio",
+      "category": "audio-music",
+      "upstream": "https://github.com/bitwize-music-studio/claude-ai-music-skills"
+    },
+    {
+      "id": "algorithmic-art",
+      "name": "algorithmic-art",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/anthropics/skills/tree/main/algorithmic-art"
+    },
+    {
+      "id": "apple-hig",
+      "name": "apple-hig",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/raintree-technology/apple-hig-skills"
+    },
+    {
+      "id": "article-magazine",
+      "name": "article-magazine",
+      "zh_name": "\u6742\u5fd7\u6587\u7ae0",
+      "en_name": "Magazine Article",
+      "emoji": "\ud83d\udcd6",
+      "description": "Huashu / huashu-md-html-inspired magazine article layout for turning Markdown or notes into a polished long-form HTML essay.",
+      "category": "article",
+      "scenario": "marketing",
+      "aspect_hint": "A4 / \u957f\u9875\u9762",
+      "featured": "0.03",
+      "tags": "[\"blog\", \"essay\", \"newsletter\", \"\u516c\u4f17\u53f7\", \"\u535a\u5ba2\", \"\u6587\u7ae0\"]",
+      "example_id": "sample-article-trq212-html",
+      "example_name": "\u6742\u5fd7\u6587\u7ae0 \u00b7 HTML \u53d6\u4ee3 Markdown",
+      "example_format": "markdown",
+      "example_tagline": "\u7075\u611f\u6765\u81ea @trq212 \u7684\u63a8\u6587",
+      "example_desc": "\u56f4\u7ed5\u300cAI \u65f6\u4ee3 HTML > Markdown\u300d\u7684\u5ef6\u4f38\u8bc4\u8bba, \u542b\u539f\u63a8\u9644\u6ce8\u4e0e\u53ef\u70b9\u51fb\u94fe\u63a5",
+      "example_source_url": "https://x.com/trq212/status/2052809885763747935",
+      "example_source_label": "@trq212 / x.com",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u6742\u5fd7\u6587\u7ae0\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300cHuashu / huashu-md-html-inspired magazine article layout for turning Markdown or notes into a polished long-form HTML essay\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "artifacts-builder",
+      "name": "artifacts-builder",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "web-artifacts",
+      "upstream": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/artifacts-builder"
+    },
+    {
+      "id": "brainstorming",
+      "name": "brainstorming",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "creative-direction",
+      "upstream": "https://github.com/obra/superpowers"
+    },
+    {
+      "id": "brand-guidelines",
+      "name": "brand-guidelines",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/anthropics/skills/tree/main/brand-guidelines"
+    },
+    {
+      "id": "canvas-design",
+      "name": "canvas-design",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/anthropics/skills/tree/main/canvas-design"
+    },
+    {
+      "id": "card-twitter",
+      "name": "card-twitter",
+      "zh_name": "Twitter \u5206\u4eab\u5361",
+      "en_name": "Twitter Share Card",
+      "emoji": "\ud83d\udc26",
+      "description": "\u63a8\u7279\u91d1\u53e5 / \u6570\u636e\u5361, \u9002\u5408\u914d\u63a8\u6587",
+      "category": "card",
+      "scenario": "marketing",
+      "aspect_hint": "1600\u00d7900 (16:9)",
+      "tags": "[\"twitter\", \"x\", \"quote\", \"\u91d1\u53e5\"]",
+      "example_id": "sample-twitter-quote",
+      "example_name": "\u63a8\u7279\u5361 \u00b7 \u91d1\u53e5",
+      "example_format": "text",
+      "example_tagline": "16:9 \u6697\u8272\u91d1\u53e5\u5361, \u622a\u56fe\u76f4\u63a5\u914d\u63a8\u6587",
+      "example_desc": "\u9ad8\u5bf9\u6bd4\u91d1\u53e5\u6a21\u677f, \u542b grid \u7f51\u683c + \u6e10\u53d8\u5149\u6655\u80cc\u666f",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cTwitter \u5206\u4eab\u5361\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u63a8\u7279\u91d1\u53e5 / \u6570\u636e\u5361, \u9002\u5408\u914d\u63a8\u6587\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "card-xiaohongshu",
+      "name": "card-xiaohongshu",
+      "zh_name": "\u5c0f\u7ea2\u4e66\u56fe\u6587\u5361\u7247",
+      "en_name": "Xiaohongshu Card",
+      "emoji": "\ud83d\udcf1",
+      "description": "\u5c0f\u7ea2\u4e66\u98ce\u683c\u77e5\u8bc6\u5361\u7247, \u591a\u5f20\u8054\u6392\u53ef\u6ed1\u52a8\u6d4f\u89c8",
+      "category": "card",
+      "scenario": "marketing",
+      "aspect_hint": "1080\u00d71440 (3:4)",
+      "featured": "24",
+      "tags": "[\"xhs\", \"\u5c0f\u7ea2\u4e66\", \"carousel\", \"\u56fe\u6587\"]",
+      "example_id": "sample-xhs-ai-habits",
+      "example_name": "\u5c0f\u7ea2\u4e66\u56fe\u6587\u5361 \u00b7 AI \u5de5\u5177\u4e60\u60ef",
+      "example_format": "markdown",
+      "example_tagline": "7 \u5f20\u8fde\u6392, \u83ab\u5170\u8fea\u6e10\u53d8",
+      "example_desc": "\u5e72\u8d27\u5361\u7247\u5408\u96c6, \u9002\u5408\u622a\u56fe\u53d1\u5c0f\u7ea2\u4e66 / \u670b\u53cb\u5708",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u5c0f\u7ea2\u4e66\u56fe\u6587\u5361\u7247\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u5c0f\u7ea2\u4e66\u98ce\u683c\u77e5\u8bc6\u5361\u7247, \u591a\u5f20\u8054\u6392\u53ef\u6ed1\u52a8\u6d4f\u89c8\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "color-expert",
+      "name": "color-expert",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/meodai/skill.color-expert"
+    },
+    {
+      "id": "competitive-ads-extractor",
+      "name": "competitive-ads-extractor",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/competitive-ads-extractor"
+    },
+    {
+      "id": "copywriting",
+      "name": "copywriting",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/coreyhaines31/marketingskills"
+    },
+    {
+      "id": "creative-director",
+      "name": "creative-director",
+      "description": "|",
+      "AI creative director with recursive self-assessment": "20+ methodologies (SIT, TRIZ, Bisociation, SCAMPER, Synectics), 3-axis evaluation calibrated against Cannes/D&AD/HumanKind, 5-phase process from brief to presentation.",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "creative-direction",
+      "upstream": "https://github.com/smixs/creative-director-skill"
+    },
+    {
+      "id": "d3-visualization",
+      "name": "d3-visualization",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "diagrams",
+      "upstream": "https://github.com/chrisvoncsefalvay/d3-claude-skill"
+    },
+    {
+      "id": "data-report",
+      "name": "data-report",
+      "zh_name": "\u6570\u636e\u53ef\u89c6\u5316\u62a5\u544a",
+      "en_name": "Data Visualization Report",
+      "emoji": "\ud83d\udcca",
+      "description": "\u628a CSV/Excel/JSON \u6570\u636e\u8f6c\u6210\u6f02\u4eae\u7684\u53ef\u89c6\u5316\u62a5\u544a\u9875",
+      "category": "data",
+      "scenario": "finance",
+      "aspect_hint": "\u684c\u9762\u957f\u9875\u9762",
+      "featured": "10",
+      "tags": "[\"data\", \"report\", \"chart\", \"\u6570\u636e\", \"\u62a5\u544a\"]",
+      "example_id": "sample-data-weekly-report",
+      "example_name": "\u6570\u636e\u62a5\u544a \u00b7 \u5468\u62a5",
+      "example_format": "csv",
+      "example_tagline": "KPI \u5361 + Chart.js \u56fe\u8868 + \u8868\u683c",
+      "example_desc": "9 \u4e2a\u6708\u589e\u957f\u6570\u636e\u81ea\u52a8\u6e32\u67d3\u6210\u53ef\u89c6\u5316\u62a5\u544a, \u5185\u8054 Chart.js",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u6570\u636e\u53ef\u89c6\u5316\u62a5\u544a\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u628a CSV/Excel/JSON \u6570\u636e\u8f6c\u6210\u6f02\u4eae\u7684\u53ef\u89c6\u5316\u62a5\u544a\u9875\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "deck-guizang-editorial",
+      "name": "deck-guizang-editorial",
+      "zh_name": "\u5f52\u85cf\u7f16\u8f91\u58a8\u6c34 Deck",
+      "en_name": "Guizang Editorial E-Ink Deck",
+      "emoji": "\ud83d\udd8b\ufe0f",
+      "description": "\u7535\u5b50\u6742\u5fd7 \u00d7 \u7535\u5b50\u58a8\u6c34; 10 \u4e2a\u7248\u9762 + 5 \u5957\u8c03\u8272\u677f (\u58a8\u6c34/\u975b\u84dd\u74f7/\u68ee\u6797\u58a8/\u725b\u76ae\u7eb8/\u6c99\u4e18)",
+      "category": "slides",
+      "scenario": "marketing",
+      "aspect_hint": "16:9 \u6a2a\u5411\u7ffb\u9875",
+      "featured": "0.01",
+      "recommended": "1",
+      "tags": "[\"editorial\", \"e-ink\", \"magazine\", \"narrative\", \"guizang\"]",
+      "example_id": "sample-guizang-editorial",
+      "example_name": "\u5f52\u85cf\u7f16\u8f91\u58a8\u6c34 \u00b7 \u7ae0\u8282\u5c01\u9875",
+      "example_format": "markdown",
+      "example_tagline": "\u58a8\u6c34\u7ecf\u5178\u8c03\u8272\u677f + \u886c\u7ebf display",
+      "example_desc": "L02 Act Divider \u7ae0\u8282\u5c01\u9875 + L03 Big Numbers Grid \u6570\u636e\u683c, \u7eb8\u611f\u5370\u5237",
+      "example_source_url": "https://github.com/op7418/guizang-ppt-skill",
+      "example_source_label": "op7418/guizang-ppt-skill",
+      "od": "",
+      "mode": "deck",
+      "surface": "web",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u5f52\u85cf\u7f16\u8f91\u58a8\u6c34 Deck\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u5957\u300c\u7535\u5b50\u6742\u5fd7 \u00d7 \u7535\u5b50\u58a8\u6c34; 10 \u4e2a\u7248\u9762 + 5 \u5957\u8c03\u8272\u677f (\u58a8\u6c34/\u975b\u84dd\u74f7/\u68ee\u6797\u58a8/\u725b\u76ae\u7eb8/\u6c99\u4e18)\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "deck-open-slide-canvas",
+      "name": "deck-open-slide-canvas",
+      "zh_name": "1920 \u753b\u5e03\u81ea\u7531 Deck",
+      "en_name": "Open-Slide 1920 Canvas Deck",
+      "emoji": "\ud83c\udfa8",
+      "description": "\u9501\u6b7b 1920\u00d71080 \u753b\u5e03, React \u7ec4\u4ef6\u7ea7\u81ea\u7531\u7ec4\u5408, \u4e0d\u7ed1\u6a21\u677f",
+      "category": "slides",
+      "scenario": "design",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "0.17",
+      "recommended": "9",
+      "tags": "[\"canvas\", \"open-slide\", \"freeform\", \"1920\", \"react\"]",
+      "example_id": "sample-deck-open-slide-canvas",
+      "example_name": "1920 \u81ea\u7531\u753b\u5e03 \u00b7 Sea Indigo",
+      "example_format": "markdown",
+      "example_tagline": "\u9501\u6b7b 1920\u00d71080 + \u81ea\u7531\u7ec4\u5408",
+      "example_desc": "Sea Indigo \u8c03\u8272 + \u4e00\u9875\u5927\u5b57 question + \u89d2\u6807",
+      "example_source_url": "https://github.com/1weiho/open-slide",
+      "example_source_label": "1weiho/open-slide",
+      "od": "",
+      "mode": "deck",
+      "surface": "web",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c1920 \u753b\u5e03\u81ea\u7531 Deck\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u5957\u300c\u9501\u6b7b 1920\u00d71080 \u753b\u5e03, React \u7ec4\u4ef6\u7ea7\u81ea\u7531\u7ec4\u5408, \u4e0d\u7ed1\u6a21\u677f\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "deck-swiss-international",
+      "name": "deck-swiss-international",
+      "zh_name": "\u745e\u58eb\u56fd\u9645\u4e3b\u4e49 Deck",
+      "en_name": "Swiss International Deck",
+      "emoji": "\ud83d\udfe6",
+      "description": "16 \u5217\u7f51\u683c + \u5355\u4e00\u9971\u548c accent + 22 \u4e2a\u9501\u6b7b\u7248\u9762 (Klein Blue / Lemon / Mint / Safety Orange)",
+      "category": "slides",
+      "scenario": "marketing",
+      "aspect_hint": "16:9 \u6a2a\u5411\u7ffb\u9875",
+      "featured": "0.001",
+      "recommended": "1",
+      "tags": "[\"swiss\", \"grid\", \"international\", \"ikb\", \"editorial\", \"facts\"]",
+      "example_id": "sample-swiss-international",
+      "example_name": "Swiss International \u00b7 \u4ea7\u54c1\u8def\u7ebf",
+      "example_format": "markdown",
+      "example_tagline": "Klein Blue IKB + 16 \u5217\u7f51\u683c",
+      "example_desc": "S01 Cover + S06 KPI Tower \u4e24\u9875\u9884\u89c8, IKB \u5168\u5c4f\u6807\u9898 + 4 \u67f1\u72b6 KPI",
+      "example_source_url": "https://github.com/op7418/guizang-ppt-skill",
+      "example_source_label": "op7418/guizang-ppt-skill",
+      "od": "",
+      "mode": "deck",
+      "surface": "web",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u745e\u58eb\u56fd\u9645\u4e3b\u4e49 Deck\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u5957\u300c16 \u5217\u7f51\u683c + \u5355\u4e00\u9971\u548c accent + 22 \u4e2a\u9501\u6b7b\u7248\u9762 (Klein Blue / Lemon / Mint / Safety Orange)\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "design-brief",
+      "name": "design-brief",
+      "description": "I-Lang formatted design brief or natural language description",
+      "\"make it professional\" by requiring explicit dimensions": "palette, typography,",
+      "Trigger keywords": "design brief\", \"create a design brief\", \"ilang brief\", \"structured brief\".",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "platform": "desktop",
+      "scenario": "planning",
+      "preview": "",
+      "type": "string",
+      "entry": "brief-preview.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "generates": "true",
+      "sections": "[visual-theme, color-palette, typography, component-stylings, layout, depth-elevation, dos-and-donts, responsive, agent-prompt-guide]",
+      "inputs": "",
+      "- name": "brief",
+      "required": "true",
+      "outputs": "",
+      "primary": "DESIGN.md",
+      "secondary": "brief-preview.html",
+      "capabilities_required": ""
+    },
+    {
+      "id": "design-consultation",
+      "name": "design-consultation",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "creative-direction",
+      "upstream": "https://github.com/garrytan/gstack"
+    },
+    {
+      "id": "design-md",
+      "name": "design-md",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/google-labs-code/skills"
+    },
+    {
+      "id": "design-review",
+      "name": "design-review",
+      "description": "|",
+      "Designer Who Codes": "visual audit then fixes with atomic commits and before/after screenshots. Useful for tightening shipped UI before launch.",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "creative-direction",
+      "upstream": "https://github.com/garrytan/gstack"
+    },
+    {
+      "id": "digits-fintech-swiss-template",
+      "name": "digits-fintech-swiss-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create a Swiss-grid fintech strategy deck with modular data cards, lime accents, and clean keyboard navigation.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "doc",
+      "name": "doc",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "documents",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "doc-kami-parchment",
+      "name": "doc-kami-parchment",
+      "zh_name": "Kami \u7f8a\u76ae\u7eb8\u6587\u6863",
+      "en_name": "Kami Parchment Document",
+      "emoji": "\ud83d\udcdc",
+      "description": "\u6696\u7f8a\u76ae\u7eb8\u5e95 (#f5f4ed) + \u58a8\u84dd\u5355\u8272 accent (#1B365D) + \u5355\u4e00\u886c\u7ebf\u5b57\u4f53, \u7f16\u8f91\u7ea7\u6392\u5370",
+      "category": "doc",
+      "scenario": "personal",
+      "aspect_hint": "A4 / Letter \u957f\u9875",
+      "featured": "0.04",
+      "recommended": "3",
+      "tags": "[\"kami\", \"parchment\", \"serif\", \"editorial\", \"report\", \"letter\", \"one-pager\"]",
+      "example_id": "sample-kami-parchment",
+      "example_name": "Kami \u7f8a\u76ae\u7eb8 \u00b7 One-Pager",
+      "example_format": "markdown",
+      "example_tagline": "\u6696\u7f8a\u76ae\u7eb8 + \u58a8\u84dd\u5355\u8272 + \u5355\u4e00\u886c\u7ebf",
+      "example_desc": "\u4e00\u9875 Open Design Studio Issue \u211626 \u7f16\u8f91\u7ea7 one-pager",
+      "example_source_url": "https://github.com/tw93/kami",
+      "example_source_label": "tw93/kami",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cKami \u7f8a\u76ae\u7eb8\u6587\u6863\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u6696\u7f8a\u76ae\u7eb8\u5e95 (#f5f4ed) + \u58a8\u84dd\u5355\u8272 accent (#1B365D) + \u5355\u4e00\u886c\u7ebf\u5b57\u4f53, \u7f16\u8f91\u7ea7\u6392\u5370\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "docx",
+      "name": "docx",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "documents",
+      "upstream": "https://github.com/anthropics/skills/tree/main/docx"
+    },
+    {
+      "id": "domain-name-brainstormer",
+      "name": "domain-name-brainstormer",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/domain-name-brainstormer"
+    },
+    {
+      "id": "editorial-burgundy-principles-template",
+      "name": "editorial-burgundy-principles-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create a premium editorial deck in burgundy and blush with a tag cloud slide and an eight-principles card grid.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "enhance-prompt",
+      "name": "enhance-prompt",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/google-labs-code/skills"
+    },
+    {
+      "id": "fal-3d",
+      "name": "fal-3d",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "3d-shaders",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-generate",
+      "name": "fal-generate",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-image-edit",
+      "name": "fal-image-edit",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-kling-o3",
+      "name": "fal-kling-o3",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-lip-sync",
+      "name": "fal-lip-sync",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-realtime",
+      "name": "fal-realtime",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-restore",
+      "name": "fal-restore",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-train",
+      "name": "fal-train",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-tryon",
+      "name": "fal-tryon",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-upscale",
+      "name": "fal-upscale",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-video-edit",
+      "name": "fal-video-edit",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "fal-vision",
+      "name": "fal-vision",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/fal-ai-community/skills"
+    },
+    {
+      "id": "faq-page",
+      "name": "faq-page",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "platform": "desktop",
+      "scenario": "support",
+      "featured": "8",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "design_system": "",
+      "requires": "[typography, accessibility-baseline, state-coverage]",
+      "sections": "[color, typography, layout, components]",
+      "craft": ""
+    },
+    {
+      "id": "field-notes-editorial-template",
+      "name": "field-notes-editorial-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "true",
+      "sections": "[color, typography, layout, components]",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create an editorial Field Notes style report with three insight cards, key metrics blocks, and a retention line chart in one polished single-file HTML page.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "figma-code-connect-components",
+      "name": "figma-code-connect-components",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-create-design-system-rules",
+      "name": "figma-create-design-system-rules",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-create-new-file",
+      "name": "figma-create-new-file",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-generate-design",
+      "name": "figma-generate-design",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-generate-library",
+      "name": "figma-generate-library",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-implement-design",
+      "name": "figma-implement-design",
+      "description": "|",
+      "Translate Figma designs into production-ready code with 1": "1 visual fidelity. Useful for handing off Figma frames straight to a frontend agent.",
+      "triggers": "",
+      "- \"1": "1 figma",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "figma-use",
+      "name": "figma-use",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "figma",
+      "upstream": "https://github.com/figma/skills"
+    },
+    {
+      "id": "flutter-animating-apps",
+      "name": "flutter-animating-apps",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "animation-motion",
+      "upstream": "https://github.com/flutter/skills"
+    },
+    {
+      "id": "frame-data-chart-nyt",
+      "name": "frame-data-chart-nyt",
+      "zh_name": "NYT \u98ce\u6570\u636e\u56fe\u8868\u5e27",
+      "en_name": "NYT-Style Data Chart Frame",
+      "emoji": "\ud83d\udcc8",
+      "description": "NYT-newsroom \u6392\u7248 + \u9519\u5cf0\u63ed\u793a\u52a8\u753b + \u7f16\u8f91\u7ea7\u56fe\u8868 (\u6298\u7ebf/\u67f1/\u8303\u56f4\u5e26)",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "46",
+      "tags": "[\"data\", \"chart\", \"nyt\", \"editorial\", \"frame\"]",
+      "example_id": "sample-frame-data-chart-nyt",
+      "example_name": "NYT \u98ce\u6298\u7ebf\u56fe \u00b7 \u5168\u7403\u7528\u6237\u91cf",
+      "example_format": "markdown",
+      "example_tagline": "\u7f16\u8f91\u7ea7\u56fe\u8868 + \u9519\u5cf0\u63ed\u793a",
+      "example_desc": "8 \u5e74\u5468\u6d3b\u8dc3\u7528\u6237\u6298\u7ebf + NYT red accent + \u6ce8\u91ca mono",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 data-chart",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cNYT \u98ce\u6570\u636e\u56fe\u8868\u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300cNYT-newsroom \u6392\u7248 + \u9519\u5cf0\u63ed\u793a\u52a8\u753b + \u7f16\u8f91\u7ea7\u56fe\u8868 (\u6298\u7ebf/\u67f1/\u8303\u56f4\u5e26)\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-flowchart-sticky",
+      "name": "frame-flowchart-sticky",
+      "zh_name": "\u4fbf\u5229\u8d34\u6d41\u7a0b\u56fe\u5e27",
+      "en_name": "Sticky Flowchart Frame",
+      "emoji": "\ud83d\udcdd",
+      "description": "SVG \u66f2\u7ebf\u8fde\u63a5 + \u4fbf\u5229\u8d34\u8282\u70b9 + \u5149\u6807\u4ea4\u4e92, \u50cf\u767d\u677f brainstorm",
+      "category": "video",
+      "scenario": "operations",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "45",
+      "tags": "[\"flowchart\", \"diagram\", \"sticky\", \"whiteboard\", \"frame\"]",
+      "example_id": "sample-frame-flowchart-sticky",
+      "example_name": "\u4fbf\u5229\u8d34\u6d41\u7a0b\u56fe \u00b7 \u7528\u6237 onboarding",
+      "example_format": "markdown",
+      "example_tagline": "SVG \u66f2\u7ebf + 4 \u8272\u4fbf\u5229\u8d34",
+      "example_desc": "6 \u8282\u70b9 onboarding \u6d41\u7a0b, \u624b\u5199\u4f53 + \u767d\u677f\u7eb8\u5e95",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 flowchart",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u4fbf\u5229\u8d34\u6d41\u7a0b\u56fe\u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300cSVG \u66f2\u7ebf\u8fde\u63a5 + \u4fbf\u5229\u8d34\u8282\u70b9 + \u5149\u6807\u4ea4\u4e92, \u50cf\u767d\u677f brainstorm\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-glitch-title",
+      "name": "frame-glitch-title",
+      "zh_name": "\u6545\u969c\u827a\u672f\u6807\u9898\u5e27",
+      "en_name": "Glitch Title Frame",
+      "emoji": "\u26a1",
+      "description": "\u6570\u5b57\u6545\u969c / \u50cf\u6563\u504f\u79fb / \u6570\u636e\u8150\u8d25\u6807\u9898, \u9002\u5408\u89c6\u9891\u8f6c\u573a / cyberpunk hero",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "0.14",
+      "recommended": "6",
+      "tags": "[\"glitch\", \"cyberpunk\", \"title\", \"transition\", \"vfx\", \"frame\"]",
+      "example_id": "sample-frame-glitch-title",
+      "example_name": "\u6545\u969c\u6807\u9898 \u00b7 SIGNAL_LOST",
+      "example_format": "markdown",
+      "example_tagline": "cyan / magenta \u50cf\u6563 + CRT \u626b\u63cf\u7ebf",
+      "example_desc": "\u5de8\u5927\u6807\u9898 + \u6570\u636e\u8150\u8d25\u4f2a\u5f71 + \u89d2\u843d ASCII \u566a\u70b9 chunks",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 glitch",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u6545\u969c\u827a\u672f\u6807\u9898\u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300c\u6570\u5b57\u6545\u969c / \u50cf\u6563\u504f\u79fb / \u6570\u636e\u8150\u8d25\u6807\u9898, \u9002\u5408\u89c6\u9891\u8f6c\u573a / cyberpunk hero\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-light-leak-cinema",
+      "name": "frame-light-leak-cinema",
+      "zh_name": "\u80f6\u7247\u6f0f\u5149\u7535\u5f71\u5e27",
+      "en_name": "Light-Leak Cinematic Frame",
+      "emoji": "\ud83c\udf9e\ufe0f",
+      "description": "\u80f6\u7247\u6f0f\u5149 + \u9897\u7c92\u566a\u70b9 + 16:9 letterbox + \u886c\u7ebf\u5927\u5b57, \u7535\u5f71\u611f\u5f00\u573a / \u7ae0\u8282\u5361",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "2.39:1 letterbox (1920\u00d7800) \u6216 16:9 (1920\u00d71080)",
+      "featured": "36",
+      "tags": "[\"cinema\", \"film\", \"light-leak\", \"grain\", \"letterbox\", \"frame\"]",
+      "example_id": "sample-frame-light-leak-cinema",
+      "example_name": "\u80f6\u7247\u6f0f\u5149 \u00b7 REEL 03",
+      "example_format": "markdown",
+      "example_tagline": "\u6696\u6a59\u6f0f\u5149 + 35mm \u9897\u7c92",
+      "example_desc": "2.39:1 letterbox + \u886c\u7ebf\u659c\u4f53\u5927\u5b57 + \u80f6\u7247\u9f7f\u5b54",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 light-leak",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u80f6\u7247\u6f0f\u5149\u7535\u5f71\u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300c\u80f6\u7247\u6f0f\u5149 + \u9897\u7c92\u566a\u70b9 + 16:9 letterbox + \u886c\u7ebf\u5927\u5b57, \u7535\u5f71\u611f\u5f00\u573a / \u7ae0\u8282\u5361\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-liquid-bg-hero",
+      "name": "frame-liquid-bg-hero",
+      "zh_name": "\u6d41\u4f53\u80cc\u666f Hero \u5e27",
+      "en_name": "Liquid Background Hero",
+      "emoji": "\ud83c\udf0a",
+      "description": "WebGL \u98ce\u6d41\u4f53\u7f6e\u6362\u80cc\u666f + \u9876\u90e8\u53e0\u52a0\u91d1\u53e5, \u9002\u5408\u89c6\u9891\u7247\u5934 / landing hero / \u6d77\u62a5",
+      "category": "poster",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9) \u6216 1080\u00d71920 (9:16)",
+      "featured": "39",
+      "tags": "[\"liquid\", \"fluid\", \"background\", \"hero\", \"html-in-canvas\", \"vfx\"]",
+      "example_id": "sample-frame-liquid-bg-hero",
+      "example_name": "\u6d41\u4f53\u80cc\u666f Hero \u00b7 \u91d1\u53e5",
+      "example_format": "markdown",
+      "example_tagline": "Aurora Violet \u6d41\u4f53",
+      "example_desc": "\u591a\u5c42 radial-gradient \u547c\u5438\u80cc\u666f + difference \u6587\u5b57",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 vfx-liquid-background",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u6d41\u4f53\u80cc\u666f Hero \u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300cWebGL \u98ce\u6d41\u4f53\u7f6e\u6362\u80cc\u666f + \u9876\u90e8\u53e0\u52a0\u91d1\u53e5, \u9002\u5408\u89c6\u9891\u7247\u5934 / landing hero / \u6d77\u62a5\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-logo-outro",
+      "name": "frame-logo-outro",
+      "zh_name": "\u54c1\u724c Logo \u6536\u5c3e\u5e27",
+      "en_name": "Logo Outro Frame",
+      "emoji": "\ud83c\udfac",
+      "description": "Logo \u5206\u5757\u7ec4\u88c5\u5165\u573a + glow bloom + tagline \u63ed\u793a, \u9002\u5408\u89c6\u9891\u7247\u5c3e / \u54c1\u724c\u95ed\u5e55",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "0.16",
+      "recommended": "8",
+      "tags": "[\"logo\", \"outro\", \"branding\", \"end-card\", \"frame\"]",
+      "example_id": "sample-frame-logo-outro",
+      "example_name": "\u54c1\u724c Logo \u6536\u5c3e \u00b7 HTML Anything",
+      "example_format": "markdown",
+      "example_tagline": "Midnight Indigo + glow bloom",
+      "example_desc": "Logo \u88c5\u914d + \u54c1\u724c\u540d + tagline + CTA, \u89c6\u9891\u7247\u5c3e\u7528",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 logo-outro",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u54c1\u724c Logo \u6536\u5c3e\u5e27\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300cLogo \u5206\u5757\u7ec4\u88c5\u5165\u573a + glow bloom + tagline \u63ed\u793a, \u9002\u5408\u89c6\u9891\u7247\u5c3e / \u54c1\u724c\u95ed\u5e55\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frame-macos-notification",
+      "name": "frame-macos-notification",
+      "zh_name": "macOS \u901a\u77e5\u6a2a\u5e45",
+      "en_name": "macOS Notification Banner",
+      "emoji": "\ud83d\udd14",
+      "description": "\u62df\u771f macOS \u901a\u77e5 banner + app icon + \u6807\u9898\u6b63\u6587, \u9002\u5408 video overlay / \u4ea7\u54c1\u53d1\u5e03\u9884\u544a",
+      "category": "card",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 \u89c6\u9891\u6216 480\u00d7120 \u6a2a\u5e45",
+      "featured": "41",
+      "tags": "[\"macos\", \"notification\", \"banner\", \"overlay\", \"frame\"]",
+      "example_id": "sample-frame-macos-notification",
+      "example_name": "macOS \u901a\u77e5 \u00b7 \u65b0\u529f\u80fd\u53d1\u5e03",
+      "example_format": "markdown",
+      "example_tagline": "Big Sur \u78e8\u7802\u73bb\u7483 banner",
+      "example_desc": "App icon + \u6807\u9898 + \u53cc\u884c\u6b63\u6587, \u89c6\u9891\u89d2\u843d\u53e0\u52a0\u7528",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 macos-notification",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cmacOS \u901a\u77e5\u6a2a\u5e45\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300c\u62df\u771f macOS \u901a\u77e5 banner + app icon + \u6807\u9898\u6b63\u6587, \u9002\u5408 video overlay / \u4ea7\u54c1\u53d1\u5e03\u9884\u544a\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "frontend-design",
+      "name": "frontend-design",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/anthropics/skills/tree/main/frontend-design"
+    },
+    {
+      "id": "frontend-dev",
+      "name": "frontend-dev",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "web-artifacts",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "frontend-skill",
+      "name": "frontend-skill",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "frontend-slides",
+      "name": "frontend-slides",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "deck",
+      "category": "slides",
+      "upstream": "https://github.com/zarazhangrui/frontend-slides"
+    },
+    {
+      "id": "full-page-screenshot",
+      "name": "full-page-screenshot",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "screenshots",
+      "upstream": "https://github.com/LewisLiu007/full-page-screenshot"
+    },
+    {
+      "id": "gif-sticker-maker",
+      "name": "gif-sticker-maker",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "gsap-core",
+      "name": "gsap-core",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "animation-motion",
+      "upstream": "https://github.com/greensock/skills"
+    },
+    {
+      "id": "gsap-react",
+      "name": "gsap-react",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "animation-motion",
+      "upstream": "https://github.com/greensock/skills"
+    },
+    {
+      "id": "gsap-scrolltrigger",
+      "name": "gsap-scrolltrigger",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "animation-motion",
+      "upstream": "https://github.com/greensock/skills"
+    },
+    {
+      "id": "gsap-timeline",
+      "name": "gsap-timeline",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "animation-motion",
+      "upstream": "https://github.com/greensock/skills"
+    },
+    {
+      "id": "hand-drawn-diagrams",
+      "name": "hand-drawn-diagrams",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "diagrams",
+      "upstream": "https://github.com/muthuishere/hand-drawn-diagrams"
+    },
+    {
+      "id": "hatch-pet",
+      "name": "hatch-pet",
+      "description": "Create, repair, validate, preview, and package Codex-compatible animated pet spritesheets from character art, screenshots, generated images, or visual references. Use when a user wants to hatch a Codex pet, create a custom animated pet, or build a built-in pet asset with an 8x9 atlas, transparent unused cells, row-by-row animation prompts, QA contact sheets, preview videos, and pet.json packaging. This skill composes the installed $imagegen system skill for visual generation and uses bundled scripts for deterministic spritesheet assembly.",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "surface": "image",
+      "scenario": "personal",
+      "featured": "11",
+      "preview": "",
+      "type": "image",
+      "entry": "final/spritesheet.png",
+      "design_system": "",
+      "requires": "false",
+      "outputs": "",
+      "primary": "final/spritesheet.png",
+      "secondary": "",
+      "example_prompt": "Hatch me a tiny pixel-art shiba pet \u2014 friendly, sitting upright, with a small pomegranate prop. Use the hatch-pet skill end-to-end.",
+      "upstream": "https://github.com/openai/skills/tree/main/skills/.curated/hatch-pet"
+    },
+    {
+      "id": "html-ppt-retro-quarterly-review",
+      "name": "html-ppt-retro-quarterly-review",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "capabilities_required": ""
+    },
+    {
+      "id": "image-enhancer",
+      "name": "image-enhancer",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/image-enhancer"
+    },
+    {
+      "id": "imagegen",
+      "name": "imagegen",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "imagen",
+      "name": "imagen",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/sanjay3290/imagen"
+    },
+    {
+      "id": "login-flow",
+      "name": "login-flow",
+      "description": "Mobile login and authentication flow screens",
+      "od": "",
+      "mode": "prototype",
+      "platform": "mobile",
+      "triggers": ""
+    },
+    {
+      "id": "marketing-psychology",
+      "name": "marketing-psychology",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/coreyhaines31/marketingskills"
+    },
+    {
+      "id": "minimax-docx",
+      "name": "minimax-docx",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "documents",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "minimax-pdf",
+      "name": "minimax-pdf",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "documents",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "mockup-device-3d",
+      "name": "mockup-device-3d",
+      "zh_name": "iPhone \u00d7 MacBook \u7acb\u4f53\u5c55\u67b6",
+      "en_name": "Device 3D Showcase",
+      "emoji": "\ud83d\udcf1",
+      "description": "iPhone + MacBook \u4eff GLTF \u9759\u6001\u5c55\u67b6, \u5c4f\u5e55\u5185\u5d4c\u771f\u5b9e HTML \u5185\u5bb9, \u73bb\u7483\u955c\u5934\u6298\u5c04, 360\u00b0 \u8f6c\u76d8\u6784\u56fe",
+      "category": "poster",
+      "scenario": "product",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "47",
+      "tags": "[\"device\", \"mockup\", \"iphone\", \"macbook\", \"html-in-canvas\", \"product\"]",
+      "example_id": "sample-mockup-device-3d",
+      "example_name": "iPhone \u00d7 MacBook \u7acb\u4f53\u5c55\u67b6",
+      "example_format": "markdown",
+      "example_tagline": "HTML-in-Canvas \u8bbe\u5907\u79c0",
+      "example_desc": "iPhone \u5c4f\u5e55 + MacBook \u5c4f\u5e55\u90fd\u5d4c\u5165\u771f\u5b9e UI \u5185\u5bb9, \u73bb\u7483\u955c\u5934\u6298\u5c04",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 vfx-iphone-device",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300ciPhone \u00d7 MacBook \u7acb\u4f53\u5c55\u67b6\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300ciPhone + MacBook \u4eff GLTF \u9759\u6001\u5c55\u67b6, \u5c4f\u5e55\u5185\u5d4c\u771f\u5b9e HTML \u5185\u5bb9, \u73bb\u7483\u955c\u5934\u6298\u5c04, 360\u00b0 \u8f6c\u76d8\u6784\u56fe\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "nanobanana-ppt",
+      "name": "nanobanana-ppt",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "deck",
+      "category": "image-generation",
+      "upstream": "https://github.com/op7418/NanoBanana-PPT-Skills"
+    },
+    {
+      "id": "paywall-upgrade-cro",
+      "name": "paywall-upgrade-cro",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "marketing-creative",
+      "upstream": "https://github.com/coreyhaines31/marketingskills"
+    },
+    {
+      "id": "pdf",
+      "name": "pdf",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "documents",
+      "upstream": "https://github.com/anthropics/skills/tree/main/pdf"
+    },
+    {
+      "id": "pixelbin-media",
+      "name": "pixelbin-media",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/pixelbin-dev/skills"
+    },
+    {
+      "id": "plan-design-review",
+      "name": "plan-design-review",
+      "description": "|",
+      "Senior Designer review": "rates each design dimension 0-10, explains what a 10 looks like, and flags AI Slop signals. Useful as a gate before merging UI work.",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "creative-direction",
+      "upstream": "https://github.com/garrytan/gstack"
+    },
+    {
+      "id": "platform-design",
+      "name": "platform-design",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/ehmo/platform-design-skills"
+    },
+    {
+      "id": "poster-hero",
+      "name": "poster-hero",
+      "zh_name": "\u8425\u9500\u6d77\u62a5",
+      "en_name": "Marketing Poster",
+      "emoji": "\ud83d\uddbc\ufe0f",
+      "description": "\u7ad6\u7248\u6d77\u62a5 / \u670b\u53cb\u5708\u5206\u4eab\u56fe, \u5f3a\u89c6\u89c9\u51b2\u51fb",
+      "category": "poster",
+      "scenario": "marketing",
+      "aspect_hint": "1080\u00d71920 \u7ad6\u7248",
+      "tags": "[\"poster\", \"\u6d77\u62a5\", \"\u670b\u53cb\u5708\"]",
+      "example_id": "sample-poster-launch",
+      "example_name": "\u8425\u9500\u6d77\u62a5 \u00b7 \u4ea7\u54c1\u53d1\u5e03",
+      "example_format": "markdown",
+      "example_tagline": "9:16 \u670b\u53cb\u5708\u5206\u4eab\u56fe",
+      "example_desc": "\u9ad8\u5bf9\u6bd4\u5ea6\u53d1\u5e03\u6d77\u62a5, \u542b QR \u7801\u5360\u4f4d + \u6e10\u53d8 mesh + \u566a\u70b9\u7eb9\u7406",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u8425\u9500\u6d77\u62a5\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u7ad6\u7248\u6d77\u62a5 / \u670b\u53cb\u5708\u5206\u4eab\u56fe, \u5f3a\u89c6\u89c9\u51b2\u51fb\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "ppt-keynote",
+      "name": "ppt-keynote",
+      "zh_name": "Keynote \u98ce\u683c PPT",
+      "en_name": "Keynote-style Slides",
+      "emoji": "\ud83c\udfac",
+      "description": "\u82f9\u679c Keynote \u7ea7\u522b\u5e7b\u706f\u7247, \u4e00\u5c4f\u4e00\u5361, \u952e\u76d8\u5de6\u53f3\u5207\u6362",
+      "category": "slides",
+      "scenario": "marketing",
+      "aspect_hint": "16:9 (1280\u00d7720)",
+      "featured": "19",
+      "tags": "[\"slides\", \"deck\", \"presentation\", \"\u5e7b\u706f\u7247\", \"\u6f14\u8bb2\"]",
+      "example_id": "sample-ppt-html-anything",
+      "example_name": "Keynote PPT \u00b7 \u4ea7\u54c1\u4ecb\u7ecd",
+      "example_format": "markdown",
+      "example_tagline": "7 \u5f20\u5e7b\u706f\u7247\u8bb2\u6e05\u4ea7\u54c1",
+      "example_desc": "\u82f9\u679c Keynote \u98ce\u683c\u7684\u4ea7\u54c1\u4ecb\u7ecd, \u2190/\u2192 \u5207\u6362",
+      "od": "",
+      "mode": "deck",
+      "surface": "web",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cKeynote \u98ce\u683c PPT\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u5957\u300c\u82f9\u679c Keynote \u7ea7\u522b\u5e7b\u706f\u7247, \u4e00\u5c4f\u4e00\u5361, \u952e\u76d8\u5de6\u53f3\u5207\u6362\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "pptx",
+      "name": "pptx",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "deck",
+      "category": "slides",
+      "upstream": "https://github.com/anthropics/skills/tree/main/pptx"
+    },
+    {
+      "id": "pptx-generator",
+      "name": "pptx-generator",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "deck",
+      "category": "slides",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "pptx-html-fidelity-audit",
+      "name": "pptx-html-fidelity-audit",
+      "description": "Audit a python-pptx export against its source HTML deck, identify layout/content drift (footer overflow, cropped content, missing italic/em, lost styling, off-rhythm spacing), and re-export with strict footer-rail + cursor-flow layout discipline. Use this skill whenever the user has a .pptx that was generated from an HTML slide deck and asks to compare/audit/verify/fix the export \u2014 including phrases like \"compare ppt with html\", \"fidelity audit\", \"fix the pptx\", \"ppt is cut off\", \"footer overlap\", \"italic missing in pptx\", \"re-export the deck\", \"pptx-html-fidelity-audit\", or any case where a python-pptx \u2192 HTML round-trip needs verification or repair. Also trigger when the user shows you a deck.html and a deck.pptx side by side and is debugging visual differences.",
+      "triggers": "",
+      "od": "",
+      "mode": "utility",
+      "scenario": "engineering"
+    },
+    {
+      "id": "release-notes-one-pager",
+      "name": "release-notes-one-pager",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "platform": "desktop",
+      "scenario": "engineering",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "design_system": "",
+      "requires": "true",
+      "sections": "[color, typography, layout, components]",
+      "example_prompt": "Write release notes for v2.3.1 with Added, Fixed, Breaking changes, Known issues, and an Upgrade note."
+    },
+    {
+      "id": "remotion",
+      "name": "remotion",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/remotion-dev/remotion"
+    },
+    {
+      "id": "replicate",
+      "name": "replicate",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/replicate/skills"
+    },
+    {
+      "id": "resume-modern",
+      "name": "resume-modern",
+      "zh_name": "\u6781\u7b80\u7b80\u5386",
+      "en_name": "Modern Resume",
+      "emoji": "\ud83d\udcc4",
+      "description": "\u73b0\u4ee3\u6781\u7b80\u7b80\u5386, A4 \u5355\u9875, \u9002\u5408\u6253\u5370\u6216\u5bfc\u51fa PDF",
+      "category": "resume",
+      "scenario": "personal",
+      "aspect_hint": "A4 (210\u00d7297mm)",
+      "recommended": "12",
+      "tags": "[\"resume\", \"cv\", \"\u7b80\u5386\"]",
+      "example_id": "sample-resume-frontend",
+      "example_name": "\u6781\u7b80\u7b80\u5386 \u00b7 \u524d\u7aef\u5de5\u7a0b\u5e08",
+      "example_format": "markdown",
+      "example_tagline": "A4 \u5355\u9875, \u53ef\u6253\u5370 / \u5bfc\u51fa PDF",
+      "example_desc": "\u9ad8\u7ea7\u524d\u7aef\u5de5\u7a0b\u5e08\u7b80\u5386, \u4e24\u680f\u5e03\u5c40, \u6570\u5b57\u6210\u5c31\u9ad8\u4eae",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "featured": "12",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300c\u6781\u7b80\u7b80\u5386\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u73b0\u4ee3\u6781\u7b80\u7b80\u5386, A4 \u5355\u9875, \u9002\u5408\u6253\u5370\u6216\u5bfc\u51fa PDF\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "screenshot",
+      "name": "screenshot",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "screenshots",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "screenshots-marketing",
+      "name": "screenshots-marketing",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "screenshots",
+      "upstream": "https://github.com/Shpigford/screenshots"
+    },
+    {
+      "id": "shadcn-ui",
+      "name": "shadcn-ui",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/google-labs-code/skills"
+    },
+    {
+      "id": "shader-dev",
+      "name": "shader-dev",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "3d-shaders",
+      "upstream": "https://github.com/MiniMax-AI/skills"
+    },
+    {
+      "id": "slack-gif-creator",
+      "name": "slack-gif-creator",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/anthropics/skills/tree/main/slack-gif-creator"
+    },
+    {
+      "id": "slides",
+      "name": "slides",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "deck",
+      "category": "slides",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "social-reddit-card",
+      "name": "social-reddit-card",
+      "zh_name": "Reddit \u5e16\u5b50\u5361",
+      "en_name": "Reddit Post Card",
+      "emoji": "\ud83d\udd3a",
+      "description": "\u62df\u771f Reddit \u5e16\u5b50\u5361 + \u4e0a\u4e0b\u6295\u7968 + \u8bc4\u8bba\u6570, \u9002\u5408\u89c6\u9891\u53e0\u52a0 / \u6545\u4e8b\u5206\u4eab",
+      "category": "card",
+      "scenario": "marketing",
+      "aspect_hint": "1280\u00d7720 \u6216 800\u00d7600",
+      "featured": "42",
+      "tags": "[\"reddit\", \"social\", \"card\", \"overlay\", \"story\"]",
+      "example_id": "sample-social-reddit-card",
+      "example_name": "Reddit \u5e16\u5b50 \u00b7 r/programming",
+      "example_format": "markdown",
+      "example_tagline": "Reddit dark mode + vote rail",
+      "example_desc": "\u4e00\u6761 AITA \u98ce\u683c\u6545\u4e8b + 12.3k upvotes + 1.2k comments",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 reddit-post",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cReddit \u5e16\u5b50\u5361\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u62df\u771f Reddit \u5e16\u5b50\u5361 + \u4e0a\u4e0b\u6295\u7968 + \u8bc4\u8bba\u6570, \u9002\u5408\u89c6\u9891\u53e0\u52a0 / \u6545\u4e8b\u5206\u4eab\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "social-spotify-card",
+      "name": "social-spotify-card",
+      "zh_name": "Spotify \u6b63\u5728\u64ad\u653e\u5361",
+      "en_name": "Spotify Now-Playing Card",
+      "emoji": "\ud83c\udfb5",
+      "description": "Spotify Now Playing \u98ce\u683c\u5361: \u4e13\u8f91\u5c01\u9762 + \u8fdb\u5ea6\u6761 + \u64ad\u653e\u63a7\u5236, \u9002\u914d\u89c6\u9891\u53e0\u52a0 / \u4e2a\u4eba\u4e3b\u9875",
+      "category": "card",
+      "scenario": "personal",
+      "aspect_hint": "1280\u00d7720 \u6216 600\u00d7200",
+      "featured": "43",
+      "tags": "[\"spotify\", \"music\", \"now-playing\", \"card\", \"overlay\"]",
+      "example_id": "sample-social-spotify-card",
+      "example_name": "Spotify Now Playing \u00b7 Lo-Fi",
+      "example_format": "markdown",
+      "example_tagline": "Spotify \u7ecf\u5178 dark \u5361",
+      "example_desc": "Lo-Fi Beats \u00b7 Chillhop \u8fdb\u5ea6\u6761 1:24 / 3:42 + \u63a7\u5236\u884c",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 spotify-card",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cSpotify \u6b63\u5728\u64ad\u653e\u5361\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300cSpotify Now Playing \u98ce\u683c\u5361: \u4e13\u8f91\u5c01\u9762 + \u8fdb\u5ea6\u6761 + \u64ad\u653e\u63a7\u5236, \u9002\u914d\u89c6\u9891\u53e0\u52a0 / \u4e2a\u4eba\u4e3b\u9875\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "social-x-post-card",
+      "name": "social-x-post-card",
+      "zh_name": "X (Twitter) \u5e16\u5b50\u5361",
+      "en_name": "X / Twitter Post Card",
+      "emoji": "\ud835\udd4f",
+      "description": "\u62df\u771f X \u63a8\u6587\u5361\u7247 + \u4e92\u52a8\u6570\u636e (likes/reposts/views), \u9002\u914d\u89c6\u9891\u53e0\u52a0\u6216\u56fe\u5361\u5206\u4eab",
+      "category": "card",
+      "scenario": "marketing",
+      "aspect_hint": "1280\u00d7720 \u6216 1080\u00d71080",
+      "featured": "44",
+      "tags": "[\"twitter\", \"x\", \"social\", \"card\", \"overlay\"]",
+      "example_id": "sample-social-x-post-card",
+      "example_name": "X \u5e16\u5b50\u5361 \u00b7 AlchainHust \u91d1\u53e5",
+      "example_format": "markdown",
+      "example_tagline": "X dark mode + \u4e92\u52a8\u6570\u636e",
+      "example_desc": "\u4e00\u6761\u91d1\u53e5\u63a8\u6587 + 12.3K likes / 1.2K reposts + \u84dd\u52fe",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 x-post",
+      "od": "",
+      "mode": "prototype",
+      "surface": "web",
+      "platform": "desktop",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cX (Twitter) \u5e16\u5b50\u5361\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u4efd\u300c\u62df\u771f X \u63a8\u6587\u5361\u7247 + \u4e92\u52a8\u6570\u636e (likes/reposts/views), \u9002\u914d\u89c6\u9891\u53e0\u52a0\u6216\u56fe\u5361\u5206\u4eab\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "sora",
+      "name": "sora",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "speech",
+      "name": "speech",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "audio",
+      "category": "audio-music",
+      "upstream": "https://github.com/openai/skills"
+    },
+    {
+      "id": "stitch-loop",
+      "name": "stitch-loop",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/google-labs-code/skills"
+    },
+    {
+      "id": "swiftui-design",
+      "name": "swiftui-design",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/wholiver/swiftui-design-skill"
+    },
+    {
+      "id": "swiss-creative-mode-template",
+      "name": "swiss-creative-mode-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "true",
+      "sections": "[color, typography, layout, components]",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "capabilities_required": ""
+    },
+    {
+      "id": "swiss-user-research-video-template",
+      "name": "swiss-user-research-video-template",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "template",
+      "surface": "video",
+      "type": "html",
+      "platform": "desktop",
+      "preview": "",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "true",
+      "sections": "[color, typography, layout, components]",
+      "outputs": "",
+      "primary": "index.html",
+      "secondary": "",
+      "example_prompt": "Create a Swiss-style user research synthesis deck with premium minimalist typography, warm paper tone, a participant donut breakdown, and subtle editorial interactions.",
+      "capabilities_required": ""
+    },
+    {
+      "id": "taste-skill",
+      "name": "taste-skill",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/Leonxlnx/taste-skill"
+    },
+    {
+      "id": "theme-factory",
+      "name": "theme-factory",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/anthropics/skills/tree/main/theme-factory"
+    },
+    {
+      "id": "threejs",
+      "name": "threejs",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "3d-shaders",
+      "upstream": "https://github.com/CloudAI-X/threejs-skills"
+    },
+    {
+      "id": "ui-skills",
+      "name": "ui-skills",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/ibelick/ui-skills"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "ui-ux-pro-max",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+    },
+    {
+      "id": "venice-audio-music",
+      "name": "venice-audio-music",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "audio",
+      "category": "audio-music",
+      "upstream": "https://github.com/veniceai/skills"
+    },
+    {
+      "id": "venice-audio-speech",
+      "name": "venice-audio-speech",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "audio",
+      "category": "audio-music",
+      "upstream": "https://github.com/veniceai/skills"
+    },
+    {
+      "id": "venice-image-edit",
+      "name": "venice-image-edit",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/veniceai/skills"
+    },
+    {
+      "id": "venice-image-generate",
+      "name": "venice-image-generate",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "image",
+      "category": "image-generation",
+      "upstream": "https://github.com/veniceai/skills"
+    },
+    {
+      "id": "venice-video",
+      "name": "venice-video",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/veniceai/skills"
+    },
+    {
+      "id": "vfx-text-cursor",
+      "name": "vfx-text-cursor",
+      "zh_name": "VFX \u6587\u5b57\u5149\u6807",
+      "en_name": "VFX Text Cursor",
+      "emoji": "\u2728",
+      "description": "\u5149\u6807\u62d6\u5149 + \u5f69\u8272\u50cf\u6563\u5c04\u7ebf + \u5b9a\u5411\u5149\u6591, \u9002\u5408\u89c6\u9891\u7247\u5934\u9010\u5b57\u63ed\u793a\u91d1\u53e5",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "featured": "0.15",
+      "recommended": "7",
+      "tags": "[\"vfx\", \"text\", \"cursor\", \"chromatic\", \"reveal\", \"frame\"]",
+      "example_id": "sample-vfx-text-cursor",
+      "example_name": "VFX \u5149\u6807 \u00b7 \u5f00\u573a\u91d1\u53e5",
+      "example_format": "markdown",
+      "example_tagline": "\u9010\u5b57\u63ed\u793a + chromatic \u62d6\u5149",
+      "example_desc": "\u5149\u6807\u6253\u5b57 hot pink + cyan \u50cf\u6563, \u89c6\u9891\u5f00\u573a\u7528",
+      "example_source_url": "https://hyperframes.heygen.com/catalog",
+      "example_source_label": "hyperframes \u00b7 vfx-text-cursor",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cVFX \u6587\u5b57\u5149\u6807\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300c\u5149\u6807\u62d6\u5149 + \u5f69\u8272\u50cf\u6563\u5c04\u7ebf + \u5b9a\u5411\u5149\u6591, \u9002\u5408\u89c6\u9891\u7247\u5934\u9010\u5b57\u63ed\u793a\u91d1\u53e5\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "video-downloader",
+      "name": "video-downloader",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/video-downloader"
+    },
+    {
+      "id": "video-hyperframes",
+      "name": "video-hyperframes",
+      "zh_name": "Hyperframes \u89c6\u9891\u811a\u672c",
+      "en_name": "Hyperframes Video",
+      "emoji": "\ud83c\udf9e\ufe0f",
+      "description": "Hyperframes / Remotion \u517c\u5bb9\u7684\u8fde\u7eed\u5e27\u52a8\u753b, \u53ef\u81ea\u52a8\u64ad\u653e",
+      "category": "video",
+      "scenario": "video",
+      "aspect_hint": "1920\u00d71080 (16:9)",
+      "recommended": "5",
+      "tags": "[\"video\", \"hyperframes\", \"remotion\", \"\u89c6\u9891\"]",
+      "example_id": "sample-hyperframes-workflow",
+      "example_name": "Hyperframes \u00b7 AI workflow \u89c6\u9891",
+      "example_format": "markdown",
+      "example_tagline": "8 \u5e27\u81ea\u52a8\u64ad\u653e, \u542b\u8fdb\u5ea6\u6761 + \u5143\u6570\u636e",
+      "example_desc": "\u7535\u5f71\u611f\u52a8\u753b\u811a\u672c, \u53ef\u76f4\u63a5\u5582\u7ed9 Remotion \u505a\u6210 mp4",
+      "example_source_url": "https://github.com/heygen-com/hyperframes",
+      "example_source_label": "heygen-com/hyperframes",
+      "od": "",
+      "mode": "video",
+      "surface": "video",
+      "featured": "0.13",
+      "upstream": "https://github.com/nexu-io/html-anything",
+      "preview": "",
+      "type": "html",
+      "entry": "index.html",
+      "reload": "debounce-100",
+      "design_system": "",
+      "requires": "false",
+      "example_prompt": "\u7528\u300cHyperframes \u89c6\u9891\u811a\u672c\u300d\u6a21\u677f\u628a\u6211\u7684\u5185\u5bb9\u505a\u6210\u4e00\u6bb5\u300cHyperframes / Remotion \u517c\u5bb9\u7684\u8fde\u7eed\u5e27\u52a8\u753b, \u53ef\u81ea\u52a8\u64ad\u653e\u300d\u3002\u4fdd\u6301\u6a21\u677f\u7684\u89c6\u89c9\u7b7e\u540d\uff0c\u4f7f\u7528\u771f\u5b9e\u5185\u5bb9\u548c\u6570\u636e\uff0c\u907f\u514d lorem ipsum \u548c\u5360\u4f4d\u56fe\u7247\u3002"
+    },
+    {
+      "id": "web-artifacts-builder",
+      "name": "web-artifacts-builder",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "prototype",
+      "category": "web-artifacts",
+      "upstream": "https://github.com/anthropics/skills/tree/main/web-artifacts-builder"
+    },
+    {
+      "id": "web-design-guidelines",
+      "name": "web-design-guidelines",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/vercel-labs/skills"
+    },
+    {
+      "id": "wpds",
+      "name": "wpds",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "design-system",
+      "category": "design-systems",
+      "upstream": "https://github.com/WordPress/skills"
+    },
+    {
+      "id": "youtube-clipper",
+      "name": "youtube-clipper",
+      "description": "|",
+      "triggers": "",
+      "od": "",
+      "mode": "video",
+      "category": "video-generation",
+      "upstream": "https://github.com/op7418/Youtube-clipper-skill"
+    }
+  ],
+  "designSystems": [
+    {
+      "id": "agentic",
+      "title": "Design System Inspired by Agentic",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#FF5701",
+        "#F6F6F1",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "airbnb",
+      "title": "Design System Inspired by Airbnb",
+      "description": "Category: E-Commerce & Retail",
+      "category": "E-Commerce & Retail",
+      "signatureColors": [
+        "#ff385c",
+        "#222222",
+        "#ff385c",
+        "#92174d",
+        "#460479",
+        "#ff385c"
+      ]
+    },
+    {
+      "id": "airtable",
+      "title": "Design System Inspired by Airtable",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#181d26",
+        "#1b61c9",
+        "#181d26",
+        "#1b61c9",
+        "#181d26",
+        "#1b61c9"
+      ]
+    },
+    {
+      "id": "ant",
+      "title": "Design System Inspired by Ant",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#1677FF",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "apple",
+      "title": "Design System Inspired by Apple",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#000000",
+        "#f5f5f7",
+        "#0071e3",
+        "#0066cc",
+        "#2997ff",
+        "#000000"
+      ]
+    },
+    {
+      "id": "application",
+      "title": "Design System Inspired by Application",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#9333EA",
+        "#A855F7",
+        "#10B981",
+        "#F59E0B",
+        "#EF4444",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "arc",
+      "title": "Design System Inspired by Arc Browser",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#ff7e5f",
+        "#feb47b",
+        "#7f5af0",
+        "#e84393",
+        "#16f2b3",
+        "#0db4f7"
+      ]
+    },
+    {
+      "id": "artistic",
+      "title": "Design System Inspired by Artistic",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "atelier-zero",
+      "title": "Atelier Zero",
+      "description": "Category: Editorial \u00b7 Studio",
+      "category": "Editorial \u00b7 Studio",
+      "signatureColors": [
+        "#efe7d2",
+        "#efe7d2",
+        "#ece4cf",
+        "#ddd2b6",
+        "#f7f1de",
+        "#15140f"
+      ]
+    },
+    {
+      "id": "bento",
+      "title": "Design System Inspired by Bento",
+      "description": "Category: Layout & Structure",
+      "category": "Layout & Structure",
+      "signatureColors": [
+        "#FAD4C0",
+        "#80A1C1",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFF5E6"
+      ]
+    },
+    {
+      "id": "binance",
+      "title": "Design System Inspired by Binance.US",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#222126",
+        "#F0B90B",
+        "#F0B90B",
+        "#F0B90B",
+        "#FFD000",
+        "#F8D12F"
+      ]
+    },
+    {
+      "id": "bmw",
+      "title": "Design System Inspired by BMW",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#1c69d4",
+        "#0653b6",
+        "#757575",
+        "#1c69d4",
+        "#1c69d4",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "bmw-m",
+      "title": "Design System Inspired by BMW M",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#0066b1",
+        "#1c69d4",
+        "#e22718",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "bold",
+      "title": "Design System Inspired by Bold",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#0077BC",
+        "#009866",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#111111"
+      ]
+    },
+    {
+      "id": "brutalism",
+      "title": "Design System Inspired by Brutalism",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#DD614C",
+        "#DAA144",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "bugatti",
+      "title": "Design System Inspired by Bugatti",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#000000",
+        "#000000",
+        "#ffffff",
+        "#999999",
+        "#000000",
+        "#999999"
+      ]
+    },
+    {
+      "id": "cafe",
+      "title": "Design System Inspired by Cafe",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#5D4432",
+        "#E9E3DD",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#F9F7F5"
+      ]
+    },
+    {
+      "id": "cal",
+      "title": "Design System Inspired by Cal.com",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#242424",
+        "#898989",
+        "#242424",
+        "#242424",
+        "#111111",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "canva",
+      "title": "Design System Inspired by Canva",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#ffffff",
+        "#7d2ae8",
+        "#00c4cc",
+        "#7d2ae8",
+        "#00c4cc",
+        "#7d2ae8"
+      ]
+    },
+    {
+      "id": "cisco",
+      "title": "Design System Inspired by Cisco",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#049fd9",
+        "#049fd9",
+        "#64bbe3",
+        "#005073",
+        "#2b5592",
+        "#39393b"
+      ]
+    },
+    {
+      "id": "claude",
+      "title": "Design System Inspired by Claude (Anthropic)",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#f5f4ed",
+        "#c96442",
+        "#5e5d59",
+        "#87867f",
+        "#4d4c48",
+        "#f0eee6"
+      ]
+    },
+    {
+      "id": "clay",
+      "title": "Design System Inspired by Clay",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#faf9f7",
+        "#dad4c8",
+        "#eee9df",
+        "#faf9f7",
+        "#dad4c8",
+        "#000000"
+      ]
+    },
+    {
+      "id": "claymorphism",
+      "title": "Design System Inspired by Claymorphism",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#3B82F6",
+        "#FFFFFF",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "clean",
+      "title": "Design System Inspired by Clean",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "clickhouse",
+      "title": "Design System Inspired by ClickHouse",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#000000",
+        "#414141",
+        "#faff69",
+        "#faff69",
+        "#000000",
+        "#166534"
+      ]
+    },
+    {
+      "id": "cohere",
+      "title": "Design System Inspired by Cohere",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#d9d9dd",
+        "#e5e7eb",
+        "#1863dc",
+        "#000000",
+        "#212121",
+        "#17171c"
+      ]
+    },
+    {
+      "id": "coinbase",
+      "title": "Design System Inspired by Coinbase",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#0052ff",
+        "#578bfa",
+        "#0a0b0d",
+        "#282b31",
+        "#0052ff",
+        "#0a0b0d"
+      ]
+    },
+    {
+      "id": "colorful",
+      "title": "Design System Inspired by Colorful",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "composio",
+      "title": "Design System Inspired by Composio",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#0f0f0f",
+        "#0007cd",
+        "#00ffff",
+        "#0007cd",
+        "#00ffff",
+        "#0089ff"
+      ]
+    },
+    {
+      "id": "contemporary",
+      "title": "Design System Inspired by Contemporary",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#C800DF",
+        "#E60076",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "corporate",
+      "title": "Design System Inspired by Corporate",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "cosmic",
+      "title": "Design System Inspired by Cosmic",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "creative",
+      "title": "Design System Inspired by Creative",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "cursor",
+      "title": "Design System Inspired by Cursor",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#f2f1ed",
+        "#26251e",
+        "#e6e5e0",
+        "#ebeae5",
+        "#cf2d56",
+        "#f2f1ed"
+      ]
+    },
+    {
+      "id": "dashboard",
+      "title": "Design System Inspired by Dashboard",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#0C5CAB",
+        "#0A4A8A",
+        "#10B981",
+        "#F59E0B",
+        "#EF4444",
+        "#09090B"
+      ]
+    },
+    {
+      "id": "default",
+      "title": "Neutral Modern",
+      "description": "Category: Starter",
+      "category": "Starter",
+      "signatureColors": [
+        "#FAFAFA",
+        "#111111",
+        "#2F6FEB",
+        "#6B6B6B",
+        "#E5E5E5",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "discord",
+      "title": "Design System Inspired by Discord",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#313338",
+        "#1e1f22",
+        "#5865f2",
+        "#1e1f22",
+        "#2b2d31",
+        "#313338"
+      ]
+    },
+    {
+      "id": "dithered",
+      "title": "Design System Inspired by Dithered",
+      "description": "Category: Retro & Nostalgic",
+      "category": "Retro & Nostalgic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "doodle",
+      "title": "Design System Inspired by Doodle",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#49B6E5",
+        "#263D5B",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "dramatic",
+      "title": "Design System Inspired by Dramatic",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#8B5CF6",
+        "#F43F5E",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#09090B"
+      ]
+    },
+    {
+      "id": "duolingo",
+      "title": "Design System Inspired by Duolingo",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#58cc02",
+        "#ffffff",
+        "#e5e5e5",
+        "#58cc02",
+        "#ff9600",
+        "#ce82ff"
+      ]
+    },
+    {
+      "id": "editorial",
+      "title": "Design System Inspired by Editorial",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#111111",
+        "#F1F1F1",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "elegant",
+      "title": "Design System Inspired by Elegant",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "elevenlabs",
+      "title": "Design System Inspired by ElevenLabs",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#ffffff",
+        "#f5f5f5",
+        "#f5f2ef",
+        "#777169",
+        "#f5f5f5",
+        "#f5f2ef"
+      ]
+    },
+    {
+      "id": "energetic",
+      "title": "Design System Inspired by Energetic",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#EA580B",
+        "#F59E0B",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFEDD5"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "title": "Design System Inspired by Enterprise",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#072C2C",
+        "#FF5F03",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#EDEADE"
+      ]
+    },
+    {
+      "id": "expo",
+      "title": "Design System Inspired by Expo",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#f0f0f3",
+        "#000000",
+        "#60646c",
+        "#b0b4ba",
+        "#555860",
+        "#f0f0f3"
+      ]
+    },
+    {
+      "id": "expressive",
+      "title": "Design System Inspired by Expressive",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#DB2777",
+        "#2563EB",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "fantasy",
+      "title": "Design System Inspired by Fantasy",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#0250CC",
+        "#FDC800",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "ferrari",
+      "title": "Design System Inspired by Ferrari",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#DA291C",
+        "#303030",
+        "#8F8F8F",
+        "#D2D2D2",
+        "#FFF200",
+        "#F6E500"
+      ]
+    },
+    {
+      "id": "figma",
+      "title": "Design System Inspired by Figma",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#000000",
+        "#ffffff",
+        "#000000",
+        "#ffffff",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "flat",
+      "title": "Design System Inspired by Flat",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#F2673C",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "framer",
+      "title": "Design System Inspired by Framer",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#000000",
+        "#0099ff",
+        "#000000",
+        "#0099ff",
+        "#000000",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "friendly",
+      "title": "Design System Inspired by Friendly",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#F2D9DC",
+        "#D9F2D8",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "futuristic",
+      "title": "Design System Inspired by Futuristic",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "github",
+      "title": "Design System Inspired by GitHub",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#ffffff",
+        "#0d1117",
+        "#0969da",
+        "#1a7f37",
+        "#ffffff",
+        "#0d1117"
+      ]
+    },
+    {
+      "id": "glassmorphism",
+      "title": "Design System Inspired by Glassmorphism",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#1856FF",
+        "#3A344E",
+        "#07CA6B",
+        "#E89558",
+        "#EA2143",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "gradient",
+      "title": "Design System Inspired by Gradient",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#990FFA",
+        "#E60076",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "hashicorp",
+      "title": "Design System Inspired by HashiCorp",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#15181e",
+        "#0d0e12",
+        "#7b42bc",
+        "#ffcf25",
+        "#14c6cb",
+        "#1868f2"
+      ]
+    },
+    {
+      "id": "hud",
+      "title": "HUD Design System",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#0A0A0A",
+        "#111316",
+        "#1E2328",
+        "#00FF41",
+        "#7FFF00",
+        "#5A9A5A"
+      ]
+    },
+    {
+      "id": "huggingface",
+      "title": "Design System Inspired by Hugging Face",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#ffd21e",
+        "#fafafa",
+        "#0d1117",
+        "#f3f4f6",
+        "#ffd21e",
+        "#fafafa"
+      ]
+    },
+    {
+      "id": "ibm",
+      "title": "Design System Inspired by IBM",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#ffffff",
+        "#161616",
+        "#0f62fe",
+        "#0f62fe",
+        "#f4f4f4",
+        "#0f62fe"
+      ]
+    },
+    {
+      "id": "intercom",
+      "title": "Design System Inspired by Intercom",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#faf9f6",
+        "#111111",
+        "#ff5600",
+        "#dedbd6",
+        "#faf9f6",
+        "#dedbd6"
+      ]
+    },
+    {
+      "id": "kami",
+      "title": "Design System Inspired by kami (\u7d19 / \u7eb8)",
+      "description": "Category: Editorial & Print",
+      "category": "Editorial & Print",
+      "signatureColors": [
+        "#f5f4ed",
+        "#1B365D",
+        "#f5f4ed",
+        "#ffffff",
+        "#1B365D",
+        "#E4ECF5"
+      ]
+    },
+    {
+      "id": "kraken",
+      "title": "Design System Inspired by Kraken",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#7132f5",
+        "#5741d8",
+        "#5b1ecf",
+        "#7132f5",
+        "#5741d8",
+        "#5b1ecf"
+      ]
+    },
+    {
+      "id": "lamborghini",
+      "title": "Design System Inspired by Lamborghini",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#000000",
+        "#FFC000",
+        "#000000",
+        "#FFC000"
+      ]
+    },
+    {
+      "id": "levels",
+      "title": "Design System Inspired by Levels",
+      "description": "Category: Layout & Structure",
+      "category": "Layout & Structure",
+      "signatureColors": [
+        "#27272A",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "linear-app",
+      "title": "Design System Inspired by Linear",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#08090a",
+        "#f7f8f8",
+        "#5e6ad2",
+        "#7170ff",
+        "#08090a",
+        "#0f1011"
+      ]
+    },
+    {
+      "id": "lingo",
+      "title": "Design System Inspired by Lingo",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#58CC02",
+        "#CE82FF",
+        "#58CC02",
+        "#FFC800",
+        "#FF4B4B",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "loom",
+      "title": "Loom Design System",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#625DF5",
+        "#FFFFFF",
+        "#F7F7F8",
+        "#E4E4E7",
+        "#625DF5",
+        "#5048E5"
+      ]
+    },
+    {
+      "id": "lovable",
+      "title": "Design System Inspired by Lovable",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#f7f4ed",
+        "#1c1c1c",
+        "#1c1c1c",
+        "#eceae4",
+        "#f7f4ed",
+        "#1c1c1c"
+      ]
+    },
+    {
+      "id": "luxury",
+      "title": "Design System Inspired by Luxury",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#FAFAFA",
+        "#FAFAFA",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#000000"
+      ]
+    },
+    {
+      "id": "mastercard",
+      "title": "Design System Inspired by Mastercard",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#F3F0EE",
+        "#F3F0EE",
+        "#141413",
+        "#EB001B"
+      ]
+    },
+    {
+      "id": "material",
+      "title": "Design System Inspired by Material",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#6442D6",
+        "#C8B3FD",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "meta",
+      "title": "Design System Inspired by Meta (Store)",
+      "description": "Category: E-Commerce & Retail",
+      "category": "E-Commerce & Retail",
+      "signatureColors": [
+        "#0064E0",
+        "#0143B5",
+        "#004BB9",
+        "#47A5FA",
+        "#1877F2",
+        "#D6311F"
+      ]
+    },
+    {
+      "id": "minimal",
+      "title": "Design System Inspired by Minimal",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#0C0C09",
+        "#312C85",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#F4F4F1"
+      ]
+    },
+    {
+      "id": "minimax",
+      "title": "Design System Inspired by MiniMax",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#ffffff",
+        "#1456f0",
+        "#3b82f6",
+        "#60a5fa",
+        "#ea5ec1",
+        "#222222"
+      ]
+    },
+    {
+      "id": "mintlify",
+      "title": "Design System Inspired by Mintlify",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#ffffff",
+        "#0d0d0d",
+        "#18E299",
+        "#18E299",
+        "#0d0d0d",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "miro",
+      "title": "Design System Inspired by Miro",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#1c1c1e",
+        "#1c1c1e",
+        "#5b76fe",
+        "#00b473",
+        "#1c1c1e",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "mission-control",
+      "title": "Mission Control Design System",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#0B1120",
+        "#111827",
+        "#1A2535",
+        "#1E3A5F",
+        "#FFB800",
+        "#00D4FF"
+      ]
+    },
+    {
+      "id": "mistral-ai",
+      "title": "Design System Inspired by Mistral AI",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#fa520f",
+        "#ffd900",
+        "#ffa110",
+        "#fa520f",
+        "#fffaeb",
+        "#fa520f"
+      ]
+    },
+    {
+      "id": "modern",
+      "title": "Design System Inspired by Modern",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#553F83",
+        "#111111",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#553F83"
+      ]
+    },
+    {
+      "id": "mongodb",
+      "title": "Design System Inspired by MongoDB",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#001e2b",
+        "#00ed64",
+        "#001e2b",
+        "#b8c4c2",
+        "#00684a",
+        "#001e2b"
+      ]
+    },
+    {
+      "id": "mono",
+      "title": "Design System Inspired by Mono",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#37F712",
+        "#00A6F4",
+        "#00A63D",
+        "#FE9900",
+        "#FF2157",
+        "#E7E5E4"
+      ]
+    },
+    {
+      "id": "neobrutalism",
+      "title": "Design System Inspired by Neobrutalism",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#FDC800",
+        "#432DD7",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FBFBF9"
+      ]
+    },
+    {
+      "id": "neon",
+      "title": "Design System Inspired by Neon",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#BBF351",
+        "#00BCFF",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "neumorphism",
+      "title": "Design System Inspired by Neumorphism",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#006666",
+        "#F1F2F5",
+        "#00A63D",
+        "#FE9900",
+        "#FF2157",
+        "#E7E5E4"
+      ]
+    },
+    {
+      "id": "nike",
+      "title": "Design System Inspired by Nike",
+      "description": "Category: E-Commerce & Retail",
+      "category": "E-Commerce & Retail",
+      "signatureColors": [
+        "#111111",
+        "#111111",
+        "#000000",
+        "#FFFFFF",
+        "#FAFAFA",
+        "#F5F5F5"
+      ]
+    },
+    {
+      "id": "notion",
+      "title": "Design System Inspired by Notion",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#ffffff",
+        "#f6f5f4",
+        "#31302e",
+        "#615d59",
+        "#a39e98",
+        "#f6f5f4"
+      ]
+    },
+    {
+      "id": "nvidia",
+      "title": "Design System Inspired by NVIDIA",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#000000",
+        "#ffffff",
+        "#76b900",
+        "#76b900",
+        "#76b900",
+        "#76b900"
+      ]
+    },
+    {
+      "id": "ollama",
+      "title": "Design System Inspired by Ollama",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#000000",
+        "#ffffff",
+        "#000000",
+        "#262626",
+        "#090909",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "openai",
+      "title": "Design System Inspired by OpenAI",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#ffffff",
+        "#0d0d0d",
+        "#e5e5e5",
+        "#ffffff",
+        "#0d0d0d",
+        "#e5e5e5"
+      ]
+    },
+    {
+      "id": "opencode-ai",
+      "title": "Design System Inspired by OpenCode",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#201d1d",
+        "#fdfcfc",
+        "#201d1d",
+        "#201d1d",
+        "#9a9898",
+        "#fdfcfc"
+      ]
+    },
+    {
+      "id": "pacman",
+      "title": "Design System Inspired by Pacman",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#2A3FE5",
+        "#F4B9B0",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#000000"
+      ]
+    },
+    {
+      "id": "paper",
+      "title": "Design System Inspired by Paper",
+      "description": "Category: Retro & Nostalgic",
+      "category": "Retro & Nostalgic",
+      "signatureColors": [
+        "#111111",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "perplexity",
+      "title": "Design System Inspired by Perplexity AI",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#0f0f10",
+        "#19191a",
+        "#232325",
+        "#2e2e30",
+        "#f0f0f0",
+        "#9b9b9b"
+      ]
+    },
+    {
+      "id": "perspective",
+      "title": "Design System Inspired by Perspective",
+      "description": "Category: Layout & Structure",
+      "category": "Layout & Structure",
+      "signatureColors": [
+        "#00BD7D",
+        "#00BD7D",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "pinterest",
+      "title": "Design System Inspired by Pinterest",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#e60023",
+        "#91918c",
+        "#62625b",
+        "#e5e5e0",
+        "#e5e5e0",
+        "#e60023"
+      ]
+    },
+    {
+      "id": "playstation",
+      "title": "Design System Inspired by PlayStation",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#1eaedb",
+        "#0070cc",
+        "#1eaedb",
+        "#d53b00",
+        "#0070cc",
+        "#000000"
+      ]
+    },
+    {
+      "id": "posthog",
+      "title": "Design System Inspired by PostHog",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#fdfdf8",
+        "#F54E00",
+        "#1e1f23",
+        "#bfc1b7",
+        "#F54E00",
+        "#bfc1b7"
+      ]
+    },
+    {
+      "id": "premium",
+      "title": "Design System Inspired by Premium",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "professional",
+      "title": "Design System Inspired by Professional",
+      "description": "Category: Professional & Corporate",
+      "category": "Professional & Corporate",
+      "signatureColors": [
+        "#FECE14",
+        "#000000",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "publication",
+      "title": "Design System Inspired by Publication",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#A855F7",
+        "#0A1829",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "raycast",
+      "title": "Design System Inspired by Raycast",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#07080a",
+        "#FF6363",
+        "#07080a",
+        "#FF6363",
+        "#07080a",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "refined",
+      "title": "Design System Inspired by Refined",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "renault",
+      "title": "Design System Inspired by Renault",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#EFDF00",
+        "#EFDF00"
+      ]
+    },
+    {
+      "id": "replicate",
+      "title": "Design System Inspired by Replicate",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#ea2804",
+        "#202020",
+        "#2b9a66",
+        "#202020",
+        "#ea2804",
+        "#dd4425"
+      ]
+    },
+    {
+      "id": "resend",
+      "title": "Design System Inspired by Resend",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#000000",
+        "#f0f0f0",
+        "#f0f0f0",
+        "#000000",
+        "#f0f0f0",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "retro",
+      "title": "Design System Inspired by Retro",
+      "description": "Category: Retro & Nostalgic",
+      "category": "Retro & Nostalgic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "revolut",
+      "title": "Design System Inspired by Revolut",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#e23b4a",
+        "#ec7e00",
+        "#00a87e",
+        "#494fdf",
+        "#e61e49",
+        "#191c1f"
+      ]
+    },
+    {
+      "id": "runwayml",
+      "title": "Design System Inspired by Runway",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#767d88",
+        "#7d848e",
+        "#000000",
+        "#030303",
+        "#1a1a1a",
+        "#ffffff"
+      ]
+    },
+    {
+      "id": "sanity",
+      "title": "Design System Inspired by Sanity",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#0b0b0b",
+        "#0b0b0b",
+        "#212121",
+        "#353535",
+        "#797979",
+        "#b9b9b9"
+      ]
+    },
+    {
+      "id": "sentry",
+      "title": "Design System Inspired by Sentry",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#1f1633",
+        "#150f23",
+        "#c2ef4e",
+        "#79628c",
+        "#1f1633",
+        "#150f23"
+      ]
+    },
+    {
+      "id": "shadcn",
+      "title": "Design System Inspired by Shadcn",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#000000",
+        "#111111",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "shopify",
+      "title": "Design System Inspired by Shopify",
+      "description": "Category: E-Commerce & Retail",
+      "category": "E-Commerce & Retail",
+      "signatureColors": [
+        "#02090A",
+        "#061A1C",
+        "#102620",
+        "#36F4A4",
+        "#C1FBD4",
+        "#D4F9E0"
+      ]
+    },
+    {
+      "id": "simple",
+      "title": "Design System Inspired by Simple",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "skeumorphism",
+      "title": "Design System Inspired by Skeumorphism",
+      "description": "Category: Morphism & Effects",
+      "category": "Morphism & Effects",
+      "signatureColors": [
+        "#FA3C00",
+        "#F08321",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "slack",
+      "title": "Design System Inspired by Slack",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#4A154B",
+        "#FFFFFF",
+        "#F8F8F8",
+        "#4A154B",
+        "#4A154B",
+        "#350d36"
+      ]
+    },
+    {
+      "id": "sleek",
+      "title": "Design System Inspired by Sleek",
+      "description": "Category: Modern & Minimal",
+      "category": "Modern & Minimal",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "spacex",
+      "title": "Design System Inspired by SpaceX",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#000000",
+        "#f0f0fa",
+        "#f0f0fa",
+        "#000000",
+        "#f0f0fa"
+      ]
+    },
+    {
+      "id": "spacious",
+      "title": "Design System Inspired by Spacious",
+      "description": "Category: Layout & Structure",
+      "category": "Layout & Structure",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "spotify",
+      "title": "Design System Inspired by Spotify",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#121212",
+        "#181818",
+        "#1f1f1f",
+        "#1ed760",
+        "#121212",
+        "#1f1f1f"
+      ]
+    },
+    {
+      "id": "starbucks",
+      "title": "Design System Inspired by Starbucks",
+      "description": "Category: E-Commerce & Retail",
+      "category": "E-Commerce & Retail",
+      "signatureColors": [
+        "#f2f0eb",
+        "#edebe9",
+        "#006241",
+        "#cba258",
+        "#00754A",
+        "#f2f0eb"
+      ]
+    },
+    {
+      "id": "storytelling",
+      "title": "Design System Inspired by Storytelling",
+      "description": "Category: Creative & Artistic",
+      "category": "Creative & Artistic",
+      "signatureColors": [
+        "#3B82F6",
+        "#8B5CF6",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "stripe",
+      "title": "Design System Inspired by Stripe",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#ffffff",
+        "#061b31",
+        "#533afd",
+        "#061b31",
+        "#ea2261",
+        "#f96bee"
+      ]
+    },
+    {
+      "id": "supabase",
+      "title": "Design System Inspired by Supabase",
+      "description": "Category: Backend & Data",
+      "category": "Backend & Data",
+      "signatureColors": [
+        "#0f0f0f",
+        "#171717",
+        "#3ecf8e",
+        "#00c573",
+        "#3ecf8e",
+        "#00c573"
+      ]
+    },
+    {
+      "id": "superhuman",
+      "title": "Design System Inspired by Superhuman",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#1b1938",
+        "#e9e5dd",
+        "#cbb7fb",
+        "#1b1938",
+        "#e9e5dd",
+        "#cbb7fb"
+      ]
+    },
+    {
+      "id": "tesla",
+      "title": "Design System Inspired by Tesla",
+      "description": "Category: Automotive",
+      "category": "Automotive",
+      "signatureColors": [
+        "#3E6AE1",
+        "#3E6AE1"
+      ]
+    },
+    {
+      "id": "tetris",
+      "title": "Design System Inspired by Tetris",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#1C202B",
+        "#7107E7",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#DFE7FF"
+      ]
+    },
+    {
+      "id": "theverge",
+      "title": "Design System Inspired by The Verge",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#131313",
+        "#3cffd0",
+        "#5200ff",
+        "#ffffff",
+        "#3cffd0",
+        "#5200ff"
+      ]
+    },
+    {
+      "id": "together-ai",
+      "title": "Design System Inspired by Together AI",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#010120",
+        "#ef2cc1",
+        "#fc4c02",
+        "#010120",
+        "#ef2cc1",
+        "#fc4c02"
+      ]
+    },
+    {
+      "id": "totality-festival",
+      "signatureColors": [
+        "#121318",
+        "#121318",
+        "#38393f",
+        "#0d0e13",
+        "#1a1b21",
+        "#1e1f25"
+      ]
+    },
+    {
+      "id": "trading-terminal",
+      "title": "Trading Terminal Design System",
+      "description": "Category: Themed & Unique",
+      "category": "Themed & Unique",
+      "signatureColors": [
+        "#00D4AA",
+        "#FF4757",
+        "#0D0D0D",
+        "#141414",
+        "#1A1A1A",
+        "#2A2A2A"
+      ]
+    },
+    {
+      "id": "uber",
+      "title": "Design System Inspired by Uber",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#000000",
+        "#ffffff",
+        "#000000",
+        "#ffffff",
+        "#e2e2e2"
+      ]
+    },
+    {
+      "id": "urdu",
+      "title": "Urdu Modern (Indus Script System)",
+      "description": "Category: Editorial / Personal / Publication",
+      "category": "Editorial / Personal / Publication",
+      "signatureColors": [
+        "#0F595E",
+        "#F4F1EA",
+        "#C05621",
+        "#1A202C",
+        "#4A5568",
+        "#E2E8F0"
+      ]
+    },
+    {
+      "id": "vercel",
+      "title": "Design System Inspired by Vercel",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#ffffff",
+        "#171717",
+        "#171717",
+        "#ff5b4f",
+        "#de1d8d",
+        "#0a72ef"
+      ]
+    },
+    {
+      "id": "vibrant",
+      "title": "Design System Inspired by Vibrant",
+      "description": "Category: Bold & Expressive",
+      "category": "Bold & Expressive",
+      "signatureColors": [
+        "#7C61D4",
+        "#EAAE87",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "vintage",
+      "title": "Design System Inspired by Vintage",
+      "description": "Category: Retro & Nostalgic",
+      "category": "Retro & Nostalgic",
+      "signatureColors": [
+        "#008080",
+        "#C0C0C0",
+        "#16A34A",
+        "#D97706",
+        "#DC2626",
+        "#C0C0C0"
+      ]
+    },
+    {
+      "id": "vodafone",
+      "title": "Design System Inspired by Vodafone",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#e60000"
+      ]
+    },
+    {
+      "id": "voltagent",
+      "title": "Design System Inspired by VoltAgent",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#050507",
+        "#00d992",
+        "#3d3a39",
+        "#8b949e",
+        "#b8b3b0",
+        "#050507"
+      ]
+    },
+    {
+      "id": "warm-editorial",
+      "title": "Warm Editorial",
+      "description": "Category: Starter",
+      "category": "Starter",
+      "signatureColors": [
+        "#FAF7F2",
+        "#1C1A17",
+        "#C0512F",
+        "#2F5B4F",
+        "#8A817A",
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": "warp",
+      "title": "Design System Inspired by Warp",
+      "description": "Category: Developer Tools",
+      "category": "Developer Tools",
+      "signatureColors": [
+        "#faf9f6",
+        "#faf9f6",
+        "#353534",
+        "#faf9f6",
+        "#353534",
+        "#868584"
+      ]
+    },
+    {
+      "id": "webex",
+      "title": "Design System Inspired by Webex",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#1170cf",
+        "#0353a8",
+        "#063a75",
+        "#1170cf",
+        "#0353a8",
+        "#063a75"
+      ]
+    },
+    {
+      "id": "webflow",
+      "title": "Design System Inspired by Webflow",
+      "description": "Category: Design & Creative",
+      "category": "Design & Creative",
+      "signatureColors": [
+        "#146ef5",
+        "#080808",
+        "#146ef5",
+        "#7a3dff",
+        "#ed52cb",
+        "#00d722"
+      ]
+    },
+    {
+      "id": "wechat",
+      "title": "WeChat Design System",
+      "description": "Category: Social & Messaging",
+      "category": "Social & Messaging",
+      "signatureColors": [
+        "#07C160",
+        "#10B160",
+        "#059050",
+        "#95EC69",
+        "#FFFFFF",
+        "#1A1A1A"
+      ]
+    },
+    {
+      "id": "wired",
+      "title": "Design System Inspired by WIRED",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#057dbc",
+        "#000000",
+        "#1a1a1a",
+        "#ffffff",
+        "#057dbc"
+      ]
+    },
+    {
+      "id": "wise",
+      "title": "Design System Inspired by Wise",
+      "description": "Category: Fintech & Crypto",
+      "category": "Fintech & Crypto",
+      "signatureColors": [
+        "#0e0f0c",
+        "#9fe870",
+        "#9fe870",
+        "#163300",
+        "#9fe870",
+        "#163300"
+      ]
+    },
+    {
+      "id": "x-ai",
+      "title": "Design System Inspired by xAI",
+      "description": "Category: AI & LLM",
+      "category": "AI & LLM",
+      "signatureColors": [
+        "#1f2228",
+        "#ffffff",
+        "#1f2228",
+        "#ffffff",
+        "#ffffff",
+        "#1f2228"
+      ]
+    },
+    {
+      "id": "xiaohongshu",
+      "title": "Design System Inspired by Xiaohongshu",
+      "description": "Category: Media & Consumer",
+      "category": "Media & Consumer",
+      "signatureColors": [
+        "#FFFFFF",
+        "#F5F5F5",
+        "#FF2442",
+        "#FF2442",
+        "#FF2E4D"
+      ]
+    },
+    {
+      "id": "zapier",
+      "title": "Design System Inspired by Zapier",
+      "description": "Category: Productivity & SaaS",
+      "category": "Productivity & SaaS",
+      "signatureColors": [
+        "#fffefb",
+        "#201515",
+        "#ff4f00",
+        "#fffefb",
+        "#201515",
+        "#ff4f00"
+      ]
+    }
+  ],
+  "directions": [
+    {
+      "id": "editorial-monocle",
+      "name": "Editorial Monocle",
+      "mood": "Print-magazine feel, serif headlines, paper + ink + single accent"
+    },
+    {
+      "id": "modern-minimal",
+      "name": "Modern Minimal",
+      "mood": "Quiet, precise, software-native. System fonts, crisp neutrals, small product palette"
+    },
+    {
+      "id": "warm-soft",
+      "name": "Warm Soft",
+      "mood": "Approachable, rounded, warm neutrals, friendly and inviting"
+    },
+    {
+      "id": "tech-utility",
+      "name": "Tech Utility",
+      "mood": "Monospace-heavy, terminal aesthetic, data-dense, dark backgrounds"
+    },
+    {
+      "id": "brutalist-experimental",
+      "name": "Brutalist Experimental",
+      "mood": "Raw, confrontational, oversized type, high contrast, broken grids"
+    }
+  ]
+}
