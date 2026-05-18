@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// Default base '/' for Railway deployment
+// For GitHub Pages, build with: BASE_URL=/DesignSite/ npx vite build
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: '/',
-})
+  base: process.env.BASE_URL || (mode === 'pages' ? '/DesignSite/' : '/'),
+}))
