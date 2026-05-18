@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Railway local config
+.railway/
+
+# Built output (built in Docker)
+
+docs/
+
