@@ -1,1 +1,176 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Airtable - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#ffffff;color:#111111;"><section style="padding:120px 48px 80px;text-align:center;border-bottom:6px solid #181d26;"><h1 style="font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:0.95;">Airtable</h1><p style="font-size:24px;margin-top:24px;font-weight:700;">Spreadsheet-database hybrid. Colorful, friendly, structured data aesthetic.</p><div style="margin-top:40px;display:inline-block;background:#181d26;color:#FFF;padding:16px 48px;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:2px;text-decoration:none;">Explore Now</div></section><section style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:6px solid #181d26;"><div style="border:3px solid #181d26;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#181d26;">5M+</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">API/Day</div></div><div style="border:3px solid #181d26;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#181d26;">24/7</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Support</div></div><div style="border:3px solid #181d26;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#181d26;">99.9%</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Uptime</div></div><div style="border:3px solid #181d26;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#181d26;">50ms</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Response</div></div></section><section style="padding:0;border-bottom:6px solid #181d26;"><div style="background:#181d26;color:#FFFFFF;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Brand Kit</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Centralized assets</p></div><div style="background:#ffffff;color:#111111;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Live Multiplayer</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Collaborate with cursors</p></div><div style="background:#181d26;color:#FFFFFF;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Infinite Canvas</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Boundless workspace</p></div><div style="background:#ffffff;color:#111111;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Export &amp; Publish</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Any format, one click</p></div></section><section style="padding:120px 48px;text-align:center;"><div style="font-size:80px;font-weight:900;color:#181d26;text-transform:uppercase;line-height:1;letter-spacing:-3px;">Airtable</div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Airtable — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#18B5E0;--accent2:#FCB400;--accent3:#E94F37;--accent4:#7C4DFF;--accent5:#00C9A7;--bg:#ffffff;--fg:#181d26;--muted:#6b7280;--border:#e5e7eb;--surface:#f7f7f7;--card:#ffffff;--radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--radius-pill:9999px;--font:'Inter',system-ui,-apple-system,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);z-index:100;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px}
+.nav-logo .icon{display:flex;gap:2px}
+.nav-logo .icon span{width:6px;height:6px;border-radius:2px}
+.nav-logo .icon .c1{background:var(--accent)}.nav-logo .icon .c2{background:var(--accent2)}.nav-logo .icon .c3{background:var(--accent3)}.nav-logo .icon .c4{background:var(--accent4)}
+.nav-links{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.btn{border:none;font-family:var(--font);font-size:14px;font-weight:600;padding:10px 20px;border-radius:var(--radius-pill);cursor:pointer;transition:all 150ms}
+.btn-ghost{background:transparent;color:var(--fg)}
+.btn-ghost:hover{background:var(--surface)}
+.btn-primary{background:var(--fg);color:#fff}
+.btn-primary:hover{opacity:0.9}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:#14a3cb}
+
+/* Hero */
+.hero{padding:80px 0 60px;text-align:center}
+.hero-badges{display:flex;justify-content:center;gap:8px;margin-bottom:24px}
+.badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:var(--radius-pill);text-transform:uppercase;letter-spacing:0.5px}
+.badge-blue{background:#e0f4fc;color:#0b7dab}.badge-yellow{background:#fef3cd;color:#92620d}.badge-red{background:#fde2df;color:#b3291a}.badge-purple{background:#ede5ff;color:#5b2dbd}
+.hero h1{font-size:clamp(36px,5vw,60px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:20px;max-width:800px;margin-inline:auto}
+.hero h1 .gr{color:var(--accent)}
+.hero h1 .yg{color:var(--accent2)}
+.hero-sub{font-size:18px;color:var(--muted);max-width:560px;margin-inline:auto;line-height:1.7;margin-bottom:36px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-logos{margin-top:48px;font-size:13px;color:var(--muted);text-align:center}
+.hero-logos .bar{display:flex;justify-content:center;gap:32px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.hero-logos .bar span{font-weight:600;font-size:15px;color:#c0c0c0}
+
+/* Spreadsheets */
+.spreadsheet{padding:60px 0}
+.spreadsheet-header{text-align:center;margin-bottom:40px}
+.spreadsheet-header .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px}
+.spreadsheet-header h2{font-size:36px;font-weight:800;letter-spacing:-1px}
+.spreadsheet-header p{font-size:16px;color:var(--muted);margin-top:8px}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.table-toolbar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface)}
+.table-toolbar .tab{font-size:13px;font-weight:600;padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;transition:all 150ms}
+.table-toolbar .tab.active{background:var(--fg);color:#fff}
+.table-toolbar .tab:not(.active):hover{background:var(--border)}
+.table-toolbar .actions{margin-left:auto;display:flex;gap:8px}
+.table-toolbar .actions .abtn{font-size:12px;padding:6px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fff;cursor:pointer;font-weight:500}
+.table-toolbar .actions .abtn:hover{background:var(--surface)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 16px;text-align:left;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);border-bottom:1px solid var(--border);background:var(--surface)}
+tbody td{padding:12px 16px;font-size:14px;border-bottom:1px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#fafafa}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:var(--radius-pill)}
+.tag-green{background:#d4edda;color:#155724}.tag-blue{background:#cce5ff;color:#004085}.tag-yellow{background:#fff3cd;color:#856404}.tag-red{background:#f8d7da;color:#721c24}.tag-purple{background:#e2d5f5;color:#5b2dbd}
+.avatar-sm{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+
+/* Features */
+.features{padding:80px 0;background:var(--surface)}
+.features-header{text-align:center;margin-bottom:48px}
+.features-header .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent2);margin-bottom:12px}
+.features-header h2{font-size:36px;font-weight:800;letter-spacing:-1px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all 200ms;position:relative;overflow:hidden}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.feat-card:nth-child(1)::before{background:var(--accent)}.feat-card:nth-child(2)::before{background:var(--accent2)}.feat-card:nth-child(3)::before{background:var(--accent3)}.feat-card:nth-child(4)::before{background:var(--accent4)}.feat-card:nth-child(5)::before{background:var(--accent5)}.feat-card:nth-child(6)::before{background:var(--accent)}
+.feat-icon{width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.fi-blue{background:#e0f4fc;color:var(--accent)}.fi-yellow{background:#fef3cd;color:var(--accent2)}.fi-red{background:#fde2df;color:var(--accent3)}.fi-purple{background:#ede5ff;color:var(--accent4)}.fi-green{background:#d1f5ec;color:var(--accent5)}
+.feat-card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* Integrations */
+.integrations{padding:80px 0}
+.integrations-header{text-align:center;margin-bottom:48px}
+.integrations-header .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent4);margin-bottom:12px}
+.integrations-header h2{font-size:36px;font-weight:800;letter-spacing:-1px}
+.integrations-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.int-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;text-align:center;transition:all 150ms}
+.int-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(24,181,224,0.1)}
+.int-card .icon{width:48px;height:48px;border-radius:var(--radius-md);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.int-card .name{font-size:14px;font-weight:600}
+.int-card .desc{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* CTA */
+.cta{padding:80px 0;text-align:center;background:var(--fg);color:#fff;border-radius:24px;margin:0 24px 60px}
+.cta h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.cta p{font-size:18px;opacity:0.7;max-width:500px;margin-inline:auto;line-height:1.7;margin-bottom:32px}
+.cta .btn{font-size:16px;padding:14px 32px}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:40px 24px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px}
+.footer-logo .icon{display:flex;gap:2px}
+.footer-logo .icon span{width:6px;height:6px;border-radius:2px}
+.footer-links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+.footer-links a:hover{color:var(--fg)}
+
+@media(max-width:1023px){.features-grid{grid-template-columns:repeat(2,1fr)}.integrations-grid{grid-template-columns:repeat(3,1fr)}.hero-logos .bar{gap:20px}}
+@media(max-width:639px){.features-grid{grid-template-columns:1fr}.integrations-grid{grid-template-columns:repeat(2,1fr)}.nav-links{display:none}.table-wrap{overflow-x:auto}table{min-width:600px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><span class="icon"><span class="c1"></span><span class="c2"></span><span></span><span class="c3"></span><span class="c4"></span></span> Airtable</div><div class="nav-links"><a href="#sheets">Views</a><a href="#features">Features</a><a href="#integrations">Integrations</a><a href="#">Templates</a><a href="#">Pricing</a></div><div style="display:flex;gap:8px;align-items:center"><button class="btn btn-ghost">Log in</button><button class="btn btn-accent">Sign up free</button></div></nav>
+
+<section class="hero container">
+<div class="hero-badges"><span class="badge badge-blue">Spreadsheet</span><span class="badge badge-yellow">Database</span><span class="badge badge-red">Automation</span><span class="badge badge-purple">AI Powered</span></div>
+<h1>Build apps. <span class="gr">No code.</span><br>Run workflows. <span class="yg">Zero friction.</span></h1>
+<p class="hero-sub">The platform that combines the simplicity of a spreadsheet with the power of a database. Organize, automate, and collaborate—faster than ever.</p>
+<div class="hero-actions"><button class="btn btn-primary">Get started for free</button><button class="btn btn-ghost" style="border:1px solid var(--border)">Watch a demo</button></div>
+<div class="hero-logos"><p style="font-size:13px;color:#aaa;margin-top:0">Trusted by 450,000+ organizations</p><div class="bar"><span>Shopify</span><span>Netflix</span><span>Time</span><span>Figma</span><span>Coinbase</span><span>Salesforce</span></div></div>
+</section>
+
+<section class="spreadsheet container" id="sheets">
+<div class="spreadsheet-header"><div class="eyebrow">Live View</div><h2>Your data, your way</h2><p>Switch between Grid, Calendar, Kanban, Gallery, and Gantt—same data, different perspective.</p></div>
+<div class="table-wrap">
+<div class="table-toolbar"><div class="tab active">Grid</div><div class="tab">Calendar</div><div class="tab">Kanban</div><div class="tab">Gallery</div><div class="tab">Gantt</div><div class="actions"><button class="abtn">+ Add field</button><button class="abtn">Filter</button><button class="abtn">Sort</button></div></div>
+<table>
+<thead><tr><th>Project</th><th>Status</th><th>Priority</th><th>Owner</th><th>Due Date</th><th>Progress</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600">Website Redesign</td><td><span class="tag tag-green">Active</span></td><td><span class="tag tag-red">High</span></td><td><span class="avatar-sm" style="background:var(--accent);margin-right:6px">MK</span>Maria K.</td><td>Jun 15, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent5);height:100%;width:72%;border-radius:99px"></div></div></td></tr>
+<tr><td style="font-weight:600">Mobile App Launch</td><td><span class="tag tag-blue">In Review</span></td><td><span class="tag tag-red">High</span></td><td><span class="avatar-sm" style="background:var(--accent4);margin-right:6px">JS</span>James S.</td><td>Jul 01, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent4);height:100%;width:58%;border-radius:99px"></div></div></td></tr>
+<tr><td style="font-weight:600">API Documentation</td><td><span class="tag tag-green">Active</span></td><td><span class="tag tag-yellow">Medium</span></td><td><span class="avatar-sm" style="background:var(--accent);margin-right:6px">AR</span>Amara R.</td><td>Jul 22, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent);height:100%;width:45%;border-radius:99px"></div></div></td></tr>
+<tr><td style="font-weight:600">Customer Onboarding Flow</td><td><span class="tag tag-yellow">Planning</span></td><td><span class="tag tag-yellow">Medium</span></td><td><span class="avatar-sm" style="background:var(--accent3);margin-right:6px">LP</span>Lena P.</td><td>Aug 10, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent2);height:100%;width:20%;border-radius:99px"></div></div></td></tr>
+<tr><td style="font-weight:600">Data Pipeline v2</td><td><span class="tag tag-purple">Blocked</span></td><td><span class="tag tag-red">High</span></td><td><span class="avatar-sm" style="background:var(--accent2);margin-right:6px">DW</span>Dan W.</td><td>Sep 05, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent3);height:100%;width:12%;border-radius:99px"></div></div></td></tr>
+<tr><td style="font-weight:600">Security Audit Q3</td><td><span class="tag tag-blue">In Review</span></td><td><span class="tag tag-green">Low</span></td><td><span class="avatar-sm" style="background:#6b7280;margin-right:6px">RK</span>Raj K.</td><td>Oct 01, 2026</td><td><div style="background:#e5e7eb;border-radius:99px;height:8px;width:100px;overflow:hidden"><div style="background:var(--accent5);height:100%;width:85%;border-radius:99px"></div></div></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="features" id="features"><div class="container">
+<div class="features-header"><div class="eyebrow">Features</div><h2>Everything connected, everything automated</h2></div>
+<div class="features-grid">
+<div class="feat-card"><div class="feat-icon fi-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><h3>Multiple Views</h3><p>Grid, Calendar, Kanban, Gallery, Gantt—switch instantly. Same data, the view that fits your workflow.</p></div>
+<div class="feat-card"><div class="feat-icon fi-yellow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Automations</h3><p>Trigger workflows when records change. Send emails, update fields, call webhooks—no code required.</p></div>
+<div class="feat-card"><div class="feat-icon fi-red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div><h3>AI Fields</h3><p>Categorize, summarize, translate, and extract with built-in AI. One formula field, infinite intelligence.</p></div>
+<div class="feat-card"><div class="feat-icon fi-purple"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Real-Time Collaboration</h3><p>Comment, mention, assign—everyone sees changes live. No version conflicts, no lost context.</p></div>
+<div class="feat-card"><div class="feat-icon fi-green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div><h3>Interfaces</h3><p>Build custom dashboards, forms, and apps on top of your data. Share with anyone—no Airtable account needed.</p></div>
+<div class="feat-card"><div class="feat-icon fi-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Enterprise Security</h3><p>SOC 2 Type II, HIPAA, GDPR compliant. Role-based access, audit logs, and SSO built in from day one.</p></div>
+</div></div></section>
+
+<section class="integrations container" id="integrations">
+<div class="integrations-header"><div class="eyebrow">Integrations</div><h2>Works with what you already use</h2></div>
+<div class="integrations-grid">
+<div class="int-card"><div class="icon" style="background:#e0f4fc">📧</div><div class="name">Gmail</div><div class="desc">Email to record</div></div>
+<div class="int-card"><div class="icon" style="background:#fef3cd">💬</div><div class="name">Slack</div><div class="desc">Notifications</div></div>
+<div class="int-card"><div class="icon" style="background:#ede5ff">📊</div><div class="name">Google Drive</div><div class="desc">File attachments</div></div>
+<div class="int-card"><div class="icon" style="background:#d1f5ec">💳</div><div class="name">Stripe</div><div class="desc">Payment tracking</div></div>
+<div class="int-card"><div class="icon" style="background:#fde2df">🔧</div><div class="name">Zapier</div><div class="desc">5,000+ apps</div></div>
+<div class="int-card"><div class="icon" style="background:#e0f4fc">📋</div><div class="name">Salesforce</div><div class="desc">CRM sync</div></div>
+<div class="int-card"><div class="icon" style="background:#fef3cd">🐙</div><div class="name">GitHub</div><div class="desc">Issue tracking</div></div>
+<div class="int-card"><div class="icon" style="background:#ede5ff">📊</div><div class="name">Looker</div><div class="desc">Analytics</div></div>
+</div>
+</section>
+
+<section class="cta"><h2>Create. Automate. Scale.</h2><p>Start building for free. Upgrade when your team grows.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-accent" style="font-size:16px;padding:14px 32px">Sign up free</button><button class="btn btn-ghost" style="font-size:16px;padding:14px 32px;border:1px solid rgba(255,255,255,0.3);color:#fff">Talk to sales</button></div></section>
+
+<footer class="footer"><div class="footer-inner">
+<div class="footer-logo"><span class="icon"><span class="c1"></span><span class="c2"></span><span></span><span class="c3"></span><span class="c4"></span></span> Airtable</div>
+<div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a><a href="#">Status</a></div>
+<div style="font-size:13px;color:var(--muted)">&copy; 2026 Airtable. All rights reserved.</div>
+</div></footer>
+</body>
+</html>

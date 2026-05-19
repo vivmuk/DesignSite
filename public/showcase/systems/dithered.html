@@ -1,1 +1,183 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dithered - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFFFFF;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:28px 64px;border-bottom:1px solid #E8E8E8;"><div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:300;">Dithered</div><div style="display:flex;gap:40px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777777;"><span>System</span><span>Components</span><span>About</span></div></nav><section style="padding:140px 64px 80px;text-align:center;max-width:680px;margin:0 auto;"><div style="width:60px;height:1px;background:#3B82F6;margin:0 auto 40px;"></div><h1 style="font-size:44px;font-weight:200;letter-spacing:6px;text-transform:uppercase;line-height:1.3;">Dithered</h1><p style="font-size:16px;line-height:1.8;margin-top:32px;color:#888888;font-weight:300;">Dot-pattern rendering technique that simulates shades with a limited palette for nostalgic, retro, high-contra</p><div style="width:60px;height:1px;background:#3B82F6;margin:40px auto 0;"></div></section><section style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;"><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">50ms</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Response</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">10K+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Teams</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">200+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Integrations</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">4.9★</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Rating</div></div></section><section style="max-width:600px;margin:0 auto;padding:40px 64px 100px;"><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Icon System</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Scalable vector icons</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Responsive Grid</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Fluid adaptive layouts</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Design Tokens</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Centralized variables</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Theme Engine</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Instant look switching</p></div></section><section style="text-align:center;padding:60px 64px 120px;border-top:1px solid #E8E8E8;"><div style="width:40px;height:1px;background:#3B82F6;margin:0 auto 32px;"></div><a href="#" style="color:#3B82F6;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:400;border-bottom:1px solid #3B82F6;padding-bottom:4px;">Discover More</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dithered - Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3B82F6;--bg:#FFFFFF;--text:#111111;--text-dim:#666666;--border:#DDDDDD;--dither:bg url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="4" height="4" fill="white"/><rect x="0" y="0" width="1" height="1" fill="black" opacity="0.08"/><rect x="2" y="2" width="1" height="1" fill="black" opacity="0.08"/></svg>')}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:2px solid #111}
+.nav-logo{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;letter-spacing:-1px;text-transform:uppercase}
+.nav-logo span{display:inline-block;background:#111;color:#fff;padding:2px 6px;margin-left:2px}
+.nav-links{display:flex;gap:28px;font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:1px}
+.nav-links a{color:var(--text);transition:all .2s;border-bottom:2px solid transparent;padding-bottom:2px}
+.nav-links a:hover{border-bottom-color:var(--accent)}
+.hero{padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f0f0f0 100%)}
+.hero::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='%23000' opacity='0.03'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000' opacity='0.05'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%23000' opacity='0.03'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%23000' opacity='0.05'/%3E%3C/svg%3E");pointer-events:none}
+.hero-inner{position:relative;z-index:1}
+.hero-badge{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);margin-bottom:32px;display:inline-block;border:1px dashed var(--border);padding:8px 24px}
+.hero h1{font-family:'Space Mono',monospace;font-size:80px;font-weight:700;letter-spacing:-4px;line-height:.95;margin-bottom:24px}
+.hero h1 .dot{color:var(--accent)}
+.hero p{font-size:18px;color:var(--text-dim);max-width:480px;margin:0 auto 48px;line-height:1.7;font-weight:300}
+.hero-actions{display:flex;gap:16px;justify-content:center}
+.btn-fill{font-family:'Space Mono',monospace;background:#111;color:#fff;padding:14px 36px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:none;cursor:pointer;transition:all .2s}
+.btn-fill:hover{background:var(--accent)}
+.btn-outline{font-family:'Space Mono',monospace;background:transparent;color:#111;padding:14px 36px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:2px solid #111;cursor:pointer;transition:all .2s}
+.btn-outline:hover{background:#111;color:#fff}
+.dither-strip{height:8px;background-image:url("data:image/svg+xml,%3Csvg width='2' height='2' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='%23000'/%3E%3C/svg%3E");background-size:4px 8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2px solid #111}
+.stat{text-align:center;padding:48px 24px;border-right:2px solid #111;transition:background .2s}
+.stat:last-child{border-right:none}
+.stat:hover{background:#f5f5f5}
+.stat-number{font-family:'Space Mono',monospace;font-size:48px;font-weight:700;letter-spacing:-2px}
+.stat-label{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-top:8px}
+.features{padding:100px 48px;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Space Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:4px;color:var(--text-dim);margin-bottom:48px;text-align:center}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.feature-block{border:2px solid #111;padding:40px;position:relative;transition:all .2s}
+.feature-block:hover{background:#f9f9f9;transform:translate(-2px,-2px);box-shadow:4px 4px 0 #111}
+.feature-block::before{content:attr(data-num);font-family:'Space Mono',monospace;font-size:64px;font-weight:700;color:#f0f0f0;position:absolute;top:16px;right:20px;line-height:1}
+.feature-block h3{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;margin-bottom:12px;position:relative}
+.feature-block p{font-size:15px;color:var(--text-dim);line-height:1.7;position:relative}
+.pattern-section{padding:80px 48px;background:#111;color:#fff;position:relative}
+.pattern-section::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='white' opacity='0.04'/%3E%3Crect x='2' y='2' width='1' height='1' fill='white' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none}
+.pattern-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;text-align:center}
+.pattern-inner h2{font-family:'Space Mono',monospace;font-size:48px;font-weight:700;letter-spacing:-2px;margin-bottom:24px}
+.pattern-inner p{font-size:16px;opacity:.7;max-width:500px;margin:0 auto 48px;line-height:1.7}
+.pattern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1)}
+.pattern-card{background:#111;padding:32px;text-align:center;transition:background .2s}
+.pattern-card:hover{background:#1a1a1a}
+.pattern-card .icon{font-size:32px;margin-bottom:16px}
+.pattern-card h4{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;margin-bottom:8px}
+.pattern-card p{font-size:13px;opacity:.6;line-height:1.6}
+.showcase{padding:100px 48px;max-width:1200px;margin:0 auto}
+.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.showcase-item{border:2px solid #111;position:relative;overflow:hidden;transition:all .2s}
+.showcase-item:hover{box-shadow:6px 6px 0 var(--accent);transform:translate(-2px,-2px)}
+.showcase-visual{height:200px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:48px;font-weight:700;position:relative}
+.showcase-visual.s1{background:#f5f5f5;color:#111;background-image:url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='%23000' opacity='0.06'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000' opacity='0.06'/%3E%3C/svg%3E)")}
+.showcase-visual.s2{background:#111;color:#fff;background-image:url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='white' opacity='0.06'/%3E%3Crect x='2' y='2' width='1' height='1' fill='white' opacity='0.06'/%3E%3C/svg%3E)")}
+.showcase-item h4{font-family:'Space Mono',monospace;padding:20px 24px 4px;font-size:16px}
+.showcase-item p{padding:0 24px 20px;font-size:14px;color:var(--text-dim);line-height:1.6}
+.cta{padding:100px 48px;text-align:center;background:#f5f5f5;background-image:url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1' height='1' fill='%23000' opacity='0.05'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000' opacity='0.05'/%3E%3C/svg%3E)")}
+.cta h2{font-family:'Space Mono',monospace;font-size:48px;font-weight:700;letter-spacing:-2px;margin-bottom:16px}
+.cta p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto 40px;line-height:1.7}
+.footer{border-top:2px solid #111;padding:48px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
+.footer-logo{font-family:'Space Mono',monospace;font-weight:700;font-size:14px;text-transform:uppercase}
+.footer-logo span{background:#111;color:#fff;padding:2px 6px}
+.footer-links{display:flex;gap:32px;font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.footer-links a{color:var(--text-dim);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-family:'Space Mono',monospace;font-size:11px;color:var(--text-dim);width:100%;text-align:center;margin-top:24px;padding-top:24px;border-top:1px dashed var(--border)}
+@media(max-width:768px){
+.hero h1{font-size:48px}.stats{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr}.pattern-grid{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.nav{padding:16px 24px}.hero{padding:80px 24px}.nav-links{display:none}
+}
+@media(max-width:480px){.hero h1{font-size:36px}.stat-number{font-size:32px}.footer-links{flex-direction:column;gap:16px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">DITHERED<span>.</span></div>
+<div class="nav-links">
+<a href="#">Process</a><a href="#">Gallery</a><a href="#">Spec</a><a href="#">About</a>
+</div>
+</nav>
+<section class="hero">
+<div class="hero-inner">
+<div class="hero-badge">Design System v3.0</div>
+<h1>Where pixels<br>become pattern<span class="dot">.</span></h1>
+<p>Dot-pattern rendering that simulates shades with a limited palette. Nostalgic, retro, high-contrast — built for screens that remember.</p>
+<div class="hero-actions">
+<button class="btn-fill">Explore System</button>
+<button class="btn-outline">View Docs</button>
+</div>
+</div>
+</section>
+<div class="dither-strip"></div>
+<section class="stats">
+<div class="stat"><div class="stat-number">120+</div><div class="stat-label">Dither Patterns</div></div>
+<div class="stat"><div class="stat-number">6</div><div class="stat-label">Bit Depths</div></div>
+<div class="stat"><div class="stat-number">2.4K</div><div class="stat-label">GitHub Stars</div></div>
+<div class="stat"><div class="stat-number">∞</div><div class="stat-label">Possibilities</div></div>
+</section>
+<section class="features">
+<div class="section-title">// How it works</div>
+<div class="feature-grid">
+<div class="feature-block" data-num="01">
+<h3>Ordered Dithering</h3>
+<p>Classic Bayer matrix patterns that produce clean, organized dot distributions. Perfect for UI elements that need consistent texture at any scale.</p>
+</div>
+<div class="feature-block" data-num="02">
+<h3>Error Diffusion</h3>
+<p>Floyd-Steinberg and Jarvis-Judice-Ninke algorithms that redistribute quantization error across neighboring pixels for organic, natural patterns.</p>
+</div>
+<div class="feature-block" data-num="03">
+<h3>Custom Patterns</h3>
+<p>Define your own threshold matrices for unique halftone effects. SVG-compatible and build-time ready for any rendering pipeline.</p>
+</div>
+<div class="feature-block" data-num="04">
+<h3>Multi-bit Output</h3>
+<p>Support for 1-bit through 8-bit output depths. Control exactly how many tonal levels your system supports at render time.</p>
+</div>
+</div>
+</section>
+<section class="pattern-section">
+<div class="pattern-inner">
+<h2>Every shade,<br>one dot at a time</h2>
+<p>Beauty in constraint. Precision in limitation. Dithering proves that less truly is more.</p>
+<div class="pattern-grid">
+<div class="pattern-card"><div class="icon">⬜⬛⬜⬛</div><h4>2×2 Bayer</h4><p>Smallest ordered matrix. Four shades from two colors. The foundation.</p></div>
+<div class="pattern-card"><div class="icon">⬜⬛⬜⬛⬜⬛</div><h4>4×4 Bayer</h4><p>Sixteen threshold values. Smooth gradients with minimal artifacts.</p></div>
+<div class="pattern-card"><div class="icon">⬛⬜⬜⬛</div><h4>8×8 Bayer</h4><p>Sixty-four levels. Near-continuous tone from binary output.</p></div>
+<div class="pattern-card"><div class="icon">◈◇◈◇</div><h4>Blue Noise</h4><p>Stochastic distribution with minimal low-frequency energy.</p></div>
+<div class="pattern-card"><div class="icon">◉◎◎◉</div><h4>Interleaved</h4><p>Gradient ramp patterns for transitional dithering.</p></div>
+<div class="pattern-card"><div class="icon">▪▫▪▫▪▫</div><h4>Custom Matrix</h4><p>Upload or define your own threshold map. Infinite control.</p></div>
+</div>
+</div>
+</section>
+<section class="showcase">
+<div class="section-title">// Gallery</div>
+<div class="showcase-grid">
+<div class="showcase-item">
+<div class="showcase-visual s1">▓▒░</div>
+<h4>Grayscale Ramp</h4>
+<p>Full 8-bit to 1-bit conversion with Floyd-Steinberg error diffusion across a continuous gradient.</p>
+</div>
+<div class="showcase-item">
+<div class="showcase-visual s2">█▓▒░</div>
+<h4>High Contrast Mode</h4>
+<p>Binary output with ordered dithering. Pure black and white, nothing in between — just pattern.</p>
+</div>
+<div class="showcase-item">
+<div class="showcase-visual s2">◐◑◒◓</div>
+<h4>Halftone Effects</h4>
+<p>Variable dot sizes for print-inspired aesthetics. SVG output scales cleanly to any resolution.</p>
+</div>
+<div class="showcase-item">
+<div class="showcase-visual s1">◍◌◎●</div>
+<h4>Animated Dither</h4>
+<p>Threshold matrix animations that shift over time. Create breathing, living dot patterns.</p>
+</div>
+</div>
+</section>
+<section class="cta">
+<h2>Start dithering<span class="dot">.</span></h2>
+<p>The pattern library is open source. Fork it, extend it, make it yours.</p>
+<div class="hero-actions">
+<button class="btn-fill">Get Started</button>
+<button class="btn-outline">GitHub</button>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-logo">DITHERED<span>.</span></div>
+<div class="footer-links">
+<a href="#">Docs</a><a href="#">GitHub</a><a href="#">NPM</a><a href="#">Blog</a>
+</div>
+<div class="footer-copy">© 2026 Dithered Design System. Released under MIT License.</div>
+</footer>
+</body>
+</html>

@@ -1,1 +1,231 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neutral Modern - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FAFAFA;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #E8E8E8;"><div style="font-weight:800;font-size:18px;letter-spacing:-0.5px;">Neutral Modern</div><div style="display:flex;gap:28px;font-size:14px;color:#555555;"><span>Components</span><span>Docs</span><span>GitHub</span></div></nav><section style="padding:100px 48px 60px;text-align:center;max-width:800px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#FAFAFA;font-weight:600;margin-bottom:16px;">Design System</div><h1 style="font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;">Neutral Modern</h1><p style="font-size:18px;color:#555555;margin-top:20px;line-height:1.6;">A clean, product-oriented default. Use when the brief doesnt call for a</p></section><section style="display:flex;justify-content:center;gap:48px;padding:40px 48px;border-top:1px solid #E8E8E8;border-bottom:1px solid #E8E8E8;max-width:900px;margin:0 auto;"><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#FAFAFA;">200+</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Integrations</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#FAFAFA;">4.9★</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Rating</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#FAFAFA;">&lt;1s</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Time to Value</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#FAFAFA;">5M+</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">API/Day</div></div></section><section style="padding:80px 48px;max-width:680px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#FAFAFA;font-weight:600;margin-bottom:48px;">Features</div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#FAFAFA;line-height:1;opacity:0.85;">01</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Export &amp; Publish</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Any format, one click</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#FAFAFA;line-height:1;opacity:0.85;">02</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Brand Kit</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Centralized assets</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#FAFAFA;line-height:1;opacity:0.85;">03</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Live Multiplayer</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Collaborate with cursors</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#FAFAFA;line-height:1;opacity:0.85;">04</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Infinite Canvas</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Boundless workspace</p></div></div></section><section style="text-align:center;padding:60px 48px 100px;"><a href="#" style="background:#FAFAFA;color:#FFF;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;">Get Started</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neutral Modern - Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#FAFAFA;--bg:#FAFAFA;--card-bg:#FFFFFF;--text:#111111;--text-dim:#888888;--border:#E5E5E5;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--text);text-decoration:none}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 64px;background:var(--card-bg);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:16px;font-weight:600;letter-spacing:-.5px}
+.nav-logo span{font-weight:300;color:var(--text-dim)}
+.nav-links{display:flex;gap:32px;font-size:13px;color:var(--text-dim)}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--text);color:var(--bg);padding:8px 24px;border-radius:8px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+.hero{padding:140px 64px 100px;text-align:center;background:var(--bg)}
+.hero h1{font-size:64px;font-weight:300;letter-spacing:-3px;line-height:1.1;margin-bottom:24px;color:var(--text)}
+.hero h1 strong{font-weight:600}
+.hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin:0 auto 48px;line-height:1.7}
+.hero-input-group{display:flex;gap:12px;max-width:460px;margin:0 auto;align-items:center}
+.hero-input-group input{flex:1;padding:14px 20px;border:1px solid var(--border);border-radius:10px;font-size:15px;background:var(--card-bg);outline:none;font-family:inherit}
+.hero-input-group input:focus{border-color:#ccc}
+.hero-input-group button{background:var(--text);color:var(--bg);padding:14px 32px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.hero-input-group button:hover{opacity:.85}
+.logos{text-align:center;padding:40px 64px 80px;border-bottom:1px solid var(--border)}
+.logos p{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:32px}
+.logo-row{display:flex;justify-content:center;align-items:center;gap:64px;flex-wrap:wrap;opacity:.4}
+.logo-row span{font-size:20px;font-weight:600;letter-spacing:-.5px}
+.features{padding:100px 64px;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;max-width:1200px;margin:0 auto}
+.feature{text-align:left;padding:32px 0}
+.feature-number{font-size:12px;color:var(--text-dim);font-weight:500;margin-bottom:16px;letter-spacing:1px}
+.feature h3{font-size:20px;font-weight:600;margin-bottom:12px;letter-spacing:-.3px}
+.feature p{font-size:15px;color:var(--text-dim);line-height:1.7}
+.feature:hover h3{opacity:.7;transition:opacity .2s}
+.stats-bar{background:var(--text);color:var(--bg);padding:80px 64px;display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-item .number{font-size:56px;font-weight:200;letter-spacing:-2px}
+.stat-item .label{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.6;margin-top:8px}
+.testimonials{padding:100px 64px;max-width:1000px;margin:0 auto}
+.testimonials h2{font-size:32px;font-weight:300;letter-spacing:-1px;text-align:center;margin-bottom:64px}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.testimonial{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:32px;box-shadow:var(--shadow)}
+.testimonial p{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:20px}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600}
+.author-info .name{font-size:13px;font-weight:600}
+.author-info .role{font-size:12px;color:var(--text-dim)}
+.pricing{padding:100px 64px;text-align:center;max-width:1100px;margin:0 auto}
+.pricing h2{font-size:40px;font-weight:300;letter-spacing:-1px;margin-bottom:16px}
+.pricing>p{color:var(--text-dim);margin-bottom:64px;font-size:16px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:40px 32px;text-align:left;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.price-card.featured{border-color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.price-card h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.price-card .price{font-size:40px;font-weight:200;margin-bottom:4px;letter-spacing:-1px}
+.price-card .price span{font-size:14px;color:var(--text-dim);font-weight:400}
+.price-card .desc{font-size:13px;color:var(--text-dim);margin-bottom:24px}
+.price-card ul{list-style:none;margin-bottom:32px}
+.price-card li{font-size:14px;padding:8px 0;border-bottom:1px solid var(--border);color:#444}
+.price-card li:last-child{border:none}
+.btn-card{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .2s}
+.btn-card:hover{background:var(--text);color:var(--bg)}
+.btn-card.primary{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn-card.primary:hover{opacity:.85}
+.cta{padding:100px 64px;text-align:center;background:var(--text);color:var(--bg)}
+.cta h2{font-size:48px;font-weight:200;letter-spacing:-2px;margin-bottom:16px}
+.cta p{font-size:16px;opacity:.7;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.btn-cta-light{background:var(--bg);color:var(--text);padding:14px 40px;border-radius:10px;font-size:14px;font-weight:500;border:none;cursor:pointer;transition:opacity .2s}
+.btn-cta-light:hover{opacity:.85}
+.footer{padding:60px 64px 40px;border-top:1px solid var(--border)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .footer-logo{font-size:16px;font-weight:600;margin-bottom:12px}
+.footer-brand .footer-logo span{font-weight:300;color:var(--text-dim)}
+.footer-brand p{font-size:14px;color:var(--text-dim);line-height:1.7}
+.footer-col h4{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:16px;font-weight:600}
+.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim)}
+@media(max-width:768px){
+.hero h1{font-size:40px}.features{grid-template-columns:1fr}.pricing-grid{grid-template-columns:1fr}.testimonial-grid{grid-template-columns:1fr}.stats-bar{gap:40px}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.hero{padding:80px 24px}.hero-input-group{flex-direction:column}
+}
+@media(max-width:480px){.hero h1{font-size:32px}.footer-grid{grid-template-columns:1fr}.logo-row{gap:32px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">neutral<span>.modern</span></div>
+<div class="nav-links">
+<a href="#">Product</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a>
+</div>
+<button class="nav-cta">Get Started</button>
+</nav>
+<section class="hero">
+<h1>The product that<br><strong>just works</strong></h1>
+<p>A clean, product-oriented platform designed to get out of your way and let you focus on what matters.</p>
+<div class="hero-input-group">
+<input type="email" placeholder="Enter your email">
+<button>Start free trial</button>
+</div>
+</section>
+<section class="logos">
+<p>Trusted by teams at</p>
+<div class="logo-row">
+<span>Vercel</span><span>Linear</span><span>Notion</span><span>Figma</span><span>Stripe</span><span>Railway</span>
+</div>
+</section>
+<section class="features">
+<div class="feature">
+<div class="feature-number">01</div>
+<h3>Zero Configuration</h3>
+<p>Start using immediately — no setup wizards, no onboarding flows. The interface adapts to your workflow from day one.</p>
+</div>
+<div class="feature">
+<div class="feature-number">02</div>
+<h3>Thoughtful Defaults</h3>
+<p>Every setting pre-configured for the most common use case. Change it when you need to, not before.</p>
+</div>
+<div class="feature">
+<div class="feature-number">03</div>
+<h3>Progressive Disclosure</h3>
+<p>Simple surface, powerful depth. Advanced options appear only when contextually relevant — never overwhelming.</p>
+</div>
+<div class="feature">
+<div class="feature-number">04</div>
+<h3>Instant Response</h3>
+<p>Every action completes in under 100ms. The interface is so fast it feels like it anticipates your next move.</p>
+</div>
+<div class="feature">
+<div class="feature-number">05</div>
+<h3>Cross-Platform Sync</h3>
+<p>Seamless experience across desktop, tablet, and mobile. Pick up exactly where you left off, on any device.</p>
+</div>
+<div class="feature">
+<div class="feature-number">06</div>
+<h3>Open Infrastructure</h3>
+<p>Full API access, webhooks, and data export. Your data is yours — always portable, never locked in.</p>
+</div>
+</section>
+<section class="stats-bar">
+<div class="stat-item"><div class="number">12k+</div><div class="label">Active Teams</div></div>
+<div class="stat-item"><div class="number">99.9%</div><div class="label">Uptime SLA</div></div>
+<div class="stat-item"><div class="number">2.8M</div><div class="label">Tasks Completed</div></div>
+<div class="stat-item"><div class="number">4.8★</div><div class="label">Average Rating</div></div>
+</section>
+<section class="testimonials">
+<h2>What people are saying</h2>
+<div class="testimonial-grid">
+<div class="testimonial">
+<p>"Finally a product that doesn't try to be everything. It does one thing exceptionally well, and the interface disappears when you don't need it."</p>
+<div class="testimonial-author">
+<div class="author-avatar">SM</div>
+<div class="author-info"><div class="name">Sarah Mitchell</div><div class="role">VP Engineering, Flexbase</div></div>
+</div>
+</div>
+<div class="testimonial">
+<p>"We evaluated seven different platforms before choosing this. The design philosophy matches our team's values: simple by default, powerful when needed."</p>
+<div class="testimonial-author">
+<div class="author-avatar">JK</div>
+<div class="author-info"><div class="name">James Kim</div><div class="role">CTO, NovaBuild</div></div>
+</div>
+</div>
+<div class="testimonial">
+<p>"The attention to detail is remarkable. Every interaction feels intentional — not over-designed, not under-designed. Just right."</p>
+<div class="testimonial-author">
+<div class="author-avatar">AL</div>
+<div class="author-info"><div class="name">Ana Lopes</div><div class="role">Design Lead, Camelot</div></div>
+</div>
+</div>
+<div class="testimonial">
+<p>"We migrated our entire team in a single afternoon. The onboarding was so smooth, I got concerned emails asking if we'd made a mistake. We hadn't."</p>
+<div class="testimonial-author">
+<div class="author-avatar">RV</div>
+<div class="author-info"><div class="name">Raj Venkatesh</div><div class="role">Head of Ops, Streamline</div></div>
+</div>
+</div>
+</div>
+</section>
+<section class="pricing">
+<h2>Simple pricing, no surprises</h2>
+<p>Start free. Scale when you're ready.</p>
+<div class="pricing-grid">
+<div class="price-card">
+<h3>Starter</h3>
+<div class="price">$0<span>/mo</span></div>
+<div class="desc">For individuals and small experiments</div>
+<ul><li>Up to 3 projects</li><li>1 GB storage included</li><li>Community support</li><li>Core integrations</li></ul>
+<button class="btn-card">Get Started</button>
+</div>
+<div class="price-card featured">
+<h3>Pro</h3>
+<div class="price">$29<span>/mo</span></div>
+<div class="desc">For growing teams that need more</div>
+<ul><li>Unlimited projects</li><li>100 GB storage</li><li>Priority support</li><li>All integrations</li></ul>
+<button class="btn-card primary">Start Free Trial</button>
+</div>
+<div class="price-card">
+<h3>Enterprise</h3>
+<div class="price">Custom</div>
+<div class="desc">For organizations with advanced needs</div>
+<ul><li>Custom limits</li><li>SSO & SAML</li><li>Dedicated support</li><li>SLA guarantees</li></ul>
+<button class="btn-card">Contact Sales</button>
+</div>
+</div>
+</section>
+<section class="cta">
+<h2>Start building today</h2>
+<p>No credit card required. Free forever for small teams.</p>
+<button class="btn-cta-light">Create Your Account</button>
+</section>
+<footer class="footer">
+<div class="footer-grid">
+<div class="footer-brand">
+<div class="footer-logo">neutral<span>.modern</span></div>
+<p>Clean, product-oriented design. When the brief doesn't call for anything else.</p>
+</div>
+<div class="footer-col"><h4>Product</h4><a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a><a href="#">Roadmap</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Docs</a><a href="#">API</a><a href="#">Blog</a><a href="#">Community</a></div>
+<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Contact</a></div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 neutral.modern</span>
+<span>Privacy · Terms · Status</span>
+</div>
+</footer>
+</body>
+</html>

@@ -1,1 +1,285 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#ffffff;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:28px 64px;border-bottom:1px solid #E8E8E8;"><div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:300;">Dashboard</div><div style="display:flex;gap:40px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777777;"><span>System</span><span>Components</span><span>About</span></div></nav><section style="padding:140px 64px 80px;text-align:center;max-width:680px;margin:0 auto;"><div style="width:60px;height:1px;background:#0C5CAB;margin:0 auto 40px;"></div><h1 style="font-size:44px;font-weight:200;letter-spacing:6px;text-transform:uppercase;line-height:1.3;">Dashboard</h1><p style="font-size:16px;line-height:1.8;margin-top:32px;color:#888888;font-weight:300;">Dark-themed cloud-platform aesthetic with modular grids, glass-like panels, and strong data hierarchy for prod</p><div style="width:60px;height:1px;background:#0C5CAB;margin:40px auto 0;"></div></section><section style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;"><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">200+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#0C5CAB;margin-top:8px;font-weight:500;">Integrations</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">4.9★</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#0C5CAB;margin-top:8px;font-weight:500;">Rating</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">&lt;1s</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#0C5CAB;margin-top:8px;font-weight:500;">Time to Value</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">5M+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#0C5CAB;margin-top:8px;font-weight:500;">API/Day</div></div></section><section style="max-width:600px;margin:0 auto;padding:40px 64px 100px;"><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#0C5CAB;margin:0 0 12px;">SLA Guarantee</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">99.99% uptime</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#0C5CAB;margin:0 0 12px;">Enterprise SSO</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">SAML, OIDC support</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#0C5CAB;margin:0 0 12px;">Audit Logging</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Every action searchable</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#0C5CAB;margin:0 0 12px;">RBAC</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Granular permissions</p></div></section><section style="text-align:center;padding:60px 64px 120px;border-top:1px solid #E8E8E8;"><div style="width:40px;height:1px;background:#0C5CAB;margin:0 auto 32px;"></div><a href="#" style="color:#0C5CAB;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:400;border-bottom:1px solid #0C5CAB;padding-bottom:4px;">Discover More</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard - Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#0C5CAB;--accent-light:#1A7AD4;--accent-dark:#084580;--bg:#0a0e1a;--bg-card:#111827;--bg-elevated:#1a2035;--border:#1e293b;--text:#e2e8f0;--text-dim:#64748b;--text-bright:#f8fafc;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--info:#3b82f6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--accent-light);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;border-bottom:1px solid var(--border);backdrop-filter:blur(20px);background:rgba(10,14,26,.85);position:sticky;top:0;z-index:100}
+.nav-logo{font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-bright)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim)}
+.nav-links a{color:var(--text-dim);transition:color .2s}
+.nav-links a:hover{color:var(--text-bright)}
+.nav-cta{background:var(--accent);color:#fff;padding:8px 24px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.nav-cta:hover{background:var(--accent-light);transform:translateY(-1px)}
+.hero{padding:120px 48px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 50%,rgba(12,92,171,.15) 0%,transparent 60%);pointer-events:none}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;display:inline-block;border:1px solid var(--accent);padding:6px 20px;border-radius:40px}
+.hero h1{font-size:72px;font-weight:200;letter-spacing:-2px;color:var(--text-bright);line-height:1.1;margin-bottom:24px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:18px;line-height:1.8;color:var(--text-dim);max-width:600px;margin:0 auto 48px;font-weight:300}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 40px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all .25s}
+.btn-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(12,92,171,.3)}
+.btn-secondary{background:transparent;color:var(--text);padding:14px 40px;border-radius:8px;font-size:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--border);cursor:pointer;transition:all .25s}
+.btn-secondary:hover{border-color:var(--text-dim);background:var(--bg-elevated)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);max-width:1000px;margin:0 auto 80px}
+.stat{background:var(--bg-card);padding:40px 24px;text-align:center;transition:background .2s}
+.stat:hover{background:var(--bg-elevated)}
+.stat-number{font-size:48px;font-weight:200;color:var(--text-bright);margin-bottom:8px}
+.stat-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600}
+.section{max-width:1200px;margin:0 auto;padding:80px 48px}
+.section-header{text-align:center;margin-bottom:64px}
+.section-header h2{font-size:42px;font-weight:200;color:var(--text-bright);letter-spacing:-1px;margin-bottom:16px}
+.section-header p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:36px;transition:all .3s}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(12,92,171,.15)}
+.feature-icon{width:48px;height:48px;background:var(--bg-elevated);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--accent)}
+.feature-card h3{font-size:18px;font-weight:600;color:var(--text-bright);margin-bottom:12px}
+.feature-card p{font-size:14px;color:var(--text-dim);line-height:1.7}
+.dashboard-preview{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px;margin:80px auto;max-width:1100px}
+.dashboard-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.dashboard-header-left{display:flex;align-items:center;gap:12px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--success)}
+.dashboard-header h3{font-size:14px;font-weight:600;color:var(--text-bright)}
+.dashboard-header span{font-size:12px;color:var(--text-dim)}
+.mini-chart{display:flex;align-items:flex-end;gap:3px;height:80px;justify-content:center;margin-bottom:24px}
+.mini-bar{width:8px;border-radius:4px 4px 0 0;background:var(--accent);transition:height .3s,background .3s}
+.mini-bar:hover{background:var(--accent-light)}
+.mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mini-stat{background:var(--bg-elevated);border-radius:8px;padding:16px;text-align:center}
+.mini-stat-val{font-size:20px;font-weight:600;color:var(--text-bright)}
+.mini-stat-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.loglist{max-width:800px;margin:0 auto}
+.log-item{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:1px solid var(--border);transition:all .2s}
+.log-item:hover{padding-left:8px}
+.log-item-left{display:flex;align-items:center;gap:16px}
+.log-badge{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--bg-elevated);color:var(--accent)}
+.log-item h4{font-size:15px;font-weight:600;color:var(--text-bright)}
+.log-item p{font-size:13px;color:var(--text-dim);margin-top:2px}
+.log-item .tag{font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:4px;background:var(--bg-elevated);color:var(--accent)}
+.cta-section{text-align:center;padding:100px 48px;border-top:1px solid var(--border);position:relative}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(12,92,171,.1) 0%,transparent 60%);pointer-events:none}
+.cta-section h2{font-size:48px;font-weight:200;color:var(--text-bright);margin-bottom:16px;position:relative}
+.cta-section p{color:var(--text-dim);margin-bottom:40px;font-size:18px;position:relative}
+.footer{border-top:1px solid var(--border);padding:60px 48px 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .footer-logo{font-size:16px;font-weight:700;color:var(--text-bright);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+.footer-brand .footer-logo span{color:var(--accent)}
+.footer-brand p{font-size:14px;color:var(--text-dim);line-height:1.7}
+.footer-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;font-weight:600}
+.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:12px;transition:color .2s}
+.footer-col a:hover{color:var(--text-bright)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim)}
+@media(max-width:768px){
+.hero h1{font-size:40px}
+.stats{grid-template-columns:1fr 1fr}
+.features-grid{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr 1fr}
+.nav{padding:16px 24px}
+.nav-links{display:none}
+.section{padding:60px 24px}
+.mini-stats{grid-template-columns:1fr 1fr}
+.dashboard-preview{margin:40px auto}
+}
+@media(max-width:480px){
+.stats{grid-template-columns:1fr}
+.hero{padding:80px 24px 60px}
+.hero h1{font-size:32px}
+.footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">DASH<span>BOARD</span></div>
+<div class="nav-links">
+<a href="#">Platform</a>
+<a href="#">Integrations</a>
+<a href="#">Pricing</a>
+<a href="#">Docs</a>
+</div>
+<a href="#" class="nav-cta">Start Free</a>
+</nav>
+<section class="hero">
+<div class="hero-tag">Real-time Infrastructure Monitoring</div>
+<h1>See everything.<br><em>React instantly.</em></h1>
+<p>Unified observability platform with glass-like panels, modular grids, and strong data hierarchy for modern engineering teams.</p>
+<div class="hero-buttons">
+<button class="btn-primary">Get Started</button>
+<button class="btn-secondary">Watch Demo</button>
+</div>
+</section>
+<section class="stats">
+<div class="stat"><div class="stat-number">200+</div><div class="stat-label">Integrations</div></div>
+<div class="stat"><div class="stat-number">4.9★</div><div class="stat-label">Developer Rating</div></div>
+<div class="stat"><div class="stat-number">&lt;1s</div><div class="stat-label">Time to Value</div></div>
+<div class="stat"><div class="stat-number">5M+</div><div class="stat-label">API Calls/Day</div></div>
+</section>
+<section class="dashboard-preview">
+<div class="dashboard-header">
+<div class="dashboard-header-left">
+<div class="status-dot"></div>
+<h3>Production Cluster</h3>
+<span>Last updated 2s ago</span>
+</div>
+<span>Live</span>
+</div>
+<div class="mini-chart">
+<div class="mini-bar" style="height:45%"></div>
+<div class="mini-bar" style="height:62%"></div>
+<div class="mini-bar" style="height:38%"></div>
+<div class="mini-bar" style="height:71%"></div>
+<div class="mini-bar" style="height:55%"></div>
+<div class="mini-bar" style="height:83%"></div>
+<div class="mini-bar" style="height:67%"></div>
+<div class="mini-bar" style="height:91%"></div>
+<div class="mini-bar" style="height:74%"></div>
+<div class="mini-bar" style="height:85%"></div>
+<div class="mini-bar" style="height:60%"></div>
+<div class="mini-bar" style="height:78%"></div>
+<div class="mini-bar" style="height:95%"></div>
+<div class="mini-bar" style="height:72%"></div>
+<div class="mini-bar" style="height:88%"></div>
+<div class="mini-bar" style="height:66%"></div>
+<div class="mini-bar" style="height:79%"></div>
+<div class="mini-bar" style="height:92%"></div>
+</div>
+<div class="mini-stats">
+<div class="mini-stat"><div class="mini-stat-val">99.97%</div><div class="mini-stat-label">Uptime</div></div>
+<div class="mini-stat"><div class="mini-stat-val">142ms</div><div class="mini-stat-label">P95 Latency</div></div>
+<div class="mini-stat"><div class="mini-stat-val">2.4K</div><div class="mini-stat-label">Req/min</div></div>
+<div class="mini-stat"><div class="mini-stat-val">0</div><div class="mini-stat-label">Incidents</div></div>
+</div>
+</section>
+<section class="section">
+<div class="section-header">
+<h2>Built for Scale</h2>
+<p>Everything you need to monitor, observe, and optimize</p>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+</div>
+<h3>Modular Grid Views</h3>
+<p>Drag-and-drop dashboard panels that adapt to any screen. Build custom layouts for every team and workflow.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+</div>
+<h3>Real-Time Streams</h3>
+<p>Live metrics with sub-second latency. Watch your infrastructure respond to changes as they happen.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+</div>
+<h3>Smart Alerts</h3>
+<p>Anomaly detection powered by ML. Get notified of real issues, not noise. Tune thresholds per-service.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+</div>
+<h3>Log Correlation</h3>
+<p>Trace any request across services with unified logging. Filter, search, and pivot in milliseconds.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+</div>
+<h3>Team Workspaces</h3>
+<p>Fine-grained RBAC with team-scoped dashboards. Everyone sees exactly what they need — nothing more.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+</div>
+<h3>SLA Guarantees</h3>
+<p>99.99% uptime with audit logging for every action. Enterprise-grade reliability built into every tier.</p>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="section-header">
+<h2>Recent Activity</h2>
+</div>
+<div class="loglist">
+<div class="log-item">
+<div class="log-item-left">
+<div class="log-badge" style="color:var(--success)">✓</div>
+<div><h4>Deployment v2.14.3</h4><p>All health checks passing — production cluster</p></div>
+</div>
+<span class="tag">completed</span>
+</div>
+<div class="log-item">
+<div class="log-item-left">
+<div class="log-badge" style="color:var(--warning)">⚠</div>
+<div><h4>High memory usage — node-07</h4><p>Threshold breached at 92% — auto-scaling initiated</p></div>
+</div>
+<span class="tag">warning</span>
+</div>
+<div class="log-item">
+<div class="log-item-left">
+<div class="log-badge" style="color:var(--info)">ℹ</div>
+<div><h4>Scheduled maintenance window</h4><p>Database rotation begins at 03:00 UTC</p></div>
+</div>
+<span class="tag">scheduled</span>
+</div>
+<div class="log-item">
+<div class="log-item-left">
+<div class="log-badge" style="color:var(--success)">✓</div>
+<div><h4>SSL certificate renewed</h4><p>Auto-renewed via Let's Encrypt — expires 2027-08-14</p></div>
+</div>
+<span class="tag">completed</span>
+</div>
+<div class="log-item">
+<div class="log-item-left">
+<div class="log-badge" style="color:var(--danger)">✕</div>
+<div><h4>Alert rule triggered — API latency</h4><p>P99 exceeded 500ms on /api/v2/search for 3 minutes</p></div>
+</div>
+<span class="tag">incident</span>
+</div>
+</div>
+</section>
+<section class="cta-section">
+<h2>Start monitoring in minutes</h2>
+<p>No credit card required. Free tier includes 5 hosts forever.</p>
+<button class="btn-primary">Get Started Free</button>
+</section>
+<footer class="footer">
+<div class="footer-grid">
+<div class="footer-brand">
+<div class="footer-logo">DASH<span>BOARD</span></div>
+<p>Modern observability for engineering teams. Real-time insights, zero noise.</p>
+</div>
+<div class="footer-col">
+<h4>Product</h4>
+<a href="#">Features</a><a href="#">Integrations</a><a href="#">Pricing</a><a href="#">Changelog</a>
+</div>
+<div class="footer-col">
+<h4>Resources</h4>
+<a href="#">Documentation</a><a href="#">API Reference</a><a href="#">Status</a><a href="#">Blog</a>
+</div>
+<div class="footer-col">
+<h4>Company</h4>
+<a href="#">About</a><a href="#">Careers</a><a href="#">Security</a><a href="#">Contact</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Dashboard Inc. All rights reserved.</span>
+<span>Privacy · Terms · Cookies</span>
+</div>
+</footer>
+</body>
+</html>

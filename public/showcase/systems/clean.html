@@ -1,1 +1,98 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clean - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFFFFF;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #E8E8E8;"><div style="font-weight:800;font-size:18px;letter-spacing:-0.5px;">Clean</div><div style="display:flex;gap:28px;font-size:14px;color:#555555;"><span>Components</span><span>Docs</span><span>GitHub</span></div></nav><section style="padding:100px 48px 60px;text-align:center;max-width:800px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#3B82F6;font-weight:600;margin-bottom:16px;">Design System</div><h1 style="font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;">Clean</h1><p style="font-size:18px;color:#555555;margin-top:20px;line-height:1.6;">Simplicity-focused design with ample whitespace, legible typography, and a limited color palette to reduce vis</p></section><section style="display:flex;justify-content:center;gap:48px;padding:40px 48px;border-top:1px solid #E8E8E8;border-bottom:1px solid #E8E8E8;max-width:900px;margin:0 auto;"><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">4.9★</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Rating</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">&lt;1s</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Time to Value</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">5M+</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">API/Day</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">24/7</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Support</div></div></section><section style="padding:80px 48px;max-width:680px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#3B82F6;font-weight:600;margin-bottom:48px;">Features</div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">01</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Icon System</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Scalable vector icons</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">02</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Responsive Grid</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Fluid adaptive layouts</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">03</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Design Tokens</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Centralized variables</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">04</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Theme Engine</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Instant look switching</p></div></div></section><section style="text-align:center;padding:60px 48px 100px;"><a href="#" style="background:#3B82F6;color:#FFF;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;">Get Started</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clean — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3B82F6;--accent1:#3B82F6;--accent2:#3B82F6;--accent3:#3B82F6;--bg:#FFFFFF;--fg:#111111;--muted:#666666;--border:#e0e0e0;--surface:#f5f5f5;--gradient:#3B82F6;--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:24px;--font:'Inter',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.btn{border:none;font-family:var(--font);font-size:14px;font-weight:600;padding:12px 28px;border-radius:var(--radius-sm);cursor:pointer;transition:all 150ms}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:0.9}
+.btn-primary-grad{background:var(--gradient);color:#fff;border:none}
+.btn-primary-grad:hover{opacity:0.9}
+.btn-secondary{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--fg)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;backdrop-filter:blur(12px)}
+.nav-logo{font-weight:800;font-size:18px;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.hero{padding:80px 0 60px;text-align:center;}
+.hero .kicker{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:16px}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:16px}
+.hero-sub{font-size:18px;color:var(--muted);max-width:540px;margin-inline:auto;line-height:1.7;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.stats{display:flex;justify-content:center;gap:48px;padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{text-align:center}
+.stat .num{font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-0.5px}
+.stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.features{padding:80px 0}
+.features-header{text-align:center;margin-bottom:48px}
+.features-header .kicker{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);font-weight:600;margin-bottom:12px}
+.features-header h2{font-size:36px;font-weight:800;letter-spacing:-1px}
+.features-header p{font-size:16px;color:var(--muted);max-width:500px;margin-inline:auto}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all 200ms}
+.feature-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.feature-card .emoji{font-size:32px;margin-bottom:12px;display:block}
+.feature-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.cta{padding:80px 0;text-align:center}
+.cta h2{font-size:40px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.cta p{font-size:16px;color:var(--muted);max-width:480px;margin-inline:auto;margin-bottom:28px}
+.footer{border-top:1px solid var(--border);padding:40px 24px}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-brand{font-weight:800;font-size:16px}
+.footer-links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+.footer-links a:hover{color:var(--fg)}
+.footer-copy{font-size:13px;color:var(--muted)}
+@media(max-width:1023px){.features-grid{grid-template-columns:1fr}.stats{gap:32px;flex-wrap:wrap}}
+@media(max-width:639px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">Clean</div><div class="nav-links"><a href="#features">Features</a><a href="#">Docs</a><a href="#">Pricing</a></div><div style="display:flex;gap:10px"><button class="btn btn-secondary">Log in</button><button class="btn btn-primary>Get Started</button></div></nav>
+
+<section class="hero container">
+<div class="kicker">Design System</div>
+<h1>Clean</h1>
+<p class="hero-sub">Simplicity-focused design with ample whitespace and legible typography.</p>
+<div class="hero-actions"><button class="btn btn-primary" style="font-size:15px;padding:14px 32px">Get Started</button><button class="btn btn-secondary" style="font-size:15px;padding:14px 32px">View Docs</button></div>
+</section>
+
+<section class="container"><div class="stats">
+<div class="stat"><div class="num"><1s</div><div class="label">First Paint</div></div>
+<div class="stat"><div class="num">50KB</div><div class="label">CSS</div></div>
+<div class="stat"><div class="num">99%</div><div class="label">A11y</div></div>
+<div class="stat"><div class="num">3</div><div class="label">Tokens</div></div>
+</div></section>
+
+<section class="features container" id="features">
+<div class="features-header"><div class="kicker">Features</div><h2>Built for modern teams</h2><p>Everything you need to ship faster, with confidence.</p></div>
+<div class="features-grid">
+<div class="feature-card"><span class="emoji">&#10024;</span><h3>Minimal Palette</h3><p>One accent color, two grays, black and white. Every color earns its place.</p></div>
+<div class="feature-card"><span class="emoji">&#128207;</span><h3>Purposeful Whitespace</h3><p>Generous margins, consistent spacing. Content breathes and readers relax.</p></div>
+<div class="feature-card"><span class="emoji">&#128288;</span><h3>Legible Typography</h3><p>Clear hierarchy with Inter at three weights. Easy to scan, easy to read.</p></div>
+<div class="feature-card"><span class="emoji">&#127919;</span><h3>Focused Interactions</h3><p>Subtle hover states, smooth transitions. Natural, never distracting.</p></div>
+</div>
+</section>
+
+<section class="cta container">
+<h2>Start building with Clean</h2>
+<p>Simplicity-focused design with ample whitespace and legible typography. Production-ready, beautifully designed.</p>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-primary" style="font-size:15px;padding:14px 32px">Get Started Free</button><button class="btn btn-secondary" style="font-size:15px;padding:14px 32px">Documentation</button></div>
+</section>
+
+<footer class="footer"><div class="footer-inner">
+<div class="footer-brand">Clean</div>
+<div class="footer-links"><a href="#">Documentation</a><a href="#">GitHub</a><a href="#">Community</a><a href="#">License</a></div>
+<div class="footer-copy">&copy; 2026 Clean</div>
+</div></footer>
+</body>
+</html>

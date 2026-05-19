@@ -1,1 +1,109 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bold - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#ffffff;color:#111111;"><section style="padding:120px 48px 80px;text-align:center;border-bottom:6px solid #0077BC;"><h1 style="font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:0.95;">Bold</h1><p style="font-size:24px;margin-top:24px;font-weight:700;">Strong visual presence with heavyweight typography, high-contrast colors, and commanding layouts.</p><div style="margin-top:40px;display:inline-block;background:#0077BC;color:#FFF;padding:16px 48px;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:2px;text-decoration:none;">Explore Now</div></section><section style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:6px solid #0077BC;"><div style="border:3px solid #0077BC;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#0077BC;">&lt;1s</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Time to Value</div></div><div style="border:3px solid #0077BC;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#0077BC;">5M+</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">API/Day</div></div><div style="border:3px solid #0077BC;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#0077BC;">24/7</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Support</div></div><div style="border:3px solid #0077BC;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#0077BC;">99.9%</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Uptime</div></div></section><section style="padding:0;border-bottom:6px solid #0077BC;"><div style="background:#0077BC;color:#FFFFFF;padding:48px;border:4px solid #0077BC;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Responsive Grid</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Fluid adaptive layouts</p></div><div style="background:#ffffff;color:#111111;padding:48px;border:4px solid #0077BC;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Design Tokens</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Centralized variables</p></div><div style="background:#0077BC;color:#FFFFFF;padding:48px;border:4px solid #0077BC;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Theme Engine</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Instant look switching</p></div><div style="background:#ffffff;color:#111111;padding:48px;border:4px solid #0077BC;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Component Library</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Production-ready blocks</p></div></section><section style="padding:120px 48px;text-align:center;"><div style="font-size:80px;font-weight:900;color:#0077BC;text-transform:uppercase;line-height:1;letter-spacing:-3px;">Bold</div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bold — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#0077BC;--bg:#ffffff;--fg:#111111;--muted:#555;--border:#000;--surface:#f5f5f5;--radius:0;--font:'Inter',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:4px solid var(--fg)}
+.nav-logo{font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:2px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:24px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.btn{border:3px solid var(--fg);background:var(--fg);color:#fff;font-family:var(--font);font-size:14px;font-weight:800;padding:12px 28px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all 150ms}
+.btn:hover{background:transparent;color:var(--fg)}
+.btn-outline{background:transparent;color:var(--fg)}
+.btn-accent{background:var(--accent);border-color:var(--accent)}
+.btn-accent:hover{background:transparent;color:var(--accent)}
+
+.hero{padding:80px 32px 60px}
+.hero-inner{max-width:1200px;margin:0 auto}
+.hero .kicker{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:6px;color:var(--accent);margin-bottom:20px}
+.hero h1{font-size:clamp(44px,7vw,88px);font-weight:900;text-transform:uppercase;line-height:0.95;letter-spacing:-2px;margin-bottom:24px}
+.hero h1 .outline{-webkit-text-stroke:3px var(--fg);-webkit-text-fill-color:transparent}
+.hero-sub{font-size:20px;color:var(--muted);max-width:500px;margin-bottom:36px;font-weight:400}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:4px solid var(--fg);border-bottom:4px solid var(--fg)}
+.stat{padding:32px;text-align:center;border-right:4px solid var(--fg)}
+.stat:last-child{border-right:none}
+.stat .num{font-size:48px;font-weight:900;line-height:1}
+.stat .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:6px}
+
+.features{padding:80px 32px}
+.features-inner{max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:48px}
+.section-header .kicker{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:6px;color:var(--accent);margin-bottom:16px}
+.section-header h2{font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{border:4px solid var(--fg);padding:32px;position:relative;transition:all 150ms}
+.feat-card:hover{background:var(--fg);color:#fff}
+.feat-card:hover .feat-num{color:var(--accent)}
+.feat-card:hover p{color:rgba(255,255,255,0.7)}
+.feat-num{font-size:64px;font-weight:900;line-height:1;color:rgba(0,0,0,0.06);margin-bottom:-16px;transition:color 150ms}
+.feat-card:hover .feat-num{color:rgba(0,119,188,0.3)}
+.feat-card h3{font-size:18px;font-weight:800;text-transform:uppercase;margin-bottom:8px}
+.feat-card p{font-size:14px;color:var(--muted);line-height:1.6;transition:color 150ms}
+
+.dark-section{background:var(--fg);color:#fff;padding:80px 32px}
+.dark-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.dark-text .kicker{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:6px;color:var(--accent);margin-bottom:16px}
+.dark-text h2{font-size:48px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:1.05;margin-bottom:16px}
+.dark-text p{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:24px}
+.dark-visual{border:4px solid rgba(255,255,255,0.15);aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative}
+.dark-visual .big{font-size:160px;font-weight:900;color:rgba(255,255,255,0.05);line-height:1;text-transform:uppercase}
+
+.cta{padding:80px 32px;text-align:center}
+.cta h2{font-size:56px;font-weight:900;text-transform:uppercase;letter-spacing:-2px;margin-bottom:12px}
+.cta p{font-size:18px;color:var(--muted);margin-bottom:32px}
+
+.footer{border-top:4px solid var(--fg);padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:14px;font-weight:700}
+.footer-logo{font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:2px}
+.footer-logo span{color:var(--accent)}
+
+@media(max-width:1023px){.feat-grid{grid-template-columns:repeat(2,1fr)}.dark-inner{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}}
+@media(max-width:639px){.feat-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat{border-right:none;border-bottom:4px solid var(--fg)}.stat:last-child{border-bottom:none}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo"><span>Bold</span></div><div class="nav-links"><a href="#">Work</a><a href="#">About</a><a href="#">Process</a><a href="#">Journal</a></div><div style="display:flex;gap:10px"><button class="btn btn-outline">Log in</button><button class="btn btn-accent">Start</button></div></nav>
+
+<section class="hero"><div class="hero-inner">
+<div class="kicker">Design System</div>
+<h1>Command<br>attention<span class="outline">.</span></h1>
+<p class="hero-sub">Heavyweight typography, high-contrast colors, and commanding layouts. For brands that refuse to whisper.</p>
+<div class="hero-actions"><button class="btn">Explore System</button><button class="btn btn-outline">View Showreel</button></div>
+</div></section>
+
+<section class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Weight Variants</div></div>
+<div class="stat"><div class="num">960</div><div class="label">Grid Columns</div></div>
+<div class="stat"><div class="num">4px</div><div class="label">Border Weight</div></div>
+<div class="stat"><div class="num">0</div><div class="label">Border Radius</div></div>
+</section>
+
+<section class="features"><div class="features-inner">
+<div class="section-header"><div class="kicker">Principles</div><h2>Brutal clarity</h2></div>
+<div class="feat-grid">
+<div class="feat-card"><div class="feat-num">01</div><h3>Weight 900</h3><p>Maximum type weight at every heading level. Display, section, subtitle — all 900. Variation comes from size, not weight.</p></div>
+<div class="feat-card"><div class="feat-num">02</div><h3>4px Borders</h3><p>Thick structural borders. No 1px hairlines. Every boundary is a declaration, not an accident. Edges define the page.</p></div>
+<div class="feat-card"><div class="feat-num">03</div><h3>Zero Radius</h3><p>Square corners everywhere. The system is geometric, not organic. Right angles feel decisive and absolute.</p></div>
+<div class="feat-card"><div class="feat-num">04</div><h3>High Contrast</h3><p>Black on white, or white on black. No gray areas. The accent color appears exactly twice: CTA and kicker.</p></div>
+<div class="feat-card"><div class="feat-num">05</div><h3>Uppercase</h3><p>All headings, labels, and CTAs in uppercase. The system doesn't whisper — it announces. Text transforms serve hierarchy.</p></div>
+<div class="feat-card"><div class="feat-num">06</div><h3>Asymmetric Grid</h3><p>960px with 24px gutters. Left-weighted layouts. Asymmetry creates tension. Tension creates attention.</p></div>
+</div></div></section>
+
+<section class="dark-section"><div class="dark-inner">
+<div class="dark-text"><div class="kicker">In Practice</div><h2>No half<br>measures</h2><p>The Bold system inverts when it needs to. Dark mode isn't a feature — it's the same system, same borders, same weight, on a #111111 surface.</p><button class="btn" style="border-color:#fff;color:#fff">Switch to Dark</button></div>
+<div class="dark-visual"><div class="big">B</div></div>
+</div></section>
+
+<section class="cta"><h2>Make it <span style="color:var(--accent)">bold</span></h2><p>Stop blending in. Start standing out.</p><button class="btn btn-accent">Get Started</button></section>
+
+<footer class="footer" style="max-width:1200px;margin-inline:auto"><div class="footer-logo"><span>Bold</span></div><div style="font-weight:400;color:var(--muted)">&copy; 2026 Bold Design System</div><div style="display:flex;gap:20px"><a href="#">GitHub</a><a href="#">Docs</a><a href="#">License</a></div></footer>
+</body>
+</html>

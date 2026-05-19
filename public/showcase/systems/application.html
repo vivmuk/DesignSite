@@ -1,1 +1,167 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Application - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFFFFF;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #E8E8E8;"><div style="font-weight:800;font-size:18px;letter-spacing:-0.5px;">Application</div><div style="display:flex;gap:28px;font-size:14px;color:#555555;"><span>Components</span><span>Docs</span><span>GitHub</span></div></nav><section style="padding:100px 48px 60px;text-align:center;max-width:800px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#9333EA;font-weight:600;margin-bottom:16px;">Design System</div><h1 style="font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;">Application</h1><p style="font-size:18px;color:#555555;margin-top:20px;line-height:1.6;">App dashboard with purple-themed aesthetic, top-bar navigation, card-based layouts, and developer-first workfl</p></section><section style="display:flex;justify-content:center;gap:48px;padding:40px 48px;border-top:1px solid #E8E8E8;border-bottom:1px solid #E8E8E8;max-width:900px;margin:0 auto;"><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#9333EA;">&lt;1s</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Time to Value</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#9333EA;">5M+</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">API/Day</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#9333EA;">24/7</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Support</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#9333EA;">99.9%</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Uptime</div></div></section><section style="padding:80px 48px;max-width:680px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#9333EA;font-weight:600;margin-bottom:48px;">Features</div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#9333EA;line-height:1;opacity:0.85;">01</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Audit Logging</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Every action searchable</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#9333EA;line-height:1;opacity:0.85;">02</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">RBAC</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Granular permissions</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#9333EA;line-height:1;opacity:0.85;">03</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">SLA Guarantee</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">99.99% uptime</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#9333EA;line-height:1;opacity:0.85;">04</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Enterprise SSO</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">SAML, OIDC support</p></div></div></section><section style="text-align:center;padding:60px 48px 100px;"><a href="#" style="background:#9333EA;color:#FFF;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;">Get Started</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Application — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#9333EA;--accent-hover:#7C3AED;--accent-light:#F3E8FF;--bg:#FFFFFF;--fg:#111111;--muted:#6B7280;--border:#E5E7EB;--surface:#F9FAFB;--surface-dark:#1F1035;--success:#10B981;--warn:#F59E0B;--danger:#EF4444;--info:#3B82F6;--radius-sm:6px;--radius-md:10px;--radius-lg:14px;--radius-xl:20px;--radius-pill:9999px;--font:'Inter',system-ui,-apple-system,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Top bar */
+.topbar{display:flex;align-items:center;padding:0 24px;height:52px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);z-index:100}
+.topbar-logo{font-weight:800;font-size:16px;color:var(--accent);display:flex;align-items:center;gap:6px;margin-right:32px}
+.topbar-logo svg{width:20px;height:20px}
+.topbar-nav{display:flex;gap:24px;font-size:13px;font-weight:500;color:var(--muted)}
+.topbar-nav a:hover{color:var(--accent)}
+.topbar-nav a.active{color:var(--accent);font-weight:600}
+.topbar-right{margin-left:auto;display:flex;gap:12px;align-items:center}
+.topbar-search{padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius-pill);font-size:13px;width:200px;outline:none;font-family:var(--font);transition:border 150ms}
+.topbar-search:focus{border-color:var(--accent);width:240px}
+.topbar-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+
+/* Sidebar + Main layout */
+.app-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 52px)}
+.sidebar{border-right:1px solid var(--border);padding:20px 0;background:var(--surface)}
+.sidebar-section{margin-bottom:24px}
+.sidebar-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:0 16px;margin-bottom:8px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 16px;font-size:14px;color:var(--muted);cursor:pointer;transition:all 150ms;border-radius:0}
+.sidebar-item:hover{background:var(--accent-light);color:var(--accent)}
+.sidebar-item.active{background:var(--accent-light);color:var(--accent);font-weight:600;border-right:3px solid var(--accent)}
+.sidebar-item svg{width:18px;height:18px;flex-shrink:0}
+.sidebar-badge{margin-left:auto;font-size:11px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:var(--radius-pill);font-weight:600}
+
+/* Main content */
+.main{padding:24px 32px}
+.welcome{margin-bottom:32px}
+.welcome h1{font-size:28px;font-weight:800;letter-spacing:-0.5px}
+.welcome p{color:var(--muted);font-size:14px;margin-top:4px}
+
+/* Stats cards */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-card:nth-child(1)::before{background:var(--accent)}.stat-card:nth-child(2)::before{background:var(--info)}.stat-card:nth-child(3)::before{background:var(--success)}.stat-card:nth-child(4)::before{background:var(--warn)}
+.stat-card .label{font-size:13px;color:var(--muted);font-weight:500}
+.stat-card .value{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-top:4px}
+.stat-card .change{font-size:12px;margin-top:4px;font-weight:600}
+.stat-card .change.up{color:var(--success)}
+.stat-card .change.down{color:var(--danger)}
+.stat-card .icon{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center}
+
+/* Chart area */
+.dashboard-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-header h3{font-size:15px;font-weight:700}
+.card-header .actions{display:flex;gap:8px}
+.card-header .actions button{font-size:12px;padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;cursor:pointer;font-family:var(--font);color:var(--muted)}
+.card-header .actions button.active{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.card-body{padding:20px}
+.chart-placeholder{height:200px;background:linear-gradient(180deg,var(--accent-light) 0%,transparent 100%);border-radius:var(--radius-md);position:relative;overflow:hidden}
+.chart-line{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(180deg,rgba(147,51,234,0.3) 0%,rgba(147,51,234,0.05) 100%);border-radius:0 0 var(--radius-md) var(--radius-md)}
+.chart-line svg{width:100%;height:100%}
+
+/* Activity feed */
+.activity{list-style:none}
+.activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.activity-info{flex:1}
+.activity-info .title{font-size:14px;font-weight:500}
+.activity-info .time{font-size:12px;color:var(--muted)}
+
+/* Team grid */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.team-card{display:flex;align-items:center;gap:10px;padding:12px;border-radius:var(--radius-md);border:1px solid var(--border);transition:all 150ms}
+.team-card:hover{border-color:var(--accent)}
+.team-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0}
+.team-info .name{font-size:14px;font-weight:600}
+.team-info .role{font-size:12px;color:var(--muted)}
+
+/* CTA */
+.cta-banner{background:linear-gradient(135deg,var(--accent) 0%,#7C3AED 100%);color:#fff;border-radius:var(--radius-xl);padding:40px;text-align:center;margin-top:32px}
+.cta-banner h2{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+.cta-banner p{opacity:0.85;margin-bottom:20px;font-size:15px}
+.cta-banner .btn{background:#fff;color:var(--accent);border:none;font-family:var(--font);font-size:14px;font-weight:600;padding:12px 28px;border-radius:var(--radius-pill);cursor:pointer}
+
+@media(max-width:1023px){.app-layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:639px){.stats-row{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.topbar-search{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<div class="topbar-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Application</div>
+<div class="topbar-nav"><a href="#" class="active">Dashboard</a><a href="#">Analytics</a><a href="#">Team</a><a href="#">Settings</a><a href="#">Docs</a></div>
+<div class="topbar-right"><input class="topbar-search" type="text" placeholder="Search..."><button style="background:none;border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button><div class="topbar-avatar">JD</div></div>
+</div>
+
+<div class="app-layout">
+<div class="sidebar">
+<div class="sidebar-section"><div class="sidebar-label">Overview</div><div class="sidebar-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Dashboard</div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg> Analytics</div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Reports</div></div>
+<div class="sidebar-section"><div class="sidebar-label">Workspace</div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Team <span class="sidebar-badge">5</span></div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg> Projects <span class="sidebar-badge">12</span></div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg> Deployments</div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> Calendar</div></div>
+<div class="sidebar-section"><div class="sidebar-label">System</div><div class="sidebar-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</div></div>
+</div>
+
+<div class="main">
+<div class="welcome"><h1>Welcome back, Jordan</h1><p>Here's what's happening with your projects today.</p></div>
+
+<div class="stats-row">
+<div class="stat-card"><div class="label">Total Users</div><div class="value">24,589</div><div class="change up">↑ 12.5% from last month</div><div class="icon" style="background:var(--accent-light)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
+<div class="stat-card"><div class="label">Revenue</div><div class="value">$48.2K</div><div class="change up">↑ 8.3% from last month</div><div class="icon" style="background:#DBEAFE"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+<div class="stat-card"><div class="label">Active Projects</div><div class="value">127</div><div class="change up">↑ 4 new this week</div><div class="icon" style="background:#D1FAE5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div></div>
+<div class="stat-card"><div class="label">Uptime</div><div class="value">99.98%</div><div class="change up">↑ 0.02% improvement</div><div class="icon" style="background:#FEF3C7"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div></div>
+</div>
+
+<div class="dashboard-grid">
+<div class="card">
+<div class="card-header"><h3>API Requests</h3><div class="actions"><button class="active">7d</button><button>30d</button><button>90d</button></div></div>
+<div class="card-body">
+<div class="chart-placeholder">
+<div class="chart-line">
+<svg viewBox="0 0 400 120" preserveAspectRatio="none"><path d="M0,100 C40,80 80,60 120,70 C160,80 200,40 240,30 C280,20 320,50 360,35 L400,30 L400,120 L0,120 Z" fill="rgba(147,51,234,0.15)"/><path d="M0,100 C40,80 80,60 120,70 C160,80 200,40 240,30 C280,20 320,50 360,35 L400,30" fill="none" stroke="#9333EA" stroke-width="2.5"/></svg>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-header"><h3>Recent Activity</h3></div>
+<div class="card-body">
+<ul class="activity">
+<li class="activity-item"><div class="activity-dot" style="background:var(--accent-light);color:var(--accent)">🚀</div><div class="activity-info"><div class="title">v2.4.0 deployed to production</div><div class="time">2 minutes ago</div></div></li>
+<li class="activity-item"><div class="activity-dot" style="background:#D1FAE5;color:#10B981">✅</div><div class="activity-info"><div class="title">All tests passed — 847/847</div><div class="time">18 minutes ago</div></div></li>
+<li class="activity-item"><div class="activity-dot" style="background:#DBEAFE;color:#3B82F6">👤</div><div class="activity-info"><div class="title">New team member: Elena Rodriguez</div><div class="time">1 hour ago</div></div></li>
+<li class="activity-item"><div class="activity-dot" style="background:#FEF3C7;color:#F59E0B">⚡</div><div class="activity-info"><div class="title">API latency spike resolved (#3891)</div><div class="time">3 hours ago</div></div></li>
+<li class="activity-item"><div class="activity-dot" style="background:var(--accent-light);color:var(--accent)">📊</div><div class="activity-info"><div class="title">Monthly report generated</div><div class="time">5 hours ago</div></div></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="card" style="margin-bottom:24px">
+<div class="card-header"><h3>Team Members</h3><button style="font-size:12px;padding:4px 12px;border:1px solid var(--accent);border-radius:var(--radius-sm);background:var(--accent-light);color:var(--accent);cursor:pointer;font-family:var(--font);font-weight:600">+ Invite</button></div>
+<div class="card-body">
+<div class="team-grid">
+<div class="team-card"><div class="team-avatar" style="background:var(--accent)">JD</div><div class="team-info"><div class="name">Jordan Davis</div><div class="role">Engineering Lead</div></div></div>
+<div class="team-card"><div class="team-avatar" style="background:var(--info)">MK</div><div class="team-info"><div class="name">Maya Kim</div><div class="role">Product Designer</div></div></div>
+<div class="team-card"><div class="team-avatar" style="background:var(--success)">RA</div><div class="team-info"><div class="name">Raj Anand</div><div class="role">Backend Eng</div></div></div>
+<div class="team-card"><div class="team-avatar" style="background:var(--warn)">SP</div><div class="team-info"><div class="name">Sarah Park</div><div class="role">Data Scientist</div></div></div>
+<div class="team-card"><div class="team-avatar" style="background:var(--danger)">TL</div><div class="team-info"><div class="name">Tom Liu</div><div class="role">DevOps Engineer</div></div></div>
+<div class="team-card"><div class="team-avatar" style="background:#EC4899">ER</div><div class="team-info"><div class="name">Elena Rodriguez</div><div class="role">Frontend Eng</div></div></div>
+</div>
+</div>
+</div>
+
+<div class="cta-banner">
+<h2>Ship faster with Application</h2>
+<p>Enterprise-ready components, design tokens, and workflows. Start building today.</p>
+<button class="btn">Get Started Free</button>
+</div>
+</div>
+</div>
+</body>
+</html>

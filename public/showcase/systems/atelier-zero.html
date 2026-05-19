@@ -1,1 +1,147 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Atelier Zero - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,Georgia,serif;background:#efe7d2;color:#111111;"><header style="text-align:center;padding:24px 48px;border-bottom:3px double #efe7d2;"><div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#efe7d2;margin-bottom:4px;">Design System Review</div><div style="font-family:Playfair Display,Georgia,serif;font-size:24px;font-weight:700;">Atelier Zero</div></header><section style="max-width:720px;margin:0 auto;padding:100px 48px 60px;"><h1 style="font-family:Playfair Display,Georgia,serif;font-size:56px;font-weight:900;line-height:1.05;letter-spacing:-1px;">Atelier Zero</h1><p style="font-size:20px;line-height:1.7;margin-top:28px;color:#555555;border-left:3px solid #efe7d2;padding-left:20px;font-style:italic;">A magazine-grade, collage-driven visual system: warm paper canvas, surreal</p></section><section style="max-width:720px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #efe7d2;border-bottom:2px solid #efe7d2;padding:24px 0;"><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#efe7d2;">99.9%</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Uptime</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#efe7d2;">50ms</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Response</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#efe7d2;">10K+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Teams</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#efe7d2;">200+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Integrations</div></div></section><section style="max-width:720px;margin:0 auto;padding:80px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;"><article style="border-top:1px solid #efe7d2;padding-top:24px;"><div style="font-size:13px;color:#efe7d2;font-weight:700;margin-bottom:8px;letter-spacing:2px;">01 / LONG-FORM</div><p style="font-size:16px;line-height:1.7;color:#555555;">Scroll-based narratives</p></article><article style="border-top:1px solid #efe7d2;padding-top:24px;"><div style="font-size:13px;color:#efe7d2;font-weight:700;margin-bottom:8px;letter-spacing:2px;">02 / READER ANALYTICS</div><p style="font-size:16px;line-height:1.7;color:#555555;">Scroll depth insights</p></article><article style="border-top:1px solid #efe7d2;padding-top:24px;"><div style="font-size:13px;color:#efe7d2;font-weight:700;margin-bottom:8px;letter-spacing:2px;">03 / IMMERSIVE GALLERIES</div><p style="font-size:16px;line-height:1.7;color:#555555;">Full-bleed captions</p></article><article style="border-top:1px solid #efe7d2;padding-top:24px;"><div style="font-size:13px;color:#efe7d2;font-weight:700;margin-bottom:8px;letter-spacing:2px;">04 / TYPOGRAPHY</div><p style="font-size:16px;line-height:1.7;color:#555555;">Fine-tuned kerning</p></article></section><section style="max-width:720px;margin:0 auto;padding:60px 48px 100px;text-align:center;border-top:1px solid #efe7d2;"><p style="font-family:Playfair Display,Georgia,serif;font-size:32px;font-style:italic;color:#efe7d2;">&ldquo;A magazine-grade, collage-driven visual system: warm paper canvas, surreal&rdquo;</p><div style="margin-top:24px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#777777;">&mdash; Atelier Zero Design Team</div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atelier Zero — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efe7d2;--fg:#111111;--muted:#6B6456;--accent:#C2A47E;--accent-dark:#8B7355;--border:#D4C9B3;--surface:#F7F2E8;--surface-dark:#1A1714;--radius-sm:2px;--radius-md:4px;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-0.3px}
+.nav-links{display:flex;gap:32px;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.btn{border:1px solid var(--fg);background:none;font-family:var(--font-body);font-size:12px;font-weight:600;padding:10px 24px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 150ms}
+.btn:hover{background:var(--fg);color:var(--bg)}
+
+/* Hero */
+.hero{padding:100px 0 80px;text-align:center;position:relative}
+.hero::after{content:'№ 01';position:absolute;top:24px;right:24px;font-family:var(--font-display);font-size:120px;font-weight:800;color:rgba(0,0,0,0.04);line-height:1;pointer-events:none}
+.hero .kicker{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:5px;color:var(--accent-dark);margin-bottom:20px}
+.hero h1{font-family:var(--font-display);font-size:clamp(40px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-1px;margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:400}
+.hero h1 .serif-accent{color:var(--accent-dark)}
+.hero-sub{font-family:var(--font-display);font-size:20px;font-style:italic;color:var(--muted);max-width:520px;margin-inline:auto;line-height:1.7;margin-bottom:36px}
+.hero-actions{display:flex;gap:16px;justify-content:center}
+
+/* Collage section */
+.collage{padding:40px 0 80px;position:relative}
+.collage-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:260px 200px;gap:12px}
+.collage-item{position:relative;overflow:hidden;background:var(--surface)}
+.collage-item:first-child{grid-row:span 2}
+.collage-item:nth-child(2){grid-column:span 2}
+.collage-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;background:linear-gradient(to top,rgba(26,23,20,0.7) 0%,transparent 60%);color:#fff}
+.collage-inner h3{font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:4px}
+.collage-inner p{font-size:13px;opacity:0.8}
+.collage-gradient{position:absolute;inset:0}
+.collage-item:first-child .collage-gradient{background:linear-gradient(135deg,#8B7355 0%,#C2A47E 50%,#EFE7D2 100%)}
+.collage-item:nth-child(2) .collage-gradient{background:linear-gradient(135deg,#3E362E 0%,#6B6456 100%)}
+.collage-item:nth-child(3) .collage-gradient{background:linear-gradient(135deg,#C2A47E 0%,#8B7355 100%)}
+.collage-item:nth-child(4) .collage-gradient{background:linear-gradient(135deg,#1A1714 0%,#3E362E 100%)}
+
+/* Editorial features */
+.editorial{padding:80px 0}
+.editorial-header{text-align:center;margin-bottom:56px}
+.editorial-header .kicker{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:5px;color:var(--accent-dark);margin-bottom:16px}
+.editorial-header h2{font-family:var(--font-display);font-size:42px;font-weight:800;letter-spacing:-1px}
+.editorial-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.editorial-num{font-family:var(--font-display);font-size:96px;font-weight:800;color:rgba(0,0,0,0.06);line-height:1;margin-bottom:-20px}
+.editorial-block h3{font-family:var(--font-display);font-size:28px;font-weight:700;margin-bottom:8px}
+.editorial-block h3 em{font-style:italic;font-weight:400}
+.editorial-block p{font-size:15px;color:var(--muted);line-height:1.7}
+
+/* Quote */
+.quote{padding:80px 0;text-align:center}
+.quote blockquote{font-family:var(--font-display);font-size:clamp(24px,3vw,36px);font-style:italic;line-height:1.5;max-width:700px;margin-inline:auto;margin-bottom:16px}
+.quote cite{font-size:14px;color:var(--muted);font-style:normal;text-transform:uppercase;letter-spacing:2px}
+
+/* Dark section */
+.dark-section{background:var(--surface-dark);color:#fff;padding:80px 0}
+.dark-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.dark-text .kicker{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:5px;color:var(--accent);margin-bottom:16px}
+.dark-text h2{font-family:var(--font-display);font-size:40px;font-weight:700;line-height:1.2;margin-bottom:16px}
+.dark-text p{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:24px}
+.dark-text .btn{border-color:#fff;color:#fff;transition:all 150ms}
+.dark-text .btn:hover{background:#fff;color:var(--surface-dark)}
+.dark-visual{position:relative;height:300px;background:linear-gradient(135deg,rgba(194,164,126,0.2),rgba(139,115,85,0.3));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:120px;font-weight:800;color:rgba(255,255,255,0.05)}
+
+/* CTA */
+.cta{padding:80px 0;text-align:center}
+.cta h2{font-family:var(--font-display);font-size:48px;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.cta p{font-family:var(--font-display);font-size:18px;font-style:italic;color:var(--muted);margin-bottom:32px}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:40px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-brand{font-family:var(--font-display);font-weight:700;font-size:18px}
+.footer-links{display:flex;gap:24px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.footer-links a:hover{color:var(--fg)}
+
+@media(max-width:1023px){.collage-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.collage-item:first-child{grid-row:span 1}.dark-inner{grid-template-columns:1fr}.editorial-grid{grid-template-columns:1fr}}
+@media(max-width:639px){.collage-grid{grid-template-columns:1fr;grid-template-rows:auto}.nav-links{display:none}.dark-visual{height:200px}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">Atelier Zero</div><div class="nav-links"><a href="#">Journal</a><a href="#">Typography</a><a href="#">Grid</a><a href="#">About</a></div><button class="btn">Begin</button></nav>
+
+<section class="hero container">
+<div class="kicker">Magazine-Grade Design System</div>
+<h1>Warm paper. <em>Ink</em><br><span class="serif-accent">soul.</span></h1>
+<p class="hero-sub">A collage-driven visual system built on warm paper canvas, serif-led hierarchy, and surreal compositional thinking — for content that demands to be read.</p>
+<div class="hero-actions"><button class="btn">Explore the System</button><button class="btn" style="background:var(--fg);color:var(--bg);border-color:var(--fg)">Read the Journal</button></div>
+</section>
+
+<section class="collage container">
+<div class="collage-grid">
+<div class="collage-item"><div class="collage-gradient"></div><div class="collage-inner"><h3>Paper Canvas</h3><p>Warm parchment tones, #efe7d2</p></div></div>
+<div class="collage-item"><div class="collage-gradient"></div><div class="collage-inner"><h3>Ink-Led Hierarchy</h3><p>Serif display, sans body — nothing else</p></div></div>
+<div class="collage-item"><div class="collage-gradient"></div><div class="collage-inner"><h3>Collage Layouts</h3><p>Overlapping, asymmetric, intentional</p></div></div>
+<div class="collage-item"><div class="collage-gradient"></div><div class="collage-inner"><h3>Surreal Touch</h3><p>Moments of visual surprise, elegantly placed</p></div></div>
+</div>
+</section>
+
+<section class="editorial container">
+<div class="editorial-header"><div class="kicker">Principles</div><h2>Built on <em>intention</em></h2></div>
+<div class="editorial-grid">
+<div class="editorial-block"><div class="editorial-num">01</div><h3>Warmth over <em>whiteness</em></h3><p>The paper canvas (#efe7d2) replaces stark white. Every surface carries warmth — like a well-kept book, not a hospital corridor. Tone-on-tone depth, never flat.</p></div>
+<div class="editorial-block"><div class="editorial-num">02</div><h3>Serif commands, <em>sans obeys</em></h3><p>Playfair Display leads headlines. DM Sans carries the body. Two families, one voice — the serif sets the tone, the sans reads the notes.</p></div>
+<div class="editorial-block"><div class="editorial-num">03</div><h3>Collage, not <em>grid</em></h3><p>Elements overlap, bleed, and recombine. Asymmetric compositions carry more energy than balanced ones. Break the grid, then rebuild it.</p></div>
+<div class="editorial-block"><div class="editorial-num">04</div><h3>Surreal <em>moments</em></h3><p>One unexpected element per page. A shifted baseline, an oversized numeral, a color that appears once and disappears. Visual poetry, not decoration.</p></div>
+</div>
+</section>
+
+<section class="quote container">
+<blockquote>"Design is not just what it looks like and feels like. Design is how it works — and how it <em>lingers</em>."</blockquote>
+<cite>Atelier Zero Manifesto, 2026</cite>
+</section>
+
+<section class="dark-section">
+<div class="dark-inner">
+<div class="dark-text">
+<div class="kicker">Dark Mode</div>
+<h2>Warmth in <em>darkness</em></h2>
+<p>Dark mode doesn't mean cold. Atelier Zero's dark palette wraps content in deep, warm blacks (#1A1714) with ink-blue accents — like reading by lamplight in a leather-bound study.</p>
+<button class="btn">Explore Dark Palette</button>
+</div>
+<div class="dark-visual">AZ</div>
+</div>
+</section>
+
+<section class="cta container">
+<h2>Create pages that <em>linger</em></h2>
+<p>The Atelier Zero system — warm paper, serif-led, collage-driven.</p>
+<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap"><button class="btn">Get Started</button><button class="btn" style="background:var(--fg);color:var(--bg);border-color:var(--fg)">View on GitHub</button></div>
+</section>
+
+<footer class="footer" style="max-width:1100px;margin-inline:auto">
+<div class="footer-brand">Atelier Zero</div>
+<div class="footer-links"><a href="#">Typography</a><a href="#">Tokens</a><a href="#">Components</a><a href="#">License</a></div>
+<div style="font-size:13px;color:var(--muted)">&copy; 2026</div>
+</footer>
+</body>
+</html>

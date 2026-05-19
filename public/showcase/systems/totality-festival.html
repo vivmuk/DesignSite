@@ -1,1 +1,155 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Totality Festival - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#ffffff;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:28px 64px;border-bottom:1px solid #E8E8E8;"><div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:300;">Totality Festival</div><div style="display:flex;gap:40px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777777;"><span>System</span><span>Components</span><span>About</span></div></nav><section style="padding:140px 64px 80px;text-align:center;max-width:680px;margin:0 auto;"><div style="width:60px;height:1px;background:#121318;margin:0 auto 40px;"></div><h1 style="font-size:44px;font-weight:200;letter-spacing:6px;text-transform:uppercase;line-height:1.3;">Totality Festival</h1><p style="font-size:16px;line-height:1.8;margin-top:32px;color:#888888;font-weight:300;">name: Totality Festival Design System</p><div style="width:60px;height:1px;background:#121318;margin:40px auto 0;"></div></section><section style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;"><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">4.9★</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#121318;margin-top:8px;font-weight:500;">Rating</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">&lt;1s</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#121318;margin-top:8px;font-weight:500;">Time to Value</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">5M+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#121318;margin-top:8px;font-weight:500;">API/Day</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">24/7</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#121318;margin-top:8px;font-weight:500;">Support</div></div></section><section style="max-width:600px;margin:0 auto;padding:40px 64px 100px;"><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#121318;margin:0 0 12px;">Icon System</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Scalable vector icons</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#121318;margin:0 0 12px;">Responsive Grid</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Fluid adaptive layouts</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#121318;margin:0 0 12px;">Design Tokens</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Centralized variables</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#121318;margin:0 0 12px;">Theme Engine</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Instant look switching</p></div></section><section style="text-align:center;padding:60px 64px 120px;border-top:1px solid #E8E8E8;"><div style="width:40px;height:1px;background:#121318;margin:0 auto 32px;"></div><a href="#" style="color:#121318;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:400;border-bottom:1px solid #121318;padding-bottom:4px;">Discover More</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Totality Festival — Eclipse-Inspired Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#121318;--bg:#0A0A0E;--bg-surface:#13131A;--bg-card:#1A1A22;--text:#F0EDE8;--text-muted:#8A8694;--corona:#D4A843;--corona-light:#F0D68A;--eclipse:#C75442;--star:#F5F0E8;--border:rgba(255,255,255,0.06);--radius:16px;--radius-lg:24px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,14,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:68px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--corona)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:var(--text-muted);font-size:14px;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--corona)}
+.nav-cta{background:var(--corona);color:var(--bg);padding:10px 24px;border-radius:100px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:all .3s}
+.nav-cta:hover{background:var(--corona-light);transform:translateY(-1px)}
+
+.hero{padding:180px 0 120px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,var(--corona) 0%,transparent 1%,rgba(212,168,67,0.08) 30%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;color:var(--corona);margin-bottom:24px}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--corona);box-shadow:0 0 10px rgba(212,168,67,0.5)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,8vw,92px);font-weight:700;line-height:1.0;margin-bottom:24px;letter-spacing:-1px}
+.hero h1 .corona{color:var(--corona);text-shadow:0 0 40px rgba(212,168,67,0.3)}
+.hero p{font-size:19px;color:var(--text-muted);max-width:520px;margin-bottom:40px;font-weight:300}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{background:var(--corona);color:var(--bg);padding:16px 36px;border-radius:100px;font-weight:600;font-size:16px;border:none;cursor:pointer;transition:all .3s;box-shadow:0 0 24px rgba(212,168,67,0.3)}
+.btn-primary:hover{background:var(--corona-light);transform:translateY(-2px);box-shadow:0 0 40px rgba(212,168,67,0.4)}
+.btn-secondary{background:transparent;color:var(--text);padding:16px 36px;border-radius:100px;font-weight:600;font-size:16px;border:1px solid rgba(255,255,255,0.15);cursor:pointer;transition:all .3s}
+.btn-secondary:hover{border-color:var(--corona);color:var(--corona)}
+
+.stats{padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.stat-number{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--corona);text-shadow:0 0 20px rgba(212,168,67,0.2)}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+
+.features{padding:120px 0}
+.section-label{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--corona);margin-bottom:16px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.15;margin-bottom:16px}
+.section-title .corona{color:var(--corona);text-shadow:0 0 20px rgba(212,168,67,0.2)}
+.section-desc{color:var(--text-muted);font-size:18px;max-width:520px;margin-bottom:64px;font-weight:300}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all .4s}
+.feature-card:hover{border-color:rgba(212,168,67,0.2);transform:translateY(-4px);box-shadow:0 0 40px rgba(212,168,67,0.05)}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;background:rgba(212,168,67,0.1)}
+.feature-card h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+.eclipse{padding:120px 0;text-align:center;position:relative}
+.eclipse::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(199,84,66,0.15) 0%,transparent 60%);pointer-events:none}
+.eclipse h2{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:700;margin-bottom:20px;position:relative}
+.eclipse h2 .corona{color:var(--corona);text-shadow:0 0 30px rgba(212,168,67,0.3)}
+.eclipse p{font-size:18px;color:var(--text-muted);max-width:500px;margin:0 auto 40px;font-weight:300;position:relative}
+.eclipse-date{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--corona);margin-bottom:8px}
+
+.pricing{padding:120px 0}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pricing-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;transition:all .4s}
+.pricing-card.featured{border-color:var(--corona);box-shadow:0 0 40px rgba(212,168,67,0.08)}
+.pricing-card:hover{transform:translateY(-4px)}
+.pricing-tier{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--corona);margin-bottom:8px}
+.pricing-price{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;margin-bottom:4px}
+.pricing-price span{font-size:16px;font-weight:300;color:var(--text-muted)}
+.pricing-desc{font-size:14px;color:var(--text-muted);margin-bottom:32px}
+.pricing-features{list-style:none;margin-bottom:32px}
+.pricing-features li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;display:flex;align-items:center;gap:10px}
+.pricing-features li::before{content:'';width:16px;height:16px;border-radius:50%;background:var(--corona);flex-shrink:0}
+
+.cta{padding:120px 0;text-align:center;position:relative}
+.cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(212,168,67,0.1) 0%,transparent 60%);pointer-events:none}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(40px,5vw,60px);font-weight:700;margin-bottom:20px;position:relative}
+.cta h2 .corona{color:var(--corona);text-shadow:0 0 30px rgba(212,168,67,0.3)}
+.cta p{color:var(--text-muted);font-size:18px;margin-bottom:40px;font-weight:300;position:relative}
+
+.footer{padding:64px 0 32px;border-top:1px solid var(--border)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .nav-logo{margin-bottom:12px;display:inline-block;font-size:18px}
+.footer-brand p{font-size:14px;color:var(--text-muted);max-width:260px;line-height:1.7}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--corona);margin-bottom:16px}
+.footer-col a{display:block;color:var(--text-muted);font-size:14px;padding:5px 0;transition:color .3s}
+.footer-col a:hover{color:var(--corona)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)}
+
+@media(max-width:768px){.nav-links{display:none}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid,.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner"><div class="nav-logo">Totality</div><div class="nav-links"><a href="#features">Experience</a><a href="#pricing">Tickets</a><button class="nav-cta">Get Tickets</button></div></div></nav>
+
+<section class="hero"><div class="container hero-content">
+<div class="hero-badge"><span class="dot"></span> August 12, 2026 — Total Eclipse</div>
+<h1>Stand in the <br><span class="corona">shadow</span>.</h1>
+<p>Totality Festival's design system channels the awe of a solar eclipse. Dark celestial surfaces, corona-gold accents, and an experience that stays with you.</p>
+<div class="hero-actions"><button class="btn-primary">Get Tickets</button><button class="btn-secondary">Watch Preview</button></div>
+</div></section>
+
+<section class="stats"><div class="container"><div class="stats-grid">
+<div><div class="stat-number">50K+</div><div class="stat-label">Attendees</div></div>
+<div><div class="stat-number">140+</div><div class="stat-label">Artists</div></div>
+<div><div class="stat-number">3</div><div class="stat-label">Days</div></div>
+<div><div class="stat-number">4m26s</div><div class="stat-label">Totality Duration</div></div>
+</div></div></section>
+
+<section class="features" id="features"><div class="container">
+<div class="section-label">THE EXPERIENCE</div>
+<h2 class="section-title">Where darkness <span class="corona">reveals</span> light.</h2>
+<p class="section-desc">Every design choice mirrors the eclipse: dark surfaces that let golden accents corona-bloom into prominence.</p>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">🌑</div><h3>Celestial Dark Base</h3><p>Near-black backgrounds (#0A0A0E) that simulate totality. Dark surfaces that make every golden accent corona-glow.</p></div>
+<div class="feature-card"><div class="feature-icon">✦</div><h3>Corona Gold Accent</h3><p>#D4A843 — the warm gold of the solar corona. Used for headlines, CTAs, and the moments that need to shine through darkness.</p></div>
+<div class="feature-card"><div class="feature-icon">◉</div><h3>Eclipse Typography</h3><p>Playfair Display for dramatic headlines, Inter for readable body copy. A pairing that balances spectacle and clarity.</p></div>
+<div class="feature-card"><div class="feature-icon">💫</div><h3>Radiant Glow Effects</h3><p>Subtle text-shadow and box-shadow glows that simulate the corona's ethereal light. Illumination without glare.</p></div>
+<div class="feature-card"><div class="feature-icon">🌄</div><h3>Shadow Transitions</h3><p>State changes inspired by eclipse phases: partial → totality → diamond ring. Animations that mirror nature's drama.</p></div>
+<div class="feature-card"><div class="feature-icon">⭐</div><h3>Star Field Textures</h3><p>Subtle dot-pattern backgrounds and star-field elements that evoke the midday sky during totality.</p></div>
+</div></div></section>
+
+<section class="eclipse"><div class="container">
+<div class="eclipse-date">August 12, 2026</div>
+<h2>Experience <span class="corona">totality</span>.</h2>
+<p>Three days of music, art, and wonder under the shadow of the moon. The darkest hour becomes the most luminous.</p>
+<button class="btn-primary">Secure Your Spot</button>
+</div></section>
+
+<section class="pricing" id="pricing"><div class="container">
+<div class="section-label">TICKETS</div>
+<h2 class="section-title">Choose your <span class="corona">phase</span>.</h2>
+<div class="pricing-grid">
+<div class="pricing-card"><div class="pricing-tier">Partial</div><div class="pricing-price">$199</div><div class="pricing-desc">General admission experience.</div><ul class="pricing-features"><li>3-day festival access</li><li>Main stage viewing</li><li>Camping included</li><li>Festival app access</li></ul><button class="btn-secondary" style="width:100%">Select</button></div>
+<div class="pricing-card featured"><div class="pricing-tier">Totality</div><div class="pricing-price">$449<span>/person</span></div><div class="pricing-desc">The full eclipse experience.</div><ul class="pricing-features"><li>Everything in Partial</li><li>VIP eclipse viewing</li><li>Artist meet & greet</li><li>Exclusive merch</li><li>Premium camping</li></ul><button class="btn-primary" style="width:100%">Select</button></div>
+<div class="pricing-card"><div class="pricing-tier">Diamond Ring</div><div class="pricing-price">$1,200</div><div class="pricing-desc">The ultimate luminous experience.</div><ul class="pricing-features"><li>Everything in Totality</li><li>Backstage access</li><li>Luxury glamping</li><li>Private events</li><li>Lifetime membership</li></ul><button class="btn-secondary" style="width:100%">Select</button></div>
+</div></div></section>
+
+<section class="cta"><div class="container">
+<h2>Don't miss the <span class="corona">shadow</span>.</h2>
+<p>Tickets are limited. The next total eclipse won't cross this path for 54 years.</p>
+<button class="btn-primary">Get Tickets Now</button>
+</div></section>
+
+<footer class="footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><div class="nav-logo" style="font-size:18px">Totality</div><p>The eclipse-inspired design system. Dark celestial surfaces, corona-gold accents, and an experience that stays with you.</p></div>
+<div class="footer-col"><h4>Experience</h4><a href="#">Lineup</a><a href="#">Schedule</a><a href="#">Map</a><a href="#">FAQ</a></div>
+<div class="footer-col"><h4>Design</h4><a href="#">Components</a><a href="#">Tokens</a><a href="#">Figma Kit</a><a href="#">Changelog</a></div>
+<div class="footer-col"><h4>Info</h4><a href="#">About</a><a href="#">Sustainability</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Totality Festival Design System</span><span>🌑 ✦ 🌕</span></div>
+</div></footer>
+</body></html>

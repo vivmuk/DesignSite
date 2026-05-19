@@ -1,1 +1,509 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Retro - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFFFFF;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:28px 64px;border-bottom:1px solid #E8E8E8;"><div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:300;">Retro</div><div style="display:flex;gap:40px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777777;"><span>System</span><span>Components</span><span>About</span></div></nav><section style="padding:140px 64px 80px;text-align:center;max-width:680px;margin:0 auto;"><div style="width:60px;height:1px;background:#3B82F6;margin:0 auto 40px;"></div><h1 style="font-size:44px;font-weight:200;letter-spacing:6px;text-transform:uppercase;line-height:1.3;">Retro</h1><p style="font-size:16px;line-height:1.8;margin-top:32px;color:#888888;font-weight:300;">Throwback design with vintage-inspired typography, high-contrast retro palettes, and nostalgic visual elements</p><div style="width:60px;height:1px;background:#3B82F6;margin:40px auto 0;"></div></section><section style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;"><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">5M+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">API/Day</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">24/7</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Support</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">99.9%</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Uptime</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">50ms</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#3B82F6;margin-top:8px;font-weight:500;">Response</div></div></section><section style="max-width:600px;margin:0 auto;padding:40px 64px 100px;"><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Responsive Grid</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Fluid adaptive layouts</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Design Tokens</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Centralized variables</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Theme Engine</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Instant look switching</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#3B82F6;margin:0 0 12px;">Component Library</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Production-ready blocks</p></div></section><section style="text-align:center;padding:60px 64px 120px;border-top:1px solid #E8E8E8;"><div style="width:40px;height:1px;background:#3B82F6;margin:0 auto 32px;"></div><a href="#" style="color:#3B82F6;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:400;border-bottom:1px solid #3B82F6;padding-bottom:4px;">Discover More</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro — Throwback Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --accent: #3B82F6;
+  --accent-warm: #D97706;
+  --accent-rose: #DB2777;
+  --bg: #FAF7F2;
+  --bg-cream: #F5F0E8;
+  --text: #1A1A1A;
+  --text-muted: #6B6B6B;
+  --border: #E0D8CC;
+  --radius: 8px;
+}
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.serif { font-family: 'Playfair Display', Georgia, serif; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* Decorative line */
+.deco-line {
+  width: 60px; height: 3px; background: var(--accent-warm);
+  margin-bottom: 20px;
+}
+
+/* Nav */
+.nav {
+  padding: 20px 0;
+  border-bottom: 2px solid var(--text);
+}
+.nav-inner {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 900;
+  letter-spacing: -1px;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--text-muted); transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--text); color: var(--bg); padding: 10px 24px;
+  font-size: 13px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; border: none; cursor: pointer;
+  transition: all 0.3s;
+}
+.nav-cta:hover { background: var(--accent-warm); }
+
+/* Hero */
+.hero {
+  padding: 100px 0 80px;
+  border-bottom: 2px solid var(--text);
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(56px, 9vw, 120px);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: -2px; margin-bottom: 32px;
+}
+.hero h1 em {
+  font-style: italic; color: var(--accent-warm);
+}
+.hero p {
+  font-size: 18px; color: var(--text-muted); max-width: 480px;
+  margin-bottom: 40px; border-left: 3px solid var(--accent-warm);
+  padding-left: 20px;
+}
+.hero-actions { display: flex; gap: 16px; }
+.btn-primary {
+  background: var(--text); color: var(--bg); padding: 14px 32px;
+  font-size: 14px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; border: 2px solid var(--text); cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--accent-warm); border-color: var(--accent-warm); }
+.btn-outline {
+  background: transparent; color: var(--text); padding: 14px 32px;
+  font-size: 14px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; border: 2px solid var(--text); cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-outline:hover { background: var(--text); color: var(--bg); }
+
+/* Ticker */
+.ticker {
+  padding: 16px 0;
+  border-bottom: 2px solid var(--text);
+  background: var(--accent-warm);
+  overflow: hidden; white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: ticker-scroll 25s linear infinite;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+}
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-inner span { margin: 0 32px; }
+
+/* Stats */
+.stats {
+  padding: 80px 0;
+  border-bottom: 2px solid var(--text);
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+}
+.stat-item {
+  padding: 32px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px; font-weight: 900; line-height: 1;
+}
+.stat-number.warm { color: var(--accent-warm); }
+.stat-number.blue { color: var(--accent); }
+.stat-number.rose { color: var(--accent-rose); }
+.stat-label {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 2px; margin-top: 8px; color: var(--text-muted);
+}
+
+/* Features */
+.features { padding: 100px 0; }
+.section-label {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 3px; color: var(--accent-warm); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+  line-height: 1.1; margin-bottom: 16px;
+}
+.section-title em { font-style: italic; }
+.section-desc { font-size: 17px; color: var(--text-muted); max-width: 520px; margin-bottom: 64px; }
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+}
+.feature-card {
+  padding: 32px; border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.feature-card:hover { border-color: var(--text); transform: translateY(-4px); }
+.feature-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 900; color: var(--border);
+  line-height: 1; margin-bottom: 16px;
+}
+.feature-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; margin-bottom: 8px;
+}
+.feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+/* Showcase */
+.showcase {
+  padding: 100px 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  background: var(--bg-cream);
+}
+.showcase-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+.showcase-card {
+  background: var(--bg); border: 2px solid var(--text);
+  overflow: hidden; transition: all 0.3s;
+}
+.showcase-card:hover { transform: translateY(-4px); }
+.showcase-preview { height: 220px; border-bottom: 2px solid var(--text); }
+.showcase-preview.s1 { background: linear-gradient(135deg, var(--accent-warm), var(--accent-rose)); }
+.showcase-preview.s2 { background: linear-gradient(135deg, var(--accent), #7B2FFF); }
+.showcase-info { padding: 24px; }
+.showcase-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; margin-bottom: 6px;
+}
+.showcase-info p { font-size: 14px; color: var(--text-muted); }
+.showcase-tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  padding: 4px 12px; border: 1px solid var(--text);
+  margin-top: 12px;
+}
+
+/* Quote */
+.quote-section { padding: 80px 0; }
+.quote-block {
+  max-width: 700px; margin: 0 auto; text-align: center;
+}
+.quote-block blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3vw, 36px); font-weight: 600;
+  font-style: italic; line-height: 1.4; margin-bottom: 24px;
+}
+.quote-block cite {
+  font-size: 14px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--text-muted); font-style: normal;
+}
+
+/* Pricing */
+.pricing { padding: 100px 0; }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.pricing-card {
+  padding: 40px; border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.pricing-card:hover { border-color: var(--text); }
+.pricing-card.featured { border: 2px solid var(--text); }
+.pricing-tier {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--accent-warm); margin-bottom: 8px;
+}
+.pricing-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 900; margin-bottom: 4px;
+}
+.pricing-price span { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; color: var(--text-muted); }
+.pricing-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+.pricing-features { list-style: none; margin-bottom: 32px; }
+.pricing-features li {
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+/* CTA */
+.cta {
+  padding: 80px 0; text-align: center;
+  border-top: 2px solid var(--text);
+}
+.cta h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+  margin-bottom: 20px;
+}
+.cta h2 em { font-style: italic; color: var(--accent-warm); }
+.cta p { font-size: 18px; color: var(--text-muted); margin-bottom: 32px; }
+
+/* Footer */
+.footer { padding: 48px 0 24px; border-top: 2px solid var(--text); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+.footer-brand .nav-logo { font-size: 22px; margin-bottom: 12px; display: inline-block; }
+.footer-brand p { font-size: 14px; color: var(--text-muted); max-width: 280px; line-height: 1.7; }
+.footer-col h4 {
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 2px; margin-bottom: 16px;
+}
+.footer-col a { display: block; font-size: 14px; color: var(--text-muted); padding: 4px 0; }
+.footer-col a:hover { color: var(--text); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 24px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-grid, .showcase-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="nav-logo serif">Retro.</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#pricing">Pricing</a>
+      <button class="nav-cta">Get Started</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <h1 class="serif">Design that<br><em>remembers</em>.</h1>
+    <p>Throwback-inspired components with vintage typography, high-contrast retro palettes, and nostalgic visual elements. The past never looked this good.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Explore Components</button>
+      <button class="btn-outline">View Documentation</button>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>VINTAGE TYPOGRAPHY</span><span>●</span>
+    <span>HIGH CONTRAST</span><span>●</span>
+    <span>RETRO PALETTES</span><span>●</span>
+    <span>EDITORIAL LAYOUT</span><span>●</span>
+    <span>TIMELESS DESIGN</span><span>●</span>
+    <span>VINTAGE TYPOGRAPHY</span><span>●</span>
+    <span>HIGH CONTRAST</span><span>●</span>
+    <span>RETRO PALETTES</span><span>●</span>
+    <span>EDITORIAL LAYOUT</span><span>●</span>
+    <span>TIMELESS DESIGN</span><span>●</span>
+  </div>
+</div>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-number warm">9K+</div><div class="stat-label">Github Stars</div></div>
+      <div class="stat-item"><div class="stat-number blue">180+</div><div class="stat-label">Components</div></div>
+      <div class="stat-item"><div class="stat-number rose">97%</div><div class="stat-label">Satisfaction</div></div>
+      <div class="stat-item"><div class="stat-number warm">4.9★</div><div class="stat-label">Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="deco-line"></div>
+    <div class="section-label">FEATURES</div>
+    <h2 class="section-title">Classic design,<br><em>modern</em> craft.</h2>
+    <p class="section-desc">Every component channels decades of design history — then makes it work for the web of today.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-number">01</div>
+        <h3>Editorial Typography</h3>
+        <p>Playfair Display for headings, Inter for body. Serif meets sans in a pairing that echoes broadsheet newspapers and magazine mastheads.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number" style="color:var(--accent-warm)">02</div>
+        <h3>Retro Color Palettes</h3>
+        <p>Amber warmth, faded cream, and deep ink tones. Colors drawn from mid-century print design, adapted for screen readability.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number" style="color:var(--accent)">03</div>
+        <h3>Border-Heavy Layouts</h3>
+        <p>Generous 2px borders and structured dividers that reference the clean grid systems of 1960s Swiss and editorial design.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number" style="color:var(--accent-rose)">04</div>
+        <h3>Nostalgic Motion</h3>
+        <p>Transitions that feel like flipping a page — smooth but deliberate. No bounce, no elastic. Just dignified, intentional movement.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number">05</div>
+        <h3>Warm Surfaces</h3>
+        <p>Off-white and cream backgrounds that feel like aged paper. No harsh pure white — every surface has warmth, like it's been here for decades.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-number" style="color:var(--accent-warm)">06</div>
+        <h3>Timeless Patterns</h3>
+        <p>Decorative rules, dots, and dividers that reference classic print design. Never trendy — always tasteful.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase" id="showcase">
+  <div class="container">
+    <div class="deco-line"></div>
+    <div class="section-label">SHOWCASE</div>
+    <h2 class="section-title serif">Built with <em>character</em>.</h2>
+    <div class="showcase-grid">
+      <div class="showcase-card">
+        <div class="showcase-preview s1"></div>
+        <div class="showcase-info">
+          <h3>The Herald Tribune</h3>
+          <p>Digital newspaper with Playfair-driven mastheads, columned layouts, and ink-warm tones for modern newsreading.</p>
+          <div class="showcase-tag">Case Study</div>
+        </div>
+      </div>
+      <div class="showcase-card">
+        <div class="showcase-preview s2"></div>
+        <div class="showcase-info">
+          <h3>Hearthside Bakery</h3>
+          <p>Artisan bakery website using vintage typography, amber palettes, and editorial card layouts that feel timeless.</p>
+          <div class="showcase-tag">Live Product</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section">
+  <div class="container">
+    <div class="quote-block">
+      <blockquote>"Retro gave us a design language that feels both familiar and fresh. Our users immediately connected with it."</blockquote>
+      <cite>— Alexandra Moretti, Creative Director</cite>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="deco-line"></div>
+    <div class="section-label">PRICING</div>
+    <h2 class="section-title">Invest in <em>timeless</em> design.</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$0 <span>/ forever</span></div>
+        <div class="pricing-desc">For personal projects and experiments.</div>
+        <ul class="pricing-features">
+          <li>40+ core components</li>
+          <li>2 retro palettes</li>
+          <li>Community support</li>
+          <li>React only</li>
+        </ul>
+        <button class="btn-outline" style="width:100%">Get Started</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tier">Classic</div>
+        <div class="pricing-price">$29 <span>/month</span></div>
+        <div class="pricing-desc">For teams building production apps.</div>
+        <ul class="pricing-features">
+          <li>180+ components</li>
+          <li>Full retro palette</li>
+          <li>Priority support</li>
+          <li>All frameworks</li>
+          <li>Figma library</li>
+        </ul>
+        <button class="btn-primary" style="width:100%">Start Free Trial</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Heritage</div>
+        <div class="pricing-price">Custom</div>
+        <div class="pricing-desc">For organizations with legacy.</div>
+        <ul class="pricing-features">
+          <li>Everything in Classic</li>
+          <li>Custom palettes</li>
+          <li>Dedicated support</li>
+          <li>SLA guarantee</li>
+          <li>White-label</li>
+        </ul>
+        <button class="btn-outline" style="width:100%">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2 class="serif">The past is <em>present</em>.</h2>
+    <p>Join 9,000+ designers building interfaces that stand the test of time.</p>
+    <button class="btn-primary">Start Building — Free</button>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo serif">Retro.</div>
+        <p>The throwback design system. Vintage typography, retro palettes, and editorial layouts for the modern web.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#">Components</a>
+        <a href="#">Templates</a>
+        <a href="#">Figma Kit</a>
+        <a href="#">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">Tutorials</a>
+        <a href="#">Blog</a>
+        <a href="#">Community</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Retro Design System. All rights reserved.</span>
+      <span>Timeless design, modern craft.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

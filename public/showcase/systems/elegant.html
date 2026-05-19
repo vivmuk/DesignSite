@@ -1,1 +1,113 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Elegant - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFFFFF;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:20px 48px;border-bottom:1px solid #E8E8E8;"><div style="font-weight:800;font-size:18px;letter-spacing:-0.5px;">Elegant</div><div style="display:flex;gap:28px;font-size:14px;color:#555555;"><span>Components</span><span>Docs</span><span>GitHub</span></div></nav><section style="padding:100px 48px 60px;text-align:center;max-width:800px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#3B82F6;font-weight:600;margin-bottom:16px;">Design System</div><h1 style="font-size:52px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;">Elegant</h1><p style="font-size:18px;color:#555555;margin-top:20px;line-height:1.6;">Graceful, refined aesthetic with delicate typography, minimal palettes, and polished layouts that exude sophis</p></section><section style="display:flex;justify-content:center;gap:48px;padding:40px 48px;border-top:1px solid #E8E8E8;border-bottom:1px solid #E8E8E8;max-width:900px;margin:0 auto;"><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">24/7</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Support</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">99.9%</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Uptime</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">50ms</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Response</div></div><div style="text-align:center;padding:0 16px;"><div style="font-size:28px;font-weight:800;color:#3B82F6;">10K+</div><div style="font-size:12px;color:#555555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Teams</div></div></section><section style="padding:80px 48px;max-width:680px;margin:0 auto;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:3px;color:#3B82F6;font-weight:600;margin-bottom:48px;">Features</div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">01</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">SLA Guarantee</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">99.99% uptime</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">02</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Enterprise SSO</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">SAML, OIDC support</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">03</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">Audit Logging</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Every action searchable</p></div></div><div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:32px;"><div style="font-size:48px;font-weight:800;color:#3B82F6;line-height:1;opacity:0.85;">04</div><div><h3 style="margin:0 0 4px;font-size:18px;font-weight:700;color:#111111;">RBAC</h3><p style="margin:0;font-size:14px;color:#555555;line-height:1.6;">Granular permissions</p></div></div></section><section style="text-align:center;padding:60px 48px 100px;"><a href="#" style="background:#3B82F6;color:#FFF;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;">Get Started</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Elegant - Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#3B82F6;--bg:#FFFFFF;--text:#111111;--text-dim:#999999;--border:#E8E8E8;--light:#F7F7F5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.serif{font-family:'Cormorant Garamond',Georgia,serif}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:28px 64px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;letter-spacing:4px;text-transform:uppercase}
+.nav-links{display:flex;gap:36px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim)}
+.nav-links a{color:var(--text-dim);transition:color .3s;text-decoration:none}.nav-links a:hover{color:var(--text)}
+.hero{padding:120px 64px 80px;text-align:center;max-width:800px;margin:0 auto}
+.hero .label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:40px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;line-height:1.1;margin-bottom:24px;letter-spacing:-1px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero p{font-size:17px;color:var(--text-dim);line-height:1.8;font-weight:300;max-width:540px;margin:0 auto 48px}
+.hero-line{width:60px;height:1px;background:var(--accent);margin:0 auto 40px}
+.btn-row{display:flex;gap:20px;justify-content:center}
+.btn-e{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;padding:14px 44px;border:1px solid var(--text);background:transparent;color:var(--text);cursor:pointer;transition:all .3s;font-weight:500}
+.btn-e:hover{background:var(--text);color:#fff}
+.btn-e.filled{background:var(--text);color:#fff}.btn-e.filled:hover{background:var(--accent)}
+.showcase-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+.showcase-item{padding:80px 48px;border-bottom:1px solid var(--border);position:relative;transition:background .3s}
+.showcase-item:nth-child(odd){border-right:1px solid var(--border)}
+.showcase-item:hover{background:var(--light)}
+.showcase-item .num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;color:#f5f5f5;position:absolute;top:20px;right:24px;line-height:1}
+.showcase-item h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;margin-bottom:12px}
+.showcase-item p{font-size:15px;color:var(--text-dim);line-height:1.8;font-weight:300;max-width:380px}
+.quote-section{padding:100px 64px;text-align:center;background:var(--light)}
+.quote-section blockquote{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;font-style:italic;line-height:1.4;max-width:700px;margin:0 auto 24px;color:var(--text)}
+.quote-section cite{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);font-style:normal}
+.stats-row{display:flex;justify-content:center;gap:80px;padding:80px 64px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat-item{text-align:center}
+.stat-item .number{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300}
+.stat-item .label{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-top:8px}
+.clients{text-align:center;padding:60px 64px;border-bottom:1px solid var(--border)}
+.clients p{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);margin-bottom:32px}
+.clients .logos{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;opacity:.3;font-size:18px;font-weight:500;letter-spacing:1px}
+.cta-section{padding:100px 64px;text-align:center}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;margin-bottom:16px}
+.cta-section p{font-size:16px;color:var(--text-dim);font-weight:300;margin-bottom:40px}
+.footer{border-top:1px solid var(--border);padding:48px 64px 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-brand .logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.footer-brand p{font-size:13px;color:var(--text-dim);line-height:1.7;font-weight:300}
+.footer-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;font-weight:500}
+.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:10px;text-decoration:none;transition:color .2s;font-weight:300}.footer-col a:hover{color:var(--text)}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--text-dim);letter-spacing:1px}
+@media(max-width:768px){.hero h1{font-size:48px}.showcase-row{grid-template-columns:1fr}.stats-row{flex-wrap:wrap;gap:40px}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.hero{padding:80px 24px}}
+@media(max-width:480px){.hero h1{font-size:36px}.showcase-item .num{font-size:48px}.footer-grid{grid-template-columns:1fr}.stats-row{flex-direction:column;gap:24px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">Elegant</div>
+<div class="nav-links"><a href="#">Atelier</a><a href="#">Gallery</a><a href="#">Philosophy</a><a href="#">Journal</a><a href="#">Contact</a></div>
+</nav>
+<section class="hero">
+<div class="label">Design System</div>
+<div class="hero-line"></div>
+<h1>Grace in every <em>pixel</em></h1>
+<p>Delicate typography, minimal palettes, and polished layouts that exude sophistication. Where restraint becomes the ultimate expression of taste.</p>
+<div class="btn-row">
+<button class="btn-e filled">Explore</button>
+<button class="btn-e">Philosophy</button>
+</div>
+</section>
+<section class="showcase-row">
+<div class="showcase-item"><div class="num">01</div><h3>Refined Typography</h3><p>Serif-led hierarchies with carefully calibrated weights. Every heading, paragraph, and caption exists in intentional harmony.</p></div>
+<div class="showcase-item"><div class="num">02</div><h3>Muted Palettes</h3><p>A single accent hue against warm whites and soft grays. Understated color that serves content, never competing with it.</p></div>
+<div class="showcase-item"><div class="num">03</div><h3>Generous Space</h3><p>Breathing room between elements. White space isn't empty — it's the silence that makes the music of your layout audible.</p></div>
+<div class="showcase-item"><div class="num">04</div><h3>Intentional Motion</h3><p>Subtle transitions that feel natural. Every animation has a purpose: guiding attention, confirming action, or revealing content.</p></div>
+</section>
+<section class="quote-section">
+<blockquote>"Elegance is not the abundance of simplicity. It is the absence of complexity."</blockquote>
+<cite>— Brunello Cucinelli</cite>
+</section>
+<section class="stats-row">
+<div class="stat-item"><div class="number">98%</div><div class="label">Customer Retention</div></div>
+<div class="stat-item"><div class="number">2.4s</div><div class="label">Load Time</div></div>
+<div class="stat-item"><div class="number">4.9★</div><div class="label">Designer Rating</div></div>
+<div class="stat-item"><div class="number">120+</div><div class="label">Components</div></div>
+</section>
+<section class="clients">
+<p>Trusted by design-conscious brands</p>
+<div class="logos">
+<span>Aesop</span><span>Byredo</span><span>Le Labo</span><span>Diptyque</span><span>Muji</span><span>Kinfolk</span>
+</div>
+</section>
+<section class="cta-section">
+<h2>Begin with elegance</h2>
+<p>Available for studios, brands, and individuals who believe that less is more.</p>
+<div class="btn-row">
+<button class="btn-e filled">Get Started</button>
+<button class="btn-e">View Pricing</button>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-grid">
+<div class="footer-brand"><div class="logo">Elegant</div><p>Graceful, refined design with delicate typography and minimal palettes. Sophistication through restraint.</p></div>
+<div class="footer-col"><h4>System</h4><a href="#">Components</a><a href="#">Tokens</a><a href="#">Guidelines</a><a href="#">Changelog</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Figma Kit</a><a href="#">GitHub</a><a href="#">Blog</a></div>
+<div class="footer-col"><h4>Studio</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Contact</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Elegant Design System</span><span>Privacy · Terms</span></div>
+</footer>
+</body>
+</html>

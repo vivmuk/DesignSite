@@ -1,1 +1,132 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bugatti - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#ffffff;color:#111111;"><nav style="display:flex;justify-content:space-between;align-items:center;padding:28px 64px;border-bottom:1px solid #E8E8E8;"><div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;font-weight:300;">Bugatti</div><div style="display:flex;gap:40px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#777777;"><span>System</span><span>Components</span><span>About</span></div></nav><section style="padding:140px 64px 80px;text-align:center;max-width:680px;margin:0 auto;"><div style="width:60px;height:1px;background:#000000;margin:0 auto 40px;"></div><h1 style="font-size:44px;font-weight:200;letter-spacing:6px;text-transform:uppercase;line-height:1.3;">Bugatti</h1><p style="font-size:16px;line-height:1.8;margin-top:32px;color:#888888;font-weight:300;">Hypercar brand. Cinema-black canvas, monochrome austerity, monumental display type.</p><div style="width:60px;height:1px;background:#000000;margin:40px auto 0;"></div></section><section style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;"><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">50ms</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#000000;margin-top:8px;font-weight:500;">Response</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">10K+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#000000;margin-top:8px;font-weight:500;">Teams</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">200+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#000000;margin-top:8px;font-weight:500;">Integrations</div></div><div style="text-align:center;padding:32px 16px;"><div style="font-size:32px;font-weight:300;letter-spacing:1px;color:#111111;">4.9★</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#000000;margin-top:8px;font-weight:500;">Rating</div></div></section><section style="max-width:600px;margin:0 auto;padding:40px 64px 100px;"><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#000000;margin:0 0 12px;">Concierge</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">24/7 dedicated managers</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#000000;margin:0 0 12px;">Bespoke Program</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">One-of-one curation</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#000000;margin:0 0 12px;">Limited Editions</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Numbered releases</p></div><div style="padding:48px 0;border-bottom:1px solid #E8E8E8;"><h3 style="font-size:16px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:#000000;margin:0 0 12px;">Heritage</h3><p style="font-size:15px;line-height:1.8;color:#555555;font-weight:300;">Provenance documentation</p></div></section><section style="text-align:center;padding:60px 64px 120px;border-top:1px solid #E8E8E8;"><div style="width:40px;height:1px;background:#000000;margin:0 auto 32px;"></div><a href="#" style="color:#000000;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:400;border-bottom:1px solid #000000;padding-bottom:4px;">Discover More</a></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bugatti — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--fg:#000000;--muted:#666;--border:#e0e0e0;--surface:#f8f8f8;--radius:0;--font:'Inter',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* Nav - Minimal black */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;position:sticky;top:0;background:var(--bg);z-index:100;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:900;font-size:16px;letter-spacing:8px;text-transform:uppercase}
+.nav-links{display:flex;gap:32px;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.btn{border:none;font-family:var(--font);font-size:11px;font-weight:600;padding:12px 28px;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 200ms;background:var(--fg);color:var(--bg)}
+.btn:hover{opacity:0.85}
+
+/* Hero - Cinema black */
+.hero{background:var(--fg);color:var(--bg);padding:140px 0 100px;position:relative;overflow:hidden}
+.hero::after{content:'BUGATTI';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(60px,12vw,180px);font-weight:900;letter-spacing:clamp(10px,3vw,30px);opacity:0.03;white-space:nowrap;pointer-events:none}
+.hero-inner{position:relative}
+.hero .kicker{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:6px;opacity:0.5;margin-bottom:32px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:20px}
+.hero h1 em{font-style:italic;font-weight:300}
+.hero-sub{font-size:18px;font-weight:300;color:rgba(255,255,255,0.5);max-width:480px;line-height:1.8;margin-bottom:40px}
+.hero-actions{display:flex;gap:16px}
+.hero .btn{border:1px solid rgba(255,255,255,0.3);background:transparent;color:var(--bg)}
+.hero .btn:hover{background:var(--bg);color:var(--fg)}
+.hero .btn-primary{background:var(--bg);color:var(--fg);border-color:var(--bg)}
+
+/* Specs bar */
+.specs-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.spec{text-align:center;padding:32px 16px;border-right:1px solid var(--border)}
+.spec:last-child{border-right:none}
+.spec .val{font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1}
+.spec .unit{font-size:14px;font-weight:300;color:var(--muted)}
+.spec .label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:8px}
+
+/* Philosophy */
+.philosophy{padding:100px 0}
+.philosophy-inner{max-width:700px;margin:0 auto;text-align:center}
+.philosophy .kicker{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:6px;color:var(--muted);margin-bottom:24px}
+.philosophy h2{font-size:clamp(32px,4vw,48px);font-weight:900;letter-spacing:-1px;line-height:1.15;margin-bottom:24px}
+.philosophy h2 em{font-style:italic;font-weight:300}
+.philosophy p{font-size:17px;color:var(--muted);line-height:1.8}
+.philosophy p+p{margin-top:16px}
+
+/* Grid */
+.grid-section{padding:80px 0;border-top:1px solid var(--border)}
+.grid-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border)}
+.grid-cell{padding:48px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);transition:all 200ms}
+.grid-cell:hover{background:var(--surface)}
+.grid-cell:nth-child(2n){border-right:none}
+.grid-cell .num{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-bottom:16px}
+.grid-cell h3{font-size:24px;font-weight:900;letter-spacing:-0.5px;margin-bottom:8px}
+.grid-cell p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* Dark section */
+.dark-section{background:var(--fg);color:var(--bg);padding:80px 0}
+.dark-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.dark-text .kicker{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:6px;color:rgba(255,255,255,0.4);margin-bottom:16px}
+.dark-text h2{font-size:40px;font-weight:900;letter-spacing:-1px;margin-bottom:16px}
+.dark-text h2 em{font-style:italic;font-weight:300}
+.dark-text p{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:24px}
+.dark-visual{background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.08);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;position:relative}
+.dark-visual .speed{font-size:120px;font-weight:900;line-height:1;opacity:0.06}
+.dark-visual .speed-label{position:absolute;bottom:24px;left:24px;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.3)}
+
+/* CTA */
+.cta{padding:100px 0;text-align:center;border-top:1px solid var(--border)}
+.cta h2{font-size:clamp(32px,4vw,56px);font-weight:900;letter-spacing:-2px;margin-bottom:12px}
+.cta h2 em{font-style:italic;font-weight:300}
+.cta p{font-size:16px;color:var(--muted);margin-bottom:32px}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--muted)}
+.footer-logo{font-weight:900;font-size:14px;letter-spacing:6px;text-transform:uppercase;color:var(--fg)}
+
+@media(max-width:1023px){.grid-layout{grid-template-columns:1fr}.grid-cell{border-right:none}.dark-inner{grid-template-columns:1fr}.specs-bar{grid-template-columns:repeat(2,1fr)}.spec{border-right:none}}
+@media(max-width:639px){.specs-bar{grid-template-columns:1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">Bugatti</div><div class="nav-links"><a href="#">Models</a><a href="#">Heritage</a><a href="#">Craft</a><a href="#">Configure</a></div><button class="btn">Inquire</button></nav>
+
+<section class="hero"><div class="container hero-inner">
+<div class="kicker">Hypercar Design Language</div>
+<h1>Cinema-black.<br><em>Monochrome</em><br>austerity.</h1>
+<p class="hero-sub">Bugatti's design system draws from the silence between frames — monumental display type, near-zero UI, and surfaces that earn every pixel.</p>
+<div class="hero-actions"><button class="btn btn-primary">Explore System</button><button class="btn">View Heritage</button></div>
+</div></section>
+
+<section class="specs-bar">
+<div class="spec"><div class="val">420<span class="unit"> km/h</span></div><div class="label">Top Speed</div></div>
+<div class="spec"><div class="val">1,600<span class="unit"> HP</span></div><div class="label">Horsepower</div></div>
+<div class="spec"><div class="val">2.4<span class="unit">s</span></div><div class="label">0–100 km/h</div></div>
+<div class="spec"><div class="val">0.28<span class="unit"> Cd</span></div><div class="label">Drag Coefficient</div></div>
+</section>
+
+<section class="philosophy"><div class="philosophy-inner">
+<div class="kicker">Philosophy</div>
+<h2>Radical <em>subtraction</em></h2>
+<p>The Bugatti system removes everything that doesn't serve the object. No gradients. No shadows. No rounded corners that soften intent. What remains is the architecture of speed — vertical lines, cinematic black space, and display type that reads from across a showroom.</p>
+<p>Every surface earns its place. Every type size is a decision, not a default. The white page is our Galibier — aerodynamic, purposeful, and ruthlessly fast.</p>
+</div></section>
+
+<section class="grid-section"><div class="container">
+<div style="text-align:center;margin-bottom:48px"><div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:6px;color:var(--muted);margin-bottom:12px">System Elements</div><h2 style="font-size:36px;font-weight:900;letter-spacing:-1px">Built for <em style="font-weight:300;font-style:italic">monument</em></h2></div>
+<div class="grid-layout">
+<div class="grid-cell"><div class="num">01 — Typography</div><h3>Monumental Display</h3><p>Weight 900 at 72–180px. Subheads at weight 300 italic. Two weights, maximum contrast. The type IS the design.</p></div>
+<div class="grid-cell"><div class="num">02 — Color</div><h3>Monochrome Only</h3><p>#000000 on #FFFFFF. One system, one axis. Gray for metadata. Color appears only in photography — never in UI.</p></div>
+<div class="grid-cell"><div class="num">03 — Geometry</div><h3>Zero Radius</h3><p>Every container, every button, every image frame is a perfect rectangle. Roundness softens. We cut.</p></div>
+<div class="grid-cell"><div class="num">04 — Space</div><h3>Cinematic Pacing</h3><p>100–140px between sections. Breath is structure. The silence between sections is the design.</p></div>
+<div class="grid-cell"><div class="num">05 — Photography</div><h3>Full-Bleed Only</h3><p>Images fill their frame edge-to-edge. No rounded corners. No drop shadows. The car IS the composition.</p></div>
+<div class="grid-cell"><div class="num">06 — Motion</div><h3>Fade-Through</h3><p>Crossfades between states. 600ms ease-in-out. No bounce, no overshoot. A dissolve, like film.</p></div>
+</div></div></section>
+
+<section class="dark-section"><div class="dark-inner">
+<div class="dark-text"><div class="kicker">Bugatti Chiron Super Sport</div><h2>1,600 HP. <em>Invisible</em> UI.</h2><p>The Chiron Super Sport dashboard removes every element that doesn't serve the driver. Speed at center. Tachometer left. Nothing else until requested. The UI disappears so the experience remains.</p><button class="btn">Configure</button></div>
+<div class="dark-visual"><div class="speed">1600</div><div class="speed-label">Horsepower · Quad-Turbo W16</div></div>
+</div></section>
+
+<section class="cta"><h2>Create the <em>monument</em></h2><p>The Bugatti design system — cinema-black, monochrome austerity, monumental type.</p><button class="btn">Download System</button></section>
+
+<footer style="max-width:1200px;margin-inline:auto"><div class="footer-logo">Bugatti</div><div>&copy; 2026 Bugatti Automobiles S.A.S.</div><div style="display:flex;gap:20px"><a href="#" style="color:var(--muted)">Privacy</a><a href="#" style="color:var(--muted)">Legal</a></div></footer>
+</body>
+</html>

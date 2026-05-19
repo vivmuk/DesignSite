@@ -1,89 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Productivity & SaaS — Design System Category</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #fafafa; color: #111111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { color: #533afd; text-decoration: none; }
-    a:hover { opacity: 0.8; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Productivity — SaaS Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#4F46E5;--accent-light:#818CF8;--bg:#FFFFFF;--bg-light:#F8FAFC;--bg-card:#FFFFFF;--text:#0F172A;--text-muted:#64748B;--border:#E2E8F0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,0.08)}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:64px}
+.nav-logo{font-size:20px;font-weight:700;color:var(--accent)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-muted);transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:white;padding:9px 20px;border-radius:8px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:background .2s}
+.nav-cta:hover{background:var(--accent-light)}
+.hero{padding:140px 0 100px;background:linear-gradient(180deg,var(--bg-light) 0%,white 100%)}
+.hero h1{font-size:clamp(44px,6vw,72px);font-weight:700;line-height:1.08;margin-bottom:24px;letter-spacing:-1px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:18px;color:var(--text-muted);max-width:500px;margin-bottom:36px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:white;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(79,70,229,0.3)}
+.btn-primary:hover{background:var(--accent-light);transform:translateY(-1px)}
+.btn-secondary{background:white;color:var(--text);padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-metrics{display:flex;gap:40px;margin-top:48px}
+.metric{text-align:left}
+.metric-value{font-size:28px;font-weight:700;color:var(--accent)}
+.metric-label{font-size:13px;color:var(--text-muted)}
+.stats{padding:48px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.stat-number{font-size:36px;font-weight:700;color:var(--accent)}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:4px}
+.features{padding:100px 0}
+.section-label{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-size:clamp(28px,3vw,40px);font-weight:700;line-height:1.15;margin-bottom:12px}
+.section-title span{color:var(--accent)}
+.section-desc{color:var(--text-muted);font-size:17px;max-width:500px;margin-bottom:56px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s}
+.feature-card:hover{border-color:rgba(79,70,229,0.3);box-shadow:0 8px 24px rgba(79,70,229,0.08);transform:translateY(-2px)}
+.feature-icon{width:40px;height:40px;border-radius:8px;background:rgba(79,70,229,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px;color:var(--accent)}
+.feature-card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.feature-card p{font-size:13px;color:var(--text-muted);line-height:1.6}
+.dashboard{padding:80px 0;background:var(--bg-light)}
+.dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.dashboard-content h2{font-size:32px;font-weight:700;margin-bottom:16px;line-height:1.2}
+.dashboard-content h2 span{color:var(--accent)}
+.dashboard-content p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:24px}
+.dashboard-content ul{list-style:none}
+.dashboard-content li{padding:8px 0;font-size:14px;color:var(--text-muted);display:flex;align-items:center;gap:8px}
+.dashboard-content li::before{content:'';width:16px;height:16px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.dashboard-mock{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.mock-header{display:flex;gap:6px;margin-bottom:16px}
+.mock-header span{width:10px;height:10px;border-radius:50%}
+.mock-header span:nth-child(1){background:#FF5F56}.mock-header span:nth-child(2){background:#FFBD2E}.mock-header span:nth-child(3){background:#27C93F}
+.mock-row{display:flex;gap:10px;margin-bottom:8px}
+.mock-block{border-radius:6px;height:32px}
+.mock-block.wide{flex:2;background:rgba(79,70,229,0.15)}.mock-block.narrow{flex:1;background:var(--bg-light)}
+.mock-block.full{flex:1;background:var(--bg-light);height:60px}
+.pricing{padding:100px 0}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pricing-card{background:white;border:1px solid var(--border);border-radius:12px;padding:36px;transition:all .3s}
+.pricing-card.featured{border:2px solid var(--accent);box-shadow:0 8px 24px rgba(79,70,229,0.12)}
+.pricing-card:hover{transform:translateY(-2px)}
+.pricing-tier{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.pricing-price{font-size:40px;font-weight:700;margin-bottom:4px}
+.pricing-price span{font-size:14px;font-weight:400;color:var(--text-muted)}
+.pricing-desc{font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.pricing-features{list-style:none;margin-bottom:28px}
+.pricing-features li{padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted)}
+.pricing-features li::before{content:'✓ ';color:var(--accent);font-weight:600}
+.cta{padding:80px 0;text-align:center;background:var(--bg-light)}
+.cta h2{font-size:clamp(32px,4vw,48px);font-weight:700;margin-bottom:16px}
+.cta h2 span{color:var(--accent)}
+.cta p{color:var(--text-muted);font-size:17px;margin-bottom:32px}
+.footer{padding:48px 0 24px;border-top:1px solid var(--border)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .nav-logo{margin-bottom:8px;display:inline-block}
+.footer-brand p{font-size:14px;color:var(--text-muted);max-width:260px;line-height:1.7}
+.footer-col h4{font-size:13px;font-weight:600;margin-bottom:12px}
+.footer-col a{display:block;font-size:14px;color:var(--text-muted);padding:4px 0}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between}
+@media(max-width:768px){.nav-links{display:none}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid,.pricing-grid,.dashboard-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.1);padding:0 24px">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:24px">⚡</span>
-        <span style="font-weight:700;font-size:18px">Productivity & SaaS</span>
-      </div>
-      <div style="display:flex;gap:24px;align-items:center">
-        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Systems</a>
-        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Skills</a>
-        <a href="#" style="color:#111111;font-size:14px;opacity:0.7">Directions</a>
-        <a href="#" style="background:#533afd;color:#fff;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:500">Explore</a>
-      </div>
-    </div>
-  </nav>
-
-  <section style="padding:120px 24px 80px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,#533afd20 0%,transparent 70%);pointer-events:none"></div>
-    <div style="max-width:800px;margin:0 auto;position:relative">
-      <div style="font-size:64px;margin-bottom:24px">⚡</div>
-      <div style="display:inline-block;background:rgba(0,0,0,0.04);padding:6px 16px;border-radius:20px;font-size:13px;color:#533afd;margin-bottom:20px">Design System Category</div>
-      <h1 style="font-size:clamp(36px,6vw,64px);font-weight:800;line-height:1.05;margin:0 0 24px;letter-spacing:-0.03em">Productivity & SaaS</h1>
-      <p style="font-size:18px;color:rgba(0,0,0,0.55);line-height:1.7;margin:0 auto 40px;max-width:600px">SaaS dashboards and productivity tools. Clean, efficient interfaces focused on workflows and clarity.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="#" style="background:#533afd;color:#fff;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;box-shadow:0 0 30px #533afd44">Browse Systems</a>
-        <a href="#" style="background:rgba(0,0,0,0.04);color:#111111;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:500;border:1px solid rgba(0,0,0,0.1)">View Skills</a>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding:60px 24px">
-    <div style="max-width:1200px;margin:0 auto">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px;text-align:center">Featured Systems</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
-        
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Alpha System</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore alpha system within the productivity & saas category</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Beta Platform</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore beta platform within the productivity & saas category</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Gamma Interface</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore gamma interface within the productivity & saas category</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Delta Dashboard</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore delta dashboard within the productivity & saas category</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Epsilon Tools</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore epsilon tools within the productivity & saas category</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.1);border-radius:12px;padding:24px;cursor:default;transition:transform 0.2s">
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Zeta Engine</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Explore zeta engine within the productivity & saas category</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding:60px 24px;background:#533afd;text-align:center">
-    <div style="max-width:600px;margin:0 auto">
-      <h2 style="font-size:32px;font-weight:700;margin:0 0 16px;color:#fff">Start Exploring</h2>
-      <p style="opacity:0.8;margin:0 0 28px;color:#fff">Discover all productivity & saas design systems and skills.</p>
-      <a href="#" style="display:inline-block;background:#fff;color:#533afd;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none">Browse All →</a>
-    </div>
-  </section>
-
-  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px">© 2026 Open Design Studio · Productivity & SaaS Category</footer>
-</body>
-</html>
+<nav class="nav"><div class="nav-inner"><div class="nav-logo">Productivity</div><div class="nav-links"><a href="#features">Features</a><a href="#dashboard">Product</a><a href="#pricing">Pricing</a><button class="nav-cta">Start Free</button></div></div></nav>
+<section class="hero"><div class="container">
+<h1>Get more <span>done</span>,<br>faster.</h1>
+<p>Productivity's design system brings clean SaaS aesthetics, clear hierarchy, and indigo accents to every workflow interface.</p>
+<div class="hero-actions"><button class="btn-primary">Start Free Trial</button><button class="btn-secondary">Watch Demo</button></div>
+<div class="hero-metrics">
+<div class="metric"><div class="metric-value">3.2x</div><div class="metric-label">Faster workflows</div></div>
+<div class="metric"><div class="metric-value">98%</div><div class="metric-label">Customer retention</div></div>
+<div class="metric"><div class="metric-value">50ms</div><div class="metric-label">Avg response time</div></div>
+</div>
+</div></section>
+<section class="stats"><div class="container"><div class="stats-grid">
+<div><div class="stat-number">10K+</div><div class="stat-label">Teams Using</div></div>
+<div><div class="stat-number">250+</div><div class="stat-label">Components</div></div>
+<div><div class="stat-number">99.9%</div><div class="stat-label">Uptime</div></div>
+<div><div class="stat-number">4.9★</div><div class="stat-label">Rating</div></div>
+</div></div></section>
+<section class="features" id="features"><div class="container">
+<div class="section-label">FEATURES</div>
+<h2 class="section-title">Built for <span>workflows</span>.</h2>
+<p class="section-desc">Indigo accents, clear hierarchy, and dashboard patterns engineered for productivity tools.</p>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">⚡</div><h3>Dashboard Layouts</h3><p>Pre-built dashboard shells with sidebar nav, header bars, and content grids that fit SaaS workflows.</p></div>
+<div class="feature-card"><div class="feature-icon">📊</div><h3>Data Tables</h3><p>Sortable, filterable, paginated tables with inline editing, bulk actions, and export patterns built in.</p></div>
+<div class="feature-card"><div class="feature-icon">🔔</div><h3>Notification System</h3><p>Toast messages, badge counts, and activity feeds that keep users informed without interrupting flow.</p></div>
+<div class="feature-card"><div class="feature-icon">✓</div><h3>Task Flows</h3><p>Step indicators, progress bars, and completion states that guide users through multi-step processes.</p></div>
+<div class="feature-card"><div class="feature-icon">📐</div><h3>Indigo Accent System</h3><p>#4F46E5 anchors every primary action, link, and data highlight. Trust-building blue that drives decisions.</p></div>
+<div class="feature-card"><div class="feature-icon">♿</div><h3>Accessible Patterns</h3><p>WCAG 2.1 AA contrast, keyboard navigation, screen reader support, and focus management throughout.</p></div>
+</div></div></section>
+<section class="dashboard" id="dashboard"><div class="container">
+<div class="dashboard-grid">
+<div class="dashboard-content">
+<div class="section-label">PRODUCT</div>
+<h2>Your workspace, <span>organized</span>.</h2>
+<p>Clean dashboards with real-time updates, clear data hierarchy, and workflows that feel natural.</p>
+<ul>
+<li>Real-time collaboration indicators</li>
+<li>Activity feeds with smart filtering</li>
+<li>Keyboard-first navigation</li>
+<li>Customizable sidebar and views</li>
+</ul>
+</div>
+<div class="dashboard-mock">
+<div class="mock-header"><span></span><span></span><span></span></div>
+<div class="mock-row"><div class="mock-block wide"></div><div class="mock-block narrow"></div></div>
+<div class="mock-row"><div class="mock-block narrow"></div><div class="mock-block wide"></div></div>
+<div class="mock-row"><div class="mock-block full"></div></div>
+<div style="display:flex;gap:10px"><div class="mock-block" style="flex:1;background:rgba(79,70,229,0.15);height:48px"></div><div class="mock-block" style="flex:1;background:var(--bg-light);height:48px"></div></div>
+</div>
+</div>
+</div></section>
+<section class="pricing" id="pricing"><div class="container">
+<div class="section-label">PRICING</div>
+<h2 class="section-title">Plans for every <span>team</span>.</h2>
+<div class="pricing-grid">
+<div class="pricing-card"><div class="pricing-tier">FREE</div><div class="pricing-price">$0</div><div class="pricing-desc">For individuals</div><ul class="pricing-features"><li>50+ core components</li><li>Single project</li><li>Community support</li><li>React only</li></ul><button class="btn-secondary" style="width:100%">Get Started</button></div>
+<div class="pricing-card featured"><div class="pricing-tier">PRO</div><div class="pricing-price">$29<span>/mo</span></div><div class="pricing-desc">For growing teams</div><ul class="pricing-features"><li>250+ components</li><li>Unlimited projects</li><li>Priority support</li><li>All frameworks</li><li>Figma library</li></ul><button class="btn-primary" style="width:100%">Start Free Trial</button></div>
+<div class="pricing-card"><div class="pricing-tier">ENTERPRISE</div><div class="pricing-price">Custom</div><div class="pricing-desc">For organizations</div><ul class="pricing-features"><li>Everything in Pro</li><li>Custom components</li><li>Dedicated support</li><li>SLA guarantee</li><li>SSO & audit</li></ul><button class="btn-secondary" style="width:100%">Contact Sales</button></div>
+</div></div></section>
+<section class="cta"><div class="container">
+<h2>Start getting <span>productive</span></h2>
+<p>Join 10,000+ teams building workflow interfaces.</p>
+<button class="btn-primary">Start Free — No Credit Card</button>
+</div></section>
+<footer class="footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><div class="nav-logo" style="font-size:18px">Productivity</div><p>Clean SaaS design system. Indigo accents, clear hierarchy, and workflow-optimized components.</p></div>
+<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Templates</a><a href="#">Dashboard Kits</a><a href="#">Changelog</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Tutorials</a><a href="#">Blog</a><a href="#">Community</a></div>
+<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Productivity Design System</span><span>Get more done, faster.</span></div>
+</div></footer>
+</body></html>

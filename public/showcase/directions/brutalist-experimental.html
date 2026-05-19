@@ -1,146 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brutalist Experimental — Design Direction</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: Impact, Arial Black, sans-serif, system-ui, sans-serif; background: #fafaf0; color: #0a0a0a; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRUT.AL — Design that refuses to be invisible</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fafaf0;--surface:#fff;--fg:#0a0a0a;--accent:#ffe500;--accent-dark:#ccb800;--muted:#555;--muted-light:#888;--border:#0a0a0a;--radius:0;--font:'Impact','Arial Black','Helvetica Neue',sans-serif;--font-body:'Arial',sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--fg);line-height:1.5;-webkit-font-smoothing:auto}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+nav{border-bottom:4px solid var(--fg);padding:0 24px;background:var(--fg)}
+nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+nav .logo{font-family:var(--font);font-size:24px;color:var(--accent);letter-spacing:0.05em;text-transform:uppercase}
+nav .nav-links{display:flex;gap:0;align-items:center}
+nav .nav-links a{font-family:var(--font);font-size:12px;color:#fff;letter-spacing:0.1em;text-transform:uppercase;padding:0 16px;height:56px;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,0.15);transition:background 0.15s}
+nav .nav-links a:hover{background:var(--accent);color:var(--fg)}
+
+/* Hero */
+.hero{padding:120px 0 80px;border-bottom:4px solid var(--fg);position:relative}
+.hero-stripe{position:absolute;top:0;left:0;right:0;height:8px;background:var(--accent)}
+.hero h1{font-family:var(--font);font-size:clamp(48px,10vw,120px);line-height:0.9;letter-spacing:-0.02em;margin-bottom:24px;text-transform:uppercase}
+.hero h1 .accent{color:var(--accent);-webkit-text-stroke:2px var(--fg);text-shadow:4px 4px 0 var(--fg)}
+.hero h1 .outline{-webkit-text-stroke:3px var(--fg);color:var(--bg)}
+.hero .tagline{font-family:var(--font);font-size:clamp(16px,2vw,22px);text-transform:uppercase;letter-spacing:0.08em;max-width:600px;margin-bottom:40px;color:var(--muted);line-height:1.4}
+.hero .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn-brutal{font-family:var(--font);font-size:14px;text-transform:uppercase;letter-spacing:0.1em;padding:16px 32px;border:3px solid var(--fg);cursor:pointer;transition:all 0.1s;font-weight:700}
+.btn-primary-brutal{background:var(--accent);color:var(--fg)}
+.btn-primary-brutal:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--fg)}
+.btn-primary-brutal:active{transform:translate(0,0);box-shadow:none}
+.btn-secondary-brutal{background:var(--bg);color:var(--fg)}
+.btn-secondary-brutal:hover{background:var(--fg);color:var(--bg)}
+
+/* Stats */
+.stats-bar{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:4px solid var(--fg)}
+.stat{padding:32px 24px;text-align:center;border-right:4px solid var(--fg)}
+.stat:last-child{border-right:none}
+.stat .number{font-family:var(--font);font-size:clamp(36px,5vw,64px);line-height:1;text-transform:uppercase}
+.stat .number .accent{color:var(--accent);-webkit-text-stroke:2px var(--fg)}
+.stat .label{font-family:var(--font);font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--muted)}
+
+/* Marquee */
+.marquee{background:var(--fg);color:var(--accent);padding:12px 0;overflow:hidden;border-bottom:4px solid var(--fg)}
+.marquee-inner{display:flex;gap:48px;animation:marquee 20s linear infinite;white-space:nowrap;font-family:var(--font);font-size:14px;letter-spacing:0.1em;text-transform:uppercase}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Manifesto */
+.manifesto{padding:96px 0;border-bottom:4px solid var(--fg)}
+.manifesto .container{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.manifesto .label{font-family:var(--font);font-size:12px;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:24px;color:var(--accent);background:var(--fg);padding:4px 12px;display:inline-block;color:var(--accent)}
+.manifesto h2{font-family:var(--font);font-size:clamp(32px,5vw,56px);line-height:1;text-transform:uppercase;margin-bottom:24px}
+.manifesto p{font-size:17px;line-height:1.8;color:var(--muted);margin-bottom:16px}
+.manifesto p strong{color:var(--fg);font-weight:700}
+.manifesto .manifesto-list{list-style:none;margin-top:24px}
+.manifesto .manifesto-list li{font-family:var(--font);font-size:16px;text-transform:uppercase;letter-spacing:0.05em;padding:12px 0;border-top:3px solid var(--fg);display:flex;align-items:center;gap:12px}
+.manifesto .manifesto-list li .num{color:var(--accent);font-size:24px;-webkit-text-stroke:2px var(--fg)}
+
+/* Features Grid */
+.features{padding:96px 0;border-bottom:4px solid var(--fg)}
+.features .section-header{text-align:center;margin-bottom:56px}
+.features .section-header .tag{font-family:var(--font);font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);background:var(--fg);padding:4px 16px;display:inline-block;margin-bottom:16px}
+.features .section-header h2{font-family:var(--font);font-size:clamp(32px,5vw,48px);text-transform:uppercase;line-height:1}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.feature-card{border:3px solid var(--fg);padding:32px;transition:background 0.15s}
+.feature-card:hover{background:var(--accent)}
+.feature-card .card-num{font-family:var(--font);font-size:48px;color:var(--accent);line-height:1;-webkit-text-stroke:2px var(--fg)}
+.feature-card:hover .card-num{-webkit-text-stroke:2px var(--fg);color:var(--fg)}
+.feature-card h3{font-family:var(--font);font-size:20px;text-transform:uppercase;letter-spacing:0.04em;margin:12px 0 8px}
+.feature-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.feature-card:hover p{color:var(--fg)}
+.feature-card.wide{grid-column:1/-1}
+
+/* Testimonial */
+.testimonials{padding:80px 0;border-bottom:4px solid var(--fg)}
+.testimonials .section-header{text-align:center;margin-bottom:48px}
+.testimonials .section-header h2{font-family:var(--font);font-size:36px;text-transform:uppercase}
+.testimonial-block{background:var(--fg);color:var(--bg);padding:64px;text-align:center;position:relative}
+.testimonial-block .quote{font-family:var(--font);font-size:clamp(24px,4vw,40px);text-transform:uppercase;line-height:1.2;margin-bottom:24px;letter-spacing:0.02em}
+.testimonial-block .quote .accent{color:var(--accent)}
+.testimonial-block .attribution{font-size:14px;color:#999;text-transform:uppercase;letter-spacing:0.15em}
+.testimonial-block .attribution strong{color:var(--accent)}
+
+/* Pricing */
+.pricing{padding:96px 0;border-bottom:4px solid var(--fg)}
+.pricing .section-header{text-align:center;margin-bottom:48px}
+.pricing .section-header h2{font-family:var(--font);font-size:clamp(32px,5vw,48px);text-transform:uppercase}
+.pricing .section-header p{font-size:16px;color:var(--muted);margin-top:8px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;max-width:960px;margin:0 auto}
+.pricing-card{border:3px solid var(--fg);padding:36px 24px;position:relative;transition:all 0.15s}
+.pricing-card.featured{background:var(--accent);position:relative}
+.pricing-card.featured::before{content:'MOST BRUTAL';position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:var(--font);font-size:10px;letter-spacing:0.15em;background:var(--fg);color:var(--accent);padding:4px 16px;text-transform:uppercase}
+.pricing-card .plan-name{font-family:var(--font);font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px}
+.pricing-card .plan-price{font-family:var(--font);font-size:56px;line-height:1}
+.pricing-card .plan-price span{font-size:16px;font-weight:400}
+.pricing-card .plan-desc{font-size:13px;color:var(--muted);margin-top:8px;margin-bottom:24px}
+.pricing-card ul{list-style:none;margin-bottom:24px}
+.pricing-card li{font-size:13px;padding:8px 0;border-bottom:2px solid var(--fg);display:flex;align-items:center;gap:8px}
+.pricing-card li .x{font-family:var(--font);color:var(--accent);font-size:16px}
+.pricing-card.featured li{border-bottom-color:var(--fg)}
+
+/* CTA */
+.cta-section{padding:96px 0;background:var(--fg);color:var(--bg)}
+.cta-section h2{font-family:var(--font);font-size:clamp(32px,6vw,64px);text-transform:uppercase;text-align:center;margin-bottom:16px;line-height:1}
+.cta-section h2 .accent{color:var(--accent)}
+.cta-section p{font-size:18px;color:#aaa;text-align:center;margin-bottom:40px;font-family:var(--font)}
+.cta-section .cta-btns{text-align:center}
+.btn-cta{font-family:var(--font);font-size:16px;text-transform:uppercase;letter-spacing:0.1em;padding:20px 48px;background:var(--accent);color:var(--fg);border:3px solid var(--accent);cursor:pointer;transition:all 0.1s;font-weight:700;display:inline-block}
+.btn-cta:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--bg)}
+
+/* Footer */
+footer{padding:32px 0;border-top:4px solid var(--fg)}
+footer .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+footer .footer-brand{font-family:var(--font);font-size:18px;text-transform:uppercase;letter-spacing:0.1em}
+footer .footer-links{display:flex;gap:0}
+footer .footer-links a{font-size:12px;text-transform:uppercase;letter-spacing:0.1em;padding:0 16px;border-left:2px solid var(--fg);color:var(--muted)}
+footer .footer-links a:first-child{border-left:none}
+footer .footer-links a:hover{color:var(--fg)}
+footer .footer-copy{font-size:12px;color:var(--muted-light);text-transform:uppercase;letter-spacing:0.05em}
+
+@media(max-width:768px){
+  .features-grid{grid-template-columns:1fr}
+  .manifesto .container{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .stat{border-right:none;border-bottom:4px solid var(--fg)}
+  .stat:last-child{border-bottom:none}
+  nav .nav-links a{padding:0 10px;font-size:10px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:36px}
+  .stats-bar{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:4px solid var(--fg)}
+}
+</style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px">
-      <div style="font-weight:700;font-size:16px;letter-spacing:-0.02em">Brutalist Experimental</div>
-      <div style="display:flex;gap:24px;align-items:center">
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Overview</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Principles</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Examples</a>
-        <a href="#" style="background:#ffe500;color:#fff;padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Use Direction</a>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Hero -->
-  <section style="padding:120px 24px 100px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,#ffe50020 0%,transparent 60%);pointer-events:none"></div>
-    <div style="max-width:900px;margin:0 auto;position:relative">
-      <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.3em;color:#ffe500;margin-bottom:24px">Raw / Conflicted / Confrontational</div>
-      <h1 style="font-size:clamp(40px,7vw,80px);font-weight:900;line-height:0.95;margin:0 0 32px;letter-spacing:-0.03em">Brutalist Experimental</h1>
-      <p style="font-size:20px;color:rgba(0,0,0,0.55);line-height:1.7;max-width:680px;margin:0 auto 40px">Raw HTML feel, heavy borders, oversized type, high contrast, broken grids.</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a href="#" style="color:#ffe500;text-decoration:none;font-size:13px;border:1px solid #ffe50033;padding:4px 10px;border-radius:4px">brutalistwebsites.com</a> <a href="#" style="color:#ffe500;text-decoration:none;font-size:13px;border:1px solid #ffe50033;padding:4px 10px;border-radius:4px">Bloomberg</a></div>
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">BRUT.AL</div>
+    <div class="nav-links">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#" style="background:var(--accent);color:var(--fg)">Start Now</a>
     </div>
-  </section>
+  </div>
+</nav>
 
-  <!-- Showcase Grid -->
-  <section style="padding:60px 24px">
-    <div style="max-width:1200px;margin:0 auto">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px;text-align:center">Design Language</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-        <!-- Color Palette -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Color Palette</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#fafaf0;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">bg</div>
-              <div style="font-size:10px;opacity:0.4">#fafaf0</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#fff;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">surface</div>
-              <div style="font-size:10px;opacity:0.4">#fff</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#0a0a0a;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">fg</div>
-              <div style="font-size:10px;opacity:0.4">#0a0a0a</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#ffe500;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">accent</div>
-              <div style="font-size:10px;opacity:0.4">#ffe500</div>
-            </div>
-          </div>
-        </div>
-        <!-- Typography -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Typography</h3>
-          <div style="margin-bottom:20px">
-            <div style="font-family:Impact, Arial Black, sans-serif;font-size:48px;font-weight:700;line-height:1.1;margin-bottom:4px">Aa</div>
-            <div style="font-size:12px;opacity:0.5">Impact, Arial Black, sans-serif</div>
-          </div>
-          <div>
-            <div style="font-family:system-ui, sans-serif;font-size:16px;line-height:1.6;opacity:0.7">The quick brown fox jumps over the lazy dog. 0123456789</div>
-            <div style="font-size:12px;opacity:0.5;margin-top:4px">system-ui, sans-serif</div>
-          </div>
-        </div>
-        <!-- UI Components -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px;grid-column:1/-1">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 24px;opacity:0.5">UI Components</h3>
-          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
-            <button style="background:#ffe500;color:#fff;padding:12px 24px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;font-family:Impact, Arial Black, sans-serif">Primary Button</button>
-            <button style="background:transparent;color:#0a0a0a;padding:12px 24px;border:1.5px solid rgba(0,0,0,0.2);border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:system-ui, sans-serif">Secondary</button>
-            <div style="background:rgba(0,0,0,0.04);padding:10px 16px;border-radius:8px;font-size:14px">☀️ Light Mode</div>
-            <input placeholder="Search this style..." style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.12);padding:10px 16px;border-radius:8px;font-size:14px;color:#0a0a0a;width:200px;outline:none;font-family:system-ui, sans-serif">
-          </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-stripe"></div>
+  <div class="container">
+    <h1>DESIGN THAT<br><span class="accent">REFUSES</span><br>TO BE INVISIBLE</h1>
+    <p class="tagline">Brutal interfaces for people who don't need hand-holding. Raw HTML feel. Heavy borders. Zero apologies.</p>
+    <div class="cta-row">
+      <a href="#" class="btn-brutal btn-primary-brutal">Get Brutal →</a>
+      <a href="#" class="btn-brutal btn-secondary-brutal">Read Manifesto</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat"><div class="number">14<span class="accent">K</span></div><div class="label">Brutalist Websites</div></div>
+  <div class="stat"><div class="number">0</div><div class="label">Round Corners</div></div>
+  <div class="stat"><div class="number">100<span class="accent">%</span></div><div class="label">Conviction</div></div>
+  <div class="stat"><div class="number">∞</div><div class="label">BORDERS</div></div>
+</div>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>RAW HTML ★ NO BORDERS LEFT UNBROKEN ★ CONFRONTATIONAL DESIGN ★ REFUSE INVISIBILITY ★ HEAVY TYPE ★ HIGH CONTRAST ★ BROKEN GRIDS ★ BRUT.AL ★</span>
+    <span>RAW HTML ★ NO BORDERS LEFT UNBROKEN ★ CONFRONTATIONAL DESIGN ★ REFUSE INVISIBILITY ★ HEAVY TYPE ★ HIGH CONTRAST ★ BROKEN GRIDS ★ BRUT.AL ★</span>
+  </div>
+</div>
+
+<!-- Gallery Grid -->
+<section class="gallery" style="padding:64px 0;border-bottom:4px solid var(--fg)">
+  <div class="container">
+    <div style="font-family:var(--font);font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);background:var(--fg);padding:4px 16px;display:inline-block;margin-bottom:32px">SHOWCASE</div>
+    <h2 style="font-family:var(--font);font-size:clamp(32px,5vw,56px);text-transform:uppercase;line-height:1;margin-bottom:40px">BUILT <span style="color:var(--accent)">BRUTAL</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0">
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;padding:32px;transition:background 0.15s;cursor:pointer" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--surface)'">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:48px;-webkit-text-stroke:2px var(--fg);color:var(--bg);line-height:1">Aa</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--muted)">Typography</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Principles -->
-  <section style="padding:60px 24px;background:#fafaf0">
-    <div style="max-width:1200px;margin:0 auto;text-align:center">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px">Key Principles</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;text-align:left">
-        
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">👁️</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Visual Clarity</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Brutalist Experimental direction and ensure visual coherence.</p>
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;padding:32px;transition:background 0.15s;cursor:pointer" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--surface)'">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:48px;color:var(--fg);line-height:1">■</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--muted)">Borders</div>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🎵</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Consistent Rhythm</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Brutalist Experimental direction and ensure visual coherence.</p>
+      </div>
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;padding:32px;transition:background 0.15s;cursor:pointer" onmouseover="this.style.background='#0a0a0a';this.style.color='var(--accent)'" onmouseout="this.style.background='var(--surface)';this.style.color='var(--fg)'">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:48px;color:var(--accent);-webkit-text-stroke:2px currentColor;line-height:1">◩</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--muted)">Contrast</div>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">📐</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Purposeful Space</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Brutalist Experimental direction and ensure visual coherence.</p>
+      </div>
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:var(--accent);display:flex;align-items:center;justify-content:center;padding:32px">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:64px;line-height:1;color:var(--fg)">NO</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--fg)">Compromise</div>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🌊</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Adaptive Layout</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Brutalist Experimental direction and ensure visual coherence.</p>
+      </div>
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 10px,var(--surface) 10px,var(--surface) 20px);display:flex;align-items:center;justify-content:center;padding:32px">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:32px;text-transform:uppercase;letter-spacing:0.05em">Pattern</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:var(--muted)">Texture</div>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">✨</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Expressive Detail</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Brutalist Experimental direction and ensure visual coherence.</p>
+      </div>
+      <div style="border:3px solid var(--fg);aspect-ratio:1;background:var(--fg);display:flex;align-items:center;justify-content:center;padding:32px">
+        <div style="text-align:center">
+          <div style="font-family:var(--font);font-size:64px;line-height:1;color:var(--accent)">□</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.15em;margin-top:8px;color:#666">Grid</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section style="padding:80px 24px;text-align:center;background:#ffe500">
-    <div style="max-width:600px;margin:0 auto">
-      <h2 style="font-size:36px;font-weight:800;margin:0 0 16px;color:#fff">Apply This Direction</h2>
-      <p style="opacity:0.8;margin:0 0 28px;color:#fff">Use Brutalist Experimental in your next project.</p>
-      <a href="#" style="display:inline-block;background:#fff;color:#ffe500;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none">Explore →</a>
+<!-- Manifesto -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div>
+      <div class="label">MANIFESTO</div>
+      <h2>WE DON'T<br>PRETTY.<br>WE <span style="color:var(--accent)">REAL</span>.</h2>
     </div>
-  </section>
+    <div>
+      <p><strong>Brutalism in web design isn't a mistake — it's a refusal.</strong> A refusal to smooth edges that should be sharp. A refusal to round corners that were meant to cut. A refusal to make design invisible when design should be <em>felt</em>.</p>
+      <p>We believe the best interfaces don't apologise for existing. They announce themselves. They demand attention. They trust the user enough to be confrontational.</p>
+      <ul class="manifesto-list">
+        <li><span class="num">01</span> Form IS function</li>
+        <li><span class="num">02</span> Borders communicate structure</li>
+        <li><span class="num">03</span> Type should be FELT</li>
+        <li><span class="num">04</span> Whitespace is a choice, not a default</li>
+        <li><span class="num">05</span> Design that refuses to be ignored</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px;color:#0a0a0a">
-    © 2026 Open Design Studio · Brutalist Experimental Direction
-  </footer>
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">FEATURES</div>
+      <h2>NO COMPROMISE.<br>NO SMOOTH EDGES.</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="card-num">01</div>
+        <h3>HEAVY TYPE</h3>
+        <p>Impact. Arial Black. Type that hits you like a wall. Oversized headlines that refuse to whisper. Every letter has weight.</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-num">02</div>
+        <h3>BROKEN GRIDS</h3>
+        <p>Symmetry is boring. Overlapping elements, deliberate misalignment, and compositions that refuse grid-snapping. Chaos with intention.</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-num">03</div>
+        <h3>HIGH CONTRAST</h3>
+        <p>Black on cream. Yellow on black. No gradients hiding in safety. The palette is a statement: We see you. Now look at us.</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-num">04</div>
+        <h3>RAW INTERACTIONS</h3>
+        <p>Hover states that SHIFT. Buttons that move. Transitions that are felt, not smoothed away. Every interaction is an event.</p>
+      </div>
+      <div class="feature-card wide">
+        <div class="card-num">05</div>
+        <h3>ZERO APOLOGIES</h3>
+        <p>Brutalism isn't a shortcut — it's a philosophy. Every pixel here was chosen. Every heavy border is structural. Every oversized word is intentional. This is design that trusts you to handle it. If you want safe, there are 10,000 SaaS landing pages with the same blue gradient. This isn't one of them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header"><h2>WHAT PEOPLE SAY</h2></div>
+    <div class="testimonial-block">
+      <div class="quote">"I didn't know a website could <span class="accent">PUNCH</span> me in the face until I saw this." </div>
+      <div class="attribution"><strong>— BRUTALISTWEBSITES.COM</strong> · DAILY REVIEW</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>PRICING IS SIMPLE.</h2>
+      <p>No tiers of gradual disappointment. Clear. Direct. Brutal.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">STARTER</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-desc">For dabblers.</div>
+        <ul>
+          <li><span class="x">✕</span> 3 pages</li>
+          <li><span class="x">✕</span> Community templates</li>
+          <li><span class="x">✕</span> HTML export</li>
+        </ul>
+        <a href="#" class="btn-brutal btn-secondary-brutal" style="padding:12px 24px;font-size:12px;display:block;text-align:center">FREE</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan-name">BRUTAL</div>
+        <div class="plan-price">$29<span>/mo</span></div>
+        <div class="plan-desc">For believers.</div>
+        <ul>
+          <li><span class="x">✕</span> Unlimited pages</li>
+          <li><span class="x">✕</span> All brutalist templates</li>
+          <li><span class="x">✕</span> Custom type stacks</li>
+          <li><span class="x">✕</span> Border-weight controls</li>
+          <li><span class="x">✕</span> Priority deployment</li>
+        </ul>
+        <a href="#" class="btn-brutal btn-primary-brutal" style="padding:12px 24px;font-size:12px;display:block;text-align:center;border-color:var(--fg)">GET BRUTAL</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">TOTAL</div>
+        <div class="plan-price">$99<span>/mo</span></div>
+        <div class="plan-desc">For organizations.</div>
+        <ul>
+          <li><span class="x">✕</span> Everything in Brutal</li>
+          <li><span class="x">✕</span> Team access</li>
+          <li><span class="x">✕</span> Custom domain</li>
+          <li><span class="x">✕</span> White-label</li>
+        </ul>
+        <a href="#" class="btn-brutal btn-secondary-brutal" style="padding:12px 24px;font-size:12px;display:block;text-align:center">CONTACT</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Principles Ticker -->
+<div style="background:var(--accent);border-top:4px solid var(--fg);border-bottom:4px solid var(--fg);padding:8px 0;overflow:hidden">
+  <div style="display:flex;gap:48px;animation:marquee 15s linear infinite;white-space:nowrap;font-family:var(--font);font-size:14px;letter-spacing:0.1em;text-transform:uppercase">
+    <span>BORDERS ARE STRUCTURE ★ TYPE IS ARCHITECTURE ★ CONTRAST IS HONESTY ★ GRID IS OPTIONAL ★ STYLE IS SUBSTANCE ★</span>
+    <span>BORDERS ARE STRUCTURE ★ TYPE IS ARCHITECTURE ★ CONTRAST IS HONESTY ★ GRID IS OPTIONAL ★ STYLE IS SUBSTANCE ★</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>STOP PRETENDING.<br><span class="accent">START BUILDING.</span></h2>
+  <p>NO MORE GRADIENTS. NO MORE APOLOGIES.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn-cta">GO BRUTAL →</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">BRUT.AL</div>
+      <div class="footer-links">
+        <a href="#">Manifesto</a>
+        <a href="#">Gallery</a>
+        <a href="#">Github</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 BRUT.AL · Brutalist Experimental direction</div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

@@ -1,1 +1,159 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sanity - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,Georgia,serif;background:#ededed;color:#111111;"><header style="text-align:center;padding:24px 48px;border-bottom:3px double #0b0b0b;"><div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#0b0b0b;margin-bottom:4px;">Design System Review</div><div style="font-family:Playfair Display,Georgia,serif;font-size:24px;font-weight:700;">Sanity</div></header><section style="max-width:720px;margin:0 auto;padding:100px 48px 60px;"><h1 style="font-family:Playfair Display,Georgia,serif;font-size:56px;font-weight:900;line-height:1.05;letter-spacing:-1px;">Sanity</h1><p style="font-size:20px;line-height:1.7;margin-top:28px;color:#555555;border-left:3px solid #0b0b0b;padding-left:20px;font-style:italic;">Headless CMS. Red accent, content-first editorial layout.</p></section><section style="max-width:720px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #0b0b0b;border-bottom:2px solid #0b0b0b;padding:24px 0;"><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#0b0b0b;">50ms</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Response</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#0b0b0b;">10K+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Teams</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#0b0b0b;">200+</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Integrations</div></div><div style="text-align:center;padding:16px 0;"><div style="font-family:Playfair Display,Georgia,serif;font-size:36px;font-weight:700;color:#0b0b0b;">4.9★</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:#777777;">Rating</div></div></section><section style="max-width:720px;margin:0 auto;padding:80px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;"><article style="border-top:1px solid #0b0b0b;padding-top:24px;"><div style="font-size:13px;color:#0b0b0b;font-weight:700;margin-bottom:8px;letter-spacing:2px;">01 / COMPONENT LIBRARY</div><p style="font-size:16px;line-height:1.7;color:#555555;">Production-ready blocks</p></article><article style="border-top:1px solid #0b0b0b;padding-top:24px;"><div style="font-size:13px;color:#0b0b0b;font-weight:700;margin-bottom:8px;letter-spacing:2px;">02 / ICON SYSTEM</div><p style="font-size:16px;line-height:1.7;color:#555555;">Scalable vector icons</p></article><article style="border-top:1px solid #0b0b0b;padding-top:24px;"><div style="font-size:13px;color:#0b0b0b;font-weight:700;margin-bottom:8px;letter-spacing:2px;">03 / RESPONSIVE GRID</div><p style="font-size:16px;line-height:1.7;color:#555555;">Fluid adaptive layouts</p></article><article style="border-top:1px solid #0b0b0b;padding-top:24px;"><div style="font-size:13px;color:#0b0b0b;font-weight:700;margin-bottom:8px;letter-spacing:2px;">04 / DESIGN TOKENS</div><p style="font-size:16px;line-height:1.7;color:#555555;">Centralized variables</p></article></section><section style="max-width:720px;margin:0 auto;padding:60px 48px 100px;text-align:center;border-top:1px solid #0b0b0b;"><p style="font-family:Playfair Display,Georgia,serif;font-size:32px;font-style:italic;color:#0b0b0b;">&ldquo;Headless CMS. Red accent, content-first editorial layout.&rdquo;</p><div style="margin-top:24px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#777777;">&mdash; Sanity Design Team</div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanity — Headless CMS Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--accent:#0B0B0B;--bg:#EDEDED;--bg-white:#FFFFFF;--bg-card:#F5F5F5;--text:#111111;--text-muted:#666666;--border:#D4D4D4;--red:#D4213D;--radius:12px;--radius-lg:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(237,237,237,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:64px}
+.nav-logo{font-size:22px;font-weight:800;letter-spacing:-0.5px;color:var(--accent)}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text-muted);font-size:14px;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:var(--bg);padding:10px 24px;border-radius:8px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:all .3s}
+.nav-cta:hover{opacity:.85}
+.hero{padding:140px 0 100px;position:relative}
+.hero::before{content:'';position:absolute;top:0;right:-20%;width:60%;height:100%;background:linear-gradient(135deg,var(--bg-card) 0%,var(--bg) 100%);z-index:0;clip-path:polygon(20% 0,100% 0,100% 100%,0% 100%)}
+.hero-content{position:relative;z-index:2}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(48px,7vw,80px);font-weight:700;line-height:1.05;letter-spacing:-1px;margin-bottom:24px}
+.hero h1 .red{color:var(--red)}
+.hero p{font-size:18px;color:var(--text-muted);max-width:500px;margin-bottom:40px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:var(--bg);padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all .3s}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-secondary{background:var(--bg-white);color:var(--text);padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;border:1px solid var(--border);cursor:pointer;transition:all .3s}
+.btn-secondary:hover{border-color:var(--text)}
+.stats{padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.stat-number{font-size:44px;font-weight:800;color:var(--accent)}
+.stat-number .red{color:var(--red)}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.features{padding:100px 0;background:var(--bg-white)}
+.section-label{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.1;margin-bottom:16px}
+.section-title .red{color:var(--red)}
+.section-desc{color:var(--text-muted);font-size:17px;max-width:520px;margin-bottom:64px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{padding:32px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);transition:all .3s}
+.feature-card:hover{border-color:var(--red);transform:translateY(-3px)}
+.feature-icon{width:48px;height:48px;border-radius:12px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;border:1px solid var(--border)}
+.feature-card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--text-muted);line-height:1.7}
+.editorial{padding:100px 0;background:var(--bg)}
+.editorial-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.editorial-content h2{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;line-height:1.2;margin-bottom:20px}
+.editorial-content .red{color:var(--red)}
+.editorial-content p{color:var(--text-muted);font-size:16px;line-height:1.7;margin-bottom:16px}
+.editorial-visual{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;height:400px}
+.editorial-visual h3{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:12px}
+.editorial-visual p{color:var(--text-muted);font-size:14px;margin-bottom:16px}
+.editorial-visual .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border:1px solid var(--border);border-radius:4px;margin-right:8px}
+.pricing{padding:100px 0;background:var(--bg-white)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pricing-card{padding:40px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--bg-card);transition:all .3s}
+.pricing-card.featured{border-color:var(--red);position:relative}
+.pricing-card.featured::before{content:'Popular';position:absolute;top:-12px;left:24px;background:var(--red);color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:4px;text-transform:uppercase;letter-spacing:1px}
+.pricing-tier{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.pricing-price{font-size:44px;font-weight:800;margin-bottom:4px}
+.pricing-price span{font-size:14px;font-weight:400;color:var(--text-muted)}
+.pricing-desc{font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.pricing-features{list-style:none;margin-bottom:28px}
+.pricing-features li{padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-muted)}
+.pricing-features li::before{content:'→ ';color:var(--red);font-weight:600}
+.cta{padding:100px 0;text-align:center;background:var(--accent);color:var(--bg)}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:700;margin-bottom:20px}
+.cta p{font-size:18px;opacity:.7;margin-bottom:40px}
+.cta .btn-cta{background:var(--bg);color:var(--accent);padding:16px 40px;border-radius:8px;font-weight:700;font-size:16px;border:none;cursor:pointer;transition:all .3s}
+.cta .btn-cta:hover{transform:translateY(-2px)}
+.footer{padding:48px 0 24px;border-top:1px solid var(--border);background:var(--bg)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand .nav-logo{margin-bottom:12px;display:inline-block;font-size:18px}
+.footer-brand p{font-size:14px;color:var(--text-muted);max-width:260px;line-height:1.7}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;color:var(--text)}
+.footer-col a{display:block;font-size:14px;color:var(--text-muted);padding:4px 0}
+.footer-col a:hover{color:var(--red)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
+@media(max-width:768px){.nav-links{display:none}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid,.pricing-grid,.editorial-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.hero::before{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-inner"><div class="nav-logo">Sanity<span>.</span></div><div class="nav-links"><a href="#features">Features</a><a href="#editorial">Editorial</a><a href="#pricing">Pricing</a><button class="nav-cta">Get Started</button></div></div></nav>
+
+<section class="hero"><div class="container hero-content">
+<h1>Content is<br><span class="red">structure</span>.</h1>
+<p>Sanity's design system brings content-first editorial layout to every interface. Red accent, structured hierarchy, and the clarity your content deserves.</p>
+<div class="hero-actions"><button class="btn-primary">Start Building</button><button class="btn-secondary">View Documentation</button></div>
+</div></section>
+
+<section class="stats"><div class="container"><div class="stats-grid">
+<div><div class="stat-number">20<span class="red">K</span>+</div><div class="stat-label">Active Projects</div></div>
+<div><div class="stat-number">300<span class="red">+</span></div><div class="stat-label">Components</div></div>
+<div><div class="stat-number">100<span class="red">M</span></div><div class="stat-label">Content Served</div></div>
+<div><div class="stat-number">99<span class="red">.9</span>%</div><div class="stat-label">Uptime</div></div>
+</div></div></section>
+
+<section class="features" id="features"><div class="container">
+<div class="section-label">FEATURES</div>
+<h2 class="section-title">Content-<span class="red">first</span> design.</h2>
+<p class="section-desc">Every component is editorially aware. Structured content meets beautiful presentation.</p>
+<div class="features-grid">
+<div class="feature-card"><div class="feature-icon">📝</div><h3>Editorial Layouts</h3><p>Column-based grids, pull quotes, and structured content blocks that honor the written word above all else.</p></div>
+<div class="feature-card"><div class="feature-icon">🔴</div><h3>Red Accent System</h3><p>A single, powerful accent color. #D4213D draws attention exactly where it's needed — CTAs, links, and highlights.</p></div>
+<div class="feature-card"><div class="feature-icon">◎</div><h3>Structured Data</h3><p>Components that understand schemas, references, and portable text. Design that reflects your content model.</p></div>
+<div class="feature-card"><div class="feature-icon">⚡</div><h3>Real-Time Preview</h3><p>Live editing overlays, side-by-side previews, and instant content rendering. See changes before you publish.</p></div>
+<div class="feature-card"><div class="feature-icon">🎯</div><h3>Typographic Hierarchy</h3><p>Playfair for headlines, Inter for body. A pairing that gives content weight and readability equal billing.</p></div>
+<div class="feature-card"><div class="feature-icon">🔗</div><h3>API-First Components</h3><p>Components built for headless delivery. GROQ-powered data fetching baked into the design system architecture.</p></div>
+</div></div></section>
+
+<section class="editorial" id="editorial"><div class="container">
+<div class="editorial-grid">
+<div class="editorial-content">
+<div class="section-label">EDITORIAL</div>
+<h2>Designed for <span class="red">readers</span>.</h2>
+<p>The Sanity system treats content as the hero. Not chrome. Not decoration. The words themselves.</p>
+<p>Every margin, every type size, every color choice optimized for cognitive load and reading comfort.</p>
+<button class="btn-primary">Explore Components</button>
+</div>
+<div class="editorial-visual">
+<div class="tag">Article</div><div class="tag">Featured</div>
+<h3>The Future of Headless Content</h3>
+<p>How structured content enables omnichannel delivery without sacrificing editorial quality or design intent.</p>
+<p style="color:var(--red);font-size:13px;font-weight:600">Read more →</p>
+</div>
+</div>
+</div></section>
+
+<section class="pricing" id="pricing"><div class="container">
+<div class="section-label">PRICING</div>
+<h2 class="section-title">Start with <span class="red">content</span>.</h2>
+<p class="section-desc">Free to start. Scale when your content grows.</p>
+<div class="pricing-grid">
+<div class="pricing-card"><div class="pricing-tier">FREE</div><div class="pricing-price">$0</div><div class="pricing-desc">For personal projects.</div><ul class="pricing-features"><li>60+ core components</li><li>Community support</li><li>React only</li><li>Single project</li></ul><button class="btn-secondary" style="width:100%">Get Started</button></div>
+<div class="pricing-card featured"><div class="pricing-tier">TEAM</div><div class="pricing-price">$29<span>/mo</span></div><div class="pricing-desc">For teams producing content.</div><ul class="pricing-features"><li>300+ components</li><li>Priority support</li><li>All frameworks</li><li>Unlimited projects</li><li>Figma library</li></ul><button class="btn-primary" style="width:100%">Start Free Trial</button></div>
+<div class="pricing-card"><div class="pricing-tier">ENTERPRISE</div><div class="pricing-price">Custom</div><div class="pricing-desc">For large content operations.</div><ul class="pricing-features"><li>Everything in Team</li><li>Custom components</li><li>Dedicated support</li><li>SLA guarantee</li><li>White-label</li></ul><button class="btn-secondary" style="width:100%">Contact Sales</button></div>
+</div></div></section>
+
+<section class="cta"><div class="container">
+<h2>Content deserves better <span class="red">design</span>.</h2>
+<p>Join 20,000+ teams building content-first interfaces.</p>
+<button class="btn-cta">Get Started — Free</button>
+</div></section>
+
+<footer class="footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><div class="nav-logo">Sanity<span>.</span></div><p>The content-first design system. Red accent, editorial layouts, and structured hierarchy.</p></div>
+<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Templates</a><a href="#">Figma Kit</a><a href="#">Changelog</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Tutorials</a><a href="#">Blog</a><a href="#">Community</a></div>
+<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+</div>
+<div class="footer-bottom"><span>© 2026 Sanity Design System</span><span>Content-first. Always.</span></div>
+</div></footer>
+</body></html>

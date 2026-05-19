@@ -1,146 +1,444 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tech Utility — Design Direction</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: JetBrains Mono, SF Mono, monospace, system-ui, sans-serif; background: #0d0d0d; color: #e4e4e4; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TERMINAL — Dev tools for builders</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d0d0d;--surface:#141414;--surface-2:#1a1a1a;--surface-3:#222;--fg:#e4e4e4;--fg-dim:#a0a0a0;--fg-muted:#666;--accent:#3dd68c;--accent-dim:rgba(61,214,140,0.12);--accent-hover:#32b878;--border:#2a2a2a;--border-hover:#3a3a3a;--mono:'JetBrains Mono','SF Mono','Fira Code','Cascadia Code',monospace;--sans:system-ui,-apple-system,sans-serif;--radius:6px;--radius-lg:10px;--glow:0 0 20px rgba(61,214,140,0.15)}
+html{scroll-behavior:smooth}
+body{font-family:var(--mono);background:var(--bg);color:var(--fg);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+nav .nav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+nav .logo{font-weight:700;font-size:14px;letter-spacing:0.05em;color:var(--accent);display:flex;align-items:center;gap:8px}
+nav .logo::before{content:'>$';color:var(--accent);font-weight:400}
+nav .nav-links{display:flex;gap:24px;align-items:center}
+nav .nav-links a{font-size:12px;color:var(--fg-muted);letter-spacing:0.02em;transition:color 0.2s}
+nav .nav-links a:hover{color:var(--fg)}
+nav .nav-links .sep{color:var(--border);font-size:10px}
+nav .btn-cli{background:var(--accent);color:var(--bg);font-family:var(--mono);font-size:11px;font-weight:700;padding:6px 14px;border-radius:var(--radius);letter-spacing:0.04em;transition:all 0.2s}
+nav .btn-cli:hover{background:var(--accent-hover);box-shadow:var(--glow)}
+
+/* Hero */
+.hero{padding:120px 0 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:1200px;height:800px;background:radial-gradient(ellipse,rgba(61,214,140,0.04) 0%,transparent 60%);pointer-events:none}
+.hero .container{position:relative;z-index:1}
+.hero .prompt{font-size:12px;color:var(--fg-muted);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.hero .prompt .cursor{animation:blink 1s step-end infinite;color:var(--accent)}
+@keyframes blink{50%{opacity:0}}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;line-height:1.1;margin-bottom:20px;letter-spacing:-0.02em}
+.hero h1 .accent{color:var(--accent)}
+.hero h1 .dim{color:var(--fg-muted)}
+.hero .tagline{font-family:var(--sans);font-size:clamp(15px,1.8vw,18px);color:var(--fg-dim);max-width:580px;line-height:1.7;margin-bottom:32px}
+.hero .command-line{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;max-width:560px;font-size:13px}
+.hero .command-line .dollar{color:var(--accent);margin-right:8px;font-weight:700}
+.hero .command-line .cmd{color:var(--fg)}
+.hero .command-line .flag{color:var(--fg-muted)}
+.hero .command-line .comment{color:var(--fg-muted);margin-left:16px;font-style:italic}
+
+/* Stats */
+.stats-bar{padding:40px 0;border-bottom:1px solid var(--border)}
+.stats-row{display:flex;justify-content:center;gap:64px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .number{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em}
+.stat .number .accent{color:var(--accent)}
+.stat .label{font-size:11px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:4px}
+
+/* Terminal Window */
+.terminal-section{padding:96px 0}
+.terminal-section .section-header{text-align:center;margin-bottom:48px}
+.terminal-section .section-header .tag{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px}
+.terminal-section .section-header h2{font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.terminal-section .section-header p{font-family:var(--sans);font-size:16px;color:var(--fg-dim);max-width:520px;margin:0 auto}
+.terminal-window{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;max-width:720px;margin:0 auto;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.terminal-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.terminal-bar .dot{width:10px;height:10px;border-radius:50%}
+.terminal-bar .dot.red{background:#ff5f57}
+.terminal-bar .dot.yellow{background:#febc2e}
+.terminal-bar .dot.green{background:#28c840}
+.terminal-bar .title{font-size:11px;color:var(--fg-muted);margin-left:auto;margin-right:8px}
+.terminal-body{padding:24px;font-size:13px;line-height:1.9}
+.terminal-body .line{margin-bottom:4px}
+.terminal-body .prompt-line::before{content:'~ ';color:var(--accent);font-weight:700}
+.terminal-body .output{color:var(--fg-dim);padding-left:0}
+.terminal-body .success{color:var(--accent)}
+.terminal-body .comment{color:var(--fg-muted)}
+.terminal-body .key{color:var(--accent)}
+.terminal-body .string{color:#e5c07b}
+.terminal-body .number{color:#d19a66}
+
+/* Features Grid */
+.features{padding:64px 0}
+.features .section-header{text-align:center;margin-bottom:56px}
+.features .section-header .tag{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px}
+.features .section-header h2{font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.features .section-header p{font-family:var(--sans);font-size:16px;color:var(--fg-dim);max-width:520px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:border-color 0.3s,box-shadow 0.3s}
+.feature-card:hover{border-color:var(--accent);box-shadow:var(--glow)}
+.feature-card .icon-tag{font-size:11px;color:var(--accent);background:var(--accent-dim);padding:3px 8px;border-radius:4px;font-weight:700;letter-spacing:0.04em;margin-bottom:16px;display:inline-block}
+.feature-card h3{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em}
+.feature-card p{font-family:var(--sans);font-size:13px;color:var(--fg-dim);line-height:1.65}
+.feature-card .code-snippet{margin-top:16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:12px;line-height:1.8;overflow-x:auto}
+.feature-card .code-snippet .kw{color:var(--accent)}
+.feature-card .code-snippet .str{color:#e5c07b}
+.feature-card .code-snippet .num{color:#d19a66}
+.feature-card .code-snippet .cmt{color:var(--fg-muted)}
+.feature-card.full{grid-column:1/-1}
+
+/* How it Works */
+.how-section{padding:96px 0;border-top:1px solid var(--border)}
+.how-section .section-header{text-align:center;margin-bottom:56px}
+.how-section .section-header h2{font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.how-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;counter-reset:stepcounter}
+.how-step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;counter-increment:stepcounter;position:relative}
+.how-step::before{content:counter(stepcounter);display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--accent);color:var(--bg);font-weight:700;font-size:14px;border-radius:var(--radius);margin-bottom:16px}
+.how-step h3{font-size:14px;font-weight:700;margin-bottom:6px}
+.how-step p{font-family:var(--sans);font-size:13px;color:var(--fg-dim);line-height:1.6}
+.how-step code{background:var(--surface-3);color:var(--accent);padding:2px 6px;border-radius:3px;font-size:12px}
+
+/* Testimonials */
+.testimonials{padding:80px 0;border-top:1px solid var(--border)}
+.testimonials .section-header{text-align:center;margin-bottom:48px}
+.testimonials .section-header h2{font-size:28px;font-weight:700;letter-spacing:-0.02em}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:border-color 0.3s}
+.testimonial-card:hover{border-color:var(--border-hover)}
+.testimonial-card .quote{font-family:var(--sans);font-size:13px;color:var(--fg-dim);line-height:1.7;margin-bottom:16px}
+.testimonial-card .quote em{color:var(--accent);font-style:normal;font-weight:600}
+.testimonial-card .author{display:flex;align-items:center;gap:10px}
+.testimonial-card .author .handle{font-size:12px;color:var(--accent)}
+.testimonial-card .author .role{font-size:11px;color:var(--fg-muted)}
+
+/* Pricing */
+.pricing{padding:96px 0;border-top:1px solid var(--border)}
+.pricing .section-header{text-align:center;margin-bottom:48px}
+.pricing .section-header h2{font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.pricing .section-header p{font-family:var(--sans);font-size:16px;color:var(--fg-dim)}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:960px;margin:0 auto}
+.pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 24px;position:relative;transition:all 0.3s}
+.pricing-card:hover{border-color:var(--border-hover)}
+.pricing-card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(61,214,140,0.08)}
+.pricing-card.featured::before{content:'RECOMMENDED';position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;letter-spacing:0.15em;background:var(--accent);color:var(--bg);padding:4px 14px;border-radius:3px}
+.pricing-card .plan{font-size:11px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:8px}
+.pricing-card .price{font-size:44px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+.pricing-card .price span{font-size:13px;font-weight:400;color:var(--fg-muted)}
+.pricing-card .price-desc{font-family:var(--sans);font-size:13px;color:var(--fg-dim);margin-top:8px;margin-bottom:24px}
+.pricing-card ul{list-style:none;margin-bottom:24px}
+.pricing-card li{font-family:var(--sans);font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);color:var(--fg-dim);display:flex;align-items:center;gap:8px}
+.pricing-card li .check{color:var(--accent);font-weight:700;font-size:14px}
+.btn{display:block;text-align:center;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.04em;padding:12px;border-radius:var(--radius);cursor:pointer;transition:all 0.2s;border:none}
+.btn-accent{background:var(--accent);color:var(--bg)}
+.btn-accent:hover{background:var(--accent-hover);box-shadow:var(--glow)}
+.btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--fg-muted)}
+
+/* CTA */
+.cta-section{padding:96px 0;text-align:center}
+.cta-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:72px 48px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-200px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(61,214,140,0.08) 0%,transparent 60%);pointer-events:none}
+.cta-box .prompt{font-size:11px;color:var(--fg-muted);margin-bottom:16px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
+.cta-box h2{font-size:clamp(24px,4vw,40px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px;position:relative}
+.cta-box h2 .accent{color:var(--accent)}
+.cta-box p{font-family:var(--sans);font-size:16px;color:var(--fg-dim);max-width:480px;margin:0 auto 32px;position:relative}
+.cta-box .command{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 24px;font-size:13px;position:relative;cursor:pointer;transition:border-color 0.2s}
+.cta-box .command:hover{border-color:var(--accent)}
+.cta-box .command .dollar{color:var(--accent);font-weight:700}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:40px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.footer-brand{font-weight:700;font-size:14px;color:var(--accent);letter-spacing:0.04em}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:11px;color:var(--fg-muted);letter-spacing:0.04em;transition:color 0.2s}
+.footer-links a:hover{color:var(--fg)}
+.footer-copy{font-size:11px;color:var(--fg-muted);letter-spacing:0.02em}
+
+@media(max-width:768px){
+  .features-grid{grid-template-columns:1fr}
+  .feature-card.full .content-cols{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr}
+  .testimonial-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .stats-row{gap:32px}
+  nav .nav-links .sep{display:none}
+}
+@media(max-width:480px){
+  .hero h1{font-size:28px}
+  .stats-row{flex-direction:column;gap:16px}
+}
+</style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px">
-      <div style="font-weight:700;font-size:16px;letter-spacing:-0.02em">Tech Utility</div>
-      <div style="display:flex;gap:24px;align-items:center">
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Overview</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Principles</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Examples</a>
-        <a href="#" style="background:#3dd68c;color:#000;padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Use Direction</a>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">TERMINAL</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#docs">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <span class="sep">|</span>
+      <a href="#" class="btn-cli">npx install</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="prompt">$ <span class="cursor">_</span></div>
+    <h1>Dev tools built<br>by <span class="accent">builders</span><span class="dim">,</span><br>for <span class="accent">builders</span></h1>
+    <p class="tagline">The CLI-first platform for engineers who think in terminals. Fast. Precise. Scriptable. Zero UI tax.</p>
+    <div class="command-line">
+      <span class="dollar">$</span>
+      <span class="cmd">npx</span>
+      <span class="flag">@terminal/cli</span>
+      <span class="cmd">init</span>
+      <span class="flag">--yes</span>
+      <span class="comment"># takes 3 seconds</span>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat"><div class="number">120<span class="accent">K</span></div><div class="label">Active developers</div></div>
+      <div class="stat"><div class="number">8<span class="accent">ms</span></div><div class="label">Avg response time</div></div>
+      <div class="stat"><div class="number">2<span class="accent">.4M</span></div><div class="label">Deploys per week</div></div>
+      <div class="stat"><div class="number">99<span class="accent">.99%</span></div><div class="label">Uptime guarantee</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Terminal Demo -->
+<section class="terminal-section" id="docs">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">// QUICK START</div>
+      <h2>From zero to deployed<br>in 30 seconds flat</h2>
+      <p>No GUI. No config files. Just commands that work.</p>
+    </div>
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <div class="title">terminal — zsh</div>
+      </div>
+      <div class="terminal-body">
+        <div class="line prompt-line"><span class="cmd">npx @terminal/cli init my-project</span></div>
+        <div class="line output"><span class="success">✓</span> Created project in ./my-project</div>
+        <div class="line output"><span class="success">✓</span> Installed 3 dependencies</div>
+        <div class="line output"><span class="success">✓</span> Generated tsconfig.json</div>
+        <div class="line output">&nbsp;</div>
+        <div class="line prompt-line"><span class="cmd">cd my-project && terminal deploy</span></div>
+        <div class="line output"><span class="success">✓</span> Built in 1.2s</div>
+        <div class="line output"><span class="success">✓</span> Deployed to <span class="key">prod</span></div>
+        <div class="line output"><span class="success">✓</span> https://my-project.terminal.dev</div>
+        <div class="line output">&nbsp;</div>
+        <div class="line comment">// That's it. No dashboard. No clicks. Just ship.</div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- Hero -->
-  <section style="padding:120px 24px 100px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,#3dd68c20 0%,transparent 60%);pointer-events:none"></div>
-    <div style="max-width:900px;margin:0 auto;position:relative">
-      <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.3em;color:#3dd68c;margin-bottom:24px">Terminal / GitHub / Warp</div>
-      <h1 style="font-size:clamp(40px,7vw,80px);font-weight:900;line-height:0.95;margin:0 0 32px;letter-spacing:-0.03em">Tech Utility</h1>
-      <p style="font-size:20px;color:rgba(255,255,255,0.6);line-height:1.7;max-width:680px;margin:0 auto 40px">Monospace-heavy, data-dense, dark backgrounds. For power users.</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a href="#" style="color:#3dd68c;text-decoration:none;font-size:13px;border:1px solid #3dd68c33;padding:4px 10px;border-radius:4px">GitHub</a> <a href="#" style="color:#3dd68c;text-decoration:none;font-size:13px;border:1px solid #3dd68c33;padding:4px 10px;border-radius:4px">Warp Terminal</a> <a href="#" style="color:#3dd68c;text-decoration:none;font-size:13px;border:1px solid #3dd68c33;padding:4px 10px;border-radius:4px">Raycast</a></div>
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">// FEATURES</div>
+      <h2>Everything you need,<br>nothing you don't</h2>
+      <p>Built for the terminal. Every feature is a command away.</p>
     </div>
-  </section>
-
-  <!-- Showcase Grid -->
-  <section style="padding:60px 24px">
-    <div style="max-width:1200px;margin:0 auto">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px;text-align:center">Design Language</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-        <!-- Color Palette -->
-        <div style="background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Color Palette</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#0d0d0d;border-radius:8px;border:2px solid rgba(255,255,255,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">bg</div>
-              <div style="font-size:10px;opacity:0.4">#0d0d0d</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#141414;border-radius:8px;border:2px solid rgba(255,255,255,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">surface</div>
-              <div style="font-size:10px;opacity:0.4">#141414</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#e4e4e4;border-radius:8px;border:2px solid rgba(255,255,255,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">fg</div>
-              <div style="font-size:10px;opacity:0.4">#e4e4e4</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#3dd68c;border-radius:8px;border:2px solid rgba(255,255,255,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">accent</div>
-              <div style="font-size:10px;opacity:0.4">#3dd68c</div>
-            </div>
-          </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon-tag">DEPLOY</div>
+        <h3>One-command deploys</h3>
+        <p>Push to production in under 8ms. Preview URLs, rollbacks, and canary releases — all from your terminal.</p>
+        <div class="code-snippet">
+          <span class="cmt"># Deploy with canary release</span><br>
+          <span class="kw">terminal</span> deploy <span class="str">--canary</span> <span class="num">--weight 10%</span>
         </div>
-        <!-- Typography -->
-        <div style="background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Typography</h3>
-          <div style="margin-bottom:20px">
-            <div style="font-family:JetBrains Mono, SF Mono, monospace;font-size:48px;font-weight:700;line-height:1.1;margin-bottom:4px">Aa</div>
-            <div style="font-size:12px;opacity:0.5">JetBrains Mono, SF Mono, monospace</div>
-          </div>
-          <div>
-            <div style="font-family:system-ui, sans-serif;font-size:16px;line-height:1.6;opacity:0.7">The quick brown fox jumps over the lazy dog. 0123456789</div>
-            <div style="font-size:12px;opacity:0.5;margin-top:4px">system-ui, sans-serif</div>
-          </div>
+      </div>
+      <div class="feature-card">
+        <div class="icon-tag">LOGS</div>
+        <h3>Real-time log streaming</h3>
+        <p>Stream production logs in your terminal with structured JSON, filtering, and aggregation. No web console needed.</p>
+        <div class="code-snippet">
+          <span class="kw">terminal</span> logs <span class="str">--follow</span> <span class="str">--level error</span><br>
+          <span class="cmt">// live tail, zero lag</span>
         </div>
-        <!-- UI Components -->
-        <div style="background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:32px;grid-column:1/-1">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 24px;opacity:0.5">UI Components</h3>
-          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
-            <button style="background:#3dd68c;color:#000;padding:12px 24px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;font-family:JetBrains Mono, SF Mono, monospace">Primary Button</button>
-            <button style="background:transparent;color:#e4e4e4;padding:12px 24px;border:1.5px solid rgba(255,255,255,0.2);border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:system-ui, sans-serif">Secondary</button>
-            <div style="background:rgba(255,255,255,0.06);padding:10px 16px;border-radius:8px;font-size:14px">🌙 Dark Mode</div>
-            <input placeholder="Search this style..." style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:10px 16px;border-radius:8px;font-size:14px;color:#e4e4e4;width:200px;outline:none;font-family:system-ui, sans-serif">
-          </div>
+      </div>
+      <div class="feature-card">
+        <div class="icon-tag">SECRETS</div>
+        <h3>Encrypted secrets</h3>
+        <p>Manage environment variables with end-to-end encryption. Never leave your terminal to rotate keys.</p>
+        <div class="code-snippet">
+          <span class="kw">terminal</span> secrets set <span class="str">DB_URL</span><br>
+          <span class="cmt">// encrypted at rest, injected at runtime</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="icon-tag">MONITOR</div>
+        <h3>Health checks & alerts</h3>
+        <p>Configure alerting rules in YAML. Get notified in Slack, PagerDuty, or stdout — your choice.</p>
+        <div class="code-snippet">
+          <span class="kw">terminal</span> monitor <span class="str">--watch</span><br>
+          <span class="cmt">#_cpu: 23% | #mem: 1.2GB | #latency: 4ms</span>
+        </div>
+      </div>
+      <div class="feature-card full">
+        <div class="icon-tag">PIPELINE</div>
+        <h3>CI/CD that just works</h3>
+        <p>Define your pipeline in a terminal.yaml file. Push to deploy. Automatic tests, builds, and releases — fully composable with your existing tools.</p>
+        <div class="code-snippet" style="max-width:560px">
+          <span class="cmt"># terminal.yaml</span><br>
+          <span class="kw">pipeline</span>:<br>
+          &nbsp;&nbsp;<span class="kw">test</span>: <span class="str">npm test</span><br>
+          &nbsp;&nbsp;<span class="kw">build</span>: <span class="str">npm run build</span><br>
+          &nbsp;&nbsp;<span class="kw">deploy</span>:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">target</span>: <span class="str">production</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">region</span>: <span class="str">[us-east, eu-west, ap-south]</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Principles -->
-  <section style="padding:60px 24px;background:#000">
-    <div style="max-width:1200px;margin:0 auto;text-align:center">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px">Key Principles</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;text-align:left">
-        
-        <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">👁️</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Visual Clarity</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Tech Utility direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🎵</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Consistent Rhythm</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Tech Utility direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">📐</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Purposeful Space</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Tech Utility direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🌊</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Adaptive Layout</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Tech Utility direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(255,255,255,0.03);padding:24px;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">✨</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Expressive Detail</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Tech Utility direction and ensure visual coherence.</p>
-        </div>
+<!-- How it Works -->
+<section class="how-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag">// GET STARTED</div>
+      <h2>Three commands. Done.</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <h3>Initialize</h3>
+        <p>Run <code>terminal init</code> in any project directory. Auto-detects your framework, runtime, and dependencies.</p>
+      </div>
+      <div class="how-step">
+        <h3>Configure</h3>
+        <p>Edit the generated <code>terminal.yaml</code>. Define environments, secrets, and deploy targets. Plain text, version controlled.</p>
+      </div>
+      <div class="how-step">
+        <h3>Ship it</h3>
+        <p>Run <code>terminal deploy</code>. Push to any region, any environment. Preview URLs generated instantly.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section style="padding:80px 24px;text-align:center;background:#3dd68c">
-    <div style="max-width:600px;margin:0 auto">
-      <h2 style="font-size:36px;font-weight:800;margin:0 0 16px;color:#000">Apply This Direction</h2>
-      <p style="opacity:0.8;margin:0 0 28px;color:#000">Use Tech Utility in your next project.</p>
-      <a href="#" style="display:inline-block;background:#000;color:#3dd68c;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none">Explore →</a>
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header"><h2>// DEVS ♥ TERMINAL</h2></div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="quote">"Finally, a deploy tool that doesn't make me open a browser. <em>terminal deploy</em> and I'm done. The way it should be."</div>
+        <div class="author"><div class="handle">@sarahcodes</div><div class="role">Staff Engineer, Vercel</div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">"I replaced our entire CI/CD pipeline with Terminal's YAML config. <em>200 lines → 40 lines</em>. And it's actually readable."</div>
+        <div class="author"><div class="handle">@devmax</div><div class="role">DevOps Lead, Stripe</div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">"The log streaming alone is worth it. <em>terminal logs --follow</em> with structured JSON > any dashboard I've used."</div>
+        <div class="author"><div class="handle">@nkz_engineer</div><div class="role">Backend Engineer, Cloudflare</div></div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px;color:#e4e4e4">
-    © 2026 Open Design Studio · Tech Utility Direction
-  </footer>
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>Pricing that respects your terminal</h2>
+      <p>No per-seat pricing. Pay for compute, not headcount.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan">HOBBY</div>
+        <div class="price">Free</div>
+        <div class="price-desc">Personal projects, unlimited deploys.</div>
+        <ul>
+          <li><span class="check">✓</span> 3 projects</li>
+          <li><span class="check">✓</span> Unlimited deploys</li>
+          <li><span class="check">✓</span> Community support</li>
+          <li><span class="check">✓</span> 128MB RAM per deploy</li>
+        </ul>
+        <a href="#" class="btn btn-outline">Start building</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan">PRO</div>
+        <div class="price">$19<span>/mo</span></div>
+        <div class="price-desc">For serious developers shipping daily.</div>
+        <ul>
+          <li><span class="check">✓</span> Everything in Hobby</li>
+          <li><span class="check">✓</span> Unlimited projects</li>
+          <li><span class="check">✓</span> 4GB RAM per deploy</li>
+          <li><span class="check">✓</span> Custom domains</li>
+          <li><span class="check">✓</span> Priority support</li>
+        </ul>
+        <a href="#" class="btn btn-accent">Start 14-day trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan">TEAM</div>
+        <div class="price">$49<span>/mo</span></div>
+        <div class="price-desc">For teams doing real work.</div>
+        <ul>
+          <li><span class="check">✓</span> Everything in Pro</li>
+          <li><span class="check">✓</span> Team management</li>
+          <li><span class="check">✓</span> SSO/SAML</li>
+          <li><span class="check">✓</span> Audit logs</li>
+          <li><span class="check">✓</span> 99.99% SLA</li>
+        </ul>
+        <a href="#" class="btn btn-outline">Contact sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="prompt">// SHIP IT</div>
+      <h2>Stop clicking.<br>Start <span class="accent">shipping</span>.</h2>
+      <p>Join 120,000+ developers who deploy from the terminal. Free to start, powerful to scale.</p>
+      <div class="command" style="display:inline-block">
+        <span class="dollar">$</span> npx @terminal/cli init
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">$TERMINAL</div>
+      <div class="footer-links">
+        <a href="#">Docs</a>
+        <a href="#">GitHub</a>
+        <a href="#">Blog</a>
+        <a href="#">Status</a>
+        <a href="#">Changelog</a>
+      </div>
+      <div class="footer-copy">© 2026 Terminal Inc. · Tech Utility direction</div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

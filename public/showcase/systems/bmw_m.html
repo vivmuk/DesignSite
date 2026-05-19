@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BMW M — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#0066B1;--m-accent:#1E3A5F;--red:#DC0000;--cyan:#00C9DB;--fg:#0a0a0a;--bg:#ffffff;--muted:#555;--border:#ddd;--surface:#0a0a0a;--font:'Inter',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:900;font-size:18px;letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.m-badge{display:inline-flex;padding:3px 8px;background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;border-radius:2px;line-height:1}
+.nav-links{display:flex;gap:24px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.btn{border:none;font-family:var(--font);font-size:12px;font-weight:700;padding:10px 22px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all 150ms}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:0.9}
+.btn-dark{background:var(--fg);color:#fff}.btn-dark:hover{opacity:0.85}
+
+/* M stripes */
+.m-stripes{height:4px;background:linear-gradient(90deg,var(--cyan) 33.3%,var(--red) 33.3%,var(--red) 66.6%,var(--m-accent) 66.6%)}
+
+/* Hero - Dark */
+.hero{background:var(--surface);color:#fff;padding:100px 0 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 70% 30%,rgba(0,201,219,0.08) 0%,transparent 50%),radial-gradient(ellipse at 30% 70%,rgba(220,0,0,0.06) 0%,transparent 50%)}
+.hero .container{position:relative}
+.hero .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:5px;color:var(--cyan);margin-bottom:20px}
+.hero h1{font-size:clamp(44px,6vw,76px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:16px}
+.hero h1 .red{color:var(--red)}
+.hero-sub{font-size:18px;color:rgba(255,255,255,0.55);max-width:520px;line-height:1.7;margin-bottom:36px}
+.hero-specs{display:flex;gap:40px;margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1)}
+.hero-spec .val{font-size:40px;font-weight:900;color:var(--cyan);line-height:1;letter-spacing:-1px}
+.hero-spec .lab{font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+
+/* tricolor accent bar */
+.tri-bar{height:3px;background:linear-gradient(90deg,var(--cyan) 33.3%,var(--red) 33.3%,var(--red) 66.6%,#1E3A5F 66.6%)}
+
+/* Features */
+.features{padding:80px 0}
+.section-header{margin-bottom:48px}
+.section-header .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:5px;color:var(--red);margin-bottom:12px}
+.section-header h2{font-size:40px;font-weight:900;letter-spacing:-1px}
+.section-header p{font-size:16px;color:var(--muted);max-width:480px;margin-top:8px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{padding:32px;border:1px solid var(--border);border-radius:8px;transition:all 200ms;position:relative;overflow:hidden}
+.feat-card:hover{border-color:var(--red);box-shadow:0 8px 24px rgba(220,0,0,0.08)}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--red));opacity:0;transition:opacity 200ms}
+.feat-card:hover::before{opacity:1}
+.feat-card .num{font-size:48px;font-weight:900;color:rgba(0,0,0,0.04);line-height:1;margin-bottom:8px}
+.feat-card h3{font-size:17px;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.feat-card p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* Dark performance */
+.perf{background:var(--surface);color:#fff;padding:80px 0}
+.perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.perf-text .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:5px;color:var(--cyan);margin-bottom:16px}
+.perf-text h2{font-size:40px;font-weight:900;letter-spacing:-1px;margin-bottom:16px}
+.perf-text h2 .red{color:var(--red)}
+.perf-text p{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:24px}
+.perf-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.perf-stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:24px;text-align:center}
+.perf-stat .val{font-size:32px;font-weight:900;color:var(--cyan);line-height:1}
+.perf-stat .lab{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.4);margin-top:4px}
+
+/* CTA */
+.cta{padding:60px 0;text-align:center;background:var(--bg)}
+.cta h2{font-size:48px;font-weight:900;letter-spacing:-2px;margin-bottom:8px}
+.cta h2 .red{color:var(--red)}
+.cta p{font-size:16px;color:var(--muted);margin-bottom:28px}
+
+/* Footer */
+.footer{background:var(--surface);color:rgba(255,255,255,0.5);padding:32px 24px;text-align:center;font-size:13px}
+.footer .logo{font-weight:900;font-size:16px;color:#fff;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:inline-flex;align-items:center;gap:6px}
+
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+@media(max-width:1023px){.feat-grid{grid-template-columns:repeat(2,1fr)}.perf-grid{grid-template-columns:1fr}.hero-specs{gap:24px}}
+@media(max-width:639px){.feat-grid{grid-template-columns:1fr}.nav-links{display:none}.hero-specs{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="m-stripes"></div>
+<nav class="nav"><div class="nav-logo"><span class="m-badge">M</span> BMW M</div><div class="nav-links"><a href="#">Models</a><a href="#">Engineering</a><a href="#">Heritage</a><a href="#">Configurator</a></div><div style="display:flex;gap:10px"><button class="btn btn-dark">Build Yours</button><button class="btn btn-red">Book Drive</button></div></nav>
+
+<section class="hero">
+<div class="container">
+<div class="kicker">BMW M Design System</div>
+<h1>The most<br><span class="red">powerful</span><br>letter in the world.</h1>
+<p class="hero-sub">Near-black cockpit surfaces, BMW M tricolor accents, sharp engineering geometry. Every pixel driven by performance.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn-red" style="font-size:14px;padding:12px 28px">Explore M Models</button><button class="btn btn-dark" style="font-size:14px;padding:12px 28px;border:1px solid rgba(255,255,255,0.3)">Watch Film</button></div>
+<div class="hero-specs">
+<div class="hero-spec"><div class="val">617</div><div class="lab">Horsepower</div></div>
+<div class="hero-spec"><div class="val">3.2s</div><div class="lab">0–100 km/h</div></div>
+<div class="hero-spec"><div class="val">305</div><div class="lab">km/h Top Speed</div></div>
+<div class="hero-spec"><div class="val">M xDrive</div><div class="lab">All-Wheel Drive</div></div>
+</div>
+</div>
+</section>
+<div class="tri-bar"></div>
+
+<section class="features container">
+<div class="section-header"><div class="kicker">M Engineering</div><h2>Born on the track,<br>built for the road</h2><p>M is not a trim level. It's a complete engineering philosophy.</p></div>
+<div class="feat-grid">
+<div class="feat-card"><div class="num">01</div><h3>M Tricolor Accent</h3><p>BMW M Blue, M Red, and M Blue-Cyan appear exactly once per view — at the top of the page and the primary CTA. No other decorative color.</p></div>
+<div class="feat-card"><div class="num">02</div><h3>Cockpit Geometry</h3><p>Near-black surfaces (#0A0A0A) with tight 2px/4px/8px radii. Horizontal driver-focused layout. Information, not decoration.</p></div>
+<div class="feat-card"><div class="num">03</div><h3>Performance Typo</h3><p>900-weight uppercase display. 14px tabular metrics. Numbers at optical size. Every numeral is an instrument readout.</p></div>
+<div class="feat-card"><div class="num">04</div><h3>Decisive Motion</h3><p>150ms ease-out for micro-states. No bounce, no overshoot. Every transition feels like a shift — fast, clean, absolute.</p></div>
+<div class="feat-card"><div class="num">05</div><h3>Data Hierarchy</h3><p>Performance data at 32–40px. Unit labels at 11px uppercase. Specifications drive the grid. Numbers are primary content.</p></div>
+<div class="feat-card"><div class="num">06</div><h3>Animated Ascent</h3><p>Scroll-triggered counters animate from zero. The M system never reveals its data all at once — it accelerates toward you.</p></div>
+</div>
+</section>
+
+<section class="perf">
+<div class="container"><div class="perf-grid">
+<div class="perf-text"><div class="kicker">Competition</div><h2>M4 <span class="red">Competition</span><br>xDrive</h2><p>3.0L twin-turbo inline-6. 503 hp. M xDrive with 2WD mode. The definitive M car — and the definitive M interface.</p><button class="btn btn-red">Configure M4 Competition</button></div>
+<div class="perf-stats">
+<div class="perf-stat"><div class="val">503</div><div class="lab">Horsepower</div></div>
+<div class="perf-stat"><div class="val">3.2s</div><div class="lab">0–100 km/h</div></div>
+<div class="perf-stat"><div class="val">650</div><div class="lab">Nm Torque</div></div>
+<div class="perf-stat"><div class="val">290</div><div class="lab">km/h Top Speed</div></div>
+</div>
+</div></div>
+</section>
+
+<div class="tri-bar"></div>
+
+<section class="cta container"><h2>Ready for <span class="red">M</span>?</h2><p>Book your test drive at an M Certified BMW Center.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-red" style="font-size:15px;padding:14px 32px">Book Test Drive</button><button class="btn btn-dark" style="font-size:15px;padding:14px 32px">Explore All M Models</button></div></section>
+
+<footer class="footer"><div class="logo"><span class="m-badge" style="font-size:8px;padding:2px 5px">M</span> BMW M</div><p>&copy; 2026 BMW M GmbH. The Most Powerful Letter in the World.</p></footer>
+</body>
+</html>

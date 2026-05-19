@@ -1,146 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Minimal — Design Direction</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, SF Pro Display, system-ui, sans-serif, -apple-system, SF Pro Text, system-ui, sans-serif; background: #fafafa; color: #111; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear — Software for a new era</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fafafa;--surface:#fff;--fg:#111;--accent:#5566ff;--muted:#666;--muted-light:#999;--border:#e5e5e5;--border-hover:#d0d0d0;--sans:system-ui,-apple-system,'Inter','Segoe UI',Roboto,sans-serif;--radius:8px;--radius-lg:12px;--shadow-sm:0 1px 2px rgba(0,0,0,0.04);--shadow-md:0 4px 12px rgba(0,0,0,0.06);--shadow-lg:0 12px 32px rgba(0,0,0,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit;text-decoration:none}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(250,250,250,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+nav .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+nav .logo{font-weight:600;font-size:15px;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
+nav .logo svg{width:20px;height:20px}
+nav .nav-links{display:flex;gap:28px;align-items:center}
+nav .nav-links a{font-size:13px;color:var(--muted);font-weight:400;transition:color 0.2s}
+nav .nav-links a:hover{color:var(--fg)}
+nav .btn-nav{background:var(--fg);color:var(--bg);font-size:12px;font-weight:500;padding:6px 16px;border-radius:6px;transition:opacity 0.2s}
+nav .btn-nav:hover{opacity:0.85}
+
+/* Hero */
+.hero{padding:100px 0 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:1000px;height:1000px;background:radial-gradient(circle,rgba(85,102,255,0.06) 0%,transparent 60%);pointer-events:none}
+.hero .container{position:relative;z-index:1}
+.hero .kicker{font-size:12px;font-weight:500;color:var(--accent);letter-spacing:0.05em;margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.hero .kicker svg{width:16px;height:16px}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:600;letter-spacing:-0.04em;line-height:1.05;margin-bottom:24px;color:var(--fg)}
+.hero h1 .accent{background:linear-gradient(135deg,var(--accent),#7c6fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .tagline{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:560px;line-height:1.65;margin-bottom:40px;font-weight:400}
+.hero .cta-group{display:flex;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;font-size:14px;font-weight:500;padding:10px 24px;border-radius:var(--radius);border:none;cursor:pointer;transition:all 0.2s;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(85,102,255,0.3)}
+.btn-secondary{background:var(--surface);color:var(--fg);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{border-color:var(--border-hover);box-shadow:var(--shadow-md)}
+.btn svg{width:16px;height:16px}
+
+/* Logo Strip */
+.logos-section{padding:48px 0;border-bottom:1px solid var(--border)}
+.logos-section .label{font-size:12px;color:var(--muted-light);text-align:center;margin-bottom:32px;text-transform:uppercase;letter-spacing:0.08em;font-weight:500}
+.logos-row{display:flex;justify-content:center;gap:48px;align-items:center;flex-wrap:wrap;opacity:0.35}
+.logos-row span{font-size:16px;font-weight:600;letter-spacing:-0.01em}
+
+/* Features */
+.features{padding:96px 0}
+.features .section-header{text-align:center;margin-bottom:64px}
+.features .section-header .label{font-size:12px;color:var(--accent);font-weight:500;letter-spacing:0.06em;margin-bottom:12px}
+.features .section-header h2{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-0.03em;margin-bottom:12px}
+.features .section-header p{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.6}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.feature-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;transition:box-shadow 0.3s,border-color 0.3s}
+.feature-block:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+.feature-block .icon-wrap{width:40px;height:40px;background:rgba(85,102,255,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.feature-block .icon-wrap svg{width:20px;height:20px;color:var(--accent)}
+.feature-block h3{font-size:17px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em}
+.feature-block p{font-size:14px;color:var(--muted);line-height:1.6}
+.feature-block .mock-screen{margin-top:24px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border);padding:16px;font-size:12px;font-family:'SF Mono','Fira Code',monospace;color:var(--muted);line-height:1.8}
+.feature-block .mock-screen .accent-line{color:var(--accent)}
+.feature-block.full{grid-column:1/-1}
+.feature-block.full .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.feature-block.full .mock-screen{margin-top:0}
+
+/* Stats */
+.stats-bar{padding:48px 0;border-bottom:1px solid var(--border);background:var(--surface)}
+.stats-row{display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .number{font-size:clamp(32px,4vw,44px);font-weight:600;letter-spacing:-0.03em}
+.stat .number .accent{color:var(--accent)}
+.stat .label{font-size:13px;color:var(--muted-light);margin-top:4px}
+
+/* How It Works */
+.how-section{padding:96px 0}
+.how-section .section-header{text-align:center;margin-bottom:64px}
+.how-section .section-header .label{font-size:12px;color:var(--accent);font-weight:500;letter-spacing:0.06em;margin-bottom:12px}
+.how-section .section-header h2{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-0.03em;margin-bottom:12px}
+.how-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;counter-reset:step}
+.how-step{position:relative;padding-left:0}
+.how-step::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:rgba(85,102,255,0.08);color:var(--accent);font-weight:600;font-size:14px;margin-bottom:16px}
+.how-step h3{font-size:16px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em}
+.how-step p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* Testimonials */
+.testimonials{padding:80px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.testimonials .section-header{text-align:center;margin-bottom:48px}
+.testimonials .section-header h2{font-size:32px;font-weight:600;letter-spacing:-0.02em}
+.testimonial-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:border-color 0.3s}
+.testimonial-card:hover{border-color:var(--border-hover)}
+.testimonial-card .quote{font-size:14px;color:var(--fg);line-height:1.65;margin-bottom:20px}
+.testimonial-card .author{display:flex;align-items:center;gap:10px}
+.testimonial-card .author .avatar{width:32px;height:32px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--muted)}
+.testimonial-card .author .name{font-size:13px;font-weight:500}
+.testimonial-card .author .role{font-size:12px;color:var(--muted-light)}
+
+/* Pricing */
+.pricing{padding:96px 0}
+.pricing .section-header{text-align:center;margin-bottom:48px}
+.pricing .section-header h2{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-0.03em;margin-bottom:8px}
+.pricing .section-header p{font-size:16px;color:var(--muted)}
+.pricing-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:40px;font-size:14px;color:var(--muted)}
+.pricing-toggle .toggle-track{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s}
+.pricing-toggle .toggle-track.active{background:var(--accent)}
+.pricing-toggle .toggle-track::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.pricing-toggle .toggle-track.active::after{transform:translateX(20px)}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:960px;margin:0 auto}
+.pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 28px;position:relative;transition:box-shadow 0.3s,border-color 0.3s}
+.pricing-card:hover{box-shadow:var(--shadow-md)}
+.pricing-card.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow-lg)}
+.pricing-card.featured::before{content:'Most popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:500;color:#fff;background:var(--accent);padding:4px 14px;border-radius:20px}
+.pricing-card .plan-name{font-size:13px;color:var(--muted-light);font-weight:500;margin-bottom:4px}
+.pricing-card .plan-price{font-size:44px;font-weight:600;letter-spacing:-0.03em;margin-bottom:4px}
+.pricing-card .plan-price span{font-size:14px;font-weight:400;color:var(--muted-light)}
+.pricing-card .plan-desc{font-size:13px;color:var(--muted);margin-bottom:24px}
+.pricing-card ul{list-style:none;margin-bottom:28px}
+.pricing-card li{font-size:13px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.04);color:var(--muted);display:flex;align-items:center;gap:8px}
+.pricing-card li svg{width:14px;height:14px;color:var(--accent);flex-shrink:0}
+.pricing-card .btn{width:100%;justify-content:center}
+
+/* CTA */
+.cta{padding:96px 0;text-align:center}
+.cta-box{background:var(--fg);color:#fff;border-radius:var(--radius-lg);padding:80px 48px;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(85,102,255,0.3) 0%,transparent 60%);pointer-events:none}
+.cta-box h2{font-size:clamp(28px,4vw,44px);font-weight:600;letter-spacing:-0.03em;margin-bottom:12px;position:relative}
+.cta-box p{font-size:17px;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 32px;position:relative}
+.cta-box .btn{position:relative}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:48px 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+.footer-brand .logo-mark{font-weight:600;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.footer-brand p{font-size:13px;color:var(--muted);line-height:1.6;max-width:280px}
+.footer-col h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;color:var(--fg)}
+.footer-col a{display:block;font-size:13px;color:var(--muted);padding:4px 0;transition:color 0.2s}
+.footer-col a:hover{color:var(--fg)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted-light)}
+
+/* Responsive */
+@media(max-width:768px){
+  .features-grid{grid-template-columns:1fr}
+  .feature-block.full .content-grid{grid-template-columns:1fr}
+  .testimonial-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr}
+  .stats-row{gap:32px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .logos-row{gap:24px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:32px}
+  .stats-row{flex-direction:column;gap:20px}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);padding:0 24px">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px">
-      <div style="font-weight:700;font-size:16px;letter-spacing:-0.02em">Modern Minimal</div>
-      <div style="display:flex;gap:24px;align-items:center">
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Overview</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Principles</a>
-        <a href="#" style="color:inherit;opacity:0.6;font-size:14px;text-decoration:none">Examples</a>
-        <a href="#" style="background:#5566ff;color:#fff;padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none">Use Direction</a>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Hero -->
-  <section style="padding:120px 24px 100px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,#5566ff20 0%,transparent 60%);pointer-events:none"></div>
-    <div style="max-width:900px;margin:0 auto;position:relative">
-      <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.3em;color:#5566ff;margin-bottom:24px">Linear / Vercel</div>
-      <h1 style="font-size:clamp(40px,7vw,80px);font-weight:900;line-height:0.95;margin:0 0 32px;letter-spacing:-0.03em">Modern Minimal</h1>
-      <p style="font-size:20px;color:rgba(0,0,0,0.55);line-height:1.7;max-width:680px;margin:0 auto 40px">Quiet, precise, software-native. System fonts, crisp neutral foundations.</p>
-      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a href="#" style="color:#5566ff;text-decoration:none;font-size:13px;border:1px solid #5566ff33;padding:4px 10px;border-radius:4px">Linear</a> <a href="#" style="color:#5566ff;text-decoration:none;font-size:13px;border:1px solid #5566ff33;padding:4px 10px;border-radius:4px">Vercel</a> <a href="#" style="color:#5566ff;text-decoration:none;font-size:13px;border:1px solid #5566ff33;padding:4px 10px;border-radius:4px">Notion 2024</a> <a href="#" style="color:#5566ff;text-decoration:none;font-size:13px;border:1px solid #5566ff33;padding:4px 10px;border-radius:4px">Stripe Docs</a></div>
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="4" fill="#5566ff"/><path d="M5 7h7v2H7v2h4v2H7v3H5V7z" fill="#fff"/></svg>
+      Linear
     </div>
-  </section>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">Method</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#" class="btn-nav">Get started</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- Showcase Grid -->
-  <section style="padding:60px 24px">
-    <div style="max-width:1200px;margin:0 auto">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px;text-align:center">Design Language</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-        <!-- Color Palette -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Color Palette</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#fafafa;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">bg</div>
-              <div style="font-size:10px;opacity:0.4">#fafafa</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#fff;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">surface</div>
-              <div style="font-size:10px;opacity:0.4">#fff</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#111;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">fg</div>
-              <div style="font-size:10px;opacity:0.4">#111</div>
-            </div>
-            <div style="text-align:center">
-              <div style="width:60px;height:60px;background:#5566ff;border-radius:8px;border:2px solid rgba(0,0,0,0.1)"></div>
-              <div style="font-size:11px;margin-top:6px;opacity:0.6">accent</div>
-              <div style="font-size:10px;opacity:0.4">#5566ff</div>
-            </div>
-          </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="kicker">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11 3.5 14 5 9 1 6h5L8 1z" fill="#5566ff"/></svg>
+      Modern Minimal Design Direction
+    </div>
+    <h1>Build software<br>with <span class="accent">precision</span></h1>
+    <p class="tagline">Quiet, precise, and software-native. A design system for teams who ship products that feel considered rather than decorated.</p>
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary">Start for free</a>
+      <a href="#" class="btn btn-secondary">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="6,3 13,8 6,13"/></svg>
+        Watch demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Logo Strip -->
+<section class="logos-section">
+  <div class="container">
+    <div class="label">Trusted by teams at</div>
+    <div class="logos-row">
+      <span>Vercel</span><span>Notion</span><span>Raycast</span><span>Resend</span><span>Clerk</span><span>Supabase</span><span>Stripe</span>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat"><div class="number">50<span class="accent">K+</span></div><div class="label">Active teams</div></div>
+      <div class="stat"><div class="number">99.9<span class="accent">%</span></div><div class="label">Uptime SLA</div></div>
+      <div class="stat"><div class="number">2<span class="accent">M+</span></div><div class="label">Issues tracked</div></div>
+      <div class="stat"><div class="number">&lt;50<span class="accent">ms</span></div><div class="label">Average response</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">FEATURES</div>
+      <h2>Everything you need,<br>nothing you don't</h2>
+      <p>A system designed around focus — fast feedback loops, zero clutter, and interfaces that get out of your way.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-block">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#5566ff" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
         </div>
-        <!-- Typography -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 20px;opacity:0.5">Typography</h3>
-          <div style="margin-bottom:20px">
-            <div style="font-family:-apple-system, SF Pro Display, system-ui, sans-serif;font-size:48px;font-weight:700;line-height:1.1;margin-bottom:4px">Aa</div>
-            <div style="font-size:12px;opacity:0.5">-apple-system, SF Pro Display, system-ui, sans-serif</div>
-          </div>
+        <h3>Real-time sync</h3>
+        <p>Changes propagate instantly across every connected client. No refresh, no polling — just live updates that feel like magic.</p>
+        <div class="mock-screen">
+          <div class="accent-line">→ issue.updated { id: "LIN-142" }</div>
+          <div>  status: "in_progress"</div>
+          <div>  assignee: "Sarah Chen"</div>
+          <div class="accent-line">→ sync.complete (12ms)</div>
+        </div>
+      </div>
+      <div class="feature-block">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#5566ff" stroke-width="1.5"><path d="M4 4h12v12H4z"/><path d="M8 8h4M8 11h2"/></svg>
+        </div>
+        <h3>Keyboard-first</h3>
+        <p>Every action reachable from the keyboard. Command palette, shortcuts, and fast navigation built into every interaction.</p>
+        <div class="mock-screen">
+          <div>⌘K &nbsp;Open command palette</div>
+          <div>⌘/ &nbsp;Toggle filters</div>
+          <div>⌘↵ &nbsp;Quick submit</div>
+          <div class="accent-line">↑↓ &nbsp;Navigate issues</div>
+        </div>
+      </div>
+      <div class="feature-block full">
+        <div class="content-grid">
           <div>
-            <div style="font-family:-apple-system, SF Pro Text, system-ui, sans-serif;font-size:16px;line-height:1.6;opacity:0.7">The quick brown fox jumps over the lazy dog. 0123456789</div>
-            <div style="font-size:12px;opacity:0.5;margin-top:4px">-apple-system, SF Pro Text, system-ui, sans-serif</div>
+            <div class="icon-wrap">
+              <svg viewBox="0 0 20 20" fill="none" stroke="#5566ff" stroke-width="1.5"><path d="M3 10h14M10 3v14"/><circle cx="10" cy="10" r="7"/></svg>
+            </div>
+            <h3>Structured workflows that adapt</h3>
+            <p>Define your process once, then let the system handle the routing. Custom states, automated triggers, and team-specific views — all configured in seconds.</p>
+            <ul style="list-style:none;margin-top:16px">
+              <li style="font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Custom issue states and labels</li>
+              <li style="font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Automated triage rules</li>
+              <li style="font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Cycle and roadmap planning</li>
+              <li style="font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Slack & GitHub integrations</li>
+            </ul>
           </div>
-        </div>
-        <!-- UI Components -->
-        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:32px;grid-column:1/-1">
-          <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 24px;opacity:0.5">UI Components</h3>
-          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
-            <button style="background:#5566ff;color:#fff;padding:12px 24px;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;font-family:-apple-system, SF Pro Display, system-ui, sans-serif">Primary Button</button>
-            <button style="background:transparent;color:#111;padding:12px 24px;border:1.5px solid rgba(0,0,0,0.2);border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:-apple-system, SF Pro Text, system-ui, sans-serif">Secondary</button>
-            <div style="background:rgba(0,0,0,0.04);padding:10px 16px;border-radius:8px;font-size:14px">☀️ Light Mode</div>
-            <input placeholder="Search this style..." style="background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.12);padding:10px 16px;border-radius:8px;font-size:14px;color:#111;width:200px;outline:none;font-family:-apple-system, SF Pro Text, system-ui, sans-serif">
+          <div class="mock-screen" style="margin:0">
+            <div class="accent-line">workflow "bug-triage" {</div>
+            <div>  trigger: label == "bug"</div>
+            <div>  action: assign → on-call-engineer</div>
+            <div>  action: set-priority → high</div>
+            <div>  action: move → triage-board</div>
+            <div class="accent-line">}</div>
+            <div style="margin-top:8px">✓ Workflow active</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Principles -->
-  <section style="padding:60px 24px;background:#fafafa">
-    <div style="max-width:1200px;margin:0 auto;text-align:center">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 40px">Key Principles</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;text-align:left">
-        
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">👁️</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Visual Clarity</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Modern Minimal direction and ensure visual coherence.</p>
+      <div class="feature-block">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#5566ff" stroke-width="1.5"><path d="M3 17V7l4-4 3 5 4-3 3 5v7"/></svg>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🎵</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Consistent Rhythm</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Modern Minimal direction and ensure visual coherence.</p>
+        <h3>Insights at a glance</h3>
+        <p>Built-in analytics show velocity, cycle time, and bottlenecks without any setup. Data-driven decisions, not guesswork.</p>
+      </div>
+      <div class="feature-block">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 20 20" fill="none" stroke="#5566ff" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="3"/><path d="M8 3v14M3 10h14"/></svg>
         </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">📐</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Purposeful Space</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Modern Minimal direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">🌊</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Adaptive Layout</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Modern Minimal direction and ensure visual coherence.</p>
-        </div>
-        <div style="background:rgba(0,0,0,0.02);padding:24px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
-          <div style="font-size:28px;margin-bottom:8px">✨</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Expressive Detail</h3>
-          <p style="font-size:14px;opacity:0.6;line-height:1.5;margin:0">Core design principles that define the Modern Minimal direction and ensure visual coherence.</p>
-        </div>
+        <h3>Views for every context</h3>
+        <p>List, board, timeline — switch instantly. Save personal or team views that persist across sessions.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA -->
-  <section style="padding:80px 24px;text-align:center;background:#5566ff">
-    <div style="max-width:600px;margin:0 auto">
-      <h2 style="font-size:36px;font-weight:800;margin:0 0 16px;color:#fff">Apply This Direction</h2>
-      <p style="opacity:0.8;margin:0 0 28px;color:#fff">Use Modern Minimal in your next project.</p>
-      <a href="#" style="display:inline-block;background:#fff;color:#5566ff;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none">Explore →</a>
+<!-- How it Works -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">HOW IT WORKS</div>
+      <h2>Three steps to momentum</h2>
     </div>
-  </section>
+    <div class="how-steps">
+      <div class="how-step">
+        <h3>Import your world</h3>
+        <p>Connect GitHub, Slack, Sentry, and Figma. All your existing data flows in automatically — no manual migration.</p>
+      </div>
+      <div class="how-step">
+        <h3>Configure your flow</h3>
+        <p>Set up workflows, labels, and automations that match how your team actually works. Not the other way around.</p>
+      </div>
+      <div class="how-step">
+        <h3>Ship with clarity</h3>
+        <p>Cycles, roadmaps, and real-time progress give everyone the same picture. From backlog to production, nothing falls through.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px;color:#111">
-    © 2026 Open Design Studio · Modern Minimal Direction
-  </footer>
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header"><h2>Loved by builders</h2></div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="quote">"Switched from Jira and immediately felt the difference. Everything is just... faster. No more clicking through five modals to update a ticket."</div>
+        <div class="author"><div class="avatar">AK</div><div><div class="name">Alex Kim</div><div class="role">Engineering Lead, Vercel</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">"The keyboard shortcuts alone make it worth it. ⌘K to do anything — I rarely touch my mouse anymore. My team's velocity increased 30%."</div>
+        <div class="author"><div class="avatar">MR</div><div><div class="name">Maria Rodriguez</div><div class="role">PM, Raycast</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote">"Finally, an issue tracker that doesn't feel like punishment. Clean UI, fast sync, and the best API I've worked with. We migrated in a day."</div>
+        <div class="author"><div class="avatar">JL</div><div><div class="name">Johan Lindberg</div><div class="role">CTO, Stealth Startup</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>Pricing that scales with you</h2>
+      <p>Start free. Upgrade when your team grows.</p>
+    </div>
+    <div class="pricing-toggle">
+      <span>Monthly</span>
+      <div class="toggle-track active"></div>
+      <span>Annual <strong style="color:var(--accent)">-20%</strong></span>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0<span>/mo</span></div>
+        <div class="plan-desc">For individuals getting started.</div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Up to 10 team members</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Unlimited issues</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Basic integrations</li>
+        </ul>
+        <a href="#" class="btn btn-secondary" style="justify-content:center">Get started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$8<span>/user/mo</span></div>
+        <div class="plan-desc">For teams shipping real products.</div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Everything in Free</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Advanced workflows</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Priority support</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Custom views & filters</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="justify-content:center">Start free trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-desc">For organizations that need more.</div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Everything in Pro</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> SAML/SSO</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Audit logs</li>
+          <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-8" stroke="#5566ff" stroke-width="2"/></svg> Dedicated success manager</li>
+        </ul>
+        <a href="#" class="btn btn-secondary" style="justify-content:center">Contact sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to move faster?</h2>
+      <p>Join 50,000+ teams building better software with Linear. Free to start, powerful to scale.</p>
+      <a href="#" class="btn btn-primary" style="background:#fff;color:var(--fg)">Get started for free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" rx="4" fill="#5566ff"/><path d="M5 7h7v2H7v2h4v2H7v3H5V7z" fill="#fff"/></svg>
+          Linear
+        </div>
+        <p>Software for a new era. Precise, fast, and designed to get out of your way.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a><a href="#">Docs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Press</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Community</a><a href="#">API</a><a href="#">Status</a><a href="#">Security</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Linear Inc.</span>
+      <span>Modern Minimal direction</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

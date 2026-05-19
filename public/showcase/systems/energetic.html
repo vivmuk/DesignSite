@@ -1,1 +1,125 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Energetic - Design System</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}</style></head><body style="font-family:Inter,system-ui,sans-serif;background:#FFEDD5;color:#111111;"><section style="padding:120px 48px 80px;text-align:center;border-bottom:6px solid #EA580B;"><h1 style="font-size:72px;font-weight:900;text-transform:uppercase;letter-spacing:-3px;line-height:0.95;">Energetic</h1><p style="font-size:24px;margin-top:24px;font-weight:700;">Dynamic, vibrant style with thick borders, geometric shapes, high-contrast colors, and expressive typography c</p><div style="margin-top:40px;display:inline-block;background:#EA580B;color:#FFF;padding:16px 48px;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:2px;text-decoration:none;">Explore Now</div></section><section style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:6px solid #EA580B;"><div style="border:3px solid #EA580B;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#EA580B;">&lt;1s</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Time to Value</div></div><div style="border:3px solid #EA580B;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#EA580B;">5M+</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">API/Day</div></div><div style="border:3px solid #EA580B;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#EA580B;">24/7</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Support</div></div><div style="border:3px solid #EA580B;padding:24px;text-align:center;"><div style="font-size:42px;font-weight:900;color:#EA580B;">99.9%</div><div style="font-size:14px;text-transform:uppercase;font-weight:700;margin-top:4px;">Uptime</div></div></section><section style="padding:0;border-bottom:6px solid #EA580B;"><div style="background:#EA580B;color:#FFFFFF;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Design Tokens</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Centralized variables</p></div><div style="background:#FFEDD5;color:#111111;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Theme Engine</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Instant look switching</p></div><div style="background:#EA580B;color:#FFFFFF;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Component Library</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Production-ready blocks</p></div><div style="background:#FFEDD5;color:#111111;padding:48px;border:4px solid #111111;"><h2 style="font-size:36px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin:0 0 12px;">Icon System</h2><p style="font-size:18px;line-height:1.5;margin:0;opacity:0.85;">Scalable vector icons</p></div></section><section style="padding:120px 48px;text-align:center;"><div style="font-size:80px;font-weight:900;color:#EA580B;text-transform:uppercase;line-height:1;letter-spacing:-3px;">Energetic</div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Energetic - Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#EA580B;--accent-light:#FB923C;--bg:#FFEDD5;--white:#FFFFFF;--dark:#1A1A1A;--text:#1A1A1A;--text-dim:#92400E;--border:#FDBA74}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+h1,h2,h3,h4{font-family:'Space Grotesk',system-ui,sans-serif}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:var(--dark);color:var(--white)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);letter-spacing:-0.5px}
+.nav-links{display:flex;gap:24px;font-size:14px;font-weight:600}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-btn{background:var(--accent);color:#fff;padding:10px 24px;border-radius:0;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:none;cursor:pointer;transition:all .2s}
+.nav-btn:hover{background:var(--accent-light);transform:translateY(-2px)}
+.hero{padding:100px 32px 80px;background:var(--dark);color:var(--white);text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(234,88,11,.3) 0%,transparent 50%);pointer-events:none}
+.hero h1{font-size:72px;font-weight:700;line-height:1;letter-spacing:-3px;margin-bottom:20px}
+.hero h1 .accent{color:var(--accent)}
+.hero p{font-size:18px;color:rgba(255,255,255,.7);max-width:500px;margin:0 auto 40px}
+.hero-buttons{display:flex;gap:12px;justify-content:center}
+.btn-energy{padding:16px 40px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border:3px solid;cursor:pointer;transition:all .15s}
+.btn-energy.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn-energy.primary:hover{transform:translateY(-3px);box-shadow:0 8px 0 rgba(0,0,0,.3)}
+.btn-energy.secondary{background:transparent;color:var(--white);border-color:var(--white)}.btn-energy.secondary:hover{background:var(--white);color:var(--dark)}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:3px solid var(--dark);border-bottom:3px solid var(--dark)}
+.feature{padding:48px 32px;border-right:3px solid var(--dark);text-align:center;transition:all .2s}
+.feature:last-child{border-right:none}
+.feature:hover{background:rgba(234,88,11,.1);transform:translateY(-4px)}
+.feature-icon{font-size:48px;margin-bottom:16px}
+.feature h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.feature p{font-size:14px;color:var(--text-dim);line-height:1.6}
+.cta-strip{background:var(--accent);color:#fff;padding:24px 32px;text-align:center;border-top:3px solid var(--dark);border-bottom:3px solid var(--dark)}
+.cta-strip h2{font-size:28px;font-weight:700;margin-bottom:4px}
+.cta-strip p{opacity:.8;font-size:14px}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:3px solid var(--dark)}
+.gallery-item{padding:60px 40px;border-right:3px solid var(--dark);border-bottom:3px solid var(--dark);display:flex;flex-direction:column;justify-content:center;min-height:280px;transition:all .2s;cursor:pointer}
+.gallery-item:nth-child(2n){border-right:none}
+.gallery-item:hover{transform:scale(1.02)}
+.gallery-item.t1{background:var(--accent);color:#fff}
+.gallery-item.t2{background:var(--dark);color:var(--accent)}
+.gallery-item.t3{background:var(--white);color:var(--dark)}
+.gallery-item.t4{background:#FCD34D;color:var(--dark)}
+.gallery-item h3{font-size:28px;font-weight:700;margin-bottom:8px}
+.gallery-item p{font-size:15px;opacity:.8;max-width:300px}
+.pricing{padding:80px 32px;text-align:center;border-top:3px solid var(--dark)}
+.pricing h2{font-size:48px;font-weight:700;letter-spacing:-2px;margin-bottom:16px}
+.pricing>p{color:var(--text-dim);margin-bottom:48px;font-size:16px}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:900px;margin:0 auto}
+.price-card{border:3px solid var(--dark);padding:32px;background:var(--white);transition:all .2s}
+.price-card:hover{transform:translateY(-4px);box-shadow:8px 8px 0 var(--dark)}
+.price-card.pop{background:var(--accent);color:#fff;border-color:var(--dark)}
+.price-card h3{font-size:20px;font-weight:700;margin-bottom:4px}
+.price-card .amount{font-size:48px;font-weight:700;margin-bottom:4px}
+.price-card .amount span{font-size:14px;font-weight:400}
+.price-card .tagline{font-size:13px;opacity:.7;margin-bottom:24px}
+.price-card ul{list-style:none;margin-bottom:24px;text-align:left}
+.price-card li{font-size:14px;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.1)}
+.price-card li:last-child{border:none}
+.btn-price{width:100%;padding:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:13px;border:3px solid var(--dark);cursor:pointer;transition:all .15s;background:var(--white);color:var(--dark)}
+.btn-price:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--dark)}
+.btn-price.filled{background:var(--dark);color:#fff}
+.footer{background:var(--dark);color:var(--white);padding:48px 32px;border-top:3px solid var(--accent)}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--accent)}
+.footer-logo p{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;font-family:'Inter',sans-serif;font-weight:400;line-height:1.6}
+.footer-cols{display:flex;gap:48px}
+.footer-col h4{font-family:'Space Grotesk',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px;text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;margin-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.3);max-width:1100px;margin-left:auto;margin-right:auto}
+@media(max-width:768px){.hero h1{font-size:40px}.features{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.gallery-item{border-right:none!important}.price-grid{grid-template-columns:1fr}.footer-cols{flex-direction:column;gap:24px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+<div class="nav-logo">⚡ ENERGETIC</div>
+<div class="nav-links"><a href="#">Products</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a></div>
+<button class="nav-btn">Get Started ↗</button>
+</nav>
+<section class="hero">
+<h1>Move fast.<br>Hit <span class="accent">hard</span>.</h1>
+<p>Dynamic, vibrant style with thick borders, geometric shapes, and high-contrast colors that command attention.</p>
+<div class="hero-buttons">
+<button class="btn-energy primary">Start Building</button>
+<button class="btn-energy secondary">See It Live</button>
+</div>
+</section>
+<section class="features">
+<div class="feature"><div class="feature-icon">⚡</div><h3>Thick Borders</h3><p>Bold 3px+ borders that define space and create visual hierarchy with confidence.</p></div>
+<div class="feature"><div class="feature-icon">🔷</div><h3>Geometric Shapes</h3><p>Squares, rectangles, sharp corners. Geometry that feels intentional and powerful.</p></div>
+<div class="feature"><div class="feature-icon">🔥</div><h3>High Contrast</h3><p>Orange on dark. White on black. No muted tones — every color earns its place.</p></div>
+</section>
+<section class="cta-strip"><h2>Built for speed</h2><p>Zero hesitation. Maximum impact. Every pixel optimized.</p></section>
+<section class="gallery">
+<div class="gallery-item t1"><h3>Dashboard</h3><p>Real-time metrics with bold typography and unmistakable hierarchy.</p></div>
+<div class="gallery-item t2"><h3>Components</h3><p>Every element designed to feel fast, responsive, and alive.</p></div>
+<div class="gallery-item t3"><h3>Animations</h3><p>Snappy transitions that feel like 120fps on 60fps screens.</p></div>
+<div class="gallery-item t4"><h3>Mobile</h3><p>Touch-targets, gestures, and layouts built for thumb-first workflows.</p></div>
+</section>
+<section class="pricing">
+<h2>Simple pricing</h2>
+<p>No hidden fees. No surprises. Just energy.</p>
+<div class="price-grid">
+<div class="price-card"><h3>Starter</h3><div class="amount">$0<span>/mo</span></div><div class="tagline">For side projects</div><ul><li>5 components</li><li>1 project</li><li>Community support</li><li>Basic themes</li></ul><button class="btn-price">Free Start</button></div>
+<div class="price-card pop"><h3>Pro</h3><div class="amount">$29<span>/mo</span></div><div class="tagline">For professionals</div><ul><li>Unlimited components</li><li>Unlimited projects</li><li>Priority support</li><li>Custom themes</li></ul><button class="btn-price filled">Go Pro</button></div>
+<div class="price-card"><h3>Team</h3><div class="amount">$79<span>/mo</span></div><div class="tagline">For teams at scale</div><ul><li>Everything in Pro</li><li>SSO & RBAC</li><li>Design tokens API</li><li>Dedicated support</li></ul><button class="btn-price">Contact Us</button></div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-inner">
+<div class="footer-logo">⚡ ENERGETIC<p>Dynamic, vibrant design with thick borders<br>and high-contrast colors.</p></div>
+<div class="footer-cols">
+<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Themes</a><a href="#">Templates</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Docs</a><a href="#">GitHub</a><a href="#">Blog</a></div>
+<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a></div>
+</div>
+</div>
+<div class="footer-bottom"><span>© 2026 Energetic</span><span>Privacy · Terms</span></div>
+</footer>
+</body>
+</html>
