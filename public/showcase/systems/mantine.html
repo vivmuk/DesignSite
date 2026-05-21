@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantine Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --mantine-blue-0: #e7f5ff; --mantine-blue-1: #d0ebff; --mantine-blue-4: #4dabf7; --mantine-blue-6: #228be6; --mantine-blue-9: #1864ab;
+            --mantine-grape-6: #be4bdb; --mantine-violet-6: #7950f2;
+            --mantine-gray-0: #f8f9fa; --mantine-gray-1: #f1f3f5; --mantine-gray-2: #e9ecef;
+            --mantine-gray-4: #ced4da; --mantine-gray-6: #868e96; --mantine-gray-7: #495057; --mantine-gray-9: #212529;
+            --mantine-green-6: #40c057; --mantine-red-6: #fa5252; --mantine-orange-6: #fd7e14; --mantine-cyan-6: #15aabf;
+        }
+        html { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #ffffff; color: var(--mantine-gray-9); line-height: 1.55; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        /* Header */
+        .header { background: white; border-bottom: 1px solid var(--mantine-gray-2); position: sticky; top: 0; z-index: 50; }
+        .header-inner { display: flex; align-items: center; height: 60px; gap: 2rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.25rem; color: var(--mantine-blue-6); }
+        .logo-icon { width: 32px; height: 32px; background: var(--mantine-blue-6); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; }
+        .nav { display: flex; gap: 1.5rem; margin-left: auto; }
+        .nav a { color: var(--mantine-gray-7); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+        .nav a:hover { color: var(--mantine-blue-6); }
+        .btn-header { background: var(--mantine-blue-6); color: white; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.875rem; font-weight: 500; text-decoration: none; }
+        /* Hero */
+        .hero { padding: 5rem 0; background: linear-gradient(105deg, var(--mantine-blue-9) 0%, var(--mantine-violet-6) 100%); color: white; }
+        .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.1; margin-bottom: 1rem; }
+        .hero p { font-size: 1.25rem; opacity: 0.9; max-width: 600px; margin-bottom: 2rem; }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 4px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-filled { background: white; color: var(--mantine-blue-6); }
+        .btn-filled:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.4); }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+        .btn-light { background: var(--mantine-gray-1); color: var(--mantine-gray-9); }
+        .btn-light:hover { background: var(--mantine-gray-2); }
+        /* Section */
+        section { padding: 4rem 0; }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-header h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--mantine-gray-6); font-size: 1rem; }
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin: 3rem 0; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--mantine-gray-2); text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: 700; color: var(--mantine-blue-6); }
+        .stat-label { font-size: 0.875rem; color: var(--mantine-gray-6); margin-top: 0.25rem; }
+        /* Feature Cards */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .feature-card { padding: 1.5rem; border: 1px solid var(--mantine-gray-2); border-radius: 8px; transition: all 0.2s; }
+        .feature-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-color: var(--mantine-blue-1); }
+        .feature-icon { width: 44px; height: 44px; background: var(--mantine-blue-0); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--mantine-blue-6); margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.875rem; color: var(--mantine-gray-6); }
+        /* Components Grid */
+        .components-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .component-card { border: 1px solid var(--mantine-gray-2); border-radius: 8px; overflow: hidden; }
+        .component-header { background: var(--mantine-gray-0); padding: 1rem; font-size: 0.875rem; font-weight: 600; border-bottom: 1px solid var(--mantine-gray-2); }
+        .component-body { padding: 1.5rem; }
+        /* Form Elements */
+        .input, .textarea, .select {
+            width: 100%; padding: 0.625rem 0.875rem; border: 1px solid var(--mantine-gray-4);
+            border-radius: 4px; font-size: 0.875rem; transition: all 0.2s; font-family: inherit;
+        }
+        .input:focus, .textarea:focus { outline: none; border-color: var(--mantine-blue-6); }
+        .input-error { border-color: var(--mantine-red-6); }
+        .input-error:focus { border-color: var(--mantine-red-6); }
+        .label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.375rem; }
+        .error { font-size: 0.75rem; color: var(--mantine-red-6); margin-top: 0.25rem; }
+        /* Buttons */
+        .btn-primary { background: var(--mantine-blue-6); color: white; }
+        .btn-primary:hover { background: var(--mantine-blue-9); }
+        .btn-success { background: var(--mantine-green-6); color: white; }
+        .btn-danger { background: var(--mantine-red-6); color: white; }
+        .btn-cyan { background: var(--mantine-cyan-6); color: white; }
+        /* Badge */
+        .badge { display: inline-flex; align-items: center; padding: 0 0.625rem; height: 1.5rem; border-radius: 32px; font-size: 0.75rem; font-weight: 600; }
+        .badge-filled { background: var(--mantine-blue-6); color: white; }
+        .badge-light { background: var(--mantine-blue-0); color: var(--mantine-blue-9); }
+        .badge-outline { background: transparent; border: 1px solid var(--mantine-blue-6); color: var(--mantine-blue-6); }
+        /* Alert */
+        .alert { padding: 1rem; border-radius: 4px; display: flex; gap: 0.75rem; align-items: flex-start; }
+        .alert-blue { background: var(--mantine-blue-0); color: var(--mantine-blue-9); }
+        .alert-green { background: #d3f9d8; color: #2b8a3e; }
+        .alert-red { background: #ffe3e3; color: #c92a2a; }
+        /* Switch */
+        .switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .switch-track { width: 36px; height: 20px; background: var(--mantine-gray-4); border-radius: 10px; position: relative; transition: background 0.2s; }
+        .switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .switch.active .switch-track { background: var(--mantine-blue-6); }
+        .switch.active .switch-thumb { transform: translateX(16px); }
+        /* Checkbox & Radio */
+        .checkbox-label, .radio-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer; }
+        .checkbox, .radio { width: 1.125rem; height: 1.125rem; accent-color: var(--mantine-blue-6); }
+        /* Progress */
+        .progress { height: 6px; background: var(--mantine-gray-2); border-radius: 3px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--mantine-blue-6); border-radius: 3px; }
+        /* Ring Progress */
+        .ring-progress { width: 100px; height: 100px; position: relative; }
+        .ring-bg { fill: none; stroke: var(--mantine-gray-2); stroke-width: 8; }
+        .ring-fill { fill: none; stroke: var(--mantine-blue-6); stroke-width: 8; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 0.3s; }
+        .ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.25rem; font-weight: 700; color: var(--mantine-blue-6); }
+        /* Skeleton */
+        .skeleton { background: linear-gradient(90deg, var(--mantine-gray-2) 25%, var(--mantine-gray-1) 50%, var(--mantine-gray-2) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* Timeline */
+        .timeline { position: relative; padding-left: 1.5rem; }
+        .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--mantine-gray-2); }
+        .timeline-item { position: relative; padding-bottom: 1.5rem; }
+        .timeline-dot { position: absolute; left: -1.25rem; width: 14px; height: 14px; border-radius: 50%; background: var(--mantine-blue-6); border: 2px solid white; }
+        .timeline-title { font-weight: 600; font-size: 0.875rem; }
+        .timeline-text { font-size: 0.875rem; color: var(--mantine-gray-6); margin-top: 0.25rem; }
+        /* Code */
+        .code-block { background: var(--mantine-gray-9); color: white; padding: 1.5rem; border-radius: 8px; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.875rem; overflow-x: auto; }
+        .code-keyword { color: #c084fc; }
+        .code-string { color: #86efac; }
+        .code-func { color: #60a5fa; }
+        /* Footer */
+        footer { background: var(--mantine-gray-9); color: white; padding: 3rem 0; text-align: center; }
+        footer p { color: var(--mantine-gray-6); font-size: 0.875rem; }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2rem; }
+            .nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <div class="logo-icon">M</div>
+                    Mantine
+                </div>
+                <nav class="nav">
+                    <a href="#features">Features</a>
+                    <a href="#components">Components</a>
+                    <a href="#" class="btn-header">Get Started</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>A fully featured React components library</h1>
+            <p>Build fully functional accessible web applications with ease. 120+ customizable components and hooks.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn btn-filled">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                    Get Started
+                </a>
+                <a href="#" class="btn btn-outline">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.38-1.55 6.38-6.93A6.35 6.35 0 0 0 19 4.28a5.88 5.88 0 0 0-.15-1.59c-.07-.26-.28-.33-.56-.2-1.48.63-2.11.75-3.29-.23a6.63 6.63 0 0 0-6.78 0c-1.18.98-1.81.86-3.29.23-.28-.13-.49-.06-.56.2a5.88 5.88 0 0 0-.15 1.59 6.35 6.35 0 0 0 2.34 5.12c0 5.38 3.24 6.58 6.38 6.93a3.37 3.37 0 0 0-.94 2.61V22"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">120+</div><div class="stat-label">Components</div></div>
+                <div class="stat-card"><div class="stat-value">50+</div><div class="stat-label">Hooks</div></div>
+                <div class="stat-card"><div class="stat-value">500K+</div><div class="stat-label">Downloads/mo</div></div>
+                <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">TypeScript</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" style="background: var(--mantine-gray-0);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Features</h2>
+                <p>Everything you need to build professional applications</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+                    <h3>TypeScript Based</h3>
+                    <p>Build type safe applications, all components and hooks export types.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                    <h3>Free & Open Source</h3>
+                    <p>All components and hooks are free for personal and commercial use.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <h3>Accessible</h3>
+                    <p>All components follow accessibility standards and include ARIA attributes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+                    <h3>Customizable</h3>
+                    <p>Customize colors, spacing, shadows, fonts and many other settings.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+                    <h3>Dark Theme</h3>
+                    <p>Add dark theme to your application without extra configuration.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M9 2v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg></div>
+                    <h3>Hooks Library</h3>
+                    <p>50+ hooks to manage state, UI and browser APIs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="components">
+        <div class="container">
+            <div class="section-header">
+                <h2>Component Demos</h2>
+                <p>A selection of Mantine components</p>
+            </div>
+            <div class="components-grid">
+                <!-- Buttons -->
+                <div class="component-card">
+                    <div class="component-header">Buttons</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <button class="btn btn-primary">Filled</button>
+                            <button class="btn btn-light">Light</button>
+                            <button class="btn btn-outline" style="color: var(--mantine-gray-7); border-color: var(--mantine-gray-4);">Outline</button>
+                            <button class="btn btn-danger">Danger</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Inputs -->
+                <div class="component-card">
+                    <div class="component-header">TextInput</div>
+                    <div class="component-body">
+                        <div style="margin-bottom: 1rem;">
+                            <label class="label">Email</label>
+                            <input type="email" class="input" placeholder="Your email">
+                        </div>
+                        <div>
+                            <label class="label">Password</label>
+                            <input type="password" class="input input-error" value="weak">
+                            <div class="error">Password must be at least 6 characters</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Badges -->
+                <div class="component-card">
+                    <div class="component-header">Badge</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <span class="badge badge-filled">Filled</span>
+                            <span class="badge badge-light">Light</span>
+                            <span class="badge badge-outline">Outline</span>
+                            <span class="badge" style="background: var(--mantine-green-6); color: white;">Success</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Switch -->
+                <div class="component-card">
+                    <div class="component-header">Switch</div>
+                    <div class="component-body">
+                        <label class="switch active" onclick="this.classList.toggle('active')">
+                            <div class="switch-track"><div class="switch-thumb"></div></div>
+                            <span style="font-size: 0.875rem;">Enable notifications</span>
+                        </label>
+                        <div style="margin-top: 1rem;">
+                            <label class="switch" onclick="this.classList.toggle('active')">
+                                <div class="switch-track"><div class="switch-thumb"></div></div>
+                                <span style="font-size: 0.875rem;">Dark mode</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress -->
+                <div class="component-card">
+                    <div class="component-header">Progress & Ring</div>
+                    <div class="component-body">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.375rem;">
+                                <span>Uploading...</span><span>65%</span>
+                            </div>
+                            <div class="progress"><div class="progress-bar" style="width: 65%;"></div></div>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <div class="ring-progress">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <circle class="ring-bg" cx="50" cy="50" r="42"/>
+                                    <circle class="ring-fill" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="79"/>
+                                </svg>
+                                <div class="ring-text">70%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Timeline -->
+                <div class="component-card">
+                    <div class="component-header">Timeline</div>
+                    <div class="component-body">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-title">Application submitted</div>
+                                <div class="timeline-text">2 hours ago</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot" style="background: var(--mantine-green-6);"></div>
+                                <div class="timeline-title">Review complete</div>
+                                <div class="timeline-text">1 hour ago</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot" style="background: var(--mantine-gray-4);"></div>
+                                <div class="timeline-title">Final decision</div>
+                                <div class="timeline-text">Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--mantine-gray-9);">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: white;">Simple API</h2>
+                <p style="color: var(--mantine-gray-4);">Easy to learn, hard to forget</p>
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> { Button, Group } <span class="code-keyword">from</span> <span class="code-string">'@mantine/core'</span>;
+
+<span class="code-keyword">function</span> <span class="code-func">Demo</span>() {
+  <span class="code-keyword">return</span> (
+    &lt;<span class="code-func">Group</span> <span class="code-func">justify</span>=<span class="code-string">"center"</span>&gt;
+      &lt;<span class="code-func">Button</span> <span class="code-func">variant</span>=<span class="code-string">"filled"</span>&gt;Filled&lt;/<span class="code-func">Button</span>&gt;
+      &lt;<span class="code-func">Button</span> <span class="code-func">variant</span>=<span class="code-string">"light"</span>&gt;Light&lt;/<span class="code-func">Button</span>&gt;
+      &lt;<span class="code-func">Button</span> <span class="code-func">variant</span>=<span class="code-string">"outline"</span>&gt;Outline&lt;/<span class="code-func">Button</span>&gt;
+    &lt;/<span class="code-func">Group</span>&gt;
+  );
+}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Mantine — React components library with focus on usability and accessibility</p>
+        </div>
+    </footer>
+</body>
+</html>

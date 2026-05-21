@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility (A11y) Showcase | DesignSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-teal: #14b8a6;
+            --accent-teal-light: #5eead4;
+            --accent-teal-dark: #0d9488;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --focus-ring: rgba(20, 184, 166, 0.5);
+            --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--bg-tertiary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-teal-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* WCAG Badge */
+        .wcag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(20, 184, 166, 0.15);
+            border: 1px solid var(--accent-teal);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--accent-teal-light);
+            margin-top: 1.5rem;
+            animation: slide-up 0.6s ease-out;
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 4rem;
+            animation: fade-in 0.8s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-teal-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        /* Contrast Checker Tool */
+        .contrast-tool {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .color-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .color-field label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 0.5rem;
+            border: 2px solid var(--bg-tertiary);
+            transition: border-color var(--transition-base);
+        }
+
+        .color-input-wrapper:focus-within {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .color-text {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .preview-box {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all var(--transition-slow);
+        }
+
+        .preview-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all var(--transition-slow);
+        }
+
+        .preview-subtext {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .contrast-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-card {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 2px solid var(--bg-tertiary);
+            transition: all var(--transition-base);
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-teal);
+        }
+
+        .result-card.compliant {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .result-card.non-compliant {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-card.compliant .result-value {
+            color: var(--success);
+        }
+
+        .result-card.non-compliant .result-value {
+            color: var(--error);
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Focus States Demo */
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .focus-demo-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .focus-demo-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .focus-examples {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-teal);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-teal-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 3px solid var(--accent-teal-light);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-secondary);
+        }
+
+        .btn-secondary:focus-visible {
+            outline: 3px solid var(--text-secondary);
+            outline-offset: 2px;
+        }
+
+        /* Link Styles */
+        .link-demo {
+            color: var(--accent-teal-light);
+            text-decoration: none;
+            position: relative;
+            padding: 0.25rem 0;
+        }
+
+        .link-demo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal-light);
+            transition: width var(--transition-base);
+        }
+
+        .link-demo:hover::after {
+            width: 100%;
+        }
+
+        .link-demo:focus-visible {
+            outline: 2px solid var(--accent-teal);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        /* Input Styles */
+        .input-demo {
+            background: var(--bg-primary);
+            border: 2px solid var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all var(--transition-base);
+        }
+
+        .input-demo:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+            outline: none;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-teal);
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:focus-visible {
+            outline: 3px solid var(--accent-teal);
+            outline-offset: 2px;
+        }
+
+        /* Screen Reader Section */
+        .sr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sr-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--bg-tertiary);
+            transition: all var(--transition-base);
+        }
+
+        .sr-card:hover {
+            border-color: var(--accent-teal);
+            transform: translateY(-3px);
+        }
+
+        .sr-card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(20, 184, 166, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .sr-card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--accent-teal);
+        }
+
+        .sr-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .sr-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            border-left: 3px solid var(--accent-teal);
+        }
+
+        .code-block code {
+            color: var(--accent-teal-light);
+        }
+
+        /* Keyboard Navigation */
+        .keyboard-demo {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .key-nav-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .key-row {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .key {
+            min-width: 48px;
+            height: 48px;
+            background: linear-gradient(180deg, var(--bg-tertiary) 0%, var(--bg-primary) 100%);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            box-shadow: 0 4px 0 var(--bg-primary), 0 5px 10px rgba(0,0,0,0.3);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            padding: 0 0.75rem;
+        }
+
+        .key:hover {
+            background: linear-gradient(180deg, var(--accent-teal-dark) 0%, var(--accent-teal) 100%);
+            border-color: var(--accent-teal);
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--bg-primary), 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .key:focus-visible {
+            outline: 3px solid var(--accent-teal-light);
+            outline-offset: 2px;
+        }
+
+        .key.wide {
+            min-width: 80px;
+        }
+
+        .key.extra-wide {
+            min-width: 200px;
+        }
+
+        .key-nav-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .nav-pattern {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .nav-pattern-key {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .nav-pattern-key .key {
+            min-width: 36px;
+            height: 36px;
+            font-size: 0.75rem;
+        }
+
+        .nav-pattern-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* WCAG Checklist */
+        .checklist {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .checklist-category h4 {
+            color: var(--accent-teal-light);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item:hover {
+            color: var(--accent-teal-light);
+        }
+
+        .checklist-item input {
+            margin-top: 0.2rem;
+            accent-color: var(--accent-teal);
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .checklist-item.checked label {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        /* Skip Link Demo */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--accent-teal);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 100;
+            transition: top var(--transition-base);
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .contrast-tool,
+            .keyboard-demo,
+            .checklist {
+                padding: 1.5rem;
+            }
+
+            .key.extra-wide {
+                min-width: 140px;
+            }
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            :root {
+                --accent-teal: #00ffff;
+                --accent-teal-light: #ffffff;
+                --text-secondary: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="header">
+        <div class="header-content">
+            <h1>Web Accessibility (A11y)</h1>
+            <p>Building inclusive experiences that work for everyone, regardless of ability or device</p>
+            <div class="wcag-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                WCAG 2.1 AA Compliant
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="container">
+        <!-- Contrast Ratio Checker -->
+        <section class="section" aria-labelledby="contrast-heading">
+            <h2 id="contrast-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20" fill="currentColor" opacity="0.3"/>
+                </svg>
+                Contrast Ratio Checker
+            </h2>
+            <p class="section-description">
+                WCAG requires a minimum contrast ratio of 4.5:1 for normal text and 3:1 for large text. 
+                Use this tool to test color combinations.
+            </p>
+            
+            <div class="contrast-tool">
+                <div class="color-inputs">
+                    <div class="color-field">
+                        <label for="text-color">Text Color</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="text-color" class="color-picker" value="#f8fafc">
+                            <input type="text" class="color-text" value="#f8fafc" readonly>
+                        </div>
+                    </div>
+                    <div class="color-field">
+                        <label for="bg-color">Background Color</label>
+                        <div class="color-input-wrapper">
+                            <input type="color" id="bg-color" class="color-picker" value="#0f172a">
+                            <input type="text" class="color-text" value="#0f172a" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-box" id="preview-box">
+                    <div class="preview-text">Sample Text</div>
+                    <div class="preview-subtext">Secondary information</div>
+                </div>
+
+                <div class="contrast-results">
+                    <div class="result-card" id="ratio-card">
+                        <div class="result-value" id="contrast-ratio">14.2</div>
+                        <div class="result-label">Contrast Ratio</div>
+                    </div>
+                    <div class="result-card" id="aa-normal">
+                        <div class="result-value">✓</div>
+                        <div class="result-label">AA Normal</div>
+                    </div>
+                    <div class="result-card" id="aa-large">
+                        <div class="result-value">✓</div>
+                        <div class="result-label">AA Large</div>
+                    </div>
+                    <div class="result-card" id="aaa-normal">
+                        <div class="result-value">✓</div>
+                        <div class="result-label">AAA Normal</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus States Demo -->
+        <section class="section" aria-labelledby="focus-heading">
+            <h2 id="focus-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <rect x="7" y="7" width="10" height="10" rx="1"/>
+                </svg>
+                Focus States
+            </h2>
+            <p class="section-description">
+                Clear focus indicators are essential for keyboard navigation. 
+                Every interactive element must have a visible focus state.
+            </p>
+
+            <div class="focus-grid">
+                <div class="focus-demo-card">
+                    <div class="focus-demo-title">Buttons</div>
+                    <div class="focus-examples">
+                        <button class="btn btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                            Primary Action
+                        </button>
+                        <button class="btn btn-secondary">Secondary Action</button>
+                    </div>
+                </div>
+
+                <div class="focus-demo-card">
+                    <div class="focus-demo-title">Links</div>
+                    <div class="focus-examples">
+                        <p><a href="#" class="link-demo">Learn more about accessibility</a></p>
+                        <p><a href="#" class="link-demo">View documentation</a></p>
+                        <p><a href="#" class="link-demo">Contact support</a></p>
+                    </div>
+                </div>
+
+                <div class="focus-demo-card">
+                    <div class="focus-demo-title">Form Inputs</div>
+                    <div class="focus-examples">
+                        <input type="text" class="input-demo" placeholder="Enter your name" aria-label="Name input">
+                        <input type="email" class="input-demo" placeholder="Enter your email" aria-label="Email input">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" checked>
+                            <span>Subscribe to newsletter</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen Reader Considerations -->
+        <section class="section" aria-labelledby="sr-heading">
+            <h2 id="sr-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="22"/>
+                </svg>
+                Screen Reader Support
+            </h2>
+            <p class="section-description">
+                Screen readers rely on semantic HTML and ARIA attributes to convey meaning. 
+                Proper markup ensures content is accessible to blind and low-vision users.
+            </p>
+
+            <div class="sr-grid">
+                <div class="sr-card">
+                    <div class="sr-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 9h16M4 15h16"/>
+                        </svg>
+                    </div>
+                    <h3>Semantic Headings</h3>
+                    <p>Use heading levels (h1-h6) to create a logical document outline. Don't skip levels.</p>
+                    <div class="code-block">
+                        <code>&lt;h1&gt;</code> Page Title<br>
+                        <code>&nbsp;&nbsp;&lt;h2&gt;</code> Section<br>
+                        <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;</code> Subsection
+                    </div>
+                </div>
+
+                <div class="sr-card">
+                    <div class="sr-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M3 9h18"/>
+                        </svg>
+                    </div>
+                    <h3>ARIA Labels</h3>
+                    <p>Provide accessible names for elements without visible text.</p>
+                    <div class="code-block">
+                        &lt;button <code>aria-label</code>="Close menu"&gt;<br>
+                        &nbsp;&nbsp;&lt;XIcon /&gt;<br>
+                        &lt;/button&gt;
+                    </div>
+                </div>
+
+                <div class="sr-card">
+                    <div class="sr-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                            <polyline points="2 17 12 22 22 17"/>
+                            <polyline points="2 12 12 17 22 12"/>
+                        </svg>
+                    </div>
+                    <h3>Live Regions</h3>
+                    <p>Announce dynamic content changes to screen reader users.</p>
+                    <div class="code-block">
+                        &lt;div <code>role="status"</code> aria-live="polite"&gt;<br>
+                        &nbsp;&nbsp;Changes saved successfully<br>
+                        &lt;/div&gt;
+                    </div>
+                </div>
+
+                <div class="sr-card">
+                    <div class="sr-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10"/>
+                        </svg>
+                    </div>
+                    <h3>Landmarks</h3>
+                    <p>HTML5 landmarks help users navigate complex pages efficiently.</p>
+                    <div class="code-block">
+                        &lt;<code>header</code>&gt;, &lt;<code>nav</code>&gt;, &lt;<code>main</code>&gt;<br>
+                        &lt;<code>aside</code>&gt;, &lt;<code>footer</code>&gt;, &lt;<code>search</code>&gt;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Keyboard Navigation -->
+        <section class="section" aria-labelledby="keyboard-heading">
+            <h2 id="keyboard-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/>
+                </svg>
+                Keyboard Navigation
+            </h2>
+            <p class="section-description">
+                Every interactive element must be operable with a keyboard alone. 
+                Tab order should follow the visual flow of the page.
+            </p>
+
+            <div class="keyboard-demo">
+                <div class="key-nav-visual">
+                    <div class="key-row">
+                        <kbd class="key">Esc</kbd>
+                        <kbd class="key">Tab</kbd>
+                        <kbd class="key wide">Enter</kbd>
+                        <kbd class="key">Space</kbd>
+                    </div>
+                    <div class="key-row">
+                        <kbd class="key">←</kbd>
+                        <kbd class="key">↑</kbd>
+                        <kbd class="key">↓</kbd>
+                        <kbd class="key">→</kbd>
+                    </div>
+                    <div class="key-row">
+                        <kbd class="key extra-wide">Shift + Tab (Previous)</kbd>
+                    </div>
+                </div>
+
+                <div class="key-nav-info">
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">Tab</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Move to next focusable element</div>
+                    </div>
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">Shift</kbd>
+                            <kbd class="key">Tab</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Move to previous focusable element</div>
+                    </div>
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">Enter</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Activate links and buttons</div>
+                    </div>
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">Space</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Toggle checkboxes and buttons</div>
+                    </div>
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">Esc</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Close modals and menus</div>
+                    </div>
+                    <div class="nav-pattern">
+                        <div class="nav-pattern-key">
+                            <kbd class="key">↑</kbd>
+                            <kbd class="key">↓</kbd>
+                        </div>
+                        <div class="nav-pattern-desc">Navigate within groups</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WCAG Checklist -->
+        <section class="section" aria-labelledby="checklist-heading">
+            <h2 id="checklist-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                WCAG 2.1 AA Checklist
+            </h2>
+            <p class="section-description">
+                Essential checkpoints for meeting WCAG 2.1 Level AA compliance. 
+                Click items to mark them as complete.
+            </p>
+
+            <div class="checklist">
+                <div class="checklist-grid">
+                    <div class="checklist-category">
+                        <h4>Perceivable</h4>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Text has minimum 4.5:1 contrast ratio</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Large text has 3:1 contrast ratio</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Images have descriptive alt text</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Video has captions and transcripts</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Content is not color-dependent</span>
+                        </label>
+                    </div>
+
+                    <div class="checklist-category">
+                        <h4>Operable</h4>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>All functionality works with keyboard</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Focus indicators are visible</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>No keyboard traps</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Skip links are provided</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Page has meaningful title</span>
+                        </label>
+                    </div>
+
+                    <div class="checklist-category">
+                        <h4>Understandable</h4>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Language is identified in HTML</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Form labels are associated</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Error messages are descriptive</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Navigation is consistent</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Input errors can be corrected</span>
+                        </label>
+                    </div>
+
+                    <div class="checklist-category">
+                        <h4>Robust</h4>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Valid HTML markup</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>ARIA roles are used correctly</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Custom controls are accessible</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox" checked>
+                            <span>Name, Role, Value are exposed</span>
+                        </label>
+                        <label class="checklist-item">
+                            <input type="checkbox">
+                            <span>Status messages are announced</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Contrast Ratio Calculator
+        function getLuminance(r, g, b) {
+            const [rs, gs, bs] = [r, g, b].map(val => {
+                val = val / 255;
+                return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function calculateContrast(hex1, hex2) {
+            const rgb1 = hexToRgb(hex1);
+            const rgb2 = hexToRgb(hex2);
+            
+            if (!rgb1 || !rgb2) return 1;
+            
+            const lum1 = getLuminance(rgb1.r, rgb1.g, rgb1.b);
+            const lum2 = getLuminance(rgb2.r, rgb2.g, rgb2.b);
+            
+            const brightest = Math.max(lum1, lum2);
+            const darkest = Math.min(lum1, lum2);
+            
+            return (brightest + 0.05) / (darkest + 0.05);
+        }
+
+        function updateContrast() {
+            const textColor = document.getElementById('text-color').value;
+            const bgColor = document.getElementById('bg-color').value;
+            
+            // Update text displays
+            document.querySelector('#text-color + .color-text').value = textColor;
+            document.querySelector('#bg-color + .color-text').value = bgColor;
+            
+            // Update preview
+            const previewBox = document.getElementById('preview-box');
+            const previewText = previewBox.querySelector('.preview-text');
+            const previewSubtext = previewBox.querySelector('.preview-subtext');
+            
+            previewBox.style.backgroundColor = bgColor;
+            previewText.style.color = textColor;
+            previewSubtext.style.color = textColor;
+            
+            // Calculate contrast
+            const ratio = calculateContrast(textColor, bgColor);
+            document.getElementById('contrast-ratio').textContent = ratio.toFixed(2);
+            
+            // Update compliance badges
+            updateBadge('aa-normal', ratio >= 4.5);
+            updateBadge('aa-large', ratio >= 3);
+            updateBadge('aaa-normal', ratio >= 7);
+        }
+
+        function updateBadge(id, compliant) {
+            const card = document.getElementById(id);
+            const value = card.querySelector('.result-value');
+            
+            if (compliant) {
+                card.classList.add('compliant');
+                card.classList.remove('non-compliant');
+                value.textContent = '✓';
+            } else {
+                card.classList.add('non-compliant');
+                card.classList.remove('compliant');
+                value.textContent = '✗';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('text-color').addEventListener('input', updateContrast);
+        document.getElementById('bg-color').addEventListener('input', updateContrast);
+
+        // Checklist interactivity
+        document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.closest('.checklist-item').classList.toggle('checked', this.checked);
+            });
+        });
+
+        // Initialize
+        updateContrast();
+    </script>
+</body>
+</html>

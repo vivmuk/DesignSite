@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ark UI Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --ark-bg: #ffffff; --ark-text: #18181b; --ark-muted: #71717a;
+            --ark-border: #e4e4e7; --ark-surface: #fafafa; --ark-accent: #18181b;
+            --ark-primary: #3f3f46; --ark-secondary: #71717a;
+        }
+        html { font-family: 'Inter', system-ui, sans-serif; }
+        body { background: var(--ark-bg); color: var(--ark-text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        /* Nav */
+        nav { background: white; border-bottom: 1px solid var(--ark-border); position: sticky; top: 0; z-index: 50; }
+        .nav-inner { display: flex; align-items: center; height: 64px; gap: 2rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.25rem; }
+        .logo-icon { width: 32px; height: 32px; background: var(--ark-text); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; }
+        .nav-links { display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
+        .nav-link { color: var(--ark-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+        .nav-link:hover { color: var(--ark-text); }
+        .nav-cta { background: var(--ark-text); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 500; text-decoration: none; }
+        /* Hero */
+        .hero { padding: 5rem 0; text-align: center; }
+        .hero h1 { font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: 1.125rem; color: var(--ark-muted); max-width: 560px; margin: 0 auto 2rem; }
+        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; border-radius: 6px; font-size: 0.9375rem; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-primary { background: var(--ark-text); color: white; }
+        .btn-primary:hover { background: var(--ark-primary); }
+        .btn-secondary { background: var(--ark-surface); color: var(--ark-text); border: 1px solid var(--ark-border); }
+        .btn-secondary:hover { border-color: var(--ark-muted); }
+        /* Sections */
+        section { padding: 4rem 0; border-bottom: 1px solid var(--ark-border); }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-header h2 { font-size: 1.875rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--ark-muted); font-size: 1rem; }
+        /* Feature Grid */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .feature-card { padding: 1.5rem; border: 1px solid var(--ark-border); border-radius: 8px; transition: all 0.2s; }
+        .feature-card:hover { border-color: var(--ark-muted); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .feature-icon { width: 40px; height: 40px; background: var(--ark-surface); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--ark-text); }
+        .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.875rem; color: var(--ark-muted); }
+        /* Component Showcase */
+        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .component-card { border: 1px solid var(--ark-border); border-radius: 8px; overflow: hidden; }
+        .component-header { padding: 0.875rem 1rem; background: var(--ark-surface); border-bottom: 1px solid var(--ark-border); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ark-muted); }
+        .component-body { padding: 1.25rem; }
+        /* Accordion */
+        .ark-accordion { border: 1px solid var(--ark-border); border-radius: 6px; overflow: hidden; }
+        .ark-accordion-item { border-bottom: 1px solid var(--ark-border); }
+        .ark-accordion-item:last-child { border-bottom: none; }
+        .ark-accordion-trigger { width: 100%; padding: 0.875rem 1rem; display: flex; justify-content: space-between; align-items: center; background: none; border: none; font-size: 0.9375rem; cursor: pointer; }
+        .ark-accordion-trigger:hover { background: var(--ark-surface); }
+        .ark-accordion-icon { transition: transform 0.2s; }
+        .ark-accordion-item.open .ark-accordion-icon { transform: rotate(180deg); }
+        .ark-accordion-content { padding: 0 1rem 1rem; font-size: 0.875rem; color: var(--ark-muted); display: none; }
+        .ark-accordion-item.open .ark-accordion-content { display: block; }
+        /* Avatar */
+        .ark-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 0.875rem; color: white; }
+        .ark-avatar-group { display: flex; }
+        .ark-avatar-group .ark-avatar { margin-left: -8px; border: 2px solid white; }
+        .ark-avatar-group .ark-avatar:first-child { margin-left: 0; }
+        /* Carousel */
+        .ark-carousel { position: relative; overflow: hidden; border-radius: 6px; }
+        .ark-carousel-track { display: flex; transition: transform 0.3s; }
+        .ark-carousel-slide { flex: 0 0 100%; height: 120px; background: var(--ark-surface); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; color: var(--ark-muted); }
+        .ark-carousel-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; background: white; border: 1px solid var(--ark-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .ark-carousel-nav:hover { background: var(--ark-surface); }
+        .ark-carousel-prev { left: 0.5rem; }
+        .ark-carousel-next { right: 0.5rem; }
+        /* Checkbox */
+        .ark-checkbox-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; cursor: pointer; }
+        .ark-checkbox { width: 16px; height: 16px; border: 1px solid var(--ark-border); appearance: none; position: relative; cursor: pointer; }
+        .ark-checkbox:checked { background: var(--ark-text); border-color: var(--ark-text); }
+        .ark-checkbox:checked::after { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+        /* Collapsible */
+        .ark-collapsible { border: 1px solid var(--ark-border); border-radius: 6px; }
+        .ark-collapsible-trigger { width: 100%; padding: 0.875rem 1rem; display: flex; align-items: center; gap: 0.75rem; background: var(--ark-surface); border: none; font-size: 0.9375rem; cursor: pointer; border-radius: 6px; }
+        .ark-collapsible-icon { transition: transform 0.2s; }
+        .ark-collapsible.open .ark-collapsible-icon { transform: rotate(90deg); }
+        .ark-collapsible-content { padding: 1rem; font-size: 0.875rem; color: var(--ark-muted); display: none; }
+        .ark-collapsible.open .ark-collapsible-content { display: block; }
+        /* Dialog */
+        .ark-dialog-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+        .ark-dialog { background: white; border-radius: 8px; padding: 1.5rem; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .ark-dialog-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .ark-dialog-text { font-size: 0.875rem; color: var(--ark-muted); margin-bottom: 1.5rem; }
+        /* Editable */
+        .ark-editable { border: 1px solid var(--ark-border); border-radius: 6px; padding: 0.625rem 0.875rem; font-size: 0.875rem; min-height: 40px; }
+        /* Hover Card */
+        .ark-hover-card { position: relative; display: inline-block; }
+        .ark-hover-trigger { color: var(--ark-text); text-decoration: underline; cursor: help; }
+        .ark-hover-content { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 0.5rem; background: var(--ark-text); color: white; padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.75rem; white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.2s; }
+        .ark-hover-card:hover .ark-hover-content { opacity: 1; visibility: visible; }
+        /* Menu */
+        .ark-menu-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 0.875rem; background: white; border: 1px solid var(--ark-border); border-radius: 6px; font-size: 0.875rem; cursor: pointer; }
+        .ark-menu { margin-top: 0.25rem; border: 1px solid var(--ark-border); border-radius: 6px; overflow: hidden; }
+        .ark-menu-item { padding: 0.625rem 0.875rem; font-size: 0.875rem; cursor: pointer; transition: background 0.15s; }
+        .ark-menu-item:hover { background: var(--ark-surface); }
+        /* Number Input */
+        .ark-number { display: flex; align-items: center; border: 1px solid var(--ark-border); border-radius: 6px; overflow: hidden; }
+        .ark-number-btn { width: 36px; height: 36px; background: var(--ark-surface); border: none; font-size: 1rem; cursor: pointer; }
+        .ark-number-btn:hover { background: var(--ark-border); }
+        .ark-number-input { width: 60px; text-align: center; border: none; font-size: 0.875rem; }
+        /* Pagination */
+        .ark-pagination { display: flex; gap: 0.25rem; }
+        .ark-page { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.875rem; cursor: pointer; border: none; background: none; }
+        .ark-page:hover { background: var(--ark-surface); }
+        .ark-page.active { background: var(--ark-text); color: white; }
+        /* Pin Input */
+        .ark-pin { display: flex; gap: 0.5rem; }
+        .ark-pin-input { width: 40px; height: 48px; border: 1px solid var(--ark-border); border-radius: 6px; text-align: center; font-size: 1.25rem; }
+        .ark-pin-input:focus { outline: none; border-color: var(--ark-text); }
+        /* Popover */
+        .ark-popover { position: relative; display: inline-block; }
+        .ark-popover-trigger { background: var(--ark-text); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer; }
+        .ark-popover-content { position: absolute; top: 100%; left: 0; margin-top: 0.5rem; background: white; border: 1px solid var(--ark-border); border-radius: 6px; padding: 1rem; min-width: 200px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 50; }
+        /* Progress */
+        .ark-progress-label { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.5rem; }
+        .ark-progress { height: 8px; background: var(--ark-border); border-radius: 4px; overflow: hidden; }
+        .ark-progress-fill { height: 100%; background: var(--ark-text); border-radius: 4px; transition: width 0.3s; }
+        /* Radio */
+        .ark-radio-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; cursor: pointer; }
+        .ark-radio { width: 16px; height: 16px; border: 1px solid var(--ark-border); border-radius: 50%; appearance: none; position: relative; }
+        .ark-radio:checked { border-color: var(--ark-text); }
+        .ark-radio:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: var(--ark-text); border-radius: 50%; }
+        /* Select */
+        .ark-select { width: 100%; padding: 0.625rem 2rem 0.625rem 0.875rem; border: 1px solid var(--ark-border); border-radius: 6px; font-size: 0.875rem; appearance: none; background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2371717a' d='M6 8L1 3h10z'/%3E%3C/svg%3E") right 0.75rem center no-repeat; }
+        /* Slider */
+        .ark-slider { -webkit-appearance: none; width: 100%; height: 4px; background: var(--ark-border); border-radius: 2px; outline: none; }
+        .ark-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--ark-text); border-radius: 50%; cursor: pointer; }
+        /* Splitter */
+        .ark-splitter { display: flex; height: 100px; border: 1px solid var(--ark-border); border-radius: 6px; overflow: hidden; }
+        .ark-splitter-panel { flex: 1; padding: 1rem; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; }
+        .ark-splitter-divider { width: 4px; background: var(--ark-border); cursor: col-resize; }
+        /* Switch */
+        .ark-switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .ark-switch-track { width: 44px; height: 24px; background: var(--ark-border); border-radius: 12px; position: relative; transition: background 0.2s; }
+        .ark-switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .ark-switch.active .ark-switch-track { background: var(--ark-text); }
+        .ark-switch.active .ark-switch-thumb { transform: translateX(20px); }
+        /* Tabs */
+        .ark-tabs { display: flex; border-bottom: 1px solid var(--ark-border); gap: 0.25rem; }
+        .ark-tab { padding: 0.625rem 1rem; font-size: 0.875rem; font-weight: 500; color: var(--ark-muted); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
+        .ark-tab:hover { color: var(--ark-text); }
+        .ark-tab.active { color: var(--ark-text); border-bottom-color: var(--ark-text); }
+        /* Tags Input */
+        .ark-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.5rem; border: 1px solid var(--ark-border); border-radius: 6px; }
+        .ark-tag { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.5rem; background: var(--ark-surface); border-radius: 4px; font-size: 0.75rem; }
+        .ark-tag-close { cursor: pointer; opacity: 0.5; }
+        .ark-tag-close:hover { opacity: 1; }
+        /* Toast */
+        .ark-toast { padding: 1rem; background: var(--ark-text); color: white; border-radius: 6px; font-size: 0.875rem; display: flex; align-items: center; gap: 0.75rem; }
+        /* Toggle Group */
+        .ark-toggle { display: inline-flex; border: 1px solid var(--ark-border); border-radius: 6px; overflow: hidden; }
+        .ark-toggle-btn { padding: 0.5rem 1rem; background: white; border: none; border-right: 1px solid var(--ark-border); font-size: 0.875rem; cursor: pointer; }
+        .ark-toggle-btn:last-child { border-right: none; }
+        .ark-toggle-btn:hover { background: var(--ark-surface); }
+        .ark-toggle-btn.active { background: var(--ark-text); color: white; }
+        /* Tooltip */
+        .ark-tooltip { position: relative; display: inline-block; }
+        .ark-tooltip-text { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding: 0.375rem 0.75rem; background: var(--ark-text); color: white; font-size: 0.75rem; border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.2s; margin-bottom: 6px; }
+        .ark-tooltip:hover .ark-tooltip-text { opacity: 1; visibility: visible; }
+        /* Code */
+        .code-block { background: var(--ark-surface); border: 1px solid var(--ark-border); border-radius: 8px; padding: 1.25rem; font-family: 'Monaco', monospace; font-size: 0.8125rem; overflow-x: auto; line-height: 1.6; }
+        .code-keyword { color: #7c3aed; }
+        .code-string { color: #059669; }
+        .code-func { color: #0369a1; }
+        /* Footer */
+        footer { padding: 3rem 0; text-align: center; }
+        footer p { color: var(--ark-muted); font-size: 0.875rem; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    Ark UI
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Documentation</a>
+                    <a href="#" class="nav-link">Components</a>
+                    <a href="#" class="nav-link">Recipes</a>
+                    <a href="#" class="nav-cta">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Build Accessible,<br>Composable UIs</h1>
+            <p class="hero-subtitle">A headless UI library for building reusable, accessible component libraries. Built on top of Zag.js state machines.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                    Get Started
+                </a>
+                <a href="#" class="btn btn-secondary">View Components</a>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Key Features</h2>
+                <p>Everything you need to build accessible, composable UIs</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <h3>Accessible First</h3>
+                    <p>All components follow WAI-ARIA guidelines with proper keyboard navigation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+                    <h3>State Machine Powered</h3>
+                    <p>Built on Zag.js state machines for predictable, debuggable component behavior.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+                    <h3>Framework Agnostic</h3>
+                    <p>Use with React, Vue, Solid, or any framework that supports web components.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M4 17v3h3M20 7V4h-3M20 17v3h-3M9 9h6v6H9z"/></svg></div>
+                    <h3>Type Safe</h3>
+                    <p>Fully typed components and APIs for the best developer experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div>
+                    <h3>Style Agnostic</h3>
+                    <p>Bring your own styles. Works with CSS Modules, Tailwind, or any styling solution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                    <h3>40+ Components</h3>
+                    <p>A comprehensive set of UI primitives for building modern applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Component Gallery</h2>
+                <p>40+ accessible, composable UI primitives</p>
+            </div>
+            <div class="component-grid">
+                <!-- Accordion -->
+                <div class="component-card">
+                    <div class="component-header">Accordion</div>
+                    <div class="component-body" style="padding: 0;">
+                        <div class="ark-accordion">
+                            <div class="ark-accordion-item open">
+                                <button class="ark-accordion-trigger" onclick="this.parentElement.classList.toggle('open')">
+                                    <span>What is Ark UI?</span>
+                                    <svg class="ark-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                                </button>
+                                <div class="ark-accordion-content">
+                                    A headless UI library for building accessible, reusable component libraries.
+                                </div>
+                            </div>
+                            <div class="ark-accordion-item">
+                                <button class="ark-accordion-trigger" onclick="this.parentElement.classList.toggle('open')">
+                                    <span>Getting Started</span>
+                                    <svg class="ark-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                                </button>
+                                <div class="ark-accordion-content">
+                                    Install the package and start using the components in your project.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avatar -->
+                <div class="component-card">
+                    <div class="component-header">Avatar</div>
+                    <div class="component-body">
+                        <div class="ark-avatar-group">
+                            <div class="ark-avatar" style="background: #18181b;">JD</div>
+                            <div class="ark-avatar" style="background: #3f3f46;">AK</div>
+                            <div class="ark-avatar" style="background: #52525b;">+5</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkbox -->
+                <div class="component-card">
+                    <div class="component-header">Checkbox</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label class="ark-checkbox-label"><input type="checkbox" class="ark-checkbox" checked> Accept terms</label>
+                            <label class="ark-checkbox-label"><input type="checkbox" class="ark-checkbox"> Enable notifications</label>
+                            <label class="ark-checkbox-label"><input type="checkbox" class="ark-checkbox"> Subscribe to newsletter</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dialog -->
+                <div class="component-card">
+                    <div class="component-header">Dialog</div>
+                    <div class="component-body" style="padding: 2rem; background: rgba(0,0,0,0.5);">
+                        <div class="ark-dialog" style="margin: 0 auto;">
+                            <div class="ark-dialog-title">Delete Account</div>
+                            <div class="ark-dialog-text">Are you sure you want to delete your account?</div>
+                            <div class="ark-dialog-actions">
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem;">Cancel</button>
+                                <button class="btn btn-primary" style="padding: 0.5rem 1rem; background: #dc2626;">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div class="component-card">
+                    <div class="component-header">Menu</div>
+                    <div class="component-body">
+                        <button class="ark-menu-btn">
+                            <span>My Account</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="ark-menu">
+                            <div class="ark-menu-item">Profile</div>
+                            <div class="ark-menu-item">Settings</div>
+                            <div class="ark-menu-item">Logout</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Number Input -->
+                <div class="component-card">
+                    <div class="component-header">Number Input</div>
+                    <div class="component-body">
+                        <div class="ark-number">
+                            <button class="ark-number-btn">−</button>
+                            <input type="text" class="ark-number-input" value="1">
+                            <button class="ark-number-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="component-card">
+                    <div class="component-header">Pagination</div>
+                    <div class="component-body">
+                        <div class="ark-pagination">
+                            <button class="ark-page">‹</button>
+                            <button class="ark-page active">1</button>
+                            <button class="ark-page">2</button>
+                            <button class="ark-page">3</button>
+                            <button class="ark-page">…</button>
+                            <button class="ark-page">8</button>
+                            <button class="ark-page">›</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pin Input -->
+                <div class="component-card">
+                    <div class="component-header">Pin Input</div>
+                    <div class="component-body">
+                        <div class="ark-pin">
+                            <input type="text" class="ark-pin-input" value="1" maxlength="1">
+                            <input type="text" class="ark-pin-input" value="2" maxlength="1">
+                            <input type="text" class="ark-pin-input" value="3" maxlength="1">
+                            <input type="text" class="ark-pin-input" maxlength="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="component-card">
+                    <div class="component-header">Progress</div>
+                    <div class="component-body">
+                        <div style="margin-bottom: 1rem;">
+                            <div class="ark-progress-label"><span>Uploading</span><span>70%</span></div>
+                            <div class="ark-progress"><div class="ark-progress-fill" style="width: 70%;"></div></div>
+                        </div>
+                        <div>
+                            <div class="ark-progress-label"><span>Processing</span><span>45%</span></div>
+                            <div class="ark-progress"><div class="ark-progress-fill" style="width: 45%; background: #3f3f46;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Radio Group -->
+                <div class="component-card">
+                    <div class="component-header">Radio Group</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label class="ark-radio-label"><input type="radio" name="plan" class="ark-radio" checked> Basic</label>
+                            <label class="ark-radio-label"><input type="radio" name="plan" class="ark-radio"> Pro</label>
+                            <label class="ark-radio-label"><input type="radio" name="plan" class="ark-radio"> Enterprise</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Select -->
+                <div class="component-card">
+                    <div class="component-header">Select</div>
+                    <div class="component-body">
+                        <select class="ark-select">
+                            <option>Select option</option>
+                            <option selected>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Slider -->
+                <div class="component-card">
+                    <div class="component-header">Slider</div>
+                    <div class="component-body">
+                        <input type="range" min="0" max="100" value="50" class="ark-slider">
+                    </div>
+                </div>
+
+                <!-- Switch -->
+                <div class="component-card">
+                    <div class="component-header">Switch</div>
+                    <div class="component-body">
+                        <label class="ark-switch active" onclick="this.classList.toggle('active')">
+                            <div class="ark-switch-track"><div class="ark-switch-thumb"></div></div>
+                            <span style="font-size: 0.875rem;">Airplane Mode</span>
+                        </label>
+                        <label class="ark-switch" onclick="this.classList.toggle('active')" style="margin-top: 1rem;">
+                            <div class="ark-switch-track"><div class="ark-switch-thumb"></div></div>
+                            <span style="font-size: 0.875rem;">Wi-Fi</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="component-card">
+                    <div class="component-header">Tabs</div>
+                    <div class="component-body">
+                        <div class="ark-tabs">
+                            <button class="ark-tab active">Overview</button>
+                            <button class="ark-tab">Features</button>
+                            <button class="ark-tab">Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tags Input -->
+                <div class="component-card">
+                    <div class="component-header">Tags Input</div>
+                    <div class="component-body">
+                        <div class="ark-tags">
+                            <span class="ark-tag">React <span class="ark-tag-close">×</span></span>
+                            <span class="ark-tag">Vue <span class="ark-tag-close">×</span></span>
+                            <span class="ark-tag">Svelte <span class="ark-tag-close">×</span></span>
+                            <input type="text" placeholder="Add tag..." style="border: none; outline: none; font-size: 0.875rem; background: transparent; flex: 1;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toggle Group -->
+                <div class="component-card">
+                    <div class="component-header">Toggle Group</div>
+                    <div class="component-body">
+                        <div class="ark-toggle">
+                            <button class="ark-toggle-btn active">B</button>
+                            <button class="ark-toggle-btn">I</button>
+                            <button class="ark-toggle-btn">U</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple Usage</h2>
+                <p>Ark UI provides a simple, consistent API across all components</p>
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> { Accordion } <span class="code-keyword">from</span> <span class="code-string">'@ark-ui/react'</span>
+
+<span class="code-keyword">const</span> Basic = () =&gt; (
+  &lt;<span class="code-func">Accordion</span>&gt;
+    &lt;<span class="code-func">Accordion.Item</span> <span class="code-keyword">value</span>=<span class="code-string">"1"</span>&gt;
+      &lt;<span class="code-func">Accordion.ItemTrigger</span>&gt;What is Ark UI?&lt;/<span class="code-func">Accordion.ItemTrigger</span>&gt;
+      &lt;<span class="code-func">Accordion.ItemContent</span>&gt;
+        A headless UI library for building accessible, composable UIs.
+      &lt;/<span class="code-func">Accordion.ItemContent</span>&gt;
+    &lt;/<span class="code-func">Accordion.Item</span>&gt;
+  &lt;/<span class="code-func">Accordion</span>&gt;
+)
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Ark UI — Headless UI components powered by state machines</p>
+        </div>
+    </footer>
+</body>
+</html>

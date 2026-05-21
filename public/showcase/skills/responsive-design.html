@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design Showcase | DesignSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --bg-elevated: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-green: #10b981;
+            --device-mobile: #1e1e2e;
+            --device-tablet: #2d2d44;
+            --device-desktop: #3d3d5c;
+            --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--bg-tertiary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            animation: gradient-shift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 50%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #c4b5fd;
+            animation: fade-in-up 0.6s ease-out;
+        }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 5rem;
+            animation: fade-in 0.8s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+            color: var(--accent-cyan);
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 1.05rem;
+            max-width: 800px;
+        }
+
+        /* Device Mockups */
+        .device-showcase {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+            overflow: hidden;
+        }
+
+        .devices-grid {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem 0;
+        }
+
+        /* Phone Mockup */
+        .device-phone {
+            width: 200px;
+            height: 400px;
+            background: var(--device-mobile);
+            border-radius: 30px;
+            padding: 10px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            transition: transform var(--transition-slow);
+        }
+
+        .device-phone:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 20px;
+            background: #0f0f1a;
+            border-radius: 0 0 12px 12px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 22px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phone-content {
+            padding: 2.5rem 1rem 1rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .phone-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .phone-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        .phone-username {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .phone-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+
+        .phone-card-image {
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .phone-card-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .phone-card-subtitle {
+            font-size: 0.55rem;
+            color: var(--text-secondary);
+        }
+
+        .phone-nav {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-nav-item {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: var(--text-muted);
+        }
+
+        .phone-nav-item.active {
+            background: var(--accent-cyan);
+        }
+
+        /* Tablet Mockup */
+        .device-tablet {
+            width: 320px;
+            height: 440px;
+            background: var(--device-tablet);
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: float 3s ease-in-out infinite 0.5s;
+            transition: transform var(--transition-slow);
+        }
+
+        .device-tablet:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .tablet-camera {
+            position: absolute;
+            top: 50%;
+            left: 6px;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #1a1a2e;
+            border-radius: 50%;
+        }
+
+        .tablet-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .tablet-sidebar {
+            width: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .sidebar-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: var(--accent-purple);
+        }
+
+        .sidebar-icon:nth-child(2) { background: var(--accent-blue); }
+        .sidebar-icon:nth-child(3) { background: var(--accent-cyan); }
+        .sidebar-icon:nth-child(4) { background: var(--accent-pink); }
+
+        .tablet-main {
+            flex: 1;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .tablet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tablet-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tablet-action {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+        }
+
+        .tablet-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .tablet-item {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .tablet-item-visual {
+            flex: 1;
+            border-radius: 4px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .tablet-item:nth-child(2) .tablet-item-visual {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+        }
+
+        .tablet-item:nth-child(3) .tablet-item-visual {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+        }
+
+        .tablet-item:nth-child(4) .tablet-item-visual {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        .tablet-item-text {
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 2px;
+            width: 70%;
+        }
+
+        /* Desktop Mockup */
+        .device-desktop {
+            width: 100%;
+            max-width: 700px;
+            height: 450px;
+            background: var(--device-desktop);
+            border-radius: 12px 12px 8px 8px;
+            padding: 8px 8px 0;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: float 3s ease-in-out infinite 1s;
+            transition: transform var(--transition-slow);
+        }
+
+        .device-desktop:hover {
+            transform: translateY(-10px) scale(1.01);
+        }
+
+        .desktop-stand {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: var(--bg-tertiary);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .desktop-stand::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 10px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+        }
+
+        .desktop-frame {
+            background: var(--bg-tertiary);
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .desktop-browser-bar {
+            background: var(--bg-elevated);
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .browser-dot:nth-child(1) { background: #ff5f57; }
+        .browser-dot:nth-child(2) { background: #febc2e; }
+        .browser-dot:nth-child(3) { background: #28c840; }
+
+        .browser-address {
+            flex: 1;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+        }
+
+        .desktop-content {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .desktop-nav {
+            width: 180px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-logo {
+            width: 100px;
+            height: 24px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .nav-item {
+            height: 32px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 0.75rem;
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            background: var(--text-muted);
+        }
+
+        .nav-text {
+            flex: 1;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 2px;
+        }
+
+        .nav-item.active .nav-icon {
+            background: var(--accent-cyan);
+        }
+
+        .nav-item.active .nav-text {
+            background: var(--text-primary);
+        }
+
+        .desktop-main {
+            flex: 1;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .desktop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .desktop-heading {
+            width: 150px;
+            height: 24px;
+            background: var(--text-primary);
+            border-radius: 4px;
+        }
+
+        .desktop-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .desktop-btn {
+            width: 80px;
+            height: 32px;
+            background: var(--accent-cyan);
+            border-radius: 6px;
+        }
+
+        .desktop-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .desktop-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 80px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .desktop-card:nth-child(2) .card-image {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+        }
+
+        .desktop-card:nth-child(3) .card-image {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+        }
+
+        .card-title {
+            height: 12px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            width: 80%;
+        }
+
+        .card-desc {
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 2px;
+            width: 100%;
+        }
+
+        .card-desc:last-child {
+            width: 60%;
+        }
+
+        .desktop-table {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-header {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .table-cell {
+            height: 10px;
+            background: var(--text-secondary);
+            border-radius: 2px;
+        }
+
+        .table-header .table-cell {
+            background: var(--text-primary);
+        }
+
+        /* Breakpoint Slider */
+        .breakpoint-demo {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .slider-container {
+            margin-bottom: 2rem;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .slider-track {
+            position: relative;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .slider-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 4px;
+            transition: width var(--transition-slow);
+        }
+
+        .slider-input {
+            width: 100%;
+            height: 8px;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .breakpoint-markers {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding-top: 1rem;
+        }
+
+        .breakpoint-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .marker-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 2px solid var(--text-muted);
+            transition: all var(--transition-base);
+        }
+
+        .breakpoint-marker.active .marker-dot {
+            background: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.3);
+        }
+
+        .marker-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .marker-value {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .breakpoint-marker.active .marker-label,
+        .breakpoint-marker.active .marker-value {
+            color: var(--accent-cyan);
+        }
+
+        /* Responsive Preview */
+        .responsive-preview {
+            border: 2px dashed var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-slow);
+            overflow: hidden;
+        }
+
+        .preview-content {
+            width: 100%;
+            max-width: 1200px;
+            transition: all var(--transition-slow);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            transition: all var(--transition-slow);
+        }
+
+        .preview-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            transition: all var(--transition-slow);
+        }
+
+        /* Mobile-First vs Desktop-First */
+        .approach-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .approach-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 2px solid var(--bg-tertiary);
+            transition: all var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .approach-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform var(--transition-slow);
+        }
+
+        .approach-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+        }
+
+        .approach-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .approach-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .approach-card.mobile-first .approach-badge {
+            background: rgba(139, 92, 246, 0.2);
+            color: #c4b5fd;
+        }
+
+        .approach-card.desktop-first .approach-badge {
+            background: rgba(6, 182, 212, 0.2);
+            color: #67e8f9;
+        }
+
+        .approach-card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .approach-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-example {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+        }
+
+        .code-example code {
+            color: var(--accent-cyan);
+        }
+
+        .code-keyword {
+            color: var(--accent-purple);
+        }
+
+        .code-property {
+            color: #93c5fd;
+        }
+
+        .code-value {
+            color: #86efac;
+        }
+
+        /* Typography Scale */
+        .typography-demo {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .type-scale {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .type-scale-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background var(--transition-base);
+        }
+
+        .type-scale-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .type-visual {
+            flex: 1;
+        }
+
+        .type-size-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .hero-text {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .h1-text {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+        }
+
+        .h2-text {
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
+            font-weight: 600;
+        }
+
+        .h3-text {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 600;
+        }
+
+        .body-text {
+            font-size: clamp(0.9rem, 1.5vw, 1.125rem);
+            color: var(--text-secondary);
+        }
+
+        .small-text {
+            font-size: clamp(0.75rem, 1vw, 0.875rem);
+            color: var(--text-muted);
+        }
+
+        /* Grid Breakpoints Demo */
+        .grid-breakpoints {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--bg-tertiary);
+        }
+
+        .breakpoint-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .breakpoint-tab {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .breakpoint-tab:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .breakpoint-tab.active {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+
+        .grid-demo-container {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-height: 300px;
+        }
+
+        .grid-demo {
+            display: grid;
+            gap: 1rem;
+            transition: all var(--transition-slow);
+        }
+
+        .grid-demo-item {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+            transition: all var(--transition-slow);
+        }
+
+        .grid-demo-item:nth-child(2) {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange));
+        }
+
+        .grid-demo-item:nth-child(3) {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .grid-demo-item:nth-child(4) {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+        }
+
+        .grid-demo-item:nth-child(5) {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+        }
+
+        .grid-demo-item:nth-child(6) {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+        }
+
+        /* Grid configurations for different breakpoints */
+        .grid-mobile { grid-template-columns: 1fr; }
+        .grid-tablet { grid-template-columns: repeat(2, 1fr); }
+        .grid-small { grid-template-columns: repeat(3, 1fr); }
+        .grid-medium { grid-template-columns: repeat(4, 1fr); }
+        .grid-large { grid-template-columns: repeat(6, 1fr); }
+
+        /* Info Panel */
+        .grid-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 3px solid var(--accent-cyan);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .grid-info-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .grid-info-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .devices-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .device-desktop {
+                order: -1;
+                max-width: 100%;
+            }
+
+            .device-tablet, .device-phone {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .breakpoint-markers {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .breakpoint-marker {
+                align-items: flex-start;
+            }
+
+            .preview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .device-showcase,
+            .breakpoint-demo,
+            .typography-demo,
+            .grid-breakpoints {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Responsive Design</h1>
+            <p>Creating fluid, adaptable layouts that provide optimal viewing experiences across all devices and screen sizes</p>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                        <line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                    Mobile First
+                </div>
+                    <div class="stat-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    Fluid Grids
+                </div>
+                <div class="stat-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4 7 4 4 20 4 20 7"/>
+                        <line x1="9" y1="20" x2="15" y2="20"/>
+                        <line x1="12" y1="4" x2="12" y2="20"/>
+                    </svg>
+                    Flexible Typography
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Device Mockups Section -->
+        <section class="section" aria-labelledby="devices-heading">
+            <h2 id="devices-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2"/>
+                    <line x1="12" y1="18" x2="12" y2="18"/>
+                </svg>
+                Multi-Device Layouts
+            </h2>
+            <p class="section-description">
+                Responsive design adapts content seamlessly across mobile phones, tablets, and desktop screens. 
+                The same content, intelligently reflowed for each viewport.
+            </p>
+
+            <div class="device-showcase">
+                <div class="devices-grid">
+                    <!-- Phone -->
+                    <div class="device-phone" role="img" aria-label="Mobile phone layout mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="phone-content">
+                                <div class="phone-header">
+                                    <div class="phone-avatar"></div>
+                                    <span class="phone-username">Dashboard</span>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-card-image"></div>
+                                    <div class="phone-card-title">Analytics</div>
+                                    <div class="phone-card-subtitle">View reports</div>
+                                </div>
+                                <div class="phone-card">
+                                    <div class="phone-card-image" style="background: linear-gradient(135deg, #ec4899, #f97316);"></div>
+                                    <div class="phone-card-title">Projects</div>
+                                    <div class="phone-card-subtitle">5 active</div>
+                                </div>
+                                <div class="phone-nav">
+                                    <div class="phone-nav-item active"></div>
+                                    <div class="phone-nav-item"></div>
+                                    <div class="phone-nav-item"></div>
+                                    <div class="phone-nav-item"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tablet -->
+                    <div class="device-tablet" role="img" aria-label="Tablet layout mockup">
+                        <div class="tablet-camera"></div>
+                        <div class="tablet-screen">
+                            <div class="tablet-sidebar">
+                                <div class="sidebar-icon"></div>
+                                <div class="sidebar-icon"></div>
+                                <div class="sidebar-icon"></div>
+                                <div class="sidebar-icon"></div>
+                            </div>
+                            <div class="tablet-main">
+                                <div class="tablet-header">
+                                    <span class="tablet-title">Overview</span>
+                                    <div class="tablet-action"></div>
+                                </div>
+                                <div class="tablet-grid">
+                                    <div class="tablet-item">
+                                        <div class="tablet-item-visual"></div>
+                                        <div class="tablet-item-text"></div>
+                                    </div>
+                                    <div class="tablet-item">
+                                        <div class="tablet-item-visual"></div>
+                                        <div class="tablet-item-text"></div>
+                                    </div>
+                                    <div class="tablet-item">
+                                        <div class="tablet-item-visual"></div>
+                                        <div class="tablet-item-text"></div>
+                                    </div>
+                                    <div class="tablet-item">
+                                        <div class="tablet-item-visual"></div>
+                                        <div class="tablet-item-text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop -->
+                    <div class="device-desktop" role="img" aria-label="Desktop layout mockup">
+                        <div class="desktop-frame">
+                            <div class="desktop-browser-bar">
+                                <div class="browser-dots">
+                                    <div class="browser-dot"></div>
+                                    <div class="browser-dot"></div>
+                                    <div class="browser-dot"></div>
+                                </div>
+                                <div class="browser-address">app.example.com/dashboard</div>
+                            </div>
+                            <div class="desktop-content">
+                                <nav class="desktop-nav">
+                                    <div class="nav-logo"></div>
+                                    <div class="nav-item active">
+                                        <div class="nav-icon"></div>
+                                        <div class="nav-text"></div>
+                                    </div>
+                                    <div class="nav-item">
+                                        <div class="nav-icon"></div>
+                                        <div class="nav-text"></div>
+                                    </div>
+                                    <div class="nav-item">
+                                        <div class="nav-icon"></div>
+                                        <div class="nav-text"></div>
+                                    </div>
+                                    <div class="nav-item">
+                                        <div class="nav-icon"></div>
+                                        <div class="nav-text"></div>
+                                    </div>
+                                </nav>
+                                <main class="desktop-main">
+                                    <div class="desktop-header">
+                                        <div class="desktop-heading"></div>
+                                        <div class="desktop-actions">
+                                            <div class="desktop-btn"></div>
+                                        </div>
+                                    </div>
+                                    <div class="desktop-cards">
+                                        <div class="desktop-card">
+                                            <div class="card-image"></div>
+                                            <div class="card-title"></div>
+                                            <div class="card-desc"></div>
+                                            <div class="card-desc"></div>
+                                        </div>
+                                        <div class="desktop-card">
+                                            <div class="card-image"></div>
+                                            <div class="card-title"></div>
+                                            <div class="card-desc"></div>
+                                            <div class="card-desc"></div>
+                                        </div>
+                                        <div class="desktop-card">
+                                            <div class="card-image"></div>
+                                            <div class="card-title"></div>
+                                            <div class="card-desc"></div>
+                                            <div class="card-desc"></div>
+                                        </div>
+                                    </div>
+                                    <div class="desktop-table">
+                                        <div class="table-row table-header">
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                        </div>
+                                        <div class="table-row">
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                        </div>
+                                        <div class="table-row">
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                            <div class="table-cell"></div>
+                                        </div>
+                                    </div>
+                                </main>
+                            </div>
+                        </div>
+                        <div class="desktop-stand"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Breakpoint Slider -->
+        <section class="section" aria-labelledby="breakpoint-heading">
+            <h2 id="breakpoint-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    <path d="M6 10h.01M6 14h.01M10 10h.01M10 14h.01M14 10h.01M14 14h.01M18 10h.01M18 14h.01"/>
+                </svg>
+                Interactive Breakpoints
+            </h2>
+            <p class="section-description">
+                Drag the slider to see how layouts adapt at different screen widths. 
+                Breakpoints are the widths where we introduce layout changes.
+            </p>
+
+            <div class="breakpoint-demo">
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>320px</span>
+                        <span id="current-width">1200px</span>
+                        <span>1440px+</span>
+                    </div>
+                    <div class="slider-track">
+                        <div class="slider-fill" id="slider-fill" style="width: 75%"></div>
+                        <input type="range" class="slider-input" id="breakpoint-slider" min="320" max="1440" value="1200">
+                    </div>
+                    <div class="breakpoint-markers">
+                        <div class="breakpoint-marker" data-width="320">
+                            <div class="marker-dot"></div>
+                            <span class="marker-label">Mobile</span>
+                            <span class="marker-value">< 640px</span>
+                        </div>
+                        <div class="breakpoint-marker" data-width="640">
+                            <div class="marker-dot"></div>
+                            <span class="marker-label">Tablet</span>
+                            <span class="marker-value">640px</span>
+                        </div>
+                        <div class="breakpoint-marker" data-width="768">
+                            <div class="marker-dot"></div>
+                            <span class="marker-label">Small</span>
+                            <span class="marker-value">768px</span>
+                        </div>
+                        <div class="breakpoint-marker" data-width="1024">
+                            <div class="marker-dot"></div>
+                            <span class="marker-label">Medium</span>
+                            <span class="marker-value">1024px</span>
+                        </div>
+                        <div class="breakpoint-marker active" data-width="1280">
+                            <div class="marker-dot"></div>
+                            <span class="marker-label">Large</span>
+                            <span class="marker-value">1280px+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive-preview">
+                    <div class="preview-content" id="preview-content">
+                        <div class="preview-grid" id="preview-grid">
+                            <div class="preview-item">1</div>
+                            <div class="preview-item" style="background: linear-gradient(135deg, #ec4899, #f97316);">2</div>
+                            <div class="preview-item" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">3</div>
+                            <div class="preview-item" style="background: linear-gradient(135deg, #10b981, #06b6d4);">4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile-First vs Desktop-First -->
+        <section class="section" aria-labelledby="approach-heading">
+            <h2 id="approach-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9M12 20V4M3 12h9M3 12V4"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+                Mobile-First vs Desktop-First
+            </h2>
+            <p class="section-description">
+                Two strategies for building responsive layouts. Mobile-first is the modern standard, 
+                starting with core content and progressively enhancing for larger screens.
+            </p>
+
+            <div class="approach-comparison">
+                <article class="approach-card mobile-first">
+                    <span class="approach-badge">Recommended</span>
+                    <h3>Mobile-First Approach</h3>
+                            <p>Start with the smallest screen and progressively enhance. Uses <code>min-width</code> media queries to add complexity as the viewport grows.</p>
+                    <div class="code-example">
+                        <span class="code-keyword">.container</span> {<br>
+                        &nbsp;&nbsp;<span class="code-property">width</span>: <span class="code-value">100%</span>;<br>
+                        &nbsp;&nbsp;<span class="code-property">padding</span>: <span class="code-value">1rem</span>;<br>
+                        }<br><br>
+                        <span class="code-keyword">@media</span> (<span class="code-property">min-width</span>: <span class="code-value">768px</span>) {<br>
+                        &nbsp;&nbsp;<span class="code-keyword">.container</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">max-width</span>: <span class="code-value">1200px</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">margin</span>: <span class="code-value">0 auto</span>;<br>
+                        &nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </article>
+
+                <article class="approach-card desktop-first">
+                    <span class="approach-badge">Legacy</span>
+                    <h3>Desktop-First Approach</h3>
+                    <p>Start with the full desktop experience and use <code>max-width</code> media queries to subtract or hide elements for smaller screens.</p>
+                    <div class="code-example">
+                        <span class="code-keyword">.container</span> {<br>
+                        &nbsp;&nbsp;<span class="code-property">max-width</span>: <span class="code-value">1200px</span>;<br>
+                        &nbsp;&nbsp;<span class="code-property">margin</span>: <span class="code-value">0 auto</span>;<br>
+                        }<br><br>
+                        <span class="code-keyword">@media</span> (<span class="code-property">max-width</span>: <span class="code-value">768px</span>) {<br>
+                        &nbsp;&nbsp;<span class="code-keyword">.container</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">padding</span>: <span class="code-value">1rem</span>;<br>
+                        &nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Fluid Typography -->
+        <section class="section" aria-labelledby="typography-heading">
+            <h2 id="typography-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="4 7 4 4 20 4 20 7"/>
+                    <line x1="9" y1="20" x2="15" y2="20"/>
+                    <line x1="12" y1="4" x2="12" y2="20"/>
+                </svg>
+                Fluid Typography Scale
+            </h2>
+            <p class="section-description">
+                Using CSS <code>clamp()</code> to create text that scales smoothly between minimum and maximum sizes, 
+                ensuring optimal readability on every device.
+            </p>
+
+            <div class="typography-demo">
+                <div class="type-scale">
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="hero-text">Hero Title</div>
+                        </div>
+                        <span class="type-size-display">clamp(2rem, 5vw, 4rem)</span>
+                    </div>
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="h1-text">Heading Level 1</div>
+                        </div>
+                        <span class="type-size-display">clamp(1.5rem, 3vw, 2.5rem)</span>
+                    </div>
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="h2-text">Heading Level 2</div>
+                        </div>
+                        <span class="type-size-display">clamp(1.25rem, 2.5vw, 2rem)</span>
+                    </div>
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="h3-text">Heading Level 3</div>
+                        </div>
+                        <span class="type-size-display">clamp(1.1rem, 2vw, 1.5rem)</span>
+                    </div>
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="body-text">Body text scales fluidly to remain comfortable reading across all device sizes. This ensures users don't need to zoom or squint.</div>
+                        </div>
+                        <span class="type-size-display">clamp(0.9rem, 1.5vw, 1.125rem)</span>
+                    </div>
+                    <div class="type-scale-item">
+                        <div class="type-visual">
+                            <div class="small-text">Small text for captions, metadata, and secondary information. Still maintains legibility at smaller sizes.</div>
+                        </div>
+                        <span class="type-size-display">clamp(0.75rem, 1vw, 0.875rem)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid Breakpoints -->
+        <section class="section" aria-labelledby="grid-heading">
+            <h2 id="grid-heading" class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                Grid Breakpoint System
+            </h2>
+            <p class="section-description">
+                Click through the breakpoints to see how grid layouts adapt. Modern CSS Grid makes it easy to 
+                create complex, responsive layouts with minimal code.
+            </p>
+
+            <div class="grid-breakpoints">
+                <div class="breakpoint-tabs" role="tablist" aria-label="Breakpoint tabs">
+                    <button class="breakpoint-tab active" data-grid="mobile" role="tab" aria-selected="true">
+                        Mobile
+                        <small style="display: block; opacity: 0.7; font-size: 0.7rem">&lt; 640px</small>
+                    </button>
+                    <button class="breakpoint-tab" data-grid="tablet" role="tab" aria-selected="false">
+                        Tablet
+                        <small style="display: block; opacity: 0.7; font-size: 0.7rem">640px</small>
+                    </button>
+                    <button class="breakpoint-tab" data-grid="small" role="tab" aria-selected="false">
+                        Small
+                        <small style="display: block; opacity: 0.7; font-size: 0.7rem">768px</small>
+                    </button>
+                    <button class="breakpoint-tab" data-grid="medium" role="tab" aria-selected="false">
+                        Medium
+                        <small style="display: block; opacity: 0.7; font-size: 0.7rem">1024px</small>
+                    </button>
+                    <button class="breakpoint-tab" data-grid="large" role="tab" aria-selected="false">
+                        Large
+                        <small style="display: block; opacity: 0.7; font-size: 0.7rem">1280px+</small>
+                    </button>
+                </div>
+
+                <div class="grid-demo-container">
+                    <div class="grid-demo grid-mobile" id="grid-demo">
+                        <div class="grid-demo-item">1</div>
+                        <div class="grid-demo-item">2</div>
+                        <div class="grid-demo-item">3</div>
+                        <div class="grid-demo-item">4</div>
+                        <div class="grid-demo-item">5</div>
+                        <div class="grid-demo-item">6</div>
+                    </div>
+                </div>
+
+                <div class="grid-info">
+                    <div class="grid-info-title" id="grid-info-title">Mobile Layout</div>
+                    <div class="grid-info-text" id="grid-info-text">
+                        Single column layout for narrow screens. Content stacks vertically for easy scrolling on mobile devices. 
+                        Touch targets are large and spacing is generous.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Breakpoint Slider
+        const slider = document.getElementById('breakpoint-slider');
+        const sliderFill = document.getElementById('slider-fill');
+        const currentWidthLabel = document.getElementById('current-width');
+        const previewGrid = document.getElementById('preview-grid');
+        const markers = document.querySelectorAll('.breakpoint-marker');
+
+        const breakpoints = [
+            { width: 320, name: 'Mobile', cols: 1 },
+            { width: 640, name: 'Tablet', cols: 2 },
+            { width: 768, name: 'Small', cols: 2 },
+            { width: 1024, name: 'Medium', cols: 4 },
+            { width: 1280, name: 'Large', cols: 4 }
+        ];
+
+        slider.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const percentage = ((value - 320) / (1440 - 320)) * 100;
+            
+            sliderFill.style.width = percentage + '%';
+            currentWidthLabel.textContent = value + 'px';
+
+            // Update markers
+            markers.forEach(marker => {
+                const markerWidth = parseInt(marker.dataset.width);
+                marker.classList.toggle('active', value >= markerWidth);
+            });
+
+            // Update grid
+            let cols = 1;
+            if (value >= 1280) cols = 4;
+            else if (value >= 1024) cols = 4;
+            else if (value >= 768) cols = 2;
+            else if (value >= 640) cols = 2;
+            
+            previewGrid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        });
+
+        // Grid Tabs
+        const gridTabs = document.querySelectorAll('.breakpoint-tab');
+        const gridDemo = document.getElementById('grid-demo');
+        const gridInfoTitle = document.getElementById('grid-info-title');
+        const gridInfoText = document.getElementById('grid-info-text');
+
+        const gridInfo = {
+            mobile: {
+                title: 'Mobile Layout',
+                text: 'Single column layout for narrow screens. Content stacks vertically for easy scrolling on mobile devices. Touch targets are large and spacing is generous.'
+            },
+            tablet: {
+                title: 'Tablet Layout',
+                text: 'Two-column grid provides more content density while maintaining readability. Sidebar navigation often collapses into a hamburger menu at this breakpoint.'
+            },
+            small: {
+                title: 'Small Desktop Layout',
+                text: 'Two to three columns work well for small laptops and landscape tablets. More navigation options become visible, and secondary content appears.'
+            },
+            medium: {
+                title: 'Medium Desktop Layout',
+                text: 'Four-column grid for standard desktop screens. Sidebars are fully visible, and complex layouts with multiple content areas become feasible.'
+            },
+            large: {
+                title: 'Large Desktop Layout',
+                text: 'Full six-column grid for wide screens. Maximum content density while maintaining comfortable reading line lengths. Multi-column layouts shine here.'
+            }
+        };
+
+        gridTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Update tabs
+                gridTabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+
+                // Update grid
+                const gridType = this.dataset.grid;
+                gridDemo.className = 'grid-demo grid-' + gridType;
+
+                // Update info
+                const info = gridInfo[gridType];
+                gridInfoTitle.textContent = info.title;
+                gridInfoText.textContent = info.text;
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

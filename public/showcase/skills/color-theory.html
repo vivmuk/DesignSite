@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Theory | DesignSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f13;
+            --bg-secondary: #18181f;
+            --bg-tertiary: #22222c;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0c0;
+            --text-muted: #707080;
+            --border: #2e2e3e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 8%;
+            background: linear-gradient(135deg, 
+                hsl(250, 70%, 10%) 0%, 
+                hsl(280, 60%, 15%) 50%, 
+                hsl(320, 50%, 12%) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+            animation: gradientPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 8%;
+            border-top: 1px solid var(--border);
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        /* Color Wheel */
+        .color-wheel-section {
+            background: var(--bg-secondary);
+        }
+        
+        .wheel-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .wheel-visual {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                hsl(0, 90%, 60%),
+                hsl(30, 90%, 60%),
+                hsl(60, 90%, 60%),
+                hsl(90, 90%, 60%),
+                hsl(120, 90%, 60%),
+                hsl(150, 90%, 60%),
+                hsl(180, 90%, 60%),
+                hsl(210, 90%, 60%),
+                hsl(240, 90%, 60%),
+                hsl(270, 90%, 60%),
+                hsl(300, 90%, 60%),
+                hsl(330, 90%, 60%),
+                hsl(360, 90%, 60%)
+            );
+            position: relative;
+            box-shadow: 
+                0 0 0 20px var(--bg-tertiary),
+                0 0 60px rgba(0,0,0,0.5);
+        }
+        
+        .wheel-center {
+            position: absolute;
+            inset: 35%;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .wheel-labels {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .wheel-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .color-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .wheel-label span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Color Schemes */
+        .scheme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .scheme-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .scheme-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .scheme-colors {
+            display: flex;
+            height: 120px;
+        }
+        
+        .scheme-color {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+            transition: flex 0.3s ease;
+        }
+        
+        .scheme-color:hover {
+            flex: 2;
+        }
+        
+        .scheme-color::after {
+            content: attr(data-hex);
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-family: monospace;
+            opacity: 0;
+            transition: opacity 0.2s;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        .scheme-color:hover::after {
+            opacity: 1;
+        }
+        
+        .scheme-info {
+            padding: 1.5rem;
+        }
+        
+        .scheme-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .scheme-info p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Complementary */
+        .scheme-complementary .scheme-color:nth-child(1) { background: #6366f1; }
+        .scheme-complementary .scheme-color:nth-child(2) { background: #fbbf24; }
+        
+        /* Triadic */
+        .scheme-triadic .scheme-color:nth-child(1) { background: #ef4444; }
+        .scheme-triadic .scheme-color:nth-child(2) { background: #22c55e; }
+        .scheme-triadic .scheme-color:nth-child(3) { background: #3b82f6; }
+        
+        /* Analogous */
+        .scheme-analogous .scheme-color:nth-child(1) { background: #8b5cf6; }
+        .scheme-analogous .scheme-color:nth-child(2) { background: #a855f7; }
+        .scheme-analogous .scheme-color:nth-child(3) { background: #c026d3; }
+        .scheme-analogous .scheme-color:nth-child(4) { background: #db2777; }
+        
+        /* Split Complementary */
+        .scheme-split .scheme-color:nth-child(1) { background: #06b6d4; }
+        .scheme-split .scheme-color:nth-child(2) { background: #f59e0b; }
+        .scheme-split .scheme-color:nth-child(3) { background: #ef4444; }
+        
+        /* Tetradic */
+        .scheme-tetradic .scheme-color:nth-child(1) { background: #6366f1; }
+        .scheme-tetradic .scheme-color:nth-child(2) { background: #14b8a6; }
+        .scheme-tetradic .scheme-color:nth-child(3) { background: #f59e0b; }
+        .scheme-tetradic .scheme-color:nth-child(4) { background: #ec4899; }
+        
+        /* Gradient Showcase */
+        .gradient-section {
+            background: var(--bg-primary);
+        }
+        
+        .gradient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gradient-card {
+            height: 200px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+        }
+        
+        .gradient-card span {
+            position: relative;
+            font-size: 0.875rem;
+            font-family: monospace;
+        }
+        
+        .gradient-sunset {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%);
+        }
+        
+        .gradient-ocean {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .gradient-forest {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .gradient-midnight {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        
+        .gradient-candy {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+        }
+        
+        .gradient-aurora {
+            background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+        }
+        
+        /* Contrast Checker */
+        .contrast-section {
+            background: var(--bg-secondary);
+        }
+        
+        .contrast-tool {
+            background: var(--bg-tertiary);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .contrast-preview {
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contrast-preview h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contrast-preview p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .contrast-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .color-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .color-input-group label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .color-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .color-input-wrapper input[type="color"] {
+            width: 60px;
+            height: 48px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+        
+        .color-input-wrapper input[type="text"] {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .contrast-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .result-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .result-card h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+        
+        .result-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .status-pass {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .status-fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        /* Color Psychology */
+        .psychology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .psych-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .psych-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .psych-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .psych-card p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .psych-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.05));
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .psych-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.05));
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .psych-green {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        
+        .psych-yellow {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.05));
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+        
+        .psych-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05));
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        
+        .psych-orange {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.05));
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .wheel-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .contrast-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .contrast-results {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Color Theory</h1>
+            <p>Master the visual language of color—understand harmony, contrast, and the psychology behind every hue.</p>
+        </div>
+    </section>
+
+    <section class="section color-wheel-section">
+        <div class="section-header">
+            <h2>The Color Wheel</h2>
+            <p>The foundation of color theory—understanding relationships between hues.</p>
+        </div>
+        <div class="wheel-container">
+            <div class="wheel-visual">
+                <div class="wheel-center">360°</div>
+            </div>
+            <div class="wheel-labels">
+                <div class="wheel-label">
+                    <div class="color-dot" style="background: #ef4444;"></div>
+                    <span><strong>Primary:</strong> Red, Yellow, Blue — cannot be mixed from other colors</span>
+                </div>
+                <div class="wheel-label">
+                    <div class="color-dot" style="background: #22c55e;"></div>
+                    <span><strong>Secondary:</strong> Green, Orange, Purple — mixed from primaries</span>
+                </div>
+                <div class="wheel-label">
+                    <div class="color-dot" style="background: #3b82f6;"></div>
+                    <span><strong>Tertiary:</strong> Six colors mixing primary + secondary</span>
+                </div>
+                <div class="wheel-label">
+                    <div class="color-dot" style="background: linear-gradient(90deg, #fff, #000);"></div>
+                    <span><strong>Value:</strong> Lightness to darkness of a color</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2>Color Harmony</h2>
+            <p>Proven color schemes that create visual balance and appeal.</p>
+        </div>
+        <div class="scheme-grid">
+            <div class="scheme-card scheme-complementary">
+                <div class="scheme-colors">
+                    <div class="scheme-color" data-hex="#6366f1"></div>
+                    <div class="scheme-color" data-hex="#fbbf24"></div>
+                </div>
+                <div class="scheme-info">
+                    <h3>Complementary</h3>
+                    <p>Colors opposite each other on the wheel. High contrast, vibrant look.</p>
+                </div>
+            </div>
+            <div class="scheme-card scheme-triadic">
+                <div class="scheme-colors">
+                    <div class="scheme-color" data-hex="#ef4444"></div>
+                    <div class="scheme-color" data-hex="#22c55e"></div>
+                    <div class="scheme-color" data-hex="#3b82f6"></div>
+                </div>
+                <div class="scheme-info">
+                    <h3>Triadic</h3>
+                    <p>Three colors evenly spaced. Balanced and colorful without clashing.</p>
+                </div>
+            </div>
+            <div class="scheme-card scheme-analogous">
+                <div class="scheme-colors">
+                    <div class="scheme-color" data-hex="#8b5cf6"></div>
+                    <div class="scheme-color" data-hex="#a855f7"></div>
+                    <div class="scheme-color" data-hex="#c026d3"></div>
+                    <div class="scheme-color" data-hex="#db2777"></div>
+                </div>
+                <div class="scheme-info">
+                    <h3>Analogous</h3>
+                    <p>Colors next to each other. Creates serene, cohesive designs.</p>
+                </div>
+            </div>
+            <div class="scheme-card scheme-split">
+                <div class="scheme-colors">
+                    <div class="scheme-color" data-hex="#06b6d4"></div>
+                    <div class="scheme-color" data-hex="#f59e0b"></div>
+                    <div class="scheme-color" data-hex="#ef4444"></div>
+                </div>
+                <div class="scheme-info">
+                    <h3>Split Complementary</h3>
+                    <p>Base color + two adjacent to its complement. Less tension than complementary.</p>
+                </div>
+            </div>
+            <div class="scheme-card scheme-tetradic">
+                <div class="scheme-colors">
+                    <div class="scheme-color" data-hex="#6366f1"></div>
+                    <div class="scheme-color" data-hex="#14b8a6"></div>
+                    <div class="scheme-color" data-hex="#f59e0b"></div>
+                    <div class="scheme-color" data-hex="#ec4899"></div>
+                </div>
+                <div class="scheme-info">
+                    <h3>Tetradic (Double Split)</h3>
+                    <p>Four colors in rectangular formation. Rich, diverse palettes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gradient-section">
+        <div class="section-header">
+            <h2>Gradient Inspiration</h2>
+            <p>Smooth color transitions that add depth and visual interest.</p>
+        </div>
+        <div class="gradient-grid">
+            <div class="gradient-card gradient-sunset">
+                <span>linear-gradient(135deg, #ff6b6b, #feca57, #ff9ff3)</span>
+            </div>
+            <div class="gradient-card gradient-ocean">
+                <span>linear-gradient(135deg, #667eea, #764ba2, #f093fb)</span>
+            </div>
+            <div class="gradient-card gradient-forest">
+                <span>linear-gradient(135deg, #11998e, #38ef7d)</span>
+            </div>
+            <div class="gradient-card gradient-midnight">
+                <span>linear-gradient(135deg, #0f0c29, #302b63, #24243e)</span>
+            </div>
+            <div class="gradient-card gradient-candy">
+                <span>linear-gradient(135deg, #ff9a9e, #fecfef)</span>
+            </div>
+            <div class="gradient-card gradient-aurora">
+                <span>linear-gradient(135deg, #00dbde, #fc00ff)</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contrast-section">
+        <div class="section-header">
+            <h2>Contrast Checker</h2>
+            <p>Ensure text readability with WCAG-compliant color combinations.</p>
+        </div>
+        <div class="contrast-tool">
+            <div class="contrast-preview" id="contrastPreview">
+                <h3>Sample Heading Text</h3>
+                <p>This is sample body text to demonstrate contrast ratios.</p>
+            </div>
+            <div class="contrast-controls">
+                <div class="color-input-group">
+                    <label>Background Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="bgColor" value="#0f0f13">
+                        <input type="text" id="bgHex" value="#0f0f13">
+                    </div>
+                </div>
+                <div class="color-input-group">
+                    <label>Text Color</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="textColor" value="#ffffff">
+                        <input type="text" id="textHex" value="#ffffff">
+                    </div>
+                </div>
+            </div>
+            <div class="contrast-results">
+                <div class="result-card">
+                    <h4>Contrast Ratio</h4>
+                    <div class="result-value" id="ratioValue">16.0</div>
+                    <span class="result-status status-pass">Excellent</span>
+                </div>
+                <div class="result-card">
+                    <h4>AA Normal</h4>
+                    <div class="result-value" id="aaNormal">✓</div>
+                    <span class="result-status status-pass">Pass</span>
+                </div>
+                <div class="result-card">
+                    <h4>AAA Normal</h4>
+                    <div class="result-value" id="aaaNormal">✓</div>
+                    <span class="result-status status-pass">Pass</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2>Color Psychology</h2>
+            <p>Understanding the emotional impact and cultural associations of colors.</p>
+        </div>
+        <div class="psychology-grid">
+            <div class="psych-card psych-red">
+                <h4>Red</h4>
+                <p>Energy, urgency, passion. Stimulates appetite—popular in food brands.</p>
+            </div>
+            <div class="psych-card psych-blue">
+                <h4>Blue</h4>
+                <p>Trust, stability, professionalism. Most universally liked color.</p>
+            </div>
+            <div class="psych-card psych-green">
+                <h4>Green</h4>
+                <p>Growth, health, nature. Associated with sustainability and finance.</p>
+            </div>
+            <div class="psych-card psych-yellow">
+                <h4>Yellow</h4>
+                <p>Optimism, creativity, caution. Grabs attention but can cause eye strain.</p>
+            </div>
+            <div class="psych-card psych-purple">
+                <h4>Purple</h4>
+                <p>Luxury, creativity, wisdom. Historically associated with royalty.</p>
+            </div>
+            <div class="psych-card psych-orange">
+                <h4>Orange</h4>
+                <p>Enthusiasm, warmth, affordability. Calls to action without urgency.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Contrast Checker Logic
+        const bgColor = document.getElementById('bgColor');
+        const textColor = document.getElementById('textColor');
+        const bgHex = document.getElementById('bgHex');
+        const textHex = document.getElementById('textHex');
+        const contrastPreview = document.getElementById('contrastPreview');
+        const ratioValue = document.getElementById('ratioValue');
+        const aaNormal = document.getElementById('aaNormal');
+        const aaaNormal = document.getElementById('aaaNormal');
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        function getLuminance(r, g, b) {
+            const [rs, gs, bs] = [r, g, b].map(val => {
+                val = val / 255;
+                return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        }
+        
+        function calculateContrast() {
+            const bg = hexToRgb(bgColor.value);
+            const text = hexToRgb(textColor.value);
+            
+            if (!bg || !text) return;
+            
+            const l1 = getLuminance(bg.r, bg.g, bg.b);
+            const l2 = getLuminance(text.r, text.g, text.b);
+            
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            const ratio = (lighter + 0.05) / (darker + 0.05);
+            
+            contrastPreview.style.backgroundColor = bgColor.value;
+            contrastPreview.style.color = textColor.value;
+            
+            ratioValue.textContent = ratio.toFixed(2);
+            
+            // Update status
+            const aaPass = ratio >= 4.5;
+            const aaaPass = ratio >= 7;
+            
+            aaNormal.textContent = aaPass ? '✓' : '✗';
+            aaaNormal.textContent = aaaPass ? '✓' : '✗';
+            
+            aaNormal.nextElementSibling.className = 'result-status ' + (aaPass ? 'status-pass' : 'status-fail');
+            aaNormal.nextElementSibling.textContent = aaPass ? 'Pass' : 'Fail';
+            
+            aaaNormal.nextElementSibling.className = 'result-status ' + (aaaPass ? 'status-pass' : 'status-fail');
+            aaaNormal.nextElementSibling.textContent = aaaPass ? 'Pass' : 'Fail';
+            
+            const overallStatus = ratio >= 7 ? 'Excellent' : ratio >= 4.5 ? 'Good' : ratio >= 3 ? 'Fair' : 'Poor';
+            ratioValue.nextElementSibling.textContent = overallStatus;
+        }
+        
+        bgColor.addEventListener('input', (e) => {
+            bgHex.value = e.target.value;
+            calculateContrast();
+        });
+        
+        textColor.addEventListener('input', (e) => {
+            textHex.value = e.target.value;
+            calculateContrast();
+        });
+        
+        bgHex.addEventListener('change', (e) => {
+            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                bgColor.value = e.target.value;
+                calculateContrast();
+            }
+        });
+        
+        textHex.addEventListener('change', (e) => {
+            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                textColor.value = e.target.value;
+                calculateContrast();
+            }
+        });
+        
+        // Initialize
+        calculateContrast();
+    </script>
+</body>
+</html>

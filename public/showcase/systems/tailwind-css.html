@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --tw-slate-50: #f8fafc; --tw-slate-100: #f1f5f9; --tw-slate-200: #e2e8f0; --tw-slate-300: #cbd5e1;
+            --tw-slate-400: #94a3b8; --tw-slate-500: #64748b; --tw-slate-600: #475569; --tw-slate-700: #334155;
+            --tw-slate-800: #1e293b; --tw-slate-900: #0f172a; --tw-slate-950: #020617;
+            --tw-blue-400: #60a5fa; --tw-blue-500: #3b82f6; --tw-blue-600: #2563eb; --tw-blue-700: #1d4ed8;
+            --tw-indigo-500: #6366f1; --tw-indigo-600: #4f46e5; --tw-violet-500: #8b5cf6;
+            --tw-emerald-400: #34d399; --tw-emerald-500: #10b981; --tw-rose-500: #f43f5e;
+            --tw-amber-400: #fbbf24; --tw-amber-500: #f59e0b;
+        }
+        html { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+        body { background: #ffffff; color: var(--tw-slate-900); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+        /* Navigation - utility-first classes visualized */
+        .nav { background: white; border-bottom: 1px solid var(--tw-slate-200); position: sticky; top: 0; z-index: 50; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.025em; }
+        .logo-icon { width: 32px; height: 32px; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--tw-slate-600); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+        .nav-link:hover { color: var(--tw-slate-900); }
+        .nav-cta { background: var(--tw-slate-900); color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+        .nav-cta:hover { background: var(--tw-slate-800); transform: translateY(-1px); }
+        /* Hero with gradient */
+        .hero {
+            background: linear-gradient(135deg, var(--tw-slate-900) 0%, var(--tw-indigo-600) 50%, var(--tw-violet-500) 100%);
+            color: white; padding: 6rem 0; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .hero-content { position: relative; z-index: 10; text-align: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 9999px; font-size: 0.875rem; font-weight: 500; margin-bottom: 1.5rem;
+        }
+        .hero h1 { font-size: 3.75rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.25rem; color: rgba(255,255,255,0.8); max-width: 640px; margin: 0 auto 2rem; }
+        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-white { background: white; color: var(--tw-slate-900); padding: 0.875rem 1.75rem; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.15s; }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .btn-outline-white { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.4); padding: 0.875rem 1.75rem; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.15s; }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+        /* Section Styling */
+        section { padding: 5rem 0; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 1rem; color: var(--tw-slate-900); }
+        .section-header p { font-size: 1.125rem; color: var(--tw-slate-600); max-width: 600px; margin: 0 auto; }
+        /* Color Palette */
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
+        .color-card { border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--tw-slate-200); }
+        .color-preview { height: 96px; position: relative; }
+        .color-info { padding: 1rem; background: white; }
+        .color-name { font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem; }
+        .color-hex { font-size: 0.75rem; color: var(--tw-slate-500); font-family: ui-monospace, monospace; }
+        /* Gradient Showcase */
+        .gradient-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .gradient-card { height: 160px; border-radius: 0.75rem; position: relative; display: flex; align-items: flex-end; padding: 1rem; }
+        .gradient-label { background: rgba(0,0,0,0.7); color: white; padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-size: 0.75rem; font-family: ui-monospace, monospace; }
+        /* Typography Scale */
+        .type-scale { display: flex; flex-direction: column; gap: 1.5rem; }
+        .type-item { display: flex; align-items: baseline; gap: 1.5rem; border-bottom: 1px solid var(--tw-slate-200); padding-bottom: 1.5rem; }
+        .type-item:last-child { border-bottom: none; }
+        .type-preview { color: var(--tw-slate-900); }
+        .type-meta { color: var(--tw-slate-500); font-size: 0.875rem; font-family: ui-monospace, monospace; width: 120px; flex-shrink: 0; }
+        .text-9xl { font-size: 8rem; line-height: 1; letter-spacing: -0.05em; font-weight: 800; }
+        .text-7xl { font-size: 4.5rem; line-height: 1; letter-spacing: -0.025em; font-weight: 800; }
+        .text-5xl { font-size: 3rem; line-height: 1; letter-spacing: -0.025em; font-weight: 700; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; font-weight: 700; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        /* Spacing Scale */
+        .spacing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; }
+        .spacing-item { text-align: center; }
+        .spacing-box { background: var(--tw-indigo-500); border-radius: 0.25rem; margin: 0 auto 0.5rem; }
+        .spacing-label { font-size: 0.75rem; color: var(--tw-slate-600); font-family: ui-monospace, monospace; }
+        /* Shadow Scale */
+        .shadow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; }
+        .shadow-item { background: white; padding: 1.5rem; border-radius: 0.5rem; text-align: center; }
+        .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        .shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
+        .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .shadow-inner { box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05); }
+        /* Border Radius */
+        .radius-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+        .radius-item { width: 80px; height: 80px; background: var(--tw-indigo-500); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 600; }
+        .rounded-none { border-radius: 0; }
+        .rounded-sm { border-radius: 0.125rem; }
+        .rounded { border-radius: 0.25rem; }
+        .rounded-md { border-radius: 0.375rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-3xl { border-radius: 1.5rem; }
+        .rounded-full { border-radius: 9999px; }
+        /* Component Examples */
+        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .component-card { background: white; border: 1px solid var(--tw-slate-200); border-radius: 0.75rem; padding: 1.5rem; }
+        .component-title { font-weight: 600; font-size: 0.875rem; color: var(--tw-slate-900); margin-bottom: 1rem; }
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.625rem 1.25rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 600; transition: all 0.15s; cursor: pointer; border: none; text-decoration: none; }
+        .btn-primary { background: var(--tw-blue-600); color: white; }
+        .btn-primary:hover { background: var(--tw-blue-700); transform: translateY(-1px); }
+        .btn-success { background: var(--tw-emerald-500); color: white; }
+        .btn-success:hover { background: #059669; transform: translateY(-1px); }
+        .btn-danger { background: var(--tw-rose-500); color: white; }
+        .btn-danger:hover { background: #e11d48; transform: translateY(-1px); }
+        .btn-amber { background: var(--tw-amber-500); color: white; }
+        .btn-amber:hover { background: #d97706; transform: translateY(-1px); }
+        /* Form Controls */
+        .input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid var(--tw-slate-300); border-radius: 0.375rem; font-size: 0.875rem; transition: all 0.15s; outline: none; }
+        .input:focus { border-color: var(--tw-blue-500); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .input-error { border-color: var(--tw-rose-500); }
+        .input-error:focus { border-color: var(--tw-rose-500); box-shadow: 0 0 0 3px rgba(244,63,94,0.1); }
+        .label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--tw-slate-700); margin-bottom: 0.375rem; }
+        .error-text { font-size: 0.75rem; color: var(--tw-rose-500); margin-top: 0.375rem; }
+        /* Cards */
+        .card-example { background: white; border-radius: 0.5rem; overflow: hidden; }
+        .card-image { height: 120px; background: linear-gradient(135deg, var(--tw-indigo-500), var(--tw-violet-500)); }
+        .card-body { padding: 1rem; }
+        .card-heading { font-weight: 600; font-size: 1rem; margin-bottom: 0.25rem; }
+        .card-text { font-size: 0.875rem; color: var(--tw-slate-600); }
+        /* Alerts */
+        .alert { padding: 1rem; border-radius: 0.375rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+        .alert-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+        .alert-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
+        .alert-warning { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+        .alert-error { background: #fff1f2; border: 1px solid #fecdd3; color: #9f1239; }
+        /* Badges */
+        .badge { display: inline-flex; align-items: center; padding: 0.125rem 0.625rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-yellow { background: #fef3c7; color: #92400e; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+        /* Grid System */
+        .grid-showcase { display: grid; gap: 1rem; margin-bottom: 1rem; }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+        .grid-item { background: var(--tw-slate-100); border: 2px dashed var(--tw-slate-300); border-radius: 0.375rem; padding: 1rem; text-align: center; font-size: 0.75rem; color: var(--tw-slate-600); font-weight: 500; }
+        /* Flexbox */
+        .flex-showcase { display: flex; gap: 0.5rem; background: var(--tw-slate-100); padding: 1rem; border-radius: 0.375rem; margin-bottom: 0.5rem; }
+        .flex-item { background: var(--tw-indigo-500); color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; }
+        /* Animation */
+        .animate-demo { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .animate-box { width: 64px; height: 64px; background: var(--tw-indigo-500); border-radius: 0.5rem; }
+        .animate-spin { animation: spin 1s linear infinite; }
+        .animate-bounce { animation: bounce 1s infinite; }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); } 50% { transform: translateY(0); animation-timing-function: cubic-bezier(0,0,0.2,1); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        /* Code Block */
+        .code-block { background: var(--tw-slate-900); color: #e2e8f0; padding: 1.5rem; border-radius: 0.5rem; font-family: ui-monospace, monospace; font-size: 0.875rem; overflow-x: auto; line-height: 1.7; }
+        .code-keyword { color: #c084fc; }
+        .code-string { color: #86efac; }
+        .code-class { color: #60a5fa; }
+        .code-comment { color: var(--tw-slate-500); }
+        /* Footer */
+        footer { background: var(--tw-slate-900); color: white; padding: 4rem 0; }
+        footer a { color: var(--tw-slate-400); text-decoration: none; }
+        footer a:hover { color: white; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .text-9xl { font-size: 4rem; }
+            .text-7xl { font-size: 2.5rem; }
+            .grid-cols-4, .grid-cols-6 { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 32 32" fill="none"><path d="M5 7l8-4 8 4v10l-8 4-8-4V7z" fill="#0EA5E9"/><path d="M13 11l8-4v10l-8 4V11z" fill="#38BDF8"/><path d="M5 7l8 4v10l-8-4V7z" fill="#7DD3FC"/></svg>
+                    Tailwind CSS
+                </div>
+                <div class="nav-links">
+                    <a href="#colors" class="nav-link">Colors</a>
+                    <a href="#typography" class="nav-link">Typography</a>
+                    <a href="#components" class="nav-link">Components</a>
+                    <a href="#" class="nav-cta">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    v3.4 Now Available
+                </div>
+                <h1>Rapidly build modern websites<br>without leaving your HTML.</h1>
+                <p>A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn-white">Get Started</a>
+                    <a href="#" class="btn-outline-white">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;margin-right:0.5rem;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.38-1.55 6.38-6.93A6.35 6.35 0 0 0 19 4.28a5.88 5.88 0 0 0-.15-1.59c-.07-.26-.28-.33-.56-.2-1.48.63-2.11.75-3.29-.23a6.63 6.63 0 0 0-6.78 0c-1.18.98-1.81.86-3.29.23-.28-.13-.49-.06-.56.2a5.88 5.88 0 0 0-.15 1.59 6.35 6.35 0 0 0 2.34 5.12c0 5.38 3.24 6.58 6.38 6.93a3.37 3.37 0 0 0-.94 2.61V22"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="colors">
+        <div class="container">
+            <div class="section-header">
+                <h2>Color Palette</h2>
+                <p>Beautiful, accessible default color palette with semantic naming.</p>
+            </div>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-slate-50);"></div>
+                    <div class="color-info"><div class="color-name">slate-50</div><div class="color-hex">#f8fafc</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-slate-100);"></div>
+                    <div class="color-info"><div class="color-name">slate-100</div><div class="color-hex">#f1f5f9</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-slate-500);"></div>
+                    <div class="color-info"><div class="color-name">slate-500</div><div class="color-hex">#64748b</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-slate-900);"></div>
+                    <div class="color-info"><div class="color-name">slate-900</div><div class="color-hex">#0f172a</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-blue-500);"></div>
+                    <div class="color-info"><div class="color-name">blue-500</div><div class="color-hex">#3b82f6</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-blue-600);"></div>
+                    <div class="color-info"><div class="color-name">blue-600</div><div class="color-hex">#2563eb</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-indigo-500);"></div>
+                    <div class="color-info"><div class="color-name">indigo-500</div><div class="color-hex">#6366f1</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-violet-500);"></div>
+                    <div class="color-info"><div class="color-name">violet-500</div><div class="color-hex">#8b5cf6</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-emerald-500);"></div>
+                    <div class="color-info"><div class="color-name">emerald-500</div><div class="color-hex">#10b981</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-rose-500);"></div>
+                    <div class="color-info"><div class="color-name">rose-500</div><div class="color-hex">#f43f5e</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-amber-500);"></div>
+                    <div class="color-info"><div class="color-name">amber-500</div><div class="color-hex">#f59e0b</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-preview" style="background: var(--tw-amber-400);"></div>
+                    <div class="color-info"><div class="color-name">amber-400</div><div class="color-hex">#fbbf24</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--tw-slate-50);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Gradient Presets</h2>
+                <p>Ready-to-use gradient combinations.</p>
+            </div>
+            <div class="gradient-grid">
+                <div class="gradient-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><span class="gradient-label">bg-gradient-to-br from-indigo-500 to-purple-600</span></div>
+                <div class="gradient-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><span class="gradient-label">from-pink-400 to-rose-500</span></div>
+                <div class="gradient-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"><span class="gradient-label">from-blue-400 to-cyan-400</span></div>
+                <div class="gradient-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"><span class="gradient-label">from-emerald-400 to-teal-300</span></div>
+                <div class="gradient-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"><span class="gradient-label">from-rose-400 to-amber-300</span></div>
+                <div class="gradient-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"><span class="gradient-label">from-cyan-400 to-violet-900</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="typography">
+        <div class="container">
+            <div class="section-header">
+                <h2>Typography Scale</h2>
+                <p>Comprehensive type scale with line heights and letter spacing.</p>
+            </div>
+            <div class="type-scale">
+                <div class="type-item"><span class="type-meta">text-9xl</span><span class="type-preview text-9xl">Aa</span></div>
+                <div class="type-item"><span class="type-meta">text-7xl</span><span class="type-preview text-7xl">Heading 7xl</span></div>
+                <div class="type-item"><span class="type-meta">text-5xl</span><span class="type-preview text-5xl">Heading 5xl</span></div>
+                <div class="type-item"><span class="type-meta">text-3xl</span><span class="type-preview text-3xl">Heading 3xl</span></div>
+                <div class="type-item"><span class="type-meta">text-xl</span><span class="type-preview text-xl">Large Text</span></div>
+                <div class="type-item"><span class="type-meta">text-base</span><span class="type-preview text-base">Base text size for body content</span></div>
+                <div class="type-item"><span class="type-meta">text-sm</span><span class="type-preview text-sm">Small text for captions and labels</span></div>
+                <div class="type-item"><span class="type-meta">text-xs</span><span class="type-preview text-xs">Extra small text for fine print</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--tw-slate-50);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Spacing Scale</h2>
+                <p>Consistent spacing with 0.25rem (4px) base unit.</p>
+            </div>
+            <div class="spacing-grid">
+                <div class="spacing-item"><div class="spacing-box" style="width: 4px; height: 4px;"></div><div class="spacing-label">1 (4px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 8px; height: 8px;"></div><div class="spacing-label">2 (8px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 12px; height: 12px;"></div><div class="spacing-label">3 (12px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 16px; height: 16px;"></div><div class="spacing-label">4 (16px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 24px; height: 24px;"></div><div class="spacing-label">6 (24px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 32px; height: 32px;"></div><div class="spacing-label">8 (32px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 40px; height: 40px;"></div><div class="spacing-label">10 (40px)</div></div>
+                <div class="spacing-item"><div class="spacing-box" style="width: 48px; height: 48px;"></div><div class="spacing-label">12 (48px)</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Shadow Scale</h2>
+                <p>Box shadow utilities for depth and elevation.</p>
+            </div>
+            <div class="shadow-grid">
+                <div class="shadow-item shadow-sm">shadow-sm</div>
+                <div class="shadow-item shadow">shadow</div>
+                <div class="shadow-item shadow-md">shadow-md</div>
+                <div class="shadow-item shadow-lg">shadow-lg</div>
+                <div class="shadow-item shadow-xl">shadow-xl</div>
+                <div class="shadow-item shadow-2xl">shadow-2xl</div>
+                <div class="shadow-item shadow-inner" style="background: var(--tw-slate-100);">shadow-inner</div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--tw-slate-50);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Border Radius</h2>
+                <p>Consistent corner rounding utilities.</p>
+            </div>
+            <div class="radius-grid">
+                <div class="radius-item rounded-none">none</div>
+                <div class="radius-item rounded-sm">sm</div>
+                <div class="radius-item rounded">base</div>
+                <div class="radius-item rounded-md">md</div>
+                <div class="radius-item rounded-lg">lg</div>
+                <div class="radius-item rounded-xl">xl</div>
+                <div class="radius-item rounded-2xl">2xl</div>
+                <div class="radius-item rounded-3xl">3xl</div>
+                <div class="radius-item rounded-full">full</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="components">
+        <div class="container">
+            <div class="section-header">
+                <h2>Component Examples</h2>
+                <p>Common UI patterns built with Tailwind utilities.</p>
+            </div>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-title">Buttons</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <button class="btn btn-primary">Primary</button>
+                        <button class="btn btn-success">Success</button>
+                        <button class="btn btn-danger">Danger</button>
+                        <button class="btn btn-amber">Warning</button>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Form Inputs</div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <label class="label">Email Address</label>
+                            <input type="email" class="input" placeholder="you@example.com">
+                        </div>
+                        <div>
+                            <label class="label">Username</label>
+                            <input type="text" class="input input-error" value="@invalid">
+                            <div class="error-text">Username cannot contain special characters.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Badges</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="badge badge-blue">New</span>
+                        <span class="badge badge-green">Active</span>
+                        <span class="badge badge-yellow">Pending</span>
+                        <span class="badge badge-red">Error</span>
+                        <span class="badge badge-purple">Beta</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Alerts</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div class="alert alert-info">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                            <span style="font-size: 0.875rem;">A new software update is available.</span>
+                        </div>
+                        <div class="alert alert-success">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span style="font-size: 0.875rem;">Changes saved successfully!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Grid System</div>
+                    <div class="grid-showcase grid-cols-4">
+                        <div class="grid-item">1</div><div class="grid-item">2</div><div class="grid-item">3</div><div class="grid-item">4</div>
+                    </div>
+                    <div class="grid-showcase grid-cols-3">
+                        <div class="grid-item">1</div><div class="grid-item">2</div><div class="grid-item">3</div>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Flexbox</div>
+                    <div class="flex-showcase" style="justify-content: flex-start;"><div class="flex-item">Start</div></div>
+                    <div class="flex-showcase" style="justify-content: center;"><div class="flex-item">Center</div></div>
+                    <div class="flex-showcase" style="justify-content: flex-end;"><div class="flex-item">End</div></div>
+                    <div class="flex-showcase" style="justify-content: space-between;"><div class="flex-item">1</div><div class="flex-item">2</div><div class="flex-item">3</div></div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Animations</div>
+                    <div class="animate-demo">
+                        <div class="animate-box animate-spin"></div>
+                        <div class="animate-box animate-bounce"></div>
+                        <div class="animate-box animate-pulse"></div>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-title">Card Example</div>
+                    <div class="card-example shadow-md">
+                        <div class="card-image"></div>
+                        <div class="card-body">
+                            <div class="card-heading">Card Title</div>
+                            <div class="card-text">This is a card component built with Tailwind utilities.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--tw-slate-900);">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: white;">Write HTML, Not CSS</h2>
+                <p style="color: var(--tw-slate-400);">Style directly in your markup with utility classes.</p>
+            </div>
+            <div class="code-block">
+<span class="code-keyword">&lt;div</span> <span class="code-class">class</span>=<span class="code-string">"flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600"</span><span class="code-keyword">&gt;</span>
+  <span class="code-keyword">&lt;div</span> <span class="code-class">class</span>=<span class="code-string">"p-8 bg-white rounded-2xl shadow-2xl max-w-md"</span><span class="code-keyword">&gt;</span>
+    <span class="code-keyword">&lt;h1</span> <span class="code-class">class</span>=<span class="code-string">"text-3xl font-bold text-gray-900 mb-4"</span><span class="code-keyword">&gt;</span>Hello World<span class="code-keyword">&lt;/h1&gt;</span>
+    <span class="code-keyword">&lt;p</span> <span class="code-class">class</span>=<span class="code-string">"text-gray-600 mb-6"</span><span class="code-keyword">&gt;</span>Build modern websites rapidly.<span class="code-keyword">&lt;/p&gt;</span>
+    <span class="code-keyword">&lt;button</span> <span class="code-class">class</span>=<span class="code-string">"w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"</span><span class="code-keyword">&gt;</span>
+      Get Started
+    <span class="code-keyword">&lt;/button&gt;</span>
+  <span class="code-keyword">&lt;/div&gt;</span>
+<span class="code-keyword">&lt;/div&gt;</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="color: var(--tw-slate-400); font-size: 0.875rem;">Tailwind CSS — A utility-first CSS framework for rapidly building custom designs.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

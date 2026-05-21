@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Aria Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --apple-bg: #ffffff; --apple-text: #1d1d1f; --apple-secondary: #86868b;
+            --apple-blue: #0071e3; --apple-blue-hover: #0077ed; --apple-gray: #f5f5f7;
+            --apple-border: #d2d2d7; --apple-red: #ff3b30; --apple-green: #34c759;
+            --apple-orange: #ff9500; --apple-purple: #af52de;
+        }
+        html { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        body { background: var(--apple-bg); color: var(--apple-text); line-height: 1.47059; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 1024px; margin: 0 auto; padding: 0 1.5rem; }
+        /* Navigation - Apple Style */
+        nav { background: rgba(255,255,255,0.8); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
+        .nav-inner { display: flex; align-items: center; height: 52px; gap: 2rem; }
+        .logo { font-weight: 600; font-size: 1.125rem; display: flex; align-items: center; gap: 0.75rem; }
+        .logo svg { width: 24px; height: 24px; }
+        .nav-links { display: flex; gap: 2rem; margin-left: auto; align-items: center; }
+        .nav-links a { color: var(--apple-text); text-decoration: none; font-size: 0.75rem; opacity: 0.8; transition: opacity 0.2s; font-weight: 400; }
+        .nav-links a:hover { opacity: 1; }
+        /* Hero */
+        .hero { padding: 5rem 0; text-align: center; background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%); }
+        .hero h1 { font-size: 3.5rem; font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 0.75rem; }
+        .hero-subtitle { font-size: 1.25rem; color: var(--apple-secondary); max-width: 600px; margin: 0 auto 2rem; font-weight: 400; }
+        .hero-links { display: flex; gap: 2rem; justify-content: center; }
+        .hero-link { color: var(--apple-blue); text-decoration: none; font-size: 1rem; display: flex; align-items: center; gap: 0.25rem; }
+        .hero-link:hover { text-decoration: underline; }
+        .hero-link::after { content: '›'; font-size: 1.25rem; }
+        /* Section */
+        section { padding: 4rem 0; border-bottom: 1px solid var(--apple-gray); }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--apple-secondary); font-size: 1.0625rem; max-width: 600px; margin: 0 auto; }
+        /* Feature Grid */
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .feature-card { text-align: center; padding: 1.5rem; }
+        .feature-icon { width: 56px; height: 56px; margin: 0 auto 1rem; background: var(--apple-gray); border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+        .feature-icon svg { color: var(--apple-blue); }
+        .feature-card h3 { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.875rem; color: var(--apple-secondary); line-height: 1.4; }
+        /* Component Demos - Apple Style */
+        .demo-section { background: var(--apple-gray); padding: 2rem; border-radius: 20px; margin-bottom: 1.5rem; }
+        .demo-title { font-size: 0.875rem; font-weight: 600; color: var(--apple-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+        /* Buttons - Apple Style */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; padding: 0.625rem 1rem;
+            border-radius: 980px; font-size: 0.875rem; font-weight: 400; text-decoration: none;
+            cursor: pointer; border: none; transition: all 0.2s; min-width: 100px;
+        }
+        .btn-filled { background: var(--apple-blue); color: white; }
+        .btn-filled:hover { background: var(--apple-blue-hover); }
+        .btn-tonal { background: var(--apple-gray); color: var(--apple-text); }
+        .btn-tonal:hover { background: #e8e8ed; }
+        .btn-plain { background: transparent; color: var(--apple-blue); }
+        .btn-plain:hover { text-decoration: underline; }
+        .btn-disabled { opacity: 0.32; cursor: not-allowed; }
+        /* Form Elements - Apple Style */
+        .input {
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--apple-border);
+            border-radius: 10px; font-size: 1rem; background: rgba(255,255,255,0.8);
+            transition: all 0.2s; font-family: inherit; color: var(--apple-text);
+        }
+        .input:focus { outline: none; border-color: var(--apple-blue); box-shadow: 0 0 0 4px rgba(0,113,227,0.15); }
+        .input-error { border-color: var(--apple-red); }
+        .label { display: block; font-size: 0.875rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--apple-secondary); }
+        .error { font-size: 0.75rem; color: var(--apple-red); margin-top: 0.375rem; }
+        /* Toggle - Apple Style Switch */
+        .switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .switch-track { width: 51px; height: 31px; background: #e9e9eb; border-radius: 16px; position: relative; transition: background 0.2s; }
+        .switch-thumb { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
+        .switch.active .switch-track { background: #34c759; }
+        .switch.active .switch-thumb { transform: translateX(20px); }
+        /* Checkbox & Radio - Apple Style */
+        .checkbox-label, .radio-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9375rem; cursor: pointer; }
+        .checkbox, .radio { width: 20px; height: 20px; accent-color: var(--apple-blue); }
+        /* Segmented Control - Apple Style */
+        .segmented-control { display: inline-flex; background: #e5e5ea; border-radius: 9px; padding: 2px; }
+        .segment { padding: 0.5rem 1.25rem; border-radius: 7px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; background: transparent; color: var(--apple-text); }
+        .segment.active { background: white; box-shadow: 0 3px 8px rgba(0,0,0,0.12), 0 3px 1px rgba(0,0,0,0.04); }
+        /* Stepper */
+        .stepper { display: flex; align-items: center; gap: 0.5rem; }
+        .stepper-btn { width: 32px; height: 32px; border: 1px solid var(--apple-border); border-radius: 50%; background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--apple-text); }
+        .stepper-btn:hover { background: var(--apple-gray); }
+        .stepper-value { min-width: 40px; text-align: center; font-size: 1rem; font-weight: 500; }
+        /* Alert - Apple Style */
+        .alert { padding: 1rem; border-radius: 12px; display: flex; gap: 0.75rem; align-items: flex-start; }
+        .alert-info { background: rgba(0,113,227,0.08); }
+        .alert-success { background: rgba(52,199,89,0.08); }
+        .alert-error { background: rgba(255,59,48,0.08); }
+        /* List Box */
+        .list-box { border: 1px solid var(--apple-border); border-radius: 10px; overflow: hidden; }
+        .list-item { padding: 0.875rem 1rem; border-bottom: 1px solid var(--apple-border); font-size: 0.9375rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background 0.15s; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item:hover { background: var(--apple-gray); }
+        .list-item.selected { color: var(--apple-blue); }
+        /* Tabs - Apple Style */
+        .tabs { border-bottom: 1px solid var(--apple-border); display: flex; }
+        .tab { padding: 0.75rem 1.25rem; font-size: 0.9375rem; color: var(--apple-secondary); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
+        .tab:hover { color: var(--apple-text); }
+        .tab.active { color: var(--apple-blue); border-bottom-color: var(--apple-blue); }
+        /* Slider - Apple Style */
+        .slider-container { padding: 1rem 0; }
+        .slider { -webkit-appearance: none; width: 100%; height: 4px; background: #e5e5ea; border-radius: 2px; outline: none; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: white; border: 0.5px solid rgba(0,0,0,0.04); border-radius: 50%; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.16); }
+        /* Progress */
+        .progress { height: 4px; background: #e5e5ea; border-radius: 2px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--apple-blue); border-radius: 2px; }
+        /* Meter */
+        .meter-container { position: relative; height: 8px; background: #e5e5ea; border-radius: 4px; overflow: hidden; }
+        .meter-fill { height: 100%; border-radius: 4px; }
+        /* Dialog/Modal Preview */
+        .dialog-preview { background: white; border-radius: 14px; box-shadow: 0 32px 64px rgba(0,0,0,0.3); padding: 1.25rem; max-width: 320px; margin: 0 auto; text-align: center; }
+        .dialog-title { font-size: 1.0625rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .dialog-text { font-size: 0.8125rem; color: var(--apple-secondary); margin-bottom: 1rem; }
+        .dialog-actions { display: flex; gap: 0.75rem; justify-content: center; }
+        /* Popover Preview */
+        .popover-trigger { background: var(--apple-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.875rem; }
+        .popover-content { background: rgba(44,44,46,0.95); backdrop-filter: blur(20px); color: white; padding: 0.75rem; border-radius: 10px; font-size: 0.8125rem; }
+        /* Search Field */
+        .search-field { position: relative; }
+        .search-input { width: 100%; padding: 0.625rem 1rem 0.625rem 2.5rem; border: none; border-radius: 10px; background: var(--apple-gray); font-size: 0.9375rem; }
+        .search-input:focus { outline: none; background: white; box-shadow: 0 0 0 4px rgba(0,113,227,0.15); }
+        .search-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--apple-secondary); }
+        /* Code Block */
+        .code-block { background: #1d1d1f; color: #f5f5f7; padding: 1.5rem; border-radius: 12px; font-family: 'SF Mono', monospace; font-size: 0.8125rem; overflow-x: auto; line-height: 1.5; }
+        .code-keyword { color: #ff7b72; }
+        .code-string { color: #a5d6ff; }
+        .code-func { color: #d2a8ff; }
+        .code-comment { color: #8b949e; }
+        /* Footer */
+        footer { padding: 3rem 0; text-align: center; }
+        footer p { color: var(--apple-secondary); font-size: 0.75rem; }
+        @media (max-width: 768px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    React Aria
+                </div>
+                <div class="nav-links">
+                    <a href="#">React Aria</a>
+                    <a href="#">React Stately</a>
+                    <a href="#">React Spectrum</a>
+                    <a href="#">Internationalization</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>React Aria</h1>
+            <p class="hero-subtitle">A library of React Hooks that provides accessible UI primitives for your design system.</p>
+            <div class="hero-links">
+                <a href="#" class="hero-link">Get Started</a>
+                <a href="#" class="hero-link">Components</a>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Accessibility First</h2>
+                <p>React Aria provides accessibility and behavior for many common UI components.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>Keyboard Support</h3>
+                    <p>Full keyboard navigation and focus management for all components.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h3M4 17v3h3M20 7V4h-3M20 17v3h-3M9 9h6v6H9z"/></svg>
+                    </div>
+                    <h3>Screen Reader Support</h3>
+                    <p>Complete ARIA support for assistive technologies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3>Internationalization</h3>
+                    <p>Built-in support for 30+ languages and RTL.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Component Hooks</h2>
+                <p>Examples of accessible UI patterns built with React Aria.</p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="demo-section">
+                <div class="demo-title">Buttons</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                    <button class="btn btn-filled">Filled</button>
+                    <button class="btn btn-tonal">Tonal</button>
+                    <button class="btn btn-plain">Plain</button>
+                    <button class="btn btn-filled btn-disabled" disabled>Disabled</button>
+                </div>
+            </div>
+
+            <!-- Form Controls -->
+            <div class="demo-section">
+                <div class="demo-title">Text Field</div>
+                <div style="max-width: 320px;">
+                    <div style="margin-bottom: 1rem;">
+                        <label class="label">Name</label>
+                        <input type="text" class="input" placeholder="Enter your name">
+                    </div>
+                    <div>
+                        <label class="label">Email</label>
+                        <input type="email" class="input input-error" value="invalid-email">
+                        <div class="error">Please enter a valid email address.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Switch & Checkbox -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div class="demo-section">
+                    <div class="demo-title">Switch</div>
+                    <label class="switch active" onclick="this.classList.toggle('active')">
+                        <div class="switch-track"><div class="switch-thumb"></div></div>
+                        <span>Airplane Mode</span>
+                    </label>
+                    <label class="switch" onclick="this.classList.toggle('active')" style="margin-top: 1rem;">
+                        <div class="switch-track"><div class="switch-thumb"></div></div>
+                        <span>Wi-Fi</span>
+                    </label>
+                </div>
+                <div class="demo-section">
+                    <div class="demo-title">Checkbox</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <label class="checkbox-label"><input type="checkbox" class="checkbox" checked> Notifications</label>
+                        <label class="checkbox-label"><input type="checkbox" class="checkbox"> Email updates</label>
+                        <label class="checkbox-label"><input type="checkbox" class="checkbox"> Marketing</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segmented Control -->
+            <div class="demo-section" style="text-align: center;">
+                <div class="demo-title">Segmented Control</div>
+                <div class="segmented-control">
+                    <button class="segment active" onclick="setSegment(this)">Daily</button>
+                    <button class="segment" onclick="setSegment(this)">Weekly</button>
+                    <button class="segment" onclick="setSegment(this)">Monthly</button>
+                </div>
+            </div>
+
+            <!-- Stepper -->
+            <div class="demo-section">
+                <div class="demo-title">Stepper</div>
+                <div class="stepper">
+                    <button class="stepper-btn" onclick="changeStep(-1)">−</button>
+                    <div class="stepper-value" id="stepperValue">1</div>
+                    <button class="stepper-btn" onclick="changeStep(1)">+</button>
+                </div>
+            </div>
+
+            <!-- List Box -->
+            <div class="demo-section">
+                <div class="demo-title">List Box</div>
+                <div class="list-box">
+                    <div class="list-item selected">
+                        <span>System</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--apple-blue);"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="list-item">Light</div>
+                    <div class="list-item">Dark</div>
+                    <div class="list-item">Auto</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="demo-section">
+                <div class="demo-title">Tabs</div>
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab(this)">Mac</button>
+                    <button class="tab" onclick="showTab(this)">iPad</button>
+                    <button class="tab" onclick="showTab(this)">iPhone</button>
+                    <button class="tab" onclick="showTab(this)">Watch</button>
+                </div>
+            </div>
+
+            <!-- Slider -->
+            <div class="demo-section">
+                <div class="demo-title">Slider</div>
+                <input type="range" min="0" max="100" value="50" class="slider">
+            </div>
+
+            <!-- Progress & Meter -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div class="demo-section">
+                    <div class="demo-title">Progress Bar</div>
+                    <div class="progress"><div class="progress-bar" style="width: 70%;"></div></div>
+                </div>
+                <div class="demo-section">
+                    <div class="demo-title">Meter</div>
+                    <div class="meter-container">
+                        <div class="meter-fill" style="width: 60%; background: var(--apple-green);"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--apple-secondary); margin-top: 0.5rem;">
+                        <span>Storage</span><span>60% used</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dialog Preview -->
+            <div class="demo-section" style="background: rgba(0,0,0,0.5);">
+                <div class="demo-title" style="color: white;">Dialog</div>
+                <div class="dialog-preview">
+                    <div class="dialog-title">Allow Access?</div>
+                    <div class="dialog-text">This app would like to access your location.</div>
+                    <div class="dialog-actions">
+                        <button class="btn btn-plain">Don't Allow</button>
+                        <button class="btn btn-filled">Allow</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Field -->
+            <div class="demo-section">
+                <div class="demo-title">Search Field</div>
+                <div class="search-field" style="max-width: 300px;">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input type="search" class="search-input" placeholder="Search">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple API</h2>
+                <p>React Aria handles complex accessibility patterns for you.</p>
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> { useButton } <span class="code-keyword">from</span> <span class="code-string">'react-aria'</span>;
+
+<span class="code-keyword">function</span> <span class="code-func">Button</span>(props) {
+  <span class="code-keyword">let</span> ref = React.<span class="code-func">useRef</span>();
+  <span class="code-keyword">let</span> { buttonProps } = <span class="code-func">useButton</span>(props, ref);
+
+  <span class="code-keyword">return</span> (
+    &lt;button {...buttonProps} ref={ref}&gt;
+      {props.children}
+    &lt;/button&gt;
+  );
+}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>React Aria — Accessibility primitives for React</p>
+        </div>
+    </footer>
+
+    <script>
+        function setSegment(btn) {
+            document.querySelectorAll('.segment').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        function changeStep(delta) {
+            const val = document.getElementById('stepperValue');
+            let num = parseInt(val.textContent) + delta;
+            if (num < 0) num = 0;
+            if (num > 99) num = 99;
+            val.textContent = num;
+        }
+        function showTab(btn) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>

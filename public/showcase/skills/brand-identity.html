@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Identity Skill</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --luxury-cream: #faf8f5; --luxury-black: #1a1a1a; --luxury-charcoal: #2d2d2d;
+            --luxury-gold: #c9a962; --luxury-gold-light: #d4b978; --luxury-gray: #6b6b6b;
+            --luxury-border: #e5e2dd;
+        }
+        html { font-family: 'Cormorant Garamond', Georgia, serif; }
+        body { background: var(--luxury-cream); color: var(--luxury-black); line-height: 1.6; }
+        .sans { font-family: 'Inter', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        /* Navigation */
+        nav { position: sticky; top: 0; background: rgba(250,248,245,0.95); backdrop-filter: blur(10px); z-index: 50; border-bottom: 1px solid var(--luxury-border); }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 3rem; }
+        .nav-links a { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--luxury-charcoal); text-decoration: none; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--luxury-gold); }
+        /* Hero */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4rem 0; }
+        .hero-label { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--luxury-gold); margin-bottom: 2rem; }
+        .hero h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 em { font-style: italic; font-weight: 400; }
+        .hero-subtitle { font-size: 1.125rem; color: var(--luxury-gray); max-width: 500px; margin: 0 auto; font-style: italic; }
+        .hero-divider { width: 60px; height: 1px; background: var(--luxury-gold); margin: 3rem auto; }
+        /* Section */
+        section { padding: 6rem 0; border-bottom: 1px solid var(--luxury-border); }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-tag { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--luxury-gold); margin-bottom: 1rem; }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; }
+        /* Brand Statement */
+        .brand-statement { text-align: center; max-width: 800px; margin: 0 auto; }
+        .brand-statement p { font-size: 1.5rem; line-height: 1.8; color: var(--luxury-charcoal); margin-bottom: 2rem; }
+        .brand-statement p::first-letter { font-size: 3rem; float: left; line-height: 1; margin-right: 0.5rem; margin-top: -0.25rem; color: var(--luxury-gold); }
+        /* Logo Grid */
+        .logo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+        .logo-card { padding: 3rem; background: white; border: 1px solid var(--luxury-border); display: flex; align-items: center; justify-content: center; min-height: 200px; }
+        .logo-variant { font-size: 2rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+        .logo-variant.stacked { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+        .logo-variant.icon { width: 60px; height: 60px; border: 2px solid var(--luxury-black); display: flex; align-items: center; justify-content: center; }
+        /* Color Palette */
+        .palette-showcase { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1px; background: var(--luxury-border); }
+        .palette-item { padding: 3rem 2rem; display: flex; flex-direction: column; justify-content: flex-end; min-height: 200px; }
+        .palette-name { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem; opacity: 0.7; }
+        .palette-hex { font-size: 0.875rem; }
+        /* Typography Spec */
+        .type-spec { max-width: 800px; margin: 0 auto; }
+        .type-row { display: flex; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--luxury-border); }
+        .type-label { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--luxury-gray); width: 150px; }
+        .type-sample { flex: 1; }
+        .type-display { font-size: 4rem; font-weight: 300; }
+        .type-heading { font-size: 2.5rem; font-weight: 400; }
+        .type-subheading { font-size: 1.5rem; font-weight: 400; }
+        .type-body { font-size: 1.125rem; line-height: 1.8; }
+        .type-caption { font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        /* Brand Assets */
+        .assets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .asset-card { aspect-ratio: 1; background: white; border: 1px solid var(--luxury-border); padding: 2rem; display: flex; flex-direction: column; }
+        .asset-preview { flex: 1; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+        .asset-pattern { width: 100%; height: 100%; background: repeating-linear-gradient(45deg, transparent, transparent 10px, var(--luxury-gold) 10px, var(--luxury-gold) 11px); opacity: 0.1; }
+        .asset-label { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--luxury-gray); }
+        /* Business Cards */
+        .card-showcase { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+        .business-card { aspect-ratio: 1.75; background: white; border: 1px solid var(--luxury-border); padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+        .business-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--luxury-gold); }
+        .card-dark { background: var(--luxury-black); color: white; border-color: var(--luxury-charcoal); }
+        .card-dark::before { background: var(--luxury-gold); }
+        .card-logo { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.15em; }
+        .card-info { text-align: right; }
+        .card-name { font-size: 1.25rem; margin-bottom: 0.25rem; }
+        .card-title { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; }
+        /* Photography Style */
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .photo-item { aspect-ratio: 4/5; background: linear-gradient(135deg, #e8e4df, #d4d0c9); position: relative; overflow: hidden; }
+        .photo-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%); }
+        .photo-label { position: absolute; bottom: 1rem; left: 1rem; font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: white; z-index: 1; }
+        /* Guidelines */
+        .guidelines { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+        .guideline-item h3 { font-size: 1.25rem; font-weight: 400; margin-bottom: 1rem; color: var(--luxury-gold); }
+        .guideline-item p { font-size: 1rem; color: var(--luxury-gray); line-height: 1.8; }
+        .guideline-do { border-left: 2px solid var(--luxury-gold); padding-left: 1.5rem; }
+        .guideline-dont { border-left: 2px solid #c9a96233; padding-left: 1.5rem; opacity: 0.6; }
+        /* Footer */
+        footer { padding: 4rem 0; text-align: center; }
+        footer .logo { margin-bottom: 1rem; }
+        footer p { font-family: 'Inter', sans-serif; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--luxury-gray); }
+        @media (max-width: 768px) {
+            .logo-grid, .card-showcase, .guidelines { grid-template-columns: 1fr; }
+            .assets-grid { grid-template-columns: repeat(2, 1fr); }
+            .photo-grid { grid-template-columns: 1fr; }
+            .palette-showcase { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">MAISON</div>
+                <div class="nav-links">
+                    <a href="#brand">Brand</a>
+                    <a href="#colors">Colors</a>
+                    <a href="#typography">Typography</a>
+                    <a href="#applications">Applications</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-label">Brand Identity</div>
+            <h1>Timeless <em>Elegance</em><br>Modern Sophistication</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">A comprehensive brand identity system designed for luxury, crafted for distinction.</p>
+        </div>
+    </header>
+
+    <section id="brand">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Philosophy</div>
+                <h2 class="section-title">Brand Statement</h2>
+            </div>
+            <div class="brand-statement">
+                <p>Maison represents the intersection of heritage craftsmanship and contemporary design. Every element of our identity speaks to a commitment to excellence, from the carefully chosen typography that evokes classical beauty to the refined color palette that whispers rather than shouts. This is a brand for those who appreciate the subtleties that distinguish the extraordinary from the ordinary.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Visual Identity</div>
+                <h2 class="section-title">Logo System</h2>
+            </div>
+            <div class="logo-grid">
+                <div class="logo-card">
+                    <div class="logo-variant">MAISON</div>
+                </div>
+                <div class="logo-card" style="background: var(--luxury-black);">
+                    <div class="logo-variant" style="color: white;">MAISON</div>
+                </div>
+                <div class="logo-card">
+                    <div class="logo-variant stacked">
+                        <span>MAI</span>
+                        <span>SON</span>
+                    </div>
+                </div>
+                <div class="logo-card">
+                    <div class="logo-variant icon" style="font-family: 'Inter', sans-serif; font-size: 1.5rem; letter-spacing: 0; font-weight: 700;">M</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="colors" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Palette</div>
+                <h2 class="section-title">Color System</h2>
+            </div>
+            <div class="palette-showcase">
+                <div class="palette-item" style="background: #1a1a1a; color: white; grid-row: span 2;">
+                    <div class="palette-name">Primary</div>
+                    <div class="palette-hex">#1A1A1A</div>
+                </div>
+                <div class="palette-item" style="background: #c9a962;">
+                    <div class="palette-name">Accent</div>
+                    <div class="palette-hex">#C9A962</div>
+                </div>
+                <div class="palette-item" style="background: #faf8f5;">
+                    <div class="palette-name">Background</div>
+                    <div class="palette-hex">#FAF8F5</div>
+                </div>
+                <div class="palette-item" style="background: #2d2d2d; color: white;">
+                    <div class="palette-name">Secondary</div>
+                    <div class="palette-hex">#2D2D2D</div>
+                </div>
+                <div class="palette-item" style="background: #6b6b6b; color: white;">
+                    <div class="palette-name">Muted</div>
+                    <div class="palette-hex">#6B6B6B</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="typography">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Typography</div>
+                <h2 class="section-title">Type System</h2>
+            </div>
+            <div class="type-spec">
+                <div class="type-row">
+                    <div class="type-label sans">Display</div>
+                    <div class="type-sample type-display">Maison</div>
+                </div>
+                <div class="type-row">
+                    <div class="type-label sans">Heading</div>
+                    <div class="type-sample type-heading">The Art of Living</div>
+                </div>
+                <div class="type-row">
+                    <div class="type-label sans">Subheading</div>
+                    <div class="type-sample type-subheading">Crafted with intention, designed for distinction</div>
+                </div>
+                <div class="type-row">
+                    <div class="type-label sans">Body</div>
+                    <div class="type-sample type-body">Cormorant Garamond brings an elegant, literary quality to our communications. Its classical proportions and refined details embody the Maison ethos.</div>
+                </div>
+                <div class="type-row">
+                    <div class="type-label sans">Caption</div>
+                    <div class="type-sample type-caption">Details that define excellence</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Elements</div>
+                <h2 class="section-title">Brand Assets</h2>
+            </div>
+            <div class="assets-grid">
+                <div class="asset-card">
+                    <div class="asset-preview"><div class="asset-pattern"></div></div>
+                    <div class="asset-label sans">Pattern</div>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview">
+                        <div style="width: 40px; height: 40px; border: 2px solid var(--luxury-gold); transform: rotate(45deg);"></div>
+                    </div>
+                    <div class="asset-label sans">Iconography</div>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-preview">
+                        <div style="display: flex; gap: 4px;">
+                            <div style="width: 4px; height: 40px; background: var(--luxury-gold);"></div>
+                            <div style="width: 4px; height: 40px; background: var(--luxury-black);"></div>
+                            <div style="width: 4px; height: 40px; background: var(--luxury-gray);"></div>
+                        </div>
+                    </div>
+                    <div class="asset-label sans">Accents</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Applications</div>
+                <h2 class="section-title">Business Cards</h2>
+            </div>
+            <div class="card-showcase">
+                <div class="business-card">
+                    <div class="card-logo">MAISON</div>
+                    <div class="card-info">
+                        <div class="card-name">Victoria Laurent</div>
+                        <div class="card-title sans">Creative Director</div>
+                    </div>
+                </div>
+                <div class="business-card card-dark">
+                    <div class="card-logo">MAISON</div>
+                    <div class="card-info">
+                        <div class="card-name">Victoria Laurent</div>
+                        <div class="card-title sans">Creative Director</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Photography</div>
+                <h2 class="section-title">Visual Style</h2>
+            </div>
+            <div class="photo-grid">
+                <div class="photo-item"><div class="photo-label sans">Product</div></div>
+                <div class="photo-item"><div class="photo-label sans">Lifestyle</div></div>
+                <div class="photo-item"><div class="photo-label sans">Detail</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Standards</div>
+                <h2 class="section-title">Usage Guidelines</h2>
+            </div>
+            <div class="guidelines">
+                <div class="guideline-item guideline-do">
+                    <h3>Do</h3>
+                    <p>Maintain generous whitespace around the logo. Use the gold accent sparingly for maximum impact. Pair serif headings with clean sans-serif captions for elegant contrast.</p>
+                </div>
+                <div class="guideline-item guideline-dont">
+                    <h3>Don't</h3>
+                    <p>Distort or rotate the logo. Use more than three colors in any composition. Apply drop shadows or other effects to logotypes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo">MAISON</div>
+            <p>Brand Identity Guidelines &copy; 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

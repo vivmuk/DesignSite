@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park UI Design System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --swiss-bg: #fafafa; --swiss-text: #1a1a1a; --swiss-gray: #666666;
+            --swiss-light: #f0f0f0; --swiss-border: #e0e0e0; --swiss-muted: #999999;
+            --swiss-accent: #1a1a1a; --swiss-red: #ff0000;
+        }
+        html { font-family: 'Inter', -apple-system, sans-serif; }
+        body { background: var(--swiss-bg); color: var(--swiss-text); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+        /* Nav */
+        nav { background: white; border-bottom: 1px solid var(--swiss-border); position: sticky; top: 0; z-index: 50; }
+        .nav-inner { display: flex; align-items: center; height: 60px; gap: 2rem; }
+        .logo { font-weight: 600; font-size: 1.125rem; letter-spacing: -0.02em; }
+        .nav-links { display: flex; gap: 2rem; margin-left: auto; }
+        .nav-link { color: var(--swiss-gray); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+        .nav-link:hover { color: var(--swiss-text); }
+        /* Hero */
+        .hero { padding: 5rem 0; text-align: center; border-bottom: 1px solid var(--swiss-border); }
+        .hero h1 { font-size: 2.5rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: 1.125rem; color: var(--swiss-gray); max-width: 480px; margin: 0 auto 2rem; font-weight: 400; }
+        .hero-actions { display: flex; gap: 1rem; justify-content: center; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; font-size: 0.875rem; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+        .btn-primary { background: var(--swiss-text); color: white; border-color: var(--swiss-text); }
+        .btn-primary:hover { background: var(--swiss-gray); border-color: var(--swiss-gray); }
+        .btn-secondary { background: white; color: var(--swiss-text); border-color: var(--swiss-border); }
+        .btn-secondary:hover { border-color: var(--swiss-text); }
+        /* Sections */
+        section { padding: 4rem 0; border-bottom: 1px solid var(--swiss-border); }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+        .section-header p { color: var(--swiss-gray); font-size: 0.9375rem; }
+        /* Swiss Grid System Demo */
+        .grid-demo { display: grid; gap: 1px; background: var(--swiss-border); border: 1px solid var(--swiss-border); }
+        .grid-item { background: white; padding: 1.5rem; }
+        .grid-12 { grid-template-columns: repeat(12, 1fr); }
+        .grid-6 { grid-template-columns: repeat(6, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-span-2 { grid-column: span 2; }
+        .grid-span-3 { grid-column: span 3; }
+        .grid-span-4 { grid-column: span 4; }
+        .grid-span-6 { grid-column: span 6; }
+        /* Components */
+        .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .component-card { border: 1px solid var(--swiss-border); background: white; }
+        .component-header { padding: 0.875rem 1rem; border-bottom: 1px solid var(--swiss-border); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--swiss-gray); }
+        .component-body { padding: 1.5rem; }
+        /* Buttons - Swiss Style */
+        .swiss-btn { padding: 0.5rem 1rem; font-size: 0.8125rem; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid; }
+        .swiss-btn-filled { background: var(--swiss-text); color: white; border-color: var(--swiss-text); }
+        .swiss-btn-outline { background: white; color: var(--swiss-text); border-color: var(--swiss-border); }
+        .swiss-btn-outline:hover { border-color: var(--swiss-text); }
+        .swiss-btn-ghost { background: transparent; color: var(--swiss-text); border-color: transparent; }
+        .swiss-btn-ghost:hover { background: var(--swiss-light); }
+        /* Input */
+        .swiss-input { width: 100%; padding: 0.625rem 0.875rem; border: 1px solid var(--swiss-border); font-size: 0.875rem; transition: border-color 0.15s; }
+        .swiss-input:focus { outline: none; border-color: var(--swiss-text); }
+        .swiss-label { display: block; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; color: var(--swiss-gray); }
+        /* Badge */
+        .swiss-badge { display: inline-flex; padding: 0.125rem 0.5rem; font-size: 0.6875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+        .swiss-badge-outline { border: 1px solid var(--swiss-border); }
+        .swiss-badge-filled { background: var(--swiss-text); color: white; }
+        /* Alert */
+        .swiss-alert { padding: 1rem; border-left: 3px solid; font-size: 0.875rem; }
+        .swiss-alert-info { border-color: var(--swiss-text); background: var(--swiss-light); }
+        .swiss-alert-warning { border-color: #f59e0b; background: #fef3c7; }
+        .swiss-alert-error { border-color: #ef4444; background: #fee2e2; }
+        /* Tabs */
+        .swiss-tabs { display: flex; border-bottom: 1px solid var(--swiss-border); }
+        .swiss-tab { padding: 0.625rem 1rem; font-size: 0.8125rem; font-weight: 500; cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; color: var(--swiss-gray); }
+        .swiss-tab:hover { color: var(--swiss-text); }
+        .swiss-tab.active { color: var(--swiss-text); border-bottom-color: var(--swiss-text); }
+        /* Switch */
+        .swiss-switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .swiss-switch-track { width: 36px; height: 20px; background: var(--swiss-border); position: relative; transition: background 0.15s; }
+        .swiss-switch-thumb { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; transition: transform 0.15s; }
+        .swiss-switch.active .swiss-switch-track { background: var(--swiss-text); }
+        .swiss-switch.active .swiss-switch-thumb { transform: translateX(16px); }
+        /* Accordion */
+        .swiss-accordion { border: 1px solid var(--swiss-border); }
+        .swiss-accordion-item { border-bottom: 1px solid var(--swiss-border); }
+        .swiss-accordion-item:last-child { border-bottom: none; }
+        .swiss-accordion-trigger { width: 100%; padding: 1rem; display: flex; justify-content: space-between; align-items: center; background: none; border: none; font-size: 0.9375rem; cursor: pointer; text-align: left; }
+        .swiss-accordion-trigger:hover { background: var(--swiss-light); }
+        .swiss-accordion-icon { font-size: 0.75rem; transition: transform 0.2s; }
+        .swiss-accordion-item.open .swiss-accordion-icon { transform: rotate(45deg); }
+        .swiss-accordion-content { padding: 0 1rem 1rem; font-size: 0.875rem; color: var(--swiss-gray); display: none; }
+        .swiss-accordion-item.open .swiss-accordion-content { display: block; }
+        /* Card */
+        .swiss-card { border: 1px solid var(--swiss-border); background: white; }
+        .swiss-card-header { padding: 1rem; border-bottom: 1px solid var(--swiss-border); }
+        .swiss-card-title { font-size: 0.9375rem; font-weight: 600; }
+        .swiss-card-body { padding: 1rem; font-size: 0.875rem; color: var(--swiss-gray); }
+        .swiss-card-footer { padding: 1rem; border-top: 1px solid var(--swiss-border); }
+        /* Data Table */
+        .swiss-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+        .swiss-table th { text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--swiss-border); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--swiss-gray); }
+        .swiss-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--swiss-border); }
+        .swiss-table tr:last-child td { border-bottom: none; }
+        .swiss-table tr:hover td { background: var(--swiss-light); }
+        /* Checkbox */
+        .swiss-checkbox-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; cursor: pointer; }
+        .swiss-checkbox { width: 16px; height: 16px; border: 1px solid var(--swiss-border); appearance: none; position: relative; cursor: pointer; }
+        .swiss-checkbox:checked { background: var(--swiss-text); border-color: var(--swiss-text); }
+        .swiss-checkbox:checked::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 0.6875rem; }
+        /* Radio */
+        .swiss-radio-label { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; cursor: pointer; }
+        .swiss-radio { width: 16px; height: 16px; border: 1px solid var(--swiss-border); border-radius: 50%; appearance: none; position: relative; }
+        .swiss-radio:checked { border-color: var(--swiss-text); }
+        .swiss-radio:checked::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: var(--swiss-text); border-radius: 50%; }
+        /* Divider */
+        .swiss-divider { height: 1px; background: var(--swiss-border); margin: 1.5rem 0; }
+        /* Skeleton */
+        .swiss-skeleton { background: var(--swiss-light); height: 1rem; }
+        /* Code */
+        .code-block { background: var(--swiss-text); color: white; padding: 1.5rem; font-family: 'Monaco', monospace; font-size: 0.8125rem; overflow-x: auto; line-height: 1.6; }
+        .code-keyword { color: #a5b4fc; }
+        .code-string { color: #86efac; }
+        /* Footer */
+        footer { padding: 2.5rem 0; text-align: center; }
+        footer p { color: var(--swiss-gray); font-size: 0.8125rem; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.875rem; }
+            .grid-12, .grid-6 { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">Park UI</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Documentation</a>
+                    <a href="#" class="nav-link">Components</a>
+                    <a href="#" class="nav-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Park UI — Swiss Style<br>Design System</h1>
+            <p class="hero-subtitle">A neutral, Swiss-style design system built on top of Ark UI. Precise typography, clean lines, and functional aesthetics.</p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">View Components</a>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Swiss Grid System</h2>
+                <p>Precise 12-column grid following Swiss design principles</p>
+            </div>
+            <div class="grid-demo grid-12">
+                <div class="grid-item grid-span-4">Span 4</div>
+                <div class="grid-item grid-span-4">Span 4</div>
+                <div class="grid-item grid-span-4">Span 4</div>
+                <div class="grid-item grid-span-6">Span 6</div>
+                <div class="grid-item grid-span-6">Span 6</div>
+                <div class="grid-item grid-span-3">Span 3</div>
+                <div class="grid-item grid-span-3">Span 3</div>
+                <div class="grid-item grid-span-3">Span 3</div>
+                <div class="grid-item grid-span-3">Span 3</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Components</h2>
+                <p>Accessible, composable components with Swiss-style aesthetics</p>
+            </div>
+            <div class="component-grid">
+                <!-- Buttons -->
+                <div class="component-card">
+                    <div class="component-header">Buttons</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <button class="swiss-btn swiss-btn-filled">Filled</button>
+                            <button class="swiss-btn swiss-btn-outline">Outline</button>
+                            <button class="swiss-btn swiss-btn-ghost">Ghost</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input -->
+                <div class="component-card">
+                    <div class="component-header">Input</div>
+                    <div class="component-body">
+                        <label class="swiss-label">Email Address</label>
+                        <input type="email" class="swiss-input" placeholder="name@company.com">
+                    </div>
+                </div>
+
+                <!-- Badge -->
+                <div class="component-card">
+                    <div class="component-header">Badge</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <span class="swiss-badge swiss-badge-outline">Outline</span>
+                            <span class="swiss-badge swiss-badge-filled">Filled</span>
+                            <span class="swiss-badge swiss-badge-outline">New</span>
+                            <span class="swiss-badge swiss-badge-filled">Beta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert -->
+                <div class="component-card">
+                    <div class="component-header">Alert</div>
+                    <div class="component-body">
+                        <div class="swiss-alert swiss-alert-info">This is an informational alert message.</div>
+                        <div class="swiss-alert swiss-alert-warning" style="margin-top: 0.75rem;">This is a warning alert message.</div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="component-card">
+                    <div class="component-header">Tabs</div>
+                    <div class="component-body">
+                        <div class="swiss-tabs">
+                            <button class="swiss-tab active">Account</button>
+                            <button class="swiss-tab">Security</button>
+                            <button class="swiss-tab">Settings</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Switch -->
+                <div class="component-card">
+                    <div class="component-header">Switch</div>
+                    <div class="component-body">
+                        <label class="swiss-switch active" onclick="this.classList.toggle('active')">
+                            <div class="swiss-switch-track"><div class="swiss-switch-thumb"></div></div>
+                            <span style="font-size: 0.875rem;">Enabled</span>
+                        </label>
+                        <label class="swiss-switch" onclick="this.classList.toggle('active')" style="margin-top: 1rem;">
+                            <div class="swiss-switch-track"><div class="swiss-switch-thumb"></div></div>
+                            <span style="font-size: 0.875rem;">Disabled</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Accordion -->
+                <div class="component-card">
+                    <div class="component-header">Accordion</div>
+                    <div class="component-body" style="padding: 0;">
+                        <div class="swiss-accordion">
+                            <div class="swiss-accordion-item open">
+                                <button class="swiss-accordion-trigger" onclick="this.parentElement.classList.toggle('open')">
+                                    <span>What is Park UI?</span>
+                                    <span class="swiss-accordion-icon">+</span>
+                                </button>
+                                <div class="swiss-accordion-content">
+                                    Park UI is a design system built on top of Ark UI with Swiss-style aesthetics.
+                                </div>
+                            </div>
+                            <div class="swiss-accordion-item">
+                                <button class="swiss-accordion-trigger" onclick="this.parentElement.classList.toggle('open')">
+                                    <span>How do I get started?</span>
+                                    <span class="swiss-accordion-icon">+</span>
+                                </button>
+                                <div class="swiss-accordion-content">
+                                    Install the package and import the components you need.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card -->
+                <div class="component-card">
+                    <div class="component-header">Card</div>
+                    <div class="component-body" style="padding: 0;">
+                        <div class="swiss-card">
+                            <div class="swiss-card-header">
+                                <div class="swiss-card-title">Card Title</div>
+                            </div>
+                            <div class="swiss-card-body">
+                                Card content with Swiss-style precision and clean lines.
+                            </div>
+                            <div class="swiss-card-footer">
+                                <button class="swiss-btn swiss-btn-filled" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;">Action</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="component-card">
+                    <div class="component-header">Table</div>
+                    <div class="component-body" style="padding: 0; overflow-x: auto;">
+                        <table class="swiss-table">
+                            <thead>
+                                <tr><th>Name</th><th>Role</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>John Doe</td><td>Developer</td><td>Active</td></tr>
+                                <tr><td>Jane Smith</td><td>Designer</td><td>Active</td></tr>
+                                <tr><td>Bob Johnson</td><td>Manager</td><td>Offline</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Checkbox & Radio -->
+                <div class="component-card">
+                    <div class="component-header">Selection</div>
+                    <div class="component-body">
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label class="swiss-checkbox-label">
+                                <input type="checkbox" class="swiss-checkbox" checked>
+                                <span>Option One</span>
+                            </label>
+                            <label class="swiss-checkbox-label">
+                                <input type="checkbox" class="swiss-checkbox">
+                                <span>Option Two</span>
+                            </label>
+                            <div class="swiss-divider"></div>
+                            <label class="swiss-radio-label">
+                                <input type="radio" name="radio" class="swiss-radio" checked>
+                                <span>Radio One</span>
+                            </label>
+                            <label class="swiss-radio-label">
+                                <input type="radio" name="radio" class="swiss-radio">
+                                <span>Radio Two</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Usage</h2>
+                <p>Built on Ark UI with a Swiss-style design token layer</p>
+            </div>
+            <div class="code-block">
+<span class="code-keyword">import</span> { Button } <span class="code-keyword">from</span> <span class="code-string">'@park-ui/button'</span>
+
+<span class="code-keyword">export default function</span> <span class="code-string">App</span>() {
+  <span class="code-keyword">return</span> (
+    &lt;<span class="code-string">Button</span> <span class="code-keyword">variant</span>=<span class="code-string">"filled"</span>&gt;
+      Click me
+    &lt;/<span class="code-string">Button</span>&gt;
+  )
+}
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Park UI — Swiss-style design system built on Ark UI</p>
+        </div>
+    </footer>
+</body>
+</html>

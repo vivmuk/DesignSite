@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Showcase | DesignSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --border: #2a2a3a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 8%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+        
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 500;
+            color: var(--accent-light);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 6rem 8%;
+            border-top: 1px solid var(--border);
+        }
+        
+        .section-header {
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+        
+        /* Font Pairing Showcase */
+        .pairing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pairing-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .pairing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+        
+        .pairing-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .pairing-card p {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .pairing-card .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Type Specimen */
+        .specimen-section {
+            background: var(--bg-secondary);
+        }
+        
+        .specimen-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .specimen-block {
+            padding: 2rem;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .specimen-block h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        
+        .alphabet {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .weights {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .weight-sample {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .weight-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            width: 60px;
+        }
+        
+        .playfair { font-family: 'Playfair Display', serif; }
+        .inter { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Font Tester */
+        .tester-section {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+        
+        .tester-container {
+            background: var(--bg-tertiary);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+        }
+        
+        .tester-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .control-group label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+        
+        .control-group select,
+        .control-group input {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        
+        .control-group input[type="range"] {
+            min-width: 120px;
+        }
+        
+        #tester-preview {
+            font-size: 3rem;
+            line-height: 1.3;
+            min-height: 200px;
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        #tester-preview:focus {
+            border-color: var(--accent);
+        }
+        
+        /* Hierarchy Demo */
+        .hierarchy-demo {
+            background: var(--bg-primary);
+        }
+        
+        .hierarchy-item {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .hierarchy-item:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .h1-demo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+        
+        .h2-demo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        .h3-demo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .body-demo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        
+        .caption-demo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .hierarchy-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .specimen-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pairing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #tester-preview {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-label">Typography Showcase</div>
+        <h1>The Art of <em>Letterforms</em></h1>
+        <p>Explore the intersection of readability, hierarchy, and aesthetic beauty through carefully crafted type systems.</p>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2>Font Pairings</h2>
+            <p>Harmonious combinations that create visual rhythm and establish clear information hierarchy.</p>
+        </div>
+        <div class="pairing-grid">
+            <div class="pairing-card">
+                <h3 class="playfair">Elegance in Structure</h3>
+                <p class="inter">Playfair Display brings classical elegance to headlines, while Inter provides exceptional readability for body text. This pairing works beautifully for editorial and luxury brand designs.</p>
+                <div class="meta">Playfair Display + Inter</div>
+            </div>
+            <div class="pairing-card">
+                <h3 class="inter">Modern & Technical</h3>
+                <p class="mono">Clean sans-serif headlines paired with monospace body text create a distinctive technical aesthetic perfect for developer tools and modern SaaS platforms.</p>
+                <div class="meta">Inter + JetBrains Mono</div>
+            </div>
+            <div class="pairing-card">
+                <h3 class="playfair">Timeless Editorial</h3>
+                <p class="playfair" style="font-style: italic; opacity: 0.8;">Using a single type family with weight and style variations creates cohesive, sophisticated designs. Playfair Display's italic is particularly expressive.</p>
+                <div class="meta">Playfair Display (Solo)</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section specimen-section">
+        <div class="section-header">
+            <h2>Type Specimens</h2>
+            <p>Complete character sets and weight variations for our primary typefaces.</p>
+        </div>
+        <div class="specimen-grid">
+            <div class="specimen-block">
+                <h4>Playfair Display</h4>
+                <div class="alphabet playfair">
+                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm<br>
+                    Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz<br>
+                    1234567890 &amp; !? @#$%
+                </div>
+                <div class="weights playfair">
+                    <div class="weight-sample">
+                        <span class="weight-label">400</span>
+                        <span style="font-weight: 400;">The quick brown fox</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">600</span>
+                        <span style="font-weight: 600;">The quick brown fox</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">900</span>
+                        <span style="font-weight: 900;">The quick brown fox</span>
+                    </div>
+                </div>
+            </div>
+            <div class="specimen-block">
+                <h4>Inter</h4>
+                <div class="alphabet inter">
+                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm<br>
+                    Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz<br>
+                    1234567890 &amp; !? @#$%
+                </div>
+                <div class="weights inter">
+                    <div class="weight-sample">
+                        <span class="weight-label">300</span>
+                        <span style="font-weight: 300;">The quick brown fox</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">500</span>
+                        <span style="font-weight: 500;">The quick brown fox</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">800</span>
+                        <span style="font-weight: 800;">The quick brown fox</span>
+                    </div>
+                </div>
+            </div>
+            <div class="specimen-block">
+                <h4>JetBrains Mono</h4>
+                <div class="alphabet mono">
+                    Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm<br>
+                    Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz<br>
+                    1234567890 &amp; !? @#$%
+                </div>
+                <div class="weights mono">
+                    <div class="weight-sample">
+                        <span class="weight-label">400</span>
+                        <span style="font-weight: 400;">function hello() {}</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">500</span>
+                        <span style="font-weight: 500;">const value = 42;</span>
+                    </div>
+                    <div class="weight-sample">
+                        <span class="weight-label">700</span>
+                        <span style="font-weight: 700;">return true || false;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tester-section">
+        <div class="section-header">
+            <h2>Interactive Font Tester</h2>
+            <p>Experiment with different typefaces, sizes, and weights in real-time.</p>
+        </div>
+        <div class="tester-container">
+            <div class="tester-controls">
+                <div class="control-group">
+                    <label>Typeface</label>
+                    <select id="font-family">
+                        <option value="'Playfair Display', serif">Playfair Display</option>
+                        <option value="'Inter', sans-serif">Inter</option>
+                        <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Weight</label>
+                    <select id="font-weight">
+                        <option value="400">Regular (400)</option>
+                        <option value="500">Medium (500)</option>
+                        <option value="600">SemiBold (600)</option>
+                        <option value="700">Bold (700)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Size</label>
+                    <input type="range" id="font-size" min="16" max="120" value="48">
+                </div>
+                <div class="control-group">
+                    <label>Line Height</label>
+                    <input type="range" id="line-height" min="100" max="200" value="130">
+                </div>
+            </div>
+            <div id="tester-preview" contenteditable="true" spellcheck="false">
+                The quick brown fox jumps over the lazy dog.
+            </div>
+        </div>
+    </section>
+
+    <section class="section hierarchy-demo">
+        <div class="section-header">
+            <h2>Type Hierarchy</h2>
+            <p>Clear visual hierarchy guides readers through content with purposeful size, weight, and spacing relationships.</p>
+        </div>
+        <div class="hierarchy-item">
+            <div class="h1-demo">The Grand Headline</div>
+            <div class="hierarchy-meta">
+                <span>Font: Playfair Display</span>
+                <span>Size: 64px / 4rem</span>
+                <span>Weight: 600</span>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="h2-demo">Secondary Section Heading</div>
+            <div class="hierarchy-meta">
+                <span>Font: Playfair Display</span>
+                <span>Size: 40px / 2.5rem</span>
+                <span>Weight: 500</span>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="h3-demo">Tertiary Subsection Header</div>
+            <div class="hierarchy-meta">
+                <span>Font: Inter</span>
+                <span>Size: 24px / 1.5rem</span>
+                <span>Weight: 600</span>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="body-demo">Body text provides the detailed content that readers come for. It should be highly readable with comfortable line length (60-75 characters) and adequate line height (1.5-1.7) to reduce eye strain during extended reading sessions.</div>
+            <div class="hierarchy-meta">
+                <span>Font: Inter</span>
+                <span>Size: 16px / 1rem</span>
+                <span>Weight: 400</span>
+            </div>
+        </div>
+        <div class="hierarchy-item">
+            <div class="caption-demo">Caption / Metadata Text</div>
+            <div class="hierarchy-meta">
+                <span>Font: JetBrains Mono</span>
+                <span>Size: 12px / 0.75rem</span>
+                <span>Weight: 400</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Font Tester Interactivity
+        const preview = document.getElementById('tester-preview');
+        const fontFamily = document.getElementById('font-family');
+        const fontWeight = document.getElementById('font-weight');
+        const fontSize = document.getElementById('font-size');
+        const lineHeight = document.getElementById('line-height');
+        
+        function updatePreview() {
+            preview.style.fontFamily = fontFamily.value;
+            preview.style.fontWeight = fontWeight.value;
+            preview.style.fontSize = fontSize.value + 'px';
+            preview.style.lineHeight = lineHeight.value + '%';
+        }
+        
+        fontFamily.addEventListener('change', updatePreview);
+        fontWeight.addEventListener('change', updatePreview);
+        fontSize.addEventListener('input', updatePreview);
+        lineHeight.addEventListener('input', updatePreview);
+        
+        // Initialize
+        updatePreview();
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.pairing-card, .specimen-block, .hierarchy-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
