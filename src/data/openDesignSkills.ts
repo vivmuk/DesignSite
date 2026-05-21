@@ -155,6 +155,15 @@ export const openDesignSkills: Skill[] = [
   { id: 'artifacts-builder', name: 'Artifacts Builder', category: 'development', description: 'Web artifact builder with live preview' },
   { id: 'brainstorming', name: 'Brainstorming', category: 'utility', description: 'Creative brainstorming assistance' },
   { id: 'brand-guidelines', name: 'Brand Guidelines', category: 'design', description: 'Brand guideline document creation' },
+  { id: 'accessibility', name: 'Accessibility', category: 'design', description: 'WCAG-compliant accessible design patterns and audit workflows' },
+  { id: 'brand-identity', name: 'Brand Identity', category: 'design', description: 'Complete brand identity systems with logos, palettes, and typography' },
+  { id: 'color-theory', name: 'Color Theory', category: 'design', description: 'Color palette generation, contrast checking, and chromatic harmony' },
+  { id: 'component-library', name: 'Component Library', category: 'development', description: 'Systematic UI component architecture with design tokens and variants' },
+  { id: 'design-tokens', name: 'Design Tokens', category: 'development', description: 'Token-based design system foundations with semantic naming and theming' },
+  { id: 'layout-composition', name: 'Layout Composition', category: 'design', description: 'Grid systems, spatial rhythms, and compositional hierarchy' },
+  { id: 'motion-design', name: 'Motion Design', category: 'design', description: 'Animation principles, micro-interactions, and transition choreography' },
+  { id: 'responsive-design', name: 'Responsive Design', category: 'development', description: 'Fluid layouts, breakpoint strategies, and adaptive component patterns' },
+  { id: 'typography', name: 'Typography', category: 'design', description: 'Type scale design, font pairing, and typographic hierarchy systems' },
 ];
 
 export const getSkillsByCategory = (categoryId: string) =>
