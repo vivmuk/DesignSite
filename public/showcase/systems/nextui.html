@@ -1,366 +1,123 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextUI Design System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --nextui-background: #000000; --nextui-foreground: #ffffff;
-            --nextui-default-50: #fafafa; --nextui-default-100: #f4f4f5; --nextui-default-200: #e4e4e7;
-            --nextui-default-300: #d4d4d8; --nextui-default-400: #a1a1aa; --nextui-default-500: #71717a;
-            --nextui-default-600: #52525b; --nextui-default-700: #3f3f46; --nextui-default-800: #27272a; --nextui-default-900: #18181b;
-            --nextui-primary: #9353D3; --nextui-primary-400: #a855f7; --nextui-primary-500: #9333ea; --nextui-primary-600: #7e22ce;
-            --nextui-secondary: #338EF7; --nextui-success: #17c964; --nextui-warning: #F5A524; --nextui-danger: #F31260;
-        }
-        html { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-        body { background: var(--nextui-background); color: var(--nextui-foreground); line-height: 1.5; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        /* Navigation */
-        nav { background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--nextui-default-800); position: sticky; top: 0; z-index: 50; }
-        .nav-inner { display: flex; align-items: center; height: 64px; gap: 2rem; }
-        .logo { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.25rem; }
-        .logo-icon { width: 32px; height: 32px; background: var(--nextui-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-        .nav-links { display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
-        .nav-link { color: var(--nextui-default-400); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-        .nav-link:hover { color: var(--nextui-foreground); }
-        .nav-cta { background: var(--nextui-foreground); color: #000; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.875rem; font-weight: 500; text-decoration: none; }
-        /* Hero */
-        .hero { padding: 6rem 0; text-align: center; position: relative; }
-        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(147,83,211,0.15), transparent 50%); pointer-events: none; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; background: var(--nextui-default-900); border: 1px solid var(--nextui-default-700); border-radius: 9999px; font-size: 0.875rem; color: var(--nextui-primary-400); margin-bottom: 1.5rem; }
-        .hero h1 { font-size: 4rem; font-weight: 700; line-height: 1.1; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-subtitle { font-size: 1.25rem; color: var(--nextui-default-400); max-width: 600px; margin: 0 auto 2rem; }
-        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        /* Buttons */
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 10px; font-size: 0.9375rem; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; position: relative; overflow: hidden; }
-        .btn-primary { background: var(--nextui-primary); color: white; }
-        .btn-primary:hover { background: var(--nextui-primary-400); transform: translateY(-1px); box-shadow: 0 0 30px rgba(147,83,211,0.4); }
-        .btn-secondary { background: var(--nextui-secondary); color: white; }
-        .btn-secondary:hover { box-shadow: 0 0 30px rgba(51,142,247,0.4); }
-        .btn-outline { background: transparent; color: var(--nextui-foreground); border: 1px solid var(--nextui-default-700); }
-        .btn-outline:hover { background: var(--nextui-default-800); border-color: var(--nextui-default-600); }
-        .btn-ghost { background: transparent; color: var(--nextui-default-400); }
-        .btn-ghost:hover { background: var(--nextui-default-800); color: var(--nextui-foreground); }
-        .btn-flat { background: var(--nextui-default-800); color: var(--nextui-foreground); }
-        .btn-flat:hover { background: var(--nextui-default-700); }
-        .btn-success { background: var(--nextui-success); color: white; }
-        .btn-warning { background: var(--nextui-warning); color: black; }
-        .btn-danger { background: var(--nextui-danger); color: white; }
-        /* Sections */
-        section { padding: 5rem 0; border-bottom: 1px solid var(--nextui-default-800); }
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.75rem; }
-        .section-header p { color: var(--nextui-default-400); font-size: 1.125rem; }
-        /* Feature Cards */
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .feature-card {
-            padding: 1.5rem; background: var(--nextui-default-900); border: 1px solid var(--nextui-default-800);
-            border-radius: 16px; transition: all 0.2s;
-        }
-        .feature-card:hover { border-color: var(--nextui-primary); box-shadow: 0 0 30px rgba(147,83,211,0.1); }
-        .feature-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--nextui-primary), var(--nextui-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-        .feature-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .feature-card p { font-size: 0.875rem; color: var(--nextui-default-400); }
-        /* Component Showcase */
-        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .showcase-card { background: var(--nextui-default-900); border: 1px solid var(--nextui-default-800); border-radius: 16px; overflow: hidden; }
-        .showcase-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--nextui-default-800); font-size: 0.875rem; font-weight: 600; color: var(--nextui-default-300); }
-        .showcase-body { padding: 1.5rem; }
-        /* Inputs */
-        .input {
-            width: 100%; padding: 0.75rem 1rem; background: var(--nextui-default-900);
-            border: 1px solid var(--nextui-default-700); border-radius: 10px; color: var(--nextui-foreground);
-            font-size: 0.875rem; transition: all 0.2s;
-        }
-        .input:focus { outline: none; border-color: var(--nextui-primary); box-shadow: 0 0 0 3px rgba(147,83,211,0.2); }
-        .input-error { border-color: var(--nextui-danger); }
-        .input-error:focus { box-shadow: 0 0 0 3px rgba(243,18,96,0.2); }
-        .label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--nextui-default-300); }
-        .error-text { font-size: 0.75rem; color: var(--nextui-danger); margin-top: 0.25rem; }
-        /* Card Component */
-        .card { background: var(--nextui-default-900); border: 1px solid var(--nextui-default-800); border-radius: 16px; overflow: hidden; }
-        .card-image { height: 140px; background: linear-gradient(135deg, var(--nextui-primary), var(--nextui-secondary)); }
-        .card-body { padding: 1.25rem; }
-        .card-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .card-text { font-size: 0.875rem; color: var(--nextui-default-400); }
-        /* Badge */
-        .badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; }
-        .badge-default { background: var(--nextui-primary); color: white; }
-        .badge-secondary { background: var(--nextui-secondary); color: white; }
-        .badge-success { background: rgba(23,201,100,0.2); color: var(--nextui-success); border: 1px solid var(--nextui-success); }
-        .badge-warning { background: rgba(245,165,36,0.2); color: var(--nextui-warning); border: 1px solid var(--nextui-warning); }
-        .badge-danger { background: rgba(243,18,96,0.2); color: var(--nextui-danger); border: 1px solid var(--nextui-danger); }
-        /* Avatar */
-        .avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; color: white; }
-        .avatar-group { display: flex; }
-        .avatar-group .avatar { margin-left: -8px; border: 2px solid var(--nextui-default-900); }
-        .avatar-group .avatar:first-child { margin-left: 0; }
-        /* Switch */
-        .switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
-        .switch-track { width: 48px; height: 24px; background: var(--nextui-default-700); border-radius: 9999px; position: relative; transition: all 0.2s; }
-        .switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
-        .switch.active .switch-track { background: var(--nextui-primary); }
-        .switch.active .switch-thumb { transform: translateX(24px); }
-        /* Progress */
-        .progress { height: 8px; background: var(--nextui-default-800); border-radius: 9999px; overflow: hidden; }
-        .progress-bar { height: 100%; background: var(--nextui-primary); border-radius: 9999px; transition: width 0.3s; }
-        /* Tabs */
-        .tabs { display: flex; gap: 0.5rem; background: var(--nextui-default-800); padding: 0.25rem; border-radius: 10px; }
-        .tab { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; color: var(--nextui-default-400); cursor: pointer; transition: all 0.2s; border: none; background: transparent; }
-        .tab:hover { color: var(--nextui-foreground); }
-        .tab.active { background: var(--nextui-default-700); color: var(--nextui-foreground); }
-        /* Tooltip */
-        [data-tooltip] { position: relative; }
-        [data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-6px); padding: 0.375rem 0.75rem; background: var(--nextui-default-800); color: white; font-size: 0.75rem; border-radius: 8px; white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.2s; border: 1px solid var(--nextui-default-700); }
-        [data-tooltip]:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); }
-        /* Skeleton */
-        .skeleton { background: linear-gradient(90deg, var(--nextui-default-800) 25%, var(--nextui-default-700) 50%, var(--nextui-default-800) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        /* Code Block */
-        .code-block { background: var(--nextui-default-900); border: 1px solid var(--nextui-default-800); border-radius: 16px; padding: 1.5rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.875rem; overflow-x: auto; color: var(--nextui-default-300); }
-        .code-keyword { color: var(--nextui-primary-400); }
-        .code-string { color: var(--nextui-success); }
-        .code-func { color: var(--nextui-secondary); }
-        /* Footer */
-        footer { padding: 3rem 0; text-align: center; }
-        footer p { color: var(--nextui-default-500); font-size: 0.875rem; }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextUI — Beautiful, Fast, Modern React</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:100}
+.logo{font-size:1.4rem;font-weight:700;color:#7828C8;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:#4b5563;text-decoration:none;font-weight:500;font-size:.88rem;transition:color .2s}
+.nav-links a:hover{color:#7828C8}
+.hero{padding:6rem 2rem 4rem;text-align:center;max-width:860px;margin:0 auto}
+.hero h1{font-size:3.5rem;font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:1.5rem;color:#0f172a}
+.hero h1 span{color:#7828C8}
+.hero p{font-size:1.15rem;color:#64748b;max-width:600px;margin:0 auto 2.5rem}
+.cta-btn{display:inline-block;background:#7828C8;color:#fff;padding:.85rem 2rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:.95rem;transition:background .2s,box-shadow .2s}
+.cta-btn:hover{background:#6621a8;box-shadow:0 8px 24px rgba(120,40,200,.25)}
+.stats{display:flex;justify-content:center;gap:4rem;padding:3rem 2rem;background:#f8fafc;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb}
+.stat{text-align:center}
+.stat .number{font-size:2.5rem;font-weight:800;color:#7828C8}
+.stat .label{font-size:.78rem;color:#94a3b8;margin-top:.25rem;text-transform:uppercase;letter-spacing:1px}
+.features{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.features h2{font-size:2.2rem;font-weight:700;text-align:center;margin-bottom:3rem;color:#0f172a}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.feature-card{padding:2rem;border-radius:16px;border:1px solid #e5e7eb;background:#fff;transition:border-color .2s,box-shadow .2s}
+.feature-card:hover{border-color:#7828C8;box-shadow:0 8px 30px rgba(120,40,200,.08)}
+.feature-icon{font-size:2rem;margin-bottom:1rem}
+.feature-card h3{font-size:1.1rem;font-weight:600;color:#0f172a;margin-bottom:.5rem}
+.feature-card p{color:#64748b;font-size:.9rem;line-height:1.65}
+.showcase{padding:5rem 2rem;background:linear-gradient(135deg,#7828C8 0%,#5b1f9e 100%);text-align:center;color:#fff}
+.showcase h2{font-size:2.2rem;font-weight:700;margin-bottom:1rem}
+.showcase p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:560px;margin:0 auto 2.5rem}
+.showcase .cta-btn{background:#fff;color:#7828C8}
+.showcase .cta-btn:hover{box-shadow:0 8px 24px rgba(255,255,255,.2)}
+footer{padding:2rem;text-align:center;color:#94a3b8;font-size:.8rem;border-top:1px solid #e5e7eb}
+@media(max-width:768px){
+.hero h1{font-size:2.2rem}
+.stats{flex-direction:column;gap:2rem;padding:2rem 1rem}
+.feature-grid{grid-template-columns:1fr}
+.nav-links{display:none}
+}
+</style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="nav-inner">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                    </div>
-                    NextUI
-                </div>
-                <div class="nav-links">
-                    <a href="#" class="nav-link">Docs</a>
-                    <a href="#" class="nav-link">Components</a>
-                    <a href="#" class="nav-link">Github</a>
-                    <a href="#" class="nav-cta">Get Started</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+<nav>
+<div class="logo">NextUI</div>
+<ul class="nav-links">
+<li><a href="#">Components</a></li>
+<li><a href="#">Themes</a></li>
+<li><a href="#">Docs</a></li>
+<li><a href="#">GitHub</a></li>
+</ul>
+</nav>
 
-    <header class="hero">
-        <div class="container">
-            <div class="hero-badge">
-                <span style="color: var(--nextui-success);">●</span> v2.2 Available
-            </div>
-            <h1>Make beautiful<br>websites regardless<br>of your design<br>experience.</h1>
-            <p class="hero-subtitle">NextUI is a React UI library that helps you build beautiful and accessible user interfaces. Created on top of Tailwind CSS and React Aria.</p>
-            <div class="hero-actions">
-                <a href="#" class="btn btn-primary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                    Get Started
-                </a>
-                <a href="#" class="btn btn-outline">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.38-1.55 6.38-6.93A6.35 6.35 0 0 0 19 4.28a5.88 5.88 0 0 0-.15-1.59c-.07-.26-.28-.33-.56-.2-1.48.63-2.11.75-3.29-.23a6.63 6.63 0 0 0-6.78 0c-1.18.98-1.81.86-3.29.23-.28-.13-.49-.06-.56.2a5.88 5.88 0 0 0-.15 1.59 6.35 6.35 0 0 0 2.34 5.12c0 5.38 3.24 6.58 6.38 6.93a3.37 3.37 0 0 0-.94 2.61V22"/></svg>
-                    GitHub
-                </a>
-            </div>
-        </div>
-    </header>
+<section class="hero">
+<h1>React UI that <span>looks like you care</span></h1>
+<p>Beautiful defaults, blurred glass effects, smooth transitions. NextUI ships components so polished your users won't believe you didn't hire a designer.</p>
+<a href="#" class="cta-btn">Get started</a>
+</section>
 
-    <section>
-        <div class="container">
-            <div class="section-header">
-                <h2>Why NextUI?</h2>
-                <p>Everything you need to build modern applications</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-                    </div>
-                    <h3>Beautiful and Unique</h3>
-                    <p>Each component is crafted with attention to detail, providing a stunning default look.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    </div>
-                    <h3>Accessible</h3>
-                    <p>Built on top of React Aria, ensuring all components meet accessibility standards.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <h3>TypeScript Ready</h3>
-                    <p>Fully typed components and hooks for a better developer experience.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                    </div>
-                    <h3>Customization</h3>
-                    <p>Powerful theming system with CSS variables and Tailwind CSS integration.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                    </div>
-                    <h3>Dark Mode</h3>
-                    <p>First-class dark mode support with automatic switching.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3>Fast Performance</h3>
-                    <p>Optimized for speed with minimal re-renders and efficient bundle size.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="stats">
+<div class="stat">
+<div class="number">60+</div>
+<div class="label">Components</div>
+</div>
+<div class="stat">
+<div class="number">Dark/Light</div>
+<div class="label">Built-in Themes</div>
+</div>
+<div class="stat">
+<div class="number">140K+</div>
+<div class="label">Weekly Downloads</div>
+</div>
+</section>
 
-    <section>
-        <div class="container">
-            <div class="section-header">
-                <h2>Components</h2>
-                <p>A selection of our beautiful components</p>
-            </div>
-            <div class="showcase-grid">
-                <!-- Buttons -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Buttons</div>
-                    <div class="showcase-body">
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                            <button class="btn btn-primary">Primary</button>
-                            <button class="btn btn-secondary">Secondary</button>
-                            <button class="btn btn-success">Success</button>
-                            <button class="btn btn-warning">Warning</button>
-                            <button class="btn btn-danger">Danger</button>
-                            <button class="btn btn-flat">Flat</button>
-                            <button class="btn btn-ghost">Ghost</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Inputs -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Input</div>
-                    <div class="showcase-body">
-                        <div style="margin-bottom: 1rem;">
-                            <label class="label">Username</label>
-                            <input type="text" class="input" placeholder="Enter username">
-                        </div>
-                        <div>
-                            <label class="label">Password</label>
-                            <input type="password" class="input input-error" value="short">
-                            <div class="error-text">Password must be at least 6 characters</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Badges -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Badge</div>
-                    <div class="showcase-body">
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                            <span class="badge badge-default">Default</span>
-                            <span class="badge badge-secondary">Secondary</span>
-                            <span class="badge badge-success">Success</span>
-                            <span class="badge badge-warning">Warning</span>
-                            <span class="badge badge-danger">Danger</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Switch -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Switch</div>
-                    <div class="showcase-body">
-                        <label class="switch active" onclick="this.classList.toggle('active')">
-                            <div class="switch-track"><div class="switch-thumb"></div></div>
-                            <span style="font-size: 0.875rem; color: var(--nextui-default-300);">Available</span>
-                        </label>
-                        <div style="margin-top: 1rem;">
-                            <label class="switch" onclick="this.classList.toggle('active')">
-                                <div class="switch-track"><div class="switch-thumb"></div></div>
-                                <span style="font-size: 0.875rem; color: var(--nextui-default-300);">Notifications</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- Progress -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Progress</div>
-                    <div class="showcase-body">
-                        <div style="margin-bottom: 1.5rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--nextui-default-400); margin-bottom: 0.5rem;">
-                                <span>Loading...</span><span>67%</span>
-                            </div>
-                            <div class="progress"><div class="progress-bar" style="width: 67%;"></div></div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.875rem; color: var(--nextui-default-400); margin-bottom: 0.5rem;">
-                                <span>Storage</span><span>45%</span>
-                            </div>
-                            <div class="progress"><div class="progress-bar" style="width: 45%; background: var(--nextui-success);"></div></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Avatar Group -->
-                <div class="showcase-card">
-                    <div class="showcase-header">Avatar Group</div>
-                    <div class="showcase-body">
-                        <div class="avatar-group">
-                            <div class="avatar" style="background: var(--nextui-primary);">JD</div>
-                            <div class="avatar" style="background: var(--nextui-secondary);">AK</div>
-                            <div class="avatar" style="background: var(--nextui-success);">MR</div>
-                            <div class="avatar" style="background: var(--nextui-warning);">+4</div>
-                        </div>
-                        <div style="margin-top: 1.5rem;">
-                            <div class="card">
-                                <div class="card-body" style="display: flex; align-items: center; gap: 1rem;">
-                                    <div class="avatar" style="background: var(--nextui-primary);">JD</div>
-                                    <div>
-                                        <div style="font-weight: 600;">John Doe</div>
-                                        <div style="font-size: 0.75rem; color: var(--nextui-default-400);">Product Designer</div>
-                                    </div>
-                                    <span class="badge badge-success" style="margin-left: auto;">Online</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="features">
+<h2>Designed to delight, engineered to perform</h2>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-icon">✨</div>
+<h3>Gorgeous Defaults</h3>
+<p>Every component ships looking production-ready. Subtle shadows, smooth corners, glassmorphism — no theme tweaking required to look professional.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🌗</div>
+<h3>Dark + Light Themes</h3>
+<p>Toggle between themes with one prop. No CSS wrestling. Colors, shadows, and contrast adapt automatically across 60+ components.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">⚡</div>
+<h3>Blazing Performance</h3>
+<p>Tree-shakeable, SSR-friendly, and built on React Aria. Only the components you use end up in your bundle — typically under 40KB.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🧩</div>
+<h3>Composable API</h3>
+<p>Slots, variants, and compound components. Compose a DatePicker from primitives or use the pre-built one. Your code, your choice.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">♿</div>
+<h3>Accessibility First</h3>
+<p>Built on React Aria under the hood. Full keyboard navigation, ARIA labels, and screen reader support out of the box.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🎨</div>
+<h3>Design System Ready</h3>
+<p>Tailwind, Stitches, or plain CSS — NextUI integrates with your design tokens and scales from prototype to enterprise without breaking.</p>
+</div>
+</div>
+</section>
 
-    <section>
-        <div class="container">
-            <div class="code-block">
-<span class="code-keyword">import</span> { Button, Card, CardBody } <span class="code-keyword">from</span> <span class="code-string">"@nextui-org/react"</span>;
+<section class="showcase">
+<h2>Stop building buttons from scratch</h2>
+<p>60+ components with beautiful defaults, dark mode, and full accessibility. Your React app deserves to look this good.</p>
+<a href="#" class="cta-btn">Explore components</a>
+</section>
 
-<span class="code-keyword">export default function</span> <span class="code-func">App</span>() {
-  <span class="code-keyword">return</span> (
-    &lt;<span class="code-func">Card</span>&gt;
-      &lt;<span class="code-func">CardBody</span>&gt;
-        &lt;<span class="code-func">p</span>&gt;Make beautiful websites regardless of your design experience.&lt;/<span class="code-func">p</span>&gt;
-        &lt;<span class="code-func">Button</span> <span class="code-func">color</span>=<span class="code-string">"primary"</span>&gt;Get Started&lt;/<span class="code-func">Button</span>&gt;
-      &lt;/<span class="code-func">CardBody</span>&gt;
-    &lt;/<span class="code-func">Card</span>&gt;
-  );
-}
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>NextUI — Beautiful, fast, and modern React UI library</p>
-        </div>
-    </footer>
+<footer>© 2026 NextUI — MIT License</footer>
 </body>
 </html>

@@ -1,524 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radix UI Design System</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --gray-100: #f7f7f7; --gray-200: #ededed; --gray-300: #e6e6e6;
-            --gray-400: #dadada; --gray-500: #c0c0c0; --gray-600: #9e9e9e;
-            --gray-700: #757575; --gray-800: #4a4a4a; --gray-900: #1a1a1a;
-            --accent-blue: #3b82f6; --accent-green: #10b981; --accent-amber: #f59e0b;
-            --accent-red: #ef4444; --accent-purple: #8b5cf6;
-        }
-        html { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif; }
-        body {
-            background: #ffffff; color: var(--gray-900); line-height: 1.6;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-        /* Navigation */
-        nav {
-            position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--gray-200);
-        }
-        .nav-inner { display: flex; align-items: center; height: 4rem; gap: 2rem; }
-        .nav-logo { font-weight: 600; font-size: 1.125rem; display: flex; align-items: center; gap: 0.5rem; }
-        .nav-logo svg { width: 28px; height: 28px; }
-        .nav-links { display: flex; gap: 2rem; margin-left: auto; align-items: center; }
-        .nav-links a {
-            color: var(--gray-700); text-decoration: none; font-size: 0.875rem;
-            font-weight: 500; transition: color 0.2s; position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
-            background: var(--accent-blue); transition: width 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--gray-900); }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        /* Hero */
-        .hero {
-            padding: 6rem 0; border-bottom: 1px solid var(--gray-200);
-            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
-        }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.375rem 1rem; background: var(--gray-100); border-radius: 9999px;
-            font-size: 0.8125rem; font-weight: 500; color: var(--gray-700); margin-bottom: 1.5rem;
-        }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
-        .hero-subtitle { font-size: 1.25rem; color: var(--gray-600); max-width: 560px; margin-bottom: 2rem; }
-        .hero-actions { display: flex; gap: 1rem; }
-        /* Buttons */
-        .btn {
-            display: inline-flex; align-items: center; gap: 0.5rem; height: 2.75rem;
-            padding: 0 1.25rem; border-radius: 6px; font-size: 0.9375rem;
-            font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer;
-            border: none; font-family: inherit;
-        }
-        .btn-primary {
-            background: var(--gray-900); color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        .btn-primary:hover { background: #000; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .btn-secondary {
-            background: white; color: var(--gray-900); border: 1px solid var(--gray-300);
-        }
-        .btn-secondary:hover { border-color: var(--gray-400); background: var(--gray-100); }
-        .btn-ghost { background: transparent; color: var(--gray-700); }
-        .btn-ghost:hover { background: var(--gray-100); color: var(--gray-900); }
-        /* Sections */
-        section { padding: 5rem 0; border-bottom: 1px solid var(--gray-200); }
-        section:last-of-type { border-bottom: none; }
-        .section-header { text-align: center; margin-bottom: 3.5rem; }
-        .section-header h2 { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-        .section-header p { font-size: 1.125rem; color: var(--gray-600); max-width: 560px; margin: 0 auto; }
-        /* Primitives Grid */
-        .primitives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .primitive-card {
-            padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: 12px;
-            transition: all 0.2s; background: white;
-        }
-        .primitive-card:hover { border-color: var(--gray-300); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .primitive-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.375rem; display: flex; align-items: center; gap: 0.5rem; }
-        .primitive-card p { font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem; }
-        .primitive-card .tag {
-            display: inline-block; padding: 0.125rem 0.5rem; background: var(--gray-100);
-            border-radius: 4px; font-size: 0.75rem; color: var(--gray-600); font-weight: 500;
-        }
-        /* Component Demo Areas */
-        .demo-area { background: var(--gray-100); border-radius: 8px; padding: 1.25rem; margin-top: 1rem; }
-        .demo-area-inner { background: white; border-radius: 6px; padding: 1rem; border: 1px solid var(--gray-200); }
-        /* Dialog Simulation */
-        .dialog-trigger {
-            padding: 0.625rem 1rem; background: white; border: 1px solid var(--gray-300);
-            border-radius: 6px; font-size: 0.875rem; cursor: pointer; transition: all 0.2s;
-        }
-        .dialog-trigger:hover { border-color: var(--gray-400); }
-        /* Accordion */
-        .accordion-item { border-bottom: 1px solid var(--gray-200); }
-        .accordion-header {
-            width: 100%; padding: 1rem 0; display: flex; justify-content: space-between;
-            align-items: center; background: none; border: none; font-size: 0.9375rem;
-            font-weight: 500; cursor: pointer; color: var(--gray-900); font-family: inherit;
-        }
-        .accordion-header:hover { color: var(--accent-blue); }
-        .accordion-content { padding-bottom: 1rem; font-size: 0.875rem; color: var(--gray-600); }
-        .accordion-icon { transition: transform 0.2s; }
-        .accordion-item.open .accordion-icon { transform: rotate(180deg); }
-        /* Tabs */
-        .tabs-list { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--gray-200); margin-bottom: 1rem; }
-        .tabs-trigger {
-            padding: 0.625rem 1rem; background: none; border: none; font-size: 0.875rem;
-            font-weight: 500; color: var(--gray-600); cursor: pointer;
-            border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
-            font-family: inherit;
-        }
-        .tabs-trigger:hover { color: var(--gray-900); }
-        .tabs-trigger.active { color: var(--gray-900); border-color: var(--accent-blue); }
-        .tabs-content { display: none; font-size: 0.875rem; color: var(--gray-600); }
-        .tabs-content.active { display: block; }
-        /* Dropdown */
-        .dropdown-trigger {
-            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1rem;
-            background: white; border: 1px solid var(--gray-300); border-radius: 6px;
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s;
-        }
-        .dropdown-trigger:hover { border-color: var(--gray-400); }
-        /* Popover */
-        .popover-demo { position: relative; display: inline-block; }
-        .popover-content {
-            position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
-            padding: 0.75rem; background: white; border: 1px solid var(--gray-200);
-            border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-size: 0.8125rem;
-            width: 200px; z-index: 50;
-        }
-        /* Hover Card */
-        .hover-trigger { text-decoration: underline dotted; cursor: help; }
-        /* Tooltip */
-        [data-tooltip] { position: relative; }
-        [data-tooltip]::after {
-            content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%;
-            transform: translateX(-50%) translateY(-6px); padding: 0.375rem 0.625rem;
-            background: var(--gray-900); color: white; font-size: 0.75rem;
-            border-radius: 4px; white-space: nowrap; opacity: 0; visibility: hidden;
-            transition: all 0.2s; pointer-events: none;
-        }
-        [data-tooltip]:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-8px); }
-        /* Checkbox & Radio */
-        .checkbox-group, .radio-group { display: flex; flex-direction: column; gap: 0.75rem; }
-        .checkbox-item, .radio-item { display: flex; align-items: center; gap: 0.625rem; font-size: 0.875rem; }
-        .checkbox, .radio { width: 1.125rem; height: 1.125rem; accent-color: var(--accent-blue); }
-        /* Slider */
-        .slider-container { padding: 1rem 0; }
-        .slider {
-            -webkit-appearance: none; width: 100%; height: 4px; background: var(--gray-200);
-            border-radius: 2px; outline: none;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 20px; height: 20px; background: white;
-            border: 2px solid var(--accent-blue); border-radius: 50%; cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        /* Scroll Area */
-        .scroll-area {
-            height: 120px; overflow-y: auto; border: 1px solid var(--gray-200);
-            border-radius: 6px; padding: 0.75rem;
-        }
-        .scroll-area::-webkit-scrollbar { width: 8px; }
-        .scroll-area::-webkit-scrollbar-track { background: transparent; }
-        .scroll-area::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
-        .scroll-item { padding: 0.5rem 0; border-bottom: 1px solid var(--gray-100); font-size: 0.8125rem; }
-        /* Context Menu Demo */
-        .context-menu-target {
-            padding: 2rem; background: var(--gray-50); border: 2px dashed var(--gray-300);
-            border-radius: 8px; text-align: center; font-size: 0.875rem; color: var(--gray-600);
-        }
-        /* Switch */
-        .switch { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
-        .switch-track {
-            width: 44px; height: 24px; background: var(--gray-300); border-radius: 12px;
-            position: relative; transition: background 0.2s;
-        }
-        .switch-thumb {
-            position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
-            background: white; border-radius: 50%; transition: transform 0.2s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .switch.active .switch-track { background: var(--accent-green); }
-        .switch.active .switch-thumb { transform: translateX(20px); }
-        .switch-label { font-size: 0.875rem; }
-        /* Separator */
-        .separator { height: 1px; background: var(--gray-200); margin: 1.5rem 0; }
-        /* Toggle Group */
-        .toggle-group { display: inline-flex; border: 1px solid var(--gray-300); border-radius: 6px; overflow: hidden; }
-        .toggle-btn {
-            padding: 0.5rem 1rem; background: white; border: none; border-right: 1px solid var(--gray-300);
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s; font-family: inherit;
-        }
-        .toggle-btn:last-child { border-right: none; }
-        .toggle-btn:hover { background: var(--gray-50); }
-        .toggle-btn.active { background: var(--gray-100); font-weight: 500; }
-        /* Navigation Menu */
-        .nav-menu { display: flex; gap: 1.5rem; }
-        .nav-menu-item { position: relative; }
-        .nav-menu-trigger {
-            display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0;
-            font-size: 0.875rem; color: var(--gray-700); cursor: pointer; border: none; background: none;
-        }
-        .nav-menu-trigger:hover { color: var(--gray-900); }
-        /* Aspect Ratio */
-        .aspect-demo { aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--gray-100), var(--gray-200)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gray-500); font-size: 0.875rem; }
-        /* Collapsible */
-        .collapsible-trigger {
-            width: 100%; padding: 0.75rem; display: flex; justify-content: space-between;
-            align-items: center; background: var(--gray-100); border: none; border-radius: 6px;
-            font-size: 0.875rem; font-weight: 500; cursor: pointer; font-family: inherit;
-        }
-        /* Visually Hidden Demo */
-        .sr-demo { padding: 1rem; background: var(--gray-100); border-radius: 6px; font-size: 0.875rem; }
-        /* Features Grid */
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .feature { text-align: center; }
-        .feature-icon {
-            width: 48px; height: 48px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;
-            background: var(--gray-100); border-radius: 12px;
-        }
-        .feature h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .feature p { font-size: 0.875rem; color: var(--gray-600); }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.25rem; }
-            .features-grid { grid-template-columns: 1fr; }
-            .primitives-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
-        /* Progress */
-        .progress { height: 4px; background: var(--gray-200); border-radius: 2px; overflow: hidden; }
-        .progress-bar { height: 100%; background: var(--accent-blue); width: 60%; border-radius: 2px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radix UI — Unstyled, Accessible Primitives</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:1px solid #e5e7eb;position:sticky;top:0;background:#fff;z-index:100}
+.logo{font-size:1.4rem;font-weight:700;color:#6E56CF;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:#4b5563;text-decoration:none;font-weight:500;font-size:.88rem;transition:color .2s}
+.nav-links a:hover{color:#6E56CF}
+.hero{padding:6rem 2rem 4rem;text-align:center;max-width:860px;margin:0 auto}
+.hero h1{font-size:3.3rem;font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:1.5rem;color:#0f172a}
+.hero h1 span{color:#6E56CF}
+.hero p{font-size:1.1rem;color:#64748b;max-width:600px;margin:0 auto 2.5rem;line-height:1.7}
+.cta-btn{display:inline-block;background:#6E56CF;color:#fff;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;transition:background .2s}
+.cta-btn:hover{background:#5b44b0}
+.stats{display:flex;justify-content:center;gap:4rem;padding:3rem 2rem;background:#f5f3ff;border-top:1px solid #e9e5f5;border-bottom:1px solid #e9e5f5}
+.stat{text-align:center}
+.stat .number{font-size:2.5rem;font-weight:800;color:#6E56CF}
+.stat .label{font-size:.78rem;color:#a78bfa;margin-top:.25rem;text-transform:uppercase;letter-spacing:1px}
+.features{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.features h2{font-size:2.2rem;font-weight:700;text-align:center;margin-bottom:3rem;color:#0f172a}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.feature-card{padding:2rem;border-radius:12px;border:1px solid #e5e7eb;transition:border-color .2s,box-shadow .2s}
+.feature-card:hover{border-color:#6E56CF;box-shadow:0 4px 20px rgba(110,86,207,.1)}
+.feature-icon{font-size:2rem;margin-bottom:1rem}
+.feature-card h3{font-size:1.1rem;font-weight:600;color:#0f172a;margin-bottom:.5rem}
+.feature-card p{color:#64748b;font-size:.9rem;line-height:1.65}
+.showcase{padding:5rem 2rem;background:#0f172a;text-align:center;color:#fff}
+.showcase h2{font-size:2.2rem;font-weight:700;margin-bottom:1rem}
+.showcase p{color:#94a3b8;font-size:1rem;max-width:560px;margin:0 auto 2.5rem}
+.showcase .cta-btn{background:#6E56CF}
+.showcase .cta-btn:hover{background:#8b74e0}
+footer{padding:2rem;text-align:center;color:#94a3b8;font-size:.8rem;border-top:1px solid #e5e7eb}
+@media(max-width:768px){
+.hero h1{font-size:2.2rem}
+.stats{flex-direction:column;gap:2rem;padding:2rem 1rem}
+.feature-grid{grid-template-columns:1fr}
+.nav-links{display:none}
+}
+</style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="nav-inner">
-                <div class="nav-logo">
-                    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/><path d="M10 16h12M16 10v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    Radix UI
-                </div>
-                <div class="nav-links">
-                    <a href="#primitives">Primitives</a>
-                    <a href="#demos">Demos</a>
-                    <a href="#features">Features</a>
-                    <a href="https://github.com/radix-ui" target="_blank">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+<nav>
+<div class="logo">Radix UI</div>
+<ul class="nav-links">
+<li><a href="#">Primitives</a></li>
+<li><a href="#">Docs</a></li>
+<li><a href="#">GitHub</a></li>
+</ul>
+</nav>
 
-    <header class="hero">
-        <div class="container">
-            <div class="hero-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                v1.0 Released
-            </div>
-            <h1>Unstyled, accessible<br>React primitives</h1>
-            <p class="hero-subtitle">An open-source library of unstyled, accessible UI components for building high-quality design systems and web apps.</p>
-            <div class="hero-actions">
-                <a href="#primitives" class="btn btn-primary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                    Explore Primitives
-                </a>
-                <a href="#" class="btn btn-secondary">View Documentation</a>
-            </div>
-        </div>
-    </header>
+<section class="hero">
+<h1>Behavior first.<br><span>Style later.</span></h1>
+<p>Radix gives you fully accessible, unstyled UI primitives. Bring your own design. We handle the keyboard traps, focus rings, and ARIA so you don't have to.</p>
+<a href="#" class="cta-btn">Explore primitives</a>
+</section>
 
-    <section id="primitives">
-        <div class="container">
-            <div class="section-header">
-                <h2>25+ Unstyled Primitives</h2>
-                <p>Each primitive handles complex accessibility, state management, and keyboard interactions. You bring the styles.</p>
-            </div>
-            <div class="primitives-grid">
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Dialog</h3>
-                    <p>A modal window that interrupts the user with important content.</p>
-                    <span class="tag">WAI-ARIA Dialog</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Accordion</h3>
-                    <p>Vertically collapsing content sections with keyboard support.</p>
-                    <span class="tag">WAI-ARIA Accordion</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg> Tabs</h3>
-                    <p>Accessible tabbed interface with keyboard navigation.</p>
-                    <span class="tag">WAI-ARIA Tabs</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Dropdown Menu</h3>
-                    <p>Accessible dropdown menu with full keyboard navigation.</p>
-                    <span class="tag">WAI-ARIA Menu</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Popover</h3>
-                    <p>Floating content anchored to a trigger element.</p>
-                    <span class="tag">Anchored Positioning</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> Hover Card</h3>
-                    <p>Card preview on hover with configurable delay.</p>
-                    <span class="tag">Mouse-only Interaction</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Tooltip</h3>
-                    <p>Accessible tooltip with proper focus management.</p>
-                    <span class="tag">WAI-ARIA Tooltip</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Checkbox</h3>
-                    <p>Accessible checkbox with indeterminate state support.</p>
-                    <span class="tag">WAI-ARIA Checkbox</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Radio Group</h3>
-                    <p>Accessible radio button group with arrow key navigation.</p>
-                    <span class="tag">WAI-ARIA Radio Group</span>
-                </div>
-                <div class="primitive-card">
-                    <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/></svg> Slider</h3>
-                    <p>Accessible range input with multi-thumb support.</p>
-                    <span class="tag">WAI-ARIA Slider</span>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="stats">
+<div class="stat">
+<div class="number">50+</div>
+<div class="label">Primitives</div>
+</div>
+<div class="stat">
+<div class="number">WAI-ARIA</div>
+<div class="label">Compliant</div>
+</div>
+<div class="stat">
+<div class="number">Zero</div>
+<div class="label">Styles Included</div>
+</div>
+</section>
 
-    <section id="demos" style="background: linear-gradient(180deg, #fafafa, #ffffff);">
-        <div class="container">
-            <div class="section-header">
-                <h2>Live Demos</h2>
-                <p>Interactive examples demonstrating accessibility features and keyboard navigation.</p>
-            </div>
-            <div class="primitives-grid">
-                <!-- Accordion Demo -->
-                <div class="primitive-card">
-                    <h3>Accordion</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Click to expand. Supports Space/Enter keys.</p>
-                    <div class="demo-area" style="padding: 0;">
-                        <div class="accordion-item open">
-                            <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
-                                What is Radix UI?
-                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                            </button>
-                            <div class="accordion-content">Radix Primitives are unstyled, accessible components for building high-quality design systems.</div>
-                        </div>
-                        <div class="accordion-item">
-                            <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
-                                Is it free?
-                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                            </button>
-                            <div class="accordion-content" style="display: none;">Yes! Radix UI is completely free and open-source under the MIT license.</div>
-                        </div>
-                        <div class="accordion-item">
-                            <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
-                                How do I get started?
-                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                            </button>
-                            <div class="accordion-content" style="display: none;">Install with npm and start composing your components. Check the docs for examples.</div>
-                        </div>
-                    </div>
-                </div>
+<section class="features">
+<h2>Primitives, not opinions</h2>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-icon">♿</div>
+<h3>Accessible by Architecture</h3>
+<p>Every primitive implements WAI-ARIA patterns correctly. Focus management, keyboard navigation, and screen reader support — not bolted on, built in.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🚫</div>
+<h3>Zero Styles, Zero Fights</h3>
+<p>No CSS to override. No !important hacks. Radix ships behavior only — you layer whatever design system, framework, or aesthetic you want on top.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🔗</div>
+<h3>Composable API</h3>
+<p>Each primitive exposes precise control. Compose a Dialog from Trigger, Content, Overlay, and Close — or grab the pre-assembled version. Your call.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">⌨️</div>
+<h3>Keyboard Interactions</h3>
+<p>Arrow keys, Tab, Escape, Enter — every primitive handles keyboard patterns by default. Your Dropdown Menu works before you write a single event handler.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🔒</div>
+<h3>Focus Traps & Modals</h3>
+<p>Dialog traps focus. Popper positions correctly. Overlay prevents scroll. These are solved problems — Radix solves them so you can ship product.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🏗️</div>
+<h3>Build Up, Not Down</h3>
+<p>Start with primitives for maximum control, or compose them into higher-level components. Radix scales from prototype to production without rewriting.</p>
+</div>
+</div>
+</section>
 
-                <!-- Tabs Demo -->
-                <div class="primitive-card">
-                    <h3>Tabs</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Arrow keys navigate between tabs.</p>
-                    <div class="demo-area">
-                        <div class="tabs-list">
-                            <button class="tabs-trigger active" onclick="showTab(this, 'account')">Account</button>
-                            <button class="tabs-trigger" onclick="showTab(this, 'password')">Password</button>
-                            <button class="tabs-trigger" onclick="showTab(this, 'settings')">Settings</button>
-                        </div>
-                        <div id="tab-account" class="tabs-content active">
-                            Manage your account settings and set e-mail preferences.
-                        </div>
-                        <div id="tab-password" class="tabs-content">
-                            Change your password here. After saving, you'll be logged out.
-                        </div>
-                        <div id="tab-settings" class="tabs-content">
-                            Configure global application settings and preferences.
-                        </div>
-                    </div>
-                </div>
+<section class="showcase">
+<h2>Ship accessible UI without the expertise tax</h2>
+<p>50+ unstyled primitives. Full WAI-ARIA compliance. Zero CSS opinions. Radix: behavior you can trust, styles you can own.</p>
+<a href="#" class="cta-btn">View all primitives</a>
+</section>
 
-                <!-- Switch Demo -->
-                <div class="primitive-card">
-                    <h3>Switch</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Toggle state with click or Space key.</p>
-                    <div class="demo-area">
-                        <label class="switch active" onclick="this.classList.toggle('active')">
-                            <div class="switch-track"><div class="switch-thumb"></div></div>
-                            <span class="switch-label">Airplane Mode</span>
-                        </label>
-                        <div class="separator"></div>
-                        <label class="switch" onclick="this.classList.toggle('active')">
-                            <div class="switch-track"><div class="switch-thumb"></div></div>
-                            <span class="switch-label">Wi-Fi</span>
-                        </label>
-                        <div class="separator"></div>
-                        <label class="switch" onclick="this.classList.toggle('active')">
-                            <div class="switch-track"><div class="switch-thumb"></div></div>
-                            <span class="switch-label">Bluetooth</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Toggle Group -->
-                <div class="primitive-card">
-                    <h3>Toggle Group</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Single or multiple selection.</p>
-                    <div class="demo-area">
-                        <div class="toggle-group">
-                            <button class="toggle-btn active">Bold</button>
-                            <button class="toggle-btn">Italic</button>
-                            <button class="toggle-btn">Underline</button>
-                        </div>
-                        <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 4px; font-size: 0.875rem;">
-                            The quick brown fox jumps over the lazy dog.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slider -->
-                <div class="primitive-card">
-                    <h3>Slider</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Drag or use arrow keys to adjust.</p>
-                    <div class="demo-area">
-                        <div class="slider-container">
-                            <input type="range" min="0" max="100" value="50" class="slider">
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--gray-600); margin-top: 0.5rem;">
-                            <span>0%</span><span>50%</span><span>100%</span>
-                        </div>
-                        <div class="progress" style="margin-top: 1rem;">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Checkbox Group -->
-                <div class="primitive-card">
-                    <h3>Checkbox</h3>
-                    <p style="font-size: 0.8125rem; margin-bottom: 1rem;">Multiple selection support.</p>
-                    <div class="demo-area">
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" class="checkbox" checked>
-                                <span>Accept terms of service</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" class="checkbox" checked>
-                                <span>Receive newsletter</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" class="checkbox">
-                                <span>Enable notifications</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Why Radix?</h2>
-                <p>Built for developers who care about accessibility and user experience.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <h4>Accessible</h4>
-                    <p>WAI-ARIA compliant with full keyboard navigation and screen reader support.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    </div>
-                    <h4>Unstyled</h4>
-                    <p>Complete control over styling. Works with CSS-in-JS, Tailwind, or any approach.</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <h4>Composable</h4>
-                    <p>Granular component parts that compose together for maximum flexibility.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer style="padding: 3rem 0; border-top: 1px solid var(--gray-200); text-align: center; color: var(--gray-600); font-size: 0.875rem;">
-        <div class="container">
-            <p>Radix UI — Unstyled, accessible components for React</p>
-        </div>
-    </footer>
-
-    <script>
-        function showTab(btn, tabId) {
-            document.querySelectorAll('.tabs-trigger').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tabs-content').forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('tab-' + tabId).classList.add('active');
-        }
-    </script>
+<footer>© 2026 Radix UI — MIT License</footer>
 </body>
 </html>

@@ -2,105 +2,120 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Muji - Design System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUJI — Simple, Quality, Life</title>
 <style>
-:root{--accent:#B5960A;--bg:#F5F1E8;--card:#F5F1E8;--text:#2C2C28;--text-dim:#777;--border:#E5E5E5}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:var(--accent);text-decoration:none}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;position:sticky;top:0;z-index:100;background:#F5F1E8;border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
-.nav-logo{font-size:18px;font-weight:700;letter-spacing:-.5px}.nav-logo em{font-style:normal;color:var(--accent)}
-.nav-links{display:flex;gap:28px;font-size:13px}.nav-links a{color:var(--text-dim);transition:color .2s}.nav-links a:hover{color:var(--accent)}
-.nav-btn{font-size:13px;padding:8px 24px;border-radius:8px;background:var(--accent);color:#111111;border:none;cursor:pointer;font-weight:600;transition:opacity .2s}.nav-btn:hover{opacity:.85}
-.hero{padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}
-.hero h1{font-size:68px;font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:20px;position:relative;z-index:1}.hero h1 em{font-style:italic;color:var(--accent)}
-.hero p{font-size:18px;color:var(--text-dim);max-width:520px;margin:0 auto 48px;line-height:1.7;font-weight:300;position:relative;z-index:1}
-.hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-.btn-p{background:var(--accent);color:#111111;padding:14px 36px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s}.btn-p:hover{transform:translateY(-1px)}
-.btn-s{background:transparent;color:var(--text);padding:14px 36px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:all .2s}.btn-s:hover{border-color:var(--text-dim)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stat{text-align:center;padding:40px 24px;border-right:1px solid var(--border)}.stat:last-child{border-right:none}
-.stat .num{font-size:40px;font-weight:700;margin-bottom:4px}.stat .num.colored{color:var(--accent)}
-.stat .label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim)}
-.features{padding:100px 48px;max-width:1100px;margin:0 auto}
-.section-head{text-align:center;margin-bottom:64px}
-.section-head .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.section-head h2{font-size:40px;font-weight:700;letter-spacing:-1px;margin-bottom:12px}
-.section-head p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto}
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .25s}.fcard:hover{border-color:var(--accent);transform:translateY(-4px)}
-.ficon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;background:rgba(0,0,0,.04);color:var(--accent)}
-.fcard h3{font-size:18px;font-weight:600;margin-bottom:8px}.fcard p{font-size:14px;color:var(--text-dim);line-height:1.6}
-.showcase{padding:80px 48px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto}
-.showcase-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:40px;transition:all .2s;cursor:pointer}.showcase-item:hover{border-color:var(--accent)}
-.showcase-item h3{font-size:20px;font-weight:600;margin-bottom:8px}.showcase-item p{font-size:14px;color:var(--text-dim);line-height:1.6}
-.cta{padding:100px 48px;text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden}
-.cta h2{font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:16px;position:relative;z-index:1}.cta p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto 40px;position:relative;z-index:1}
-.footer{border-top:1px solid var(--border);padding:48px 48px 32px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
-.footer-brand .logo{font-size:16px;font-weight:700;margin-bottom:8px}.footer-brand .logo em{font-style:normal;color:var(--accent)}
-.footer-brand p{font-size:13px;color:var(--text-dim);line-height:1.7}
-.footer-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;font-weight:600}
-.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:10px;transition:color .2s}.footer-col a:hover{color:var(--accent)}
-.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim)}
-@media(max-width:768px){.hero h1{font-size:40px}.stats{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.nav-links{display:none}}
-@media(max-width:480px){.hero h1{font-size:32px}.stats{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:#3d3629;background:#F5F1E8;line-height:1.7}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:1px solid #d9d2c4;position:sticky;top:0;background:#F5F1E8;z-index:100}
+.logo{font-size:1.4rem;font-weight:400;color:#8B7355;letter-spacing:4px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:#8B7355;text-decoration:none;font-weight:400;font-size:.85rem;letter-spacing:1px;transition:opacity .2s}
+.nav-links a:hover{opacity:.5}
+.hero{padding:6rem 2rem 4rem;text-align:center;max-width:720px;margin:0 auto}
+.hero h1{font-size:2.8rem;font-weight:300;letter-spacing:1px;line-height:1.3;margin-bottom:1.5rem;color:#3d3629}
+.hero p{font-size:1.05rem;color:#7a6e5c;max-width:540px;margin:0 auto 2rem;line-height:1.8}
+.cta-btn{display:inline-block;background:#8B7355;color:#F5F1E8;padding:.8rem 2.2rem;border-radius:4px;text-decoration:none;font-weight:400;font-size:.9rem;letter-spacing:1px;transition:background .2s}
+.cta-btn:hover{background:#6b5740}
+.stats{display:flex;justify-content:center;gap:4rem;padding:3rem 2rem;border-top:1px solid #d9d2c4;border-bottom:1px solid #d9d2c4}
+.stat{text-align:center}
+.stat .number{font-size:2.2rem;font-weight:300;color:#8B7355}
+.stat .label{font-size:.75rem;color:#7a6e5c;margin-top:.25rem;letter-spacing:1.5px;text-transform:uppercase}
+.features{padding:5rem 2rem;max-width:1050px;margin:0 auto}
+.features h2{font-size:1.8rem;font-weight:300;text-align:center;margin-bottom:3rem;color:#3d3629;letter-spacing:1px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.feature-card{padding:2rem;border-radius:8px;border:1px solid #d9d2c4;background:#faf8f3;transition:border-color .2s}
+.feature-card:hover{border-color:#8B7355}
+.feature-icon{font-size:1.8rem;margin-bottom:.8rem}
+.feature-card h3{font-size:1rem;font-weight:500;color:#3d3629;margin-bottom:.5rem}
+.feature-card p{color:#7a6e5c;font-size:.88rem;line-height:1.7}
+.showcase{padding:5rem 2rem;background:#3d3629;text-align:center;color:#F5F1E8}
+.showcase h2{font-size:1.8rem;font-weight:300;letter-spacing:1px;margin-bottom:1rem}
+.showcase p{color:#b5a995;font-size:1rem;max-width:500px;margin:0 auto 2rem;line-height:1.8}
+.showcase .cta-btn{background:#F5F1E8;color:#3d3629}
+.showcase .cta-btn:hover{background:#fff}
+footer{padding:2rem;text-align:center;color:#7a6e5c;font-size:.75rem;letter-spacing:1px;border-top:1px solid #d9d2c4}
+@media(max-width:768px){
+.hero h1{font-size:2rem}
+.stats{flex-direction:column;gap:2rem}
+.feature-grid{grid-template-columns:1fr}
+.nav-links{display:none}
+}
 </style>
 </head>
 <body>
-<nav class="nav">
-<div class="nav-logo"><em>Muji</em></div>
-<div class="nav-links"><a href="#">Product</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a></div>
-<button class="nav-btn">Get Started</button>
+<nav>
+<div class="logo">MUJI</div>
+<ul class="nav-links">
+<li><a href="#">Products</a></li>
+<li><a href="#">Philosophy</a></li>
+<li><a href="#">Stores</a></li>
+</ul>
 </nav>
-<section class="hero">
 
-<h1>Enough,<br><em>already</em></h1>
-<p>Japanese minimalism. Warm natural tones. Extreme simplicity.</p>
-<div class="hero-buttons"><button class="btn-p">Explore</button><button class="btn-s">Learn More</button></div>
+<section class="hero">
+<h1>This is enough.</h1>
+<p>No logos. No excess. MUJI makes things that quietly improve daily life — simple, well-made, and affordable. What you need, nothing more.</p>
+<a href="#" class="cta-btn">Browse collection</a>
 </section>
+
 <section class="stats">
-<div class="stat"><div class="num colored">200+</div><div class="label">Components</div></div>
-<div class="stat"><div class="num">99.9%</div><div class="label">Uptime</div></div>
-<div class="stat"><div class="num">4.8&#9733;</div><div class="label">Rating</div></div>
-<div class="stat"><div class="num colored">50K+</div><div class="label">Developers</div></div>
+<div class="stat">
+<div class="number">7,000+</div>
+<div class="label">Products</div>
+</div>
+<div class="stat">
+<div class="number">800+</div>
+<div class="label">Stores Worldwide</div>
+</div>
+<div class="stat">
+<div class="number">27</div>
+<div class="label">Countries</div>
+</div>
 </section>
+
 <section class="features">
-<div class="section-head"><div class="eyebrow">Features</div><h2>Built for Muji</h2><p>Japanese minimalism, warm natural tones, extreme simplicity</p></div>
-<div class="fgrid">
-<div class="fcard"><div class="ficon">&#9889;</div><h3>Performance First</h3><p>Optimized for speed with tree-shaking, lazy loading, and zero runtime overhead.</p></div>
-<div class="fcard"><div class="ficon">&#127912;</div><h3>Design Tokens</h3><p>Consistent design language across your entire product with semantic tokens and theming.</p></div>
-<div class="fcard"><div class="ficon">&#128241;</div><h3>Responsive</h3><p>Adapts beautifully from mobile to desktop with fluid spacing and intelligent breakpoints.</p></div>
-<div class="fcard"><div class="ficon">&#9855;</div><h3>Accessible</h3><p>WCAG 2.1 AA compliant with keyboard navigation, screen reader support, and focus management.</p></div>
-<div class="fcard"><div class="ficon">&#128295;</div><h3>Customizable</h3><p>Fully themeable with CSS variables and design tokens. Make it yours in minutes, not days.</p></div>
-<div class="fcard"><div class="ficon">&#128230;</div><h3>Ready to Ship</h3><p>Production-tested components with TypeScript, comprehensive testing, and docs built in.</p></div>
+<h2>Living with less, living better</h2>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-icon">🧺</div>
+<h3>Everyday Essentials</h3>
+<p>Pens that write smoothly. Towels that dry well. Storage that actually fits. We obsess over the objects you touch every day.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🌱</div>
+<h3>Sustainable Materials</h3>
+<p>Recycled cotton, unbleached paper, sustainably sourced wood. When you use less, the material matters more.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🤍</div>
+<h3>No-Brand Philosophy</h3>
+<p>We removed the logo so the product speaks for itself. Quality you can see and feel — not a label you're paying for.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🏠</div>
+<h3>Small-Space Living</h3>
+<p>Modular furniture, stackable storage, compact appliances. Designed for real homes, not showrooms.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">✍️</div>
+<h3>Thoughtful Design</h3>
+<p>Every detail considered: the angle of a handle, the weight of a cup, the fold of a bag. Simplicity takes more work, not less.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">🧘</div>
+<h3>Calm Living</h3>
+<p>A MUJI space feels settled. Not empty — intentional. Objects in their place, life unfolding gently.</p>
+</div>
 </div>
 </section>
+
 <section class="showcase">
-<div class="section-head"><div class="eyebrow">Templates</div><h2>Ship faster</h2><p>Pre-built templates and patterns designed for real-world applications.</p></div>
-<div class="showcase-grid">
-<div class="showcase-item"><h3>Dashboard Kit</h3><p>Pre-built dashboard layouts with charts, tables, and KPI cards for data-rich applications.</p></div>
-<div class="showcase-item"><h3>Marketing Pages</h3><p>Hero sections, feature grids, pricing tables, and CTAs optimized for conversion.</p></div>
-<div class="showcase-item"><h3>Form Patterns</h3><p>Validated inputs, multi-step wizards, and accessible form components with error handling.</p></div>
-<div class="showcase-item"><h3>Navigation</h3><p>Sidebar, top nav, breadcrumbs, tabs, and command palette patterns for complex apps.</p></div>
-</div>
+<h2>Enough is beautiful</h2>
+<p>From stationery to furniture, every MUJI product shares one principle: it should be useful, well-made, and reasonably priced. That's all.</p>
+<a href="#" class="cta-btn">Find a store</a>
 </section>
-<section class="cta">
-<h2>Start building with Muji</h2>
-<p>Open source, production-ready, and designed to scale with your team from MVP to enterprise.</p>
-<div class="hero-buttons"><button class="btn-p">Get Started Free</button><button class="btn-s">View Documentation</button></div>
-</section>
-<footer class="footer">
-<div class="footer-grid">
-<div class="footer-brand"><div class="logo"><em>Muji</em></div><p>Japanese minimalism, warm natural tones, extreme simplicity</p></div>
-<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Tokens</a><a href="#">Templates</a><a href="#">Changelog</a></div>
-<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">GitHub</a><a href="#">Figma</a><a href="#">Blog</a></div>
-<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a><a href="#">Terms</a></div>
-</div>
-<div class="footer-bottom"><span>&copy; 2026 Muji Design System</span><span>Privacy &middot; Terms &middot; License</span></div>
-</footer>
+
+<footer>© 2026 MUJI — Simple, Quality, Life</footer>
 </body>
 </html>

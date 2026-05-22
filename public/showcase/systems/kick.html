@@ -3,104 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kick - Design System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Kick — Design System Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--accent:#53FC18;--bg:#0A0A0A;--card:#141414;--text:#FFFFFF;--text-dim:#999;--border:#1A1A1A}
+:root{--accent:#53FC18;--accent-dim:rgba(83,252,24,0.12);--bg:#0A0A0A;--surface:#111111;--card:#141414;--text:#EEEEEE;--text-dim:#777;--border:#1E1E1E;--glow:0 0 40px rgba(83,252,24,0.15)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 a{color:var(--accent);text-decoration:none}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;position:sticky;top:0;z-index:100;background:#0A0A0A;border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
-.nav-logo{font-size:18px;font-weight:700;letter-spacing:-.5px}.nav-logo em{font-style:normal;color:var(--accent)}
-.nav-links{display:flex;gap:28px;font-size:13px}.nav-links a{color:var(--text-dim);transition:color .2s}.nav-links a:hover{color:var(--accent)}
-.nav-btn{font-size:13px;padding:8px 24px;border-radius:8px;background:var(--accent);color:#0A0A0A;border:none;cursor:pointer;font-weight:600;transition:opacity .2s}.nav-btn:hover{opacity:.85}
-.hero{padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}
-.hero h1{font-size:68px;font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:20px;position:relative;z-index:1}.hero h1 em{font-style:italic;color:var(--accent)}
-.hero p{font-size:18px;color:var(--text-dim);max-width:520px;margin:0 auto 48px;line-height:1.7;font-weight:300;position:relative;z-index:1}
-.hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-.btn-p{background:var(--accent);color:#0A0A0A;padding:14px 36px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s}.btn-p:hover{transform:translateY(-1px)}
-.btn-s{background:transparent;color:var(--text);padding:14px 36px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:all .2s}.btn-s:hover{border-color:var(--text-dim)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stat{text-align:center;padding:40px 24px;border-right:1px solid var(--border)}.stat:last-child{border-right:none}
-.stat .num{font-size:40px;font-weight:700;margin-bottom:4px}.stat .num.colored{color:var(--accent)}
-.stat .label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim)}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 48px;position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.85);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;letter-spacing:-0.5px}.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;font-size:13px;font-weight:500}.nav-links a{color:var(--text-dim);transition:color .2s}.nav-links a:hover{color:var(--accent)}
+.nav-btn{font-size:13px;padding:8px 20px;border-radius:6px;background:var(--accent);color:#0A0A0A;border:none;cursor:pointer;font-weight:700;transition:all .2s;letter-spacing:-0.2px}.nav-btn:hover{box-shadow:var(--glow)}
+.hero{padding:120px 48px 80px;text-align:center;position:relative;overflow:hidden}
+.hero-blob{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(83,252,24,0.08) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-size:72px;font-weight:900;letter-spacing:-3px;line-height:1.05;margin-bottom:20px;position:relative;z-index:1}.hero h1 .green{color:var(--accent)}
+.hero p{font-size:18px;color:var(--text-dim);max-width:480px;margin:0 auto 48px;line-height:1.7;font-weight:400;position:relative;z-index:1}
+.hero-buttons{display:flex;gap:12px;justify-content:center;position:relative;z-index:1}
+.btn-p{background:var(--accent);color:#0A0A0A;padding:14px 36px;border-radius:6px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s}.btn-p:hover{transform:translateY(-2px);box-shadow:var(--glow)}
+.btn-s{background:transparent;color:var(--text);padding:14px 36px;border-radius:6px;font-size:14px;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:all .2s}.btn-s:hover{border-color:var(--accent);color:var(--accent)}
+.live-strip{display:flex;justify-content:center;gap:24px;padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;margin-right:8px;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.live-stat{text-align:center}.live-stat .num{font-size:32px;font-weight:800}.live-stat .num.accent{color:var(--accent)}.live-stat .label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-top:4px}
 .features{padding:100px 48px;max-width:1100px;margin:0 auto}
-.section-head{text-align:center;margin-bottom:64px}
-.section-head .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.section-head h2{font-size:40px;font-weight:700;letter-spacing:-1px;margin-bottom:12px}
-.section-head p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto}
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .25s}.fcard:hover{border-color:var(--accent);transform:translateY(-4px)}
-.ficon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;background:rgba(255,255,255,.05);color:var(--accent)}
-.fcard h3{font-size:18px;font-weight:600;margin-bottom:8px}.fcard p{font-size:14px;color:var(--text-dim);line-height:1.6}
-.showcase{padding:80px 48px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto}
-.showcase-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:40px;transition:all .2s;cursor:pointer}.showcase-item:hover{border-color:var(--accent)}
-.showcase-item h3{font-size:20px;font-weight:600;margin-bottom:8px}.showcase-item p{font-size:14px;color:var(--text-dim);line-height:1.6}
+.section-head{text-align:center;margin-bottom:64px}.section-head .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}.section-head h2{font-size:42px;font-weight:800;letter-spacing:-1.5px;margin-bottom:12px}.section-head p{font-size:16px;color:var(--text-dim);max-width:480px;margin:0 auto}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.fcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .25s}.fcard:hover{border-color:var(--accent);box-shadow:0 0 30px rgba(83,252,24,0.06)}
+.ficon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px;background:var(--accent-dim);color:var(--accent)}
+.fcard h3{font-size:17px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}.fcard p{font-size:13px;color:var(--text-dim);line-height:1.6}
+.stream-section{padding:80px 48px;max-width:1100px;margin:0 auto}
+.stream-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:48px}
+.stream-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .2s;cursor:pointer}.stream-card:hover{border-color:var(--accent)}
+.stream-thumb{width:100%;aspect-ratio:16/9;background:var(--surface);position:relative;display:flex;align-items:center;justify-content:center}
+.stream-thumb .play{width:48px;height:48px;border-radius:50%;background:rgba(83,252,24,0.15);display:flex;align-items:center;justify-content:center;border:2px solid var(--accent)}
+.stream-thumb .play::after{content:'';width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:16px solid var(--accent);margin-left:3px}
+.stream-live{position:absolute;top:8px;left:8px;background:var(--accent);color:#0A0A0A;font-size:10px;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:1px}
+.stream-info{padding:12px 16px}.stream-info h4{font-size:14px;font-weight:600;letter-spacing:-0.2px}.stream-info p{font-size:12px;color:var(--text-dim);margin-top:2px}
 .cta{padding:100px 48px;text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden}
-.cta h2{font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:16px;position:relative;z-index:1}.cta p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto 40px;position:relative;z-index:1}
-.footer{border-top:1px solid var(--border);padding:48px 48px 32px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
-.footer-brand .logo{font-size:16px;font-weight:700;margin-bottom:8px}.footer-brand .logo em{font-style:normal;color:var(--accent)}
+.cta-blob{position:absolute;bottom:-200px;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(circle,rgba(83,252,24,0.06) 0%,transparent 70%);pointer-events:none}
+.cta h2{font-size:48px;font-weight:900;letter-spacing:-2px;margin-bottom:16px;position:relative;z-index:1}.cta p{font-size:16px;color:var(--text-dim);max-width:480px;margin:0 auto 40px;position:relative;z-index:1}
+.footer{border-top:1px solid var(--border);padding:40px 48px 24px;background:var(--surface)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:32px}
+.footer-brand .logo{font-size:16px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px}.footer-brand .logo span{color:var(--accent)}
 .footer-brand p{font-size:13px;color:var(--text-dim);line-height:1.7}
-.footer-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;font-weight:600}
-.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:10px;transition:color .2s}.footer-col a:hover{color:var(--accent)}
-.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim)}
-@media(max-width:768px){.hero h1{font-size:40px}.stats{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.nav-links{display:none}}
-@media(max-width:480px){.hero h1{font-size:32px}.stats{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+.footer-col h4{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700}
+.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:8px;transition:color .2s}.footer-col a:hover{color:var(--accent)}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid var(--border);font-size:11px;color:#555}
+@media(max-width:768px){.hero h1{font-size:40px}.fgrid,.stream-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.nav-links{display:none}}
 </style>
 </head>
 <body>
 <nav class="nav">
-<div class="nav-logo"><em>Kick</em></div>
-<div class="nav-links"><a href="#">Product</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a></div>
-<button class="nav-btn">Get Started</button>
+<div class="nav-logo"><span>Kick</span> Design</div>
+<div class="nav-links"><a href="#">Stream</a><a href="#">Creators</a><a href="#">Features</a><a href="#">Developers</a></div>
+<button class="nav-btn">Go Live</button>
 </nav>
 <section class="hero">
-<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#53FC1818 0%,transparent 60%);pointer-events:none"></div>
-<h1>Stream<br><em>live</em></h1>
-<p>Green-on-dark streaming platform. Built for creators, watched by millions.</p>
-<div class="hero-buttons"><button class="btn-p">Explore</button><button class="btn-s">Learn More</button></div>
+<div class="hero-blob"></div>
+<h1>Stream.<br><span class="green">Connect.</span><br>Repeat.</h1>
+<p>The live streaming platform built for creators, gamers, and communities. Neon energy on deep black.</p>
+<div class="hero-buttons"><button class="btn-p">Start Streaming</button><button class="btn-s">Explore Channels</button></div>
 </section>
-<section class="stats">
-<div class="stat"><div class="num colored">200+</div><div class="label">Components</div></div>
-<div class="stat"><div class="num">99.9%</div><div class="label">Uptime</div></div>
-<div class="stat"><div class="num">4.8&#9733;</div><div class="label">Rating</div></div>
-<div class="stat"><div class="num colored">50K+</div><div class="label">Developers</div></div>
+<section class="live-strip">
+<div class="live-stat"><div class="num accent"><span class="live-dot"></span>12.4K</div><div class="label">Live Now</div></div>
+<div class="live-stat"><div class="num">2.1M</div><div class="label">Active Viewers</div></div>
+<div class="live-stat"><div class="num accent">340K</div><div class="label">Creators</div></div>
+<div class="live-stat"><div class="num">99.8%</div><div class="label">Uptime</div></div>
 </section>
 <section class="features">
-<div class="section-head"><div class="eyebrow">Features</div><h2>Built for Kick</h2><p>Green-on-dark, streamer-first browser UI</p></div>
+<div class="section-head"><div class="eyebrow">Features</div><h2>Built for the stream</h2><p>Everything you need to go live, engage your community, and grow your channel.</p></div>
 <div class="fgrid">
-<div class="fcard"><div class="ficon">&#9889;</div><h3>Performance First</h3><p>Optimized for speed with tree-shaking, lazy loading, and zero runtime overhead.</p></div>
-<div class="fcard"><div class="ficon">&#127912;</div><h3>Design Tokens</h3><p>Consistent design language across your entire product with semantic tokens and theming.</p></div>
-<div class="fcard"><div class="ficon">&#128241;</div><h3>Responsive</h3><p>Adapts beautifully from mobile to desktop with fluid spacing and intelligent breakpoints.</p></div>
-<div class="fcard"><div class="ficon">&#9855;</div><h3>Accessible</h3><p>WCAG 2.1 AA compliant with keyboard navigation, screen reader support, and focus management.</p></div>
-<div class="fcard"><div class="ficon">&#128295;</div><h3>Customizable</h3><p>Fully themeable with CSS variables and design tokens. Make it yours in minutes, not days.</p></div>
-<div class="fcard"><div class="ficon">&#128230;</div><h3>Ready to Ship</h3><p>Production-tested components with TypeScript, comprehensive testing, and docs built in.</p></div>
+<div class="fcard"><div class="ficon">🎬</div><h3>Ultra-Low Latency</h3><p>Sub-second streaming with adaptive bitrate. Your audience sees what you do, when you do it.</p></div>
+<div class="fcard"><div class="ficon">💬</div><h3>Live Chat</h3><p>Real-time chat with emotes, reactions, and mod tools. Keep the conversation flowing with your community.</p></div>
+<div class="fcard"><div class="ficon">💰</div><h3>Creator Economy</h3><p>Diversified revenue streams with subscriptions, donations, and sponsorships. You stream, you earn.</p></div>
+<div class="fcard"><div class="ficon">🎮</div><h3>Gaming First</h3><p>Native game detection, low-latency capture, and overlay support for AAA and indie titles.</p></div>
+<div class="fcard"><div class="ficon">🛡️</div><h3>Safety & Moderation</h3><p>AI-powered chat moderation, keyword filters, and role-based controls. Your channel, your rules.</p></div>
+<div class="fcard"><div class="ficon">⚡</div><h3>Clips & VOD</h3><p>Auto-clip highlights, full VOD storage, and one-click clip sharing. Never lose a viral moment.</p></div>
 </div>
 </section>
-<section class="showcase">
-<div class="section-head"><div class="eyebrow">Templates</div><h2>Ship faster</h2><p>Pre-built templates and patterns designed for real-world applications.</p></div>
-<div class="showcase-grid">
-<div class="showcase-item"><h3>Dashboard Kit</h3><p>Pre-built dashboard layouts with charts, tables, and KPI cards for data-rich applications.</p></div>
-<div class="showcase-item"><h3>Marketing Pages</h3><p>Hero sections, feature grids, pricing tables, and CTAs optimized for conversion.</p></div>
-<div class="showcase-item"><h3>Form Patterns</h3><p>Validated inputs, multi-step wizards, and accessible form components with error handling.</p></div>
-<div class="showcase-item"><h3>Navigation</h3><p>Sidebar, top nav, breadcrumbs, tabs, and command palette patterns for complex apps.</p></div>
+<section class="stream-section">
+<div class="section-head"><div class="eyebrow">Live Now</div><h2>Trending streams</h2><p>Discover what's live right now across gaming, music, art, and more.</p></div>
+<div class="stream-grid">
+<div class="stream-card"><div class="stream-thumb"><div class="play"></div><div class="stream-live">LIVE</div></div><div class="stream-info"><h4>Championship Finals — Pro League</h4><p>48.2K viewers</p></div></div>
+<div class="stream-card"><div class="stream-thumb"><div class="play"></div><div class="stream-live">LIVE</div></div><div class="stream-info"><h4>Indie Game Dev Marathon</h4><p>12.8K viewers</p></div></div>
+<div class="stream-card"><div class="stream-thumb"><div class="play"></div><div class="stream-live">LIVE</div></div><div class="stream-info"><h4>Beatmaking Session — Lo-Fi Hour</h4><p>8.4K viewers</p></div></div>
 </div>
 </section>
 <section class="cta">
-<h2>Start building with Kick</h2>
-<p>Open source, production-ready, and designed to scale with your team from MVP to enterprise.</p>
-<div class="hero-buttons"><button class="btn-p">Get Started Free</button><button class="btn-s">View Documentation</button></div>
+<div class="cta-blob"></div>
+<h2>Ready to go <span style="color:var(--accent)">live</span>?</h2>
+<p>Join thousands of creators streaming to millions. Free to start, built to scale.</p>
+<div class="hero-buttons"><button class="btn-p">Start Streaming Free</button><button class="btn-s">View API Docs</button></div>
 </section>
 <footer class="footer">
 <div class="footer-grid">
-<div class="footer-brand"><div class="logo"><em>Kick</em></div><p>Green-on-dark, streamer-first browser UI</p></div>
-<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Tokens</a><a href="#">Templates</a><a href="#">Changelog</a></div>
-<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">GitHub</a><a href="#">Figma</a><a href="#">Blog</a></div>
-<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+<div class="footer-brand"><div class="logo"><span>Kick</span> Design</div><p>Live streaming platform built for creators and communities worldwide.</p></div>
+<div class="footer-col"><h4>Product</h4><a href="#">Live Streaming</a><a href="#">Clips & VOD</a><a href="#">Creator Tools</a><a href="#">Mobile App</a></div>
+<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">API Reference</a><a href="#">Community</a><a href="#">Blog</a></div>
+<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Safety</a><a href="#">Terms</a></div>
 </div>
-<div class="footer-bottom"><span>&copy; 2026 Kick Design System</span><span>Privacy &middot; Terms &middot; License</span></div>
+<div class="footer-bottom"><span>&copy; 2026 Kick Streaming</span><span>Privacy &middot; Terms &middot; Guidelines</span></div>
 </footer>
 </body>
 </html>

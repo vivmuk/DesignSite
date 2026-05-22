@@ -2,105 +2,97 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KPII - Design System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPII — Enterprise Analytics Dashboard</title>
 <style>
-:root{--accent:#0066FF;--bg:#FFFFFF;--card:#FFFFFF;--text:#111111;--text-dim:#777;--border:#E5E5E5}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:var(--accent);text-decoration:none}
-.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;position:sticky;top:0;z-index:100;background:#FFFFFF;border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
-.nav-logo{font-size:18px;font-weight:700;letter-spacing:-.5px}.nav-logo em{font-style:normal;color:var(--accent)}
-.nav-links{display:flex;gap:28px;font-size:13px}.nav-links a{color:var(--text-dim);transition:color .2s}.nav-links a:hover{color:var(--accent)}
-.nav-btn{font-size:13px;padding:8px 24px;border-radius:8px;background:var(--accent);color:#FFFFFF;border:none;cursor:pointer;font-weight:600;transition:opacity .2s}.nav-btn:hover{opacity:.85}
-.hero{padding:140px 48px 100px;text-align:center;position:relative;overflow:hidden}
-.hero h1{font-size:68px;font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:20px;position:relative;z-index:1}.hero h1 em{font-style:italic;color:var(--accent)}
-.hero p{font-size:18px;color:var(--text-dim);max-width:520px;margin:0 auto 48px;line-height:1.7;font-weight:300;position:relative;z-index:1}
-.hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-.btn-p{background:var(--accent);color:#FFFFFF;padding:14px 36px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s}.btn-p:hover{transform:translateY(-1px)}
-.btn-s{background:transparent;color:var(--text);padding:14px 36px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:all .2s}.btn-s:hover{border-color:var(--text-dim)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stat{text-align:center;padding:40px 24px;border-right:1px solid var(--border)}.stat:last-child{border-right:none}
-.stat .num{font-size:40px;font-weight:700;margin-bottom:4px}.stat .num.colored{color:var(--accent)}
-.stat .label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim)}
-.features{padding:100px 48px;max-width:1100px;margin:0 auto}
-.section-head{text-align:center;margin-bottom:64px}
-.section-head .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
-.section-head h2{font-size:40px;font-weight:700;letter-spacing:-1px;margin-bottom:12px}
-.section-head p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto}
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.fcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .25s}.fcard:hover{border-color:var(--accent);transform:translateY(-4px)}
-.ficon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;background:rgba(0,0,0,.04);color:var(--accent)}
-.fcard h3{font-size:18px;font-weight:600;margin-bottom:8px}.fcard p{font-size:14px;color:var(--text-dim);line-height:1.6}
-.showcase{padding:80px 48px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto}
-.showcase-item{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:40px;transition:all .2s;cursor:pointer}.showcase-item:hover{border-color:var(--accent)}
-.showcase-item h3{font-size:20px;font-weight:600;margin-bottom:8px}.showcase-item p{font-size:14px;color:var(--text-dim);line-height:1.6}
-.cta{padding:100px 48px;text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden}
-.cta h2{font-size:48px;font-weight:700;letter-spacing:-1px;margin-bottom:16px;position:relative;z-index:1}.cta p{font-size:16px;color:var(--text-dim);max-width:500px;margin:0 auto 40px;position:relative;z-index:1}
-.footer{border-top:1px solid var(--border);padding:48px 48px 32px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
-.footer-brand .logo{font-size:16px;font-weight:700;margin-bottom:8px}.footer-brand .logo em{font-style:normal;color:var(--accent)}
-.footer-brand p{font-size:13px;color:var(--text-dim);line-height:1.7}
-.footer-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;font-weight:600}
-.footer-col a{display:block;font-size:13px;color:var(--text-dim);margin-bottom:10px;transition:color .2s}.footer-col a:hover{color:var(--accent)}
-.footer-bottom{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim)}
-@media(max-width:768px){.hero h1{font-size:40px}.stats{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.showcase-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.nav{padding:16px 24px}.nav-links{display:none}}
-@media(max-width:480px){.hero h1{font-size:32px}.stats{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#111827;line-height:1.6}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid #e5e7eb}
+nav .logo{font-size:22px;font-weight:700;color:#2563EB;letter-spacing:-0.5px}
+nav ul{list-style:none;display:flex;gap:28px}
+nav ul li a{color:#374151;text-decoration:none;font-size:14px;font-weight:500}
+nav ul li a:hover{color:#2563EB}
+.hero{text-align:center;padding:100px 40px 80px;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%)}
+.hero .badge{display:inline-block;background:#2563EB;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:20px}
+.hero h1{font-size:52px;font-weight:700;color:#111827;margin-bottom:16px}
+.hero .accent{color:#2563EB}
+.hero p{font-size:18px;max-width:620px;margin:0 auto 32px;color:#4b5563}
+.hero .btn-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 32px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-primary{background:#2563EB;color:#fff}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px)}
+.btn-secondary{background:#fff;color:#2563EB;border:2px solid #2563EB}
+.btn-secondary:hover{background:#eff6ff}
+.stats{display:flex;justify-content:center;gap:60px;padding:60px 40px;background:#fff;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .number{font-size:48px;font-weight:700;color:#2563EB}
+.stat .label{font-size:13px;color:#6b7280;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+.features{padding:80px 40px;background:#f9fafb}
+.features h2{text-align:center;font-size:36px;margin-bottom:8px;color:#111827}
+.features .subtitle{text-align:center;color:#6b7280;margin-bottom:48px;font-size:16px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;max-width:1000px;margin:0 auto}
+.feature{background:#fff;padding:32px;border-radius:12px;border:1px solid #e5e7eb;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.feature .icon{font-size:36px;margin-bottom:12px}
+.feature h3{font-size:18px;margin-bottom:8px;color:#111827}
+.feature p{color:#6b7280;font-size:14px}
+.cta{padding:80px 40px;text-align:center;background:#2563EB;color:#fff}
+.cta h2{font-size:36px;margin-bottom:16px}
+.cta p{font-size:18px;max-width:560px;margin:0 auto 32px;opacity:.9}
+.btn-white{background:#fff;color:#2563EB;padding:18px 48px;font-size:18px;border-radius:8px;font-weight:700;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+footer{padding:40px;text-align:center;background:#111827;color:#9ca3af;font-size:13px}
+footer a{color:#60a5fa;text-decoration:none}
+@media(max-width:768px){
+.hero h1{font-size:34px}
+.stats{gap:28px}.stat .number{font-size:36px}
+nav ul{display:none}
+.features-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-<nav class="nav">
-<div class="nav-logo"><em>KPII</em></div>
-<div class="nav-links"><a href="#">Product</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Docs</a></div>
-<button class="nav-btn">Get Started</button>
+<nav>
+<div class="logo">📊 KPII</div>
+<ul>
+<li><a href="#">Product</a></li>
+<li><a href="#">Integrations</a></li>
+<li><a href="#">Docs</a></li>
+<li><a href="#">Pricing</a></li>
+</ul>
 </nav>
 <section class="hero">
-
-<h1>Measure<br><em>everything</em></h1>
-<p>Data-dense dashboard design for metrics that matter. Built for precision.</p>
-<div class="hero-buttons"><button class="btn-p">Explore</button><button class="btn-s">Learn More</button></div>
-</section>
-<section class="stats">
-<div class="stat"><div class="num colored">200+</div><div class="label">Components</div></div>
-<div class="stat"><div class="num">99.9%</div><div class="label">Uptime</div></div>
-<div class="stat"><div class="num">4.8&#9733;</div><div class="label">Rating</div></div>
-<div class="stat"><div class="num colored">50K+</div><div class="label">Developers</div></div>
-</section>
-<section class="features">
-<div class="section-head"><div class="eyebrow">Features</div><h2>Built for KPII</h2><p>Data-dense dashboard design for key metrics</p></div>
-<div class="fgrid">
-<div class="fcard"><div class="ficon">&#9889;</div><h3>Performance First</h3><p>Optimized for speed with tree-shaking, lazy loading, and zero runtime overhead.</p></div>
-<div class="fcard"><div class="ficon">&#127912;</div><h3>Design Tokens</h3><p>Consistent design language across your entire product with semantic tokens and theming.</p></div>
-<div class="fcard"><div class="ficon">&#128241;</div><h3>Responsive</h3><p>Adapts beautifully from mobile to desktop with fluid spacing and intelligent breakpoints.</p></div>
-<div class="fcard"><div class="ficon">&#9855;</div><h3>Accessible</h3><p>WCAG 2.1 AA compliant with keyboard navigation, screen reader support, and focus management.</p></div>
-<div class="fcard"><div class="ficon">&#128295;</div><h3>Customizable</h3><p>Fully themeable with CSS variables and design tokens. Make it yours in minutes, not days.</p></div>
-<div class="fcard"><div class="ficon">&#128230;</div><h3>Ready to Ship</h3><p>Production-tested components with TypeScript, comprehensive testing, and docs built in.</p></div>
+<div class="badge">Enterprise-Ready</div>
+<h1>Analytics That <span class="accent">Actually Matter</span></h1>
+<p>KPII connects every data source, surfaces the metrics that drive decisions, and keeps your team aligned on what counts.</p>
+<div class="btn-group">
+<a href="#" class="btn btn-primary">Start Free Trial</a>
+<a href="#" class="btn btn-secondary">Watch Demo</a>
 </div>
 </section>
-<section class="showcase">
-<div class="section-head"><div class="eyebrow">Templates</div><h2>Ship faster</h2><p>Pre-built templates and patterns designed for real-world applications.</p></div>
-<div class="showcase-grid">
-<div class="showcase-item"><h3>Dashboard Kit</h3><p>Pre-built dashboard layouts with charts, tables, and KPI cards for data-rich applications.</p></div>
-<div class="showcase-item"><h3>Marketing Pages</h3><p>Hero sections, feature grids, pricing tables, and CTAs optimized for conversion.</p></div>
-<div class="showcase-item"><h3>Form Patterns</h3><p>Validated inputs, multi-step wizards, and accessible form components with error handling.</p></div>
-<div class="showcase-item"><h3>Navigation</h3><p>Sidebar, top nav, breadcrumbs, tabs, and command palette patterns for complex apps.</p></div>
+<section class="stats">
+<div class="stat"><div class="number">10M+</div><div class="label">Data Points Daily</div></div>
+<div class="stat"><div class="number">99.9%</div><div class="label">Uptime SLA</div></div>
+<div class="stat"><div class="number">500+</div><div class="label">Integrations</div></div>
+</section>
+<section class="features">
+<h2>From Data to Decisions, Fast</h2>
+<p class="subtitle">Enterprise analytics without the enterprise headache.</p>
+<div class="features-grid">
+<div class="feature"><div class="icon">📈</div><h3>Live Dashboards</h3><p>Real-time KPI dashboards that update as your data flows in. No refresh button, no waiting, no stale numbers.</p></div>
+<div class="feature"><div class="icon">🔗</div><h3>500+ Integrations</h3><p>Connect Salesforce, HubSpot, Snowflake, BigQuery, and every other tool your team already uses. One-click, OAuth, done.</p></div>
+<div class="feature"><div class="icon">🧠</div><h3>Anomaly Detection</h3><p>ML-powered alerts that catch outliers before they become incidents. No.threshold.tuning.required.</p></div>
+<div class="feature"><div class="icon">👥</div><h3>Team Alignment</h3><p>Shared scorecards, goals, and benchmarks. Everyone sees the same truth — even across departments.</p></div>
+<div class="feature"><div class="icon">🔒</div><h3>Row-Level Security</h3><p>Granular access controls that let finance see margins and sales see pipeline — without leaking between them.</p></div>
+<div class="feature"><div class="icon">📱</div><h3>Mobile-First Reports</h3><p>Exec dashboards that look as good on a phone as on a 4K monitor. Because decisions happen everywhere.</p></div>
 </div>
 </section>
 <section class="cta">
-<h2>Start building with KPII</h2>
-<p>Open source, production-ready, and designed to scale with your team from MVP to enterprise.</p>
-<div class="hero-buttons"><button class="btn-p">Get Started Free</button><button class="btn-s">View Documentation</button></div>
+<h2>Your Data Is Trying to Tell You Something</h2>
+<p>KPII translates 10M+ data points into the 3 metrics that matter right now. Start listening.</p>
+<a href="#" class="btn-white">Start 14-Day Free Trial</a>
 </section>
-<footer class="footer">
-<div class="footer-grid">
-<div class="footer-brand"><div class="logo"><em>KPII</em></div><p>Data-dense dashboard design for key metrics</p></div>
-<div class="footer-col"><h4>Product</h4><a href="#">Components</a><a href="#">Tokens</a><a href="#">Templates</a><a href="#">Changelog</a></div>
-<div class="footer-col"><h4>Resources</h4><a href="#">Documentation</a><a href="#">GitHub</a><a href="#">Figma</a><a href="#">Blog</a></div>
-<div class="footer-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Privacy</a><a href="#">Terms</a></div>
-</div>
-<div class="footer-bottom"><span>&copy; 2026 KPII Design System</span><span>Privacy &middot; Terms &middot; License</span></div>
+<footer>
+<p>KPII Analytics · <a href="#">Privacy</a> · <a href="#">Security</a> · <a href="#">Status</a> · <a href="#">Docs</a></p>
 </footer>
 </body>
 </html>
