@@ -1,123 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creative Director — Skill Showcase</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #0f0a1e; color: #e5e0f8; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { color: #a78bfa; text-decoration: none; }
-    a:hover { opacity: 0.8; }
-    .glow { box-shadow: 0 0 30px #a78bfa33; }
-    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 30px #a78bfa22; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Director — Portfolio</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#667788;--dark:#222;--light:#f5f5f5;--border:#ddd}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,sans-serif;color:var(--dark);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+header{padding:80px 0;border-bottom:1px solid var(--border)}
+header h1{font-size:48px;font-weight:700;margin-bottom:16px;color:var(--dark)}
+header p{font-size:18px;color:#666;max-width:600px}
+.portfolio{padding:80px 0}
+.portfolio-title{font-size:32px;font-weight:700;margin-bottom:48px;color:var(--dark)}
+.work-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-bottom:80px}
+.work-main{aspect-ratio:16/9;background:linear-gradient(135deg,#667788 0%,#556677 100%);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:64px}
+.work-info h3{font-size:24px;font-weight:700;margin-bottom:12px;color:var(--dark)}
+.work-info p{font-size:14px;color:#666;margin-bottom:16px}
+.work-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.tag{background:var(--light);color:var(--primary);font-size:12px;padding:6px 12px;border-radius:20px;font-weight:600}
+.award{color:#c94020;font-weight:600}
+.client-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:80px 0}
+.client-logo{aspect-ratio:1/1;background:var(--light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:all .2s}
+.client-logo:hover{background:var(--primary);color:#fff}
+.about{padding:80px 0;background:var(--light)}
+.about h2{font-size:32px;font-weight:700;margin-bottom:32px;color:var(--dark)}
+.about-text{font-size:16px;line-height:1.8;color:#666;max-width:800px;margin-bottom:32px}
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.skill-list h3{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:16px}
+.skill-list ul{list-style:none}
+.skill-list li{font-size:14px;color:#666;padding:8px 0;border-bottom:1px solid var(--border)}
+footer{padding:80px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{color:#666;font-size:14px}
+</style>
 </head>
 <body>
-  <!-- Nav -->
-  <nav style="position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.6);backdrop-filter:blur(20px);border-bottom:1px solid rgba(167,139,250,0.15);padding:0 24px">
-    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:28px;height:28px;background:#a78bfa;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#0f0a1e">C</div>
-        <span style="font-weight:600;font-size:16px;color:#e5e0f8">Creative Director</span>
-      </div>
-      <div style="display:flex;gap:24px;align-items:center">
-        <a href="#" style="color:#e5e0f8;font-size:14px;opacity:0.7">Docs</a>
-        <a href="#" style="color:#e5e0f8;font-size:14px;opacity:0.7">Examples</a>
-        <a href="#" style="color:#e5e0f8;font-size:14px;opacity:0.7">API</a>
-        <a href="#" style="background:#a78bfa;color:#0f0a1e;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:600">Try Free</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section style="padding:80px 24px 60px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,#a78bfa15 0%,transparent 70%);pointer-events:none"></div>
-    <div style="max-width:800px;margin:0 auto;position:relative">
-      <div style="display:inline-block;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);padding:6px 16px;border-radius:20px;font-size:13px;color:#a78bfa;margin-bottom:24px">🎨 Design & Visual</div>
-      <h1 style="font-size:clamp(32px,5vw,52px);font-weight:700;line-height:1.1;margin:0 0 20px;letter-spacing:-0.02em">Creative Director</h1>
-      <p style="font-size:17px;color:#e5e0f8;opacity:0.7;line-height:1.7;margin:0 auto 36px;max-width:560px">Creative direction and art direction skills</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="#" style="background:#a78bfa;color:#0f0a1e;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;box-shadow:0 0 20px #a78bfa44">Get Started</a>
-        <a href="#" style="background:rgba(167,139,250,0.08);color:#e5e0f8;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid rgba(167,139,250,0.15)">View Documentation</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Code/Preview Block -->
-  <section style="padding:40px 24px 60px">
-    <div style="max-width:900px;margin:0 auto">
-      <div style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:12px;overflow:hidden;glow">
-        <div style="padding:12px 16px;border-bottom:1px solid rgba(167,139,250,0.15);display:flex;align-items:center;gap:8px">
-          <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div>
-          <div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div>
-          <div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div>
-          <span style="margin-left:auto;font-size:12px;opacity:0.5">example.html</span>
-        </div>
-        <pre style="padding:20px;font-family:'Inter', system-ui, sans-serif;font-size:13px;line-height:1.7;overflow-x:auto;color:#e5e0f8;opacity:0.9"><code>&lt;div class="creative-director-container"&gt;
-  &lt;h1 class="creative-director-title"&gt;Creative Director&lt;/h1&gt;
-  &lt;p class="creative-director-description"&gt;
-    Creative direction and art direction skills
-  &lt;/p&gt;
-&lt;/div&gt;</code></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- Feature Grid -->
-  <section style="padding:40px 24px 80px">
-    <div style="max-width:1200px;margin:0 auto">
-      <h2 style="font-size:28px;font-weight:700;margin:0 0 32px;text-align:center">Capabilities</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
-        
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">⚡</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Lightning Fast</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Instant generation with optimized pipelines.</p>
-        </div>
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">🎯</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Pixel Perfect</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Every output crafted to professional standards.</p>
-        </div>
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">🔄</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Iterative Refinement</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Refine results until they match your vision.</p>
-        </div>
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">📐</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Design System Aware</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Works within your existing design language.</p>
-        </div>
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">🌐</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Open Standards</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Built on open protocols and standards.</p>
-        </div>
-        <div class="card-hover" style="background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:10px;padding:24px;transition:all 0.2s;cursor:default">
-          <div style="font-size:24px;margin-bottom:12px">🔧</div>
-          <h3 style="font-size:16px;font-weight:600;margin:0 0 8px">Highly Configurable</h3>
-          <p style="font-size:14px;opacity:0.65;line-height:1.5;margin:0">Customize every parameter for your needs.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section style="padding:60px 24px;text-align:center;background:rgba(167,139,250,0.08);border-top:1px solid rgba(167,139,250,0.15)">
-    <div style="max-width:600px;margin:0 auto">
-      <h2 style="font-size:32px;font-weight:700;margin:0 0 16px">Start Building</h2>
-      <p style="opacity:0.7;margin:0 0 28px">Open Design Creative Director — free to try, powerful in production.</p>
-      <a href="#" style="display:inline-block;background:#a78bfa;color:#0f0a1e;padding:14px 32px;border-radius:8px;font-weight:600;font-size:15px">Get Started Free →</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="padding:32px 24px;text-align:center;opacity:0.4;font-size:13px">
-    © 2026 Open Design Studio · Creative Director Skill Showcase
-  </footer>
+<header><div class="container"><h1>Creative Director</h1><p>Strategic creative leadership, brand storytelling, and visual culture that drives meaningful connections between brands and their audiences.</p></div></header>
+<section class="portfolio"><div class="container"><h2 class="portfolio-title">Selected Work</h2>
+<div class="work-grid"><div class="work-main">🎨</div><div class="work-info"><h3>Luxury Brand Campaign</h3><p>Creative direction for a global luxury fashion brand's seasonal campaign. Developed art direction, visual language, and executed across print, digital, and installation.</p><div class="work-tags"><span class="tag">Art Direction</span><span class="tag">Campaign</span><span class="tag">Brand</span><span class="tag award">Cannes Lions 2025</span></div></div></div>
+<div class="work-grid"><div class="work-main">✨</div><div class="work-info"><h3>Tech Product Launch</h3><p>Led creative vision for a consumer electronics company. Designed the complete visual system, campaign narrative, and go-to-market creative assets.</p><div class="work-tags"><span class="tag">Brand System</span><span class="tag">Campaign</span><span class="tag">Digital</span></div></div></div>
+<div class="work-grid"><div class="work-main">🌟</div><div class="work-info"><h3>Editorial Rebrand</h3><p>Reimagined the visual identity of a leading design publication. New typography, layout system, and visual language increasing engagement by 45%.</p><div class="work-tags"><span class="tag">Typography</span><span class="tag">Systems</span><span class="tag">Editorial</span></div></div></div>
+</section>
+<section class="portfolio"><div class="container"><h3 class="portfolio-title">Clients & Partners</h3><div class="client-grid"><div class="client-logo">👜</div><div class="client-logo">🏢</div><div class="client-logo">📱</div><div class="client-logo">🍕</div><div class="client-logo">🎬</div><div class="client-logo">⚡</div></div></div></section>
+<section class="about"><div class="container"><h2>About This Practice</h2><p class="about-text">Creative direction is about clarity of vision. It's the ability to synthesize research, strategy, and cultural insight into a coherent creative point of view that differentiates brands in crowded markets.</p><p class="about-text">The best creative direction feels inevitable in hindsight—like the brand couldn't have looked or communicated any other way. This comes from deep understanding of audience psychology, cultural trends, and the unique opportunity each brand represents.</p><div class="skills"><div class="skill-list"><h3>Strategic Skills</h3><ul><li>Brand strategy & positioning</li><li>Creative vision development</li><li>Art direction & visual systems</li><li>Campaign concepting</li><li>Design leadership</li><li>Stakeholder alignment</li></ul></div><div class="skill-list"><h3>Cultural Skills</h3><ul><li>Trend research & analysis</li><li>Consumer psychology</li><li>Cultural commentary</li><li>Narrative development</li><li>Audience insight</li><li>Visual storytelling</li></ul></div></div></div></section>
+<footer><div class="container"><p>© 2026 Creative Direction Practice | Available for strategic partnerships and consulting</p></div></footer>
 </body>
 </html>
