@@ -6,7 +6,7 @@
 <title>Ad Creative — Campaign Suite</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--primary:#ff6b35;--dark:#1a1a1a;--light:#f9f9f9;--border:#eee}
+:root{--primary:#ff6b35;--dark:#1a1a1a;--light:#f9f9f9;--border:#eee;--success:#1a9e6f;--warning:#d99a1f;--muted-blue:#3a6ea5}
 html{scroll-behavior:smooth}
 body{font-family:system-ui,-apple-system,sans-serif;color:var(--dark);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
@@ -23,16 +23,56 @@ header p{font-size:18px;opacity:.9}
 .campaign-info{padding:24px}
 .campaign-info h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--dark)}
 .campaign-info p{font-size:14px;color:#666}
-.formats{padding:80px 0;background:var(--light)}
+
+/* Performance dashboard */
+.dashboard{padding:80px 0;background:var(--light)}
+.dashboard .section-title{margin-bottom:8px}
+.dashboard .sub{color:#777;font-size:14px;margin-bottom:36px}
+.app-shell{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 16px 40px rgba(0,0,0,.08)}
+.app-topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--border)}
+.app-topbar h3{font-size:16px;color:var(--dark)}
+.date-pill{font-size:12px;color:#777;background:var(--light);padding:6px 12px;border-radius:14px}
+.app-body{padding:24px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.metric-card{border:1px solid var(--border);border-radius:10px;padding:18px}
+.metric-card .label{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.metric-card .value{font-size:26px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.metric-card .delta{font-size:12px;font-weight:600}
+.delta.up{color:var(--success)}
+.delta.down{color:#c0392b}
+.panel-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:24px}
+.panel{border:1px solid var(--border);border-radius:10px;padding:20px}
+.panel h4{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:16px}
+.chart-area{display:flex;align-items:flex-end;gap:10px;height:160px;position:relative}
+.chart-bar{flex:1;background:linear-gradient(180deg,var(--primary) 0%,#ffb088 100%);border-radius:4px 4px 0 0;min-height:4px;cursor:pointer;transition:opacity .2s}
+.chart-bar:hover{opacity:.8}
+.chart-labels{display:flex;gap:10px;margin-top:8px}
+.chart-labels span{flex:1;text-align:center;font-size:10px;color:#999}
+.chart-tooltip{position:absolute;background:var(--dark);color:#fff;font-size:11px;padding:4px 8px;border-radius:4px;transform:translate(-50%,-130%);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10}
+.channel-mix{display:flex;flex-direction:column;gap:14px}
+.channel-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.channel-bar-track{flex:1;height:8px;background:var(--light);border-radius:4px;overflow:hidden}
+.channel-bar-fill{height:100%;border-radius:4px;background:var(--primary)}
+.channel-pct{font-size:12px;font-weight:600;color:var(--dark);width:36px;text-align:right}
+.campaigns-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.campaigns-table th{text-align:left;font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.04em;padding:12px 16px;background:var(--light);font-weight:600}
+.campaigns-table td{padding:14px 16px;font-size:13px;color:var(--dark);border-top:1px solid var(--border)}
+.channel-badge{font-size:11px;padding:3px 8px;border-radius:4px;background:#f0f0f0;color:#555}
+.status-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:12px;display:inline-block}
+.status-live{background:#e3f6ed;color:var(--success)}
+.status-paused{background:#fdf2dc;color:var(--warning)}
+.status-completed{background:#e8eef5;color:var(--muted-blue)}
+
+.formats{padding:80px 0}
 .format-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
-.format-card{background:#fff;padding:40px;border-radius:8px;border:1px solid var(--border)}
+.format-card{background:var(--light);padding:40px;border-radius:8px;border:1px solid var(--border)}
 .format-card h3{font-size:20px;font-weight:700;margin-bottom:16px;color:var(--dark)}
 .format-card ul{list-style:none}
 .format-card li{font-size:14px;color:#666;padding:8px 0;border-bottom:1px solid var(--border)}
-.strategy{padding:80px 0}
+.strategy{padding:80px 0;background:var(--light)}
 .strategy-boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:768px){.strategy-boxes{grid-template-columns:1fr 1fr}}
-.strategy-box{background:var(--light);padding:32px;border-radius:8px;text-align:center}
+.strategy-box{background:#fff;padding:32px;border-radius:8px;text-align:center;border:1px solid var(--border)}
 .strategy-box h4{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
 .strategy-box p{font-size:13px;color:#666;line-height:1.6}
 .cta{padding:80px 0;background:linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%);color:#fff;text-align:center}
@@ -41,14 +81,84 @@ header p{font-size:18px;opacity:.9}
 .btn{background:rgba(255,255,255,.2);color:#fff;padding:12px 32px;border:2px solid #fff;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
 .btn:hover{background:#fff;color:var(--primary)}
 footer{padding:60px 0;text-align:center;border-top:1px solid var(--border);font-size:13px;color:#666}
+@media(max-width:900px){.metrics-grid{grid-template-columns:repeat(2,1fr)}.panel-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header><div class="container"><h1>Ad Creative</h1><p>Data-driven creative concepts, high-impact executions, and proven conversion frameworks across all digital channels</p></div></header>
 <section class="hero-campaigns"><div class="container"><h2 class="section-title">Recent Campaigns</h2><div class="campaign-grid"><div class="campaign-card"><div class="campaign-thumb">📱</div><div class="campaign-info"><h3>Mobile App Launch</h3><p>TikTok-first creative for a Gen Z fintech app. 8M impressions, 12% CTR.</p></div></div><div class="campaign-card"><div class="campaign-thumb">🛍️</div><div class="campaign-info"><h3>Ecommerce BFCM</h3><p>Coordinated creative across Instagram, Facebook, TikTok. $4.2M revenue.</p></div></div><div class="campaign-card"><div class="campaign-thumb">🏢</div><div class="campaign-info"><h3>B2B Awareness</h3><p>LinkedIn-first campaign for enterprise SaaS. 340% ROAS.</p></div></div></div></div></section>
+
+<section class="dashboard"><div class="container">
+<h2 class="section-title">Campaign Performance Dashboard</h2>
+<div class="sub">Live view of creative performance across all active campaigns — the kind of reporting clients see weekly.</div>
+<div class="app-shell">
+<div class="app-topbar"><h3>All campaigns · Last 30 days</h3><div class="date-pill">May 20 – Jun 19, 2026</div></div>
+<div class="app-body">
+<div class="metrics-grid">
+<div class="metric-card"><div class="label">Impressions</div><div class="value">18.4M</div><div class="delta up">↑ 24% vs prior period</div></div>
+<div class="metric-card"><div class="label">Avg CTR</div><div class="value">3.8%</div><div class="delta up">↑ 0.6pt</div></div>
+<div class="metric-card"><div class="label">Conversions</div><div class="value">42,180</div><div class="delta up">↑ 17%</div></div>
+<div class="metric-card"><div class="label">ROAS</div><div class="value">4.6x</div><div class="delta down">↓ 0.2x</div></div>
+</div>
+<div class="panel-grid">
+<div class="panel">
+<h4>Weekly spend vs. conversions</h4>
+<div class="chart-area" id="adChart"><div class="chart-tooltip" id="adTooltip"></div></div>
+<div class="chart-labels" id="adLabels"></div>
+</div>
+<div class="panel">
+<h4>Channel mix</h4>
+<div class="channel-mix">
+<div class="channel-row"><span style="width:70px">TikTok</span><div class="channel-bar-track"><div class="channel-bar-fill" style="width:38%"></div></div><span class="channel-pct">38%</span></div>
+<div class="channel-row"><span style="width:70px">Meta</span><div class="channel-bar-track"><div class="channel-bar-fill" style="width:31%"></div></div><span class="channel-pct">31%</span></div>
+<div class="channel-row"><span style="width:70px">LinkedIn</span><div class="channel-bar-track"><div class="channel-bar-fill" style="width:18%"></div></div><span class="channel-pct">18%</span></div>
+<div class="channel-row"><span style="width:70px">YouTube</span><div class="channel-bar-track"><div class="channel-bar-fill" style="width:13%"></div></div><span class="channel-pct">13%</span></div>
+</div>
+</div>
+</div>
+<table class="campaigns-table">
+<thead><tr><th>Campaign</th><th>Channel</th><th>Spend</th><th>CTR</th><th>ROAS</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Mobile App Launch</td><td><span class="channel-badge">TikTok</span></td><td>$82,400</td><td>12.0%</td><td>5.1x</td><td><span class="status-badge status-live">Live</span></td></tr>
+<tr><td>Ecommerce BFCM</td><td><span class="channel-badge">Meta</span></td><td>$210,000</td><td>4.4%</td><td>6.8x</td><td><span class="status-badge status-completed">Completed</span></td></tr>
+<tr><td>B2B Awareness</td><td><span class="channel-badge">LinkedIn</span></td><td>$64,500</td><td>1.9%</td><td>3.4x</td><td><span class="status-badge status-live">Live</span></td></tr>
+<tr><td>Holiday Retargeting</td><td><span class="channel-badge">YouTube</span></td><td>$38,200</td><td>2.6%</td><td>2.9x</td><td><span class="status-badge status-paused">Paused</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></section>
+
 <section class="formats"><div class="container"><h2 class="section-title">Creative Formats We Master</h2><div class="format-grid"><div class="format-card"><h3>Video & Motion</h3><ul><li>15s-60s TikTok/Reels</li><li>Animated GIFs & Loops</li><li>YouTube skippable ads</li><li>In-stream video</li><li>Testimonial videos</li><li>Product demos</li></ul></div><div class="format-card"><h3>Static & Carousel</h3><ul><li>Single image ads</li><li>Multi-card carousels</li><li>Dynamic product feeds</li><li>Collection ads</li><li>Instagram Stories</li><li>Playable ads</li></ul></div></div></div></section>
 <section class="strategy"><div class="container"><h2 class="section-title">Our Approach</h2><div class="strategy-boxes"><div class="strategy-box"><h4>📊 Audit</h4><p>Analyze competitors, platforms, and historical performance</p></div><div class="strategy-box"><h4>💡 Ideate</h4><p>Creative concepts that fit platform & audience psychology</p></div><div class="strategy-box"><h4>🎨 Execute</h4><p>High-quality production across all requested formats</p></div><div class="strategy-box"><h4>📈 Optimize</h4><p>Test, iterate, and scale winning variations</p></div></div></div></section>
 <section class="cta"><div class="container"><h2>Ready to launch a campaign?</h2><p>Let's create ads that actually convert</p><button class="btn">Get a campaign brief →</button></div></section>
 <footer><div class="container">© 2026 Ad Creative Studio | Performance marketing through beautiful, strategic creative</div></footer>
+
+<script>
+(function(){
+  var weeks=['Wk1','Wk2','Wk3','Wk4'];
+  var spend=[28000,34000,41000,52000];
+  var conv=[8200,9600,11800,12580];
+  var max=Math.max.apply(null,spend);
+  var chart=document.getElementById('adChart');
+  var labels=document.getElementById('adLabels');
+  var tooltip=document.getElementById('adTooltip');
+  weeks.forEach(function(w,i){
+    var bar=document.createElement('div');
+    bar.className='chart-bar';
+    bar.style.height=Math.round((spend[i]/max)*100)+'%';
+    bar.addEventListener('mouseenter',function(){
+      tooltip.textContent='$'+spend[i].toLocaleString()+' spend · '+conv[i].toLocaleString()+' conv';
+      tooltip.style.left=(bar.offsetLeft+bar.offsetWidth/2)+'px';
+      tooltip.style.opacity='1';
+    });
+    bar.addEventListener('mouseleave',function(){tooltip.style.opacity='0';});
+    chart.appendChild(bar);
+    var label=document.createElement('span');
+    label.textContent=w;
+    labels.appendChild(label);
+  });
+})();
+</script>
 </body>
 </html>

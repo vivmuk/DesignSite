@@ -9,25 +9,81 @@
 html{scroll-behavior:smooth}
 body{font-family:'Iowan Old Style',Charter,Georgia,serif;color:#1a1510;background:#faf9f7;line-height:1.8;-webkit-font-smoothing:antialiased}
 a{color:#c94020;text-decoration:none;border-bottom:1px solid}
-.container{max-width:900px;margin:0 auto;padding:0 48px}
-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:100px 0 80px;border-bottom:3px solid #1a1510}
-header h1{font-size:clamp(32px,5vw,56px);font-weight:600;line-height:1.1;color:#1a1510}
-header p{font-size:16px;color:#666;line-height:1.8}
-.masthead{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:#c94020;margin-bottom:24px;font-weight:600;font-family:system-ui,sans-serif}
-.article{padding:80px 0;border-bottom:2px solid #e0dbd6}
+.container{max-width:1100px;margin:0 auto;padding:0 48px}
+.narrow{max-width:900px;margin:0 auto;padding:0 48px}
+.topbar{background:#1a1510;color:#fff;font-family:system-ui,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.1em;padding:10px 0;text-align:center}
+.masthead-nav{border-bottom:3px solid #1a1510;padding:28px 0}
+.masthead-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.masthead-logo{font-size:34px;font-weight:600;letter-spacing:-.01em}
+.masthead-date{font-family:system-ui,sans-serif;font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.08em}
+.section-nav{display:flex;gap:28px;font-family:system-ui,sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#555}
+.section-nav a{border-bottom:none;color:#555}
+.section-nav a:hover{color:#c94020}
+
+.featured{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;padding:64px 0;border-bottom:2px solid #e0dbd6}
+.featured-image{aspect-ratio:16/10;background:linear-gradient(135deg,#3a342c 0%,#1a1510 100%);border-radius:2px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:48px}
+.masthead{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:#c94020;margin-bottom:16px;font-weight:600;font-family:system-ui,sans-serif}
+.featured h1{font-size:clamp(30px,4.5vw,46px);font-weight:600;line-height:1.15;color:#1a1510;margin-bottom:20px}
+.featured .excerpt{font-size:17px;color:#555;margin-bottom:20px}
+.featured .meta{font-family:system-ui,sans-serif;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:.05em}
+
+.secondary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:64px 0;border-bottom:2px solid #e0dbd6}
+.sec-card-image{aspect-ratio:4/3;background:linear-gradient(135deg,#8a7f6d 0%,#5e564a 100%);border-radius:2px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px}
+.sec-category{font-family:system-ui,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#c94020;font-weight:600;margin-bottom:10px}
+.sec-card h3{font-size:21px;font-weight:600;line-height:1.3;margin-bottom:10px;color:#1a1510}
+.sec-card p{font-size:14px;color:#666;margin-bottom:10px}
+.sec-card .meta{font-family:system-ui,sans-serif;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.05em}
+
+.body-layout{display:grid;grid-template-columns:1fr 280px;gap:64px;padding:64px 0}
 .article h2{font-size:36px;font-weight:600;margin-bottom:24px;color:#1a1510;line-height:1.2}
 .article p{font-size:18px;margin-bottom:24px;color:#333}
 .article p:first-of-type{font-size:20px;color:#1a1510;font-weight:500}
-.pullquote{font-size:28px;font-weight:600;color:#c94020;margin:60px 0;padding:32px 0;border-top:2px solid #c94020;border-bottom:2px solid #c94020;font-style:italic;line-height:1.4}
-.byline{display:flex;justify-content:space-between;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#999;margin-bottom:48px;font-family:system-ui,sans-serif;padding-top:24px;border-top:1px solid #e0dbd6}
+.pullquote{font-size:26px;font-weight:600;color:#c94020;margin:48px 0;padding:28px 0;border-top:2px solid #c94020;border-bottom:2px solid #c94020;font-style:italic;line-height:1.4}
+.byline{display:flex;justify-content:space-between;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#999;margin-bottom:40px;font-family:system-ui,sans-serif;padding-top:20px;border-top:1px solid #e0dbd6}
 .author-name{font-weight:600;color:#1a1510}
-footer{padding:80px 0;text-align:center;font-size:12px;color:#999;border-top:1px solid #e0dbd6;font-family:system-ui,sans-serif}
-@media(max-width:768px){.container{padding:0 24px}header{grid-template-columns:1fr}}
+
+.sidebar{font-family:system-ui,sans-serif}
+.sidebar-title{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#1a1510;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #1a1510}
+.most-read{list-style:none;counter-reset:rank}
+.most-read li{counter-increment:rank;display:flex;gap:14px;padding:16px 0;border-bottom:1px solid #e0dbd6;font-size:13px}
+.most-read li::before{content:counter(rank);font-family:Georgia,serif;font-size:24px;font-weight:700;color:#e0dbd6;flex-shrink:0;line-height:1}
+.most-read a{color:#1a1510;border-bottom:none;font-weight:500;line-height:1.4}
+.newsletter-box{background:#1a1510;color:#fff;padding:28px 24px;margin-top:32px;border-radius:2px}
+.newsletter-box h4{font-family:Georgia,serif;font-size:18px;margin-bottom:10px}
+.newsletter-box p{font-size:13px;color:#ccc;margin-bottom:16px;line-height:1.5}
+.newsletter-box input{width:100%;padding:10px 12px;border:none;border-radius:2px;margin-bottom:10px;font-size:13px;font-family:system-ui,sans-serif}
+.newsletter-box button{width:100%;background:#c94020;color:#fff;border:none;padding:10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;border-radius:2px;cursor:pointer;font-family:system-ui,sans-serif}
+
+footer{padding:64px 0;border-top:3px solid #1a1510;font-family:system-ui,sans-serif}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:40px}
+.footer-grid h5{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#1a1510;font-weight:700;margin-bottom:14px}
+.footer-grid ul{list-style:none}
+.footer-grid li{margin-bottom:8px;font-size:13px}
+.footer-grid li a{color:#666;border-bottom:none}
+.footer-bottom{text-align:center;font-size:11px;color:#999;border-top:1px solid #e0dbd6;padding-top:24px;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:900px){.container,.narrow{padding:0 24px}.featured{grid-template-columns:1fr}.secondary-grid{grid-template-columns:1fr}.body-layout{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<header><div><div class="masthead">Design & Culture</div><h1>The Invisible Architecture of Beautiful Software</h1></div><div><p>A look inside how the best design teams approach the relationship between aesthetics, function, and human psychology. By examining the work of leaders in the field, we uncover the principles that make great design feel inevitable.</p></div></header>
-<article class="container">
+<div class="topbar">Subscribe today — 3 issues free</div>
+<div class="container masthead-nav">
+<div class="masthead-row"><div class="masthead-logo">Form & Function</div><div class="masthead-date">Issue No. 142 — June 19, 2026</div></div>
+<div class="section-nav"><a href="#">Design</a><a href="#">Architecture</a><a href="#">Culture</a><a href="#">Technology</a><a href="#">Interviews</a><a href="#">Archive</a></div>
+</div>
+
+<section class="container featured">
+<div class="featured-image">🏛️</div>
+<div><div class="masthead">Cover Story · Design & Culture</div><h1>The Invisible Architecture of Beautiful Software</h1><p class="excerpt">A look inside how the best design teams approach the relationship between aesthetics, function, and human psychology.</p><div class="meta">Sarah Chen · 14 min read</div></div>
+</section>
+
+<section class="container secondary-grid">
+<div class="sec-card"><div class="sec-card-image">🖋️</div><div class="sec-category">Typography</div><h3>Why Serifs Are Making a Digital Comeback</h3><p>Display serifs are showing up everywhere from fintech apps to AI products.</p><div class="meta">Marcus Webb · 8 min</div></div>
+<div class="sec-card"><div class="sec-card-image">🪑</div><div class="sec-category">Interview</div><h3>A Conversation With a Master Furniture Designer</h3><p>On restraint, materials, and the discipline of doing less.</p><div class="meta">Priya Nair · 11 min</div></div>
+<div class="sec-card"><div class="sec-card-image">🏗️</div><div class="sec-category">Architecture</div><h3>The Quiet Buildings That Shape Our Cities</h3><p>What unremarkable architecture teaches us about good design.</p><div class="meta">Tom Eriksson · 9 min</div></div>
+</section>
+
+<section class="container body-layout">
+<article class="article">
 <div class="byline"><span class="author-name">Sarah Chen</span><span>June 19, 2026</span></div>
 <p>The best design is the kind you don't notice. It doesn't announce itself or demand attention. Instead, it anticipates your needs and guides you effortlessly toward your goal, leaving you with the impression that things could have never been any other way.</p>
 <p>This is what separates genuinely excellent design from the merely competent: the ability to make the complex feel simple, to obscure the tremendous effort that went into creating something that feels inevitable.</p>
@@ -37,7 +93,29 @@ footer{padding:80px 0;text-align:center;font-size:12px;color:#999;border-top:1px
 <p>The teams producing the most delightful products today understand that constraint breeds clarity. They choose a limited palette—whether of colors, typography, or interaction patterns—and work within those bounds with obsessive precision. This is the opposite of complexity; it's the art of knowing what to remove.</p>
 <div class="pullquote">Great design systems exist because great teams have learned what to keep and, more importantly, what to discard.</div>
 <p>This principle extends beyond pure aesthetics. The most respected design leaders we spoke with all emphasized the importance of building a shared language with their teams. When everyone understands why certain decisions were made—why this color, this typeface, this spacing—the system becomes more than rules. It becomes philosophy.</p>
+<p>And philosophy, unlike a style guide, survives the departure of any single designer. It is the truest measure of whether a design system has succeeded: not whether it looks consistent today, but whether it will still make sense five years from now, to people who never met the team that built it.</p>
 </article>
-<footer><div class="container">Form & Function — A Journal of Design and Culture | © 2026 All Rights Reserved</div></footer>
+<aside class="sidebar">
+<div class="sidebar-title">Most Read</div>
+<ul class="most-read">
+<li><a href="#">The Death of the Hamburger Menu</a></li>
+<li><a href="#">Inside Apple's Color Grading Process</a></li>
+<li><a href="#">Why Brutalism Refuses to Die</a></li>
+<li><a href="#">The Designer Who Said No to Figma</a></li>
+<li><a href="#">A Brief History of the Sans Serif</a></li>
+</ul>
+<div class="newsletter-box"><h4>The Weekly Brief</h4><p>Design and culture, delivered every Friday. No noise, just signal.</p><input type="email" placeholder="your@email.com"><button>Subscribe</button></div>
+</aside>
+</section>
+
+<footer><div class="container">
+<div class="footer-grid">
+<div><h5>Sections</h5><ul><li><a href="#">Design</a></li><li><a href="#">Architecture</a></li><li><a href="#">Culture</a></li><li><a href="#">Technology</a></li></ul></div>
+<div><h5>About</h5><ul><li><a href="#">Our story</a></li><li><a href="#">Masthead</a></li><li><a href="#">Contact</a></li></ul></div>
+<div><h5>Subscribe</h5><ul><li><a href="#">Print edition</a></li><li><a href="#">Digital access</a></li><li><a href="#">Gift a subscription</a></li></ul></div>
+<div><h5>Follow</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">RSS</a></li></ul></div>
+</div>
+<div class="footer-bottom">Form & Function — A Journal of Design and Culture · © 2026 All Rights Reserved</div>
+</div></footer>
 </body>
 </html>

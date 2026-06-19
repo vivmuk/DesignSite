@@ -10,9 +10,20 @@
 html{scroll-behavior:smooth}
 body{font-family:system-ui,-apple-system,sans-serif;color:var(--dark);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
-header{padding:80px 0;border-bottom:1px solid var(--border)}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:18px 0}
+nav .nav-inner{display:flex;justify-content:space-between;align-items:center}
+nav .logo{font-weight:700;font-size:16px;letter-spacing:-.01em}
+nav .nav-links{display:flex;gap:28px;font-size:13px;color:#555}
+header{padding:80px 0 60px;border-bottom:1px solid var(--border)}
 header h1{font-size:48px;font-weight:700;margin-bottom:16px;color:var(--dark)}
 header p{font-size:18px;color:#666;max-width:600px}
+
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)}
+.stat-cell{padding:36px 24px;text-align:center;border-right:1px solid var(--border)}
+.stat-cell:last-child{border-right:none}
+.stat-cell .num{font-size:36px;font-weight:700;color:var(--primary);margin-bottom:6px}
+.stat-cell .label{font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.04em}
+
 .portfolio{padding:80px 0}
 .portfolio-title{font-size:32px;font-weight:700;margin-bottom:48px;color:var(--dark)}
 .work-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-bottom:80px}
@@ -22,10 +33,37 @@ header p{font-size:18px;color:#666;max-width:600px}
 .work-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .tag{background:var(--light);color:var(--primary);font-size:12px;padding:6px 12px;border-radius:20px;font-weight:600}
 .award{color:#c94020;font-weight:600}
-.client-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:80px 0}
+.work-result{font-size:13px;color:var(--primary);font-weight:600;border-top:1px solid var(--border);padding-top:14px}
+
+.process{padding:80px 0;background:var(--light)}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.process-step{position:relative;padding-top:8px}
+.process-step .step-num{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:12px}
+.process-step h4{font-size:18px;font-weight:700;margin-bottom:10px;color:var(--dark)}
+.process-step p{font-size:13px;color:#666}
+.process-step:not(:last-child)::after{content:'→';position:absolute;right:-20px;top:8px;color:#bbb;font-size:18px}
+
+.testimonials{padding:80px 0}
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial-card{background:var(--light);border-radius:8px;padding:28px}
+.testimonial-card .quote{font-size:15px;color:#444;margin-bottom:20px;line-height:1.6;font-style:italic}
+.testimonial-card .person{display:flex;align-items:center;gap:12px}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.t-name{font-size:13px;font-weight:700;color:var(--dark)}
+.t-title{font-size:12px;color:#888}
+
+.client-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:0 0 80px}
 .client-logo{aspect-ratio:1/1;background:var(--light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:all .2s}
 .client-logo:hover{background:var(--primary);color:#fff}
-.about{padding:80px 0;background:var(--light)}
+
+.awards{padding:80px 0;background:var(--light)}
+.awards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.award-card{background:#fff;border-radius:8px;padding:24px;text-align:center;border:1px solid var(--border)}
+.award-card .trophy{font-size:28px;margin-bottom:10px}
+.award-card h5{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.award-card .year{font-size:12px;color:#888}
+
+.about{padding:80px 0}
 .about h2{font-size:32px;font-weight:700;margin-bottom:32px;color:var(--dark)}
 .about-text{font-size:16px;line-height:1.8;color:#666;max-width:800px;margin-bottom:32px}
 .skills{display:grid;grid-template-columns:1fr 1fr;gap:32px}
@@ -34,16 +72,48 @@ header p{font-size:18px;color:#666;max-width:600px}
 .skill-list li{font-size:14px;color:#666;padding:8px 0;border-bottom:1px solid var(--border)}
 footer{padding:80px 0;text-align:center;border-top:1px solid var(--border)}
 footer p{color:#666;font-size:14px}
+@media(max-width:900px){.stats-bar{grid-template-columns:repeat(2,1fr)}.process-grid{grid-template-columns:1fr 1fr}.process-step::after{display:none}.testimonial-grid{grid-template-columns:1fr}.client-grid{grid-template-columns:repeat(3,1fr)}.awards-grid{grid-template-columns:1fr 1fr}.skills{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<nav><div class="container nav-inner"><div class="logo">CREATIVE DIRECTOR</div><div class="nav-links"><a href="#">Work</a><a href="#">Process</a><a href="#">About</a><a href="#">Contact</a></div></div></nav>
 <header><div class="container"><h1>Creative Director</h1><p>Strategic creative leadership, brand storytelling, and visual culture that drives meaningful connections between brands and their audiences.</p></div></header>
+
+<div class="container"><div class="stats-bar">
+<div class="stat-cell"><div class="num">14</div><div class="label">Years practice</div></div>
+<div class="stat-cell"><div class="num">120+</div><div class="label">Campaigns led</div></div>
+<div class="stat-cell"><div class="num">9</div><div class="label">Industry awards</div></div>
+<div class="stat-cell"><div class="num">22</div><div class="label">Countries worked in</div></div>
+</div></div>
+
 <section class="portfolio"><div class="container"><h2 class="portfolio-title">Selected Work</h2>
-<div class="work-grid"><div class="work-main">🎨</div><div class="work-info"><h3>Luxury Brand Campaign</h3><p>Creative direction for a global luxury fashion brand's seasonal campaign. Developed art direction, visual language, and executed across print, digital, and installation.</p><div class="work-tags"><span class="tag">Art Direction</span><span class="tag">Campaign</span><span class="tag">Brand</span><span class="tag award">Cannes Lions 2025</span></div></div></div>
-<div class="work-grid"><div class="work-main">✨</div><div class="work-info"><h3>Tech Product Launch</h3><p>Led creative vision for a consumer electronics company. Designed the complete visual system, campaign narrative, and go-to-market creative assets.</p><div class="work-tags"><span class="tag">Brand System</span><span class="tag">Campaign</span><span class="tag">Digital</span></div></div></div>
-<div class="work-grid"><div class="work-main">🌟</div><div class="work-info"><h3>Editorial Rebrand</h3><p>Reimagined the visual identity of a leading design publication. New typography, layout system, and visual language increasing engagement by 45%.</p><div class="work-tags"><span class="tag">Typography</span><span class="tag">Systems</span><span class="tag">Editorial</span></div></div></div>
-</section>
+<div class="work-grid"><div class="work-main">🎨</div><div class="work-info"><h3>Luxury Brand Campaign</h3><p>Creative direction for a global luxury fashion brand's seasonal campaign. Developed art direction, visual language, and executed across print, digital, and installation.</p><div class="work-tags"><span class="tag">Art Direction</span><span class="tag">Campaign</span><span class="tag">Brand</span><span class="tag award">Cannes Lions 2025</span></div><div class="work-result">Result: 38% lift in brand consideration across target markets</div></div></div>
+<div class="work-grid"><div class="work-main">✨</div><div class="work-info"><h3>Tech Product Launch</h3><p>Led creative vision for a consumer electronics company. Designed the complete visual system, campaign narrative, and go-to-market creative assets.</p><div class="work-tags"><span class="tag">Brand System</span><span class="tag">Campaign</span><span class="tag">Digital</span></div><div class="work-result">Result: Highest pre-order volume in company history</div></div></div>
+<div class="work-grid"><div class="work-main">🌟</div><div class="work-info"><h3>Editorial Rebrand</h3><p>Reimagined the visual identity of a leading design publication. New typography, layout system, and visual language increasing engagement by 45%.</p><div class="work-tags"><span class="tag">Typography</span><span class="tag">Systems</span><span class="tag">Editorial</span></div><div class="work-result">Result: +45% reader engagement, +60% subscriber growth</div></div></div>
+</div></section>
+
+<section class="process"><div class="container"><h2 class="portfolio-title">How I Work</h2><div class="process-grid">
+<div class="process-step"><div class="step-num">01</div><h4>Discover</h4><p>Audit brand, market, and audience to find the real opportunity.</p></div>
+<div class="process-step"><div class="step-num">02</div><h4>Define</h4><p>Sharpen a single creative idea everyone can rally around.</p></div>
+<div class="process-step"><div class="step-num">03</div><h4>Design</h4><p>Build the visual system and key executions with the team.</p></div>
+<div class="process-step"><div class="step-num">04</div><h4>Deliver</h4><p>Ship across every channel, then measure and refine.</p></div>
+</div></div></section>
+
+<section class="testimonials"><div class="container"><h2 class="portfolio-title">What Clients Say</h2><div class="testimonial-grid">
+<div class="testimonial-card"><div class="quote">"The clearest creative point of view I've worked with. Every decision traced back to a single, sharp idea."</div><div class="person"><div class="t-avatar">RW</div><div><div class="t-name">Rachel W.</div><div class="t-title">CMO, Luxury Retail Group</div></div></div></div>
+<div class="testimonial-card"><div class="quote">"Turned a crowded product launch into the most talked-about thing in the category that quarter."</div><div class="person"><div class="t-avatar">DK</div><div><div class="t-name">David K.</div><div class="t-title">VP Marketing, Consumer Tech</div></div></div></div>
+<div class="testimonial-card"><div class="quote">"Rare combination of strategic rigor and genuine craft. Our whole team leveled up working together."</div><div class="person"><div class="t-avatar">SL</div><div><div class="t-name">Sofia L.</div><div class="t-title">Editor-in-Chief, Design Quarterly</div></div></div></div>
+</div></div></section>
+
 <section class="portfolio"><div class="container"><h3 class="portfolio-title">Clients & Partners</h3><div class="client-grid"><div class="client-logo">👜</div><div class="client-logo">🏢</div><div class="client-logo">📱</div><div class="client-logo">🍕</div><div class="client-logo">🎬</div><div class="client-logo">⚡</div></div></div></section>
+
+<section class="awards"><div class="container"><h2 class="portfolio-title">Awards & Recognition</h2><div class="awards-grid">
+<div class="award-card"><div class="trophy">🏆</div><h5>Cannes Lions</h5><div class="year">Gold · 2025</div></div>
+<div class="award-card"><div class="trophy">🏅</div><h5>D&AD Pencil</h5><div class="year">Yellow · 2024</div></div>
+<div class="award-card"><div class="trophy">🎖️</div><h5>Webby Awards</h5><div class="year">Honoree · 2024</div></div>
+<div class="award-card"><div class="trophy">⭐</div><h5>Communication Arts</h5><div class="year">Featured · 2023</div></div>
+</div></div></section>
+
 <section class="about"><div class="container"><h2>About This Practice</h2><p class="about-text">Creative direction is about clarity of vision. It's the ability to synthesize research, strategy, and cultural insight into a coherent creative point of view that differentiates brands in crowded markets.</p><p class="about-text">The best creative direction feels inevitable in hindsight—like the brand couldn't have looked or communicated any other way. This comes from deep understanding of audience psychology, cultural trends, and the unique opportunity each brand represents.</p><div class="skills"><div class="skill-list"><h3>Strategic Skills</h3><ul><li>Brand strategy & positioning</li><li>Creative vision development</li><li>Art direction & visual systems</li><li>Campaign concepting</li><li>Design leadership</li><li>Stakeholder alignment</li></ul></div><div class="skill-list"><h3>Cultural Skills</h3><ul><li>Trend research & analysis</li><li>Consumer psychology</li><li>Cultural commentary</li><li>Narrative development</li><li>Audience insight</li><li>Visual storytelling</li></ul></div></div></div></section>
 <footer><div class="container"><p>© 2026 Creative Direction Practice | Available for strategic partnerships and consulting</p></div></footer>
 </body>

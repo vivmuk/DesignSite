@@ -6,7 +6,7 @@
 <title>Linear — Issue Tracking Reimagined</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--primary:#5566ff;--dark:#0a0a0a;--surface:#141414;--border:#2a2a2a;--text:#e4e4e4;--muted:#999}
+:root{--primary:#5566ff;--dark:#0a0a0a;--surface:#141414;--surface2:#1c1c1c;--border:#2a2a2a;--text:#e4e4e4;--muted:#999;--success:#3dd68c;--warning:#e8b339;--danger:#f0596b}
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--text);background:var(--dark);line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--primary);text-decoration:none}
@@ -17,14 +17,67 @@ nav .logo{font-weight:700;font-size:18px;color:#fff}
 nav .nav-links{display:flex;gap:32px;align-items:center}
 nav .nav-links a{color:var(--muted);font-size:14px;font-weight:500;transition:color .2s}
 nav .nav-links a:hover{color:var(--text)}
-.hero{padding:100px 0 80px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);border-bottom:1px solid var(--border)}
-.hero h1{font-size:clamp(40px,5vw,64px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:24px;color:#fff}
-.hero p{font-size:18px;color:var(--muted);max-width:600px;margin-bottom:40px;line-height:1.6}
+.hero{padding:90px 0 70px;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);border-bottom:1px solid var(--border);text-align:center}
+.hero h1{font-size:clamp(36px,5vw,56px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:20px;color:#fff}
+.hero p{font-size:17px;color:var(--muted);max-width:560px;margin:0 auto 36px;line-height:1.6}
 .btn{padding:12px 28px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;border:none}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-primary:hover{background:#4455dd;transform:translateY(-1px)}
 .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
 .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+.hero-actions{display:flex;gap:16px;justify-content:center}
+
+/* App shell demo */
+.app-demo{padding:60px 0 100px;background:var(--surface);border-bottom:1px solid var(--border)}
+.app-demo .demo-head{text-align:center;margin-bottom:40px}
+.app-demo .demo-head h2{font-size:30px;font-weight:700;color:#fff;margin-bottom:8px}
+.app-demo .demo-head p{color:var(--muted);font-size:15px}
+.app-shell{display:grid;grid-template-columns:220px 1fr;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--dark);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.app-sidebar{background:var(--surface2);border-right:1px solid var(--border);padding:18px 0}
+.workspace-switch{display:flex;align-items:center;gap:8px;padding:0 16px 16px;font-size:13px;font-weight:600;color:#fff;border-bottom:1px solid var(--border);margin-bottom:12px;padding-bottom:16px}
+.workspace-switch .dot{width:18px;height:18px;border-radius:4px;background:var(--primary)}
+.app-nav-item{display:flex;align-items:center;gap:10px;padding:8px 16px;font-size:13px;color:var(--muted);cursor:pointer;border-radius:6px;margin:1px 8px}
+.app-nav-item.active{color:#fff;background:rgba(85,102,255,.15)}
+.app-nav-item:hover:not(.active){background:rgba(255,255,255,.04);color:var(--text)}
+.sidebar-section{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#666;padding:16px 16px 6px}
+.team-row{display:flex;align-items:center;gap:8px;padding:6px 16px;font-size:12px;color:var(--muted)}
+.team-avatar{width:20px;height:20px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700}
+.app-main{padding:20px 24px}
+.app-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.app-topbar h3{font-size:16px;color:#fff;font-weight:600}
+.topbar-actions{display:flex;gap:10px}
+.search-pill{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:7px 14px;font-size:13px;color:var(--muted)}
+.btn-small{background:var(--primary);color:#fff;padding:7px 14px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+.filter-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.filter-tab{padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+.filter-tab.active{color:#fff;border-bottom-color:var(--primary)}
+.issue-table{width:100%;border-collapse:collapse}
+.issue-table tr{border-bottom:1px solid var(--border)}
+.issue-table tr:hover{background:rgba(255,255,255,.02)}
+.issue-table td{padding:11px 8px;font-size:13px;color:var(--text);vertical-align:middle}
+.priority-icon{width:14px;height:14px;display:inline-block}
+.issue-id{color:#666;font-size:12px;width:60px}
+.issue-title{font-weight:500}
+.label-pill{font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.08);color:var(--muted);margin-right:4px;display:inline-block}
+.assignee-avatar{width:22px;height:22px;border-radius:50%;background:#3a3a5a;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.issue-status{font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;display:inline-block}
+.status-todo{background:rgba(153,153,153,.15);color:var(--muted)}
+.status-progress{background:rgba(232,179,57,.15);color:var(--warning)}
+.status-done{background:rgba(61,214,140,.15);color:var(--success)}
+.right-panel{margin-top:24px;display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.panel{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px}
+.panel h4{font-size:13px;color:#fff;margin-bottom:14px;font-weight:600}
+.cycle-chart{display:flex;align-items:flex-end;gap:6px;height:120px;position:relative}
+.cycle-bar{flex:1;border-radius:3px 3px 0 0;min-height:4px;cursor:pointer;transition:opacity .2s}
+.cycle-bar.scope{background:#3a3a5a}
+.cycle-bar.done{background:var(--primary)}
+.cycle-bar:hover{opacity:.75}
+.chart-tooltip{position:absolute;background:#000;color:#fff;font-size:11px;padding:4px 8px;border-radius:4px;transform:translate(-50%,-130%);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10}
+.activity-feed{display:flex;flex-direction:column;gap:12px;font-size:12px}
+.activity-row{display:flex;gap:8px;align-items:flex-start;color:var(--muted)}
+.activity-row strong{color:var(--text)}
+.activity-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);margin-top:5px;flex-shrink:0}
+
 .features{padding:100px 0;background:var(--surface);border-bottom:1px solid var(--border)}
 .features h2{font-size:32px;font-weight:700;margin-bottom:60px;color:#fff;text-align:center}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
@@ -43,14 +96,102 @@ nav .nav-links a:hover{color:var(--text)}
 .cta h2{font-size:40px;font-weight:700;margin-bottom:16px;color:#fff}
 .cta p{font-size:18px;color:var(--muted);margin-bottom:32px}
 footer{background:rgba(0,0,0,.5);border-top:1px solid var(--border);padding:64px 0 32px;color:var(--muted);font-size:13px;text-align:center}
+@media(max-width:900px){.app-shell{grid-template-columns:1fr}.app-sidebar{display:none}.right-panel{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <nav><div class="nav-inner"><div class="logo">⚡ Linear</div><div class="nav-links"><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Blog</a><a href="#">Security</a><a href="#">Sign in</a></div></div></nav>
-<section class="hero"><div class="container"><h1>Issue tracking that works</h1><p>Linear is the modern issue tracker for software teams. Fast, intuitive, and built for teams that ship.</p><div style="display:flex;gap:16px"><button class="btn btn-primary">Start free →</button><button class="btn btn-secondary">Watch demo</button></div></div></section>
+<section class="hero"><div class="container"><h1>Issue tracking that works</h1><p>Linear is the modern issue tracker for software teams. Fast, intuitive, and built for teams that ship.</p><div class="hero-actions"><button class="btn btn-primary">Start free →</button><button class="btn btn-secondary">Watch demo</button></div></div></section>
+
+<section class="app-demo"><div class="container">
+<div class="demo-head"><h2>See Linear in action</h2><p>A real workspace: cycles, issues, and team activity — all in one fast interface.</p></div>
+<div class="app-shell">
+<div class="app-sidebar">
+<div class="workspace-switch"><div class="dot"></div>Acme Engineering</div>
+<div class="app-nav-item">📥 Inbox</div>
+<div class="app-nav-item active">📋 Issues</div>
+<div class="app-nav-item">📁 Projects</div>
+<div class="app-nav-item">🔄 Cycles</div>
+<div class="app-nav-item">👁️ Views</div>
+<div class="sidebar-section">Your teams</div>
+<div class="team-row"><div class="team-avatar">CO</div>Core</div>
+<div class="team-row"><div class="team-avatar">GR</div>Growth</div>
+<div class="team-row"><div class="team-avatar">DS</div>Design Systems</div>
+</div>
+<div class="app-main">
+<div class="app-topbar"><h3>Core · Cycle 14</h3><div class="topbar-actions"><div class="search-pill">🔍 Search</div><button class="btn-small">+ New issue</button></div></div>
+<div class="filter-tabs"><div class="filter-tab active">All issues</div><div class="filter-tab">Active</div><div class="filter-tab">Backlog</div><div class="filter-tab">Done</div></div>
+<table class="issue-table">
+<tr>
+<td class="issue-id">COR-482</td><td><span class="priority-icon">🔴</span></td><td class="issue-title">Fix race condition in webhook delivery</td><td><span class="label-pill">bug</span></td><td><div class="assignee-avatar">JS</div></td><td><span class="issue-status status-progress">In Progress</span></td>
+</tr>
+<tr>
+<td class="issue-id">COR-479</td><td><span class="priority-icon">🟡</span></td><td class="issue-title">Add keyboard shortcuts for triage view</td><td><span class="label-pill">feature</span></td><td><div class="assignee-avatar">AM</div></td><td><span class="issue-status status-todo">Todo</span></td>
+</tr>
+<tr>
+<td class="issue-id">COR-471</td><td><span class="priority-icon">🔵</span></td><td class="issue-title">Migrate billing service to new API gateway</td><td><span class="label-pill">infra</span></td><td><div class="assignee-avatar">RK</div></td><td><span class="issue-status status-progress">In Progress</span></td>
+</tr>
+<tr>
+<td class="issue-id">COR-465</td><td><span class="priority-icon">⚪</span></td><td class="issue-title">Update onboarding copy for new workspace flow</td><td><span class="label-pill">copy</span></td><td><div class="assignee-avatar">JS</div></td><td><span class="issue-status status-done">Done</span></td>
+</tr>
+<tr>
+<td class="issue-id">COR-458</td><td><span class="priority-icon">🟡</span></td><td class="issue-title">Investigate slow query on issues index</td><td><span class="label-pill">perf</span></td><td><div class="assignee-avatar">TL</div></td><td><span class="issue-status status-todo">Todo</span></td>
+</tr>
+</table>
+<div class="right-panel">
+<div class="panel">
+<h4>Cycle progress — scope vs. completed</h4>
+<div class="cycle-chart" id="cycleChart"><div class="chart-tooltip" id="cycleTooltip"></div></div>
+</div>
+<div class="panel">
+<h4>Activity</h4>
+<div class="activity-feed">
+<div class="activity-row"><div class="activity-dot"></div><div><strong>Jamie S.</strong> moved COR-482 to In Progress</div></div>
+<div class="activity-row"><div class="activity-dot"></div><div><strong>Rae K.</strong> commented on COR-471</div></div>
+<div class="activity-row"><div class="activity-dot"></div><div><strong>Amir M.</strong> created COR-479</div></div>
+<div class="activity-row"><div class="activity-dot"></div><div>Cycle 14 will end in <strong>3 days</strong></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+
 <section class="features"><div class="container"><h2>Built for teams that move fast</h2><div class="features-grid"><div class="feature-card"><h3>⚡ Lightning fast</h3><p>Instant search, real-time sync, and instant updates across all devices. No more waiting.</p></div><div class="feature-card"><h3>🔗 Deep integrations</h3><p>GitHub, Slack, Figma, Sentry, and 50+ more. Your favorite tools, connected.</p></div><div class="feature-card"><h3>🎯 Focused workflows</h3><p>Cycles instead of sprints. Focus on shipping, not process.</p></div><div class="feature-card"><h3>📊 Powerful search</h3><p>Find any issue instantly with advanced filtering and full-text search.</p></div><div class="feature-card"><h3>🤖 AI-powered triage</h3><p>Smart labels and assignments save you time on repetitive tasks.</p></div><div class="feature-card"><h3>🔒 Enterprise security</h3><p>SOC 2, HIPAA, and data residency options for large teams.</p></div></div></div></section>
 <section class="stats"><div class="container"><h2>Trusted by the best engineering teams</h2><div class="stats-grid"><div class="stat"><div class="number">100K+</div><div class="label">Teams use Linear daily</div></div><div class="stat"><div class="number">50M+</div><div class="label">Issues tracked per month</div></div><div class="stat"><div class="number">30s</div><div class="label">Average time to track an issue</div></div></div></div></section>
 <section class="cta"><div class="container"><h2>Get your team shipping faster</h2><p>Start free, no credit card required</p><button class="btn btn-primary">Get started →</button></div></section>
 <footer><div class="container">© 2026 Linear Inc. All rights reserved. | Privacy • Terms • Security</div></footer>
+
+<script>
+(function(){
+  var scope=[8,8,8,8,10,10,10,12,12,12,12,12];
+  var done=[1,2,4,5,5,6,7,7,9,10,11,12];
+  var max=Math.max.apply(null,scope);
+  var chart=document.getElementById('cycleChart');
+  var tooltip=document.getElementById('cycleTooltip');
+  for(var i=0;i<scope.length;i++){
+    var wrap=document.createElement('div');
+    wrap.style.flex='1';
+    wrap.style.position='relative';
+    wrap.style.height='100%';
+    wrap.style.display='flex';
+    wrap.style.alignItems='flex-end';
+    var scopeBar=document.createElement('div');
+    scopeBar.className='cycle-bar scope';
+    scopeBar.style.height=Math.round((scope[i]/max)*100)+'%';
+    scopeBar.style.width='100%';
+    (function(idx,bar){
+      bar.addEventListener('mouseenter',function(){
+        tooltip.textContent='Day '+(idx+1)+': '+done[idx]+'/'+scope[idx]+' done';
+        tooltip.style.left=(bar.parentElement.offsetLeft+bar.parentElement.offsetWidth/2)+'px';
+        tooltip.style.opacity='1';
+      });
+      bar.addEventListener('mouseleave',function(){tooltip.style.opacity='0';});
+    })(i,scopeBar);
+    wrap.appendChild(scopeBar);
+    chart.appendChild(wrap);
+  }
+})();
+</script>
 </body>
 </html>

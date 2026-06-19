@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cereal:wght@400;500;600;700&family=Helvetica+Neue:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--primary:#ff5a5f;--primary-dark:#e63946;--dark:#222;--light:#f7f7f7;--gray:#717171;--border:#ddd;--shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 8px 16px rgba(0,0,0,.15);--radius:8px}
+:root{--primary:#ff5a5f;--primary-dark:#e63946;--dark:#222;--light:#f7f7f7;--gray:#717171;--border:#ddd;--shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 8px 16px rgba(0,0,0,.15);--radius:8px;--success:#0a8a5f;--warning:#c2880a;--danger:#c9302c}
 html{scroll-behavior:smooth}
 body{font-family:'Helvetica Neue','Segoe UI',sans-serif;color:var(--dark);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--primary);text-decoration:none}
@@ -35,18 +35,87 @@ nav .nav-links a:hover{color:var(--primary)}
 .category-card:hover{border-color:var(--primary);box-shadow:var(--shadow-lg)}
 .category-card .icon{font-size:32px;margin-bottom:12px}
 .category-card p{font-size:14px;font-weight:500;color:var(--dark)}
-.stays{padding:64px 0;background:var(--light)}
-.stays h2{font-size:28px;font-weight:600;margin-bottom:40px;color:var(--dark)}
-.stays-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+
+/* Search & filter experience */
+.search-experience{padding:64px 0;background:var(--light)}
+.search-experience h2{font-size:28px;font-weight:600;margin-bottom:8px;color:var(--dark)}
+.search-experience .sub{color:var(--gray);font-size:14px;margin-bottom:32px}
+.search-layout{display:grid;grid-template-columns:240px 1fr;gap:32px}
+.filters{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;align-self:start}
+.filters h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);margin-bottom:16px}
+.filter-group{margin-bottom:24px}
+.filter-group:last-child{margin-bottom:0}
+.range-row{display:flex;justify-content:space-between;font-size:13px;color:var(--dark);margin-bottom:8px}
+.range-track{height:4px;background:var(--border);border-radius:2px;position:relative}
+.range-fill{position:absolute;left:20%;right:35%;top:0;bottom:0;background:var(--primary);border-radius:2px}
+.range-fill::before,.range-fill::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border:2px solid var(--primary);border-radius:50%;top:50%;transform:translateY(-50%)}
+.range-fill::before{left:-7px}
+.range-fill::after{right:-7px}
+.checkbox-row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--dark);padding:6px 0;cursor:pointer}
+.checkbox-row input{accent-color:var(--primary);width:16px;height:16px}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.results-count{font-size:14px;color:var(--gray)}
+.sort-select{border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--dark);background:#fff}
+.stays-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
 .stay-card{border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:var(--shadow);transition:all .3s;cursor:pointer}
 .stay-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.stay-image{aspect-ratio:1/1;background:linear-gradient(135deg,#ff8a65 0%,#ff5a5f 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px}
+.stay-image{aspect-ratio:1/1;background:linear-gradient(135deg,#ff8a65 0%,#ff5a5f 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;position:relative}
+.stay-image .badge-super{position:absolute;top:10px;left:10px;background:#fff;color:var(--dark);font-size:11px;font-weight:700;padding:4px 8px;border-radius:12px}
 .stay-info{padding:16px}
 .stay-title{font-size:15px;font-weight:600;color:var(--dark);margin-bottom:4px}
 .stay-desc{font-size:13px;color:var(--gray);margin-bottom:12px}
 .stay-rating{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--dark)}
 .stay-rating .star{color:#ff5a5f}
 .stay-price{font-size:14px;font-weight:600;color:var(--dark);margin-top:8px}
+.pagination{display:flex;gap:8px;justify-content:center;margin-top:32px}
+.page-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;color:var(--dark)}
+.page-btn.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+
+/* Host dashboard */
+.dashboard-section{padding:64px 0;background:#fff}
+.dashboard-section .section-head{margin-bottom:32px}
+.dashboard-section h2{font-size:28px;font-weight:600;color:var(--dark);margin-bottom:8px}
+.dashboard-section .sub{color:var(--gray);font-size:14px}
+.app-shell{display:grid;grid-template-columns:220px 1fr;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.app-sidebar{background:#fff7f5;border-right:1px solid var(--border);padding:24px 0}
+.app-sidebar .brand{font-weight:700;color:var(--primary);padding:0 20px 20px;font-size:16px}
+.app-nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:var(--gray);cursor:pointer;border-left:3px solid transparent}
+.app-nav-item.active{color:var(--primary);background:#fff;border-left-color:var(--primary);font-weight:600}
+.app-nav-item:hover:not(.active){background:rgba(255,90,95,.06)}
+.app-main{background:var(--light);padding:28px}
+.app-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.app-topbar h3{font-size:18px;color:var(--dark)}
+.app-topbar .host-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.metric-card{background:#fff;border-radius:10px;padding:18px;border:1px solid var(--border)}
+.metric-card .label{font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.metric-card .value{font-size:24px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.metric-card .delta{font-size:12px;font-weight:600}
+.delta.up{color:var(--success)}
+.delta.down{color:var(--danger)}
+.panel-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:24px}
+.panel{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px}
+.panel h4{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:16px}
+.chart-area{display:flex;align-items:flex-end;gap:8px;height:160px;position:relative}
+.chart-bar{flex:1;background:linear-gradient(180deg,var(--primary) 0%,#ff8c69 100%);border-radius:4px 4px 0 0;position:relative;cursor:pointer;transition:opacity .2s;min-height:4px}
+.chart-bar:hover{opacity:.8}
+.chart-labels{display:flex;gap:8px;margin-top:8px}
+.chart-labels span{flex:1;text-align:center;font-size:10px;color:var(--gray)}
+.chart-tooltip{position:absolute;background:var(--dark);color:#fff;font-size:11px;padding:4px 8px;border-radius:4px;transform:translate(-50%,-130%);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10}
+.review-feed{display:flex;flex-direction:column;gap:14px}
+.review-row{display:flex;gap:10px;font-size:13px;align-items:flex-start}
+.review-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0}
+.review-row .meta{color:var(--gray);font-size:11px}
+.bookings-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.bookings-table th{text-align:left;font-size:12px;color:var(--gray);text-transform:uppercase;letter-spacing:.04em;padding:12px 16px;background:var(--light);font-weight:600}
+.bookings-table td{padding:14px 16px;font-size:13px;color:var(--dark);border-top:1px solid var(--border)}
+.guest-cell{display:flex;align-items:center;gap:8px}
+.guest-avatar{width:28px;height:28px;border-radius:50%;background:#ffe0d6;color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.status-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:12px;display:inline-block}
+.status-confirmed{background:#e3f6ed;color:var(--success)}
+.status-pending{background:#fdf2dc;color:var(--warning)}
+.status-cancelled{background:#fbe7e6;color:var(--danger)}
+
 .trust{padding:64px 0;background:var(--light);text-align:center}
 .trust h2{font-size:28px;font-weight:600;margin-bottom:48px;color:var(--dark)}
 .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
@@ -65,6 +134,7 @@ footer li{margin-bottom:8px}
 footer li a{color:rgba(255,255,255,.6);font-size:13px;transition:color .2s}
 footer li a:hover{color:#fff}
 footer .copyright{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;text-align:center;font-size:12px}
+@media(max-width:900px){.search-layout{grid-template-columns:1fr}.app-shell{grid-template-columns:1fr}.app-sidebar{display:none}.metrics-grid{grid-template-columns:repeat(2,1fr)}.panel-grid{grid-template-columns:1fr}}
 @media(max-width:768px){.hero-inner{grid-template-columns:1fr}.trust-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -72,9 +142,112 @@ footer .copyright{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;tex
 <nav><div class="nav-inner"><div class="logo">🏠 Airbnb</div><div class="nav-links"><a href="#">Stays</a><a href="#">Experiences</a><a href="#">Messages</a><a href="#">Sign up</a></div></div></nav>
 <section class="hero"><div class="container"><div class="hero-inner"><div><h1>Not all destinations are the same</h1><p>Explore the world in a whole new way. From beachfront villas to city apartments.</p><div class="search-box"><input type="text" placeholder="Where are you going?"><button>Search</button></div></div><div class="hero-image">🌍</div></div></div></section>
 <section class="categories"><div class="container"><div class="category-title">Explore by category</div><div class="category-grid"><div class="category-card"><div class="icon">🏖️</div><p>Beach</p></div><div class="category-card"><div class="icon">🏔️</div><p>Mountains</p></div><div class="category-card"><div class="icon">🏙️</div><p>Cities</p></div><div class="category-card"><div class="icon">🏡</div><p>Countryside</p></div><div class="category-card"><div class="icon">🏰</div><p>Unique</p></div><div class="category-card"><div class="icon">🌴</div><p>Tropical</p></div></div></div></section>
-<section class="stays"><div class="container"><h2>Stays in trending destinations</h2><div class="stays-grid"><div class="stay-card"><div class="stay-image">🏡</div><div class="stay-info"><div class="stay-title">Santorini, Greece</div><div class="stay-desc">Whitewashed cliffside homes</div><div class="stay-rating"><span class="star">★</span>4.92 (1.2K)</div><div class="stay-price">$245/night</div></div></div><div class="stay-card"><div class="stay-image">🏖️</div><div class="stay-info"><div class="stay-title">Bali, Indonesia</div><div class="stay-desc">Beachfront villas</div><div class="stay-rating"><span class="star">★</span>4.88 (2.4K)</div><div class="stay-price">$120/night</div></div></div><div class="stay-card"><div class="stay-image">🏔️</div><div class="stay-info"><div class="stay-title">Banff, Canada</div><div class="stay-desc">Mountain lodges</div><div class="stay-rating"><span class="star">★</span>4.95 (890)</div><div class="stay-price">$180/night</div></div></div><div class="stay-card"><div class="stay-image">🏙️</div><div class="stay-info"><div class="stay-title">Tokyo, Japan</div><div class="stay-desc">Modern & traditional</div><div class="stay-rating"><span class="star">★</span>4.91 (3.1K)</div><div class="stay-price">$95/night</div></div></div></div></div></section>
+
+<section class="search-experience"><div class="container">
+<h2>Stays in trending destinations</h2>
+<div class="sub">412 stays found · Jun 24 – Jun 29 · 2 guests</div>
+<div class="search-layout">
+<aside class="filters">
+<h4>Price range</h4>
+<div class="filter-group"><div class="range-row"><span>$45</span><span>$320</span></div><div class="range-track"><div class="range-fill"></div></div></div>
+<h4>Type of place</h4>
+<div class="filter-group"><label class="checkbox-row"><input type="checkbox" checked> Entire home</label><label class="checkbox-row"><input type="checkbox"> Private room</label><label class="checkbox-row"><input type="checkbox"> Shared room</label></div>
+<h4>Amenities</h4>
+<div class="filter-group"><label class="checkbox-row"><input type="checkbox" checked> Wifi</label><label class="checkbox-row"><input type="checkbox" checked> Kitchen</label><label class="checkbox-row"><input type="checkbox"> Pool</label><label class="checkbox-row"><input type="checkbox"> Free parking</label></div>
+<h4>Superhost</h4>
+<div class="filter-group"><label class="checkbox-row"><input type="checkbox"> Superhost only</label></div>
+</aside>
+<div>
+<div class="results-header"><div class="results-count">Showing 1–4 of 412 stays</div><select class="sort-select"><option>Sort: Recommended</option><option>Price: low to high</option><option>Price: high to low</option><option>Top rated</option></select></div>
+<div class="stays-grid">
+<div class="stay-card"><div class="stay-image">🏡<span class="badge-super">Superhost</span></div><div class="stay-info"><div class="stay-title">Santorini, Greece</div><div class="stay-desc">Whitewashed cliffside homes</div><div class="stay-rating"><span class="star">★</span>4.92 (1.2K)</div><div class="stay-price">$245/night</div></div></div>
+<div class="stay-card"><div class="stay-image">🏖️</div><div class="stay-info"><div class="stay-title">Bali, Indonesia</div><div class="stay-desc">Beachfront villas</div><div class="stay-rating"><span class="star">★</span>4.88 (2.4K)</div><div class="stay-price">$120/night</div></div></div>
+<div class="stay-card"><div class="stay-image">🏔️<span class="badge-super">Superhost</span></div><div class="stay-info"><div class="stay-title">Banff, Canada</div><div class="stay-desc">Mountain lodges</div><div class="stay-rating"><span class="star">★</span>4.95 (890)</div><div class="stay-price">$180/night</div></div></div>
+<div class="stay-card"><div class="stay-image">🏙️</div><div class="stay-info"><div class="stay-title">Tokyo, Japan</div><div class="stay-desc">Modern & traditional</div><div class="stay-rating"><span class="star">★</span>4.91 (3.1K)</div><div class="stay-price">$95/night</div></div></div>
+</div>
+<div class="pagination"><div class="page-btn active">1</div><div class="page-btn">2</div><div class="page-btn">3</div><div class="page-btn">…</div><div class="page-btn">34</div></div>
+</div>
+</div>
+</div></section>
+
+<section class="dashboard-section"><div class="container">
+<div class="section-head"><h2>Manage your listing like a pro</h2><div class="sub">The Airbnb host dashboard gives hosts real-time visibility into earnings, bookings, and guest activity.</div></div>
+<div class="app-shell">
+<div class="app-sidebar">
+<div class="brand">🏠 Host Hub</div>
+<div class="app-nav-item active">📅 Today</div>
+<div class="app-nav-item">🗓️ Calendar</div>
+<div class="app-nav-item">🏡 Listings</div>
+<div class="app-nav-item">💰 Earnings</div>
+<div class="app-nav-item">💬 Messages</div>
+<div class="app-nav-item">⭐ Reviews</div>
+</div>
+<div class="app-main">
+<div class="app-topbar"><h3>Welcome back, Maria</h3><div class="host-avatar">M</div></div>
+<div class="metrics-grid">
+<div class="metric-card"><div class="label">This month</div><div class="value">$4,820</div><div class="delta up">↑ 18% vs last month</div></div>
+<div class="metric-card"><div class="label">Occupancy</div><div class="value">87%</div><div class="delta up">↑ 5%</div></div>
+<div class="metric-card"><div class="label">Avg rating</div><div class="value">4.92</div><div class="delta up">↑ 0.03</div></div>
+<div class="metric-card"><div class="label">Response rate</div><div class="value">98%</div><div class="delta down">↓ 1%</div></div>
+</div>
+<div class="panel-grid">
+<div class="panel">
+<h4>Earnings — last 12 months</h4>
+<div class="chart-area" id="earningsChart"><div class="chart-tooltip" id="chartTooltip"></div></div>
+<div class="chart-labels" id="chartLabels"></div>
+</div>
+<div class="panel">
+<h4>Recent activity</h4>
+<div class="review-feed">
+<div class="review-row"><div class="review-dot"></div><div><div>New 5★ review from <strong>James K.</strong></div><div class="meta">2 hours ago</div></div></div>
+<div class="review-row"><div class="review-dot" style="background:#0a8a5f"></div><div><div><strong>Booking confirmed</strong> for Jul 14–18</div><div class="meta">6 hours ago</div></div></div>
+<div class="review-row"><div class="review-dot" style="background:#c2880a"></div><div><div>New message from <strong>Aisha</strong></div><div class="meta">1 day ago</div></div></div>
+<div class="review-row"><div class="review-dot"></div><div><div>Payout of <strong>$1,240</strong> sent</div><div class="meta">2 days ago</div></div></div>
+</div>
+</div>
+</div>
+<table class="bookings-table">
+<thead><tr><th>Guest</th><th>Dates</th><th>Nights</th><th>Total</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><div class="guest-cell"><div class="guest-avatar">JK</div>James K.</div></td><td>Jul 14 – Jul 18</td><td>4</td><td>$980</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+<tr><td><div class="guest-cell"><div class="guest-avatar">A</div>Aisha M.</div></td><td>Jul 22 – Jul 25</td><td>3</td><td>$735</td><td><span class="status-badge status-pending">Pending</span></td></tr>
+<tr><td><div class="guest-cell"><div class="guest-avatar">DR</div>David R.</div></td><td>Aug 02 – Aug 09</td><td>7</td><td>$1,715</td><td><span class="status-badge status-confirmed">Confirmed</span></td></tr>
+<tr><td><div class="guest-cell"><div class="guest-avatar">L</div>Lena T.</div></td><td>Jun 28 – Jun 30</td><td>2</td><td>$490</td><td><span class="status-badge status-cancelled">Cancelled</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></section>
+
 <section class="trust"><div class="container"><h2>Why guests choose Airbnb</h2><div class="trust-grid"><div class="trust-item"><h4>🛡️ Safety</h4><p>24/7 support, verified reviews, secure payments</p></div><div class="trust-item"><h4>🌍 Global</h4><p>4M+ listings in 220+ countries</p></div><div class="trust-item"><h4>💝 Belong</h4><p>Connect with hosts who share your interests</p></div></div></div></section>
 <section class="cta"><div class="container"><h2>Ready to belong anywhere?</h2><p>Create your first booking in minutes</p><button class="btn-primary">Explore stays →</button></div></section>
-<footer><div class="container"><div class="footer-grid"><div><h4>Support</h4><ul><li><a href="#">Help center</a></li><li><a href="#">Safety</a></li><li><a href="#">Community</a></li></ul></div><div><h4>Hosting</h4><ul><li><a href="#">List your home</a></li><li><a href="#">Resources</a></li></ul></div><div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div></div><div class="copyright">© 2026 Airbnb. All rights reserved.</div></footer>
+<footer><div class="container"><div class="footer-grid"><div><h4>Support</h4><ul><li><a href="#">Help center</a></li><li><a href="#">Safety</a></li><li><a href="#">Community</a></li></ul></div><div><h4>Hosting</h4><ul><li><a href="#">List your home</a></li><li><a href="#">Resources</a></li></ul></div><div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div><div><h4>Legal</h4><ul><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div></div><div class="copyright">© 2026 Airbnb. All rights reserved.</div></div></footer>
+
+<script>
+(function(){
+  var months=['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+  var values=[2100,2450,2200,2800,3100,2950,3400,3650,3300,3900,4200,4820];
+  var max=Math.max.apply(null,values);
+  var chart=document.getElementById('earningsChart');
+  var labels=document.getElementById('chartLabels');
+  var tooltip=document.getElementById('chartTooltip');
+  months.forEach(function(m,i){
+    var bar=document.createElement('div');
+    bar.className='chart-bar';
+    bar.style.height=Math.round((values[i]/max)*100)+'%';
+    bar.addEventListener('mouseenter',function(e){
+      tooltip.textContent='$'+values[i].toLocaleString();
+      tooltip.style.left=(bar.offsetLeft+bar.offsetWidth/2)+'px';
+      tooltip.style.top='0px';
+      tooltip.style.opacity='1';
+    });
+    bar.addEventListener('mouseleave',function(){tooltip.style.opacity='0';});
+    chart.appendChild(bar);
+    var label=document.createElement('span');
+    label.textContent=m;
+    labels.appendChild(label);
+  });
+})();
+</script>
 </body>
 </html>
