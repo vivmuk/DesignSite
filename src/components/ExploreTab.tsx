@@ -1,9 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { enrichedStyles, enrichedCategories, sortOptions, allTags, type EnrichedStyle } from '../data/enrichedStyles';
 
 interface ExploreTabProps {
   onSelectStyle: (style: EnrichedStyle) => void;
 }
+
+const PAGE_SIZE = 24;
 
 export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
   const [search, setSearch] = useState('');
@@ -11,9 +13,32 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
   const [sortBy, setSortBy] = useState('popular');
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [showTags, setShowTags] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [allStyles, setAllStyles] = useState<EnrichedStyle[]>(enrichedStyles);
+  const [loading, setLoading] = useState(false);
+
+  // Load full 2,000 style database from JSON
+  useEffect(() => {
+    setLoading(true);
+    fetch('/styles.json')
+      .then(res => res.json())
+      .then((data: EnrichedStyle[]) => {
+        // Merge: keep enriched styles first, then add unique ones from JSON
+        const existingIds = new Set(enrichedStyles.map(s => s.id));
+        const unique = data.filter(s => !existingIds.has(s.id));
+        setAllStyles([...enrichedStyles, ...unique]);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [search, category, sortBy, activeTag]);
 
   const filtered = useMemo(() => {
-    let items = [...enrichedStyles];
+    let items = [...allStyles];
 
     if (category !== 'all') {
       items = items.filter(s => s.category === category);
@@ -24,14 +49,14 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
     }
 
     if (search) {
-      const q = search.toLowerCase();
-      items = items.filter(s =>
-        s.name.toLowerCase().includes(q) ||
-        s.description.toLowerCase().includes(q) ||
-        s.tagline.toLowerCase().includes(q) ||
-        s.tags.some(t => t.toLowerCase().includes(q)) ||
-        s.characteristics.some(c => c.toLowerCase().includes(q))
-      );
+      const words = search.toLowerCase().split(/\s+/).filter(Boolean);
+      items = items.filter(s => {
+        const haystack = [
+          s.name, s.description, s.tagline, s.mood,
+          ...s.tags, ...s.characteristics,
+        ].join(' ').toLowerCase();
+        return words.every(w => haystack.includes(w));
+      });
     }
 
     switch (sortBy) {
@@ -47,7 +72,10 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
     }
 
     return items;
-  }, [search, category, sortBy, activeTag]);
+  }, [allStyles, search, category, sortBy, activeTag]);
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   return (
     <div className="explore-tab">
@@ -56,7 +84,7 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
         <input
           type="text"
           className="explore-search-input"
-          placeholder="Search 2,000+ design styles…"
+          placeholder={`Search ${allStyles.length.toLocaleString()} design styles…`}
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -96,7 +124,9 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
 
       {/* Sort + Count */}
       <div className="explore-meta">
-        <span className="explore-count">{filtered.length} styles</span>
+        <span className="explore-count">
+          {loading ? 'Loading…' : `${filtered.length.toLocaleString()} styles`}
+        </span>
         <div className="explore-sort">
           {sortOptions.map(opt => (
             <button
@@ -112,12 +142,21 @@ export function ExploreTab({ onSelectStyle }: ExploreTabProps) {
 
       {/* Style Card Grid */}
       <div className="explore-grid">
-        {filtered.map(style => (
+        {visible.map(style => (
           <StyleCard key={style.id} style={style} onClick={() => onSelectStyle(style)} />
         ))}
       </div>
 
-      {filtered.length === 0 && (
+      {/* Load More */}
+      {hasMore && (
+        <div className="explore-load-more">
+          <button onClick={() => setVisibleCount(c => c + PAGE_SIZE)}>
+            Load more ({(filtered.length - visibleCount).toLocaleString()} remaining)
+          </button>
+        </div>
+      )}
+
+      {filtered.length === 0 && !loading && (
         <div className="explore-empty">
           <p>No styles match your search.</p>
           <button onClick={() => { setSearch(''); setCategory('all'); setActiveTag(null); }}>
@@ -134,12 +173,11 @@ function StyleCard({ style, onClick }: { style: EnrichedStyle; onClick: () => vo
   const secondary = style.colors[1] || style.neutrals[0];
   const accent = style.colors[2] || style.colors[0];
 
-  // Generate a mini preview using the style's palette
   const previewStyle: React.CSSProperties = {
     background: style.neutrals.find(n => n.name.toLowerCase().includes('paper') || n.name.toLowerCase().includes('white') || n.name.toLowerCase().includes('canvas'))?.hex || '#ffffff',
   };
 
-  const isDark = style.tags.includes('Dark') || style.tags.includes('Terminal') || style.tags.includes('Cyberpunk');
+  const isDark = style.tags.includes('Dark') || style.tags.includes('Terminal') || style.tags.includes('Cyberpunk') || style.tags.includes('dark');
 
   return (
     <div className="style-card-explore" onClick={onClick} style={previewStyle}>
