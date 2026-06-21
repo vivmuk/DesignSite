@@ -6,6 +6,8 @@ import { enrichedStyles, type EnrichedStyle } from './data/enrichedStyles';
 import { ExploreTab } from './components/ExploreTab';
 import { StyleDetailPage } from './components/StyleDetailPage';
 import { GuidesTab } from './components/GuidesTab';
+import { Top200Tab } from './components/Top200Tab';
+import { TopSiteDetail } from './components/TopSiteDetail';
 import './App.css';
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -1553,6 +1555,7 @@ function WebsitePreview({
 // ─────────────────────────────────────────────────────────────────────────────────
 const TABS = [
   { id: 'explore', label: 'Explore', emoji: '🔍', count: enrichedStyles.length },
+  { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'systems', label: 'Design Systems', emoji: '🧩', count: openDesignSystems.length },
   { id: 'skills', label: 'Skills', emoji: '⚡', count: openDesignSkills.length },
@@ -1564,9 +1567,15 @@ const TABS = [
 function App() {
   const [activeTab, setActiveTab] = useState<string>('explore');
   const [selectedStyle, setSelectedStyle] = useState<EnrichedStyle | null>(null);
+  const [selectedSite, setSelectedSite] = useState<any | null>(null);
 
   const handleSelectStyle = (style: EnrichedStyle) => {
     setSelectedStyle(style);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectSite = (site: any) => {
+    setSelectedSite(site);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -1577,7 +1586,7 @@ function App() {
           <div className="root-logo">OpenDesign<span>Studio</span></div>
           <nav className="root-tabs">
             {TABS.map(t => (
-              <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>{ setActiveTab(t.id); setSelectedStyle(null); }}>
+              <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>{ setActiveTab(t.id); setSelectedStyle(null); setSelectedSite(null); }}>
                 <span className="tab-emoji">{t.emoji}</span>
                 <span className="tab-label">{t.label}</span>
                 {t.count && <span className="tab-count">{t.count}</span>}
@@ -1590,6 +1599,9 @@ function App() {
         {activeTab === 'explore' && (selectedStyle
           ? <StyleDetailPage style={selectedStyle} onBack={() => setSelectedStyle(null)} onSelectStyle={handleSelectStyle} />
           : <ExploreTab onSelectStyle={handleSelectStyle} />)}
+        {activeTab === 'top200' && (selectedSite
+          ? <TopSiteDetail site={selectedSite} onBack={() => setSelectedSite(null)} />
+          : <Top200Tab onSelectSite={handleSelectSite} />)}
         {activeTab === 'styles' && <DesignStylesTab />}
         {activeTab === 'systems' && <DesignSystemsTab />}
         {activeTab === 'skills' && <SkillsTab />}
