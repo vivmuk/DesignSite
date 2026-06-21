@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { designStyles, mixedStyles, categories, type DesignStyle } from './data/designStyles';
 import { openDesignSkills, skillCategories } from './data/openDesignSkills';
 import { openDesignSystems, designSystemCategories } from './data/openDesignSystems';
+import { enrichedStyles, type EnrichedStyle } from './data/enrichedStyles';
+import { ExploreTab } from './components/ExploreTab';
+import { StyleDetailPage } from './components/StyleDetailPage';
+import { GuidesTab } from './components/GuidesTab';
 import './App.css';
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -1548,15 +1552,24 @@ function WebsitePreview({
 // Root App with 5-tab navigation
 // ─────────────────────────────────────────────────────────────────────────────────
 const TABS = [
+  { id: 'explore', label: 'Explore', emoji: '🔍', count: enrichedStyles.length },
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'systems', label: 'Design Systems', emoji: '🧩', count: openDesignSystems.length },
   { id: 'skills', label: 'Skills', emoji: '⚡', count: openDesignSkills.length },
   { id: 'directions', label: 'Directions', emoji: '🧭', count: 5 },
   { id: 'showcase', label: 'Showcase', emoji: '🔥', count: allShowcaseItems.length },
+  { id: 'guides', label: 'Guides', emoji: '📖' },
 ];
 
 function App() {
-  const [activeTab, setActiveTab] = useState<string>('showcase');
+  const [activeTab, setActiveTab] = useState<string>('explore');
+  const [selectedStyle, setSelectedStyle] = useState<EnrichedStyle | null>(null);
+
+  const handleSelectStyle = (style: EnrichedStyle) => {
+    setSelectedStyle(style);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="root-app">
       <header className="root-header">
@@ -1564,7 +1577,7 @@ function App() {
           <div className="root-logo">OpenDesign<span>Studio</span></div>
           <nav className="root-tabs">
             {TABS.map(t => (
-              <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>setActiveTab(t.id)}>
+              <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>{ setActiveTab(t.id); setSelectedStyle(null); }}>
                 <span className="tab-emoji">{t.emoji}</span>
                 <span className="tab-label">{t.label}</span>
                 {t.count && <span className="tab-count">{t.count}</span>}
@@ -1574,11 +1587,15 @@ function App() {
         </div>
       </header>
       <main className="root-main">
+        {activeTab === 'explore' && (selectedStyle
+          ? <StyleDetailPage style={selectedStyle} onBack={() => setSelectedStyle(null)} onSelectStyle={handleSelectStyle} />
+          : <ExploreTab onSelectStyle={handleSelectStyle} />)}
         {activeTab === 'styles' && <DesignStylesTab />}
         {activeTab === 'systems' && <DesignSystemsTab />}
         {activeTab === 'skills' && <SkillsTab />}
         {activeTab === 'directions' && <DirectionsTab />}
         {activeTab === 'showcase' && <ShowcaseTab />}
+        {activeTab === 'guides' && <GuidesTab />}
       </main>
     </div>
   );

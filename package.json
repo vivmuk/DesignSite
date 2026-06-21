@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mcp": "npx tsx server/mcp-server.ts",
+    "mcp:dev": "MCP_PORT=3120 npx tsx server/mcp-server.ts"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.7.0",
