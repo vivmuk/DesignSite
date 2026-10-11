@@ -42,13 +42,18 @@ export function TechniquesTab() {
 
   useEffect(() => {
     (async () => {
+      const decorate = (arr: any[]) => arr.map(t => ({
+        ...t,
+        demo_url: t.demo_url || `/techniques-demos/${t.id}.html`,
+        prompt_url: t.prompt_url || `https://styles-api-production.up.railway.app/techniques/${t.id}/prompt`,
+      }));
       try {
         const r = await fetch('https://styles-api-production.up.railway.app/techniques');
         if (!r.ok) throw new Error('api down');
-        setTechniques(await r.json());
+        setTechniques(decorate(await r.json()));
       } catch {
         const r = await fetch('/techniques-catalog.json');
-        setTechniques(await r.json());
+        setTechniques(decorate(await r.json()));
       } finally { setLoading(false); }
     })();
   }, []);

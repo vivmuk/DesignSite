@@ -101,7 +101,8 @@ async function handler(req: Request): Promise<Response> {
 
     if (path === "/techniques") {
       const rows = await sql`SELECT id,name,domain,level,one_line,why_pro,demo_idea,libraries,spec_url FROM techniques ORDER BY domain, id`;
-      return j(rows);
+      return j(rows.map(r => ({ ...r, demo_url: `https://designviv.up.railway.app/techniques-demos/${r.id}.html`,
+        prompt_url: `https://styles-api-production.up.railway.app/techniques/${r.id}/prompt` })));
     }
     if (path.startsWith("/techniques/") && path.endsWith("/prompt")) {
       const tid = path.slice("/techniques/".length, -"/prompt".length);
