@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Split-screen Layout</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:16px/1.7 Georgia, serif; }
+  .split { display:flex; height:100vh; }
+  .left { width:50vw; position:sticky; top:0; height:100vh; }
+  .left canvas { width:100%; height:100%; display:block; transition:opacity .5s; }
+  .left .tag { position:absolute; top:24px; left:24px; font-family:monospace; font-size:.78rem;
+               background:rgba(0,0,0,.5); padding:6px 12px; border-radius:8px; color:#a99cff; }
+  .right { width:50vw; overflow-y:auto; scroll-behavior:smooth; }
+  section { min-height:100vh; padding:90px 10% 60px; border-bottom:1px solid #1e1e1e; }
+  section h2 { font-family:system-ui, sans-serif; font-size:2rem; font-weight:700; margin:0 0 14px; }
+  section p { opacity:.8; max-width:52ch; }
+  section .kicker { font-family:monospace; font-size:.75rem; color:#7c6cff; letter-spacing:.1em; text-transform:uppercase; }
+  .progress { position:fixed; bottom:0; left:50%; height:3px; background:#7c6cff; width:0; z-index:5; }
+</style>
+</head>
+<body>
+<div class="split">
+  <div class="left">
+    <canvas id="art" width="800" height="900"></canvas>
+    <div class="tag" id="tag">scene 01 · still pinned</div>
+  </div>
+  <div class="right" id="right">
+    <section data-scene="0"><span class="kicker">Chapter 01 — Origin</span>
+      <h2>The pane that never moves</h2>
+      <p>The left half is position:sticky with height:100vh; the right half scrolls independently. This is the whole trick — no scroll-jacking, no JS animation loop driving the layout.</p>
+      <p>Agency sites love this pattern because the visual half can hold attention while the narrative half earns the scroll.</p>
+    </section>
+    <section data-scene="1"><span class="kicker">Chapter 02 — Exchange</span>
+      <h2>Scenes swap at boundaries</h2>
+      <p>An IntersectionObserver on each section swaps the pinned canvas scene when a section crosses the middle of the viewport. The image cross-fades; the text never waits for it.</p>
+    </section>
+    <section data-scene="2"><span class="kicker">Chapter 03 — Collapse</span>
+      <h2>One file, two behaviours</h2>
+      <p>On narrow viewports this collapses to a single column and the sticky pane becomes a simple header. Pure flexbox plus one media query.</p>
+    </section>
+    <section data-scene="3"><span class="kicker">Chapter 04 — Return</span>
+      <h2>Scroll progress, subtly shown</h2>
+      <p>The thin bar at the bottom-center tracks the right pane's scroll. Note the left canvas hue shifts with the active chapter.</p>
+    </section>
+  </div>
+</div>
+<div class="progress" id="pg"></div>
+<script>
+const cv = document.getElementById('art'), ctx = cv.getContext('2d');
+const scenes = [
+  { hue: 262, label: 'scene 01' }, { hue: 205, label: 'scene 02' },
+  { hue: 160, label: 'scene 03' }, { hue: 330, label: 'scene 04' }];
+function drawScene(i) {
+  const h = scenes[i].hue;
+  const g = ctx.createLinearGradient(0, 0, 800, 900);
+  g.addColorStop(0, `hsl(${h} 45% 18%)`); g.addColorStop(1, `hsl(${h + 30} 55% 42%)`);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 800, 900);
+  for (let k = 0; k < 6; k++) {
+    ctx.strokeStyle = `hsla(${h + k * 12} 70% ${50 + k * 5}% / .35)`;
+    ctx.lineWidth = 2 + k;
+    ctx.beginPath();
+    for (let x = 0; x <= 800; x += 20) {
+      const y = 300 + Math.sin(x / 90 + k * 1.4 + i * 2) * (60 + k * 22);
+      x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.stroke();
+  }
+  document.getElementById('tag').textContent = scenes[i].label + ' · still pinned';
+}
+drawScene(0);
+new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) drawScene(+en.target.dataset.scene); });
+}, { root: document.getElementById('right'), threshold: .5 }).observe.length; // placeholder noop
+const obs = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && drawScene(+e.target.dataset.scene)),
+  { root: document.getElementById('right'), threshold: .5 });
+document.querySelectorAll('.right section').forEach(s => obs.observe(s));
+document.getElementById('right').addEventListener('scroll', e => {
+  const el = e.target, p = el.scrollTop / (el.scrollHeight - el.clientHeight);
+  document.getElementById('pg').style.width = (p * 100) + '%';
+});
+</script>
+</body>
+</html>

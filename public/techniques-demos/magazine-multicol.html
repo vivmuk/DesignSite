@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Magazine Multi-column Layout</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:16px/1.65 Georgia, serif; padding:34px 20px; }
+  .spread { columns:3 280px; column-gap:34px; column-rule:1px solid #2c2c2c; max-width:1000px; margin:0 auto; }
+  h1 { font-family:system-ui, sans-serif; font-size:1.5rem; margin:0 auto 4px; max-width:1000px; }
+  .deck { font-family:system-ui, sans-serif; font-size:1rem; font-style:italic; opacity:.6; max-width:1000px;
+          margin:0 auto 26px; column-span:all; border-bottom:1px solid #2c2c2c; padding-bottom:18px; }
+  h2 { font-family:system-ui, sans-serif; font-size:.95rem; letter-spacing:.08em; text-transform:uppercase;
+       color:#a99cff; margin:0 0 12px; }
+  p { margin:0 0 1em; text-align:justify; hyphens:auto; }
+  .drop::first-letter { font-size:3.2em; float:left; line-height:.82; padding:3px 10px 0 0; color:#7c6cff; font-weight:700; }
+  .pull { float:right; width:44%; margin:6px 0 12px 18px; padding:14px; border-top:2px solid #7c6cff;
+          border-bottom:2px solid #7c6cff; font-size:1.05rem; font-style:italic; color:#cbbfff; line-height:1.45; }
+  figure { margin:0 0 16px; break-inside:avoid; }
+  figcaption { font-family:system-ui, sans-serif; font-size:.75rem; opacity:.5; margin-top:6px; }
+  .art { width:100%; display:block; border-radius:8px; }
+  .byline { font-family:system-ui, sans-serif; font-size:.8rem; opacity:.55; max-width:1000px; margin:0 auto 30px; letter-spacing:.04em; }
+
+  .spread::first-line { letter-spacing:.02em; }
+  .spread { padding-bottom:20px; }
+</style>
+</head>
+<body>
+<div class="spread" style="display:block">
+  <h1>The Cartographer of Silence</h1>
+  <p class="byline">By T. Okafor · Photography by the author · Issue 42, Winter</p>
+  <p class="deck">A spanning deck sits above the columns — one of multicol's quiet superpowers — then the text flows in balanced columns with hairline rules, floated pull-quotes, and a drop cap.</p>
+</div>
+<div class="spread">
+  <p class="drop">When Anja Meissner began mapping the world's quietest places in 1987, cartography had no vocabulary for silence. Contour lines described elevation; isobars, pressure. Nothing described the absence of a jumbo jet at three in the morning. Her first chart — a single square kilometre of Bavarian forest rendered in eleven shades of stillness — was rejected by three journals before a typographer pinned it above his desk and kept it there for thirty years.</p>
+  <div class="pull">“A map of noise shows you where people are. A map of silence shows you what they gave up to be there.”</div>
+  <p>Meissner's method was stubbornly analog. She camped. She listened. She carried a brass anemometer to calibrate wind — the enemy of all acoustic measurement — and filled notebooks with descriptions of soundscapes that no longer exist: the pre-jet-stratosphere hum, the dawn chorus before tractors, the particular hush of snowfall on spruce, which she rated the quietest phenomenon she ever recorded.</p>
+  <figure>
+    <canvas class="art" id="fig" width="420" height="240"></canvas>
+    <figcaption>Fig. 3 — isophone contour sketch, Bavarian forest quadrant, 1991.</figcaption>
+  </figure>
+  <p>Her charts inverted every convention. Instead of lines that meant mountains, her isolines traced decibel floors. Instead of blue water, pale blue marked the twenty-decibel stillness of an alpine valley at 4 a.m. — a place, she wrote, where "you can hear your own blood arrive."</p>
+  <p>The archive now holds 1,142 hand-drawn plates. Urban acousticians consult them like scripture: where Meissner measured 31 dB in 1994, today's sensors read 51. The silence she mapped is itself endangered, and her plates have become baselines — the zero point from which all our new noise is measured.</p>
+  <p>Her late notebooks turn philosophical. "We map the world to feel we own it," she wrote in 2001, "but a map of silence owns nothing. It only records what we have already lost, in the exact register of its loss." The last plate, finished weeks before her death, is blank except for a single contour and the caption: <em>here, once, it was possible to hear the rain arrive</em>.</p>
+  <p>Museums wanted the originals. She left them, instead, to a small archive in Freiburg with one condition: that the plates never be displayed under bright light. Some maps, she felt, should be read the way their subject lived — quietly, and by the few who bother to come looking.</p>
+</div>
+<script>
+const cv = document.getElementById('fig'), ctx = cv.getContext('2d');
+ctx.fillStyle = '#101018'; ctx.fillRect(0, 0, 420, 240);
+for (let r = 190; r > 30; r -= 22) {
+  ctx.strokeStyle = `hsla(${262 + (190 - r) * .5}, 60%, ${25 + (190 - r) * .18}%, .8)`;
+  ctx.beginPath();
+  for (let a = 0; a <= 6.4; a += .1) {
+    const rr = r + Math.sin(a * 3) * 9 + Math.cos(a * 5) * 5;
+    const x = 210 + Math.cos(a) * rr * 1.35, y = 120 + Math.sin(a) * rr * .62;
+    a ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  }
+  ctx.stroke();
+}
+ctx.font = '11px monospace'; ctx.fillStyle = '#7c6cff';
+ctx.fillText('20 dB', 210, 120); ctx.fillText('28 dB', 300, 78); ctx.fillText('41 dB', 62, 190);
+</script>
+</body>
+</html>

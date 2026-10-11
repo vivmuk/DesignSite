@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Overlapping Layered Layout</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; padding:20px; }
+  .hint { opacity:.5; font-size:.85rem; text-align:center; margin:14px 0 26px; }
+  .hero { display:grid; grid-template-columns:repeat(8, 1fr); grid-template-rows:repeat(6, 70px); max-width:980px; margin:0 auto; }
+  .hero > * { transition:transform .45s cubic-bezier(.3,.7,.3,1); }
+  .headline { grid-area:2 / 1 / 5 / 7; z-index:3; align-self:center; }
+  .headline h1 { font-size:clamp(2.2rem, 6vw, 4.6rem); font-weight:800; line-height:1; margin:0;
+                 letter-spacing:-.02em; }
+  .headline h1 em { font-style:normal; color:#7c6cff; }
+  .image { grid-area:1 / 4 / 7 / 9; z-index:1; border-radius:16px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.6); }
+  .image canvas { width:100%; height:100%; display:block; }
+  .badge-card { grid-area:5 / 2 / 7 / 5; z-index:2; background:#161616f2; border:1px solid #3a3a3a; border-radius:14px;
+                padding:16px 20px; backdrop-filter:blur(8px); box-shadow:0 16px 40px rgba(0,0,0,.5); }
+  .badge-card b { display:block; margin-bottom:4px; }
+  .badge-card span { font-size:.82rem; opacity:.65; }
+  .accent { grid-area:3 / 3 / 4 / 5; z-index:0; background:linear-gradient(90deg,#7c6cff33,transparent); border-radius:50%; filter:blur(30px); }
+  .hero:hover .image { transform:translate(12px, 8px) rotate(.6deg); }
+  .hero:hover .headline { transform:translate(-14px, -6px); }
+  .hero:hover .badge-card { transform:translate(6px, -10px); }
+  .secondary { display:grid; grid-template-columns:repeat(6, 1fr); grid-template-rows:repeat(3, 90px); max-width:980px; margin:44px auto 0; }
+  .card-l { grid-area:1/1/4/4; z-index:2; background:#161616; border:1px solid #3a3a3a; border-radius:12px; padding:20px; box-shadow:0 14px 40px rgba(0,0,0,.5); }
+  .card-r { grid-area:2/3/4/7; z-index:1; background:#1a1622; border:1px solid #3a3a3a; border-radius:12px; padding:20px 22px; }
+  .card-l b, .card-r b { display:block; margin-bottom:6px; color:#a99cff; }
+  .card-l span, .card-r span { font-size:.85rem; opacity:.7; }
+  .secondary:hover .card-l { transform:translate(10px, 6px); }
+  .secondary:hover .card-r { transform:translate(-8px, -4px); }
+  .note { text-align:center; font-family:monospace; font-size:.78rem; opacity:.45; margin-top:30px; }
+
+  body { min-height:100vh; }
+  .headline h1 span.word { color:#e4e4e4; }
+  .badge-card::before { content:''; position:absolute; inset:0; border-radius:14px; pointer-events:none;
+                        background:linear-gradient(120deg, #ffffff08, transparent 40%); }
+  .badge-card { position:relative; }
+</style>
+</head>
+<body>
+<div class="hint">Hover: layers share grid cells and intentionally overlap — depth from z-index + transforms, no absolute positioning.</div>
+<div class="hero">
+  <div class="accent"></div>
+  <div class="image"><canvas id="art" width="800" height="700"></canvas></div>
+  <div class="headline"><h1>Depth,<br>built with <em>grid</em>,<br>not hacks.</h1></div>
+  <div class="badge-card"><b>◈ Layered by design</b><span>Every layer occupies real grid cells — the overlap is the layout, not an accident.</span></div>
+</div>
+<div class="secondary">
+  <div class="card-l"><b>◈ Why overlap?</b><span>Overlapping grid areas create compositional depth that stacked flex columns can never give you — the eye reads intersecting planes as space.</span></div>
+  <div class="card-r"><b>◈ The rule</b><span>Overlap on purpose, with intent: one focal layer, one text layer, one accent. Overlap everything and nothing reads.</span></div>
+</div>
+<div class="note">grid-area: image [1/4→7/9] · headline [2/1→5/7] · badge [5/2→7/5] — cells overlap by design</div>
+<script>
+const cv = document.getElementById('art'), ctx = cv.getContext('2d');
+const g = ctx.createLinearGradient(0, 0, 800, 700);
+g.addColorStop(0, '#31284f'); g.addColorStop(.55, '#4a3a66'); g.addColorStop(1, '#8a5a4a');
+ctx.fillStyle = g; ctx.fillRect(0, 0, 800, 700);
+ctx.strokeStyle = 'rgba(255,255,255,.08)';
+for (let y = 60; y < 700; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke(); }
+ctx.fillStyle = 'rgba(240,230,255,.9)';
+[[560, 180, 70], [650, 300, 46], [480, 330, 30], [700, 140, 24]].forEach(([x, y, r]) => {
+  ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+});
+ctx.font = '600 34px system-ui'; ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillText('grid-area', 60, 620);
+ctx.font = '18px monospace'; ctx.fillStyle = 'rgba(200,190,255,.6)'; ctx.fillText('1 / 4 / 7 / 9', 60, 650);
+</script>
+</body>
+</html>

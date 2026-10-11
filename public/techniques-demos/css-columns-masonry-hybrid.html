@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JS-assisted Masonry Ordering — FLIP</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:16px/1.5 system-ui, sans-serif; padding:32px; }
+  h1 { font-size:1.1rem; font-weight:600; margin:0 0 6px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 20px; }
+  button { background:#7c6cff; color:#fff; border:none; border-radius:8px; padding:10px 22px; font:inherit; cursor:pointer; margin-bottom:22px; }
+  button:hover { background:#8f82ff; }
+  .wall { column-count:4; column-gap:16px; max-width:1080px; }
+  @media (max-width:900px) { .wall { column-count:3; } }
+  @media (max-width:620px) { .wall { column-count:2; } }
+  .card { break-inside:avoid; margin-bottom:16px; background:#181818; border:1px solid #2c2c2c; border-radius:12px;
+          overflow:hidden; will-change:transform; }
+  .card .art { width:100%; display:block; }
+  .card figcaption { padding:10px 12px; font-size:.85rem; opacity:.75; }
+</style>
+</head>
+<body>
+<h1>Masonry with true L→R ordering via FLIP transforms</h1>
+<p class="hint">CSS columns fill top-to-bottom per column; JS reads real positions, shuffles, and animates every card from old → new spot (FLIP).</p>
+<button id="shuffle">⤨ Shuffle with FLIP</button>
+<div class="wall" id="wall"></div>
+<script>
+const hues = [262, 160, 12, 205, 330, 45, 285];
+const wall = document.getElementById('wall');
+function makeCards() {
+  for (let i = 0; i < 14; i++) {
+    const h = 90 + Math.floor(Math.random() * 180);
+    const card = document.createElement('figure'); card.className = 'card';
+    card.innerHTML = `<canvas class="art" width="280" height="${h}" data-h="${hues[i % hues.length]}"></canvas>
+      <figcaption>Item #${i + 1} · ${h}px</figcaption>`;
+    wall.appendChild(card);
+  }
+  [...wall.children].forEach(c => {
+    const cv = c.querySelector('canvas'), ctx = cv.getContext('2d');
+    const g = ctx.createLinearGradient(0, 0, 280, cv.height);
+    g.addColorStop(0, `hsl(${cv.dataset.h} 55% 30%)`); g.addColorStop(1, `hsl(${cv.dataset.h} 60% 55%)`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, 280, cv.height);
+  });
+}
+makeCards();
+function flipShuffle() {
+  const cards = [...wall.children];
+  const first = new Map(cards.map(c => [c, c.getBoundingClientRect()]));
+  // reorder: pull items out at random, keep column balance by interleaving
+  const order = [...cards].sort(() => Math.random() - .5);
+  order.forEach(c => wall.appendChild(c));
+  order.forEach(c => {
+    const last = first.get(c), now = c.getBoundingClientRect();
+    const dx = last.left - now.left, dy = last.top - now.top;
+    if (!dx && !dy) return;
+    c.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }],
+      { duration: 550 + Math.random() * 250, easing: 'cubic-bezier(.3,.7,.3,1)' });
+  });
+}
+document.getElementById('shuffle').onclick = flipShuffle;
+setTimeout(flipShuffle, 600);
+</script>
+</body>
+</html>

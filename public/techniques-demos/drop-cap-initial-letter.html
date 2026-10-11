@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Drop Caps &amp; initial-letter</title>
+<style>
+  body {
+    margin: 0;
+    background: #0d0d0d;
+    color: #e4e4e4;
+    font: 17px/1.7 Georgia, serif;
+  }
+  main {
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 0 24px 50px;
+  }
+  h1 {
+    font-family: system-ui, sans-serif;
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+  }
+  h1::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 3px;
+    background: #7c6cff;
+    margin-top: 12px;
+  }
+  .deck {
+    opacity: .6;
+    font-style: italic;
+    margin: 0 0 30px;
+  }
+  .label {
+    font-family: system-ui, sans-serif;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #7c6cff;
+    margin: 32px 0 8px;
+  }
+  /* Faux drop cap: ::first-letter float, works everywhere */
+  .drop::first-letter {
+    font-size: 3.4em;
+    font-weight: 700;
+    float: left;
+    line-height: .85;
+    padding: 2px 10px 0 0;
+    color: #a99cff;
+  }
+  /* Native initial-letter: 3 lines sunk, 2 raised, in-flow */
+  @supports (initial-letter: 3) {
+    .drop-native::first-letter {
+      float: none;
+      font-size: unset;
+      padding: 0;
+      margin-right: 10px;
+      initial-letter: 3 2;
+      color: #7c6cff;
+      font-weight: 700;
+    }
+  }
+  /* Opening-line treatment on both paragraphs */
+  .drop::first-line {
+    font-variant: small-caps;
+    letter-spacing: .04em;
+  }
+  p {
+    margin: 0 0 1em;
+    text-align: justify;
+    hyphens: auto;
+  }
+  .drop::selection,
+  .drop-native::selection {
+    background: #7c6cff44;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #2c2c2c;
+    margin: 28px 0;
+  }
+  .note {
+    font-family: system-ui, sans-serif;
+    font-size: .82rem;
+    opacity: .6;
+    line-height: 1.6;
+  }
+  .meta {
+    font-family: system-ui, sans-serif;
+    font-size: .8rem;
+    opacity: .4;
+    border-top: 1px solid #2c2c2c;
+    padding-top: 14px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Quiet Architecture of Light</h1>
+  <p class="deck">On drop caps, masonry walls, and why the oldest typographic trick still stops the eye.</p>
+
+  <p class="label">Native initial-letter (3 lines sunk, 2 raised) — @supports gated:</p>
+  <p class="drop drop-native">Morning arrives in this old stone house the way it always has — not all at once, but in measured diagonals, climbing the plaster wall one plank of window at a time. The carpenter who built this room in 1748 understood something about light that we have mostly forgotten: it is a material, and it wants a schedule.</p>
+
+  <p>By noon the diagonals have merged into a general brightness, and the room forgets its choreography. But for one hour each morning, the geometry asserts itself. Dust motes trace the same arcs the carpenter traced with his chalk line, and if you sit still in the north window you can watch three centuries of mornings overlap like transparencies on a lightbox.</p>
+
+  <p class="label">Faux drop cap via ::first-letter float — universal fallback:</p>
+  <p class="drop" style="margin-top: 26px">By late afternoon the light turns amber and low, and every object in the room casts two shadows — one crisp from the window, one soft from the sky. It was in exactly such a room, historians of typography like to claim, that the first drop cap was set: a monk's hand, a wet vellum margin, and a decision to make the first letter worth arriving at.</p>
+
+  <p>Consider how the drop cap works on the eye. It is a shout at the start of a whisper — the reader's gaze lands on a large, dense glyph before a single word registers, and that landing buys the writer three lines of attention that no headline can purchase. Print editors understood this bargain for five centuries and set their caps accordingly.</p>
+
+  <p>This essay began as a complaint about modern interfaces, which flood every surface with even, indifferent illumination. The old house argues otherwise: hierarchy comes from contrast, and contrast comes from restraint about where the light goes.</p>
+
+  <p>The web, strangely, made the drop cap hard. Floats sort of work and sort of fail at the baseline. The <em>initial-letter</em> property is the first mechanism that understands the glyph belongs to the flow of lines — sunk, raised, and aligned exactly as a compositor would set it by hand. Where supported, it is the better tool; where not, the float stands in with quiet dignity.</p>
+
+  <hr>
+  <p class="note">Why three lines? Traditional print practice sinks the cap deep enough that its baseline sits below the first full line of text — two or three lines is the sweet spot that reads as intentional rather than decorative. Both sample paragraphs above share one paragraph style; only the ::first-letter mechanism differs, and the @supports gate routes to the right one automatically.</p>
+
+  <p class="meta">initial-letter: 3 2 · ::first-letter float fallback · ::first-line small-caps · @supports gated</p>
+</main>
+</body>
+</html>

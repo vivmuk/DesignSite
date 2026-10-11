@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stacked Sticky Sections</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; }
+  .stack { position:relative; }
+  section { height:100vh; position:sticky; top:0; display:flex; flex-direction:column; justify-content:center;
+            padding:0 10%; border-bottom:1px solid rgba(255,255,255,.08); }
+  section:nth-child(1) { background:linear-gradient(160deg,#1a1430,#0d0d0d); }
+  section:nth-child(2) { background:linear-gradient(160deg,#0e2233,#0d0d0d); }
+  section:nth-child(3) { background:linear-gradient(160deg,#13291d,#0d0d0d); }
+  section:nth-child(4) { background:linear-gradient(160deg,#2e1420,#0d0d0d); }
+  section:nth-child(5) { background:linear-gradient(160deg,#1e2413,#0d0d0d); }
+  h2 { font-size:clamp(2rem, 5.5vw, 4rem); font-weight:800; margin:0 0 12px; letter-spacing:-.02em; }
+  p { opacity:.7; max-width:52ch; font-size:1.05rem; }
+  .num { font-family:monospace; color:#7c6cff; font-size:.85rem; letter-spacing:.15em; margin-bottom:16px; }
+  .card-scale { transform-origin:top center; }
+
+  section::after { content:''; position:absolute; bottom:0; left:8%; right:8%; height:1px;
+                   background:linear-gradient(90deg, transparent, #ffffff30, transparent); }
+  .num::before { content:'⬥ '; color:#a99cff; }
+</style>
+</head>
+<body>
+<div class="stack">
+  <section><span class="num">01 / 04</span><h2>Each panel pins to the top…</h2>
+    <p>Every section is position:sticky; top:0. As you scroll, the next section slides over the previous one — pure CSS card-stacking, no scroll handlers.</p></section>
+  <section><span class="num">02 / 04</span><h2>…then the next slides over it</h2>
+    <p>The last sections stay shorter than 100vh of travel apart, so each pile-up is visible. Scales, shadows and a bottom border sell the depth.</p></section>
+  <section><span class="num">03 / 04</span><h2>Scroll-driven storytelling</h2>
+    <p>Zero JavaScript. This is the pattern behind most "scrollytelling" heroes — narrative beats pin, reveal, and get buried in sequence.</p></section>
+  <section><span class="num">04 / 05</span><h2>You made it to the bottom card</h2>
+    <p>Because all four are sticky, the stack collapses into a neat layered deck at the end of the page.</p></section>
+  <section><span class="num">05 / 05</span><h2>The deck at rest</h2>
+    <p>Five pinned cards, one passive scroll listener, zero layout thrash. Change one number — the height — and the pacing changes with it.</p></section>
+</div>
+<script>
+// Slight scale-down of buried cards for extra depth (progressive enhancement)
+const secs = [...document.querySelectorAll('section')];
+addEventListener('scroll', () => {
+  secs.forEach((s, i) => {
+    const r = s.getBoundingClientRect();
+    // how far the NEXT section has covered this one
+    const next = secs[i + 1];
+    if (next) {
+      const covered = Math.max(0, Math.min(1, (innerHeight - next.getBoundingClientRect().top) / innerHeight));
+      s.style.transform = `scale(${1 - covered * .06}) translateY(${covered * -12}px)`;
+      s.style.filter = `brightness(${1 - covered * .25})`;
+    } else s.style.transform = '';
+  });
+}, { passive: true });
+</script>
+
+<div style="position:fixed; top:18px; right:22px; font-family:monospace; font-size:.75rem; color:#7c6cff; z-index:10" id="deck">
+  cards pinned: <span id="cnt">0</span> / 5
+</div>
+<script>
+  addEventListener('scroll', () => {
+    let n = 0;
+    document.querySelectorAll('section').forEach(s => { if (s.getBoundingClientRect().top <= 0) n++; });
+    document.getElementById('cnt').textContent = n;
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Streaming HTML Simulation</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; padding:28px; max-width:900px; margin:auto; }
+  h1 { font-size:1.15rem; margin:14px 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 22px; }
+  .stage { display:grid; grid-template-columns:1fr 340px; gap:22px; }
+  .skel { background:#1a1a1a; border:1px dashed #3a3a3a; border-radius:10px; min-height:70px; margin-bottom:12px;
+          display:flex; align-items:center; padding:0 16px; color:#666; font-size:.85rem; position:relative; overflow:hidden; }
+  .skel::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, #ffffff08, transparent);
+                 animation:sweep 1.4s infinite; }
+  @keyframes sweep { from { transform:translateX(-100%) } to { transform:translateX(100%) } }
+  .skel.done { border-style:solid; background:#161616; color:#e4e4e4; animation:none; }
+  .skel.done::after { display:none; }
+  .skel .stamp { margin-left:auto; font-family:monospace; color:#7ee0a0; font-size:.75rem; }
+  .waterfall { font-family:monospace; font-size:.78rem; background:#141414; border:1px solid #2a2a2a; border-radius:10px; padding:16px; }
+  .waterfall h2 { margin:0 0 12px; font-size:.8rem; color:#a99cff; letter-spacing:.06em; }
+  .row { display:grid; grid-template-columns:110px 1fr 60px; gap:8px; align-items:center; margin-bottom:6px; }
+  .bar { height:10px; border-radius:3px; background:#7c6cff; }
+  .row span:last-child { text-align:right; opacity:.7; }
+  button { background:#7c6cff; color:#fff; border:none; border-radius:8px; padding:9px 20px; font:inherit; cursor:pointer; margin-bottom:18px; }
+</style>
+</head>
+<body>
+<h1>Edge Rendering: streamed, progressively flushed HTML</h1>
+<p class="hint">Simulates a streaming edge response: skeleton flushes at TTFB, sections arrive as chunks complete.</p>
+<button id="go">▶ Replay stream</button>
+<div class="stage">
+  <div id="sections">
+    <div class="skel" data-t="0">Shell &lt;head&gt; flushed<span class="stamp"></span></div>
+    <div class="skel" data-t="80">Hero section chunk<span class="stamp"></span></div>
+    <div class="skel" data-t="220">Product list (edge cache hit)<span class="stamp"></span></div>
+    <div class="skel" data-t="480">Personalized recommendations<span class="stamp"></span></div>
+    <div class="skel" data-t="720">Footer &amp; analytics bootstrap<span class="stamp"></span></div>
+  </div>
+  <div class="waterfall">
+    <h2>REQUEST WATERFALL</h2>
+    <div class="row"><span>ttfb</span><div class="bar" style="width:6%"></div><span>38ms</span></div>
+    <div class="row"><span>hero</span><div class="bar" style="width:14%"></div><span>118ms</span></div>
+    <div class="row"><span>list</span><div class="bar" style="width:30%"></div><span>258ms</span></div>
+    <div class="row"><span>recs</span><div class="bar" style="width:55%"></div><span>518ms</span></div>
+    <div class="row"><span>footer</span><div class="bar" style="width:75%"></div><span>758ms</span></div>
+    <p style="opacity:.6; font-size:.75rem; margin:12px 0 0">First paint at 38ms — user sees layout before origin finishes. Chunked transfer-encoding + early flush; Hono / Cloudflare Workers pattern.</p>
+  </div>
+</div>
+<script>
+const secs = [...document.querySelectorAll('.skel')];
+function replay() {
+  secs.forEach(s => { s.classList.remove('done'); s.querySelector('.stamp').textContent = ''; });
+  const t0 = performance.now();
+  secs.forEach(s => {
+    const delay = +s.dataset.t;
+    setTimeout(() => {
+      s.classList.add('done');
+      s.querySelector('.stamp').textContent = '+' + delay + 'ms';
+    }, delay + (performance.now() - t0 < 5 ? 0 : 0));
+  });
+}
+document.getElementById('go').onclick = replay;
+replay();
+</script>
+</body>
+</html>

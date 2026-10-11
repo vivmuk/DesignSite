@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSS Anchor Positioning</title>
+<style>
+  * { box-sizing: border-box; }
+  body { background:#0d0d0d; color:#e4e4e4; font:16px/1.5 system-ui, sans-serif; margin:0; min-height:100vh;
+         display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px; }
+  h1 { font-size:1.1rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; opacity:.7; }
+  .toolbar { display:flex; gap:8px; padding:10px; background:#181818; border:1px solid #333; border-radius:12px; }
+  button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:10px 16px;
+           font:inherit; cursor:pointer; anchor-name: --anchor-btn; }
+  button:hover { background:#333; }
+  /* Tooltip anchored above each button, via shared popover pattern */
+  .tip { position:fixed; position-anchor:--anchor-btn; bottom: calc(anchor(top) - 8px);
+         left: anchor(left); margin:0; background:#222; border:1px solid #555; border-radius:6px;
+         padding:4px 10px; font-size:.8rem; margin-bottom:8px; }
+  /* Dropdown menu anchored below its button */
+  .menu { position:fixed; position-anchor:--anchor-btn; top: calc(anchor(bottom) + 8px);
+          left: anchor(left); width:180px; background:#1c1c1c; border:1px solid #444; border-radius:10px;
+          padding:6px; margin:0; }
+  .menu button { display:block; width:100%; text-align:left; border:none; anchor-name:none; }
+  /* Color picker popover anchored to the right */
+  .picker { position:fixed; position-anchor:--anchor-btn; top: anchor(top);
+            left: calc(anchor(right) + 12px); width:200px; padding:14px; background:#1c1c1c;
+            border:1px solid #444; border-radius:12px; margin:0; }
+  .picker input[type=color] { width:100%; height:48px; border:none; background:none; cursor:pointer; }
+  /* Flip the picker when it would overflow the viewport */
+  @position-try --flip { left: calc(anchor(left) - 212px); }
+  .picker { position-try-fallbacks: --flip; }
+  [popover] { border:inherit; }
+  #fallback { display:none; color:#f87171; max-width:32rem; text-align:center; }
+</style>
+</head>
+<body>
+<h1>Anchor Positioning Demo</h1>
+<div class="toolbar">
+  <button popovertarget="tipA" id="b1">Copy</button>
+  <button popovertarget="menu" id="b2" style="anchor-name:--anchor-btn">Format ▾</button>
+  <button popovertarget="picker" id="b3" style="anchor-name:--anchor-btn">🎨 Color</button>
+</div>
+<div popover="manual" id="tipA" class="tip" style="anchor-name:none">Copied to clipboard!</div>
+<div popover id="menu" class="menu" style="anchor-name:none">
+  <button>Bold</button><button>Italic</button><button>Monospace</button>
+</div>
+<div popover id="picker" class="picker" style="anchor-name:none">
+  <label style="font-size:.85rem">Accent color</label>
+  <input type="color" value="#7c6cff" oninput="document.body.style.setProperty('--c',this.value)">
+</div>
+<p id="fallback">Your browser doesn't support CSS Anchor Positioning yet. Try Chrome 125+, Edge, or a nightly WebKit build.</p>
+<p style="opacity:.6; font-size:.85rem">Click the buttons — every popup is positioned by the platform, zero JS.</p>
+<script>
+  if (!CSS.supports('anchor-name: --x')) {
+    document.getElementById('fallback').style.display = 'block';
+    document.querySelector('.toolbar').style.opacity = .3;
+  }
+  // re-anchor tooltip to whichever button was clicked
+  document.getElementById('b1').addEventListener('click', () => {
+    const tip = document.getElementById('tipA');
+    tip.showPopover(); setTimeout(() => tip.hidePopover(), 1200);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modular Type Scale</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; padding:30px; max-width:820px; margin:auto; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 20px; }
+  .bar { display:flex; gap:18px; flex-wrap:wrap; align-items:center; margin-bottom:24px; font-size:.9rem; }
+  select, input { background:#1c1c1c; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:8px 12px; font:inherit; }
+  input { width:90px; }
+  .specimen > div { margin:14px 0; display:flex; align-items:baseline; gap:16px; border-bottom:1px solid #1f1f1f; padding-bottom:10px; }
+  .specimen code { font-size:.75rem; color:#7c6cff; min-width:64px; opacity:.8; font-family:monospace; }
+  .preview { border:1px solid #2c2c2c; border-radius:14px; padding:24px 26px; margin-bottom:22px; }
+  .preview h2 { font-size:calc(var(--base) * var(--ratio) ** 3); margin:0 0 8px; font-weight:700; letter-spacing:-.01em; }
+  .preview p { font-size:var(--base); line-height:1.6; opacity:.85; margin:0; max-width:60ch; }
+  .ratio-note { font-family:monospace; font-size:.82rem; background:#161616; border:1px solid #2c2c2c; border-radius:10px; padding:12px 16px; margin-top:22px; color:#a99cff; }
+
+  .specimen > div:hover { border-bottom-color:#7c6cff; }
+  .bar label { display:flex; align-items:center; gap:8px; }
+</style>
+</head>
+<body>
+<h1>Modular Type Scale</h1>
+<p class="hint">One base size, one ratio — the entire hierarchy is derived with custom properties.</p>
+<div class="bar">
+  <label>Ratio <select id="r">
+    <option value="1.200">1.200 — Minor Third</option>
+    <option value="1.250" selected>1.250 — Major Third</option>
+    <option value="1.333">1.333 — Perfect Fourth</option>
+    <option value="1.500">1.500 — Perfect Fifth</option>
+  </select></label>
+  <label>Base <input id="b" type="number" value="16" min="10" max="24"> px</label>
+</div>
+<div class="preview">
+  <h2 id="pvH">A hierarchy from one knob</h2>
+  <p id="pvB">Turn the ratio and the whole document re-tunes itself — every heading, caption, and body size derives from the same two custom properties. Print typographers called this a modular scale; the web finally has the primitives to compute it live.</p>
+</div>
+<div class="specimen" id="sp"></div>
+<div class="ratio-note" id="note"></div>
+<script>
+const names = ['caption', 'body', 'h4', 'h3', 'h2', 'h1', 'display'];
+function pow(n) { return `calc(var(--base) * var(--ratio) ** ${n})`; }
+function render() {
+  const ratio = +document.getElementById('r').value, base = +document.getElementById('b').value;
+  document.documentElement.style.setProperty('--ratio', ratio);
+  document.documentElement.style.setProperty('--base', base + 'px');
+  const sp = document.getElementById('sp');
+  sp.innerHTML = names.map((n, i) => {
+    const exp = i - 2, size = base * Math.pow(ratio, exp);
+    return `<div><code>${exp >= 0 ? '+' : ''}${exp}</code><span style="font-size:${pow(exp)}; ${exp >= 3 ? 'font-weight:700; letter-spacing:-.01em' : ''}">${n === 'body' ? 'The quick brown fox jumps over the lazy dog' : n.charAt(0).toUpperCase() + n.slice(1) + ' heading'}</span><span style="opacity:.45; font-size:.75rem; font-family:monospace">${size.toFixed(1)}px</span></div>`;
+  }).join('');
+  document.getElementById('pvH').style.fontSize = pow(3);
+  document.getElementById('pvB').style.fontSize = pow(0);
+  document.getElementById('note').textContent =
+    `--ratio: ${ratio};  scale: ${[...Array(7)].map((_, i) => (base * Math.pow(ratio, i - 2)).toFixed(0)).join(' → ')} px`;
+}
+document.getElementById('r').onchange = render;
+document.getElementById('b').oninput = render;
+render();
+</script>
+</body>
+</html>

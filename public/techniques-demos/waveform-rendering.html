@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Waveform &amp; Peaks Rendering</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; padding:28px; }
+  h1 { font-size:1.1rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 18px; }
+  .player { max-width:760px; background:#161616; border:1px solid #2c2c2c; border-radius:14px; padding:18px; }
+  canvas { width:100%; height:140px; display:block; border-radius:8px; background:#101014; cursor:pointer; }
+  .bar { display:flex; align-items:center; gap:14px; margin-top:14px; }
+  button { background:#7c6cff; color:#fff; border:none; border-radius:50px; width:46px; height:46px; font-size:1.1rem; cursor:pointer; }
+  .time { font-family:monospace; font-size:.85rem; opacity:.8; }
+  .note { font-size:.78rem; opacity:.5; margin-top:10px; }
+  input { accent-color:#7c6cff; }
+</style>
+</head>
+<body>
+<h1>Peaks waveform with drag-to-seek &amp; regions</h1>
+<p class="hint">Synthetic audio decoded to peaks; drag to seek, drag across the top edge zone to select a region.</p>
+<div class="player">
+  <canvas id="w" width="1400" height="280"></canvas>
+  <div class="bar">
+    <button id="play">▶</button>
+    <span class="time" id="time">0:00.0 / 0:12.0</span>
+    <span style="margin-left:auto" class="time">volume <input type="range" id="vol" min="0" max="100" value="60" style="width:110px"></span>
+  </div>
+  <div class="note" id="msg">Region: none — drag horizontally to select. Click elsewhere to seek.</div>
+</div>
+<script>
+const DUR = 12, cv = document.getElementById('w'), ctx = cv.getContext('2d');
+// deterministic pseudo-audio peaks (stands in for decoded AudioBuffer)
+const N = 700, peaks = [];
+let seed = 7;
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+for (let i = 0; i < N; i++) {
+  const t = i / N;
+  const env = Math.sin(t * Math.PI) * .9 + .1;
+  peaks.push(env * (.35 + rnd() * .65));
+}
+let cur = 0, playing = false, region = null, dragMode = null, t0 = 0;
+function xToT(x) { return x / cv.clientWidth * DUR; }
+function tToX(t) { return t / DUR * cv.clientWidth; }
+function draw() {
+  const W = cv.width, H = cv.height, mid = H / 2;
+  ctx.fillStyle = '#101014'; ctx.fillRect(0, 0, W, H);
+  const bw = W / N;
+  for (let i = 0; i < N; i++) {
+    const t = i / N * DUR, played = t <= cur;
+    const inRegion = region && t >= region[0] && t <= region[1];
+    ctx.fillStyle = inRegion ? '#fbbf24' : played ? '#a99cff' : '#3a3a4a';
+    const h = peaks[i] * (H * .44);
+    ctx.fillRect(i * bw, mid - h, Math.max(1, bw - 1), h * 2);
+  }
+  if (region) {
+    ctx.fillStyle = 'rgba(251,191,36,.12)';
+    ctx.fillRect(tToX(region[0]) / cv.clientWidth * W, 0, (region[1] - region[0]) / DUR * W, H);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeRect(tToX(region[0]) / cv.clientWidth * W, 1, (region[1] - region[0]) / DUR * W, H - 2);
+  }
+  // playhead
+  ctx.fillStyle = '#7ee0a0'; ctx.fillRect(cur / DUR * W, 0, 2, H);
+  ctx.beginPath(); ctx.arc(cur / DUR * W, 10, 5, 0, 7); ctx.fill();
+}
+function fmt(t) { return Math.floor(t / 60) + ':' + (t % 60).toFixed(1).padStart(4, '0'); }
+cv.addEventListener('pointerdown', e => {
+  const x = e.offsetX, t = xToT(x);
+  if (e.offsetY < 40) { dragMode = 'region'; region = [t, t]; }
+  else { dragMode = 'seek'; cur = t; }
+});
+cv.addEventListener('pointermove', e => {
+  if (dragMode === 'region') { region[1] = Math.max(region[0], xToT(e.offsetX)); document.getElementById('msg').textContent = `Region: ${fmt(region[0])} → ${fmt(region[1])}`; }
+  else if (dragMode === 'seek') { cur = xToT(e.offsetX); }
+});
+addEventListener('pointerup', () => dragMode = null);
+document.getElementById('play').onclick = e => {
+  playing = !playing; e.target.textContent = playing ? '❚❚' : '▶';
+  if (playing) { t0 = performance.now() - cur * 1000; tick(); }
+};
+document.getElementById('vol').oninput = e => e.target.value; // volume knob stand-in
+function tick() {
+  if (!playing) return;
+  cur = Math.min(DUR, (performance.now() - t0) / 1000);
+  document.getElementById('time').textContent = fmt(cur) + ' / ' + fmt(DUR);
+  if (cur >= DUR) { playing = false; document.getElementById('play').textContent = '▶'; cur = 0; return; }
+  requestAnimationFrame(() => { draw(); tick(); });
+}
+draw();
+setInterval(() => { if (!playing) document.getElementById('time').textContent = fmt(cur) + ' / ' + fmt(DUR); }, 100);
+</script>
+</body>
+</html>

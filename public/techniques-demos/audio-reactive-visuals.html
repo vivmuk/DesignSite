@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Audio-reactive Visuals — AnalyserNode</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; height:100vh;
+         display:flex; flex-direction:column; }
+  canvas { flex:1; width:100%; }
+  .bar { display:flex; gap:10px; align-items:center; padding:12px 18px; background:#161616; border-top:1px solid #2a2a2a; }
+  button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:8px 16px; font:inherit; cursor:pointer; }
+  button.on { background:#7c6cff; border-color:#7c6cff; }
+  #status { opacity:.6; font-size:.85rem; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="bar">
+  <button id="start">▶ Start (mic or synth)</button>
+  <button data-m="bars" class="on">Bars</button>
+  <button data-m="radial">Radial</button>
+  <button data-m="wave">Wave</button>
+  <span id="status">AnalyserNode: 1024-point FFT</span>
+</div>
+<script>
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let actx, analyser, data, freq, mode = 'bars', running = false;
+function resize(){ cv.width = cv.clientWidth * devicePixelRatio; cv.height = cv.clientHeight * devicePixelRatio; }
+addEventListener('resize', resize); resize();
+
+document.getElementById('start').onclick = async e => {
+  if (running) return; running = true;
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = actx.createAnalyser(); analyser.fftSize = 2048; analyser.smoothingTimeConstant = .8;
+  data = new Uint8Array(analyser.fftSize); freq = new Uint8Array(analyser.frequencyBinCount);
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    actx.createMediaStreamSource(stream).connect(analyser);
+    document.getElementById('status').textContent = 'Live microphone input';
+  } catch (err) {
+    // Fallback: built-in synth arpeggio so the demo always works
+    const osc = actx.createOscillator(), gain = actx.createGain(), lfo = actx.createOscillator();
+    osc.type = 'sawtooth'; osc.frequency.value = 110;
+    lfo.frequency.value = .8; const lg = actx.createGain(); lg.gain.value = 60;
+    lfo.connect(lg).connect(osc.frequency);
+    gain.gain.value = .12; osc.connect(gain).connect(analyser);
+    osc.start(); lfo.start();
+    document.getElementById('status').textContent = 'Mic blocked — playing internal synth instead';
+  }
+  e.target.textContent = '● Running'; e.target.classList.add('on');
+  requestAnimationFrame(draw);
+};
+document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+  mode = b.dataset.m;
+  document.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b));
+});
+function hueFromFreq() {
+  let peak = 0, idx = 0;
+  for (let i = 2; i < freq.length; i++) if (freq[i] > peak) { peak = freq[i]; idx = i; }
+  return (idx / freq.length) * 300;
+}
+function draw() {
+  if (!analyser) return;
+  analyser.getByteFrequencyData(freq); analyser.getByteTimeDomainData(data);
+  const W = cv.width, H = cv.height, hue = hueFromFreq();
+  ctx.fillStyle = 'rgba(13,13,13,.28)'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = `hsl(${hue} 80% 65%)`; ctx.fillStyle = `hsl(${hue} 80% 60%)`;
+  if (mode === 'bars') {
+    const n = 64, bw = W / n;
+    for (let i = 0; i < n; i++) {
+      const v = freq[Math.floor(i * freq.length / n / 2)] / 255, h = v * H * .9;
+      ctx.globalAlpha = .9; ctx.fillRect(i * bw + 2, H - h, bw - 4, h);
+    }
+    ctx.globalAlpha = 1;
+  } else if (mode === 'radial') {
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) * .22;
+    ctx.beginPath();
+    for (let i = 0; i <= 180; i++) {
+      const a = i / 180 * Math.PI * 2, r = R + (freq[i % freq.length] / 255) * R * 1.4;
+      i ? ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+    }
+    ctx.closePath(); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.lineWidth = 3;
+    for (let i = 0; i < data.length; i++) {
+      const x = i / data.length * W, y = H / 2 + (data[i] - 128) / 128 * H * .4;
+      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.stroke();
+  }
+  requestAnimationFrame(draw);
+}
+</script>
+</body>
+</html>

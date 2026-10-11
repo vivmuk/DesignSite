@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>App Shell Layout</title>
+<style>
+  * { box-sizing:border-box; margin:0; }
+  html, body { height:100%; }
+  body { background:#0d0d0d; color:#e4e4e4; font:14px/1.5 ui-monospace, monospace;
+         display:grid; grid-template-rows:36px 1fr 28px; grid-template-columns:auto 1fr; height:100vh; }
+  header { grid-column:1/-1; background:#161616; border-bottom:1px solid #2a2a2a; display:flex; align-items:center; gap:16px; padding:0 12px; }
+  header b { color:#7c6cff; }
+  header span { opacity:.6; }
+  aside { background:#121212; border-right:1px solid #2a2a2a; width:180px; overflow-y:auto; padding:8px 0;
+          transition:width .25s ease; }
+  aside.collapsed { width:0; overflow:hidden; }
+  aside li { list-style:none; padding:6px 14px; cursor:pointer; white-space:nowrap; opacity:.8; }
+  aside li:hover, aside li.active { background:#1e1e2e; color:#a99cff; }
+  main { display:grid; grid-template-rows:34px 1fr; overflow:hidden; }
+  .tabs { display:flex; background:#161616; border-bottom:1px solid #2a2a2a; }
+  .tabs div { padding:7px 16px; border-right:1px solid #2a2a2a; cursor:pointer; opacity:.6; }
+  .tabs div.on { background:#0d0d0d; opacity:1; border-top:2px solid #7c6cff; }
+  .editor { overflow-y:auto; padding:18px 22px; contain:strict; }
+  .editor pre { line-height:1.7; }
+  .kw { color:#c792ea } .str { color:#a5e075 } .fn { color:#82aaff } .cm { color:#5c6370 }
+  footer { grid-column:1/-1; background:#161616; border-top:1px solid #2a2a2a; display:flex; align-items:center; gap:20px; padding:0 12px; font-size:12px; }
+  footer .dot { width:8px; height:8px; border-radius:50%; background:#4ade80; }
+  .toggle { background:none; border:1px solid #444; color:#e4e4e4; border-radius:4px; cursor:pointer; padding:2px 8px; }
+</style>
+</head>
+<body>
+<header>
+  <b>◆ Hades IDE</b>
+  <span>File</span><span>Edit</span><span>View</span><span>Run</span>
+  <span style="margin-left:auto"><button class="toggle" onclick="document.querySelector('aside').classList.toggle('collapsed')">⧉ sidebar</button></span>
+</header>
+<aside>
+  <ul>
+    <li class="active">📁 src</li><li>📁 tests</li><li>📄 app.js</li><li>📄 grid.js</li>
+    <li>📄 shell.js</li><li>📄 main.ts</li><li>📄 README.md</li>
+  </ul>
+</aside>
+<main>
+  <div class="tabs" id="tabs">
+    <div class="on">app.js</div><div>shell.js</div><div>main.ts</div>
+  </div>
+  <div class="editor"><pre id="code"></pre></div>
+</main>
+<footer>
+  <span class="dot"></span><span id="pos">Ln 1, Col 1</span><span>UTF-8</span><span>Spaces: 2</span>
+  <span style="margin-left:auto">Grid × Flex nested shell</span>
+</footer>
+<script>
+const files = {
+  'app.js': `<span class="cm">// App shell: rows = [menubar, body, statusbar]</span>
+<span class="kw">const</span> shell = {
+  <span class="fn">mount</span>(root) {
+    root.style.display = <span class="str">'grid'</span>;
+    root.style.gridTemplateRows = <span class="str">'36px 1fr 28px'</span>;
+  }
+};
+shell.mount(document.body);
+`,
+  'shell.js': `<span class="kw">export function</span> <span class="fn">layout</span>() {
+  <span class="kw">return</span> { chrome: <span class="str">'fixed'</span>, scroll: <span class="str">'main-only'</span> };
+}
+<span class="cm">// contain:strict keeps scroll isolation cheap</span>
+`,
+  'main.ts': `<span class="kw">import</span> { layout } <span class="kw">from</span> <span class="str">'./shell.js'</span>;
+<span class="fn">layout</span>();
+<span class="cm">// TODO: wire the tab switching event</span>
+`
+};
+const pre = document.getElementById('code');
+function show(name) { pre.innerHTML = files[name] || ''; }
+document.getElementById('tabs').addEventListener('click', e => {
+  [...e.currentTarget.children].forEach(c => c.classList.remove('on'));
+  if (e.target.tagName === 'DIV') { e.target.classList.add('on'); show(e.target.textContent); }
+});
+show('app.js');
+document.querySelector('.editor').addEventListener('scroll', e => {
+  document.getElementById('pos').textContent = 'Ln ' + Math.round(e.target.scrollTop / 24 + 1) + ', Col 1';
+});
+</script>
+</body>
+</html>

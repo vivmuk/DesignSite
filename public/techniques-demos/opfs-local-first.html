@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OPFS Local-first Mini-App</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:14px/1.5 system-ui, sans-serif; display:grid;
+         grid-template-columns:220px 1fr 260px; height:100vh; }
+  aside, .inspector { background:#141414; border-right:1px solid #2a2a2a; padding:14px; overflow-y:auto; }
+  .inspector { border-right:none; border-left:1px solid #2a2a2a; }
+  h1 { font-size:.95rem; margin:0 0 14px; }
+  main { position:relative; }
+  canvas { width:100%; height:calc(100vh - 0px); display:block; cursor:crosshair; touch-action:none; }
+  .file { padding:8px 10px; border-radius:8px; cursor:pointer; display:flex; justify-content:space-between; }
+  .file:hover { background:#222; } .file.on { background:#241f3d; color:#a99cff; }
+  button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; width:100%; margin-bottom:8px; }
+  button.primary { background:#7c6cff; border-color:#7c6cff; color:#fff; }
+  .stat { font-family:monospace; font-size:.78rem; padding:6px 0; border-bottom:1px solid #262626; display:flex; justify-content:space-between; }
+  .stat b { color:#7ee0a0; }
+  .badge { font-size:.7rem; background:#7c6cff22; color:#a99cff; padding:2px 8px; border-radius:6px; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>🗂 OPFS Files <span class="badge">local-first</span></h1>
+  <button class="primary" onclick="newFile()">＋ New drawing</button>
+  <div id="files"></div>
+</aside>
+<main><canvas id="c"></canvas></main>
+<div class="inspector">
+  <h1>Persistence state</h1>
+  <div class="stat">backend <b id="backend">—</b></div>
+  <div class="stat">file size <b id="size">—</b></div>
+  <div class="stat">strokes <b id="strokes">0</b></div>
+  <div class="stat">last save <b id="last">—</b></div>
+  <p style="font-size:.78rem; opacity:.6; margin-top:14px">Drawings auto-save to the Origin Private File System via createSyncAccessHandle() — survives reloads, no server, no localStorage quota.</p>
+</div>
+<script>
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let root, current = null, strokes = [], files = [];
+async function init() {
+  root = await navigator.storage.getDirectory();
+  files = [];
+  for await (const [name] of root.entries()) files.push(name);
+  refreshList();
+  document.getElementById('backend').textContent = 'OPFS (sync handles)';
+}
+function refreshList() {
+  document.getElementById('files').innerHTML = files.map(f =>
+    `<div class="file ${f === current ? 'on' : 0}" onclick="openFile('${f}')">${f} <span style="opacity:.5">▣</span></div>`).join('') || '<div style="opacity:.4; font-size:.8rem">No drawings yet</div>';
+}
+async function newFile() {
+  const name = 'sketch-' + Date.now().toString(36) + '.opfs';
+  strokes = []; current = name; files.push(name);
+  await save(); refreshList();
+}
+async function openFile(name) {
+  current = name;
+  const fh = await root.getFileHandle(name, { create: true });
+  const access = await fh.createSyncAccessHandle();
+  const size = access.getSize();
+  const buf = new Uint8Array(size); access.read(buf, { at: 0 }); access.close();
+  strokes = size ? JSON.parse(new TextDecoder().decode(buf)) : [];
+  document.getElementById('size').textContent = (size / 1024).toFixed(1) + ' kB';
+  document.getElementById('strokes').textContent = strokes.length;
+  redraw(); refreshList();
+}
+async function save() {
+  if (!current) return;
+  const fh = await root.getFileHandle(current, { create: true });
+  const access = await fh.createSyncAccessHandle();
+  const data = new TextEncoder().encode(JSON.stringify(strokes));
+  access.truncate(0); access.write(data, { at: 0 }); access.flush(); access.close();
+  document.getElementById('size').textContent = (data.length / 1024).toFixed(1) + ' kB';
+  document.getElementById('strokes').textContent = strokes.length;
+  document.getElementById('last').textContent = new Date().toLocaleTimeString();
+}
+let drawing = false;
+function pos(e) { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+cv.addEventListener('pointerdown', e => { drawing = true; strokes.push({ c: '#a99cff', w: 3, pts: [pos(e)] }); });
+cv.addEventListener('pointermove', e => { if (drawing) { strokes.at(-1).pts.push(pos(e)); redraw(); } });
+addEventListener('pointerup', () => { if (drawing) { drawing = false; save(); } });
+function redraw() {
+  ctx.fillStyle = '#0d0d0d'; ctx.fillRect(0, 0, cv.width, cv.height);
+  strokes.forEach(s => { ctx.strokeStyle = s.c; ctx.lineWidth = s.w; ctx.lineCap = 'round'; ctx.beginPath();
+    s.pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke(); });
+}
+function resize() { cv.width = cv.clientWidth; cv.height = cv.clientHeight; redraw(); }
+addEventListener('resize', resize); resize();
+init();
+document.getElementById('backend').textContent =
+  navigator.storage && root !== undefined ? 'OPFS (sync handles)' : 'not supported';
+</script>
+</body>
+</html>

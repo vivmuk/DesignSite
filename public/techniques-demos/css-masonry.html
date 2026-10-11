@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Native CSS Masonry</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:16px/1.5 system-ui, sans-serif; padding:30px; }
+  h1 { font-size:1.1rem; font-weight:600; margin:0 0 6px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 20px; }
+  .bar button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:8px 18px; font:inherit; cursor:pointer; margin-right:8px; }
+  .bar button.on { background:#7c6cff; border-color:#7c6cff; }
+  .masonry { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; grid-template-rows: masonry; max-width:1080px; }
+  .masonry.plain { grid-template-rows:none; grid-auto-rows: 120px; }
+  .masonry.plain .card { height:120px; overflow:hidden; }
+  @media (max-width:900px){ .masonry{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:620px){ .masonry{grid-template-columns:repeat(2,1fr)} }
+  .card { border-radius:12px; overflow:hidden; border:1px solid #2c2c2c; background:#181818; }
+  .card canvas { width:100%; display:block; }
+  .card p { margin:0; padding:8px 12px; font-size:.8rem; opacity:.7; }
+  #flag { display:none; margin-top:14px; color:#fbbf24; font-size:.9rem; }
+
+  .bar { display:flex; gap:10px; align-items:center; margin-bottom:12px; }
+  .masonry .card:hover { border-color:#7c6cff; }
+  .masonry.plain .card canvas { height:100px; object-fit:cover; }
+</style>
+</head>
+<body>
+<h1>grid-template-rows: masonry</h1>
+<p class="hint">Items pack into staggered columns natively — no measuring, no absolute positioning.</p>
+<div class="bar">
+  <button id="m" class="on">Masonry</button>
+  <button id="g">Plain grid</button>
+</div>
+<div class="masonry" id="wall"></div>
+<p id="flag">⚠ masonry packing needs an experimental flag in most browsers (chrome://flags → Web Experimentals, or Safari TP). Showing the graceful fallback path meanwhile.</p>
+<script>
+const hues = [262, 160, 12, 205, 330, 45, 285, 95];
+const wall = document.getElementById('wall');
+const H = [220, 140, 180, 110, 260, 150, 200, 130, 240, 160, 190, 210, 175, 145, 230, 120];
+H.forEach((h, i) => {
+  const d = document.createElement('div'); d.className = 'card';
+  d.innerHTML = `<canvas width="300" height="${h}" data-h="${hues[i % hues.length]}"></canvas><p>Card ${i + 1}</p>`;
+  wall.appendChild(d);
+});
+[...wall.querySelectorAll('canvas')].forEach(cv => {
+  const ctx = cv.getContext('2d'), g = ctx.createLinearGradient(0, 0, 300, cv.height);
+  g.addColorStop(0, `hsl(${cv.dataset.h} 60% 28%)`); g.addColorStop(1, `hsl(${cv.dataset.h} 65% 58%)`);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 300, cv.height);
+});
+const supported = CSS.supports('grid-template-rows', 'masonry');
+if (!supported) document.getElementById('flag').style.display = 'block';
+document.getElementById('m').onclick = e => { wall.classList.remove('plain'); toggle(e.target); };
+document.getElementById('g').onclick = e => { wall.classList.add('plain'); toggle(e.target); };
+function toggle(btn) { document.querySelectorAll('.bar button').forEach(b => b.classList.toggle('on', b === btn)); }
+</script>
+
+<p style="opacity:.55; font-size:.85rem; font-family:monospace; margin-top:18px">
+  status: masonry = <span id="ms">detecting…</span> · toggle both modes work in any browser
+</p>
+<script>
+  document.getElementById('ms').textContent =
+    CSS.supports('grid-template-rows','masonry') ? 'supported ✓' : 'flagged/experimental ⚠';
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Variable Fonts Playground</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; padding:34px; max-width:900px; margin:auto; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 10px; }
+  canvas.slider { width:100%; height:120px; display:block; cursor:grab; touch-action:none; }
+  .stage { border:1px solid #2c2c2c; border-radius:14px; padding:26px; }
+  .sample { font-family:'Anybody', system-ui, sans-serif; font-size:clamp(2.4rem, 8vw, 5.5rem); line-height:1.08;
+            letter-spacing:-.01em; transition:none; }
+  .readout { display:flex; gap:26px; font-family:monospace; font-size:.85rem; margin-top:18px; flex-wrap:wrap; }
+  .readout b { color:#7c6cff; }
+  .axis { margin-top:14px; }
+  .axis label { font-family:monospace; font-size:.8rem; display:flex; justify-content:space-between; }
+  input[type=range] { width:100%; accent-color:#7c6cff; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,50..150,100..900;1,50..150,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1>Variable Font Playground</h1>
+<p class="hint">One file, two live axes. Drag on the big slider: X = width (wdth 50–150), Y = weight (wght 100–900).</p>
+<div class="stage">
+  <div class="sample" id="s" style="font-variation-settings:'wdth' 100, 'wght' 500">STRETCH ME</div>
+  <div class="readout">
+    <span>wdth <b id="rv">100</b></span>
+    <span>wght <b id="rw">500</b></span>
+    <span>axes served from a single ~40&nbsp;kB woff2</span>
+  </div>
+  <div class="axis"><label>wdth (width) <span id="lv">100</span></label><input type="range" id="a1" min="50" max="150" value="100"></div>
+  <div class="axis"><label>wght (weight) <span id="lw">500</span></label><input type="range" id="a2" min="100" max="900" value="500" step="10"></div>
+</div>
+<script>
+const s = document.getElementById('s'), rv = document.getElementById('rv'), rw = document.getElementById('rw');
+let wdth = 100, wght = 500;
+function apply() {
+  s.style.fontVariationSettings = `'wdth' ${wdth}, 'wght' ${wght}`;
+  rv.textContent = Math.round(wdth); rw.textContent = Math.round(wght);
+  document.getElementById('lv').textContent = Math.round(wdth);
+  document.getElementById('lw').textContent = Math.round(wght);
+  document.getElementById('a1').value = wdth; document.getElementById('a2').value = wght;
+}
+apply();
+// draggable 2D slider: x → wdth, y → wght
+const cv = document.createElement('canvas'); cv.width = 800; cv.height = 120;
+const stage = document.querySelector('.stage');
+stage.insertBefore(cv, s);
+cv.style.width = '100%'; cv.style.height = '110px'; cv.style.cursor = 'crosshair'; cv.style.touchAction = 'none';
+function drawPad() {
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#101014'; ctx.fillRect(0, 0, 800, 120);
+  for (let x = 0; x < 800; x += 10) {
+    const w = 50 + x / 800 * 100, wt = 100 + (1 - x / 800) * 0 + (x / 800) * 500;
+    ctx.fillStyle = `hsl(262 70% ${30 + (x / 800) * 25}%)`;
+    ctx.fillRect(x, 110 - ((w - 50) / 100) * 90, 4, 4 + ((w - 50) / 100) * 0);
+  }
+}
+drawPad();
+let drag = false;
+cv.addEventListener('pointerdown', e => { drag = true; cv.setPointerCapture(e.pointerId); move(e); });
+cv.addEventListener('pointerup', () => drag = false);
+cv.addEventListener('pointermove', e => drag && move(e));
+function move(e) {
+  const r = cv.getBoundingClientRect();
+  wdth = 50 + Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * 100;
+  wght = 100 + Math.max(0, Math.min(1, 1 - (e.clientY - r.top) / r.height)) * 800;
+  apply();
+}
+</script>
+</body>
+</html>

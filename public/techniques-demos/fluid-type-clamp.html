@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fluid Type Scale — clamp()</title>
+<style>
+  :root { --min: 16; --max: 28; }
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; padding:32px; }
+  h1 { font-size:1.2rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 24px; }
+  .specimen { border:1px solid #2c2c2c; border-radius:14px; padding:26px; max-width:860px; }
+  h2.display { font-size:clamp(1.6rem, 4vw + .5rem, 4.5rem); line-height:1.05; margin:0 0 14px; }
+  p.body { font-size:clamp(.95rem, .8vw + .55rem, 1.25rem); line-height:1.6; max-width:60ch; margin:0 0 10px; }
+  p.cap { font-size:clamp(.7rem, .3vw + .5rem, .9rem); opacity:.6; letter-spacing:.04em; text-transform:uppercase; }
+  .ctrl { margin:26px 0; display:flex; gap:20px; align-items:center; flex-wrap:wrap; font-family:monospace; font-size:.85rem; }
+  input[type=range] { accent-color:#7c6cff; width:220px; }
+  .ruler { height:14px; border:1px solid #333; border-radius:7px; position:relative; max-width:860px; margin:14px 0 22px;
+           background:repeating-linear-gradient(90deg, #1c1c1c 0 1px, transparent 1px 10%); }
+  .ruler::after { content:'320px ← viewport → 1800px'; position:absolute; right:0; top:-20px; font-size:.72rem; opacity:.5; font-family:monospace; }
+  .formula { background:#161616; border:1px solid #2c2c2c; border-radius:10px; padding:14px 18px; font-family:monospace;
+             font-size:.85rem; margin-top:22px; color:#a99cff; }
+  .formula code { color:#e4e4e4; }
+
+  .ctrl label { display:flex; flex-direction:column; gap:6px; }
+  .specimen h2.display::selection { background:#7c6cff44; }
+  .specimen { transition:width .08s linear; }
+</style>
+</head>
+<body>
+<h1>Fluid Type — no breakpoints, just clamp()</h1>
+<p class="hint">Drag the viewport-width slider (or resize the real window): heading, body and caption scale continuously.</p>
+<div class="ctrl">
+  <label>Viewport width: <b id="wv">1200</b>px <input type="range" id="w" min="320" max="1800" value="1200"></label>
+  <label>Scale: <b id="sv">1.00</b><input type="range" id="s" min="70" max="160" value="100"></label>
+</div>
+<div class="ruler"></div>
+<div class="specimen" id="spec">
+  <h2 class="display">Continuous Typography</h2>
+  <p class="body">This paragraph scales with the viewport between its floor and ceiling. Below the fluid range the minimum clamps; above it, the maximum holds — so text never becomes unreadably small or comically large.</p>
+  <p class="cap">caption · clamp(.7rem, .3vw + .5rem, .9rem)</p>
+  <p class="body">Notice there are no media queries anywhere on this page. The type never snaps — between 320px and 1800px it climbs a straight line, clamped at both ends like a hand on a rail.</p>
+</div>
+<div class="formula" id="f"></div>
+<script>
+const w = document.getElementById('w'), s = document.getElementById('s'), f = document.getElementById('f');
+function update() {
+  const W = +w.value, K = +s.value / 100;
+  document.getElementById('wv').textContent = W;
+  document.getElementById('sv').textContent = K.toFixed(2);
+  document.getElementById('spec').style.width = W + 'px';
+  document.getElementById('spec').style.maxWidth = '100%';
+  const vmin = 1.6 * K, vmax = 4.5 * K, slope = (vmax - vmin) / (1800 - 320);
+  const inter = vmin - 320 * slope;
+  f.innerHTML =
+    `h2 → font-size: clamp(<code>${vmin.toFixed(2)}rem</code>, <code>calc(${inter.toFixed(3)}rem + ${(slope*100).toFixed(2)}vw)</code>, <code>${vmax.toFixed(2)}rem</code>)<br>` +
+    `current resolved size ≈ <code>${Math.min(vmax, Math.max(vmin, inter + W * slope)).toFixed(2)}rem</code>`;
+}
+w.oninput = update; s.oninput = update; update();
+</script>
+</body>
+</html>

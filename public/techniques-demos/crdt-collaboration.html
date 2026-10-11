@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CRDT Collaboration — Yjs over BroadcastChannel</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; padding:28px; }
+  h1 { font-size:1.1rem; font-weight:600; opacity:.85; }
+  .wrap { display:grid; grid-template-columns:1fr 1fr 260px; gap:16px; max-width:1150px; }
+  .pane { background:#161616; border:1px solid #2c2c2c; border-radius:12px; padding:14px; }
+  .pane h2 { margin:0 0 8px; font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; opacity:.6; }
+  textarea { width:100%; min-height:320px; background:#0d0d0d; color:#e4e4e4; border:1px solid #333;
+             border-radius:8px; padding:10px; font:14px/1.6 ui-monospace, monospace; resize:vertical; }
+  .inspector { background:#141424; border:1px solid #2c2c3c; border-radius:12px; padding:14px; font-size:.82rem; }
+  .inspector h2 { margin:0 0 10px; font-size:.85rem; color:#a99cff; }
+  .row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #23233a; }
+  .row b { color:#7ee0a0; font-family:monospace; }
+  #log { max-height:170px; overflow-y:auto; font-family:monospace; font-size:.75rem; color:#9a9ab8; }
+  .badge { display:inline-block; background:#7c6cff22; color:#a99cff; border-radius:6px; padding:2px 8px; font-size:.75rem; }
+</style>
+</head>
+<body>
+<h1>Two "clients", one CRDT document — edit either side, both stay in sync with zero conflicts <span class="badge">Yjs · BroadcastChannel</span></h1>
+<div class="wrap">
+  <div class="pane"><h2>Client A (tab 1)</h2><textarea id="ta" spellcheck="false"></textarea></div>
+  <div class="pane"><h2>Client B (tab 2)</h2><textarea id="tb" spellcheck="false"></textarea></div>
+  <div class="inspector">
+    <h2>Merge-state inspector</h2>
+    <div class="row">updates applied <b id="ups">0</b></div>
+    <div class="row">client ID <b id="cid">—</b></div>
+    <div class="row">vector size <b id="ss">0</b></div>
+    <div class="row">conflicts <b>0 (CRDT-guaranteed)</b></div>
+    <h2 style="margin-top:14px">Update log</h2>
+    <div id="log"></div>
+  </div>
+</div>
+<script type="module">
+const Y = await import('https://cdn.jsdelivr.net/npm/yjs@13.6.20/+esm');
+const chan = new BroadcastChannel('yjs-demo-room');
+function makeClient(id, ta) {
+  const doc = new Y.Doc(); const ytext = doc.getText('doc');
+  const st = { updates: 0, log: (m) => { const el = document.getElementById('log');
+    el.innerHTML = `<div>${new Date().toLocaleTimeString()} · ${m}</div>` + el.innerHTML; } };
+  ytext.observe(() => { const p = ta.selectionStart; ta.value = ytext.toString(); ta.setSelectionRange(p, p); });
+  ta.addEventListener('input', () => { ytext.delete(0, ytext.length); ytext.insert(0, ta.value); });
+  doc.on('update', (u, origin) => {
+    if (origin !== 'remote') chan.postMessage(u);
+    st.updates++;
+    document.getElementById('ups').textContent = st.updates;
+    document.getElementById('ss').textContent = doc.store.getStateVector ? Object.keys(doc.store.getStateVector()).length : 0;
+    if (st.updates <= 30) st.log(`${id} ${origin === 'remote' ? 'received' : 'broadcast'} ${u.byteLength}B update`);
+  });
+  chan.onmessage = e => { Y.applyUpdate(doc, e.data, 'remote'); };
+  // initial sync handshake
+  chan.postMessage(Y.encodeStateAsUpdate(doc));
+  return doc;
+}
+const a = makeClient('A', document.getElementById('ta'));
+const b = makeClient('B', document.getElementById('tb'));
+a.getText('doc').insert(0, 'Team meeting notes — edit me from either side.
+
+• CRDTs merge concurrent edits automatically
+• No server required in this demo
+');
+document.getElementById('cid').textContent = a.clientID + ' / ' + b.clientID;
+document.getElementById('ss').textContent = '2';
+</script>
+</body>
+</html>

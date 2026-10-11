@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Islands &amp; Partial Hydration</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; padding:30px; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 24px; }
+  .page { max-width:860px; }
+  .island { outline:2px dashed transparent; transition:outline-color .3s; border-radius:10px; padding:4px; }
+  .island.hydrated { outline-color:#7ee0a0; }
+  .island.pending { outline-color:#fbbf24; }
+  .island-label { font-family:monospace; font-size:.72rem; color:#7ee0a0; display:inline-block; background:#0f1f16;
+                  padding:2px 10px; border-radius:6px; margin:8px 0; }
+  .island.pending .island-label { color:#fbbf24; background:#20180a; }
+  .static { border:1px solid #262626; border-radius:10px; padding:18px; margin:10px 0; opacity:.8; }
+  .static small { display:block; color:#666; font-family:monospace; font-size:.7rem; margin-bottom:8px; }
+  .counter button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:6px 14px; cursor:pointer; margin-right:6px; font:inherit; }
+  .counter b { font-size:1.4rem; font-family:monospace; color:#a99cff; margin:0 10px; }
+  .carousel { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; }
+  .carousel div { width:130px; height:88px; border-radius:8px; flex-shrink:0; }
+  .togglebar button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:8px 16px; font:inherit; cursor:pointer; margin-right:8px; }
+  .togglebar button.on { background:#7c6cff; border-color:#7c6cff; }
+  .cost { font-family:monospace; font-size:.8rem; color:#7ee0a0; margin-top:18px; }
+</style>
+</head>
+<body>
+<h1>Islands Architecture — hydration à la carte</h1>
+<p class="hint">Static HTML everywhere; only the dashed islands carry JS. Toggle hydration per island.</p>
+<div class="togglebar">
+  <button id="t1" class="on">counter: hydrated</button>
+  <button id="t2">carousel: idle</button>
+</div>
+<div class="page">
+  <div class="static"><small>&lt;section&gt; static — zero JS shipped</small>
+    Long-form content ships as pure HTML. It renders before any JavaScript exists, is crawlable by default, and costs the browser almost nothing to display. The framework only wakes the parts that need a client runtime.</div>
+  <div class="island hydrated" id="i1"><span class="island-label">⬢ island #1 · counter · 2.1 kB</span>
+    <div class="counter">
+      <button onclick="this.nextElementSibling.textContent = +this.nextElementSibling.textContent - 1">−</button>
+      <b id="cv">42</b>
+      <button onclick="this.previousElementSibling.textContent = +this.previousElementSibling.textContent + 1">+</button>
+      <span style="opacity:.6; font-size:.85rem">← interactive island (its own state)</span>
+    </div></div>
+  <div class="static"><small>&lt;p&gt; static — zero JS shipped</small>
+    Between islands, the document stays inert markup. Scroll, selection, and reading all work without hydration.</div>
+  <div class="island pending" id="i2"><span class="island-label">⬢ island #2 · carousel · idle</span>
+    <div class="carousel" id="car"></div></div>
+  <div class="cost" id="cost">JS shipped: 2.1 kB / 148 kB page (1.4%)</div>
+</div>
+<script>
+const hues = [262, 205, 160, 330, 45, 12];
+document.querySelectorAll('.carousel').forEach(c => {
+  hues.forEach(h => { const d = document.createElement('div');
+    d.style.background = `linear-gradient(135deg, hsl(${h} 50% 30%), hsl(${h} 60% 55%))`; c.appendChild(d); });
+});
+let c1 = true, c2 = false;
+document.getElementById('t1').onclick = e => {
+  c1 = !c1; e.target.classList.toggle('on', c1); e.target.textContent = 'counter: ' + (c1 ? 'hydrated' : 'idle');
+  document.getElementById('i1').className = 'island ' + (c1 ? 'hydrated' : 'pending');
+  cost();
+};
+document.getElementById('t2').onclick = e => {
+  c2 = !c2; e.target.classList.toggle('on', c2); e.target.textContent = 'carousel: ' + (c2 ? 'hydrated' : 'idle');
+  document.getElementById('i2').className = 'island ' + (c2 ? 'hydrated' : 'pending');
+  cost();
+};
+function cost() {
+  const kb = (c1 ? 2.1 : 0) + (c2 ? 18.4 : 0);
+  document.getElementById('cost').textContent = `JS shipped: ${kb.toFixed(1)} kB / 148 kB page (${(kb/148*100).toFixed(1)}%)`;
+}
+</script>
+</body>
+</html>

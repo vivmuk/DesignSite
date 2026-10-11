@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aspect-ratio Boxes &amp; Media Objects</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font:15px/1.5 system-ui, sans-serif; padding:30px; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 24px; }
+  button { background:#7c6cff; color:#fff; border:none; border-radius:8px; padding:9px 20px; font:inherit; cursor:pointer; margin-bottom:22px; }
+  .feed { max-width:680px; display:flex; flex-direction:column; gap:14px; }
+  .comment { display:grid; grid-template-columns:52px 1fr; gap:14px; background:#161616; border:1px solid #2c2c2c; border-radius:12px; padding:16px; }
+  .avatar { width:52px; aspect-ratio:1; border-radius:50%; object-fit:cover; display:block; }
+  .avatar.skel { background:linear-gradient(110deg,#1e1e1e 30%,#2a2a2a 50%,#1e1e1e 70%); background-size:200% 100%;
+                 animation:shimmer 1.2s infinite; }
+  @keyframes shimmer { to { background-position:-200% 0 } }
+  .thumb { grid-column:1/-1; width:100%; aspect-ratio:16/9; border-radius:8px; object-fit:cover; display:block; }
+  .thumb.skel { background:linear-gradient(110deg,#1a1a1e 30%,#26262c 50%,#1a1a1e 70%); background-size:200% 100%;
+                animation:shimmer 1.2s infinite; }
+  .meta b { color:#a99cff; } .meta span { opacity:.5; font-size:.85rem; margin-left:8px; }
+  .body-text { margin:6px 0 0; opacity:.85; }
+  .noshift { color:#7ee0a0; font-family:monospace; font-size:.78rem; }
+  .shifted { color:#fbbf24; font-family:monospace; font-size:.78rem; }
+  .no-ar .thumb { height:0 !important; aspect-ratio:auto; transition:none; }
+  .no-ar .avatar { height:0 !important; width:52px; aspect-ratio:auto; }
+  .mode { display:flex; gap:8px; margin-bottom:8px; }
+  .mode button { background:#262626; color:#e4e4e4; border:1px solid #444; border-radius:8px; padding:7px 14px; font:inherit; cursor:pointer; }
+  .mode button.on { background:#7c6cff; border-color:#7c6cff; }
+
+  .mode { align-items:center; }
+  .comment { transition:background .3s; }
+  .comment:hover { background:#1a1a1a; }
+</style>
+</head>
+<body>
+<h1>aspect-ratio: space reserved, zero layout shift</h1>
+<p class="hint">Click to "load" the images — every skeleton box is aspect-ratio locked, so nothing ever jumps. <span class="noshift">CLS ≈ 0.000</span></p>
+<div class="mode">
+  <button id="withAr" class="on">with aspect-ratio</button>
+  <button id="withoutAr">without (shifts!)</button>
+  <button id="load">⤓ Load media</button>
+</div>
+<span class="shifted" id="cls" style="display:none">CLS ≈ 0.21 — watch the feed jump</span>
+<div class="feed" id="feed"></div>
+<script>
+const people = [
+  { n: 'Ada Lovelace', t: '2h', c: 'The analytical engine weaves algebraic patterns just as the Jacquard loom weaves flowers and leaves.', hue: 262 },
+  { n: 'Grace Hopper', t: '5h', c: 'A ship in port is safe, but that is not what ships are built for. Deploy on Friday.', hue: 205 },
+  { n: 'Alan Turing', t: '1d', c: 'We can only see a short distance ahead, but we can see plenty there that needs to be done.', hue: 160 },
+  { n: 'Radia Perlman', t: '1d', c: 'Spanning tree was a Tuesday afternoon. The protocol review, however, took a decade.', hue: 330 },
+];
+const feed = document.getElementById('feed');
+people.forEach((p, i) => {
+  const el = document.createElement('article'); el.className = 'comment';
+  el.innerHTML = `
+    <canvas class="avatar skel" width="104" height="104"></canvas>
+    <div class="meta"><b>${p.n}</b><span>@handle${i} · ${p.t}</span><p class="body-text">${p.c}</p></div>
+    <canvas class="thumb skel" width="640" height="360" data-h="${p.hue}"></canvas>`;
+  feed.appendChild(el);
+});
+document.getElementById('withAr').onclick = e => { feed.classList.remove('no-ar');
+  document.querySelectorAll('.mode button').forEach(b => b.classList.remove('on')); e.target.classList.add('on');
+  document.getElementById('cls').style.display = 'none'; };
+document.getElementById('withoutAr').onclick = e => { feed.classList.add('no-ar');
+  document.querySelectorAll('.mode button').forEach(b => b.classList.remove('on')); e.target.classList.add('on');
+  document.getElementById('cls').style.display = 'inline'; };
+document.getElementById('load').onclick = () => {
+  document.querySelectorAll('canvas').forEach(cv => {
+    cv.classList.remove('skel');
+    const ctx = cv.getContext('2d');
+    const g = ctx.createLinearGradient(0, 0, cv.width, cv.height);
+    g.addColorStop(0, `hsl(${cv.dataset.h} 55% 32%)`); g.addColorStop(1, `hsl(${cv.dataset.h} 70% 60%)`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.font = (cv.width / 6) + 'px system-ui'; ctx.fillStyle = '#ffffffcc'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(cv.className.includes('avatar') ? cv.closest('.comment').querySelector('b').textContent[0] : '⌘', cv.width/2, cv.height/2);
+    cv.className = cv.width === 104 ? 'avatar' : 'thumb';
+  });
+};
+</script>
+</body>
+</html>

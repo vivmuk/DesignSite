@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Optical Sizing (opsz)</title>
+<style>
+  body { margin:0; background:#0d0d0d; color:#e4e4e4; font-family:system-ui, sans-serif; padding:30px; }
+  h1 { font-size:1.15rem; margin:0 0 4px; }
+  .hint { opacity:.55; font-size:.9rem; margin:0 0 24px; }
+  .row { display:flex; align-items:baseline; gap:18px; border-bottom:1px solid #222; padding:12px 0; }
+  .row .tag { font-family:monospace; font-size:.78rem; opacity:.6; width:110px; flex-shrink:0; }
+  .sample { font-family:'Fraunces', Georgia, serif; font-optical-sizing:auto; line-height:1.05; }
+  .sample.manual { font-optical-sizing:none; }
+  .controls { margin:20px 0; display:flex; gap:18px; align-items:center; font-family:monospace; font-size:.85rem; }
+  input[type=range] { accent-color:#7c6cff; width:240px; }
+  .overlay-note { background:#161616; border:1px solid #2c2c2c; border-radius:10px; padding:14px 18px;
+                  font-size:.85rem; max-width:640px; margin-top:22px; opacity:.85; }
+  b.o { color:#a99cff; }
+  .compare { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:20px; }
+  .compare .cell { padding:14px; border-radius:10px 10px 0 0; text-align:center; }
+  .compare .cell small { display:block; font-family:monospace; font-size:.7rem; opacity:.5; margin-bottom:6px; }
+  .cap-a { font-family:'Fraunces', Georgia, serif; font-optical-sizing:auto; }
+  .cap-b { font-family:'Fraunces', Georgia, serif; font-optical-sizing:none; font-variation-settings:'opsz' 9; }
+
+  .row:hover .sample { color:#fff; }
+  .controls label { display:flex; align-items:center; gap:8px; }
+  .controls input[type=checkbox] { accent-color:#7c6cff; width:16px; height:16px; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1>One font, many personalities — the opsz axis</h1>
+<p class="hint">At display sizes Fraunces grows high-contrast, delicate serifs; at caption sizes it thickens for legibility. font-optical-sizing:auto does this automatically.</p>
+<div class="controls">
+  <label>Render size: <b id="sv">96</b>px <input type="range" id="s" min="12" max="140" value="96"></label>
+  <label><input type="checkbox" id="auto" checked> font-optical-sizing: auto</label>
+</div>
+<div class="row"><span class="tag" id="t1">caption · 12</span><div class="sample" id="x1" style="font-size:12px">Quaint quartz jars vexed</div></div>
+<div class="row"><span class="tag">text · 24</span><div class="sample" style="font-size:24px">Quaint quartz jars vexed</div></div>
+<div class="row"><span class="tag" id="t2">current · 96</span><div class="sample" id="x2" style="font-size:96px">Quartz vex</div></div>
+<div class="row"><span class="tag">display · 140</span><div class="sample" style="font-size:140px">Vex</div></div>
+<div class="overlay-note" id="note">
+  Current size <b class="o" id="ns">96px</b> → opsz resolves to <b class="o" id="no">96</b>.
+  As size grows, stroke contrast increases and terminals sharpen — exactly how metal type castings were graded by body size in print.
+</div>
+<script>
+const s = document.getElementById('s'), x2 = document.getElementById('x2');
+function upd() {
+  const v = +s.value;
+  x2.style.fontSize = v + 'px';
+  x2.style.fontOpticalSizing = document.getElementById('auto').checked ? 'auto' : 'none';
+  x2.style.fontVariationSettings = x2.style.fontOpticalSizing === 'none' ? "'opsz' 9" : 'normal';
+  document.getElementById('t2').textContent = 'current · ' + v;
+  document.getElementById('sv').textContent = v;
+  document.getElementById('ns').textContent = v + 'px';
+  document.getElementById('no').textContent = x2.style.fontOpticalSizing === 'none' ? '9 (locked — sturdy text cut)' : v + ' (auto)';
+}
+s.oninput = upd; document.getElementById('auto').onchange = upd; upd();
+</script>
+<div class="compare">
+  <div class="cell" style="background:#141420"><small>opsz auto (resolves to size)</small><div class="cap-a" style="font-size:64px">Wax &amp; Vex</div></div>
+  <div class="cell" style="background:#141420"><small>opsz locked at 9 (text cut)</small><div class="cap-b" style="font-size:64px">Wax &amp; Vex</div></div>
+</div>
+</body>
+</html>
