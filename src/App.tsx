@@ -6,6 +6,7 @@ import { enrichedStyles, type EnrichedStyle } from './data/enrichedStyles';
 import { ExploreTab } from './components/ExploreTab';
 import { StyleDetailPage } from './components/StyleDetailPage';
 import { GuidesTab } from './components/GuidesTab';
+import { StylesDBTab } from './components/StylesDBTab';
 import { Top200Tab } from './components/Top200Tab';
 import { TopSiteDetail } from './components/TopSiteDetail';
 import './App.css';
@@ -1554,6 +1555,7 @@ function WebsitePreview({
 // Root App with 5-tab navigation
 // ─────────────────────────────────────────────────────────────────────────────────
 const TABS = [
+  { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 100 },
   { id: 'explore', label: 'Explore', emoji: '🔍', count: enrichedStyles.length },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
@@ -1607,6 +1609,7 @@ function App() {
         {activeTab === 'skills' && <SkillsTab />}
         {activeTab === 'directions' && <DirectionsTab />}
         {activeTab === 'showcase' && <ShowcaseTab />}
+        {activeTab === 'stylesdb' && <StylesDBTab />}
         {activeTab === 'guides' && <GuidesTab />}
       </main>
     </div>
