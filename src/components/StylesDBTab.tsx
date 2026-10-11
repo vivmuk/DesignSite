@@ -35,7 +35,7 @@ export function StylesDBTab() {
           n: s.n, id: s.id, name: s.name, category: s.category, tagline: s.tagline,
           techniques: s.techniques, best_for: s.best_for, component_focus: s.component_focus,
           palette: s.palette,
-          image_url: `/styles-images/${s.id}.png`, spec_url: `/styles-specs/${s.id}.html`,
+          image_url: `/styles-images-jpg/${s.id}.jpg`, spec_url: `/styles-specs/${s.id}.html`,
         })));
         setSource('static');
       } finally { setLoading(false); }
