@@ -99,6 +99,20 @@ async function handler(req: Request): Promise<Response> {
       return j({ query: q, count: rows.length, results: rows.map((r: Record<string, unknown>) => ({ id: r.id, name: r.name, category: r.category, tagline: r.tagline })) });
     }
 
+    if (path === "/techniques") {
+      const rows = await sql`SELECT id,name,domain,level,one_line,why_pro,demo_idea,libraries,spec_url FROM techniques ORDER BY domain, id`;
+      return j(rows);
+    }
+    if (path.startsWith("/techniques/") && path.endsWith("/prompt")) {
+      const tid = path.slice("/techniques/".length, -"/prompt".length);
+      const rows = await sql`SELECT id,name,level,domain,demo_idea,agent_prompt FROM techniques WHERE id = ${tid} LIMIT 1`;
+      if (!rows.length) return new Response(JSON.stringify({ error: "not found" }), { status: 404, headers: cors });
+      const r0 = rows[0];
+      return j({ id: r0.id, name: r0.name, level: r0.level, domain: r0.domain,
+        demo_idea: r0.demo_idea, agent_prompt: r0.agent_prompt,
+        demo_url: `https://designviv.up.railway.app/techniques-demos/${r0.id}.html` });
+    }
+
     if (path === "/legacy") {
       const kind = url.searchParams.get("kind") ?? undefined;
       let rows;
