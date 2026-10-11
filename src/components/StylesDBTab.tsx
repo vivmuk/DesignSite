@@ -104,7 +104,7 @@ export function StylesDBTab() {
       <div className="db-grid">
         {filtered.map(s => (
           <div key={s.id} className="db-card" onClick={()=>setSelected(s)}>
-            <div className="db-thumb"><img src={s.image_url} alt={s.name} loading="lazy" /></div>
+            <div className="db-thumb"><img src={s.image_url.replace('/styles-images/','/styles-images-jpg/').replace('.png','.jpg')} alt={s.name} loading="lazy" /></div>
             <div className="db-info">
               <div className="db-tags"><span className="tag tag-system">{s.category}</span></div>
               <h3>{s.name}</h3>
