@@ -24,6 +24,13 @@ const DOMAIN_LABELS: Record<string,string> = {
   'architecture': 'Architecture & Perf', 'a11y': 'Accessibility & i18n', 'dev-tricks': 'Pro Workflow Tricks',
 };
 
+const libsOf = (t: Technique): string[] => {
+  const lib = t.libraries as unknown;
+  if (Array.isArray(lib)) return lib as string[];
+  if (typeof lib === 'string') { try { const a = JSON.parse(lib); return Array.isArray(a) ? a : []; } catch { return []; } }
+  return [];
+};
+
 // Loads from the live styles-api /techniques endpoint; falls back to static catalog.json
 export function TechniquesTab() {
   const [techniques, setTechniques] = useState<Technique[]>([]);
@@ -81,8 +88,8 @@ export function TechniquesTab() {
           <div className="tech-card">
             <h3>Build it with an agent</h3>
             <p className="tech-demo-idea">{selected.demo_idea}</p>
-            {selected.libraries && selected.libraries.length > 0 && (
-              <div className="tech-libs">{selected.libraries.map(l => <span key={l} className="tag">{l}</span>)}</div>
+            {libsOf(selected).length > 0 && (
+              <div className="tech-libs">{libsOf(selected).map(l => <span key={l} className="tag">{l}</span>)}</div>
             )}
             {selected.prompt_url
               ? <a className="tech-btn" href={selected.prompt_url} target="_blank" rel="noopener">🔌 Agent prompt (JSON) ↗</a>
