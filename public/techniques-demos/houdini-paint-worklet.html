@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Houdini Paint Worklet</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:760px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  @media (max-width:640px){ .cards { grid-template-columns:1fr; } }
+  .card { border-radius:14px; padding:1.4rem; background:#141414; border:1px solid #2a2a2a; min-height:180px; box-sizing:border-box; }
+  .card h3 { margin:0 0 .4rem; }
+  .card p { color:#999; font-size:.88rem; line-height:1.55; margin:0; }
+  .confetti { background-image: paint(confetti); --confetti-density: 40; --confetti-color: #8b7cff; }
+  .hatching { background-image: paint(hatching); --hatch-angle: 45deg; --hatch-color: #7dd8a0; }
+  .controls { margin:1.4rem 0; display:flex; gap:1.4rem; flex-wrap:wrap; font-size:.85rem; color:#999; }
+  input { accent-color:#8b7cff; }
+  .note { font-size:.85rem; color:#777; margin-top:1.4rem; }
+  .fb { display:none; color:#e8c468; background:#1d160f; border:1px solid #4a3a2a; padding:1rem; border-radius:10px; margin-bottom:1.4rem; }
+</style>
+</head>
+<body>
+<h1>Houdini Paint Worklet</h1>
+<p class="sub">Custom background painting registered via CSS.paintWorklet.addModule() — confetti and hatching drawn in JS, styled in CSS.</p>
+<div class="fb" id="fb">CSS Paint API isn't supported here — cards render with plain backgrounds.</div>
+<div class="controls">
+  <label>density <input type="range" id="dens" min="5" max="120" value="40"></label>
+  <label>hatch angle <input type="range" id="ang" min="0" max="180" value="45"></label>
+</div>
+<div class="cards">
+  <div class="card confetti"><h3>Confetti worklet</h3><p>Random dots painted per element box. Density and color are input properties, so the slider repaints instantly.</p></div>
+  <div class="card hatching"><h3>Hatching worklet</h3><p>Diagonal line texture. Angle follows the second slider — geometry computed inside the paint worklet.</p></div>
+</div>
+<p class="note">The worklet registers itself with registerPaint(), declares inputProperties, and CSS consumes it with background-image: paint(confetti).</p>
+<script>
+  const confettiSrc = `
+    registerPaint('confetti', class {
+      static get inputProperties() { return ['--confetti-density', '--confetti-color']; }
+      paint(ctx, size, props) {
+        const n = parseInt(props.get('--confetti-density')) || 40;
+        const color = String(props.get('--confetti-color')) || '#8b7cff';
+        ctx.fillStyle = color;
+        for (let i = 0; i < n; i++) {
+          const x = Math.random() * size.width, y = Math.random() * size.height;
+          const r = 1.5 + Math.random() * 3.5;
+          ctx.globalAlpha = 0.25 + Math.random() * 0.75;
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+    });`;
+  const hatchSrc = `
+    registerPaint('hatching', class {
+      static get inputProperties() { return ['--hatch-angle', '--hatch-color']; }
+      paint(ctx, size, props) {
+        const a = (parseFloat(props.get('--hatch-angle')) || 45) * Math.PI / 180;
+        ctx.strokeStyle = String(props.get('--hatch-color')) || '#7dd8a0';
+        ctx.lineWidth = 1;
+        const diag = Math.hypot(size.width, size.height);
+        ctx.save(); ctx.translate(size.width/2, size.height/2); ctx.rotate(a);
+        for (let x = -diag/2; x < diag/2; x += 9) {
+          ctx.beginPath(); ctx.moveTo(x, -diag/2); ctx.lineTo(x, diag/2); ctx.stroke();
+        }
+        ctx.restore();
+      }
+    });`;
+  function blob(src) { return URL.createObjectURL(new Blob([src], {type:'text/javascript'})); }
+  if ('paintWorklet' in CSS) {
+    CSS.paintWorklet.addModule(blob(confettiSrc));
+    CSS.paintWorklet.addModule(blob(hatchSrc));
+    dens.addEventListener('input', () => document.querySelector('.confetti').style.setProperty('--confetti-density', dens.value));
+    ang.addEventListener('input', () => document.querySelector('.hatching').style.setProperty('--hatch-angle', ang.value + 'deg'));
+  } else {
+    document.getElementById('fb').style.display = 'block';
+    document.querySelector('.confetti').style.background = '#1a1626';
+    document.querySelector('.hatching').style.background = '#121a16';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimistic UI</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:520px;margin:40px auto}
+.post{border:1px solid #333;border-radius:12px;padding:16px 20px;margin-bottom:16px}
+.like{background:none;border:1px solid #444;color:#e4e4e4;border-radius:20px;padding:6px 14px;cursor:pointer;transition:.15s}
+.like.on{border-color:#ff6b81;color:#ff6b81}
+.like.pending{opacity:.5}
+.rolled{color:#ff6b81;font-size:12px;height:16px}
+.log{color:#888;font-size:12px;margin-top:16px;white-space:pre-line}
+
+</style></head><body>
+
+<div class="wrap">
+<h1>Optimistic like button</h1>
+<p style="color:#888">Flip is instant; the fake network takes 1.2s and fails 35% of the time — watch the rollback.</p>
+<div class="post">Post A — “Optimistic UI feels instant.”<br><button class="like">♡ <span class="n">12</span></button><div class="rolled"></div></div>
+<div class="post">Post B — “Rollback must be visible.”<br><button class="like">♡ <span class="n">7</span></button><div class="rolled"></div></div>
+<div class="log" id="log"></div>
+</div>
+<script>
+
+const log=document.getElementById('log');
+const say=m=>{log.textContent=m+'\n'+log.textContent};
+document.querySelectorAll('.post').forEach(post=>{
+  const btn=post.querySelector('.like'),n=btn.querySelector('.n'),rolled=post.querySelector('.rolled');
+  let count=+n.textContent,liked=false;
+  btn.addEventListener('click',()=>{
+    if(btn.classList.contains('pending'))return;
+    liked=!liked;
+    count+=liked?1:-1;                       // optimistic update
+    btn.classList.add('on','pending');
+    n.textContent=count;rolled.textContent='';
+    say('→ optimistic: '+(liked?'like':'unlike')+' sent');
+    fakeRequest().then(ok=>{
+      btn.classList.remove('pending');
+      if(ok){say('✓ server confirmed');}
+      else{                                  // rollback
+        liked=!liked;count+=liked?1:-1;
+        n.textContent=count;btn.classList.toggle('on',liked);
+        rolled.textContent='✗ server error — rolled back';
+        say('✗ failed, rolled back');
+      }
+    });
+  });
+});
+function fakeRequest(){return new Promise(res=>setTimeout(()=>res(Math.random()>0.35),1200));}
+</script></body></html>

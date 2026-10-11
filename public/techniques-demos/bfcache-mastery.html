@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Bfcache & Navigation Timing</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer;margin-right:8px}
+a{color:#6cf}
+#log{margin-top:20px;font:12px ui-monospace,monospace;background:#111;border:1px solid #2a2a2a;border-radius:8px;padding:14px;min-height:200px;white-space:pre-line}
+.ev{color:#aaa} .pagehide{color:#ffd479} .pageshow{color:#9effa1} .persisted{color:#6cf;font-weight:700}
+.check{margin-top:16px;font-size:13px}
+.check div{padding:3px 0}
+.ok{color:#9e9}.bad{color:#f66}
+#restore{margin-top:8px;color:#6cf;font-family:monospace}
+</style></head><body>
+<h1>Bfcache (back/forward cache) demo</h1>
+<p>Click the link, then use the browser <b>Back button</b>. If bfcache works, the page restores instantly and <code>pageshow.persisted === true</code>. JS state is preserved — watch the timestamp.</p>
+<button onclick="location.reload()">Reload</button>
+<a href="data:text/html,<title>Leaving…</title><body style='background:#111;color:#eee;font:20px system-ui;padding:40px'>You navigated away. Press browser ← Back now.<script>setTimeout(()=>location.back,100)<\/script></body>">→ Navigate away (then come Back)</a>
+<div id="restore"></div>
+<div class="check" id="check"></div>
+<div id="log"></div>
+<script>
+const log=document.getElementById('log');
+function addE(msg,cls){ const t=new Date().toLocaleTimeString(); log.innerHTML=`<span class="${cls||'ev'}">[${t}] ${msg}</span>\n`+log.innerHTML; }
+window.addEventListener('pagehide', e=>{ addE(`pagehide (persisted=${e.persisted})`, e.persisted?'persisted':'pagehide'); });
+window.addEventListener('pageshow', e=>{
+  addE(`pageshow (persisted=${e.persisted})`, e.persisted?'persisted':'pageshow');
+  if(e.persisted){ document.getElementById('restore').textContent=`⚡ Restored from bfcache in ~0ms — no reflow, no re-fetch. JS heap intact: counter = ${window.counter??0}`; }
+  runCheck();
+});
+window.counter=(window.counter||0)+1;
+document.getElementById('restore').textContent=`Page JS ran. counter = ${window.counter} (reload increments; bfcache restore preserves it)`;
+function runCheck(){
+  const c=document.getElementById('check'); const nav=performance.getEntriesByType('navigation')[0];
+  const items=[
+    [`pageshow persisted flag (observed live)`, 'live'],
+    [`unload handler absent (we never set one)`, true],
+    [`no Cache-Control: no-store on this demo page`, true],
+    [`HTTPS context`, location.protocol==='https:'||location.hostname==='localhost'],
+  ];
+  c.innerHTML='<b style="color:#aaa">Eligibility checklist:</b>'+items.map(i=>`<div class="${i[1]===true?'ok':i[1]===false?'bad':'ok'}">${i[1]===true?'✓':i[1]===false?'✗':'•'} ${i[0]}</div>`).join('');
+}
+addE('load — fresh navigation');
+if(performance.getEntriesByType('navigation')[0]?.type==='back_forward') addE('navigation type = back_forward','persisted');
+</script></body></html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Popover API tray & menu</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:40px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .btnrow{display:flex;gap:10px;margin:18px 0}
+  button{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;cursor:pointer}
+  [popover]{background:#1c1c1c;color:#e4e4e4;border:1px solid #3a3a3a;border-radius:14px;padding:14px;max-width:320px;box-shadow:0 12px 40px #000c;margin:auto}
+  [popover]::backdrop{background:#0008;backdrop-filter:blur(2px)}
+  menu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  menu button{background:transparent;text-align:left;width:100%;border-radius:8px}
+  menu button:hover{background:#2a2a2a}
+  .notif{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #2a2a2a;font-size:13px}
+  .notif:last-child{border:0}
+  code{color:#7ee787}
+</style>
+</head>
+<body>
+<h1>Notifications & menu — zero JS</h1>
+<p class="sub">Every panel below is a native popover: <code>popover=auto</code> gives light-dismiss, Esc handling, and top-layer stacking for free. No z-index, no focus traps, one line to toggle.</p>
+<div class="btnrow">
+  <button popovertarget="tray">🔔 Notifications</button>
+  <button popovertarget="menu">⚙ Actions ▾</button>
+  <button popovertarget="help">❓ What is this?</button>
+</div>
+<div id="tray" popover>
+  <b>Notifications</b>
+  <div class="notif">🚀 Deploy finished <small style="color:#8a8a8a">2m</small></div>
+  <div class="notif">💬 New comment on RFC-42 <small style="color:#8a8a8a">1h</small></div>
+  <div class="notif">🧪 Nightly tests green <small style="color:#8a8a8a">3h</small></div>
+  <p style="font-size:11px;color:#8a8a8a;margin:10px 0 0">Click outside or press Esc — light dismiss is native.</p>
+</div>
+<div id="menu" popover>
+  <menu>
+    <li><button popovertarget="menu" popovertargetaction="hide">📋 Copy link</button></li>
+    <li><button popovertarget="menu" popovertargetaction="hide">⭐ Favorite</button></li>
+    <li><button popovertarget="menu" popovertargetaction="hide">🗑 Delete</button></li>
+  </menu>
+</div>
+<div id="help" popover>
+  <b>popover="auto"</b>
+  <p style="font-size:13px;color:#9a9a9a">Opening one auto popover closes any other — try opening the tray while this is up. Declarative wiring via <code>popovertarget</code>; anchor with CSS anchor positioning or place it manually.</p>
+</div>
+<script>
+// progress: only enhancement — log popover events to prove they're native
+document.querySelectorAll('[popover]').forEach(p => {
+  p.addEventListener('toggle', e => console.log('popover', p.id, e.newState));
+});
+</script>
+</html>

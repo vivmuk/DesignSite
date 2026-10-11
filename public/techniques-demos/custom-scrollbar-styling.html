@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Custom Scrollbars & Scroll States</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pane{height:320px;overflow:auto;border:1px solid #2a2a2a;border-radius:10px;background:#111;padding:0 18px;position:relative}
+.pane p{color:#999;line-height:1.7}
+/* styled scrollbar */
+.fancy::-webkit-scrollbar{width:12px}
+.fancy::-webkit-scrollbar-track{background:#0a0a0a;border-radius:6px}
+.fancy::-webkit-scrollbar-thumb{background:#2a4a6a;border-radius:6px;border:2px solid #0a0a0a}
+.fancy::-webkit-scrollbar-thumb:hover{background:#3b82f6}
+.fancy{scrollbar-width:thin;scrollbar-color:#3b82f6 #0a0a0a}
+/* scroll-driven restyling */
+.hero{position:sticky;top:0;background:#0d0d0d;z-index:2;padding:14px 0;margin:0 -18px;padding-inline:18px;border-bottom:1px solid transparent;transition:.25s}
+.pane.scrolled .hero{background:#161616ee;border-bottom-color:#2a2a2a;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.pane.scrolled .hero b{font-size:14px;color:#6cf}
+#progress{position:fixed;top:0;left:0;height:3px;background:#6cf;width:0;z-index:20}
+</style></head><body>
+<div id="progress"></div>
+<h1>Custom scrollbars + scroll-state styling</h1>
+<p>Left pane: default scrollbar. Right: styled thumb (WebKit pseudo-elements + Firefox <code>scrollbar-color</code>). Both panes restyle their sticky header after scrolling starts.</p>
+<div class="wrap">
+<div class="pane" id="p1"><div class="hero"><b>Default pane</b></div>
+<p>Scroll me.</p><p>Standard browser chrome scrollbar — perfectly fine, occasionally off-brand.</p>
+<p>Paragraph after paragraph of scrollable content so the thumb has room to travel.</p><p>Content…</p><p>More content…</p><p>Even more…</p><p>Keep going…</p><p>Almost there…</p><p>The end.</p></div>
+<div class="pane fancy" id="p2"><div class="hero"><b>Fancy pane</b></div>
+<p>Scroll me — compare thumbs.</p><p>The thumb uses ::-webkit-scrollbar-thumb with a hover state, and scrollbar-color for Firefox.</p>
+<p>Notice the sticky header: it gains a shadow + background once scrollY > 0 via a class flip.</p><p>Content…</p><p>More content…</p><p>Even more…</p><p>Keep going…</p><p>Almost there…</p><p>The end.</p></div>
+</div>
+<script>
+document.querySelectorAll('.pane').forEach(p=>{
+  p.addEventListener('scroll',()=>{ p.classList.toggle('scrolled', p.scrollTop>10); });
+});
+addEventListener('scroll',()=>{ const d=document.documentElement;
+  document.getElementById('progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'; });
+</script></body></html>

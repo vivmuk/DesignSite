@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blend Mode Lab</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:760px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:1.5rem; font-weight:700; }
+.stage { position:relative; height:380px; border-radius:14px; overflow:hidden; border:1px solid #2a2a2a;
+  background:
+    radial-gradient(circle at 30% 30%, #5a4a8a, transparent 60%),
+    radial-gradient(circle at 70% 60%, #2d6a5e, transparent 60%),
+    repeating-linear-gradient(45deg, #1a1a1e 0 40px, #20202a 40px 80px); }
+.photo { position:absolute; inset:0;
+  background:
+    radial-gradient(circle at 65% 35%, rgba(255,220,180,0.9), transparent 40%),
+    linear-gradient(160deg, #3a3a4a 20%, #6a5a4a 60%, #2a2a32 100%); }
+.tint { position:absolute; inset:0; background:#e86aa8; mix-blend-mode:multiply; transition:background 0.3s; }
+.cursor { position:absolute; width:110px; height:110px; border-radius:50%; background:#fff; mix-blend-mode:difference; display:flex; align-items:center; justify-content:center; font-size:0.75rem; letter-spacing:0.15em; color:#111; pointer-events:none; transform:translate(-50%,-50%); z-index:5; }
+.controls { display:flex; gap:1.5rem; align-items:center; margin-top:1.2rem; }
+.controls label { display:flex; gap:0.6rem; align-items:center; font-size:0.85rem; color:#aaa; }
+button { background:none; border:1px solid #444; color:#e4e4e4; padding:0.6rem 1.2rem; cursor:pointer; font-size:0.85rem; }
+.cur { margin-top:0.8rem; color:#777; font-size:0.85rem; }
+.cur span { color:#e8b96a; font-family:ui-monospace, monospace; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Blend Mode Lab</h1>
+  <div class="stage" id="stage">
+    <div class="photo"></div>
+    <div class="tint" id="tint"></div>
+    <div class="cursor" id="cursor">invert</div>
+  </div>
+  <div class="controls">
+    <label>Tint color <input type="color" id="tcol" value="#e86aa8"></label>
+    <button id="cycle">Next blend mode</button>
+  </div>
+  <p class="cur">Current: <span id="cur">multiply</span></p>
+</div>
+
+<script>
+
+const modes = ['multiply','screen','overlay','darken','lighten','color-dodge','color-burn','hard-light','soft-light','difference','exclusion','hue','saturation','color','luminosity'];
+let i = 0;
+const tint = document.getElementById('tint');
+document.getElementById('cycle').addEventListener('click', function() {
+  i = (i + 1) % modes.length;
+  tint.style.mixBlendMode = modes[i];
+  document.getElementById('cur').textContent = modes[i];
+});
+const stage = document.getElementById('stage'), cursor = document.getElementById('cursor');
+stage.addEventListener('pointermove', function(e) {
+  const r = stage.getBoundingClientRect();
+  cursor.style.left = (e.clientX - r.left) + 'px';
+  cursor.style.top = (e.clientY - r.top) + 'px';
+});
+document.getElementById('tcol').addEventListener('input', function(e) {
+  tint.style.background = e.target.value;
+});
+
+</script>
+</body>
+</html>

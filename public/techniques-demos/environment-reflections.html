@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Environment Maps & PBR</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:16px;left:16px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:14px;width:230px;font-size:13px}
+#ui button{display:inline-block;margin:3px 3px 10px 0;background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:6px;padding:6px 12px;cursor:pointer}
+#ui button.on{border-color:#7ee787;color:#7ee787}
+#ui label{display:flex;justify-content:space-between;margin:6px 0}
+#ui input{accent-color:#7ee787;width:110px}
+#ui b{color:#7ee787}
+
+</style></head><body>
+
+<div id=ui><h3 style="margin:0 0 4px">Environment</h3><div id=envs></div>
+<label>roughness <input id=r type=range min=0 max=1 step=.01 value=.05><b id=rv>0.05</b></label>
+<label>metalness <input id=m type=range min=0 max=1 step=.01 value=1><b id=mv>1.00</b></label>
+<label>intensity <input id=i type=range min=0 max=3 step=.1 value=1><b id=iv>1.0</b></label></div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,50);camera.position.set(0,0,5);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.toneMapping=THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const pmrem=new THREE.PMREMGenerator(renderer);
+// procedural environments: tiny gradient scenes rendered to PMREM
+function makeEnv(top,bot,bands){
+  const s=new THREE.Scene();
+  const grad=(c1,c2)=>{
+    const cv=document.createElement('canvas');cv.width=4;cv.height=256;
+    const cx=cv.getContext('2d');const g=cx.createLinearGradient(0,0,0,256);
+    g.addColorStop(0,c1);g.addColorStop(1,c2);cx.fillStyle=g;cx.fillRect(0,0,4,256);
+    return new THREE.CanvasTexture(cv);
+  };
+  const geo=new THREE.SphereGeometry(10,16,16);
+  const mat=new THREE.MeshBasicMaterial({map:grad(top,bot),side:THREE.BackSide});
+  s.add(new THREE.Mesh(geo,mat));
+  bands.forEach(([color,y,h])=>{
+    const b=new THREE.Mesh(new THREE.CylinderGeometry(10.1,10.1,h,32,1,true,0,Math.PI*2),
+      new THREE.MeshBasicMaterial({color,side:THREE.BackSide}));
+    b.position.y=y;s.add(b);
+  });
+  return pmrem.fromScene(s,.04).texture;
+}
+const envs={
+ 'Studio':makeEnv('#f5f5f5','#404040',[]),
+ 'Dusk':makeEnv('#2b3a67','#0d0d0d',[[0xff8c42,.5,1.2]]),
+ 'Neon':makeEnv('#1a0533','#050505',[[0xff2ea6,.6,.8],[0x2de2ff,-.4,.8]]),
+ 'Overcast':makeEnv('#cfd8dc','#78909c',[]),
+};
+const mat=new THREE.MeshPhysicalMaterial({roughness:.05,metalness:1,envMapIntensity:1});
+const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1,.32,256,48),mat);
+scene.add(knot);
+const names=Object.keys(envs);let cur='Studio';
+scene.environment=envs[cur];
+const envBox=document.getElementById('envs');
+names.forEach(n=>{const b=document.createElement('button');b.textContent=n;if(n===cur)b.classList.add('on');
+  b.onclick=()=>{cur=n;scene.environment=envs[n];[...envBox.children].forEach(x=>x.classList.toggle('on',x.textContent===n));};
+  envBox.appendChild(b);});
+const bind=(id,v_id,u)=>{const el=document.getElementById(id),v=document.getElementById(v_id);
+  el.addEventListener('input',()=>{mat[u]=+el.value;mat.needsUpdate=true;v.textContent=(+el.value).toFixed(2);});};
+bind('r','rv','roughness');bind('m','mv','metalness');bind('i','iv','envMapIntensity');
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);knot.rotation.y=t*.0004;knot.rotation.x=t*.00023;renderer.render(scene,camera);})(0);
+</script></body></html>

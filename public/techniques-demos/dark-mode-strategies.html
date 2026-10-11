@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Dark Mode Strategies</title>
+<script>
+/* THE ANTI-FOUC GUARD — runs before <body> exists */
+(function(){ try{ const s=localStorage.getItem('dm'); const sys=matchMedia('(prefers-color-scheme: dark)').matches;
+  const dark = s ? s==='dark' : sys;
+  if(dark) document.documentElement.dataset.scheme='dark';
+}catch(e){} })();
+</script>
+<style>
+:root{--bg:#f5f5f5;--fg:#171717;--card:#fff;--muted:#666}
+[data-scheme=dark]{--bg:#0d0d0d;--fg:#e4e4e4;--card:#181818;--muted:#999}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui;padding:24px;transition:background .2s}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+button{background:var(--card);color:var(--fg);border:1px solid #444;padding:9px 16px;border-radius:6px;cursor:pointer}
+.card{background:var(--card);border:1px solid #00000022;border-radius:10px;padding:16px;margin:10px 0}
+.muted{color:var(--muted)}
+.race{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.race .card h4{margin:0 0 6px}
+.bad{outline:2px dashed #f66}.good{outline:2px dashed #9e9}
+#log{font:11px monospace;color:#6cf;margin-top:10px;min-height:16px}
+</style></head><body>
+<header><h1 style="font-size:18px;margin:0">Two dark-mode approaches, one page</h1>
+<button id="t">🌗 Toggle scheme</button></header>
+<p class="muted">Approach A: media query only (<code>@media (prefers-color-scheme: dark)</code>) — automatic but not user-overridable. Approach B: <code>[data-scheme]</code> attribute + pre-paint script — user control, no flash. This page uses B for real and simulates both below.</p>
+<div class="race">
+<div class="card bad"><h4>❌ Media-query-only</h4><p style="font-size:13px" class="muted">Follows OS, but the user can\'t force light in a dark room or vice versa. And if you also hardcode colors, components mismatch.</p></div>
+<div class="card good"><h4>✅ data-scheme + pre-paint guard</h4><p style="font-size:13px" class="muted">Inline head script reads localStorage/prefers-color-scheme and sets the attribute BEFORE first paint → zero flash. Toggle actually switches this page.</p></div>
+</div>
+<div id="log"></div>
+<script>
+const t=document.getElementById('t'), log=document.getElementById('log');
+function isDark(){ return document.documentElement.dataset.scheme==='dark'; }
+t.onclick=()=>{ const d=!isDark();
+  if(d) document.documentElement.dataset.scheme='dark'; else delete document.documentElement.dataset.scheme;
+  try{ localStorage.setItem('dm', d?'dark':'light');}catch(e){}
+  log.textContent=`scheme → ${d?'dark':'light'} · persisted to localStorage · pre-paint guard will read it on next load ✓`;
+};
+log.textContent=`on load: ${isDark()?'dark':'light'} (from ${(()=>{try{return localStorage.getItem('dm')||'system preference'}catch(e){return 'system'}})()})`;
+</script></body></html>

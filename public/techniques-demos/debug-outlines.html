@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Debug Outlines & Grid Overlays</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:20px}
+.bar{position:sticky;top:0;background:#0d0d0d;z-index:10;padding:12px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #222}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 14px;border-radius:6px;cursor:pointer}
+button.on{background:#2a4a2a;border-color:#5a5;color:#9e9}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:14px}
+.col{background:#1a1a1a;border-radius:6px;min-height:120px;position:relative}
+.col::before{content:attr(data-n);font:10px monospace;color:#555;position:absolute;top:4px;left:6px}
+#ov{position:fixed;inset:0;pointer-events:none;display:none;padding:0 20px}
+#ov .g{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;height:100%}
+#ov .g i{background:rgba(0,180,255,.07);border-inline:1px solid rgba(0,180,255,.25)}
+#ov .base{position:absolute;left:20px;right:20px;top:0;bottom:0;
+  background:repeating-linear-gradient(to bottom,transparent 0 27px,rgba(255,80,80,.18) 27px 28px)}
+section{background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:16px;margin:14px 0}
+.tag{font:10px monospace;background:#2a2a3a;color:#8af;padding:2px 6px;border-radius:4px;margin-left:8px;vertical-align:middle}
+</style></head><body>
+<div class="bar">
+<button id="b1">□ Element outlines</button>
+<button id="b2">▦ 12-col overlay</button>
+<button id="b3">≡ Baseline grid</button>
+<button id="b4">⌗ Spacing (child gaps)</button>
+</div>
+<div id="ov"><div class="base"></div><div class="g"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<section><h2>Layout under inspection<span class="tag">section</span></h2>
+<div class="grid12"><div class="col" data-n="col-4"></div><div class="col" data-n="col-4"></div><div class="col" data-n="col-4"></div></div>
+<p style="color:#888">Toggle overlays to see why something overflows: outlines reveal collapsed containers, the column overlay exposes misalignment, the baseline shows vertical rhythm breaks.</p>
+<ul style="color:#aaa;font-size:14px"><li>list item one</li><li>list item two</li></ul>
+</section>
+<script>
+const toggles={b1:'debug-outline *',b2:'debug-grid',b3:'debug-baseline',b4:'debug-spacing'};
+document.getElementById('b1').onclick=()=>toggle('b1',()=>document.body.classList.toggle('outlines'));
+document.getElementById('b2').onclick=()=>toggle('b2',()=>document.getElementById('ov').style.display=document.getElementById('ov').style.display==='block'?'none':'block');
+document.getElementById('b3').onclick=()=>toggle('b3',()=>document.querySelector('#ov .base').style.display=document.querySelector('#ov .base').style.display==='none'?'block':'none');
+document.getElementById('b4').onclick=()=>toggle('b4',()=>document.body.classList.toggle('spacing'));
+function toggle(id,fn){ fn(); document.getElementById(id).classList.toggle('on'); }
+</script>
+<style>
+/* debug layers — toggled via body classes */
+body.outlines *{outline:1px solid rgba(0,200,255,.4) !important;outline-offset:-1px}
+body.outlines section{outline:1px solid rgba(255,120,255,.6) !important}
+body.spacing *{box-shadow:0 0 0 1px rgba(80,255,120,.25) inset !important}
+body.spacing{background:
+  linear-gradient(rgba(80,255,120,.03) 1px,transparent 1px) 0 0/100% 8px}
+</style>
+</body></html>

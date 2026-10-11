@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>12-Column Grid — Layout Builder</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:860px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.4rem; }
+  .palette { display:flex; gap:.5rem; margin-bottom:1rem; flex-wrap:wrap; align-items:center; }
+  .palette button { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:8px; padding:.45rem 1rem; cursor:pointer; font-size:.85rem; }
+  .palette button:hover { border-color:#8b7cff; color:#8b7cff; }
+  .palette span { color:#777; font-size:.78rem; }
+  .board { display:grid; grid-template-columns:repeat(12, 1fr); gap:.8rem; position:relative; padding:.8rem; background:#101014; border-radius:12px; border:1px solid #222; }
+  .guide { position:absolute; inset:.8rem; display:grid; grid-template-columns:repeat(12, 1fr); gap:.8rem; pointer-events:none; }
+  .guide div { background:#8b7cff11; border-inline:1px dashed #8b7cff33; border-radius:2px; }
+  .block { border-radius:10px; padding:.7rem .9rem; font-size:.82rem; font-weight:600; color:#0d0d0d; cursor:pointer; display:flex; align-items:center; gap:.5rem; user-select:none; }
+  .block small { font-weight:400; opacity:.75; font-family:ui-monospace,monospace; }
+  .b-article { background:#8b7cff; } .b-ad { background:#e8c468; } .b-media { background:#7dd8a0; }
+  .readout { margin-top:1rem; font-family:ui-monospace,monospace; font-size:.78rem; color:#e8c468; background:#141414; border:1px solid #262626; border-radius:8px; padding:.7rem 1rem; line-height:1.8; }
+  .hint { color:#666; font-size:.78rem; margin-top:.6rem; }
+</style>
+</head>
+<body>
+<h1>12-Column Grid System</h1>
+<p class="sub">A visible 12-column guide behind blocks. Click a block to cycle its span; shift-click removes it.</p>
+<div class="palette">
+  <button onclick="add('article')">+ article</button>
+  <button onclick="add('ad')">+ ad</button>
+  <button onclick="add('media')">+ media</button>
+</div>
+<div class="board" id="board">
+  <div class="guide"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+<div class="readout" id="readout"></div>
+<p class="hint">Blocks use grid-column: span N on grid-template-columns: repeat(12, 1fr) — the classic 12-col system, but native CSS, no framework.</p>
+<script>
+  const board = document.getElementById('board');
+  const spans = [3, 4, 6, 8, 12];
+  const kinds = { article: ['b-article', 'Article'], ad: ['b-ad', 'Ad'], media: ['b-media', 'Media'] };
+  const blocks = [];
+  function add(kind) {
+    const [cls, label] = kinds[kind];
+    const b = document.createElement('div');
+    b.className = 'block ' + cls;
+    b.dataset.span = spans[Math.floor(Math.random() * 3)];
+    render(b, label);
+    b.addEventListener('click', e => {
+      if (e.shiftKey) { b.remove(); blocks.splice(blocks.indexOf(b), 1); update(); return; }
+      b.dataset.span = spans[(spans.indexOf(+b.dataset.span) + 1) % spans.length];
+      render(b, label); update();
+    });
+    board.appendChild(b); blocks.push(b); update();
+  }
+  function render(b, label) {
+    b.innerHTML = label + ' <small>span ' + b.dataset.span + '/12</small>';
+    b.style.gridColumn = 'span ' + b.dataset.span;
+  }
+  function update() {
+    readout.textContent = blocks.map((b, i) => '.item-' + (i + 1) + ' { grid-column: span ' + b.dataset.span + ' }').join('  ') || '(empty board)';
+  }
+  add('article'); add('media'); add('ad');
+</script>
+</body>
+</html>

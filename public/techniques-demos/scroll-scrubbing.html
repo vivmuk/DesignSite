@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll-scrubbed Sequence</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.hud { position:fixed; top:1.2rem; left:50%; transform:translateX(-50%); z-index:10; display:flex; align-items:center; gap:0.8rem; background:rgba(20,20,20,0.85); border:1px solid #2c2c2c; border-radius:10px; padding:0.7rem 1.2rem; font-family:ui-monospace, monospace; font-size:0.75rem; color:#8ab4ff; }
+.bar { width:160px; height:4px; background:#2a2a2a; border-radius:2px; overflow:hidden; }
+#fill { height:100%; width:0; background:#8ab4ff; }
+.scroll-space { height:320vh; }
+.sticky-stage { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+.gadget { width:min(60vw, 420px); }
+#label { font-size:1rem; letter-spacing:0.3em; text-transform:uppercase; color:#888; }
+
+</style>
+</head>
+<body>
+
+<div class="hud"><span>progress</span><div class="bar"><div id="fill"></div></div><span id="pct">0%</span></div>
+<div class="scroll-space">
+  <div class="sticky-stage">
+    <svg viewBox="0 0 400 300" class="gadget">
+      <rect id="p1" x="150" y="120" width="100" height="60" rx="10" fill="#2d4a8a"/>
+      <circle id="p2" cx="120" cy="150" r="26" fill="#8a5ae8"/>
+      <circle id="p3" cx="280" cy="150" r="26" fill="#e86aa8"/>
+      <rect id="p4" x="180" y="60" width="40" height="40" rx="6" fill="#eec07e"/>
+      <rect id="p5" x="180" y="200" width="40" height="40" rx="6" fill="#7ee8c2"/>
+    </svg>
+    <h1 id="label">Assembled</h1>
+  </div>
+</div>
+
+<script>
+
+const parts = [
+  { el: document.getElementById('p1'), dx: 0, dy: -120 },
+  { el: document.getElementById('p2'), dx: -110, dy: -40 },
+  { el: document.getElementById('p3'), dx: 110, dy: -40 },
+  { el: document.getElementById('p4'), dx: 0, dy: -90 },
+  { el: document.getElementById('p5'), dx: 0, dy: 90 }
+];
+const fill = document.getElementById('fill'), pct = document.getElementById('pct'), label = document.getElementById('label');
+function upd() {
+  const rect = document.querySelector('.scroll-space').getBoundingClientRect();
+  const total = rect.height - innerHeight;
+  const p = Math.max(0, Math.min(1, -rect.top / total));
+  fill.style.width = (p * 100) + '%';
+  pct.textContent = Math.round(p * 100) + '%';
+  const e = p < 0.5 ? p * 2 : (1 - p) * 2;
+  const eased = e * e * (3 - 2 * e);
+  parts.forEach(function(pt) {
+    pt.el.setAttribute('transform', 'translate(' + (pt.dx * eased).toFixed(1) + ',' + (pt.dy * eased).toFixed(1) + ')');
+  });
+  label.textContent = p < 0.5 ? 'Exploded view' : 'Reassembling';
+}
+addEventListener('scroll', function() { requestAnimationFrame(upd); }, { passive: true });
+upd();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>text-box-trim</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.panel { max-width:640px; margin:0 auto; padding:10vh 5vw; }
+h1 { font-size:1.8rem; margin-bottom:2.5rem; font-weight:700; }
+.row { height:80px; display:flex; align-items:center; border-top:1px solid #2a2a2a; position:relative; }
+.row::before { content:''; position:absolute; left:0; right:0; top:calc(50% - 20px); border-top:1px dashed rgba(230,140,90,0.5); pointer-events:none; }
+.row::after { content:''; position:absolute; left:0; right:0; top:calc(50% + 20px); border-top:1px dashed rgba(230,140,90,0.5); pointer-events:none; }
+.chip { background:#1c1c1c; border:1px solid #3a3a3a; padding:0 1.1rem; font-size:1.1rem; line-height:40px; }
+.trimmed .chip { text-box: trim-both cap alphabetic; }
+.note { color:#8a8a8a; font-size:0.9rem; line-height:1.7; margin-top:2rem; }
+.note code, .note .code { color:#e8b96a; }
+
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <h1>Precise Text Boxes</h1>
+  <div class="controls">
+    <div class="row raw"><span class="chip">Raw label</span></div>
+    <div class="row trimmed"><span class="chip">Trimmed label</span></div>
+    <div class="row raw"><span class="chip">Raw label</span></div>
+    <div class="row trimmed"><span class="chip">Trimmed label</span></div>
+  </div>
+  <p class="note">Rows alternate: untrimmed labels carry half-leading that pushes caps off the 40px guide; trimmed labels snap cap-height to the box edge with text-box-trim: trim-both cap alphabetic.</p>
+</div>
+
+<script>
+
+if (!CSS.supports('text-box-trim', 'trim-both') && !CSS.supports('text-box', 'trim-both cap alphabetic')) {
+  document.querySelector('.note').textContent = 'Fallback text: text-box-trim unsupported - all labels render untrimmed.';
+}
+
+</script>
+</body>
+</html>

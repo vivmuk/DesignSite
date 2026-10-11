@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Store — Home</title>
+<style>
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root){ animation-duration:.45s; }
+  .logo{ view-transition-name: logo; }
+  .hero{ view-transition-name: hero; }
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:16px/1.6 system-ui;padding:28px}
+  header{display:flex;align-items:center;gap:14px}
+  .logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#2563eb);display:grid;place-items:center;font-weight:800;font-size:22px}
+  h1{font-size:22px;margin:0}
+  nav{margin:20px 0;display:flex;gap:10px}
+  nav a{color:#60a5fa;text-decoration:none;padding:8px 14px;border:1px solid #2a2a2a;border-radius:10px}
+  nav a:hover{border-color:#60a5fa}
+  .hero{margin-top:18px;width:100%;max-width:640px;height:220px;border-radius:16px;background:linear-gradient(120deg,#1e3a8a,#7c3aed 60%,#db2777);display:grid;place-items:center;font-size:26px;font-weight:700}
+  p{color:#9a9a9a;max-width:640px}
+</style>
+</head>
+<body>
+<header><div class="logo">N</div><h1>Nimbus Store</h1></header>
+<nav><a href="page-a.html" style="display:none">.</a><a href="#" id="toDetail">View product →</a></nav>
+<div class="hero">Aurora Lamp</div>
+<p>The shared logo and hero have <code>view-transition-name</code> values, and the document opts in with <code>@view-transition { navigation: auto; }</code> — so navigating to the detail page morphs them automatically.</p>
+<script>
+// Single-file demo: emulate a real cross-document navigation with an actual
+// location change to a second copy of this page carrying ?page=detail.
+// For the standalone file, we demonstrate same-document VT as a fallback.
+const url = new URL(location.href);
+if (url.searchParams.get('page') !== 'detail'){
+  document.getElementById('toDetail').onclick = e => {
+    e.preventDefault();
+    if ('CSSViewTransitionRule' in window || CSS.supports('view-transition-name','logo')){
+      // cross-document if both pages are served; same-document otherwise
+      url.searchParams.set('page','detail');
+      if (location.protocol.startsWith('http')){
+        location.href = url;                     // real navigation → cross-doc morph
+      }else{
+        document.startViewTransition(() => swapToDetail());
+      }
+    }else{
+      swapToDetail();                            // graceful fallback, no animation
+    }
+  };
+  function swapToDetail(){
+    document.querySelector('.hero').textContent = 'Aurora Lamp — detail view';
+    document.querySelector('p').textContent = 'Same document, rendered via startViewTransition fallback: the hero and logo still morph because they carry view-transition-names.';
+    document.getElementById('toDetail').textContent = '← Back to home';
+    document.getElementById('toDetail').onclick = e => { e.preventDefault(); location.search=''; };
+  }
+}
+</script>
+</html>

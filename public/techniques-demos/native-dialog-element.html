@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings flow — &lt;dialog&gt;</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:32px}
+  h1{font-size:19px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;cursor:pointer}
+  dialog{background:#1c1c1c;color:#e4e4e4;border:1px solid #3a3a3a;border-radius:16px;padding:22px;max-width:420px}
+  dialog::backdrop{background:#000a;backdrop-filter:blur(3px)}
+  dialog h2{margin:0 0 6px;font-size:17px}
+  dialog p.sub{color:#9a9a9a;font-size:12px;margin:0 0 14px}
+  label{display:block;margin:12px 0 4px;font-size:13px;color:#b8b8b8}
+  input[type=text],select{width:100%;box-sizing:border-box;background:#141414;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:9px;font:inherit}
+  .row{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+  .row .secondary{background:#2a2a2a}
+  #result{margin-top:16px;color:#7ee787;min-height:24px;font-size:13px}
+</style>
+</head>
+<body>
+<h1>Settings flow with native dialogs</h1>
+<p>Esc closes the topmost dialog automatically; <code>form method="dialog"</code> returns values; focus is trapped and restored natively.</p>
+<button id="openSettings">⚙ Open settings</button>
+<div id="result"></div>
+
+<dialog id="settings">
+  <h2>Workspace settings</h2>
+  <p class="sub">Step 1 of 2 — identity</p>
+  <form method="dialog">
+    <label>Workspace name</label><input type="text" name="wsname" value="Nimbus" required>
+    <label>Timezone</label>
+    <select name="tz"><option>UTC</option><option>Europe/Berlin</option><option>Asia/Tokyo</option></select>
+    <div class="row">
+      <button value="cancel" class="secondary">Cancel</button>
+      <button value="next">Next →</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirm">
+  <h2>Almost done</h2>
+  <p class="sub">Step 2 of 2 — confirm (nested dialog: Esc closes only this one first)</p>
+  <form method="dialog">
+    <p id="summary" style="font-size:14px"></p>
+    <div class="row">
+      <button value="cancel" class="secondary">Back</button>
+      <button value="save">Save changes</button>
+    </div>
+  </form>
+</dialog>
+<script>
+const settings = document.getElementById('settings');
+const confirm = document.getElementById('confirm');
+const result = document.getElementById('result');
+
+document.getElementById('openSettings').onclick = () => settings.showModal();
+
+settings.addEventListener('close', () => {
+  const v = new FormData(settings.querySelector('form'));
+  if (settings.returnValue === 'next'){
+    document.getElementById('summary').textContent =
+      `Saving “${v.get('wsname')}” in ${v.get('tz')}.`;
+    confirm.showModal();                       // nested modal on top
+  }else{
+    result.textContent = 'Canceled.';
+  }
+});
+confirm.addEventListener('close', () => {
+  if (confirm.returnValue === 'save'){
+    result.textContent = '✓ Saved! returnValue propagation worked.';
+  }else{
+    result.textContent = 'Went back — reopen step 2 anytime.';
+  }
+});
+</script>
+</html>

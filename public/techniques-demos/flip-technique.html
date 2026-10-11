@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLIP Technique</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:860px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:0.6rem; font-weight:700; }
+.hint { color:#777; font-size:0.85rem; margin-bottom:2rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; }
+.thumb { aspect-ratio:4/3; border-radius:12px; overflow:hidden; cursor:pointer; border:none; padding:0; background:#161616; }
+.thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+.thumb:hover img { transform:scale(1.06); }
+.detail { position:fixed; inset:0; background:rgba(13,13,13,0.92); display:flex; align-items:center; justify-content:center; gap:3rem; padding:5vw; z-index:10; }
+.detail img { width:min(50vw, 520px); aspect-ratio:4/3; object-fit:cover; border-radius:16px; }
+.meta h2 { font-size:2rem; margin-bottom:1rem; }
+.meta p { color:#999; max-width:36ch; line-height:1.7; }
+.morphing { transition:none !important; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>FLIP Morph</h1>
+  <p class="hint">Click any thumbnail — it FLIP-morphs into the detail hero. Click the detail to shrink back.</p>
+  <div class="grid" id="grid"></div>
+  <div class="detail" id="detail" hidden>
+    <img id="dimg" src="" alt="detail image">
+    <div class="meta"><h2 id="dtitle"></h2><p>Detail view. The image you clicked never left the screen — it was measured, inverted, and played to its new rect.</p></div>
+  </div>
+</div>
+
+<script>
+
+const ids = [1015, 1016, 1018, 1019, 1024, 1025];
+const grid = document.getElementById('grid'), detail = document.getElementById('detail');
+const dimg = document.getElementById('dimg');
+ids.forEach(function(id) {
+  grid.insertAdjacentHTML('beforeend',
+    '<button class="thumb" data-id="' + id + '"><img src="https://picsum.photos/id/' + id + '/480/360" alt="thumbnail"></button>');
+});
+function flipTo(fromEl, toEl) {
+  const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
+  toEl.classList.add('morphing');
+  toEl.style.transformOrigin = 'top left';
+  toEl.style.transform = 'translate(' + (a.left - b.left) + 'px,' + (a.top - b.top) + 'px) scale(' + (a.width / b.width) + ',' + (a.height / b.height) + ')';
+  toEl.getBoundingClientRect();
+  toEl.style.transition = 'transform 0.55s cubic-bezier(0.22,1,0.36,1)';
+  toEl.style.transform = '';
+  toEl.addEventListener('transitionend', function h() {
+    toEl.classList.remove('morphing');
+    toEl.style.transition = '';
+    toEl.removeEventListener('transitionend', h);
+  });
+}
+grid.addEventListener('click', function(e) {
+  const th = e.target.closest('.thumb');
+  if (!th) return;
+  dimg.src = th.querySelector('img').src;
+  detail.hidden = false;
+  requestAnimationFrame(function() { flipTo(th.querySelector('img'), dimg); });
+});
+detail.addEventListener('click', function() {
+  const src = document.querySelector('.thumb[data-id] img[src="' + dimg.src.split('/').slice(-2).join('/') + '"]');
+  detail.hidden = true;
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bar Chart Race — D3 key-based transitions</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  svg{width:100%;max-width:820px;background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  .row{display:flex;gap:14px;align-items:center;margin:12px 0}
+  button,input[type=range]{font:inherit}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:6px 14px;cursor:pointer}
+  input[type=range]{flex:1;accent-color:#60a5fa}
+  .year{font:700 42px monospace;fill:#e4e4e4}
+</style>
+</head>
+<body>
+<h1>GDP race (trillions USD)</h1>
+<p class="sub">Bars are tracked by a key function, so each country smoothly slides and re-ranks as years advance.</p>
+<div class="row">
+  <button id="play">▶ Play</button>
+  <input id="scrub" type="range" min="0" max="5" step="1" value="0">
+</div>
+<svg id="chart" viewBox="0 0 820 420"></svg>
+<script>
+const YEARS = [2000, 2005, 2010, 2015, 2020, 2024];
+const GDP = {
+  'United States': [10.3,13.0,15.0,18.2,21.1,28.8],
+  'China':         [ 1.2, 2.3, 6.1,11.1,14.7,18.5],
+  'Japan':         [ 4.9, 4.8, 5.8, 4.4, 5.0, 4.1],
+  'Germany':       [ 1.9, 2.9, 3.4, 3.4, 3.9, 4.5],
+  'India':         [ 0.5, 0.8, 1.7, 2.1, 2.7, 3.9],
+  'Brazil':        [ 0.6, 0.9, 2.2, 1.8, 1.5, 2.2],
+};
+const NAMES = Object.keys(GDP);
+const W=820, H=420, TOP=6, BAR=H/TOP-4;
+
+const svg = d3.select('#chart');
+svg.append('text').attr('class','year').attr('x', W-24).attr('y', 60).attr('text-anchor','end');
+
+const x = d3.scaleLinear().domain([0, d3.max(NAMES, n => d3.max(GDP[n]))]).range([0, W-220]);
+
+function frame(yi, first){
+  const data = NAMES.map(n => ({ name:n, v: GDP[n][yi] }))
+                    .sort((a,b) => b.v - a.v).slice(0, TOP);
+  svg.select('.year').text(YEARS[yi]);
+  // key function keeps each country bound to its bar across frames
+  const bars = svg.selectAll('g.bar').data(data, d => d.name);
+  const enter = bars.enter().append('g').attr('class','bar')
+    .attr('transform', `translate(200,${H})`);           // slide in from below
+  enter.append('rect').attr('rx',5).attr('height',BAR)
+    .attr('fill',(d,i)=>d3.interpolateTurbo(0.15+i/TOP*0.7));
+  enter.append('text').attr('class','nm').attr('x',-12).attr('dy',BAR/2+5).attr('text-anchor','end').attr('fill','#e4e4e4');
+  enter.append('text').attr('class','vl').attr('dy',BAR/2+5).attr('fill','#9a9a9a').attr('font-size',12);
+
+  const merged = enter.merge(bars);
+  merged.transition().duration(first?0:700).ease(d3.easeCubicOut)
+    .attr('transform', (d,i) => `translate(200,${i*(BAR+4)+8})`);
+  merged.select('rect').transition().duration(first?0:700)
+    .attr('width', d => Math.max(2, x(d.v)));
+  merged.select('.nm').text(d => d.name);
+  merged.select('.vl').attr('x', d => Math.max(2, x(d.v))+10).text(d => d.v.toFixed(1));
+  bars.exit().transition().duration(500).attr('transform',`translate(200,${H})`).remove();
+}
+frame(0, true);
+
+let playing = false, tId;
+const scrub = document.getElementById('scrub');
+scrub.oninput = () => { stop(); frame(+scrub.value); };
+function play(){
+  playing = true; document.getElementById('play').textContent = '⏸ Pause';
+  tId = setInterval(() => {
+    let v = +scrub.value + 1;
+    if (v > 5){ v = 0; }
+    scrub.value = v; frame(v);
+  }, 1400);
+}
+function stop(){ playing = false; clearInterval(tId); document.getElementById('play').textContent = '▶ Play'; }
+document.getElementById('play').onclick = () => playing ? stop() : play();
+</script>
+</html>

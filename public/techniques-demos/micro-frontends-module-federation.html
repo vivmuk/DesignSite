@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Micro-frontends & Module Federation</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer;margin-right:8px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
+.widget{border:1px solid #2a2a2a;border-radius:10px;padding:14px;min-height:140px}
+.widget h4{margin:0 0 6px;font-size:13px;color:#6cf}
+.team{font:10px monospace;color:#888}
+.loading{color:#777;font:12px monospace}
+#tl{margin-top:20px;border-top:1px solid #2a2a2a;padding-top:14px;font:12px monospace}
+.dep{display:inline-block;padding:6px 14px;border-radius:8px;border:1px solid #3a3a3a;margin:4px 6px 4px 0;position:relative}
+.dep .v{color:#9effa1}
+.dep.old .v{color:#f66}
+.up{color:#9e9;font-size:11px}
+</style></head><body>
+<h1>Micro-frontends portal — independent deploys</h1>
+<p>Three widgets from three "teams", each an independently deployed bundle. Team B ships a new version — only their widget re-renders.</p>
+<button onclick="loadAll()">▶ Boot portal</button>
+<button onclick="deployB()">🚀 Team B deploys v2.1.0</button>
+<div class="row">
+<div class="widget" id="wA"><h4>🛒 Cart widget</h4><div class="team">team-a · cart@2.0.3</div><div class="loading">not loaded</div></div>
+<div class="widget" id="wB"><h4>🔍 Search widget</h4><div class="team">team-b · search@2.0.0</div><div class="loading">not loaded</div></div>
+<div class="widget" id="wC"><h4>📊 Recommendations</h4><div class="team">team-c · recs@1.4.1</div><div class="loading">not loaded</div></div>
+</div>
+<div id="tl"></div>
+<script>
+const widgetBody={
+ A:`<p style="font-size:13px">3 items · <b>$129.99</b><br><small style="color:#888">checkout button ready</small></p>`,
+ B:`<input placeholder="search products…" style="background:#111;border:1px solid #333;border-radius:6px;color:#eee;padding:8px;width:100%"><p style="font-size:12px;color:#888;margin:8px 0 0">federated remote, no shared state</p>`,
+ C:`<ul style="font-size:13px;color:#aaa;padding-left:18px;margin:8px 0 0"><li>Item you viewed yesterday</li><li>Customers also bought…</li></ul>`};
+function tl(msg){ const d=document.getElementById('tl'); d.innerHTML=msg+'<br>'+d.innerHTML; }
+function render(id,body){ const w=document.getElementById(id);
+  w.querySelector('.loading')?.remove(); const div=document.createElement('div'); div.innerHTML=body; w.append(div); }
+function loadAll(){ tl('⬇ host shell loaded (0 KB of widget code — each remote fetched independently)');
+  setTimeout(()=>{ render('A',widgetBody.A); tl('⬇ team-a/cart@2.0.3 loaded — 24 KB'); },300);
+  setTimeout(()=>{ render('B',widgetBody.B); tl('⬇ team-b/search@2.0.0 loaded — 38 KB'); },600);
+  setTimeout(()=>{ render('C',widgetBody.C); tl('⬇ team-c/recs@1.4.1 loaded — 19 KB'); },900);
+}
+function deployB(){
+  const w=document.getElementById('wB');
+  w.innerHTML='<h4>🔍 Search widget</h4><div class="team team-b">team-b · search@2.1.0</div><div class="loading">re-fetching remote…</div>';
+  tl('🚀 team-b deployed search@2.1.0 — teams A and C untouched ✓');
+  setTimeout(()=>{ w.querySelector('.loading').remove(); render('B',widgetBody.B+'<div class="up">v2.1.0: instant results ✓</div>'); },700);
+}
+</script></body></html>

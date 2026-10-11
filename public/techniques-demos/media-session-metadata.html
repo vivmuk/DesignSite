@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lo-Fi Radio — Media Session API</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui}
+  .player{width:380px;max-width:92vw;background:#161616;border:1px solid #2a2a2a;border-radius:16px;padding:24px;text-align:center}
+  img{width:100%;border-radius:12px}
+  h1{font-size:18px;margin:14px 0 2px} p{margin:0;color:#9a9a9a;font-size:13px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:999px;width:64px;height:64px;font-size:24px;cursor:pointer;margin-top:16px}
+  .log{margin-top:14px;font:12px/1.5 monospace;color:#8a8a8a;min-height:40px;text-align:left}
+  .ok{color:#7ee787}
+</style>
+</head>
+<body>
+<div class="player">
+  <img id="art" alt="album art" width="332" height="332">
+  <h1 id="title">Midnight Drift</h1><p id="artist">The Browser Ensemble</p>
+  <button id="play">▶</button>
+  <div class="log" id="log"></div>
+</div>
+<script>
+// --- generated album art (data URL, also handed to the OS) ---
+const art = document.createElement('canvas'); art.width = art.height = 332;
+const a = art.getContext('2d');
+const g = a.createLinearGradient(0,0,332,332);
+g.addColorStop(0,'#1e3a8a'); g.addColorStop(.5,'#7c3aed'); g.addColorStop(1,'#0d0d0d');
+a.fillStyle = g; a.fillRect(0,0,332,332);
+a.fillStyle = '#e4e4e4cc'; a.beginPath(); a.arc(166,150,80,0,7); a.fill();
+a.fillStyle = '#0d0d0d'; a.beginPath(); a.arc(166,150,10,0,7); a.fill();
+for(let r=90;r>20;r-=12){ a.strokeStyle='#0d0d0d55'; a.beginPath(); a.arc(166,150,r,0,7); a.stroke(); }
+document.getElementById('art').src = art.toDataURL();
+
+// --- WebAudio "lo-fi loop" piped through an <audio> element so the OS sees real playback ---
+let ctx, dest, timer;
+function buildAudio(){
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  dest = ctx.createMediaStreamDestination();
+  const master = ctx.createGain(); master.gain.value = .16; master.connect(dest);
+  const chords = [[220,277,330],[196,247,294],[175,220,262],[196,247,330]];
+  let bar = 0;
+  timer = setInterval(() => {
+    const t = ctx.currentTime;
+    chords[bar % chords.length].forEach(f => {
+      const o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = 'triangle'; o.frequency.value = f;
+      og.gain.setValueAtTime(0,t); og.gain.linearRampToValueAtTime(1,t+.4); og.gain.linearRampToValueAtTime(0,t+1.9);
+      o.connect(og); og.connect(master); o.start(t); o.stop(t+2);
+    });
+    bar++;
+  }, 2000);
+}
+const audio = new Audio();
+audio.srcObject = null;
+const play = document.getElementById('play');
+const log = m => document.getElementById('log').innerHTML = m + '<br>' + document.getElementById('log').innerHTML;
+
+// --- Media Session wiring ---
+if ('mediaSession' in navigator){
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: 'Midnight Drift', artist: 'The Browser Ensemble', album: 'Client-Side Lo-Fi',
+    artwork: [{ src: art.toDataURL(), sizes: '332x332', type: 'image/png' }]
+  });
+  navigator.mediaSession.setActionHandler('play', () => setPlaying(true));
+  navigator.mediaSession.setActionHandler('pause', () => setPlaying(false));
+  navigator.mediaSession.setActionHandler('previoustrack', () => log('⏮ OS previoustrack →'));
+  navigator.mediaSession.setActionHandler('nexttrack', () => log('⏭ OS nexttrack →'));
+  log('<span class="ok">Media Session active — use your OS media keys / lockscreen.</span>');
+}else{
+  log('Media Session API not supported; playback still works.');
+}
+
+function setPlaying(on){
+  if (on && !ctx){ buildAudio(); audio.srcObject = dest.stream; }
+  if (on){ ctx.resume(); audio.play(); } else audio.pause();
+  play.textContent = on ? '⏸' : '▶';
+  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = on ? 'playing' : 'paused';
+  log((on ? '▶' : '⏸') + ' playback ' + (on ? 'started' : 'paused'));
+}
+play.onclick = () => setPlaying(play.textContent === '▶');
+</script>
+</html>

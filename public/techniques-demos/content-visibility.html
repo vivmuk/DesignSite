@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>content-visibility: auto</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.sec{border:1px solid #2a2a2a;border-radius:10px;padding:16px;margin:12px 0;position:relative}
+.sec h3{margin:0 0 8px;font-size:14px;color:#aaa}
+.skel{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.skel i{display:block;height:44px;background:#1d1d1d;border-radius:4px}
+.cv{content-visibility:auto;contain-intrinsic-size:300px}
+.badge{position:absolute;top:12px;right:12px;font:10px monospace;background:#3a2a1a;color:#fb5;padding:3px 8px;border-radius:99px;opacity:0;transition:.3s}
+.badge.on{opacity:1}
+.badge.rendered{background:#1e2a1e;color:#9e9}
+#stats{position:fixed;bottom:20px;right:20px;background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:10px 16px;font:12px monospace}
+</style></head><body>
+<h1>content-visibility: auto — render-skipping at scale</h1>
+<p>500 sections exist in the DOM, but only ones near the viewport render their contents. Scroll fast — notice no jank. Each badge flips from "skipped" to "rendered" as you approach.</p>
+<div id="secs"></div>
+<div id="stats">sections: 500 · rendered so far: <span id="n">0</span></div>
+<script>
+const wrap=document.getElementById('secs'); const frag=document.createDocumentFragment();
+const useCV='contentVisibility' in document.documentElement.style || CSS.supports('content-visibility','auto');
+for(let i=0;i<500;i++){
+  const s=document.createElement('section'); s.className='sec'+(useCV?' cv':''); s.dataset.i=i;
+  s.innerHTML=`<h3>Section #${i+1}</h3><div class="skel">${'<i></i>'.repeat(6)}</div><span class="badge">⏭ render-skipped</span>`;
+  frag.append(s);
+}
+wrap.append(frag);
+const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){
+  const b=e.target.querySelector('.badge');
+  if(!b.classList.contains('rendered')){ b.classList.add('rendered'); b.textContent='✓ rendered'; b.classList.add('on');
+    const n=+document.getElementById('n').textContent; document.getElementById('n').textContent=n+1; }
+}});},{rootMargin:'200px'});
+document.querySelectorAll('.sec').forEach(s=>io.observe(s));
+document.getElementById('n').textContent='0';
+if(!useCV){ document.querySelectorAll('.badge').forEach(b=>{b.textContent='(no content-visibility support)';b.classList.add('rendered','on')}); }
+</script></body></html>

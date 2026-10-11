@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradient & Clipped Text</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.stat { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; }
+.label { color:#888; letter-spacing:0.25em; text-transform:uppercase; font-size:0.85rem; }
+.counter { font-size:clamp(5rem,18vw,14rem); font-weight:800; font-variant-numeric:tabular-nums; line-height:1;
+  background:conic-gradient(from var(--a, 0deg), #7ee8fa, #eec0f8, #f8b47e, #7ee8fa);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent; }
+@property --a { syntax:'<angle>'; inherits:false; initial-value:0deg; }
+@keyframes spin { to { --a:360deg; } }
+.counter { animation:spin 6s linear infinite; }
+.hint { color:#555; font-size:0.85rem; max-width:32ch; text-align:center; }
+@supports not (background-clip: text) {
+  .counter { color:#7ee8fa; background:none; -webkit-text-fill-color:initial; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="stat">
+  <div class="label">Downloads this year</div>
+  <div id="counter" class="counter">0</div>
+  <p class="hint">The number is filled with a rotating conic gradient via background-clip:text</p>
+</div>
+
+<script>
+
+const el = document.getElementById('counter');
+const target = 2481937, dur = 2600, t0 = performance.now();
+function ease(t) { return 1 - Math.pow(1 - t, 4); }
+(function tick(now) {
+  const t = Math.min(1, (now - t0) / dur);
+  el.textContent = Math.round(target * ease(t)).toLocaleString('en-US');
+  if (t < 1) requestAnimationFrame(tick);
+})(t0);
+if (!window.CSS || !CSS.supports('background-clip', 'text')) {
+  document.querySelector('.hint').textContent = 'Fallback text: gradient text clip unsupported - solid color shown.';
+}
+
+</script>
+</body>
+</html>

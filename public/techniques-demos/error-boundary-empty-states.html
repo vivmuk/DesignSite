@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Empty, Error & Loading State Craft</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px;display:grid;grid-template-columns:220px 1fr;gap:24px}
+h1{font-size:18px}
+.nav button{display:block;width:100%;text-align:left;background:#161616;color:#ccc;border:1px solid #2a2a2a;padding:10px 14px;border-radius:8px;cursor:pointer;margin:6px 0;font-size:14px}
+.nav button.on{border-color:#6cf;color:#6cf}
+.stage{border:1px solid #2a2a2a;border-radius:12px;min-height:380px;display:grid;place-items:center;padding:24px;position:relative}
+.center{text-align:center;max-width:340px}
+.sk{width:100%;max-width:420px}
+.sk .l{height:14px;background:linear-gradient(90deg,#1a1a1a 25%,#242424 50%,#1a1a1a 75%);background-size:200% 100%;animation:sh 1.2s infinite;border-radius:7px;margin:10px 0}
+@keyframes sh{to{background-position:-200% 0}}
+.illus{font-size:48px;margin-bottom:8px}
+.retry{background:#6cf;color:#000;border:none;padding:10px 22px;border-radius:8px;cursor:pointer;font-weight:600;margin-top:12px}
+h3{margin:8px 0 4px} p{color:#888;font-size:13px;margin:4px 0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+.cards .c{background:#161616;border-radius:8px;height:110px;display:grid;place-items:center;color:#555;font-size:13px}
+.fade{animation:fade .4s}@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+</style></head><body>
+<div class="nav"><h1 style="font-size:18px">State machine</h1>
+<button data-s="loading" class="on">⏳ loading</button>
+<button data-s="empty">∅ empty</button>
+<button data-s="error">✖ error</button>
+<button data-s="success">✓ success</button>
+<p style="font-size:12px;color:#666">Real apps derive this state from data+status. Never ship an unstyled default.</p></div>
+<div><h2 style="font-size:15px;color:#aaa">Project gallery</h2>
+<div class="stage" id="stage"></div></div>
+<script>
+const stage=document.getElementById('stage');
+const views={
+ loading:()=>`<div class="sk fade">${'<div class="l"></div>'.repeat(4)}</div>`,
+ empty:()=>`<div class="center fade"><div class="illus">🗂️</div><h3>No projects yet</h3>
+   <p>Projects live here once you create one. Empty is a designed state — illustration + one clear action, not a blank void.</p>
+   <button class="retry" onclick="go('loading')">+ New project</button></div>`,
+ error:()=>`<div class="center fade"><div class="illus">⚡</div><h3>Couldn\'t load projects</h3>
+   <p>The request failed after 2 retries (simulated 503). Preserve the user\'s context; offer one honest retry — never a dead end.</p>
+   <button class="retry" onclick="go('loading')">Retry</button></div>`,
+ success:()=>`<div class="cards fade">${[1,2,3,4,5,6].map(i=>`<div class="c">project ${i}</div>`).join('')}</div>`
+};
+function go(s){ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  stage.innerHTML=views[s](); }
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.s));
+// auto-cycle demo on load
+let seq=['loading','success'], i=0;
+go('loading'); setTimeout(()=>go('success'),1400);
+</script></body></html>

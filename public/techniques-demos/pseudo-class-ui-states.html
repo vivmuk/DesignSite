@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UI State Pseudo-classes — CSS-only Settings Panel</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:760px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:2rem; }
+  .theme { position:absolute; } /* keep checkbox inputs functional but visually hidden */
+  .panel { background:#141414; border:1px solid #262626; border-radius:14px; padding:1.4rem; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; color:#777; margin:1.2rem 0 .6rem; }
+  /* Switch cards driven by :checked on a sibling input */
+  .switch input { position:absolute; opacity:0; }
+  .switch { display:flex; align-items:center; justify-content:space-between; padding:.8rem 1rem; border:1px solid #2a2a2a; border-radius:10px; margin-bottom:.6rem; cursor:pointer; }
+  .switch .knob { width:42px; height:24px; border-radius:999px; background:#2c2c2c; position:relative; transition:background .2s; flex-shrink:0; margin-left:1rem; }
+  .switch .knob::after { content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#888; transition:transform .2s, background .2s; }
+  .switch input:checked ~ .knob { background:#8b7cff; }
+  .switch input:checked ~ .knob::after { transform:translateX(18px); background:#0d0d0d; }
+  .switch:hover { border-color:#3d3d3d; }
+  .switch input:focus-visible ~ .knob { outline:2px solid #8b7cff; outline-offset:2px; }
+  /* Radio chips */
+  .chips { display:flex; gap:.5rem; flex-wrap:wrap; }
+  .chips input { position:absolute; opacity:0; }
+  .chips label { padding:.4rem 1rem; border:1px solid #333; border-radius:999px; font-size:.85rem; cursor:pointer; }
+  .chips label:hover { border-color:#555; }
+  .chips input:checked + label { background:#8b7cff; color:#0d0d0d; border-color:#8b7cff; font-weight:600; }
+  .chips input:focus-visible + label { outline:2px solid #8b7cff; outline-offset:2px; }
+  /* Live preview theme via :checked on the radio group + general sibling */
+  .preview { margin-top:1.4rem; padding:1.4rem; border-radius:10px; border:1px solid #2a2a2a; transition:background .3s, color .3s; }
+  #t-mint:checked ~ .panel .preview { background:#0f1f18; color:#7dd8a0; }
+  #t-ember:checked ~ .panel .preview { background:#221210; color:#ff9c6e; }
+  #t-ink:checked ~ .panel .preview { background:#12121f; color:#8b7cff; }
+  .preview strong { display:block; margin-bottom:.3rem; }
+  .btn:disabled { opacity:.4; cursor:not-allowed; }
+  .btn:active { transform:translateY(1px); }
+  .btn { background:#8b7cff; color:#0d0d0d; border:0; border-radius:8px; padding:.6rem 1.3rem; font-weight:600; }
+</style>
+</head>
+<body>
+<h1>CSS-only Settings Panel</h1>
+<p class="sub">Every toggle below is stateless JavaScript-free: :checked, :hover, :focus-visible, :active and :disabled do all the work.</p>
+<input type="radio" name="theme" id="t-mint" class="theme">
+<input type="radio" name="theme" id="t-ember" class="theme" checked>
+<input type="radio" name="theme" id="t-ink" class="theme">
+<div class="panel">
+  <h2>Switch cards</h2>
+  <label class="switch"><span>Enable notifications</span><input type="checkbox" checked><span class="knob"></span></label>
+  <label class="switch"><span>Auto-save drafts</span><input type="checkbox"><span class="knob"></span></label>
+  <h2>Accent chips</h2>
+  <div class="chips">
+    <input type="radio" name="theme2" id="c1"><label for="c1">Slate</label>
+    <input type="radio" name="theme2" id="c2" checked><label for="c2">Ember</label>
+    <input type="radio" name="theme2" id="c3"><label for="c3">Iris</label>
+  </div>
+  <h2>Live preview (theme radios drive this)</h2>
+  <div class="preview"><strong>Preview surface</strong>The entire theme recolors from three radio inputs using sibling selectors.</div>
+  <h2>Button states</h2>
+  <button class="btn">Press me (active state)</button>
+  <button class="btn" disabled>Disabled</button>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Device Console — WebSerial (simulated device)</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.6 system-ui;padding:24px;font-family:ui-monospace,monospace}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px;font-family:system-ui}
+  .row{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;font-family:system-ui}
+  button.on{background:#34d399;color:#0d0d0d}
+  #device{width:220px;padding:16px;background:#161616;border:1px solid #2a2a2a;border-radius:12px}
+  #led{width:36px;height:36px;border-radius:50%;background:#3a3a3a;margin:8px 0;transition:background .1s, box-shadow .1s}
+  #led.on{background:#f87171;box-shadow:0 0 18px #f87171}
+  canvas{background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  #console{background:#101010;border:1px solid #2a2a2a;border-radius:10px;padding:10px;height:180px;overflow-y:auto;font-size:12px;max-width:560px}
+  #console div{padding:1px 0;border-bottom:1px solid #1c1c1c}
+  .tx{color:#60a5fa}.rx{color:#7ee787}.sys{color:#8a8a8a}
+</style>
+</head>
+<body>
+<h1>&gt; device console <span style="color:#3a3a3a">— simulated Arduino over WebSerial</span></h1>
+<p class="sub">Connect to the simulated device (or a real one if navigator.serial is available and you pick it). Blink its LED, query the sensor, watch the chart.</p>
+<div class="row">
+  <button id="conn">🔌 Connect</button>
+  <button id="blink" disabled>💡 Toggle LED</button>
+  <button id="sensor" disabled>🌡 Read sensor</button>
+  <button id="auto" disabled>▶ Auto-stream</button>
+</div>
+<div style="display:flex;gap:20px;flex-wrap:wrap">
+  <div id="device">
+    <b style="font-family:system-ui">SIM-duino v1</b>
+    <div id="led"></div>
+    <div style="font-size:11px;color:#8a8a8a" id="dstatus">disconnected</div>
+  </div>
+  <div>
+    <canvas id="chart" width="320" height="180"></canvas>
+    <div style="font-size:11px;color:#8a8a8a;margin-top:4px" id="reading">sensor: –</div>
+  </div>
+  <div id="console" style="flex:1;min-width:260px"></div>
+</div>
+<script>
+const logEl = document.getElementById('console');
+const log = (cls, m) => { logEl.insertAdjacentHTML('afterbegin', `<div class="${cls}">${m}</div>`); while(logEl.children.length>60) logEl.lastChild.remove(); };
+const ledEl = document.getElementById('led'), reading = document.getElementById('reading'), chart = document.getElementById('chart'), cx = chart.getContext('2d');
+let connected = false, realPort = null, writer = null, auto = null;
+const hist = [];
+
+const [connBtn, blinkBtn, sensorBtn, autoBtn] = ['conn','blink','sensor','auto'].map(id=>document.getElementById(id));
+
+// simulated device protocol
+const SIM = {
+  write(line){
+    log('tx','→ ' + line);
+    if (line === 'LED_TOGGLE\n'){
+      ledEl.classList.toggle('on');
+      log('rx','← LED:' + (ledEl.classList.contains('on')?'ON':'OFF'));
+    }else if (line === 'READ\n'){
+      const v = 20 + Math.sin(Date.now()/3000)*6 + Math.random()*2;
+      setTimeout(() => { log('rx','← TEMP:' + v.toFixed(2) + 'C'); handle(v); }, 40);
+    }
+  }
+};
+function handle(v){
+  reading.textContent = 'sensor: ' + v.toFixed(1) + ' °C';
+  hist.push(v); if (hist.length>60) hist.shift();
+  cx.fillStyle='#141414'; cx.fillRect(0,0,320,180);
+  cx.beginPath();
+  hist.forEach((s,i)=>{ const x=i/59*320, y=160-(s-14)/16*140; i?cx.lineTo(x,y):cx.moveTo(x,y); });
+  cx.strokeStyle='#fbbf24'; cx.lineWidth=1.8; cx.stroke();
+  cx.fillStyle='#8a8a8a'; cx.font='10px monospace';
+  cx.fillText('14–30 °C', 6, 12);
+}
+
+async function writeLine(s){
+  if (realPort){
+    await writer.write(new TextEncoder().encode(s));
+  }else{
+    SIM.write(s);
+  }
+}
+connBtn.onclick = async () => {
+  if (connected){
+    if (auto) { clearInterval(auto); auto=null; autoBtn.textContent='▶ Auto-stream'; }
+    if (realPort){ try{ await realPort.close(); }catch(e){} realPort=null; writer=null; }
+    connected = false;
+    connBtn.textContent='🔌 Connect'; [blinkBtn,sensorBtn,autoBtn].forEach(b=>b.disabled=true);
+    document.getElementById('dstatus').textContent='disconnected';
+    ledEl.classList.remove('on');
+    log('sys','— disconnected —');
+    return;
+  }
+  // try real WebSerial first
+  if ('serial' in navigator){
+    try{
+      log('sys','navigator.serial available — requesting port…');
+      realPort = await navigator.serial.requestPort();
+      await realPort.open({baudRate: 9600});
+      writer = realPort.writable.getWriter();
+      connected = true;
+      log('sys','✓ real serial port opened @9600 baud');
+    }catch(e){
+      log('sys','real serial declined (' + e.name + ') — falling back to simulated device');
+      realPort = null;
+    }
+  }else{
+    log('sys','navigator.serial unavailable in this browser — using simulated device');
+  }
+  if (!realPort){ connected = true; }
+  connBtn.textContent='⏏ Disconnect'; connBtn.classList.add('on');
+  [blinkBtn,sensorBtn,autoBtn].forEach(b=>b.disabled=false);
+  document.getElementById('dstatus').textContent = realPort ? 'real serial port' : 'simulated';
+  log('sys','✓ connected. Protocol: LED_TOGGLE\\n / READ\\n');
+};
+blinkBtn.onclick = () => writeLine('LED_TOGGLE\n');
+sensorBtn.onclick = () => writeLine('READ\n');
+autoBtn.onclick = () => {
+  if (auto){ clearInterval(auto); auto=null; autoBtn.textContent='▶ Auto-stream'; return; }
+  auto = setInterval(() => writeLine('READ\n'), 400);
+  autoBtn.textContent='⏸ Auto-stream';
+};
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Film Grain & Noise</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.hero { min-height:100vh; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden;
+  background:radial-gradient(ellipse at 30% 20%, #1e2430, #0d0d0d 70%); }
+.grain { position:absolute; inset:-50%; width:200%; height:200%;
+  filter:url(#grain); opacity:0.12; pointer-events:none; }
+.grain.anim { animation:shimmer 0.6s steps(6) infinite; }
+@keyframes shimmer {
+  0% { transform:translate(0,0); } 20% { transform:translate(-3%,2%); }
+  40% { transform:translate(2%,-3%); } 60% { transform:translate(-2%,-2%); }
+  80% { transform:translate(3%,1%); } 100% { transform:translate(0,0); }
+}
+.content { position:relative; z-index:2; text-align:center; max-width:46ch; padding:0 5vw; }
+h1 { font-size:clamp(3rem,10vw,7rem); letter-spacing:0.1em; font-weight:300; margin-bottom:1rem; }
+p { color:#a8a8a8; line-height:1.7; margin-bottom:2rem; }
+.controls { display:flex; gap:2rem; justify-content:center; align-items:center; }
+label { display:flex; gap:0.6rem; align-items:center; font-size:0.85rem; color:#aaa; }
+input[type=range] { accent-color:#a8a8a8; }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="grain-defs" width="0" height="0">
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" seed="7" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/></filter>
+  </svg>
+  <div class="grain" id="grain"></div>
+  <div class="content">
+    <h1>ANALOG</h1>
+    <p>Film grain via feTurbulence — a seeded fractal noise field rendered as a repeating tile.</p>
+    <div class="controls">
+      <label>Opacity <input type="range" id="op" min="0" max="0.4" step="0.01" value="0.12"></label>
+      <label><input type="checkbox" id="shimmer" checked> Shimmer</label>
+    </div>
+  </div>
+</div>
+
+<script>
+
+const grain = document.getElementById('grain');
+document.getElementById('op').addEventListener('input', function(e) {
+  grain.style.opacity = e.target.value;
+});
+document.getElementById('shimmer').addEventListener('change', function(e) {
+  grain.classList.toggle('anim', e.target.checked);
+});
+grain.classList.add('anim');
+
+</script>
+</body>
+</html>

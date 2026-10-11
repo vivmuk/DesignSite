@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>File System Access API</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 ui-monospace,monospace;background:#0d0d0d;color:#e4e4e4;display:flex;height:100vh}
+aside{width:220px;border-right:1px solid #2a2a2a;padding:16px;overflow:auto}
+main{flex:1;display:flex;flex-direction:column}
+header{padding:12px 16px;border-bottom:1px solid #2a2a2a;display:flex;gap:8px;align-items:center}
+#tabs{display:flex;gap:4px;padding:8px 16px 0}
+.tab{padding:6px 12px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px 6px 0 0;cursor:pointer}
+.tab.active{background:#242424;color:#fff}
+textarea{flex:1;background:#111;color:#9effa1;border:none;resize:none;padding:16px;font:14px/1.6 monospace;outline:none}
+button{background:#2a2a2a;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 14px;border-radius:6px;cursor:pointer}
+button:hover{background:#3a3a3a}
+#status{padding:8px 16px;color:#888;font-size:12px}
+li{list-style:none;padding:4px 8px;border-radius:4px;cursor:pointer}
+li:hover{background:#222}
+</style></head><body>
+<aside><h3>Folder</h3>
+<button id="open">📂 Open Folder</button><ul id="tree"></ul></aside>
+<main><header><strong>FS Editor</strong> <span id="dir" style="color:#888"></span>
+<button id="save" disabled>💾 Save</button><button id="perm" hidden>Grant permission</button></header>
+<div id="tabs"></div><textarea id="ed" spellcheck="false" placeholder="Open a folder and click a .txt/.md file..."></textarea>
+<div id="status">Supported: <span id="sup"></span></div></main>
+<script>
+const sup = 'showDirectoryPicker' in window;
+sup.textContent = sup ? 'yes ✓' : 'no — demo disabled';
+let dirHandle = null, files = new Map(), active = null;
+document.getElementById('open').onclick = async () => {
+  if (!sup) return alert('File System Access API unsupported');
+  dirHandle = await showDirectoryPicker();
+  document.getElementById('dir').textContent = dirHandle.name;
+  localStorage.setItem('fsdemo', '1');
+  await listDir();
+};
+async function listDir(){
+  const ul = document.getElementById('tree'); ul.innerHTML=''; files.clear();
+  for await (const [name, h] of dirHandle.entries()){
+    if (h.kind === 'file' && /\.(txt|md|json|js|css)$/.test(name)){
+      const li = document.createElement('li'); li.textContent = name;
+      li.onclick = () => openFile(name, h); ul.append(li); files.set(name, h);
+    }
+  }
+}
+async function openFile(name, h){
+  if (await verify(h)){
+    const t = await h.getFile(); document.getElementById('ed').value = await t.text();
+    active = {name, h};
+    document.getElementById('tabs').innerHTML = `<span class="tab active">${name}</span>`;
+    document.getElementById('save').disabled = false;
+    document.getElementById('status').textContent = 'Editing ' + name;
+  }
+}
+async function verify(h){
+  if (await h.queryPermission({mode:'readwrite'}) === 'granted') return true;
+  const ok = await h.requestPermission({mode:'readwrite'}) === 'granted';
+  document.getElementById('status').textContent = ok ? '' : 'Permission denied';
+  return ok;
+}
+document.getElementById('save').onclick = async () => {
+  if (!active) return;
+  const w = await active.h.createWritable();
+  await w.write(document.getElementById('ed').value); await w.close();
+  document.getElementById('status').textContent = 'Saved ✓ ' + new Date().toLocaleTimeString();
+};
+document.getElementById('perm').onclick = () => dirHandle && dirHandle.requestPermission({mode:'readwrite'});
+if (localStorage.getItem('fsdemo')) document.getElementById('status').textContent += ' — previous session detected (handles can\'t be serialized in this demo; re-open folder)';
+</script></body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Treemap Drill-Down — D3 hierarchy</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:6px 14px;font:inherit;cursor:pointer;margin-bottom:10px}
+  svg{width:100%;max-width:860px;background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  .cell rect{stroke:#0d0d0d;stroke-width:2;cursor:pointer;transition:fill .2s}
+  .cell:hover rect{fill-opacity:.8 !important}
+  .cell text{fill:#fff;pointer-events:none;font-size:11px}
+  .crumb{color:#9a9a9a}
+</style>
+</head>
+<body>
+<h1>File system treemap</h1>
+<p class="sub">Click a folder cell to zoom into it; use the breadcrumb (or ⟲) to come back. Relayout is animated.</p>
+<button id="up">⟲ Up one level</button> <span class="crumb" id="crumb">/root</span><br>
+<svg id="chart" viewBox="0 0 860 480"></svg>
+<script>
+const TREE = {name:'root', children:[
+  {name:'src', children:[
+    {name:'ui', children:[
+      {name:'App.jsx', size:420},{name:'Panel.jsx', size:260},{name:'Modal.jsx', size:150},{name:'theme.js', size:80}]},
+    {name:'core', children:[
+      {name:'engine.js', size:900},{name:'state.js', size:520},{name:'utils.js', size:190}]},
+    {name:'api', children:[
+      {name:'client.js', size:340},{name:'types.ts', size:210},{name:'mocks.js', size:120}]}]},
+  {name:'assets', children:[
+    {name:'fonts/', size:1400},{name:'icons/', size:620},{name:'img/', size:2300}]},
+  {name:'tests', children:[
+    {name:'unit/', size:860},{name:'e2e/', size:430},{name:'fixtures/', size:280}]},
+  {name:'docs', children:[
+    {name:'README', size:90},{name:'guides/', size:340},{name:'rfcs/', size:210}]}
+]};
+const W=860, H=480;
+const root = d3.hierarchy(TREE).sum(d => d.children ? 0 : d.size);
+const svg = d3.select('#chart');
+const x = d3.scaleLinear(), y = d3.scaleLinear();
+
+function draw(node){
+  const t = d3.transition().duration(650).ease(d3.easeCubicOut);
+  x.domain([node.x0, node.x1]).range([0, W]);
+  y.domain([node.y0, node.y1]).range([0, H]);
+  const leaves = node.leaves();
+  const cells = svg.selectAll('g.cell').data(leaves, d => d.data.name);
+  const enter = cells.enter().append('g').attr('class','cell')
+    .append('rect').attr('fill', d => d.parent ? color(d) : '#333');
+  const g = cells.enter().append('g').attr('class','cell');
+  // (re)build each cell fully — simplest robust path for drill-down relayout
+  svg.selectAll('g.cell').remove();
+  leaves.forEach(d => {
+    const g = svg.append('g').attr('class','cell');
+    const rx = x(d.x0), ry = y(d.y0), rw = x(d.x1)-x(d.x0), rh = y(d.y1)-y(d.y0);
+    g.append('rect').attr('rx',6)
+      .attr('fill', color(d));
+    g.append('text').attr('x',8).attr('y',18).text(`${d.data.name}  ${(d.value/1024).toFixed(1)}k`);
+    g.attr('transform',`translate(${rx},${ry})`).attr('opacity',0)
+      .transition(t).attr('opacity',1);
+    g.select('rect').attr('width',rw).attr('height',rh);
+    g.on('click', (e,dd) => { if (dd.children || dd.parent) zoomTo(dd); });
+  });
+  document.getElementById('crumb').textContent = pathOf(node);
+}
+function color(d){
+  const depth = d.depth;
+  return d3.interpolateTurbo(0.15 + (depth*0.18 + (d.data.name.charCodeAt(0)%10)/50));
+}
+function pathOf(n){ let p=[]; while(n && n.data.name!=='root'){p.unshift(n.data.name); n=n.parent;} return '/'+p.join('/'); }
+let current = root;
+function zoomTo(n){
+  // allow clicking a leaf: zoom to its parent folder
+  current = (n.children ? n : n.parent);
+  draw(current);
+}
+document.getElementById('up').onclick = () => { if (current.parent){ current = current.parent; draw(current); } };
+draw(root);
+svg.selectAll('g.cell').on('click', (e,d) => zoomTo(d));
+</script>
+</html>

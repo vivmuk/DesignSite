@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Custom Shaders (GLSL)</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#editor{position:fixed;top:16px;left:16px;z-index:5;background:rgba(22,22,22,.9);border:1px solid #333;border-radius:10px;padding:10px;width:340px}
+textarea{width:100%;height:170px;background:#0d0d0d;color:#7ee787;border:1px solid #333;border-radius:6px;font:12px monospace;padding:8px;box-sizing:border-box;resize:vertical}
+#err{color:#ff6b81;font:11px monospace;min-height:14px;margin-top:4px}
+#ok{color:#7ee787;font:11px monospace}
+
+</style></head><body>
+
+<div id=editor><b>fragment shader — edit to hot-reload</b>
+<textarea id=code rows=8></textarea>
+<div id=err></div><div id=ok></div></div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const scene=new THREE.Scene();
+const camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+const DEFAULT=`precision highp float;
+uniform float uTime;
+uniform vec2 uRes;
+varying vec2 vUv;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
+void main(){
+  vec2 uv=(vUv-.5)*vec2(uRes.x/uRes.y,1.);
+  float w=sin(uv.x*3.+uTime)*.3;
+  float n=noise(uv*4.+vec2(0.,uTime*.3));
+  float g=uv.y+w+n*.4;
+  vec3 col=mix(vec3(.02,.05,.12),vec3(.2,.9,.6),smoothstep(0.,1.,g));
+  col+=vec3(.9,.7,.3)*pow(max(0.,1.-abs(g-.6)*8.),2.);
+  gl_FragColor=vec4(col,1.);
+}`;
+const vert=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.);}`;
+const uniforms={uTime:{value:0},uRes:{value:new THREE.Vector2(innerWidth,innerHeight)}};
+function compile(fragSrc){
+  try{
+    const mat=new THREE.ShaderMaterial({vertexShader:vert,fragmentShader:fragSrc,uniforms});
+    mesh.material=mat;
+    document.getElementById('err').textContent='';
+    document.getElementById('ok').textContent='✓ compiled '+new Date().toLocaleTimeString();
+  }catch(e){
+    document.getElementById('err').textContent='✗ '+e.message.slice(0,140);
+  }
+}
+const mesh=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial());
+scene.add(mesh);
+const ta=document.getElementById('code');
+ta.value=DEFAULT;compile(DEFAULT);
+let deb;ta.addEventListener('input',()=>{clearTimeout(deb);deb=setTimeout(()=>compile(ta.value),400);});
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);uniforms.uRes.value.set(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);uniforms.uTime.value=t*.001;renderer.render(scene,camera);})(0);
+</script></body></html>

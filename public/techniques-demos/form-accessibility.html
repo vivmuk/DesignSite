@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Accessible Forms & Validation UX</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px;max-width:640px}
+h1{font-size:18px}
+form{margin-top:16px}
+label{display:block;margin:14px 0 4px;font-size:13px}
+input,select{width:100%;box-sizing:border-box;background:#111;border:1px solid #333;color:#e4e4e4;padding:10px;border-radius:6px;font-size:14px}
+input[aria-invalid=true]{border-color:#f66;background:#2a1515}
+.hint{font-size:12px;color:#888;margin-top:3px}
+.err{font-size:12px;color:#f88;margin-top:3px;display:none}
+.err.on{display:block}
+button{margin-top:18px;background:#2a4a6a;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;cursor:pointer}
+#summary{background:#2a1515;border:1px solid #f66;border-radius:8px;padding:12px 16px;display:none;margin-bottom:8px}
+#summary.on{display:block}
+#summary a{color:#f88}
+#live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#sr{position:fixed;left:20px;bottom:20px;background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;font:11px monospace;color:#9e9;max-width:300px}
+</style></head><body>
+<h1>Checkout — errors that announce themselves</h1>
+<div id="summary" role="alert"><b style="color:#f88">2 fields need your attention:</b><div id="sumlinks"></div></div>
+<form novalidate>
+<label for="em">Email <span aria-hidden="true" style="color:#f66">*</span></label>
+<input id="em" name="email" type="email" required aria-describedby="em-h em-e" autocomplete="email">
+<div class="hint" id="em-h">We never share it. Format: name@domain.tld</div>
+<div class="err" id="em-e">Enter a valid email like name@domain.tld</div>
+<label for="z">ZIP code</label>
+<input id="z" name="zip" inputmode="numeric" pattern="[0-9]{5}" aria-describedby="z-e">
+<div class="err" id="z-e">ZIP must be exactly 5 digits</div>
+<label for="c">Country</label>
+<select id="c"><option value="">Choose…</option><option>US</option><option>DE</option><option>JP</option></select>
+<div class="err" id="c-e">Choose a country</div>
+<button type="submit">Place order</button>
+</form>
+<div id="live" role="status" aria-live="polite"></div>
+<div id="sr">🔊 what a screen reader just heard: <div id="srl">—</div></div>
+<script>
+const form=document.querySelector('form'), live=document.getElementById('live'), srl=document.getElementById('srl');
+function announce(msg){ live.textContent=''; setTimeout(()=>live.textContent=msg,50); srl.textContent=msg; }
+function fieldErr(id,msg){
+  const el=document.getElementById(id), e=document.getElementById(id+'-e');
+  el.setAttribute('aria-invalid','true'); e.classList.add('on');
+  return {id,msg};
+}
+function clearErr(id){ document.getElementById(id).removeAttribute('aria-invalid');
+  const e=document.getElementById(id+'-e'); if(e) e.classList.remove('on'); }
+form.onsubmit=e=>{
+  e.preventDefault(); clearErr('em');clearErr('z');clearErr('c');
+  const errors=[];
+  const em=document.getElementById('em');
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(em.value)) errors.push(fieldErr('em','email'));
+  const z=document.getElementById('z');
+  if(!/^[0-9]{5}$/.test(z.value)) errors.push(fieldErr('z','zip'));
+  const c=document.getElementById('c');
+  if(!c.value) errors.push(fieldErr('c','country'));
+  if(errors.length){
+    document.getElementById('summary').classList.add('on');
+    document.getElementById('sumlinks').innerHTML=errors.map((er,i)=>`${i+1}. <a href="#${er.id}" onclick="setTimeout(()=>document.getElementById('${er.id}').focus(),0)">${er.msg}</a>`).join('');
+    announce(`${errors.length} errors found. ${errors[0].msg} is invalid.`);
+    document.getElementById('summary').querySelector('a').focus();
+  } else {
+    document.getElementById('summary').classList.remove('on');
+    announce('Order placed successfully. Confirmation sent to '+em.value);
+  }
+};
+['em','z','c'].forEach(id=>document.getElementById(id).addEventListener('input',()=>clearErr(id)));
+</script></body></html>

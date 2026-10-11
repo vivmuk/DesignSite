@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radial Spotlight</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.stage { min-height:100vh; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.art { position:relative; width:min(760px, 90vw); aspect-ratio:16/9; border-radius:16px; overflow:hidden; background:#101014; }
+.art::before { content:''; position:absolute; inset:0;
+  background:radial-gradient(circle 180px at var(--mx, 50%) var(--my, 50%), rgba(126,232,250,0.9), rgba(126,232,250,0.25) 55%, transparent 75%);
+  mix-blend-mode:screen; pointer-events:none; z-index:2; }
+body.glow .art::before { box-shadow:0 0 80px rgba(126,232,250,0.35); }
+.art::after { content:''; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.75) 100%); }
+body.novig .art::after { display:none; }
+.art h1 { position:absolute; top:18%; left:8%; font-size:clamp(2rem,6vw,4rem); letter-spacing:0.2em; font-weight:300; z-index:1; }
+.art p { position:absolute; top:38%; left:8%; color:#777; z-index:1; }
+.shape { position:absolute; border-radius:50%; }
+.s1 { width:220px; height:220px; right:10%; top:15%; background:#1e2a30; }
+.s2 { width:140px; height:140px; right:28%; bottom:8%; background:#2a1e30; }
+.s3 { width:90px; height:90px; left:45%; bottom:20%; background:#302a1e; }
+.controls { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; gap:2rem; background:rgba(20,20,20,0.8); border:1px solid #2c2c2c; padding:0.8rem 1.4rem; border-radius:10px; }
+label { font-size:0.85rem; color:#aaa; display:flex; gap:0.5rem; align-items:center; cursor:pointer; }
+
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="art" id="art">
+    <h1>NOCTURNE</h1>
+    <p>The spotlight reveals what the dark conceals.</p>
+    <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
+  </div>
+  <div class="controls">
+    <label><input type="checkbox" id="vig" checked> Vignette</label>
+    <label><input type="checkbox" id="glow"> Glow</label>
+    <label><input type="checkbox" id="follow" checked> Follow cursor</label>
+  </div>
+</div>
+
+<script>
+
+const stage = document.getElementById('stage');
+stage.addEventListener('pointermove', function(e) {
+  if (!document.getElementById('follow').checked) return;
+  const r = stage.getBoundingClientRect();
+  stage.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+  stage.style.setProperty('--my', (e.clientY - r.top) + 'px');
+});
+document.getElementById('vig').addEventListener('change', function(e) {
+  document.body.classList.toggle('novig', !e.target.checked);
+});
+document.getElementById('glow').addEventListener('change', function(e) {
+  document.body.classList.toggle('glow', e.target.checked);
+});
+
+</script>
+</body>
+</html>

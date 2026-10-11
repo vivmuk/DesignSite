@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebXR Gallery — enter VR flow</title>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"></script>
+<style>
+  html,body{margin:0;height:100%;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;overflow:hidden}
+  .hud{position:fixed;left:16px;top:16px;background:#161616e6;border:1px solid #2a2a2a;border-radius:10px;padding:12px 14px;max-width:340px;z-index:2}
+  h1{margin:0 0 6px;font-size:15px} p{margin:0;color:#9a9a9a;font-size:12px}
+  button{margin-top:10px;background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer;display:block}
+  button:disabled{opacity:.4;cursor:default}
+</style>
+</head>
+<body>
+<div class="hud"><h1>Immersive gallery</h1>
+<p id="state">Checking XR support…</p>
+<button id="vr" disabled>🥽 Enter VR</button>
+<button id="desktop">🖥 Desktop orbit mode</button>
+</div>
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+const state = document.getElementById('state'), vrBtn = document.getElementById('vr');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d0d);
+const camera = new THREE.PerspectiveCamera(70, innerWidth/innerHeight, .05, 60);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.xr.enabled = true;
+document.body.appendChild(renderer.domElement);
+
+// floating gallery panels around the viewer
+const panels = [];
+const titles = ['shaders','physics','streaming','webgpu','audio','motion'];
+titles.forEach((t,i) => {
+  const cv = document.createElement('canvas'); cv.width=512; cv.height=320;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#1a1a1a'; c.fillRect(0,0,512,320);
+  c.fillStyle = '#60a5fa'; c.font='bold 44px monospace'; c.fillText(t, 30, 90);
+  c.fillStyle = '#8a8a8a'; c.font='20px monospace';
+  c.fillText('panel ' + (i+1) + ' — laser-selectable', 30, 140);
+  const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace;
+  const p = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.6, 1),
+    new THREE.MeshBasicMaterial({map:tex, side:THREE.DoubleSide}));
+  const ang = i/titles.length * Math.PI*2;
+  p.position.set(Math.sin(ang)*2.6, 1.6, Math.cos(ang)*2.6 - 1);
+  p.lookAt(0,1.6,0);
+  p.userData = {title:t};
+  scene.add(p); panels.push(p);
+});
+scene.add(new THREE.HemisphereLight(0x8888ff, 0x0d0d0d, 1.2));
+
+// laser pointer reticle for VR selection
+const reticle = new THREE.Mesh(
+  new THREE.RingGeometry(.02,.035,24),
+  new THREE.MeshBasicMaterial({color:0xfbbf24, side:THREE.DoubleSide}));
+reticle.visible = false; scene.add(reticle);
+
+let desktopMode = false, yaw = 0, pitch = 0;
+document.getElementById('desktop').onclick = () => {
+  desktopMode = !desktopMode;
+  state.textContent = desktopMode ? 'Desktop orbit: drag to look around.' : 'Idle.';
+};
+addEventListener('pointermove', e => { if (desktopMode){ yaw = (e.clientX/innerWidth-0.5)*1.6; pitch = (e.clientY/innerHeight-0.5)*0.8; }});
+
+// XR session flow with capability detection
+if ('xr' in navigator){
+  navigator.xr.isSessionSupported('immersive-vr').then(ok => {
+    if (ok){ vrBtn.disabled = false; state.textContent = 'Immersive VR supported on this device.'; }
+    else state.textContent = 'VR device not detected — desktop orbit mode available below. (Emulator: WebXR API Emulator extension.)';
+  });
+}else{
+  state.textContent = 'navigator.xr unavailable in this browser — desktop orbit mode is the fallback.';
+}
+vrBtn.onclick = async () => {
+  try{
+    const session = await navigator.xr.requestSession('immersive-vr', {optionalFeatures:['local-floor','bounded-floor']});
+    renderer.xr.setSession(session);
+    state.textContent = 'In VR — point the controller at panels; squeeze to select.';
+    session.addEventListener('end', () => state.textContent = 'Session ended.');
+  }catch(e){ state.textContent = 'XR session failed: ' + e.message; }
+};
+
+// controller laser
+const laser = new THREE.Line(
+  new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), new THREE.Vector3(0,0,-1)]),
+  new THREE.LineBasicMaterial({color:0x60a5fa}));
+laser.scale.z = 5;
+
+renderer.setAnimationLoop((t, frame) => {
+  if (renderer.xr.isPresenting){
+    for (const src of renderer.xr.getControllers ? renderer.xr.getControllers() : []){
+      src.add(laser);
+      const hit = intersectPanels(src);
+      if (hit){ reticle.visible = true; reticle.position.copy(hit.point); reticle.lookAt(camera.position); }
+      else reticle.visible = false;
+    }
+  }else{
+    camera.position.set(0, 1.6, 4.2);
+    camera.rotation.set(pitch, yaw, 0);
+  }
+  panels.forEach((p,i) => p.position.y = 1.6 + Math.sin(t/1000 + i)*0.06);
+  renderer.render(scene, camera);
+});
+function intersectPanels(src){
+  const dir = new THREE.Vector3(0,0,-1).applyQuaternion(src.quaternion);
+  const ray = new THREE.Raycaster(src.position, dir);
+  const hits = ray.intersectObjects(panels);
+  return hits[0] || null;
+}
+</script>
+</html>

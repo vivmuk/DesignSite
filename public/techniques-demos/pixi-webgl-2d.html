@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PixiJS WebGL 2D</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;top:12px;left:12px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:8px;padding:8px 12px;font:11px monospace;color:#888;z-index:5}
+#hud b{color:#7ee787}
+
+</style></head><body>
+
+<div id=hud>WebGL batched 2D · sprites <b id=sp>0</b> · fps <b id=fps>–</b> · move cursor to ripple</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.0/pixi.min.js"></script>
+<script>
+
+function boot(){
+  const app=new PIXI.Application({background:0x0d0d0d,resizeTo:window,antialias:true});
+  document.body.appendChild(app.view);
+  // procedural poster texture (no external asset)
+  const pc=document.createElement('canvas');pc.width=512;pc.height=512;
+  const px=pc.getContext('2d');
+  const g=px.createLinearGradient(0,0,512,512);
+  g.addColorStop(0,'#c0392b');g.addColorStop(.5,'#8e44ad');g.addColorStop(1,'#2de2ff');
+  px.fillStyle=g;px.fillRect(0,0,512,512);
+  for(let i=0;i<40;i++){px.fillStyle=`hsla(${Math.random()*360},70%,60%,.5)`;
+    px.beginPath();px.arc(Math.random()*512,Math.random()*512,10+Math.random()*70,0,Math.PI*2);px.fill();}
+  px.fillStyle='#0d0d0d';px.font='900 90px system-ui';px.fillText('WEBGL',36,140);px.fillText('2D',36,240);
+  const poster=PIXI.Texture.from(pc);
+  const p=new PIXI.Sprite(poster);
+  p.width=app.screen.width;p.height=app.screen.width*(512/512);
+  app.stage.addChild(p);
+  // displacement ripple
+  const noiseC=document.createElement('canvas');noiseC.width=noiseC.height=256;
+  const nx=noiseC.getContext('2d');const id=nx.createImageData(256,256);
+  for(let i=0;i<id.data.length;i+=4){id.data[i]=Math.random()*255;id.data[i+1]=Math.random()*255;id.data[i+2]=128;id.data[i+3]=255;}
+  nx.putImageData(id,0,0);
+  const disp=PIXI.Texture.from(noiseC);
+  const filter=new PIXI.filters.DisplacementFilter(disp,0);
+  p.filters=[filter];
+  let mx=-1000,my=-1000,target=0;
+  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;target=40;});
+  addEventListener('pointerleave',()=>target=0);
+  // confetti
+  const N=300,conf=[];
+  for(let i=0;i<N;i++){
+    const s=new PIXI.Sprite(PIXI.Texture.WHITE);
+    s.tint=Math.random()*0xffffff;s.width=4+Math.random()*8;s.height=8+Math.random()*10;
+    s.x=Math.random()*app.screen.width;s.y=Math.random()*app.screen.height;
+    s.anchor.set(.5);s._v=1.5+Math.random()*3;s._r=(Math.random()-.5)*.2;
+    app.stage.addChild(s);conf.push(s);
+  }
+  document.getElementById('sp').textContent=N+1;
+  let last=performance.now(),fps=60;
+  app.ticker.add(()=>{
+    const dt=app.ticker.deltaMS/1000;fps+=(1000/app.ticker.deltaMS-fps)*.05;
+    // ripple follows cursor
+    filter.scale.x+= (target-filter.scale.x)*.1;
+    filter.scale.y=filter.scale.x;
+    disp._frame&&(0);
+    const pt=new PIXI.Point(mx- p.x, my-p.y);
+    // animate noise offset for shimmer
+    filter.uniforms=filter.uniforms||{};
+    target*= .995; if(target<1)target=0;
+    for(const s of conf){
+      s.y+=s._v;s.rotation+=s._r;
+      if(s.y>app.screen.height+20){s.y=-20;s.x=Math.random()*app.screen.width;}
+    }
+    document.getElementById('fps').textContent=fps|0;
+  });
+}
+try{
+  if(!window.PIXI)throw new Error('PIXI failed to load');
+  boot();
+}catch(e){
+  document.body.innerHTML='<div style="padding:40px;color:#ff6b81;font-family:monospace">✗ PixiJS/WebGL unavailable ('+e.message+') — showing fallback text. The poster would render as a plain CSS gradient here.</div>';
+}
+</script></body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accessible Chart — keyboard + audio + table</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:10px;margin:10px 0;align-items:center}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:6px 14px;font:inherit;cursor:pointer}
+  svg{width:100%;max-width:760px;background:#141414;border:1px solid #2a2a2a;border-radius:12px;outline:none}
+  svg:focus{border-color:#60a5fa}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  #live{color:#7ee787;min-height:22px;font-size:13px}
+  .pt.focus rect{stroke:#fff;stroke-width:2.5}
+  table{border-collapse:collapse;font-size:12px}
+  th,td{border:1px solid #333;padding:4px 10px}
+</style>
+</head>
+<body>
+<h1>Quarterly revenue</h1>
+<p class="sub">Click the chart, then use ← → to move between points; press S to hear a tone mapped to the value. A full data table backs the chart for screen readers.</p>
+<div class="row"><button id="sound">🔊 Audio tones: OFF</button></div>
+<svg id="chart" tabindex="0" role="img" aria-label="Bar chart of quarterly revenue in thousands of dollars. Press left and right arrows to explore points." viewBox="0 0 760 340"></svg>
+<div id="live" role="status" aria-live="polite"></div>
+<div class="visually-hidden"><table><caption>Quarterly revenue, thousands USD</caption><tbody id="tbody"></tbody></table></div>
+<script>
+const DATA = [{q:'Q1',v:120},{q:'Q2',v:165},{q:'Q3',v:98},{q:'Q4',v:210},{q:'Q5',v:180},{q:'Q6',v:240}];
+const W=760,H=340,M={t:20,r:16,b:36,l:56};
+const svg = d3.select('#chart');
+const x = d3.scaleBand().domain(DATA.map(d=>d.q)).range([M.l,W-M.r]).padding(.35);
+const y = d3.scaleLinear().domain([0,250]).range([H-M.b,M.t]);
+
+svg.append('g').attr('transform',`translate(0,${H-M.b})`).call(d3.axisBottom(x));
+svg.append('g').attr('transform',`translate(${M.l},0)`).call(d3.axisLeft(y).ticks(5));
+svg.selectAll('g.pt').data(DATA).join('g').attr('class','pt')
+  .attr('transform',d=>`translate(${x(d.q)},0)`)
+  .append('rect').attr('x',0).attr('width',x.bandwidth())
+  .attr('y',d=>y(d.v)).attr('height',d=>H-M.b-y(d.v))
+  .attr('fill','#60a5fa').attr('rx',4);
+
+// hidden data table
+document.getElementById('tbody').innerHTML =
+  DATA.map(d=>`<tr><th scope="row">${d.q}</th><td>$${d.v}k</td></tr>`).join('');
+
+let idx = -1, soundOn = false;
+const pts = svg.selectAll('g.pt');
+function focusPoint(i){
+  idx = (i + DATA.length) % DATA.length;
+  pts.classed('focus',(d,j)=>j===idx);
+  const d = DATA[idx];
+  document.getElementById('live').textContent = `${d.q}: $${d.v} thousand — point ${idx+1} of ${DATA.length}`;
+  if (soundOn) playTone(d.v);
+}
+function playTone(v){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.value = 220 + (v/250)*660;          // value → pitch mapping
+    g.gain.setValueAtTime(.12, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime+.25);
+    o.connect(g).connect(ctx.destination); o.start(); o.stop(ctx.currentTime+.26);
+  }catch(e){}
+}
+svg.on('keydown', (e) => {
+  if (e.key==='ArrowRight'){ focusPoint(idx+1); e.preventDefault(); }
+  else if (e.key==='ArrowLeft'){ focusPoint(idx-1); e.preventDefault(); }
+  else if (e.key==='s' || e.key==='S'){ playTone(DATA[idx>=0?idx:0].v); }
+  else if (e.key==='Enter'){ focusPoint(idx<0?0:idx); }
+});
+document.getElementById('sound').onclick = function(){
+  soundOn = !soundOn;
+  this.textContent = soundOn ? '🔊 Audio tones: ON' : '🔊 Audio tones: OFF';
+  if (soundOn) playTone(DATA[Math.max(0,idx)].v);
+};
+svg.on('click', () => focusPoint(idx<0?0:idx));
+</script>
+</html>

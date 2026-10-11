@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>List Virtualization</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:640px;margin:40px auto}
+.stats{display:flex;gap:16px;color:#888;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.stats b{color:#7ee787}
+#viewport{position:relative;height:480px;overflow-y:auto;border:1px solid #333;border-radius:8px}
+#spacer{position:absolute;width:100%;pointer-events:none}
+.row{position:absolute;left:0;right:0;height:40px;display:flex;align-items:center;padding:0 16px;box-sizing:border-box;border-bottom:1px solid #1c1c1c}
+.row:nth-child(odd){background:#141414}
+
+</style></head><body>
+
+<div class="wrap">
+<h1>100,000 rows, ~15 in the DOM</h1>
+<div class="stats">rows in DOM: <b id="count">0</b><span>rendered window: <b id="win">–</b></span></div>
+<div id="viewport"><div id="spacer"></div></div>
+</div>
+<script>
+
+const N=100000,ROW=40,viewport=document.getElementById('viewport'),spacer=document.getElementById('spacer');
+spacer.style.height=N*ROW+'px';
+const pool=[];
+function onScroll(){
+  const scrollTop=viewport.scrollTop;
+  const first=Math.max(0,Math.floor(scrollTop/ROW)-2);
+  const visible=Math.ceil(viewport.clientHeight/ROW)+4;
+  const last=Math.min(N,first+visible);
+  spacer.innerHTML='';
+  pool.length=0;
+  for(let i=first;i<last;i++){
+    const d=document.createElement('div');d.className='row';
+    d.style.top=(i*ROW)+'px';d.textContent='Row '+i;
+    spacer.appendChild(d);pool.push(d);
+  }
+  document.getElementById('count').textContent=pool.length;
+  document.getElementById('win').textContent=first+'–'+last;
+}
+viewport.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+</script></body></html>

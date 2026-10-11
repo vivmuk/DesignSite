@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Client Persistence Patterns</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px;display:grid;grid-template-columns:1fr 340px;gap:24px}
+h1{font-size:18px}
+input,textarea{width:100%;box-sizing:border-box;background:#111;border:1px solid #333;color:#e4e4e4;padding:10px;border-radius:6px;font:14px system-ui}
+textarea{min-height:150px;resize:vertical;font:13px ui-monospace,monospace}
+#status{margin-top:8px;font:12px monospace;min-height:18px}
+#status.ok{color:#9e9}#status.warn{color:#fb5}#status.err{color:#f66}
+label{font-size:13px;display:block;margin:12px 0 4px}
+aside{background:#101010;border:1px solid #2a2a2a;border-radius:10px;padding:16px;font:12px ui-monospace,monospace;overflow:auto;max-height:80vh}
+aside h3{margin:0 0 8px;color:#6cf;font-size:13px}
+.key{padding:6px 0;border-bottom:1px solid #1a1a1a}
+.key b{color:#9effa1}.key .sz{color:#666;float:right}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 14px;border-radius:6px;cursor:pointer;margin:8px 8px 0 0}
+button.fill{border-color:#f66;color:#f88}
+#usage{margin-top:10px;height:8px;background:#1a1a1a;border-radius:4px;overflow:hidden}
+#usage div{height:100%;background:#6cf;transition:.3s}
+</style></head><body>
+<div><h1>Draft autosave with quota-aware persistence</h1>
+<label for="t">Title</label><input id="t" placeholder="Draft title">
+<label for="b">Body</label><textarea id="b" placeholder="Start typing — a debounced save fires 600ms after you stop…"></textarea>
+<div id="status"></div>
+<button onclick="save(true)">💾 Save now</button>
+<button onclick="clearDrafts()">🗑 Clear drafts</button>
+<button class="fill" onclick="fillQuota()">💣 Trigger quota failure</button>
+</div>
+<aside><h3>Storage inspector</h3><div id="insp"></div>
+<div id="usage"><div style="width:2%"></div></div>
+<div style="color:#666;margin-top:6px" id="utext"></div></aside>
+<script>
+const DEBOUNCE=600, KEY='draft:post';
+let timer, saved='';
+const st=document.getElementById('status');
+function estimate(){ let bytes=0; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i);
+  bytes+=(localStorage[k].length+k.length)*2; }
+  document.querySelector('#usage div').style.width=Math.min(100,bytes/5242880*100)+'%';
+  document.getElementById('utext').textContent=`~${(bytes/1024).toFixed(1)} KB of ~5 MB quota`;
+  const insp=document.getElementById('insp');
+  insp.innerHTML=Array.from({length:localStorage.length},(_,i)=>{ const k=localStorage.key(i);
+    return `<div class="key"><b>${k}</b><span class="sz">${(localStorage[k].length/1024).toFixed(1)}KB</span><br>${localStorage[k].slice(0,60).replace(/</g,'&lt;')}…</div>`; }).join('')||'<span style="color:#555">empty</span>';
+}
+function save(manual){
+  const data=JSON.stringify({t:t.value,b:b.value,at:Date.now()});
+  try{
+    localStorage.setItem(KEY,data); saved=data;
+    st.className='ok'; st.textContent=(manual?'manual save':'autosave ✓')+' '+new Date().toLocaleTimeString();
+  }catch(e){
+    // quota failure — the pattern: degrade gracefully
+    st.className='err';
+    st.textContent='QuotaExceededError — falling back to in-memory only (draft survives until tab close)';
+    window._mem=data; // in-memory fallback
+  }
+  estimate();
+}
+function debounce(){ clearTimeout(timer); st.className='warn'; st.textContent='edited… (saving in 600ms)';
+  timer=setTimeout(()=>save(false),DEBOUNCE); }
+function clearDrafts(){ localStorage.removeItem(KEY); delete window._mem; t.value=''; b.value=''; saved='';
+  st.className='ok'; st.textContent='drafts cleared'; estimate(); }
+function fillQuota(){
+  try{ // 5MB blob of junk
+    localStorage.setItem('junk:big','x'.repeat(2*1024*1024)); localStorage.setItem('junk:big2','y'.repeat(2*1024*1024));
+    st.className='warn'; st.textContent='storage stuffed to ~4MB — now edit and watch autosave hit QuotaExceededError';
+  }catch(e){ st.className='err'; st.textContent='quota already exhausted'; }
+  estimate();
+}
+[t,b].forEach(el=>el.addEventListener('input',debounce));
+// restore on load
+try{ const d=localStorage.getItem(KEY); if(d){ const o=JSON.parse(d); t.value=o.t; b.value=o.b; saved=d;
+  st.className='ok'; st.textContent='draft restored from previous session ✓'; } }catch(e){}
+estimate();
+</script></body></html>

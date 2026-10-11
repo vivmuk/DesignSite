@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Performance Profiling Workflow</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+#flame{background:#111;border:1px solid #2a2a2a;border-radius:8px;padding:12px;margin-top:14px}
+.row{position:relative;height:22px;margin-bottom:4px}
+.blk{position:absolute;top:0;height:100%;border-radius:3px;font:10px/22px monospace;padding:0 6px;color:#0d0d0d;white-space:nowrap;overflow:hidden;cursor:pointer;transition:opacity .3s, transform .3s}
+.blk:hover{outline:1px solid #fff}
+.long{background:#f66}.mid{background:#fb5}.short{background:#9e9}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+button.fix{border-color:#5a5;color:#9e9}
+#info{margin-top:14px;padding:12px;background:#161616;border-radius:8px;font:12px monospace;min-height:40px;color:#aaa}
+#ms{float:right;font:16px monospace} #ms.bad{color:#f66} #ms.good{color:#9e9}
+</style></head><body>
+<h1>Flame chart simulator — fix the long task</h1>
+<p>Click the big red block (the culprit). Choosing the right fix visually shortens the task and the total frame time drops under 50ms.</p>
+<button class="fix" onclick="applyFix('codeSplit')">Fix: split the long task (yield with await)</button>
+<button onclick="applyFix('debounce')">Fix: debounce the handler</button>
+<button onclick="applyFix('webworker')">Fix: move to a Web Worker</button>
+<span id="ms">total: 187 ms</span>
+<div id="flame">
+<div class="row" data-r="0"><span class="blk long" style="left:0;width:94%" data-fix="any">handleScrollEvent — 180ms 🔴</span></div>
+<div class="row" data-r="1" style="padding-left:2%"><span class="blk mid" style="left:0;width:22%">parseJSON 38ms</span><span class="blk long" style="left:23%;width:68%" data-fix="any" id="culprit">layout thrash loop — 140ms 🔴</span></div>
+<div class="row" data-r="2" style="padding-left:4%"><span class="blk short" style="left:24%;width:10%">read 12ms</span><span class="blk short" style="left:35%;width:8%">write 9ms</span><span class="blk short" style="left:44%;width:10%">read 13ms</span><span class="blk short" style="left:55%;width:9%">write 8ms</span></div>
+</div>
+<div id="info">Click any block to inspect. Red = >50ms task. The write-then-read ping-pong in the inner row is forced synchronous layout.</div>
+<script>
+const tips={
+ 'layout thrash loop — 140ms 🔴':'CULPRIT: alternating reads/writes inside a loop invalidates layout each iteration. Fix: batch reads, then batch writes.',
+ 'handleScrollEvent — 180ms 🔴':'Top-level task: too much work in one task. Fix: split with `await new Promise(r=>setTimeout(r))` between chunks.',
+ 'parseJSON 38ms':'Under 50ms — acceptable.'};
+document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>{ document.getElementById('info').textContent=tips[b.textContent]||b.textContent; });
+function applyFix(kind){
+  const culprit=document.getElementById('culprit');
+  if(kind==='webworker'){ culprit.textContent='worker handoff — 4ms'; culprit.className='blk short'; culprit.removeAttribute('id');
+    setTotal(52); info('Moved the thrash loop to a Worker. Main task now ends after handoff.');
+  } else if(kind==='codeSplit'){ culprit.textContent='chunk 1 — 22ms (yielded)'; culprit.className='blk mid'; culprit.removeAttribute('id');
+    const row=culprit.parentElement; for(let i=0;i<2;i++){ const s=document.createElement('span'); s.className='blk short'; s.style.left=(24+i*26)+'%'; s.style.width='16%'; s.textContent='chunk '+(i+2)+' (yield)'; row.append(s); }
+    setTotal(71); info('Task split via await-yield: each chunk under 50ms. Responsiveness restored.');
+  } else { setTotal(184); info('Debounce barely helps here — the work is inside one event. Wrong fix! Pick another.'); }
+}
+function setTotal(ms){ const el=document.getElementById('ms'); el.textContent='total: '+ms+' ms'; el.className=ms<100?'good':'bad'; }
+function info(t){ document.getElementById('info').textContent=t; }
+</script></body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2D Scene Graph Game Loop</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;top:12px;left:12px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:8px;padding:8px 12px;font:11px monospace;color:#888;z-index:5}
+#hud b{color:#7ee787}
+
+</style></head><body>
+
+<div id=hud>fps <b id=fps>–</b> · entities <b id=en>0</b> · fixed step 1/60s · coins <b id=co>0</b>/30</div>
+<script>
+
+const cv=document.createElement('canvas');document.body.appendChild(cv);
+const ctx=cv.getContext('2d');
+let W,H;function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit();addEventListener('resize',fit);
+// scene graph: root with children, transforms nest
+class Node{
+  constructor(){this.x=0;this.y=0;this.children=[];}
+  add(n){this.children.push(n);return n;}
+  update(dt){for(const c of this.children)c.update(dt);}
+  draw(cx){cx.save();cx.translate(this.x,this.y);for(const c of this.children)c.draw(cx);cx.restore();}
+}
+const root=new Node();
+// parallax layers
+function layer(speed,hue){
+  const n=root.add(new Node());
+  n.update=dt=>{n.x-=speed*60*dt;if(n.x<-innerWidth)n.x=0;};
+  n.draw=cx=>{
+    cx.fillStyle=`hsl(${hue},30%,8%)`;
+    for(let i=0;i<3;i++)cx.fillRect(n.x+i*innerWidth,0,innerWidth,innerHeight);
+    cx.fillStyle=`hsla(${hue},40%,30%,.5)`;
+    for(let i=0;i<8;i++){const bx=((i*173)%innerWidth);cx.fillRect(n.x+bx,innerHeight*.55+(i%3)*40,60+i%4*30,innerHeight);}
+  };
+  return n;
+}
+layer(.2,210);layer(.5,160);layer(1,90);
+// player
+const player=root.add(new Node());
+player.vx=180;player.vy=0;
+player.update=dt=>{
+  player.x+=player.vx*dt;
+  player.vy+=1400*dt;player.y+=player.vy*dt;
+  if(player.y>innerHeight*.5){player.y=innerHeight*.5;player.vy=0;}
+};
+player.draw=cx=>{
+  cx.fillStyle='#7ee787';cx.fillRect(-10,-30,20,30);
+  cx.fillStyle='#0d0d0d';cx.fillRect(2,-22,4,4);
+};
+addEventListener('pointerdown',()=>{if(player.y>=innerHeight*.5-1)player.vy=-560;});
+addEventListener('keydown',e=>{if(e.code==='Space'&&player.y>=innerHeight*.5-1)player.vy=-560;});
+// coins in the graph
+let coinsLeft=30;
+for(let i=0;i<30;i++){
+  const c=root.add(new Node());
+  c.x=400+i*160;c.y=innerHeight*(.2+((i*37)%40)/100);
+  c._t=i;
+  c.update=dt=>{c._t+=dt;if(Math.abs(player.x-c.x)<24&&Math.abs(player.y-c.y)<40){c._got=true;coinsLeft--;}};
+  c.draw=cx=>{if(c._got)return;cx.fillStyle='#ffd866';cx.beginPath();cx.arc(0,Math.sin(c._t*3)*8,9,0,Math.PI*2);cx.fill();};
+}
+// fixed-timestep loop
+let last=performance.now(),acc=0,fpsS=60;const STEP=1/60;
+document.getElementById('en').textContent=root.children.length;
+(function loop(now){
+  requestAnimationFrame(loop);
+  let dt=Math.min((now-last)/1000,.1);last=now;fpsS+=(1/Math.max(dt,.001)-fpsS)*.05;
+  acc+=dt;
+  while(acc>=STEP){root.update(STEP);acc-=STEP;}
+  const alpha=acc/STEP;
+  // render with interpolation-ish (camera follows player)
+  ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,innerWidth,innerHeight);
+  ctx.save();
+  ctx.translate(-(player.x-innerWidth*.3)*alpha*.5,0);
+  root.draw(ctx);
+  ctx.restore();
+  document.getElementById('fps').textContent=fpsS|0;
+  document.getElementById('co').textContent=30-coinsLeft;
+})(performance.now());
+</script></body></html>

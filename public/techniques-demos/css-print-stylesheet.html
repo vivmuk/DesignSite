@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Print Stylesheets</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+.bar{display:flex;gap:10px;align-items:center;margin-bottom:18px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+article{max-width:640px;line-height:1.7}
+article h2{font-size:20px;margin-top:0}
+nav,aside.ad,.actions{display:none}
+@media print{
+  body{background:#fff;color:#000;font:12pt Georgia,serif;padding:0;max-width:100%}
+  .bar,.no-print{display:none !important}
+  article h2{page-break-after:avoid}
+  .callout{border:2pt solid #000;padding:8pt;page-break-inside:avoid}
+  a{color:#000;text-decoration:none}
+  a::after{content:" (" attr(href) ") ";font-size:9pt;color:#444}
+  ul.sources{list-style:disc}
+  ul.sources li{page-break-inside:avoid}
+  section{page-break-before:auto}
+  .chapter{page-break-before:always}
+}
+.callout{background:#161616;border:1px solid #3a3a3a;border-radius:8px;padding:12px 16px;margin:14px 0}
+#sim{display:none;background:#fff;color:#000;font:12pt Georgia,serif;padding:28px;border-radius:8px;margin-top:10px;max-width:640px}
+#sim .pb{border-top:2px dashed #999;margin:18px -28px;padding-top:14px;text-align:center;font:10pt sans-serif;color:#666}
+</style></head><body>
+<div class="bar"><h1 style="font-size:18px;margin:0">Print stylesheet demo</h1>
+<button onclick="window.print()">🖨 Real print dialog</button>
+<button onclick="sim()">👁 Simulated preview</button></div>
+<article>
+<h2>The Browser as a Printing Press</h2>
+<p class="no-print" style="color:#888">This paragraph is screen-only (class <code>no-print</code>). The simulated preview below shows the same article with print rules applied.</p>
+<p>Print styles remain one of CSS\' most underused superpowers. A well-crafted <code>@media print</code> block turns any article into a clean document: black on white, serif body, no chrome.</p>
+<div class="callout">Callout boxes use <code>page-break-inside: avoid</code> so they never split across pages.</div>
+<section class="chapter"><h2>Chapter Two: Link Expansion</h2>
+<p>In print, URLs vanish — so we regenerate them with <code>a::after { content: " (" attr(href) ") " }</code>, making citations meaningful on paper.</p>
+<ul class="sources"><li><a href="https://example.com/spec">The specification</a></li><li><a href="https://example.com/guide">The practitioner\'s guide</a></li></ul>
+</section>
+</article>
+<div id="sim"></div>
+<script>
+function sim(){
+  const s=document.getElementById('sim');
+  s.style.display=s.style.display==='none'?'block':'none';
+  if(s.style.display==='block'){
+    s.innerHTML=`<b>The Browser as a Printing Press</b><br><br>
+    Print styles remain one of CSS\' most underused superpowers…<br><br>
+    <span style="border:2pt solid #000;padding:8pt;display:inline-block">Callout boxes use page-break-inside: avoid…</span><br>
+    <div class="pb">— — — page break (chapter two starts on a new page) — — —</div>
+    <b>Chapter Two: Link Expansion</b><br><br>
+    In print, URLs vanish — so we regenerate them:<br>
+    • The specification (https://example.com/spec)<br>
+    • The practitioner\'s guide (https://example.com/guide)`;
+  }
+}
+</script></body></html>

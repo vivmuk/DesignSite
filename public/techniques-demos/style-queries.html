@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Style Queries — @container style()</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:820px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.4rem; }
+  .chips { display:flex; gap:.6rem; margin-bottom:1.6rem; flex-wrap:wrap; }
+  .chips button { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:999px; padding:.45rem 1.1rem; cursor:pointer; font-size:.85rem; }
+  .chips button:hover { border-color:#8b7cff; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem; }
+  /* Each tile's parent carries the --tone variable; children restyle from it */
+  .tile { container-type: inline-size; }
+  .tile-inner { background:#141414; border:1px solid #2a2a2a; border-radius:12px; padding:1rem; height:120px; box-sizing:border-box;
+    transition:background .3s, border-color .3s; }
+  .tile-inner h3 { margin:0 0 .3rem; font-size:.9rem; }
+  .tile-inner p { margin:0; font-size:.72rem; color:#999; }
+  /* Style query: read a custom property from the container */
+  @container style(--tone: warm) {
+    .tile-inner { background:#221410; border-color:#7a4a2a; }
+    .tile-inner h3 { color:#ff9c6e; }
+  }
+  @container style(--tone: cool) {
+    .tile-inner { background:#101823; border-color:#2a4a7a; }
+    .tile-inner h3 { color:#6ea8ff; }
+  }
+  @container style(--tone: fresh) {
+    .tile-inner { background:#0f1f18; border-color:#2a5a3f; }
+    .tile-inner h3 { color:#7dd8a0; }
+  }
+  .unsupported { display:none; color:#e8c468; background:#1d160f; border:1px solid #4a3a2a; padding:1rem; border-radius:10px; margin-bottom:1.4rem; }
+</style>
+</head>
+<body>
+<h1>Style Queries: @container style()</h1>
+<p class="sub">Theme chips set a <code>--tone</code> custom property on the gallery; every tile's styling reacts through <code>@container style()</code>.</p>
+<div class="unsupported" id="unsup">Style queries aren't supported in this browser yet — tiles stay in their base style.</div>
+<div class="chips" role="group" aria-label="Tone">
+  <button onclick="setTone('warm')">Warm</button>
+  <button onclick="setTone('cool')">Cool</button>
+  <button onclick="setTone('fresh')">Fresh</button>
+</div>
+<div class="gallery" id="gallery">
+  <div class="tile"><div class="tile-inner"><h3>Tile one</h3><p>Reads --tone from its container.</p></div></div>
+  <div class="tile"><div class="tile-inner"><h3>Tile two</h3><p>Same markup, different theme.</p></div></div>
+  <div class="tile"><div class="tile-inner"><h3>Tile three</h3><p>No classes are swapped.</p></div></div>
+  <div class="tile"><div class="tile-inner"><h3>Tile four</h3><p>Only a variable changes.</p></div></div>
+  <div class="tile"><div class="tile-inner"><h3>Tile five</h3><p>Query, not inheritance.</p></div></div>
+  <div class="tile"><div class="tile-inner"><h3>Tile six</h3><p>CSS reads state.</p></div></div>
+</div>
+<script>
+  const gallery = document.getElementById('gallery');
+  function setTone(t) { gallery.style.setProperty('--tone', t); }
+  setTone('cool');
+  // Style queries: verify support by checking the rule parses
+  let ok = false;
+  try { ok = CSS.supports('container-type: inline-size') && (CSS.supports('@container style(--x: y) { a { color: red } }') || (() => { const s = document.createElement('style'); s.textContent = '@container style(--tone: warm) { .t { color: red } }'; document.head.appendChild(s); ok = [...s.sheet.cssRules].length > 0 && s.sheet.cssRules[0].constructor.name === 'CSSContainerRule'; s.remove(); return ok; })()); } catch(e) {}
+  if (!ok) document.getElementById('unsup').style.display = 'block';
+</script>
+</body>
+</html>

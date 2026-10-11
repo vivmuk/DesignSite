@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easing Race Track</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:860px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2rem; font-weight:700; }
+.lane { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+.track { flex:1; height:34px; background:#161616; border:1px solid #2a2a2a; border-radius:999px; position:relative; }
+.ball { position:absolute; top:5px; left:6px; width:24px; height:24px; border-radius:50%; }
+.name { width:210px; font-family:ui-monospace, monospace; font-size:0.72rem; color:#999; }
+#go { background:none; border:1px solid #444; color:#e4e4e4; padding:0.7rem 2rem; cursor:pointer; margin-top:0.5rem; font-size:0.9rem; }
+#go:hover { border-color:#e4e4e4; }
+svg { margin-top:1.5rem; background:#111; border:1px solid #2a2a2a; border-radius:10px; width:100%; height:220px; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Easing Race</h1>
+  <div id="lanes"></div>
+  <button id="go">Race</button>
+  <p class="hint">Balls animate left→right with distinct timing functions; the graph shows each curve's progress (y) against linear time (x).</p>
+</div>
+
+<script>
+
+const racers = [
+  ['linear', 'linear', '#7ee8fa'],
+  ['ease', 'ease', '#e86aa8'],
+  ['ease-out', 'ease-out', '#eec07e'],
+  ['bounce (cubic-bezier)', 'cubic-bezier(0.34, 1.56, 0.64, 1)', '#7ee8c2'],
+  ['linear() segments', 'linear(0, 0.25 25%, 0.75 60%, 1)', '#c27ee8']
+];
+const lanes = document.getElementById('lanes');
+racers.forEach(function(r, i) {
+  lanes.insertAdjacentHTML('beforeend',
+    '<div class="lane"><div class="track"><div class="ball" id="b' + i + '" style="background:' + r[2] + '"></div></div><span class="name">' + r[0] + '</span></div>');
+});
+const DUR = 2200;
+function race() {
+  racers.forEach(function(r, i) {
+    const b = document.getElementById('b' + i);
+    b.style.transition = 'none';
+    b.style.left = '6px';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        b.style.transition = 'left ' + DUR + 'ms ' + r[1];
+        b.style.left = 'calc(100% - 30px)';
+      });
+    });
+  });
+  drawGraph();
+}
+const SVGNS = 'http://www.w3.org/2000/svg';
+function drawGraph() {
+  let svg = document.querySelector('svg');
+  if (!svg) { svg = document.createElementNS(SVGNS, 'svg'); document.querySelector('.wrap').appendChild(svg); }
+  svg.innerHTML = '';
+  const W = 800, H = 220, PAD = 30;
+  racers.forEach(function(r, i) {
+    const path = document.createElementNS(SVGNS, 'path');
+    const pts = [];
+    for (let t = 0; t <= 1.001; t += 0.02) {
+      const probe = document.createElement('div');
+      const y = sampleEase(r[1], t);
+      pts.push([(PAD + t * (W - 2 * PAD)).toFixed(1), (H - PAD - y * (H - 2 * PAD)).toFixed(1)]);
+    }
+    path.setAttribute('d', 'M' + pts.map(function(p) { return p.join(','); }).join(' L'));
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', r[2]);
+    path.setAttribute('stroke-width', '2');
+    svg.appendChild(path);
+  });
+}
+function sampleEase(fn, t) {
+  const el = document.createElement('div');
+  const anim = el.animate([{ transform: 'translateX(0px)' }, { transform: 'translateX(100px)' }], { duration: 1000, easing: fn, fill: 'forwards' });
+  anim.pause();
+  anim.currentTime = t * 1000;
+  const m = new DOMMatrix(getComputedStyle(el).transform);
+  anim.cancel();
+  return m.m41 / 100;
+}
+document.getElementById('go').addEventListener('click', race);
+race();
+
+</script>
+</body>
+</html>

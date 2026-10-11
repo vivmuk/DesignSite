@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clip-path Morph</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.hero { min-height:70vh; display:grid; place-items:center; position:relative; }
+.hero::before { content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, #1e3a5e, #5e2a3a 60%, #0d0d0d);
+  clip-path:polygon(var(--poly)); transition:clip-path 0.5s cubic-bezier(0.4,0,0.2,1); }
+.content { position:relative; z-index:2; text-align:center; max-width:48ch; padding:0 5vw; }
+h1 { font-size:clamp(2.5rem,7vw,5rem); font-weight:800; margin-bottom:1rem; }
+p { color:#a8a8a8; margin-bottom:2rem; line-height:1.7; }
+input[type=range] { width:280px; accent-color:#7ee8fa; }
+.verts { margin-top:2.5rem; display:grid; grid-template-columns:repeat(3, 1fr); gap:0.6rem; max-width:480px; margin-inline:auto; }
+.verts input { width:100%; font-family:ui-monospace, monospace; background:#161616; border:1px solid #2a2a2a; color:#8ab4ff; padding:0.35rem 0.5rem; border-radius:6px; font-size:0.75rem; }
+
+</style>
+</head>
+<body>
+
+<div class="hero" id="hero">
+  <div class="content">
+    <h1>SHAPED</h1>
+    <p>The banner below is clipped with polygon(). Scroll the slider to morph between presets, or drag the vertex editor.</p>
+    <input type="range" id="morph" min="0" max="100" value="0">
+    <div class="verts" id="verts"></div>
+  </div>
+</div>
+
+<script>
+
+const polys = [
+  '0 0, 100% 0, 100% 78%, 0 100%',
+  '0 12%, 100% 0, 100% 100%, 0 88%',
+  '12% 0, 100% 0, 88% 100%, 0 100%',
+  '0 0, 100% 0, 100% 100%, 50% 82%, 0 100%'
+];
+let idx = 0;
+function setPoly(p) { document.getElementById('hero').style.setProperty('--poly', p); }
+document.getElementById('morph').addEventListener('input', function(e) {
+  const t = e.target.value / 100 * (polys.length - 1);
+  const a = Math.floor(t), b = Math.min(a + 1, polys.length - 1), f = t - a;
+  const pa = polys[a].split(', ').map(Number.POSITIVE === Number ? null : null) || polys[a].split(', ');
+  const A = polys[a].split(', '), B = polys[b].split(', ');
+  const mix = A.map(function(v, i) {
+    const m1 = parseFloat(A[i]), m2 = parseFloat(B[i]);
+    const unit = A[i].includes('%') ? '%' : 'px';
+    return (m1 + (m2 - m1) * f).toFixed(1) + unit;
+  }).join(', ');
+  setPoly(mix);
+});
+document.getElementById('morph').addEventListener('change', function(e) {
+  if (+e.target.value === 0 || +e.target.value === 100) {
+    idx = +e.target.value === 100 ? polys.length - 1 : 0;
+  }
+});
+const verts = document.getElementById('verts');
+setPoly(polys[0]);
+
+</script>
+</body>
+</html>

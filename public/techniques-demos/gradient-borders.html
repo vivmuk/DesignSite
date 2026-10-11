@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradient Borders</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+@property --spin { syntax:'<angle>'; inherits:false; initial-value:0deg; }
+@keyframes turn { to { --spin:360deg; } }
+.wrap { max-width:960px; margin:0 auto; padding:8vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2.5rem; font-weight:700; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; }
+.card { border-radius:16px; padding:2px; position:relative; }
+.card::before { content:''; position:absolute; inset:0; border-radius:16px; padding:2px;
+  background:conic-gradient(from var(--spin), #7ee8fa, #8a5ae8, #e86aa8, #7ee8fa);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+.card.spin::before { animation:turn 4s linear infinite; }
+.card.static::before { background:linear-gradient(135deg, #7ee8fa, #e86aa8); }
+.card.glow::before { animation:turn 6s linear infinite; }
+.card.glow { filter:drop-shadow(0 0 18px rgba(138,90,232,0.35)); }
+.inner { background:#161616; border-radius:14px; padding:1.6rem; }
+.card h3 { font-size:1.05rem; margin-bottom:0.7rem; }
+.card p { color:#999; font-size:0.88rem; line-height:1.65; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Gradient Border Rings</h1>
+  <div class="cards">
+    <div class="card spin"><h3>Spinning conic</h3><p>Animated conic-gradient border using mask composite — the border rotates while the card face stays dark.</p></div>
+    <div class="card static"><h3>Static duotone</h3><p>Two-stop gradient border, no animation — the everyday workhorse for feature cards.</p></div>
+    <div class="card glow"><h3>Glow ring</h3><p>Conic border plus a matching drop-shadow so the ring appears to emit light.</p></div>
+  </div>
+</div>
+
+<script>
+
+document.querySelectorAll('.card').forEach(function(c) {
+  if (!c.querySelector('.inner')) {
+    const d = document.createElement('div');
+    d.className = 'inner';
+    while (c.firstChild) d.appendChild(c.firstChild);
+    c.appendChild(d);
+  }
+});
+if (!CSS.supports('mask-composite', 'exclude') && !CSS.supports('-webkit-mask-composite', 'xor')) {
+  document.querySelector('h1').insertAdjacentText('afterend',
+    'Fallback text: mask-composite unsupported - cards shown with plain borders.');
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Canvas 2D Paint</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;display:flex;flex-direction:column;height:100vh}
+#bar{display:flex;gap:8px;align-items:center;padding:10px 14px;background:#161616;border-bottom:1px solid #262626;flex-wrap:wrap}
+button{background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:6px;padding:6px 12px;cursor:pointer}
+button.on{border-color:#7ee787;color:#7ee787}
+.sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+.sw.on{border-color:#7ee787}
+label{font-size:12px;color:#888;display:flex;gap:6px;align-items:center}
+#wrap{position:relative;flex:1;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+
+</style></head><body>
+
+<div id=bar>
+<button data-t=brush class=on>brush</button><button data-t=line>line</button><button data-t=rect>rect</button><button data-t=circle>circle</button>
+<span style="width:10px"></span><label>size <input id=size type=range min=1 max=40 value=6></label>
+<span style="width:10px"></span><div id=colors></div>
+<button id=sym>symmetry: off</button><button id=undo>↩ undo</button><button id=clear>clear</button>
+</div>
+<div id=wrap><canvas id=main></canvas><canvas id=over></canvas></div>
+<script>
+
+const main=document.getElementById('main'),over=document.getElementById('over');
+const ctx=main.getContext('2d'),octx=over.getContext('2d');
+const colors=['#e4e4e4','#7ee787','#7eb8ff','#ff6b81','#ffd866'];
+const cbox=document.getElementById('colors');
+let color=colors[0];
+colors.forEach((c,i)=>{const d=document.createElement('div');d.className='sw'+(i?'':' on');d.style.background=c;
+  d.onclick=()=>{color=c;[...cbox.children].forEach(x=>x.classList.toggle('on',x===d));};cbox.appendChild(d);});
+function fit(c){const r=c.parentElement.getBoundingClientRect();c.width=r.width*devicePixelRatio;c.height=r.height*devicePixelRatio;
+  c.getContext('2d').setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit(main);fit(over);
+addEventListener('resize',()=>{const snap=snapshots[snapshots.length-1];fit(main);fit(over);if(snap)ctx.putImageData(snap,0,0);});
+let tool='brush',symmetry=false,drawing=false,start=null,snaps=[];
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tool=b.dataset.t;
+  document.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('on',x===b));});
+const symBtn=document.getElementById('sym');
+symBtn.onclick=()=>{symmetry=!symmetry;symBtn.textContent='symmetry: '+(symmetry?'on':'off');symBtn.classList.toggle('on',symmetry);};
+const size=document.getElementById('size');
+function pos(e){const r=over.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top];}
+function strokePath(cx,pts,mirror){
+  cx.beginPath();
+  pts.forEach((p,i)=>{const x=mirror?over.width/devicePixelRatio-p[0]:p[0];
+    i?cx.lineTo(x,p[1]):cx.moveTo(x,p[1]);});
+  cx.strokeStyle=color;cx.lineWidth=+size.value;cx.lineCap='round';cx.lineJoin='round';cx.stroke();
+}
+function shape(cx,a,b,commit){
+  cx.beginPath();
+  if(tool==='line'){cx.moveTo(...a);cx.lineTo(...b);}
+  if(tool==='rect'){cx.rect(...a,b[0]-a[0],b[1]-a[1]);}
+  if(tool==='circle'){cx.arc(...a,Math.hypot(b[0]-a[0],b[1]-a[1]),0,Math.PI*2);}
+  if(commit){cx.strokeStyle=color;cx.lineWidth=+size.value;cx.stroke();}
+  else{cx.setLineDash([5,5]);cx.strokeStyle='#666';cx.lineWidth=1;cx.stroke();cx.setLineDash([]);}
+}
+over.addEventListener('pointerdown',e=>{
+  over.setPointerCapture(e.pointerId);drawing=true;start=pos(e);
+  if(snaps.length>=20)snaps.shift();
+  snaps.push(ctx.getImageData(0,0,main.width,main.height));
+});
+over.addEventListener('pointermove',e=>{
+  if(!drawing)return;
+  octx.clearRect(0,0,over.width,over.height);
+  const p=pos(e);
+  if(tool==='brush'){
+    if(!over._pts)over._pts=[];
+    over._pts.push(p);
+    octx.strokeStyle=color;octx.lineWidth=+size.value;octx.lineCap='round';
+    octx.beginPath();over._pts.forEach((q,i)=>i?octx.lineTo(...q):octx.moveTo(...q));octx.stroke();
+  } else shape(octx,start,p,false);
+});
+over.addEventListener('pointerup',e=>{
+  if(!drawing)return;drawing=false;
+  const p=pos(e);
+  ctx.save();
+  if(symmetry){ctx.translate(main.width/devicePixelRatio,0);ctx.scale(-1,1);}
+  if(tool==='brush'&&over._pts){
+    strokePath(ctx,over._pts,false);
+    if(symmetry){ctx.beginPath();
+      over._pts.forEach((q,i)=>{const x=main.width/devicePixelRatio-q[0];i?ctx.lineTo(x,q[1]):ctx.moveTo(x,q[1]);});
+      ctx.stroke();}
+  } else {
+    shape(ctx,start,p,true);
+    if(symmetry)shape(ctx,[main.width/devicePixelRatio-start[0],start[1]],[main.width/devicePixelRatio-p[0],p[1]],true);
+  }
+  ctx.restore();
+  octx.clearRect(0,0,over.width,over.height);over._pts=null;
+});
+document.getElementById('undo').onclick=()=>{const s=snaps.pop();if(s)ctx.putImageData(s,0,0);};
+document.getElementById('clear').onclick=()=>{snaps.push(ctx.getImageData(0,0,main.width,main.height));ctx.clearRect(0,0,main.width,main.height);};
+</script></body></html>

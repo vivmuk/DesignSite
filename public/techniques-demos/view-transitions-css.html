@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>View Transitions — Grid to Detail</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:680px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+  .shot { aspect-ratio:1; border-radius:12px; cursor:pointer; display:grid; place-items:end center; font-size:.8rem; color:#fff; padding-bottom:.6rem; box-sizing:border-box; transition:filter .15s; }
+  .shot:hover { filter:brightness(1.15); }
+  .s1 { background:linear-gradient(135deg,#8b7cff,#4a3aff); } .s2 { background:linear-gradient(135deg,#7dd8a0,#2a7a5a); }
+  .s3 { background:linear-gradient(135deg,#ff9c6e,#a34a2a); } .s4 { background:linear-gradient(135deg,#6ea8ff,#2a4a8a); }
+  .s5 { background:linear-gradient(135deg,#e8c468,#8a6a2a); } .s6 { background:linear-gradient(135deg,#ff7a9c,#8a2a4a); }
+  .detail { display:none; } .detail.show { display:block; }
+  .detail .hero { aspect-ratio:16/9; border-radius:16px; margin-bottom:1rem; }
+  .detail h2 { margin:.2rem 0 .5rem; } .detail p { color:#999; line-height:1.6; }
+  .back { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:8px; padding:.5rem 1.2rem; cursor:pointer; margin-top:1rem; }
+  .back:hover { border-color:#8b7cff; color:#8b7cff; }
+  .vt { view-transition-name: hero; }
+  ::view-transition-old(hero), ::view-transition-new(hero) { animation-duration:.35s; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration:.25s; }
+</style>
+</head>
+<body>
+<div id="gallery">
+  <h1>View Transitions</h1>
+  <p class="sub">Click a tile — it morphs into the detail hero with view-transition-name. No routing, no FLIP library.</p>
+  <div class="grid">
+    <div class="shot s1" data-name="Iris study" data-desc="A gradient study in violet.">Iris study</div>
+    <div class="shot s2" data-name="Mint field" data-desc="Cool greens with depth.">Mint field</div>
+    <div class="shot s3" data-name="Ember dusk" data-desc="Warm sunset ramp.">Ember dusk</div>
+    <div class="shot s4" data-name="Cobalt" data-desc="Blues and glass.">Cobalt</div>
+    <div class="shot s5" data-name="Brass" data-desc="Metallic gold tones.">Brass</div>
+    <div class="shot s6" data-name="Rose static" data-desc="Pink noise texture.">Rose static</div>
+  </div>
+</div>
+<div id="detailView" class="detail">
+  <div class="hero s1 vt"></div>
+  <h2 id="dTitle"></h2>
+  <p id="dDesc"></p>
+  <button class="back" onclick="goBack()">← Back to grid</button>
+</div>
+<script>
+  function swap(showDetail, tile) {
+    const doIt = () => {
+      gallery.style.display = showDetail ? 'none' : 'block';
+      detailView.classList.toggle('show', showDetail);
+      if (tile) {
+        detailView.querySelector('.hero').className = 'hero vt ' + [...tile.classList].find(c => /^s\d$/.test(c));
+        dTitle.textContent = tile.dataset.name;
+        dDesc.textContent = tile.dataset.desc + ' This view replaced the grid inside the same document — the browser cross-fades and morphs matching view-transition-name elements automatically.';
+      }
+    };
+    if (document.startViewTransition && CSS.supports('view-transition-name: x')) {
+      document.startViewTransition(doIt);
+    } else { doIt(); }
+  }
+  document.querySelectorAll('.shot').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.shot').forEach(x => x.classList.remove('vt'));
+    t.classList.add('vt');
+    swap(true, t);
+  }));
+  function goBack() { swap(false); }
+</script>
+</body>
+</html>

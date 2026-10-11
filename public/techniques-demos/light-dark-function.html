@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>light-dark() Function</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+:root { color-scheme: dark; }
+.wrap { max-width:820px; margin:0 auto; padding:6vh 5vw; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
+h1 { font-size:1.6rem; font-weight:700; }
+button { background:none; border:1px solid #555; color:inherit; padding:0.6rem 1.2rem; cursor:pointer; font-size:0.85rem; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:2.5rem; }
+.card { background:light-dark(#1a1a1e,#f2f2ee); color:light-dark(#e4e4e4,#1a1a1e); border:1px solid light-dark(#2c2c32,#d5d5cf); border-radius:12px; padding:1.2rem; min-height:190px; display:flex; flex-direction:column; justify-content:space-between; }
+.card h2 { font-size:0.85rem; font-weight:500; color:light-dark(#8a8a92,#5a5a54); text-transform:uppercase; letter-spacing:0.1em; }
+.stat { font-size:2rem; font-weight:700; font-variant-numeric:tabular-nums; }
+.bar { width:38px; border-radius:4px; background:light-dark(#8ab4ff,#2851a3); }
+.swatches { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.sw { height:70px; border-radius:8px; display:flex; align-items:flex-end; overflow:hidden; }
+.sw span { font-family:ui-monospace, monospace; font-size:0.58rem; background:light-dark(rgba(0,0,0,0.55),rgba(255,255,255,0.75)); color:light-dark(#e4e4e4,#111); padding:4px 6px; width:100%; }
+.wrap, .wrap * { transition:background 0.4s, color 0.4s, border-color 0.4s; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header><h1>Dashboard</h1><button id="flip">Flip scheme</button></header>
+  <div class="grid">
+    <div class="card"><h2>Revenue</h2><div class="stat">$48.2k</div><div class="bar" style="height:60%"></div></div>
+    <div class="card"><h2>Users</h2><div class="stat">1,204</div><div class="bar" style="height:80%"></div></div>
+    <div class="card"><h2>Uptime</h2><div class="stat">99.9%</div><div class="bar" style="height:95%"></div></div>
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:light-dark(#1a1a1e,#f2f2ee)"><span>surface: light-dark(#1a1a1e,#f2f2ee)</span></div>
+    <div class="sw" style="background:light-dark(#26262c,#e2e2dc)"><span>raised: light-dark(#26262c,#e2e2dc)</span></div>
+    <div class="sw" style="background:light-dark(#8ab4ff,#2851a3)"><span>accent: light-dark(#8ab4ff,#2851a3)</span></div>
+    <div class="sw" style="background:light-dark(#3a3a42,#c8c8c2)"><span>muted: light-dark(#3a3a42,#c8c8c2)</span></div>
+  </div>
+</div>
+
+<script>
+
+document.getElementById('flip').addEventListener('click', function() {
+  const root = document.documentElement;
+  root.style.colorScheme = root.style.colorScheme === 'light' ? 'dark' : 'light';
+});
+if (!CSS.supports('color', 'light-dark(#000,#fff)')) {
+  document.body.insertAdjacentHTML('afterbegin',
+    '<p style="padding:1rem;color:#e8b96a">Fallback text: light-dark() unsupported - dark theme only shown.</p>');
+}
+
+</script>
+</body>
+</html>

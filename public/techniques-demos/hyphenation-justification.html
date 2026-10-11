@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyphenation & Justification</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.paper { max-width:420px; margin:0 auto; padding:8vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:1.8rem; font-weight:700; }
+.modes { display:flex; gap:0.5rem; margin-bottom:1.5rem; }
+button { flex:1; background:none; border:1px solid #3a3a3a; color:#bbb; padding:0.55rem 0.3rem; font-size:0.75rem; cursor:pointer; letter-spacing:0.05em; }
+button.on { border-color:#e4e4e4; color:#e4e4e4; }
+p.col { text-align:justify; line-height:1.65; font-size:1rem; color:#cfcfcf; }
+.ragged { text-align:left; }
+.hyph { hyphens:auto; -webkit-hyphens:auto; }
+.raw { hyphens:manual; -webkit-hyphens:manual; }
+.note { margin-top:1.5rem; color:#777; font-size:0.85rem; }
+
+</style>
+</head>
+<body>
+
+<div class="paper">
+  <h1>The Narrow Column Problem</h1>
+  <div class="modes">
+    <button class="on" data-mode="ragged">Ragged right</button>
+    <button data-mode="hyph">Hyphenated justify</button>
+    <button data-mode="raw">Raw justify</button>
+  </div>
+  <p id="col" lang="en" class="ragged">Typography exists to honor content. When columns narrow beyond roughly forty characters, justification without hyphenation tears holes in the texture: word spacing balloons, rivers of white run diagonally through the paragraph, and the reader's eye stumbles at every line turn. Hyphenation re-knits the fabric. The dictionary breaks long words at syllable seams, the justification algorithm redistributes the remainder, and the grey of the column returns to an even hum — the quiet signature of professionally set newsprint, now available in the browser with nothing more than hyphens: auto and a lang attribute.</p>
+  <p class="note">Current mode: <span id="cur">ragged right</span></p>
+</div>
+
+<script>
+
+document.querySelectorAll('.modes button').forEach(function(b) {
+  b.addEventListener('click', function() {
+    document.querySelectorAll('.modes button').forEach(function(x) { x.classList.remove('on'); });
+    b.classList.add('on');
+    const col = document.getElementById('col');
+    col.className = 'col ' + b.dataset.mode;
+    document.getElementById('cur').textContent = b.textContent.toLowerCase();
+  });
+});
+
+</script>
+</body>
+</html>

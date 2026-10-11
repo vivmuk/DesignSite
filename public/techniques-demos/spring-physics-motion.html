@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spring Physics Drag</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.stage { min-height:100vh; display:flex; align-items:center; justify-content:center; gap:6rem; }
+.card { width:180px; height:180px; border-radius:18px; background:linear-gradient(135deg, #2d4a8a, #8a5ae8);
+  display:flex; align-items:center; justify-content:center; font-weight:600; cursor:grab; user-select:none; touch-action:none; will-change:transform; }
+.card:active { cursor:grabbing; }
+.panel { display:flex; flex-direction:column; gap:1.2rem; width:240px; }
+label { display:flex; flex-direction:column; gap:0.4rem; font-size:0.82rem; color:#999; }
+input[type=range] { accent-color:#8ab4ff; }
+code { font-family:ui-monospace, monospace; font-size:0.8rem; color:#8ab4ff; }
+
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="card" id="card">Drag me</div>
+  <div class="panel">
+    <label>Stiffness <input type="range" id="k" min="20" max="400" value="180"></label>
+    <label>Damping <input type="range" id="c" min="4" max="40" value="16"></label>
+    <code id="readout">k=180 c=16</code>
+  </div>
+</div>
+
+<script>
+
+const card = document.getElementById('card');
+const kEl = document.getElementById('k'), cEl = document.getElementById('c');
+let pos = { x: 0, y: 0 }, vel = { x: 0, y: 0 }, dragging = false, raf = null, last = 0;
+function tick(now) {
+  const dt = Math.min(0.032, (now - last) / 1000); last = now;
+  const k = +kEl.value, c = +cEl.value;
+  if (!dragging) {
+    const ax = -k * pos.x - c * vel.x;
+    const ay = -k * pos.y - c * vel.y;
+    vel.x += ax * dt; vel.y += ay * dt;
+    pos.x += vel.x * dt; pos.y += vel.y * dt;
+  }
+  card.style.transform = 'translate(' + pos.x.toFixed(2) + 'px, ' + pos.y.toFixed(2) + 'px)' + (dragging ? ' rotate(' + (vel.x * 0.05).toFixed(2) + 'deg)' : '');
+  raf = requestAnimationFrame(tick);
+}
+card.addEventListener('pointerdown', function(e) {
+  dragging = true; card.setPointerCapture(e.pointerId);
+  const startX = e.clientX - pos.x, startY = e.clientY - pos.y;
+  function move(ev) {
+    if (!dragging) return;
+    pos.x = ev.clientX - startX; pos.y = ev.clientY - startY;
+  }
+  function up() {
+    dragging = false;
+    card.removeEventListener('pointermove', move);
+    card.removeEventListener('pointerup', up);
+  }
+  card.addEventListener('pointermove', move);
+  card.addEventListener('pointerup', up);
+});
+document.getElementById('readout').textContent = 'k=' + kEl.value + ' c=' + cEl.value;
+[kEl, cEl].forEach(function(el) {
+  el.addEventListener('input', function() {
+    document.getElementById('readout').textContent = 'k=' + kEl.value + ' c=' + cEl.value;
+  });
+});
+last = performance.now();
+raf = requestAnimationFrame(tick);
+
+</script>
+</body>
+</html>

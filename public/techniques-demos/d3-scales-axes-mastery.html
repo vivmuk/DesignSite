@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scale Lab — linear vs log</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:18px;margin:12px 0;align-items:center;flex-wrap:wrap}
+  label{display:flex;gap:6px;align-items:center;color:#b8b8b8}
+  input{accent-color:#60a5fa}
+  svg{width:100%;max-width:860px;background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  .bar{fill:#60a5fa}
+  .bar.warn{fill:#fbbf24}
+  #verdict{margin-top:10px;min-height:22px;color:#9a9a9a}
+</style>
+</head>
+<body>
+<h1>Scale lab</h1>
+<p class="sub">Startup valuations: one whale dominates. Toggle linear/log and tick count — watch how each choice hides or reveals the story.</p>
+<div class="row">
+  <label><input type="radio" name="s" value="linear" checked> Linear</label>
+  <label><input type="radio" name="s" value="log"> Log</label>
+  <label>Ticks <input id="ticks" type="range" min="3" max="10" value="5"> <b id="tv">5</b></label>
+</div>
+<svg id="chart" viewBox="0 0 860 400"></svg>
+<div id="verdict"></div>
+<script>
+const COMPANIES = [
+  {n:'Acme',      v:1.2},{n:'Nimbus',   v:2.1},{n:'Quanta', v:3.4},
+  {n:'Zenith',    v:5.0},{n:'Halyard',  v:8.5},{n:'Gigacorp', v:480}
+];
+const W=860, H=400, M={t:20,r:20,b:40,l:110};
+const svg = d3.select('#chart');
+const bw = (H-M.t-M.b)/COMPANIES.length - 12;
+
+let scaleType='linear', nTicks=5;
+function render(){
+  const maxV = d3.max(COMPANIES, d=>d.v);
+  const scale = scaleType==='linear'
+    ? d3.scaleLinear().domain([0, maxV*1.05])
+    : d3.scaleLog().domain([0.5, maxV*1.5]).clamp(true);
+  scale.range([0, W-M.l-M.r]);
+
+  const y = i => M.t + i*(bw+12);
+  // bars
+  const bars = svg.selectAll('g.row').data(COMPANIES, d=>d.n);
+  const enter = bars.enter().append('g').attr('class','row');
+  enter.append('rect').attr('class','bar').attr('x',M.l).attr('height',bw).attr('rx',5);
+  enter.append('text').attr('class','nm').attr('x',M.l-10).attr('dy',bw/2+5)
+    .attr('text-anchor','end').attr('fill','#e4e4e4');
+  enter.append('text').attr('class','vl').attr('dy',bw/2+5).attr('fill','#9a9a9a').attr('font-size',12);
+  const all = enter.merge(bars);
+  all.select('text.nm').text(d=>d.n);
+  all.select('rect.bar')
+    .classed('warn', d => d.v > maxV*0.5)
+    .transition().duration(500).attr('width', d => Math.max(2, scale(d.v)));
+  all.select('text.vl')
+    .attr('x', d => M.l + Math.max(2, scale(d.v)) + 8)
+    .text(d => '$' + d.v + 'B');
+  // axis
+  const axis = scaleType==='linear' ? d3.axisBottom(scale).ticks(nTicks).tickFormat(d=>'$'+d+'B')
+                                    : d3.axisBottom(scale).ticks(nTicks).tickFormat(d=>'$'+d+'B');
+  svg.selectAll('g.axis').data([1]).join('g').attr('class','axis')
+    .attr('transform',`translate(${M.l},${H-M.b})`).call(axis);
+  document.getElementById('verdict').textContent = scaleType==='linear'
+    ? 'Linear: five companies look identical and tiny — the whale flattens everyone. Honest for magnitude comparison, poor for detail.'
+    : 'Log: each ×10 step is equal width — small-company differences become visible, but the axis must be labeled clearly to avoid misreading.';
+}
+document.querySelectorAll('input[name=s]').forEach(r => r.onchange = e => { scaleType = e.target.value; render(); });
+document.getElementById('ticks').oninput = e => { nTicks = +e.target.value; document.getElementById('tv').textContent = nTicks; render(); };
+render();
+</script>
+</html>

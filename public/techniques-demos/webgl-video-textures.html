@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebGL Video Textures</title>
+<style>
+  html,body{margin:0;height:100%;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;overflow:hidden}
+  .hud{position:fixed;left:16px;top:16px;max-width:360px;background:#161616e6;border:1px solid #2a2a2a;border-radius:10px;padding:12px 14px;z-index:2}
+  h1{margin:0 0 6px;font-size:15px} p{margin:0;color:#9a9a9a;font-size:12px}
+  .err{border-color:#7a3030;color:#e0a0a0}
+</style>
+</head>
+<body>
+<div class="hud" id="hud"><h1>WebGL Video Textures</h1>
+<p>A procedural canvas is captured as a live stream, fed into a <code>THREE.VideoTexture</code>, and sampled by a gallery of planes. Move the mouse — planes warp in a wave.</p></div>
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+// 1 — Procedural "video" source (no network asset needed)
+const src = document.createElement('canvas');
+src.width = 512; src.height = 288;
+const s = src.getContext('2d');
+function drawSource(t){
+  const g = s.createLinearGradient(0,0,512,288);
+  g.addColorStop(0,`hsl(${(t*40)%360},70%,50%)`);
+  g.addColorStop(1,`hsl(${(t*40+140)%360},70%,30%)`);
+  s.fillStyle=g; s.fillRect(0,0,512,288);
+  for(let i=0;i<7;i++){
+    const y=144+Math.sin(t*2+i)*70, x=(i*80+t*70)%560-24;
+    s.fillStyle=`hsla(${(t*90+i*40)%360},85%,62%,0.55)`;
+    s.beginPath(); s.ellipse(x,y,42,14,0,0,7); s.fill();
+  }
+  s.fillStyle='#fff'; s.font='bold 26px monospace';
+  s.fillText('LIVE '+t.toFixed(1)+'s',18,40);
+}
+drawSource(0);
+
+// 2 — canvas.captureStream -> <video> -> THREE.VideoTexture
+const video = document.createElement('video');
+video.muted = true; video.playsInline = true; video.loop = true;
+let texture, mode = 'VideoTexture';
+try{
+  video.srcObject = src.captureStream(30);
+  await video.play();
+  texture = new THREE.VideoTexture(video);
+}catch(e){
+  texture = new THREE.CanvasTexture(src); // graceful fallback
+  mode = 'CanvasTexture fallback';
+}
+texture.colorSpace = THREE.SRGBColorSpace;
+
+// 3 — Gallery of floating planes sharing the one texture
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d0d);
+const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, .1, 100);
+camera.position.set(0, 0, 9);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const COLS=6, ROWS=4, GAP=2.15, planes=[];
+const geo = new THREE.PlaneGeometry(1.9, 1.07);
+for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+  const mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({map:texture}));
+  mesh.position.set((c-(COLS-1)/2)*GAP, (r-(ROWS-1)/2)*GAP*0.62, 0);
+  scene.add(mesh); planes.push(mesh);
+}
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(9,9);
+addEventListener('pointermove', e=>{
+  ndc.set(e.clientX/innerWidth*2-1, -(e.clientY/innerHeight)*2+1);
+});
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(()=>{
+  const t = clock.getElapsedTime();
+  drawSource(t);                       // keep the source canvas animating
+  texture.needsUpdate = true;          // required for the CanvasTexture fallback
+  ray.setFromCamera(ndc, camera);
+  const p = ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,0,1),0), new THREE.Vector3());
+  for(const m of planes){
+    const d = p ? m.position.distanceTo(p) : 99;
+    const wave = Math.exp(-d*d*0.12);  // gaussian falloff around the pointer
+    m.position.z = wave*1.6;
+    m.rotation.y = Math.sin(t + m.position.x)*0.25 + wave*0.6;
+    m.rotation.x = Math.cos(t*0.8 + m.position.y)*0.15;
+  }
+  renderer.render(scene, camera);
+});
+document.querySelector('#hud p').insertAdjacentHTML('afterend','<p>Mode: '+mode+'</p>');
+</script>
+</html>

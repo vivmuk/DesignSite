@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D3 Data Joins</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;padding:24px}
+h1{font-size:18px;font-weight:300}
+#btns{margin-bottom:14px}
+button{background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:6px;padding:7px 16px;cursor:pointer;margin-right:6px}
+button.on{border-color:#7ee787;color:#7ee787}
+#join{font:12px monospace;color:#888;margin:8px 0}
+#join b{color:#7ee787}
+svg{width:100%;max-width:640px;height:340px}
+.bar-label{font:11px monospace;fill:#888}
+
+</style></head><body>
+
+<h1>General update pattern</h1>
+<div id=btns><button data-y=2020 class=on>2020</button><button data-y=2021>2021</button><button data-y=2022>2022</button></div>
+<div id=join></div><svg id=chart></svg>
+<script type="module">
+
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm';
+const DATA={
+ 2020:[42,18,63,27,51,35],
+ 2021:[30,55,38,72,44,66,12],
+ 2022:[58,24,66,31,80,19,47,8],
+};
+const svg=d3.select('#chart');
+const M={t:20,r:20,b:30,l:40};
+const W=640,H=340;
+const g=svg.append('g').attr('transform',`translate(${M.l},${M.t})`);
+const x=d3.scaleBand().padding(.25);
+const y=d3.scaleLinear();
+const gx=svg.append('g').attr('transform',`translate(${M.l},${H-M.b})`);
+const gy=svg.append('g').attr('transform',`translate(${M.l},${M.t})`);
+let year=2020;
+function update(){
+  const data=DATA[year];
+  x.domain(data.map((_,i)=>i)).range([0,W-M.l-M.r]);
+  y.domain([0,d3.max(data)*1.15]).nice().range([H-M.t-M.b,0]);
+  // bars: the general update pattern
+  const bars=g.selectAll('rect').data(data);
+  bars.exit().transition().duration(500).attr('height',0).attr('y',y(0)).remove();
+  bars.enter().append('rect')
+    .attr('x',(d,i)=>x(i)).attr('width',x.bandwidth())
+    .attr('rx',4).attr('fill','#7ee787')
+    .attr('y',y(0)).attr('height',0)
+   .merge(bars)
+    .transition().duration(750).ease(d3.easeCubicOut)
+    .attr('x',(d,i)=>x(i)).attr('width',x.bandwidth())
+    .attr('y',d=>y(d)).attr('height',d=>y(0)-y(d));
+  // labels
+  const labels=g.selectAll('text').data(data);
+  labels.exit().transition().duration(400).attr('opacity',0).remove();
+  labels.enter().append('text').attr('class','bar-label').attr('text-anchor','middle').attr('opacity',0)
+   .merge(labels)
+    .attr('x',(d,i)=>x(i)+x.bandwidth()/2)
+    .transition().duration(750)
+    .attr('opacity',1).attr('y',d=>y(d)-6).text(d=>d);
+  // axes
+  gx.transition().duration(750).call(d3.axisBottom(x).tickFormat(i=>'Q'+(i+1)));
+  gy.transition().duration(750).call(d3.axisLeft(y).ticks(5));
+  const enter=data.length-g.selectAll('rect').size()<=0?0:0;
+  document.getElementById('join').innerHTML=
+    `dataset ${year}: n=<b>${data.length}</b> · enter: <b>${data.length-Math.min(data.length, previousN())}</b> · update: <b>${Math.min(data.length,previousN())}</b> · exit: <b>${Math.max(0,previousN()-data.length)}</b>`;
+}
+let _prev=DATA[2020].length;
+function previousN(){return _prev;}
+// wrap: track previous count after each render
+const _update=update;update=function(){const prev=_prev;_prev=DATA[year].length;
+  const data=DATA[year];
+  document.getElementById('join').innerHTML=`dataset ${year}: n=<b>${data.length}</b> · enter: <b>${Math.max(0,data.length-prev)}</b> · update: <b>${Math.min(data.length,prev)}</b> · exit: <b>${Math.max(0,prev-data.length)}</b>`;
+  _updateOriginal();};
+let _updateOriginal=update.bind(null);
+// simpler: just call the inner update with join counts computed directly
+function render(){
+  const prev=_prev;_prev=DATA[year].length;
+  const data=DATA[year];
+  x.domain(data.map((_,i)=>i)).range([0,W-M.l-M.r]);
+  y.domain([0,d3.max(data)*1.15]).nice().range([H-M.t-M.b,0]);
+  const bars=g.selectAll('rect').data(data);
+  bars.exit().transition().duration(500).attr('height',0).attr('y',y(0)).remove();
+  bars.enter().append('rect')
+    .attr('x',(d,i)=>x(i)).attr('width',x.bandwidth())
+    .attr('rx',4).attr('fill','#7ee787')
+    .attr('y',y(0)).attr('height',0)
+   .merge(bars)
+    .transition().duration(750).ease(d3.easeCubicOut)
+    .attr('x',(d,i)=>x(i)).attr('width',x.bandwidth())
+    .attr('y',d=>y(d)).attr('height',d=>y(0)-y(d));
+  const labels=g.selectAll('text').data(data);
+  labels.exit().transition().duration(400).attr('opacity',0).remove();
+  labels.enter().append('text').attr('class','bar-label').attr('text-anchor','middle').attr('opacity',0)
+   .merge(labels)
+    .attr('x',(d,i)=>x(i)+x.bandwidth()/2)
+    .transition().duration(750)
+    .attr('opacity',1).attr('y',d=>y(d)-6).text(d=>d);
+  gx.transition().duration(750).call(d3.axisBottom(x).tickFormat(i=>'Q'+(i+1)));
+  gy.transition().duration(750).call(d3.axisLeft(y).ticks(5));
+  document.getElementById('join').innerHTML=
+    `dataset ${year}: n=<b>${data.length}</b> · enter: <b>${Math.max(0,data.length-prev)}</b> · update: <b>${Math.min(data.length,prev)}</b> · exit: <b>${Math.max(0,prev-data.length)}</b>`;
+}
+document.querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{
+  year=b.dataset.y;
+  document.querySelectorAll('[data-y]').forEach(x=>x.classList.toggle('on',x===b));
+  render();
+});
+render();
+</script></body></html>

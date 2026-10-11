@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sprint Gantt — drag & resize</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  #board{position:relative;height:340px;background:#141414;border:1px solid #2a2a2a;border-radius:12px;margin-top:8px;overflow:hidden}
+  .day{position:absolute;top:0;bottom:0;border-left:1px solid #232323;font:10px monospace;color:#6a6a6a;padding:4px}
+  .task{position:absolute;height:34px;border-radius:8px;color:#0d0d0d;font:600 12px/34px system-ui;padding-left:10px;cursor:grab;white-space:nowrap;overflow:hidden}
+  .task .h{position:absolute;top:0;bottom:0;width:10px;cursor:ew-resize}
+  .task .h.l{left:0;cursor:w-resize}.task .h.r{right:0;cursor:e-resize}
+  svg#deps{position:absolute;inset:0;pointer-events:none}
+  .today{position:absolute;top:0;bottom:0;background:#60a5fa18;border-left:2px dashed #60a5fa}
+</style>
+</head>
+<body>
+<h1>Sprint planner</h1>
+<p class="sub">Drag task bars across days, resize via the edge handles. Curved connectors redraw as dependencies move. Today is dashed blue.</p>
+<div id="board"></div>
+<script>
+const DAYS = 14, DAY_W = 110, ROW_H = 56;
+const TASKS = [
+  {id:1,name:'Auth refactor',  start:0,len:4,row:0,color:'#60a5fa'},
+  {id:2,name:'API endpoints',  start:3,len:5,row:1,color:'#34d399'},
+  {id:3,name:'UI polish',      start:6,len:3,row:2,color:'#fbbf24'},
+  {id:4,name:'QA + release',   start:9,len:4,row:3,color:'#f472b6'},
+];
+const DEPS = [[1,2],[2,3],[3,4]];
+const board = document.getElementById('board');
+const SVGNS='http://www.w3.org/2000/svg';
+const deps = document.createElementNS(SVGNS,'svg'); deps.id='deps'; board.append(deps);
+
+// day grid + today marker
+for(let d=0; d<DAYS; d++){
+  const c = document.createElement('div'); c.className='day';
+  c.style.left = d*DAY_W+'px'; c.style.width = DAY_W+'px';
+  c.textContent = 'Day ' + (d+1); board.append(c);
+}
+const today = document.createElement('div'); today.className='today';
+today.style.left = 5*DAY_W+'px'; today.style.width='2px'; board.append(today);
+
+const els = {};
+TASKS.forEach(t => {
+  const el = document.createElement('div'); el.className='task';
+  el.style.background = t.color; el.textContent = t.name;
+  const l = document.createElement('span'); l.className='h l';
+  const r = document.createElement('span'); r.className='h r';
+  el.append(l,r); board.append(el); els[t.id] = el;
+  let mode=null, sx=0, os=0, ol=0;
+  const down = (m) => (e) => {
+    mode=m; sx=e.clientX; os=t.start; ol=t.len;
+    document.body.style.cursor='grabbing'; e.preventDefault();
+  };
+  l.onpointerdown = down('l'); r.onpointerdown = down('r');
+  el.onpointerdown = e => { if (e.target.classList.contains('h')) return; down('m')(e); };
+  window.addEventListener('pointermove', e => {
+    if (!mode) return;
+    const dd = Math.round((e.clientX - sx)/DAY_W);
+    if (mode==='m') t.start = Math.max(0, Math.min(DAYS-t.len, os+dd));
+    if (mode==='l') { t.start = Math.max(0, Math.min(os+ol-1, os+dd)); t.len = ol - (t.start-os); }
+    if (mode==='r') t.len = Math.max(1, Math.min(DAYS-t.start, ol+dd));
+    layout();
+  });
+  window.addEventListener('pointerup', () => { mode=null; document.body.style.cursor=''; });
+});
+function layout(){
+  TASKS.forEach(t => {
+    const el = els[t.id];
+    el.style.left = t.start*DAY_W+4+'px';
+    el.style.width = t.len*DAY_W-10+'px';
+    el.style.top = 20 + t.row*ROW_H+'px';
+  });
+  deps.setAttribute('width', DAYS*DAY_W); deps.setAttribute('height', board.clientHeight);
+  deps.innerHTML = '';
+  DEPS.forEach(([a,b]) => {
+    const A=TASKS.find(t=>t.id===a), B=TASKS.find(t=>t.id===b);
+    const x1=(A.start+A.len)*DAY_W-6, y1=20+A.row*ROW_H+17;
+    const x2=B.start*DAY_W+4,        y2=20+B.row*ROW_H+17;
+    const p = document.createElementNS(SVGNS,'path');
+    const mx = (x1+x2)/2;
+    p.setAttribute('d',`M${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+    p.setAttribute('stroke','#5a5a5a'); p.setAttribute('fill','none');
+    p.setAttribute('stroke-width','1.5'); p.setAttribute('marker-end','');
+    deps.append(p);
+  });
+}
+layout();
+</script>
+</html>

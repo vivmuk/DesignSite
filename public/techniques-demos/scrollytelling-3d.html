@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrollytelling 3D</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0}
+#bg{position:fixed;inset:0;z-index:0}
+section{position:relative;z-index:1;height:100vh;display:grid;place-items:center}
+.panel{background:rgba(13,13,13,.75);border:1px solid #333;border-radius:14px;padding:28px 34px;max-width:380px;opacity:.25;transform:translateY(20px);transition:opacity .5s,transform .5s;backdrop-filter:blur(6px)}
+.panel.on{opacity:1;transform:none}
+.panel h2{margin:0 0 8px;color:#7ee787}
+#progress{position:fixed;top:0;left:0;height:3px;background:#7ee787;width:0;z-index:2}
+
+</style></head><body>
+
+<div id=progress></div><canvas id=bg></canvas>
+<section><div class=panel><h2>01 · Meet the Object</h2><p>A crystalline form floats in space. Scroll to travel around it.</p></div></section>
+<section><div class=panel><h2>02 · Orbit Right</h2><p>The camera swings right and rises, revealing the facets.</p></div></section>
+<section><div class=panel><h2>03 · Dive Below</h2><p>We pass underneath — notice the shadow plane from here.</p></div></section>
+<section><div class=panel><h2>04 · Pull Back</h2><p>Wide shot: the full constellation settles into place.</p></div></section>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const canvas=document.getElementById('bg');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+scene.add(new THREE.AmbientLight(0xffffff,.4));
+const key=new THREE.DirectionalLight(0xffffff,2);key.position.set(4,6,3);scene.add(key);
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,100);
+// the "product"
+const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.4,1),new THREE.MeshStandardMaterial({color:0x8899aa,metalness:.85,roughness:.2,flatShading:true}));
+scene.add(core);
+const ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,.04,12,100),new THREE.MeshBasicMaterial({color:0x7ee787}));
+ring.rotation.x=Math.PI/2.4;scene.add(ring);
+const sats=[];
+for(let i=0;i<4;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(.12,16,16),new THREE.MeshBasicMaterial({color:0xffd866}));
+  s.userData.a=i*Math.PI/2;scene.add(s);sats.push(s);}
+// camera keyframes: {pos, look}
+const KF=[
+ {pos:[0,-.5,5],look:[0,0,0],p:0},
+ {pos:[3.5,1.5,3],look:[0,.2,0],p:1/3},
+ {pos:[1.5,-3,-3],look:[0,-.2,0],p:2/3},
+ {pos:[0,2.5,7],look:[0,0,0],p:1},
+];
+const smooth=t=>t*t*(3-2*t);
+function cam(p){
+  let i=0;while(i<KF.length-2&&p>KF[i+1].p)i++;
+  const a=KF[i],b=KF[i+1];
+  const t=smooth(Math.max(0,Math.min(1,(p-a.p)/(b.p-a.p))));
+  camera.position.set(...['x','y','z'].map((k,j)=>a.pos[j]+(b.pos[j]-a.pos[j])*t));
+  const lk=[0,0,0].map((_,j)=>a.look[j]+(b.look[j]-a.look[j])*t);
+  camera.lookAt(...lk);
+}
+const panels=[...document.querySelectorAll('.panel')];
+function onScroll(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  const p=Math.max(0,Math.min(1,scrollY/max));
+  document.getElementById('progress').style.width=p*100+'%';
+  cam(p);
+  panels.forEach((el,i)=>el.classList.toggle('on',Math.abs(p-(i/(panels.length-1)))<.18));
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+onScroll();
+(function loop(t){requestAnimationFrame(loop);
+  core.rotation.y=t*.0003;core.rotation.x=Math.sin(t*.0004)*.2;
+  ring.rotation.z=t*.0004;
+  sats.forEach(s=>{const a=s.userData.a+t*.0007;s.position.set(Math.cos(a)*2.6,0,Math.sin(a)*2.6);});
+  renderer.render(scene,camera);})(0);
+</script></body></html>

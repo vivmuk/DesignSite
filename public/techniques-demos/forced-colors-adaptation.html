@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forced Colors Adaptation</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:820px; margin:0 auto; padding:6vh 5vw; }
+header { display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1.2rem; flex-wrap:wrap; }
+h1 { font-size:1.5rem; font-weight:700; }
+button { background:none; border:1px solid #444; color:inherit; padding:0.6rem 1.2rem; cursor:pointer; font-size:0.85rem; }
+.intro { color:#999; font-size:0.9rem; line-height:1.7; margin-bottom:2rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin-bottom:1.5rem; }
+.demo { border:1px solid #2a2a2a; border-radius:12px; padding:1.3rem; background:#161616; }
+.demo h2 { font-size:1rem; margin-bottom:0.6rem; }
+.demo p { color:#aaa; font-size:0.88rem; line-height:1.65; }
+.demo a { color:#8ab4ff; }
+.btnrow { display:flex; gap:0.8rem; align-items:center; }
+.btnrow button { background:#2d4a8a; color:#fff; border:none; padding:0.7rem 1.3rem; border-radius:8px; }
+.btnrow .ghost { background:transparent; color:#e4e4e4; border:1px solid #555; }
+.imgbox { height:110px; border-radius:8px; margin-bottom:0.8rem; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, #1e3a5e, #5e2a3a); color:rgba(255,255,255,0.8); font-size:0.8rem; letter-spacing:0.15em; }
+.state { font-family:ui-monospace, monospace; color:#e8b96a; font-size:0.85rem; }
+body.sim .demo { background:Canvas; color:CanvasText; border-color:CanvasText; }
+body.sim .demo p { color:CanvasText; }
+body.sim .demo a { color:LinkText; }
+body.sim .btnrow button { background:ButtonFace; color:ButtonText; border:1px solid ButtonText; }
+body.sim .btnrow .ghost { background:Canvas; }
+body.sim .imgbox { background:none; border:1px dashed CanvasText; color:CanvasText; }
+body.sim header button { border-color:ButtonText; }
+body.sim, body.sim .demo { forced-color-adjust:none; }
+body.sim .imgbox { forced-color-adjust:auto; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Forced Colors Readiness</h1>
+    <button id="sim">Simulate forced colors</button>
+  </header>
+  <p class="intro">The toggle below re-colors the page the way Windows High Contrast does: author colors are discarded, SystemColors and forced-colors:active rules take over, images get their backdrops stripped unless you intervene.</p>
+  <div class="grid">
+    <div class="demo card"><h2>Card</h2><p>Surface uses Canvas / ButtonFace system colors under forced colors.</p></div>
+    <div class="demo linkrow"><p>Text with a <a href="#">forced-color link</a> — links stay underlined and system-colored.</p></div>
+    <div class="demo imger"><div class="imgbox"><span>IMAGE ZONE</span></div><p>Image backdrops are forced transparent; borders must carry meaning.</p></div>
+    <div class="demo btnrow"><button>Primary action</button><button class="ghost">Secondary</button></div>
+  </div>
+  <p id="state" class="state">Mode: normal author colors</p>
+</div>
+
+<script>
+
+const btn = document.getElementById('sim'), state = document.getElementById('state');
+btn.addEventListener('click', function() {
+  const on = document.body.classList.toggle('sim');
+  btn.textContent = on ? 'Restore author colors' : 'Simulate forced colors';
+  state.textContent = on ? 'Mode: forced-colors simulation (SystemColors active)' : 'Mode: normal author colors';
+});
+if (matchMedia('(forced-colors: active)').matches) {
+  state.textContent = 'Mode: real forced-colors active in this browser (not simulated)';
+}
+
+</script>
+</body>
+</html>

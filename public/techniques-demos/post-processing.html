@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Post-processing Stack</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:16px;left:16px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:14px;width:230px;font-size:13px}
+#ui label{display:flex;justify-content:space-between;margin:8px 0}
+#ui input{accent-color:#7ee787;width:110px}
+#ui b{color:#7ee787}
+#toggle{margin-top:10px;background:#1c1c1c;border:1px solid #444;color:#e4e4e4;border-radius:6px;padding:6px 12px;cursor:pointer;width:100%}
+
+</style></head><body>
+
+<div id=ui><h3 style="margin:0 0 4px">Post FX</h3>
+<label>bloom <input id=b type=range min=0 max=2 step=.05 value=.9><b id=bv>0.90</b></label>
+<label>grain <input id=g type=range min=0 max=1 step=.05 value=.25><b id=gv>0.25</b></label>
+<label>vignette <input id=v type=range min=0 max=1.5 step=.05 value=.8><b id=vv>0.80</b></label>
+<button id=toggle>compare: OFF (raw)</button></div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x050505);
+scene.fog=new THREE.Fog(0x050505,8,22);
+scene.add(new THREE.AmbientLight(0xffffff,.35));
+const p1=new THREE.PointLight(0x7ee787,30,12);p1.position.set(3,3,2);scene.add(p1);
+const p2=new THREE.PointLight(0xff6b81,25,12);p2.position.set(-3,2,-2);scene.add(p2);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,50);camera.position.set(0,2,7);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.appendChild(renderer.domElement);
+const mat=new THREE.MeshStandardMaterial({color:0x8899aa,metalness:.9,roughness:.15});
+for(let i=0;i<9;i++){
+  const m=new THREE.Mesh(new THREE.IcosahedronGeometry(.7,1),mat);
+  m.position.set((Math.random()-.5)*8,(Math.random()-.5)*4,(Math.random()-.5)*6);
+  m.userData.spin=(Math.random()-.5)*.02;scene.add(m);
+}
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.MeshStandardMaterial({color:0x111111,roughness:.8}));
+floor.rotation.x=-Math.PI/2;floor.position.y=-2.5;scene.add(floor);
+// Custom post pass: bloom-ish blur composite + grain + vignette in one shader (self-contained, no EffectComposer import).
+const post={
+  uniforms:{tDiffuse:{value:null},uBloom:{value:.9},uGrain:{value:.25},uVig:{value:.8},uTime:{value:0},uOn:{value:1}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`
+uniform sampler2D tDiffuse;uniform float uBloom,uGrain,uVig,uTime,uOn;varying vec2 vUv;
+float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+void main(){
+  vec4 c=texture2D(tDiffuse,vUv);
+  if(uOn>.5){
+    vec3 blur=vec3(0.);
+    for(int i=0;i<8;i++){
+      float a=float(i)*.785;
+      blur+=texture2D(tDiffuse,vUv+vec2(cos(a),sin(a))*.012).rgb;
+    }
+    blur*=.125;
+    vec3 bright=max(blur-.6,0.);
+    c.rgb+=bright*uBloom*2.;
+    c.rgb+=vec3(hash(vUv*vec2(1920.,1080.)+uTime*60.)-.5)*uGrain*.25;
+    float d=length(vUv-.5);
+    c.rgb*=1.-uVig*d*d;
+  }
+  gl_FragColor=c;
+}`};
+const target=new THREE.WebGLRenderTarget(innerWidth,innerHeight);
+const postScene=new THREE.Scene(),postCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+postScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.ShaderMaterial(post)));
+const toggle=document.getElementById('toggle');let on=true;
+toggle.onclick=()=>{on=!on;post.uniforms.uOn.value=on?1:0;toggle.textContent=on?'compare: OFF (raw)':'compare: ON (FX)';};
+const bind=(id,v_id,u)=>{const el=document.getElementById(id),v=document.getElementById(v_id);
+  el.addEventListener('input',()=>{post.uniforms[u].value=+el.value;v.textContent=(+el.value).toFixed(2);});};
+bind('b','bv','uBloom');bind('g','gv','uGrain');bind('v','vv','uVig');
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);target.setSize(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);
+  scene.children.forEach(o=>{if(o.userData.spin){o.rotation.x+=o.userData.spin;o.rotation.y+=o.userData.spin*1.4;}});
+  post.uniforms.uTime.value=t*.001;
+  renderer.setRenderTarget(target);renderer.render(scene,camera);
+  post.uniforms.tDiffuse.value=target.texture;
+  renderer.setRenderTarget(null);renderer.render(postScene,postCam);
+})(0);
+</script></body></html>

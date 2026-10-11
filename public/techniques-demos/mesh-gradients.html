@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesh Gradient Backgrounds</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.hero { min-height:100vh; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.blob { position:absolute; width:45vw; height:45vw; min-width:340px; min-height:340px; border-radius:50%; filter:blur(90px); opacity:0.55; will-change:transform; }
+.b1 { background:radial-gradient(circle, #2d4a8a, transparent 70%); top:-10%; left:-8%; animation:drift1 26s ease-in-out infinite alternate; }
+.b2 { background:radial-gradient(circle, #7a3a8a, transparent 70%); bottom:-15%; right:-10%; animation:drift2 32s ease-in-out infinite alternate; }
+.b3 { background:radial-gradient(circle, #1e6e5e, transparent 70%); top:30%; right:15%; animation:drift3 24s ease-in-out infinite alternate; }
+.b4 { background:radial-gradient(circle, #8a5a2d, transparent 70%); bottom:5%; left:20%; animation:drift1 38s ease-in-out infinite alternate-reverse; }
+@keyframes drift1 { to { transform:translate(12vw, 8vh) scale(1.15); } }
+@keyframes drift2 { to { transform:translate(-10vw, -6vh) scale(0.9); } }
+@keyframes drift3 { to { transform:translate(-14vw, 10vh) scale(1.1); } }
+.content { position:relative; z-index:2; text-align:center; max-width:44ch; padding:0 5vw; }
+h1 { font-size:clamp(3rem,9vw,6rem); font-weight:700; margin-bottom:1rem; letter-spacing:-0.02em; }
+p { color:#b8b8b8; line-height:1.7; margin-bottom:2rem; }
+button { background:rgba(255,255,255,0.08); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); color:#e4e4e4; padding:0.8rem 1.6rem; border-radius:999px; cursor:pointer; font-size:0.9rem; transition:background 0.3s; }
+button:hover { background:rgba(255,255,255,0.16); }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="content">
+    <h1>Aurora</h1>
+    <p>Four blurred blobs, one ambient field. No images, no canvas — layered radial gradients with filter:blur drifting on long transform animations.</p>
+    <button id="shuffle">Shuffle palette</button>
+  </div>
+</div>
+
+<script>
+
+const palettes = [
+  ['#2d4a8a', '#7a3a8a', '#1e6e5e', '#8a5a2d'],
+  ['#8a2d3c', '#2d5a8a', '#5e3a7a', '#2d7a4a'],
+  ['#7a6a2d', '#2d7a6a', '#8a2d5e', '#3a3a8a'],
+  ['#5a2d8a', '#2d6a8a', '#8a4a2d', '#2d8a5e']
+];
+let idx = 0;
+document.getElementById('shuffle').addEventListener('click', function() {
+  idx = (idx + 1) % palettes.length;
+  document.querySelectorAll('.blob').forEach(function(b, i) {
+    b.style.background = 'radial-gradient(circle, ' + palettes[idx][i] + ', transparent 70%)';
+  });
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Attribute Selectors — Data-attribute Design System</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:860px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:2rem; }
+  .row { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1.6rem; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; color:#777; }
+  /* All styling driven by attributes only — zero presentational classes */
+  [data-variant] { border:1px solid transparent; border-radius:8px; padding:.55rem 1.1rem; font-size:.9rem; cursor:pointer; background:#1a1a1a; color:#e4e4e4; }
+  [data-variant="primary"] { background:#8b7cff; color:#0d0d0d; font-weight:600; }
+  [data-variant="danger"] { background:#3a1420; color:#ff7a9c; border-color:#7a2a3f; }
+  [data-variant="ghost"] { background:transparent; border-color:#333; }
+  [data-size="sm"] { padding:.3rem .7rem; font-size:.78rem; }
+  [data-size="lg"] { padding:.8rem 1.6rem; font-size:1.05rem; }
+  [data-badge] { display:inline-block; padding:.2rem .6rem; border-radius:999px; font-size:.75rem; }
+  [data-badge~="status"] { border:1px solid currentColor; }
+  [data-badge="status-active"] { color:#7dd8a0; }
+  [data-badge="status-pending"] { color:#e8c468; }
+  [data-badge="status-error"] { color:#ff7a9c; }
+  [data-control] { background:#141414; border:1px solid #333; border-radius:8px; padding:.5rem .8rem; color:#e4e4e4; }
+  [data-control="text"]:focus { outline:2px solid #8b7cff; border-color:#8b7cff; }
+  [data-control][aria-invalid="true"] { border-color:#ff7a9c; outline-color:#ff7a9c; }
+  [href^="https://docs."] { color:#7dd8a0; text-decoration:none; border-bottom:1px dashed #7dd8a0; }
+  [href$=".pdf"]::after { content:" (PDF)"; font-size:.75em; color:#777; }
+  [href*="github"] { color:#8b7cff; }
+  [data-state~="selected"] { box-shadow:0 0 0 2px #8b7cff; }
+  code { color:#e8c468; font-size:.8rem; }
+</style>
+</head>
+<body>
+<h1>Attribute Selectors</h1>
+<p class="sub">Every look below comes from <code>[attr]</code> matches — presence, exact value, prefix ^, suffix $, substring *, and whitespace-list ~.</p>
+<h2>data-variant + data-size (exact match)</h2>
+<div class="row">
+  <button data-variant="primary" data-size="lg">Primary lg</button>
+  <button data-variant="primary">Primary</button>
+  <button data-variant="danger">Danger</button>
+  <button data-variant="ghost" data-size="sm">Ghost sm</button>
+</div>
+<h2>data-badge with ~= list matching</h2>
+<div class="row">
+  <span data-badge="status-active">Active</span>
+  <span data-badge="status-pending">Pending</span>
+  <span data-badge="status-error">Error</span>
+  <span data-badge="status-active" data-state="selected">Active + selected</span>
+</div>
+<h2>Inputs: presence + aria-invalid flip</h2>
+<div class="row">
+  <input data-control="text" placeholder="Valid field">
+  <input data-control="text" aria-invalid="true" value="bad@@email">
+</div>
+<h2>href ^= $ * matching</h2>
+<div class="row">
+  <a href="https://docs.example.com/css">docs.example.com (prefix)</a>
+  <a href="/files/report.pdf">report.pdf (suffix)</a>
+  <a href="https://github.com/org/repo">github link (substring)</a>
+</div>
+<script>
+  // Flip aria-invalid live to show attribute-driven state restyling
+  const bad = document.querySelector('[aria-invalid]');
+  bad.addEventListener('input', e => e.target.setAttribute('aria-invalid', e.target.value.includes('@') ? 'false' : 'true'));
+</script>
+</body>
+</html>

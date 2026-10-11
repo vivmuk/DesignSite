@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Count-up Numbers</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.band { min-height:100vh; display:flex; align-items:center; justify-content:center; gap:4rem; flex-wrap:wrap; padding:0 5vw; }
+.stat { text-align:center; }
+.num { font-size:clamp(2.4rem,6vw,4.5rem); font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-0.02em; background:linear-gradient(180deg, #e4e4e4, #6a6a6a); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+.stat span { display:block; margin-top:0.6rem; color:#777; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; }
+
+</style>
+</head>
+<body>
+
+<div class="band" id="band">
+  <div class="stat"><div class="num" data-target="2481937" data-format="comma">0</div><span>downloads</span></div>
+  <div class="stat"><div class="num" data-target="99.9" data-decimals="1" data-suffix="%">0</div><span>uptime</span></div>
+  <div class="stat"><div class="num" data-target="142" data-prefix="$" data-suffix="k">0</div><span>mrr</span></div>
+  <div class="stat"><div class="num" data-target="12" data-suffix="ms">0</div><span>p95 latency</span></div>
+</div>
+
+<script>
+
+function fmt(el, v) {
+  const dec = +(el.dataset.decimals || 0);
+  let s = v.toFixed(dec);
+  if (el.dataset.format === 'comma') s = Number(s).toLocaleString('en-US');
+  return (el.dataset.prefix || '') + s + (el.dataset.suffix || '');
+}
+function countUp(el) {
+  const target = parseFloat(el.dataset.target);
+  const t0 = performance.now(), dur = 2000;
+  (function tick(now) {
+    const t = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - t, 4);
+    el.textContent = fmt(el, target * e);
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(el, target);
+  })(t0);
+}
+const io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(en) {
+    if (en.isIntersecting) {
+      en.target.querySelectorAll('.num').forEach(countUp);
+      io.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.4 });
+io.observe(document.getElementById('band'));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snapping Crosshair & Rich Tooltip</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;display:grid;place-items:center;min-height:100vh}
+  .wrap{width:760px;max-width:94vw}
+  h1{font-size:18px} p{color:#9a9a9a;font-size:13px}
+  svg{width:100%;background:#141414;border:1px solid #2a2a2a;border-radius:12px;touch-action:none;cursor:crosshair}
+  .tip{position:fixed;pointer-events:none;background:#1f1f1f;border:1px solid #3a3a3a;border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.5;display:none;z-index:5;box-shadow:0 6px 20px #000a}
+  .tip b{color:#fff} .up{color:#34d399}.down{color:#f87171}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Revenue — Q3 daily</h1>
+  <p>Pointer snaps to the nearest sample; tooltip shows the value and delta vs the previous day. Works with touch.</p>
+  <svg id="chart" viewBox="0 0 760 380"></svg>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const W=760, H=380, PAD={t:24,r:20,b:36,l:52};
+const N = 90;
+const pts = [];
+let v = 100;
+for(let i=0;i<N;i++){ v += (Math.random()-.46)*6; pts.push({i, v: Math.max(40, v)}); }
+
+const svg = document.getElementById('chart'), NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs) => { const n = document.createElementNS(NS, tag); for(const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+const x = i => PAD.l + i/(N-1)*(W-PAD.l-PAD.r);
+const yMin = Math.min(...pts.map(p=>p.v)) - 8, yMax = Math.max(...pts.map(p=>p.v)) + 8;
+const y = v => H-PAD.b - (v-yMin)/(yMax-yMin)*(H-PAD.t-PAD.b);
+
+// gridlines + y ticks
+for(let g=0; g<=4; g++){
+  const vy = yMin + (yMax-yMin)*g/4, yy = y(vy);
+  svg.append(el('line',{x1:PAD.l,x2:W-PAD.r,y1:yy,y2:yy,stroke:'#262626'}));
+  const t = el('text',{x:PAD.l-8,y:yy+4,'text-anchor':'end',fill:'#8a8a8a','font-size':11});
+  t.textContent = vy.toFixed(0); svg.append(t);
+}
+// area + line
+const dLine = pts.map((p,i)=>(i?'L':'M')+x(i)+','+y(p.v)).join('');
+svg.append(el('path',{d:`${dLine} L${x(N-1)},${H-PAD.b} L${x(0)},${H-PAD.b} Z`, fill:'#3b82f622'}));
+svg.append(el('path',{d:dLine, fill:'none', stroke:'#60a5fa','stroke-width':2}));
+
+// crosshair group (line, dot) — hidden until pointer enters
+const cross = el('g',{opacity:0});
+const vline = el('line',{y1:PAD.t,y2:H-PAD.b,stroke:'#e4e4e4','stroke-dasharray':'3 3'});
+const dot = el('circle',{r:4.5,fill:'#60a5fa',stroke:'#0d0d0d','stroke-width':2});
+cross.append(vline,dot); svg.append(cross);
+
+const tip = document.getElementById('tip');
+function snap(e){
+  const r = svg.getBoundingClientRect();
+  const px = (e.clientX - r.left) * (W / r.width);
+  const i = Math.max(0, Math.min(N-1, Math.round((px-PAD.l)/(W-PAD.l-PAD.r)*(N-1))));
+  const p = pts[i], prev = pts[Math.max(0,i-1)];
+  const d = p.v - prev.v, pct = prev.v ? (d/prev.v*100) : 0;
+  vline.setAttribute('x1', x(i)); vline.setAttribute('x2', x(i));
+  dot.setAttribute('cx', x(i)); dot.setAttribute('cy', y(p.v));
+  cross.setAttribute('opacity', 1);
+  tip.style.display = 'block';
+  tip.innerHTML = `<b>Day ${i+1}</b><br>Value: <b>${p.v.toFixed(1)}</b><br>` +
+    `<span class="${d>=0?'up':'down'}">${d>=0?'▲':'▼'} ${d.toFixed(2)} (${pct.toFixed(1)}%) vs prev</span>`;
+  const tw = tip.offsetWidth;
+  tip.style.left = Math.min(innerWidth - tw - 8, e.clientX + 14) + 'px';
+  tip.style.top = (e.clientY - 20) + 'px';
+}
+svg.addEventListener('pointermove', snap);
+svg.addEventListener('pointerdown', snap);           // touch support
+svg.addEventListener('pointerleave', () => { cross.setAttribute('opacity',0); tip.style.display='none'; });
+</script>
+</html>

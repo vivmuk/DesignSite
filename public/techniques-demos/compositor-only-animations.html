@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Compositor-only Animations</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px}
+.lane{border:1px solid #2a2a2a;border-radius:10px;padding:16px}
+.lane h3{margin:0 0 12px;font-size:14px}
+.stage{height:160px;position:relative;background:#111;border-radius:8px;overflow:hidden}
+.box{position:absolute;top:60px;left:0;width:40px;height:40px;border-radius:6px}
+.bad{background:#f66} .good{background:#6cf}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer;margin:16px 8px 0 0}
+#fps{font:20px monospace;margin-left:16px} #fps.good{color:#9e9}#fps.bad{color:#f66}
+#paintflash{position:fixed;inset:0;pointer-events:none;background:rgba(255,200,0,.12);opacity:0;transition:opacity .15s}
+.bad-anim{animation:moveBad 1.2s linear infinite alternate}
+@keyframes moveBad{to{left:calc(100% - 40px)}}
+.good-anim{animation:moveGood 1.2s linear infinite alternate}
+@keyframes moveGood{to{transform:translateX(calc(100vw - 200px))}}
+.note{font-size:12px;color:#777;margin-top:8px;font-family:monospace}
+</style></head><body>
+<h1>Compositor-only animations: left/top vs transform</h1>
+<p>Both boxes move at the same speed. But <code>left</code> triggers layout+paint every frame (main thread); <code>transform</code> runs on the compositor. Watch the FPS difference — max out the CPU by opening DevTools and throttling if you want drama.</p>
+<button onclick="run()">▶ Animate both for 4s</button><span id="fps">— fps</span>
+<div class="demo">
+<div class="lane"><h3>❌ animating left (layout per frame)</h3><div class="stage"><div class="box bad" id="bad"></div></div>
+<div class="note">every frame: layout → paint → composite</div></div>
+<div class="lane"><h3>✅ animating transform (compositor)</h3><div class="stage"><div class="box good" id="good"></div></div>
+<div class="note">every frame: composite only — no main thread</div></div>
+</div>
+<div id="paintflash"></div>
+<script>
+let frames=0,last=performance.now(),measuring=false;
+function loop(t){ if(measuring){ frames++;
+  if(t-last>=500){ const fps=Math.round(frames*1000/(t-last)); const el=document.getElementById('fps');
+    el.textContent=fps+' fps'; el.className=fps>50?'good':'bad'; frames=0; last=t; } }
+  requestAnimationFrame(loop);} requestAnimationFrame(loop);
+function run(){
+  measuring=true; frames=0; last=performance.now();
+  const bad=document.getElementById('bad'), good=document.getElementById('good');
+  bad.className='box bad bad-anim'; good.className='box good good-anim';
+  const flash=document.getElementById('paintflash');
+  // flash overlay when main thread does layout work (approximation: poll layout thrash)
+  let iv=setInterval(()=>{ flash.style.opacity=1; setTimeout(()=>flash.style.opacity=0,80); },400);
+  setTimeout(()=>{ bad.className='box bad'; good.className='box good'; clearInterval(iv); measuring=false;
+    document.getElementById('fps').textContent='avg recorded — bad lane typically 30-45fps, good lane 60fps'; },4000);
+}
+</script></body></html>

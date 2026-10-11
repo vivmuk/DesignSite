@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Magic Wand — tone rewrite with diff</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  textarea{width:640px;max-width:100%;box-sizing:border-box;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:10px;padding:12px;font:inherit;min-height:100px}
+  .row{display:flex;gap:10px;align-items:center;margin:10px 0}
+  select,button{background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:8px 12px;font:inherit}
+  button.wand{background:#7c3aed;border:0;color:#fff;cursor:pointer}
+  #out{width:640px;max-width:100%;min-height:100px;background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:12px;white-space:pre-wrap;font-size:14px}
+  .add{background:#052e16;color:#7ee787;border-radius:3px;padding:0 2px}
+  .del{background:#3f0d0d;color:#f87171;text-decoration:line-through;border-radius:3px;padding:0 2px}
+  .same{color:#b8b8b8}
+  #status{color:#9a9a9a;font-size:13px;min-height:22px;margin-top:8px}
+  .cursor{display:inline-block;width:8px;height:15px;background:#a78bfa;animation:blink .7s steps(1) infinite;vertical-align:text-bottom}
+  @keyframes blink{50%{opacity:0}}
+</style>
+</head>
+<body>
+<h1>Magic wand rewrite</h1>
+<p class="sub">Select a tone and hit the wand: a simulated local model streams a rewritten version, then a word-level diff highlights what changed.</p>
+<textarea id="src">hey so basically the thing is that our api kinda breaks sometimes when u send big payloads, we should probably fix that soon ok thanks</textarea>
+<div class="row">
+  <select id="tone">
+    <option value="professional">Professional</option>
+    <option value="friendly">Friendly</option>
+    <option value="concise">Concise</option>
+  </select>
+  <button class="wand" id="go">✨ Improve</button>
+</div>
+<div id="out">Rewrite appears here…</div>
+<div id="status"></div>
+<script>
+const REWRITES = {
+  professional: 'Our API intermittently returns errors when processing large payloads. We should prioritize resolving this issue. Thank you.',
+  friendly: 'Quick heads-up: our API can get a little wobbly with big payloads! It would be great to fix that soon. Thanks so much!',
+  concise: 'The API errors on large payloads. Fix needed soon.',
+};
+const out = document.getElementById('out'), status = document.getElementById('status');
+document.getElementById('go').onclick = async function(){
+  const src = document.getElementById('src').value.trim();
+  if (!src){ status.textContent = 'Write something first.'; return; }
+  this.disabled = true;
+  out.textContent = '';
+  const text = REWRITES[document.getElementById('tone').value];
+  // simulated local model stream
+  const tokens = text.match(/\\S+\\s*|\\n/g);
+  const cursor = document.createElement('span'); cursor.className='cursor';
+  out.append(cursor);
+  for (const t of tokens){
+    cursor.before(t);
+    status.textContent = 'Rewriting…';
+    await new Promise(r => setTimeout(r, 30 + Math.random()*40));
+  }
+  cursor.remove();
+  // word-level LCS diff between original and rewrite
+  const a = src.split(/\\s+/), b = text.split(/\\s+/);
+  const m = a.length, n = b.length;
+  const dp = Array.from({length:m+1}, () => new Uint16Array(n+1));
+  for(let i=m-1;i>=0;i--) for(let j=n-1;j>=0;j--)
+    dp[i][j] = a[i].toLowerCase() === b[j].toLowerCase() ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  let html = '', ai=0, bj=0;
+  while(ai<m && bj<n){
+    if (a[ai].toLowerCase() === b[bj].toLowerCase()){ html += `<span class="same">${b[bj]} </span>`; ai++; bj++; }
+    else if (dp[ai+1][bj] >= dp[ai][bj+1]){ html += `<span class="del">${a[ai]} </span>`; ai++; }
+    else { html += `<span class="add">${b[bj]} </span>`; bj++; }
+  }
+  while(ai<m) html += `<span class="del">${a[ai++]} </span>`;
+  while(bj<n) html += `<span class="add">${b[bj++]} </span>`;
+  out.innerHTML = html;
+  status.textContent = 'Green = added, red struck = removed.';
+  this.disabled = false;
+};
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Web Workers — Off the Main Thread</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.row{display:flex;gap:12px;align-items:center;margin:14px 0;flex-wrap:wrap}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+button.warn{border-color:#f66;color:#f88}
+#fps{font:14px monospace;padding:8px 14px;border-radius:6px;background:#111;border:1px solid #2a2a2a}
+#fps.good{color:#9e9}#fps.bad{color:#f66}
+.meter{width:260px;height:10px;background:#1a1a1a;border-radius:5px;overflow:hidden}
+.meter div{height:100%;background:#6cf;transition:width .2s}
+table{border-collapse:collapse;font:13px monospace;margin-top:8px}
+td{border:1px solid #2a2a2a;padding:4px 10px}
+#result{margin-top:10px;font-family:monospace;color:#9effa1}
+.anim{width:40px;height:40px;border-radius:50%;background:conic-gradient(#6cf,#c6f);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style></head><body>
+<h1>Main-thread vs Worker: 4M-element sort</h1>
+<p>Keep the spinner smooth while sorting. Click "Block main thread" and watch FPS die; click "Worker" and it stays 60fps.</p>
+<div class="row"><div class="anim"></div><span id="fps">60 fps</span>
+<div class="meter"><div id="threadbar" style="width:0%"></div></div><span style="font-size:12px;color:#777">main-thread busy</span></div>
+<div class="row"><button onclick="sortOn('main')">Sort on main thread (blocks UI)</button>
+<button onclick="sortOn('worker')">Sort in Worker ✅</button><button class="warn" onclick="blockSpin()">Spin main thread 2s (pure block)</button></div>
+<div id="result"></div>
+<table id="tbl"></table>
+<script>
+const N=4_000_000, fpsEl=document.getElementById('fps'), bar=document.getElementById('threadbar');
+let frames=0, last=performance.now(), busy=false;
+function loop(t){ frames++; if(t-last>=500){ const fps=Math.round(frames*1000/(t-last)); frames=0; last=t;
+  fpsEl.textContent=fps+' fps'; fpsEl.className=fps>45?'good':'bad'; bar.style.width=busy?'100%':'0%'; busy=false; }
+  requestAnimationFrame(loop);} requestAnimationFrame(loop);
+function genArray(){ return Array.from({length:N},()=>Math.random()); }
+function sortOn(where){
+  const t0=performance.now(); busy=true;
+  const done=(ms,preview)=>{ document.getElementById('result').textContent=
+    `sorted ${N.toLocaleString()} numbers in ${ms|0}ms on ${where==='main'?'MAIN THREAD (UI froze — did the spinner stutter?)':'a Worker (spinner stayed smooth)'}`;
+    const tbl=document.getElementById('tbl');
+    tbl.innerHTML='<tr><td>first 5</td><td>'+preview.slice(0,5).map(v=>v.toFixed(4)).join(', ')+'</td></tr>'; };
+  if(where==='main'){ const a=genArray(); a.sort(); done(performance.now()-t0, a); }
+  else{
+    const w=new Worker(URL.createObjectURL(new Blob([`
+      onmessage=e=>{ const a=e.data; a.sort(); postMessage(a.slice(0,5)); }`],{type:'text/javascript'})));
+    w.onmessage=e=>{ done(performance.now()-t0, e.data); w.terminate(); };
+    w.postMessage(genArray());
+  }
+}
+function blockSpin(){ busy=true; const t=performance.now(); while(performance.now()-t<2000); }
+</script></body></html>

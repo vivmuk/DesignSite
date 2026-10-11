@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voronoi Mosaic</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;top:12px;left:12px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:8px;padding:8px 12px;font:11px monospace;color:#888;z-index:5}
+#hud b{color:#7ee787}
+
+</style></head><body>
+
+<div id=hud>cells <b id=nc>0</b> · fps <b id=fps>–</b> · cursor repels seeds</div>
+<script type="module">
+import {Delaunay as D} from "https://cdn.jsdelivr.net/npm/d3-delaunay@6.0.4/+esm";
+window.d3Delaunay={Delaunay:D};
+</script>
+<script>
+
+const cv=document.createElement('canvas');document.body.appendChild(cv);
+const ctx=cv.getContext('2d');
+let W,H;function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit();addEventListener('resize',fit);
+let delaunay=null,voronoi=null,cells=[];
+const N=180;
+let pts=[];
+function seed(){
+  pts=[];
+  for(let i=0;i<N;i++)pts.push([Math.random()*innerWidth,Math.random()*innerHeight]);
+}
+seed();
+const mouse={x:-9999,y:-9999};
+addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+addEventListener('pointerleave',()=>{mouse.x=-9999;});
+function shoelace(poly){
+  let a=0;
+  for(let i=0;i<poly.length;i++){const p=poly[i],q=poly[(i+1)%poly.length];a+=p[0]*q[1]-q[0]*p[1];}
+  return Math.abs(a)/2;
+}
+let last=performance.now(),fps=60;
+(function loop(t){
+  requestAnimationFrame(loop);
+  const dt=Math.min((t-last)/1000,.05);last=t;fps+=(1/dt-fps)*.05;
+  // move points: jitter + cursor repulsion
+  for(const p of pts){
+    p[0]+=(Math.random()-.5)*.6;p[1]+=(Math.random()-.5)*.6;
+    const dx=p[0]-mouse.x,dy=p[1]-mouse.y,d=Math.hypot(dx,dy);
+    if(d<130&&d>1){const f=(130-d)/130*4.5;p[0]+=dx/d*f;p[1]+=dy/d*f;}
+    p[0]=Math.max(0,Math.min(innerWidth,p[0]));
+    p[1]=Math.max(0,Math.min(innerHeight,p[1]));
+  }
+  // tessellate
+  try{
+    const flat=new Float64Array(pts.flat());
+    if(window.d3Delaunay){
+      const d=d3Delaunay.Delaunay.from(pts);
+      voronoi=d.voronoi([0,0,innerWidth,innerHeight]);
+      cells=pts.map((p,i)=>voronoi.cellPolygon(i)).filter(Boolean);
+    } else {
+      // fallback: crude grid cells
+      cells=pts.map((p,i)=>[[p[0]-14,p[1]-14],[p[0]+14,p[1]-14],[p[0]+14,p[1]+14],[p[0]-14,p[1]+14]]);
+    }
+  }catch(e){cells=pts.map(p=>[[p[0]-14,p[1]-14],[p[0]+14,p[1]-14],[p[0]+14,p[1]+14],[p[0]-14,p[1]+14]]);}
+  // render
+  ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,innerWidth,innerHeight);
+  for(const poly of cells){
+    const area=shoelace(poly);
+    const hue=200+Math.min(120,Math.log(area)*14);
+    ctx.beginPath();
+    poly.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));
+    ctx.closePath();
+    ctx.fillStyle=`hsla(${hue},60%,${12+Math.min(38,area/900)}%,.9)`;
+    ctx.fill();
+    ctx.strokeStyle='rgba(13,13,13,.9)';ctx.lineWidth=1.5;ctx.stroke();
+  }
+  ctx.fillStyle='#7ee787';
+  for(const p of pts){ctx.beginPath();ctx.arc(p[0],p[1],1.6,0,Math.PI*2);ctx.fill();}
+  document.getElementById('nc').textContent=cells.length;
+  document.getElementById('fps').textContent=fps|0;
+})(performance.now());
+</script></body></html>

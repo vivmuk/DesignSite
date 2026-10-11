@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Reduced Motion Support</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.toggle{position:fixed;top:20px;right:20px;display:flex;align-items:center;gap:10px;background:#161616;border:1px solid #2a2a2a;padding:10px 16px;border-radius:99px;z-index:10}
+.switch{width:44px;height:24px;background:#333;border-radius:99px;position:relative;cursor:pointer;transition:.2s}
+.switch::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s}
+.switch.on{background:#9e9}.switch.on::after{left:23px}
+.hero{height:220px;border-radius:12px;background:linear-gradient(135deg,#1a2a4a,#3a1a4a);display:grid;place-items:center;margin:16px 0;position:relative;overflow:hidden}
+.orb{position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#6cf,#26a);}
+.parallax{will-change:transform}
+.card{background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:16px;width:260px;transition:transform .15s}
+.card:hover{transform:scale(1.06) rotate(1deg)}
+html.reduce .card:hover{transform:none;transition:none}
+html.reduce .orb{animation:none !important}
+html.reduce *{animation-duration:.01s !important;transition-duration:.15s !important;scroll-behavior:auto !important}
+#what{margin-top:16px;font:13px monospace;color:#9effa1;min-height:20px}
+.orb1{animation:float1 6s ease-in-out infinite alternate;top:20px;left:30px}
+.orb2{animation:float2 8s ease-in-out infinite alternate;top:90px;right:60px}
+@keyframes float1{to{transform:translate(60px,30px) scale(1.2)}}
+@keyframes float2{to{transform:translate(-80px,-20px) scale(.8)}}
+</style></head><body>
+<div class="toggle"><span>Reduce motion</span><div class="switch" id="sw" role="switch" aria-checked="false" tabindex="0"></div></div>
+<h1>This page respects your vestibular system</h1>
+<p>Hover the card and watch the orbs — then flip the toggle: every parallax/float/spin animation collapses into a simple opacity fade or nothing at all.</p>
+<div class="hero"><div class="orb orb1 parallax"></div><div class="orb orb2 parallax"></div><h2 style="position:relative">Parallax hero</h2></div>
+<div class="card"><b>Hover me</b><p style="color:#888;font-size:13px">Zoom + rotate on hover. With reduced motion: no transform, instant state.</p></div>
+<div id="what"></div>
+<script>
+const sw=document.getElementById('sw'), what=document.getElementById('what');
+function apply(on){
+  document.documentElement.classList.toggle('reduce',on);
+  sw.classList.toggle('on',on); sw.setAttribute('aria-checked',on);
+  what.textContent = on ? 'matchMedia(\'(prefers-reduced-motion: reduce)\') → animations disabled, opacity fades only'
+                        : 'full motion enabled — orbs float, card zooms';
+}
+sw.onclick=()=>apply(!sw.classList.contains('on'));
+sw.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();sw.click();} };
+// honor the real system preference too
+const mq=matchMedia('(prefers-reduced-motion: reduce)');
+mq.addEventListener?.('change',e=>apply(e.matches));
+apply(mq.matches);
+</script></body></html>

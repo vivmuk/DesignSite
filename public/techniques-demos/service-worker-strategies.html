@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cache Lab — SW strategies</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:820px}
+  .card{background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:14px}
+  .card h2{font-size:13px;margin:0 0 10px;color:#9a9a9a}
+  label{display:flex;justify-content:space-between;margin:8px 0;font-size:13px}
+  select{background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:6px;padding:4px 8px;font-size:12px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;margin-top:8px}
+  #log{font:11px/1.8 monospace;max-height:300px;overflow-y:auto;color:#8a8a8a}
+  .hit{color:#7ee787}.miss{color:#fbbf24}.net{color:#60a5fa}
+  .warn{color:#fbbf24}
+</style>
+</head>
+<body>
+<h1>Cache lab</h1>
+<p class="sub">Toggle a caching strategy per asset type, then fire requests and watch the log: hits come from the SW, misses hit the (throttled) network.</p>
+<div class="grid">
+  <div class="card">
+    <h2>Strategy per asset type</h2>
+    <label>Static assets (css/js) <select id="s-static"><option>cache-first</option><option>stale-while-revalidate</option><option>network-first</option></select></label>
+    <label>API data (/api/*) <select id="s-api"><option>network-first</option><option>cache-first</option><option>stale-while-revalidate</option></select></label>
+    <label>Images <select id="s-img"><option>cache-first</option><option>network-first</option><option>stale-while-revalidate</option></select></label>
+    <button id="fire">▶ Fire test requests</button>
+    <p class="warn" id="hint" style="font-size:12px"></p>
+  </div>
+  <div class="card">
+    <h2>Request log</h2>
+    <div id="log">Register the SW to begin…</div>
+  </div>
+</div>
+<script>
+const logEl = document.getElementById('log');
+const log = (cls, m) => logEl.insertAdjacentHTML('afterbegin', `<div class="${cls}">${new Date().toLocaleTimeString()} ${m}</div>`);
+const config = () => ({
+  static: document.getElementById('s-static').value,
+  api: document.getElementById('s-api').value,
+  img: document.getElementById('s-img').value,
+});
+// push strategy config to the SW via postMessage
+function pushConfig(){
+  navigator.serviceWorker?.controller?.postMessage({type:'config', value: config()});
+}
+async function boot(){
+  if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')){
+    document.getElementById('hint').textContent = 'This lab needs HTTPS or localhost — the strategies are shown but live caching requires a SW context.';
+    log('warn','SW unavailable in this context.');
+    return;
+  }
+  const swCode = `
+    let CONFIG = {static:'cache-first', api:'network-first', img:'cache-first'};
+    self.addEventListener('message', e => { if (e.data.type==='config') CONFIG = e.data.value; });
+    const kind = url => url.includes('/api/') ? 'api' : /\\.(css|js)$/.test(url) ? 'static' : 'img';
+    async function apply(kind, req, cacheName){
+      const cache = await caches.open(cacheName);
+      if (kind === 'cache-first'){
+        const hit = await cache.match(req); if (hit) return {res:hit, src:'SW cache HIT'};
+        const res = await fetch(req); await cache.put(req, res.clone()); return {res, src:'network MISS → cached'};
+      }
+      if (kind === 'network-first'){
+        try{
+          const res = await fetch(req); await cache.put(req, res.clone()); return {res, src:'network HIT → cached'};
+        }catch(e){ const hit = await cache.match(req); if (hit) return {res:hit, src:'offline → SW cache fallback'}; throw e; }
+      }
+      // stale-while-revalidate
+      const hit = await cache.match(req);
+      const net = fetch(req).then(res => { cache.put(req, res.clone()); return res; }).catch(()=>null);
+      return {res: hit || await net, src: hit ? 'SW stale HIT (revalidating in bg)' : 'network MISS → cached'};
+    }
+    self.addEventListener('fetch', e => {
+      const k = kind(e.request.url);
+      e.respondWith(apply(k, e.request, 'lab-v1').then(({res, src}) => {
+        self.clients.matchAll().then(cs => cs.forEach(c => c.postMessage({log: e.request.url.split('/').pop() + ' [' + k + '] ' + src})));
+        return res;
+      }));
+    });`;
+  const url = URL.createObjectURL(new Blob([swCode],{type:'text/javascript'}));
+  await navigator.serviceWorker.register(url);
+  navigator.serviceWorker.addEventListener('message', e => e.data.log && log('net', e.data.log));
+  log('ok','✓ SW registered. Strategies are configurable per asset class.');
+  pushConfig();
+  document.querySelectorAll('select').forEach(s => s.onchange = () => { pushConfig(); log('hit','⚙ config updated → ' + JSON.stringify(config())); });
+  document.getElementById('fire').onclick = async () => {
+    pushConfig();
+    for (const path of ['style.css','app.js','api/stats.json','photo.jpg','api/user.json']){
+      try{
+        await fetch(path + '?t=' + Date.now() + Math.random(), {cache:'no-store'});
+      }catch(e){ log('miss','✗ ' + path + ' failed'); }
+    }
+  };
+}
+boot();
+</script>
+</html>

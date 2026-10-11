@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flow Fields</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:14px;left:14px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:12px;font-size:12px;width:190px;z-index:5}
+#ui label{display:flex;justify-content:space-between;margin:6px 0;color:#888}
+#ui input{accent-color:#7ee787;width:100px}
+#ui b{color:#7ee787}
+#ui button{width:100%;margin-top:6px;background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:5px;padding:5px 0;cursor:pointer}
+
+</style></head><body>
+
+<div id=ui><label>turbulence <input id=t type=range min=0 max=8 step=.1 value=2.5><b id=tv>2.5</b></label>
+<label>speed <input id=s type=range min=1 max=8 step=.5 value=3><b id=sv>3.0</b></label>
+<button id=re>reseed particles</button></div>
+<script>
+
+// inline value-noise (no CDN dependency; d3-delaunay/simplex equivalents would work too)
+function makeNoise(seed){
+  let s=seed>>>0;
+  const rnd=()=>{s=Math.imul(s^s>>>15,2246822519);s=Math.imul(s^s>>>13,3266489917);return((s^=s>>>16)>>>0)/4294967296;};
+  const N=256,perm=new Uint8Array(N);for(let i=0;i<N;i++)perm[i]=i;
+  for(let i=N-1;i>0;i--){const j=rnd()*(i+1)|0;[perm[i],perm[j]]=[perm[j],perm[i]];}
+  const g=x=>perm[x&255]/255;
+  const fade=t=>t*t*(3-2*t);
+  return (x,y)=>{
+    const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi;
+    const tl=g(xi+g(yi*97)),tr=g(xi+1+g(yi*97)),bl=g(xi+g((yi+1)*97)),br=g(xi+1+g((yi+1)*97));
+    return (tl+(tr-tl)*fade(xf))+((bl+(br-bl)*fade(xf))-(tl+(tr-tl)*fade(xf)))*fade(yf);
+  };
+}
+const cv=document.createElement('canvas');document.body.appendChild(cv);
+const ctx=cv.getContext('2d');
+let W,H;function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit();addEventListener('resize',fit);
+const noise=makeNoise(1337);
+const N=2200,parts=[];
+function reseed(){parts.length=0;for(let i=0;i<N;i++)parts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight});}
+reseed();document.getElementById('re').onclick=reseed;
+let turb=2.5,speed=3;
+const tb=document.getElementById('t'),tv=document.getElementById('tv');
+tb.addEventListener('input',()=>{turb=+tb.value;tv.textContent=turb.toFixed(1);});
+const sb=document.getElementById('s'),sv=document.getElementById('sv');
+sb.addEventListener('input',()=>{speed=+sb.value;sv.textContent=speed.toFixed(1);});
+ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,innerWidth,innerHeight);
+let t0=0,last=performance.now(),fps=60;
+(function loop(t){
+  requestAnimationFrame(loop);
+  const dt=Math.min((t-last)/1000,.05);last=t;fps+=(1/dt-fps)*.05;
+  t0+=dt*.25;
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='rgba(13,13,13,.02)';ctx.fillRect(0,0,innerWidth,innerHeight);
+  ctx.globalCompositeOperation='lighter';
+  ctx.lineWidth=1;
+  const scale=.0022;
+  for(const p of parts){
+    const a=(noise(p.x*scale,p.y*scale+t0)*2-1)*Math.PI*turb*2;
+    const nx=p.x+Math.cos(a)*4*speed,ny=p.y+Math.sin(a)*4*speed;
+    const hue=190+noise(p.x*scale*2,p.y*scale*2)*140;
+    ctx.strokeStyle=`hsla(${hue},85%,60%,.5)`;
+    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(nx,ny);ctx.stroke();
+    p.x=nx;p.y=ny;
+    if(p.x<0||p.x>innerWidth||p.y<0||p.y>innerHeight){p.x=Math.random()*innerWidth;p.y=Math.random()*innerHeight;}
+  }
+  document.getElementById('tv').textContent=turb.toFixed(1);
+  // fps into hud via title
+  document.title=`${fps|0} fps`;
+})(performance.now());
+</script></body></html>

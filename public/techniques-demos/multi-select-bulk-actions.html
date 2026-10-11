@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selection & Bulk Actions</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:560px;margin:32px auto}
+table{width:100%;border-collapse:collapse}
+td,th{padding:10px 12px;border-bottom:1px solid #1c1c1c;text-align:left}
+tr:hover td{background:#141414}
+tr.sel td{background:#16241a}
+input[type=checkbox]{accent-color:#7ee787;width:16px;height:16px}
+#bar{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:#1c1c1c;border:1px solid #444;border-radius:12px;padding:10px 18px;display:flex;gap:14px;align-items:center;transition:.25s;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#bar.show{transform:translate(-50%,0)}
+#bar button{background:none;border:none;color:#7ee787;cursor:pointer;font-size:14px}
+.cb{text-align:center}
+
+</style></head><body>
+
+<div class="wrap">
+<h1>File manager — shift-click ranges</h1>
+<table><thead><tr><th class="cb"><input type=checkbox id=all></th><th>Name</th><th>Size</th></tr></thead>
+<tbody id=rows></tbody></table>
+<div id=bar><span id=cnt>0 selected</span><button>Rename</button><button>Move</button><button>Delete</button></div>
+</div>
+<script>
+
+const rows=document.getElementById('rows'),all=document.getElementById('all'),bar=document.getElementById('bar'),cnt=document.getElementById('cnt');
+const files=Array.from({length:14},(_,i)=>({name:'file-'+String(i+1).padStart(2,'0')+'.md',size:(Math.random()*900+20|0)+' KB'}));
+let last=-1;
+rows.innerHTML=files.map((f,i)=>`<tr data-i="${i}"><td class=cb><input type=checkbox></td><td>${f.name}</td><td>${f.size}</td></tr>`).join('');
+const boxes=[...rows.querySelectorAll('input')],trs=[...rows.querySelectorAll('tr')];
+function update(){
+  const n=boxes.filter(b=>b.checked).length;
+  cnt.textContent=n+' selected';
+  bar.classList.toggle('show',n>0);
+  all.checked=n===boxes.length;
+  all.indeterminate=n>0&&n<boxes.length;
+  trs.forEach((t,i)=>t.classList.toggle('sel',boxes[i].checked));
+}
+boxes.forEach((b,i)=>{
+  b.addEventListener('click',e=>{
+    if(e.shiftKey&&last>-1){ // range select
+      const[a,z]=[Math.min(last,i),Math.max(last,i)];
+      boxes.forEach((x,j)=>x.checked=j>=a&&j<=z);
+    }
+    last=i;update();
+  });
+  trs[i].addEventListener('click',e=>{if(e.target.tagName!=='INPUT'){b.checked=!b.checked;last=i;update();}});
+});
+all.addEventListener('click',()=>{boxes.forEach(b=>b.checked=all.checked);last=-1;update();});
+update();
+</script></body></html>

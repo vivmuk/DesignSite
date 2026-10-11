@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lottie Animations</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;display:grid;place-items:center;min-height:100vh}
+.card{background:#161616;border:1px solid #333;border-radius:16px;padding:32px;width:min(420px,92vw);text-align:center}
+#slot{height:180px;display:grid;place-items:center}
+.slot-lottie{width:180px;height:180px;margin:auto}
+button{background:#7ee787;color:#000;border:none;border-radius:8px;padding:10px 22px;font-weight:600;cursor:pointer;margin-top:14px}
+#status{color:#888;font-size:13px;margin-top:10px;min-height:18px}
+.mascots{display:flex;gap:20px;justify-content:center;margin-top:18px}
+.mascots>div{font-size:11px;color:#666}
+.mascots .l{width:70px;height:70px}
+/* CSS fallbacks */
+.css-spin{width:60px;height:60px;border:5px solid #333;border-top-color:#7ee787;border-radius:50%;animation:rot 1s linear infinite;display:none}
+@keyframes rot{to{transform:rotate(360deg)}}
+.css-check{display:none;color:#7ee787;font-size:60px;animation:pop .5s}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.css-party{display:none;font-size:44px;animation:bounce .6s infinite alternate}
+@keyframes bounce{to{transform:translateY(-14px) rotate(10deg)}}
+
+</style></head><body>
+
+<div class=card>
+<div id=slot><div class=css-spin id=fs></div><div class=css-check id=fc>✓</div><div class=css-party id=fp>🎉</div></div>
+<button id=run>Run task</button>
+<div id=status>idle — press Run task</div>
+<div class=mascots>
+<div><div class=l id=m2></div>loading (loop)</div>
+<div><div class=l id=m3></div>success (once)</div>
+<div><div class=l id=m4></div>celebrate (once)</div>
+</div>
+</div>
+<script>
+
+// Inline animationData keeps this fully self-contained (no CDN JSON fetch needed).
+const checkAnim={v:"5.7",fr:30,ip:0,op:45,w:100,h:100,ddd:0,assets:[],layers:[
+ {ddd:0,ind:1,ty:4,nm:"circle",sr:1,ks:{o:{a:0,k:100},p:{a:0,k:[50,50,0]},a:{a:0,k:[0,0,0]},s:{a:1,k:[{t:0,s:[0,0,100]},{t:20,s:[100,100,100]}]}},
+  shapes:[{ty:"gr",it:[{ty:"el",p:{a:0,k:[0,0]},s:{a:0,k:[80,80]}},{ty:"st",c:{a:0,k:[.49,.9,.53,1]},w:{a:0,k:6},o:{a:0,k:100}},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0}}]}],ip:0,op:45,st:0},
+ {ddd:0,ind:2,ty:4,nm:"tick",sr:1,ks:{o:{a:0,k:100},p:{a:0,k:[50,52,0]},a:{a:0,k:[0,0,0]},s:{a:0,k:[100,100,100]}},
+  shapes:[{ty:"gr",it:[{ty:"sh",ks:{a:0,k:{i:[[0,0],[0,0],[0,0]],o:[[0,0],[0,0],[0,0]],v:[[-16,2],[-4,13],[18,-13]],c:false}}},{ty:"st",c:{a:0,k:[.49,.9,.53,1]},w:{a:0,k:8},lc:2,o:{a:0,k:100}},{ty:"tm",s:{a:0,k:0},e:{a:1,k:[{t:15,s:[0]},{t:40,s:[100]}]},o:{a:0,k:0},m:1},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0}}]}],ip:15,op:45,st:0}]};
+let loaded=false;
+try{
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js';
+  s.onload=()=>{loaded=true;initLottie();};
+  s.onerror=()=>fallback('CDN failed to load — CSS fallbacks shown');
+  document.head.appendChild(s);
+}catch(e){fallback(e.message);}
+function initLottie(){
+  if(!window.lottie)return fallback('lottie global missing');
+  try{
+    const mk=(id,data,loop)=>lottie.loadAnimation({container:document.getElementById(id),renderer:'svg',loop,autoplay:loop,animationData:data});
+    // mini loading loop: a rotating arc
+    const loadAnim={v:"5.7",fr:30,ip:0,op:30,w:100,h:100,assets:[],layers:[
+     {ddd:0,ind:1,ty:4,nm:"arc",sr:1,ks:{o:{a:0,k:100},p:{a:0,k:[50,50,0]},a:{a:0,k:[0,0,0]},r:{a:1,k:[{t:0,s:[0]},{t:30,s:[360]}]}},
+      shapes:[{ty:"gr",it:[{ty:"el",p:{a:0,k:[0,0]},s:{a:0,k:[70,70]}},{ty:"st",c:{a:0,k:[.49,.9,.53,1]},w:{a:0,k:7},d:[{n:"d",v:{a:0,k:34}},{n:"g",v:{a:0,k:24}}],o:{a:0,k:100}},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0}}]}],ip:0,op:30,st:0}]};
+    mk('m2',loadAnim,true);
+    mk('m3',checkAnim,false);
+    mk('m4',JSON.parse(JSON.stringify(checkAnim)),false);
+    lottie.setSpeed(1.2);
+    runBtn();
+  }catch(e){fallback(e.message);}
+}
+function fallback(msg){
+  document.querySelectorAll('.css-spin,.css-check,.css-party').forEach(el=>el.dataset.fallback='1');
+  document.getElementById('status').textContent='⚠ '+msg+' — using CSS fallbacks';
+  runBtn();
+}
+function runBtn(){
+  document.getElementById('run').onclick=()=>{
+    const status=document.getElementById('status'),slot=document.getElementById('slot');
+    status.textContent='working…';
+    if(loaded){slot.innerHTML='<div class=slot-lottie id=m1></div>';
+      const a=lottie.loadAnimation({container:document.getElementById('m1'),renderer:'svg',loop:true,autoplay:true,animationData:JSON.parse(JSON.stringify({v:"5.7",fr:30,ip:0,op:30,w:100,h:100,assets:[],layers:[{ddd:0,ind:1,ty:4,nm:"arc",sr:1,ks:{o:{a:0,k:100},p:{a:0,k:[50,50,0]},a:{a:0,k:[0,0,0]},r:{a:1,k:[{t:0,s:[0]},{t:30,s:[360]}]}},shapes:[{ty:"gr",it:[{ty:"el",p:{a:0,k:[0,0]},s:{a:0,k:[70,70]}},{ty:"st",c:{a:0,k:[.49,.9,.53,1]},w:{a:0,k:7},d:[{n:"d",v:{a:0,k:34}},{n:"g",v:{a:0,k:24}}],o:{a:0,k:100}},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0}}]}],ip:0,op:30,st:0}]}))});
+      setTimeout(()=>{a.destroy();showResult();},2000);
+    } else {
+      document.getElementById('fs').style.display='block';
+      setTimeout(()=>{document.getElementById('fs').style.display='none';showResult();},2000);
+    }
+  };
+}
+function showResult(){
+  const slot=document.getElementById('slot'),status=document.getElementById('status');
+  status.textContent='✓ task complete — success mascot played, celebration fired';
+  if(loaded){slot.innerHTML='<div class=slot-lottie id=m1></div>';
+    lottie.loadAnimation({container:document.getElementById('m1'),renderer:'svg',loop:false,autoplay:true,animationData:JSON.parse(JSON.stringify(checkAnim))});
+    lottie.loadAnimation({container:document.getElementById('m4'),renderer:'svg',loop:false,autoplay:true,animationData:JSON.parse(JSON.stringify(checkAnim))}).play();
+  } else {const fc=document.getElementById('fc');fc.style.display='block';setTimeout(()=>fc.style.display='none',1600);
+    const fp=document.getElementById('fp');fp.style.display='block';}
+}
+</script></body></html>

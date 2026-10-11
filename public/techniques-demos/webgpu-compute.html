@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebGPU Compute</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#note{position:fixed;top:16px;left:16px;background:rgba(22,22,22,.9);border:1px solid #333;border-radius:10px;padding:12px 16px;font-size:13px;max-width:320px}
+#note b{color:#7ee787}
+canvas{display:block}
+
+</style></head><body>
+
+<div id=note>checking WebGPU…</div>
+<script type="module">
+
+const note=document.getElementById('note');
+if(!('gpu' in navigator)){
+  note.innerHTML='<b>WebGPU unavailable</b><br>falling back to a WebGL 2D simulation of the same N-body wave — the real demo runs compute shaders via @compute @workgroup_size(64).';
+  // Fallback: canvas 2D wave sim
+  const c=document.createElement('canvas');c.width=c.height=512;document.body.appendChild(c);
+  const ctx=c.getContext('2d');c.style.width='100vmin';c.style.height='100vmin';c.style.margin='auto';
+  const n=128,cur=new Float32Array(n*n),nxt=new Float32Array(n*n);
+  cur[n*n>>1|0]=255;
+  setInterval(()=>{
+    for(let y=1;y<n-1;y++)for(let x=1;x<n-1;x++){
+      const i=y*n+x;
+      nxt[i]=(cur[i-1]+cur[i+1]+cur[i-n]+cur[i+n])*.25-cur[i]*0+ (cur[i-1]+cur[i+1]+cur[i-n]+cur[i+n])/2 - cur[i];
+      nxt[i]*=.995;
+    }
+    cur.set(nxt);
+    const img=ctx.createImageData(n,n);
+    for(let i=0;i<n*n;i++){const v=Math.max(0,Math.min(255,128+cur[i]));img.data[i*4]=v*.2;img.data[i*4+1]=v;img.data[i*4+2]=v*.8;img.data[i*4+3]=255;}
+    ctx.putImageData(img,0,0);
+  },33);
+  document.querySelector('canvas').addEventListener('click',e=>{
+    const x=e.offsetX/e.clientWidth*n|0,y=e.offsetY/e.clientHeight*n|0;cur[y*n+x]=300;
+  });
+} else {
+  (async()=>{
+    try{
+      const adapter=await navigator.gpu.requestAdapter();
+      const device=await adapter.requestDevice();
+      note.innerHTML='<b>WebGPU active</b> — running compute pass over 1,048,576 particles.';
+      const COUNT=1048576;
+      const buf=device.createBuffer({size:COUNT*8,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST});
+      const init=new Float32Array(COUNT*2);
+      for(let i=0;i<COUNT;i++){init[i*2]=Math.random()*2-1;init[i*2+1]=Math.random()*2-1;}
+      device.queue.writeBuffer(buf,0,init);
+      const module=device.createShaderModule({code:`
+        @group(0) @binding(0) var<storage, read_write> pos: array<vec2f>;
+        @compute @workgroup_size(64)
+        fn main(@builtin(global_invocation_id) gid: vec3u) {
+          if (gid.x >= arrayLength(&pos)) { return; }
+          var p = pos[gid.x];
+          // wave/n-body-lite: attract toward center + curl swirl
+          let r = length(p);
+          p = p * (1.0 - 0.002 * r) + vec2f(-p.y, p.x) * 0.02;
+          pos[gid.x] = p;
+        }`});
+      const pipeline=device.createComputePipeline({layout:'auto',compute:{module,entryPoint:'main'}});
+      const bind=device.createBindGroup({layout:pipeline.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:buf}}]});
+      const c=document.createElement('canvas');c.width=c.height=512;document.body.appendChild(c);
+      const ctx=c.getContext('2d');
+      const read=new Float32Array(COUNT*2);
+      let frame=0;
+      async function tick(){
+        frame++;
+        const enc=device.createCommandEncoder();
+        const pass=enc.beginComputePass();
+        pass.setPipeline(pipeline);pass.setBindGroup(0,bind);
+        pass.dispatchWorkgroups(Math.ceil(COUNT/64));pass.end();
+        device.queue.submit([enc.finish()]);
+        if(frame%3===0){
+          const rb=device.createBuffer({size:buf.size,usage:GPUBufferUsage.COPY_DST|GPUBufferUsage.MAP_READ});
+          const e2=device.createCommandEncoder();e2.copyBufferToBuffer(buf,0,rb,0,rb.size);
+          device.queue.submit([e2.finish()]);
+          await rb.mapAsync(GPUMapMode.READ);
+          read.set(new Float32Array(rb.getMappedRange()));
+          rb.unmap();rb.destroy();
+          ctx.fillStyle='#050505';ctx.fillRect(0,0,512,512);
+          ctx.fillStyle='rgba(126,231,135,.6)';
+          for(let i=0;i<COUNT;i+=97){ // subsample for draw perf
+            ctx.fillRect(256+read[i*2]*120,256+read[i*2+1]*120,1.4,1.4);
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+    }catch(e){
+      note.innerHTML='<b>WebGPU init failed:</b> '+e.message+'<br>Requires a WebGPU-capable browser (Chrome/Edge 113+, or Safari 18+).';
+    }
+  })();
+}
+</script></body></html>

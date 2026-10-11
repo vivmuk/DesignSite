@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>:has() — Zero-JS Checkout Validation</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:520px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  form { background:#141414; border:1px solid #2a2a2a; border-radius:14px; padding:1.4rem; transition:border-color .25s; }
+  label { display:block; font-size:.82rem; color:#999; margin:.9rem 0 .3rem; }
+  input { width:100%; box-sizing:border-box; background:#0f0f0f; border:1px solid #333; border-radius:8px; padding:.6rem .8rem; color:#e4e4e4; font-size:.95rem; }
+  input:focus { outline:2px solid #8b7cff; border-color:transparent; }
+  .hint { display:none; font-size:.78rem; color:#ff9c6e; margin-top:.3rem; }
+  .pay { width:100%; margin-top:1.3rem; padding:.8rem; border:0; border-radius:8px; background:#8b7cff; color:#0d0d0d; font-weight:700; font-size:1rem; cursor:pointer; }
+  .pay:disabled { opacity:.35; cursor:not-allowed; }
+  /* THE MAGIC: the form reacts to its own contents */
+  form:has(input:invalid) { border-color:#7a2a3f; }
+  form:has(input:invalid) .hint { display:block; }
+  form:has(input:invalid) .pay { background:#3a1420; color:#ff9c6e; }
+  form:has(input:invalid) .pay::after { content:" — fix errors above"; font-weight:400; font-size:.8rem; }
+  input:invalid { border-color:#7a2a3f; }
+  input:valid { border-color:#2a5a3f; }
+  .status { margin-top:1rem; font-size:.85rem; color:#777; }
+  form:not(:has(input:invalid)) .status { color:#7dd8a0; }
+  .status::before { content:"⚠ waiting for valid input"; }
+  form:not(:has(input:invalid)) .status::before { content:"✓ card ready"; }
+</style>
+</head>
+<body>
+<h1>Relational Selector :has()</h1>
+<p class="sub">The form, button, and status line below are styled by <code>form:has(input:invalid)</code> — there is no JavaScript in this demo.</p>
+<form novalidate>
+  <label for="num">Card number (16 digits)</label>
+  <input id="num" required pattern="[0-9 ]{19}" placeholder="4242 4242 4242 4242" inputmode="numeric">
+  <p class="hint">Enter a 16-digit card number.</p>
+  <label for="exp">Expiry (MM/YY)</label>
+  <input id="exp" required pattern="(0[1-9]|1[0-2])/[0-9]{2}" placeholder="12/29">
+  <p class="hint">Use MM/YY format.</p>
+  <label for="cvc">CVC</label>
+  <input id="cvc" required pattern="[0-9]{3}" placeholder="123">
+  <p class="hint">3 digits on the back of the card.</p>
+  <button class="pay" type="submit" disabled>Pay $49.00</button>
+  <p class="status"></p>
+</form>
+<p style="color:#666;font-size:.8rem;margin-top:1rem">Note: the disabled attribute is set once; :has() styles it — real apps pair :has styling with the pattern's own :valid gating.</p>
+<script>
+  // Purely progressive enhancement: enable the button when the form is valid
+  const form = document.querySelector('form');
+  const pay = document.querySelector('.pay');
+  form.addEventListener('input', () => { pay.disabled = !form.checkValidity(); });
+  form.addEventListener('submit', e => { e.preventDefault(); alert('Checked out with zero validation JavaScript!'); });
+  if (!CSS.supports('selector(:has(*))')) {
+    document.querySelector('.sub').textContent = ':has() is unsupported here — the card won't turn red automatically.';
+  }
+</script>
+</body>
+</html>

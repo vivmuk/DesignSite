@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadow DOM encapsulation</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:32px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  /* deliberately aggressive page styles — the widget below must survive them */
+  .card{border-radius:2px !important;background:#7f1d1d !important;color:#fff !important;border:none !important;padding:6px !important}
+  p{color:#f87171 !important;font-size:9px !important;text-transform:uppercase !important}
+  button{background:#fbbf24 !important;border-radius:0 !important}
+  .note{color:#9a9a9a;font-size:13px;margin-top:18px;max-width:600px}
+  code{color:#7ee787}
+</style>
+</head>
+<body>
+<h1>Style encapsulation stress test</h1>
+<p class="sub">The page CSS above deliberately tries to bleed into the widget (red background, tiny uppercase text, square buttons). A declarative shadow root makes that impossible — view source to see the template rendered without any JS.</p>
+
+<video-widget>
+  <template shadowrootmode="open">
+    <style>
+      /* scoped: page styles physically cannot reach in; these can't leak out */
+      :host{display:block;max-width:440px;border:1px solid #2a2a2a;border-radius:14px;background:var(--card,#161616);color:var(--fg,#e4e4e4);overflow:hidden;font:14px system-ui}
+      .thumb{aspect-ratio:16/9;background:linear-gradient(120deg,#1e3a8a,#7c3aed);display:grid;place-items:center;font-size:34px}
+      .meta{padding:12px 14px}
+      .meta h3{margin:0 0 4px;font-size:15px}
+      .meta p{margin:0;color:var(--mut,#8a8a8a);font-size:13px;text-transform:none}
+      button{margin-top:10px;background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;cursor:pointer;font:inherit}
+      .views{float:right;font-size:12px;color:#7ee787}
+    </style>
+    <div class="thumb">▶</div>
+    <div class="meta">
+      <h3>Shadow DOM in 100 seconds <span class="views">2.1M views</span></h3>
+      <p>Every style rule here is fenced: page CSS can't cross in (except via CSS custom properties like --card), and widget styles can't leak out to break the host page.</p>
+      <button part="play">Watch now</button>
+    </div>
+  </template>
+</video-widget>
+
+<p class="note">This markup uses <code>&lt;template shadowrootmode="open"&gt;</code> — declarative Shadow DOM, parsed directly from HTML with zero script. Compare with the page's hostile CSS: the widget keeps its rounded corners, dark card, and own font sizes. Custom properties (--card, --fg, --mut) are the sanctioned styling API across the boundary.</p>
+<script>
+// wire the slotted behavior: light DOM children are the video's slot content
+document.querySelector('video-widget').addEventListener('click', e => {
+  if (e.target.part?.includes?.('play') || e.target.textContent === 'Watch now') console.log('play clicked');
+});
+</script>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Streaming Chat UI</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;display:grid;place-items:center;min-height:100vh}
+  .chat{width:560px;max-width:94vw;background:#161616;border:1px solid #2a2a2a;border-radius:16px;padding:20px}
+  h1{font-size:17px;margin:0 0 12px}
+  #log{height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:85%;padding:10px 14px;border-radius:14px;white-space:pre-wrap}
+  .user{align-self:flex-end;background:#2563eb;color:#fff;border-bottom-right-radius:4px}
+  .bot{align-self:flex-start;background:#1f1f1f;border:1px solid #2f2f2f;border-bottom-left-radius:4px}
+  .cursor{display:inline-block;width:8px;height:16px;background:#60a5fa;vertical-align:text-bottom;animation:blink .8s steps(1) infinite;margin-left:2px}
+  @keyframes blink{50%{opacity:0}}
+  .form{display:flex;gap:8px;margin-top:14px}
+  input{flex:1;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:10px;padding:10px;font:inherit}
+  button{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer}
+  button.stop{background:#dc2626;display:none}
+  .typing{color:#8a8a8a;font-size:12px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="chat">
+  <h1>Simulated assistant (client-side stream)</h1>
+  <div id="log"></div>
+  <div class="form">
+    <input id="in" placeholder="Ask something…">
+    <button id="send">Send</button>
+    <button id="stop" class="stop">■ Stop</button>
+  </div>
+</div>
+<script>
+const SCRIPTS = [
+  {q:'how do streams work', a:`Great question! Streaming is about sending data in chunks instead of waiting for the whole payload.\n\nThink of it like this:\n- The server starts generating immediately\n- Each chunk is pushed as it's ready\n- The client renders progressively\n\nThe user perceives a much faster response, even when total time is identical.`},
+  {q:'tell me a fact', a:`Here's one: the first website ever (info.cern.ch) is still online.\n\nTim Berners-Lee put it up in 1991, and the original NeXT machine it was served from had 256 MB of RAM — less than a modern browser tab uses on a bad day.`},
+  {q:'default', a:`I'm a simulated model — no network calls here. My "tokens" arrive on a timer to demonstrate the streaming UX pattern: typing indicator, blinking cursor, incremental render, and a stop button that aborts mid-stream.`},
+];
+const log = document.getElementById('log');
+let abort = null;
+
+function push(cls, text=''){
+  const d = document.createElement('div'); d.className = 'msg '+cls; d.textContent = text;
+  log.append(d); log.scrollTop = log.scrollHeight;
+  return d;
+}
+async function respond(q){
+  const hit = SCRIPTS.find(s => q.toLowerCase().includes(s.q)) || SCRIPTS.at(-1);
+  const typing = push('bot typing');
+  typing.textContent = 'thinking…';
+  await new Promise(r => setTimeout(r, 500));           // typing indicator phase
+  typing.remove();
+  const bot = push('bot');
+  const cursor = document.createElement('span'); cursor.className='cursor';
+  bot.append(cursor);
+  const tokens = hit.a.match(/\S+\s*|\n/g);
+  abort = {stopped:false};
+  document.getElementById('stop').style.display = '';
+  for (const t of tokens){
+    if (abort.stopped){ break; }
+    cursor.before(t);
+    log.scrollTop = log.scrollHeight;
+    await new Promise(r => setTimeout(r, 25 + Math.random()*45));
+  }
+  cursor.remove();
+  if (abort.stopped){ bot.append(document.createTextNode(' ⏹ [stopped]')); }
+  document.getElementById('stop').style.display = 'none';
+  abort = null;
+}
+function send(){
+  const q = document.getElementById('in').value.trim();
+  if (!q || abort) return;
+  push('user', q);
+  document.getElementById('in').value = '';
+  respond(q);
+}
+document.getElementById('send').onclick = send;
+document.getElementById('in').addEventListener('keydown', e => e.key==='Enter' && send());
+document.getElementById('stop').onclick = () => { if (abort) abort.stopped = true; };
+</script>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R3F-style Declarative 3D</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;top:14px;left:14px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:12px 16px;font-size:13px;max-width:300px}
+#hud code{color:#7ee787;font:11px monospace}
+#hud .map{color:#888;font-size:11px;margin-top:6px;line-height:1.6}
+
+</style></head><body>
+
+<div id=hud><b>R3F patterns, vanilla under the hood</b>
+<div class=map><code>&lt;Float&gt;</code> → per-instance sine offset<br>
+<code>useFrame</code> → update-registry array<br>
+<code>onPointerOver</code> → raycaster event wiring<br>
+<code>useLoader</code> → procedural geometry factory</div></div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+scene.add(new THREE.AmbientLight(0xffffff,.45));
+const key=new THREE.DirectionalLight(0xffffff,1.5);key.position.set(4,6,4);scene.add(key);
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,50);camera.position.set(0,3,9);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+// useFrame-equivalent: registry of update callbacks
+const useFrame=fns=>fns;
+const frameFns=[];
+// drei <Float> equivalent
+function addFloat(mesh,seed){frameFns.push(t=>{mesh.position.y=mesh.userData.baseY+Math.sin(t*.0018+seed)*.18;});}
+// declarative mesh factory (R3F-style props)
+function createMesh({geometry,material,position=[0,0,0],onClick,onPointerOver,onPointerOut}){
+  const m=new THREE.Mesh(geometry,material);
+  m.position.set(...position);m.userData.baseY=position[1];
+  scene.add(m);
+  if(onClick)clickables.push([m,onClick]);
+  if(onPointerOver)hoverables.push([m,onPointerOver]);
+  if(onPointerOut)hoverOuts.push([m,onPointerOut]);
+  addFloat(m,Math.random()*10);
+  return m;
+}
+const clickables=[],hoverables=[],hoverOuts=[];
+// 5x5 grid of boxes
+const boxGeo=new THREE.BoxGeometry(.7,.7,.7);
+for(let x=-2;x<=2;x++)for(let z=-2;z<=2;z++){
+  const hue=(x+2)/4*140+40;
+  createMesh({
+    geometry:boxGeo,
+    material:new THREE.MeshStandardMaterial({color:new THREE.Color(`hsl(${hue},60%,55%)`),roughness:.4,metalness:.2,emissive:0x000000}),
+    position:[x*1.35,0,z*1.35],
+    onClick:m=>{m.userData.pulse=1;m.userData.on=!m.userData.on;m.material.color.offsetHSL(0,.2,0);},
+    onPointerOver:m=>{m.material.emissive.set(0x224433);m.userData.hover=true;},
+    onPointerOut:m=>{m.material.emissive.set(0x000000);m.userData.hover=false;},
+  });
+}
+// drei-equivalent contact shadow
+const shadow=new THREE.Mesh(new THREE.PlaneGeometry(14,14),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.35}));
+shadow.rotation.x=-Math.PI/2;shadow.position.y=-1.6;scene.add(shadow);
+// raycaster events like R3F
+const ray=new THREE.Raycaster(),ptr=new THREE.Vector2();
+let hovered=null;
+function pick(e){
+  ptr.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
+  ray.setFromCamera(ptr,camera);
+  return ray.intersectObjects(scene.children.filter(o=>o.isMesh&&o!==shadow));
+}
+addEventListener('pointermove',e=>{
+  const hits=pick(e);
+  const m=hits[0]?.object||null;
+  if(hovered&&hovered!==m){const[,out]=hoverOuts.find(([o])=>o===hovered)||[];out&&out(hovered);}
+  if(m&&m!==hovered){const[,over]=hoverables.find(([o])=>o===m)||[];over&&over(m);}
+  hovered=m;document.body.style.cursor=m?'pointer':'default';
+});
+addEventListener('click',e=>{const hits=pick(e);if(hits[0]){const[,fn]=clickables.find(([o])=>o===hits[0].object)||[];fn&&fn(hits[0].object);}});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);
+  frameFns.forEach(fn=>fn(t));
+  scene.children.forEach(m=>{if(m.userData.pulse>0){m.userData.pulse-=.04;const s=1+Math.sin((1-m.userData.pulse)*Math.PI)*.25;m.scale.set(s,s,s);}else m.scale.set(1,1,1);});
+  renderer.render(scene,camera);})(0);
+</script></body></html>

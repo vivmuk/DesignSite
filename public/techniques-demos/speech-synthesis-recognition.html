@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Speech: Synthesis & Recognition</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui}
+  .card{width:420px;max-width:92vw;background:#161616;border:1px solid #2a2a2a;border-radius:16px;padding:24px;text-align:center}
+  .face{width:110px;height:110px;margin:0 auto 14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3b82f6,#1e3a8a);position:relative;transition:transform .08s}
+  .face.talking{transform:scale(1.04)}
+  .eye{position:absolute;top:34px;width:14px;height:14px;border-radius:50%;background:#0d0d0d}
+  .eye.l{left:26px}.eye.r{right:26px}
+  .mouth{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);width:44px;height:8px;border-radius:8px;background:#0d0d0d;transition:height .1s}
+  textarea{width:100%;box-sizing:border-box;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:10px;font:inherit;min-height:70px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;margin:10px 6px 0}
+  select{background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:6px}
+  .status{min-height:20px;color:#9a9a9a;font-size:13px;margin-top:10px}
+  .err{color:#f0a0a0}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="face" id="face"><div class="eye l"></div><div class="eye r"></div><div class="mouth" id="mouth"></div></div>
+  <textarea id="text">Hello! I speak entirely in your browser — no cloud service involved.</textarea>
+  <div><select id="voice"></select></div>
+  <button id="speak">🔊 Speak</button>
+  <button id="stop">⏹ Stop</button>
+  <button id="dictate">🎙 Dictate</button>
+  <div class="status" id="status"></div>
+</div>
+<script>
+const face = document.getElementById('face'), mouth = document.getElementById('mouth'), status = document.getElementById('status');
+const synth = window.speechSynthesis;
+
+// --- populate voice list (async on some engines) ---
+const voiceSel = document.getElementById('voice');
+function loadVoices(){
+  voiceSel.innerHTML = '';
+  synth.getVoices().forEach((v,i)=>{
+    const o = new Option(v.name + ' (' + v.lang + ')', i);
+    voiceSel.append(o);
+  });
+}
+loadVoices(); synth.onvoiceschanged = loadVoices;
+
+// --- synthesis with mouth animation on boundary events ---
+document.getElementById('speak').onclick = () => {
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(document.getElementById('text').value);
+  const v = synth.getVoices()[voiceSel.selectedIndex];
+  if (v) u.voice = v;
+  u.onstart = () => { face.classList.add('talking'); status.textContent = 'Speaking…'; };
+  u.onend = u.onerror = () => { face.classList.remove('talking'); mouth.style.height = '8px'; status.textContent = ''; };
+  u.onboundary = e => {                       // fires per word/char on most engines
+    mouth.style.height = (10 + Math.random()*18) + 'px';
+    status.textContent = 'Speaking… "' + (u.text.substr(e.charIndex, 18)) + '"';
+  };
+  synth.speak(u);
+};
+document.getElementById('stop').onclick = () => synth.cancel();
+
+// --- recognition (Chrome/Edge/Safari flag) ---
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+document.getElementById('dictate').onclick = () => {
+  if (!SR){ status.textContent = 'SpeechRecognition is not supported here — try Chrome or Edge.'; status.classList.add('err'); return; }
+  const r = new SR();
+  r.lang = 'en-US'; r.interimResults = true;
+  const box = document.getElementById('text');
+  r.onresult = e => {
+    let s = '';
+    for (const res of e.results) s += res[0].transcript;
+    box.value = s;
+  };
+  r.onerror = e => status.textContent = 'Recognition error: ' + e.error;
+  r.onend = () => status.textContent = status.textContent.startsWith('Recognition') ? status.textContent : '';
+  try{ r.start(); status.textContent = 'Listening…'; }catch(e){ status.textContent = e.message; }
+};
+</script>
+</html>

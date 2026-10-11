@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>State Management Patterns</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.col{border:1px solid #2a2a2a;border-radius:10px;padding:14px}
+.col h3{margin:0 0 10px;font-size:13px}
+.pattern{font:10px monospace;color:#888}
+.item{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1e1e1e;font-size:13px}
+button{background:#2a4a2a;color:#9e9;border:1px solid #3a5a3a;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px}
+button:active{transform:scale(.97)}
+#devtools{margin-top:18px;background:#111;border:1px solid #2a2a2a;border-radius:8px;padding:12px;font:11px ui-monospace,monospace}
+#devtools .h{color:#6cf;margin-bottom:6px}
+.line{color:#aaa} .line b{color:#9effa1}
+.total{margin-top:8px;color:#ffd479;font-weight:700}
+</style></head><body>
+<h1>One cart, three state patterns</h1>
+<p>Click "+ add" in any column — all three stay in sync via the same shared devtools event log, but each uses a different mechanism.</p>
+<div class="cols">
+<div class="col"><h3>Context / Provider</h3><div class="pattern">useContext + useReducer</div><div id="c1"></div><button onclick="add(0)">+ add item</button><div class="total" id="t1">$0.00</div></div>
+<div class="col"><h3>External store</h3><div class="pattern">zustand-style store</div><div id="c2"></div><button onclick="add(1)">+ add item</button><div class="total" id="t2">$0.00</div></div>
+<div class="col"><h3>Atoms</h3><div class="pattern">jotai-style atoms</div><div id="c3"></div><button onclick="add(2)">+ add item</button><div class="total" id="t3">$0.00</div></div>
+</div>
+<div id="devtools"><div class="h">⚙ shared state log (like Redux DevTools)</div><div id="log"></div></div>
+<script>
+const PRODUCTS=[['Widget',9.99],['Gadget',24.5],['Doohickey',4.75],['Gizmo',14]];
+const NAMES=PRODUCTS.map(p=>p[0]);
+// Pattern 1: context+reducer simulated (single source, dispatch)
+const ctx={items:[],dispatch(a){this.items=a.type==='add'?[...this.items,a.item]:this.items;this.listeners.forEach(f=>f(this.items))},listeners:[]};
+// Pattern 2: external store with subscribe
+const store={items:[],listeners:[],add(){this.items=[...this.items,rand()];this.listeners.forEach(f=>f(this.items))}};
+// Pattern 3: atoms (item count atom + derived total atom)
+const countAtom={v:0,subs:new Set()}; const setCount=v=>{countAtom.v=v;countAtom.subs.forEach(f=>f(v))};
+function rand(){ const p=PRODUCTS[Math.random()*4|0]; return {name:p[0],price:p[1]}; }
+let log=[];
+function devLog(pattern,item){ log.push(`■ ${pattern}.addItem → <b>${item.name} $${item.price.toFixed(2)}</b>`);
+  document.getElementById('log').innerHTML=log.slice(-8).map(l=>`<div class="line">${l}</div>`).join(''); }
+function renderLists(){
+  const mk=(items)=>items.map(i=>`<div class="item"><span>${i.name}</span><span>$${i.price.toFixed(2)}</span></div>`).join('')||'<div style="color:#555;font-size:12px">empty</div>';
+  document.getElementById('c1').innerHTML=mk(ctx.items);
+  document.getElementById('c2').innerHTML=mk(store.items);
+  const n=countAtom.v, items=Array.from({length:n},(_,i)=>({name:NAMES[i%4],price:PRODUCTS[i%4][1]}));
+  document.getElementById('c3').innerHTML=mk(items);
+  document.getElementById('t1').textContent='$'+ctx.items.reduce((s,i)=>s+i.price,0).toFixed(2);
+  document.getElementById('t2').textContent='$'+store.items.reduce((s,i)=>s+i.price,0).toFixed(2);
+  document.getElementById('t3').textContent='$'+items.reduce((s,i)=>s+i.price,0).toFixed(2);
+}
+ctx.listeners.push(renderLists); store.listeners.push(renderLists); countAtom.subs.push(renderLists);
+function add(which){ const item=rand();
+  if(which===0) ctx.dispatch({type:'add',item});
+  if(which===1) store.add();
+  if(which===2) setCount(countAtom.v+1);
+  devLog(['context+reducer','external store','atoms'][which], item);
+}
+renderLists();
+</script></body></html>

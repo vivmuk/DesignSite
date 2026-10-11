@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Critical CSS Inlining Race</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer;font-size:14px;margin-right:8px}
+.track{margin-top:24px;border:1px solid #2a2a2a;border-radius:10px;padding:16px;min-height:150px}
+.track h3{margin:0 0 6px;font-size:14px}
+.viewport{background:#111;border:1px solid #333;border-radius:6px;height:90px;position:relative;overflow:hidden}
+.viewport .content{opacity:0;transition:opacity .25s;padding:12px}
+.viewport .content.on{opacity:1}
+.viewport .blank{position:absolute;inset:0;background:#0d0d0d;display:grid;place-items:center;color:#555;font-size:12px}
+.viewport .blank.off{display:none}
+.frame{display:flex;height:14px;margin-top:8px;border-radius:3px;overflow:hidden}
+.frame span{height:100%}
+.b{background:#f66}.c{background:#9e9}.n{background:#1a1a1a}
+.lbl{font:11px monospace;color:#888;margin-top:4px}
+#verdict{margin-top:18px;font:13px monospace;color:#9effa1;min-height:20px}
+</style>
+<!-- CRITICAL CSS: inlined above the fold rules only -->
+<style>
+.hero{display:flex;gap:12px;padding:10px}
+.hero .box{width:80px;height:60px;border-radius:6px;background:linear-gradient(135deg,#2a4a6a,#4a2a6a)}
+.hero p{margin:4px 0 0;color:#ccc;font-size:13px}
+</style></head><body>
+<h1>Critical CSS inlining — paint race</h1>
+<p>Both lanes load the same page. Run each and watch when first paint happens.</p>
+<button onclick="run('slow')">▶ Run: blocking CSS (slow 4G)</button>
+<button onclick="run('fast')">▶ Run: inlined critical CSS</button>
+<div class="track"><h3>Lane A — render-blocking stylesheet (external, slow)</h3>
+<div class="viewport"><div class="blank" id="blankA">⏳ waiting for /styles.css…</div>
+<div class="content" id="cA"><div class="hero"><div class="box"></div><div class="box"></div><div class="box"></div><p>Hero content finally painted</p></div></div></div>
+<div class="frame" id="fA"></div><div class="lbl" id="lA"></div></div>
+<div class="track"><h3>Lane B — critical CSS inlined in &lt;style&gt; (same hero)</h3>
+<div class="viewport"><div class="content on" id="cB"><div class="hero"><div class="box"></div><div class="box"></div><div class="box"></div><p>Hero content painted immediately</p></div></div>
+<div class="blank off" id="blankB"></div></div>
+<div class="frame" id="fB"></div><div class="lbl" id="lB"></div></div>
+<div id="verdict"></div>
+<script>
+function seg(f, cls, pct){ const s=document.createElement('span'); s.className=cls; s.style.width=pct+'%'; f.append(s); }
+async function run(mode){
+  const fA=document.getElementById('fA'), fB=document.getElementById('fB');
+  fA.innerHTML=''; fB.innerHTML='';
+  const t0=performance.now();
+  if(mode==='slow'){
+    document.getElementById('lA').textContent='fetching /styles.css (simulated 2.4s on slow 4G)…';
+    seg(fA,'b',100); await new Promise(r=>setTimeout(r,2400));
+    document.getElementById('blankA').classList.add('off');
+    document.getElementById('cA').classList.add('on');
+    const t=(performance.now()-t0)|0;
+    document.getElementById('lA').textContent=`first paint @ ${t}ms (all red = user saw nothing)`;
+    document.getElementById('verdict').textContent=`Lane B painted at 0ms with inlined critical CSS → ${(t)}ms faster FCP on this lane.`;
+  } else {
+    seg(fB,'c',100);
+    document.getElementById('lB').textContent='first paint @ 0ms — critical CSS was already in the <head>';
+    document.getElementById('verdict').textContent=`Inlined critical CSS: hero is styled before any network round-trip. Below-the-fold CSS can still load async: <link rel="stylesheet" media="print" onload="this.media='all'">`;
+  }
+}
+</script></body></html>

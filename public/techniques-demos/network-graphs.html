@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Force-Directed Module Graph — D3 force</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:10px;margin-bottom:10px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:6px 14px;font:inherit;cursor:pointer}
+  svg{width:100%;max-width:860px;height:520px;background:#141414;border:1px solid #2a2a2a;border-radius:12px;cursor:grab}
+  .node text{fill:#e4e4e4;font-size:11px;pointer-events:none}
+  .link{stroke:#2f2f2f}
+  .dim{opacity:.15}
+  .pinned circle{stroke:#fbbf24;stroke-width:3}
+</style>
+</head>
+<body>
+<h1>Module import graph</h1>
+<p class="sub">Drag nodes to reposition; click a node to pin/unpin it. Hovering a node highlights its cluster (prefix before "/") and dims the rest.</p>
+<div class="row"><button id="reheat">🔥 Reheat simulation</button></div>
+<svg id="chart" viewBox="0 0 860 520"></svg>
+<script>
+const nodes = [
+  {id:'ui/App'},{id:'ui/Panel'},{id:'ui/Modal'},{id:'ui/theme'},
+  {id:'core/engine'},{id:'core/state'},{id:'core/utils'},
+  {id:'api/client'},{id:'api/types'},{id:'api/mocks'},
+  {id:'tests/unit'},{id:'docs/guide'}
+];
+const links = d3.pairwise? null : null;
+const EDGES = [
+  ['ui/App','ui/Panel'],['ui/App','ui/Modal'],['ui/App','ui/theme'],
+  ['ui/Panel','core/state'],['ui/Modal','core/utils'],
+  ['core/engine','core/utils'],['core/state','core/utils'],
+  ['api/client','core/engine'],['api/client','api/types'],['api/mocks','api/types'],
+  ['tests/unit','core/engine'],['tests/unit','ui/App'],
+  ['docs/guide','api/client']
+];
+const W=860, H=520;
+const svg = d3.select('#chart');
+const gLink = svg.append('g'), gNode = svg.append('g');
+
+const sim = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(EDGES.map(([s,t])=>({source:s,target:t}))).id(d=>d.id).distance(90))
+  .force('charge', d3.forceManyBody().strength(-320))
+  .force('center', d3.forceCenter(W/2, H/2))
+  .force('collide', d3.forceCollide(34));
+
+const link = gLink.selectAll('line').data(EDGES.map(([s,t])=>({source:s,target:t})))
+  .join('line').attr('class','link').attr('stroke-width',1.5);
+
+const node = gNode.selectAll('g.node').data(nodes, d=>d.id)
+  .join('g').attr('class','node').call(d3.drag()
+    .on('start',(e,d)=>{ if(!e.active) sim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on('drag',(e,d)=>{ d.fx=e.x; d.fy=e.y; })
+    .on('end',(e,d)=>{ if(!e.active) sim.alphaTarget(0); d.fx=d.fy=null; }))
+  .on('click', (e,d) => { d.pinned = !d.pinned; d.fx = d.pinned ? d.x : null; d.fy = d.pinned ? d.y : null; node.classed('pinned', n=>n.pinned); })
+  .on('mouseenter', (e,d) => highlight(d))
+  .on('mouseleave', () => highlight(null));
+
+node.append('circle').attr('r',22).attr('fill', d => d3.interpolateTurbo(hash(d.id)/10*0.8+0.1)).attr('stroke','#0d0d0d');
+node.append('text').attr('text-anchor','middle').attr('dy',38).text(d=>d.id);
+
+sim.on('tick', () => {
+  link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+  node.attr('transform', d=>`translate(${d.x},${d.y})`);
+});
+
+function highlight(focus){
+  if (!focus){ node.classed('dim',false); link.classed('dim',false); return; }
+  const cluster = focus.id.split('/')[0];
+  node.classed('dim', n => n.id.split('/')[0] !== cluster);
+  link.classed('dim', l => l.source.id.split('/')[0] !== cluster && l.target.id.split('/')[0] !== cluster);
+}
+document.getElementById('reheat').onclick = () => sim.alpha(1).restart();
+function hash(s){ let h=0; for(const c of s) h=(h*31+c.charCodeAt(0))%97; return h; }
+</script>
+</html>

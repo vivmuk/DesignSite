@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>@property — Animatable Conic Progress Ring</title>
+<style>
+  /* Register a typed, animatable custom property */
+  @property --angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:640px; margin:auto; text-align:center; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:2rem; }
+  .ring {
+    --angle: 0deg;
+    width: 180px; height: 180px; border-radius: 50%;
+    margin: 0 auto 1.6rem;
+    display:grid; place-items:center;
+    background: conic-gradient(#8b7cff var(--angle), #23233a 0);
+    transition: --angle .1s linear;
+  }
+  .ring::before { content:""; position:absolute; width:140px; height:140px; border-radius:50%; background:#0d0d0d; }
+  .ring span { position:relative; font-size:1.6rem; font-weight:700; }
+  input[type=range] { width: 300px; accent-color:#8b7cff; }
+  label { display:block; margin-bottom:.6rem; color:#999; font-size:.9rem; }
+  .fallback { display:none; border:1px solid #4a3a2a; background:#1d160f; color:#e8c468; border-radius:10px; padding:1rem; margin:1rem 0; }
+  .pct { font-family:ui-monospace,monospace; color:#8b7cff; }
+  code { color:#e8c468; font-size:.78rem; }
+</style>
+</head>
+<body>
+<h1>Typed Custom Properties: @property</h1>
+<p class="sub">A conic-gradient progress ring that <em>transitions</em> because <code>--angle</code> is registered as <code>&lt;angle&gt;</code>.</p>
+<div class="fallback" id="fallback">This browser doesn't support @property — the ring jumps instead of animating, but still works.</div>
+<div class="ring" id="ring"><span id="label">0%</span></div>
+<label for="slider">Drag to set progress</label>
+<input type="range" id="slider" min="0" max="100" value="0">
+<p>Registered with:</p>
+<pre style="color:#a8d4b0;font-size:.78rem;text-align:left;display:inline-block">@property --angle {
+  syntax: '&lt;angle&gt;';
+  inherits: false;
+  initial-value: 0deg;
+}</pre>
+<p>Without <code>@property</code>, custom properties are untyped strings and can't be transitioned — here <code>transition: --angle .1s linear</code> makes the gradient sweep smoothly, and even an auto-loop animation works (watch after 3s).</p>
+<script>
+  const ring = document.getElementById('ring');
+  const slider = document.getElementById('slider');
+  const label = document.getElementById('label');
+  function setPct(p) {
+    ring.style.setProperty('--angle', p * 3.6 + 'deg');
+    label.textContent = Math.round(p) + '%';
+    slider.value = p;
+  }
+  slider.addEventListener('input', () => setPct(+slider.value));
+  setPct(0);
+  // demo loop
+  let t = 0;
+  const iv = setInterval(() => {
+    t += 0.5;
+    if (t > 100) { clearInterval(iv); return; }
+    if (+slider.value === 0) setPct(t);
+  }, 30);
+  if (!window.CSSPropertyRule && !CSS.supports('(background: conic-gradient(red 0deg, blue 0deg))')) {
+    document.getElementById('fallback').style.display = 'block';
+  }
+</script>
+</body>
+</html>

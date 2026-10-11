@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Individual Transforms</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.stage { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3rem; }
+.cube { width:90px; height:90px; border-radius:14px; background:linear-gradient(135deg, #2d4a8a, #8a5ae8);
+  translate: 0 0; rotate: 0deg; scale: 1;
+  animation: orbit 6s ease-in-out infinite alternate, spin 3s linear infinite, breathe 2s ease-in-out infinite; }
+@keyframes orbit { from { translate: -220px 40px; } to { translate: 220px -40px; } }
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes breathe { 0%,100% { scale: 1; } 50% { scale: 1.35; } }
+.hud { display:flex; gap:2.5rem; font-family:ui-monospace, monospace; font-size:0.8rem; color:#8ab4ff; }
+
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="cube" id="cube"></div>
+  <div class="hud">
+    <span id="tx">translateX: 0px</span><span id="rot">rotate: 0deg</span><span id="sc">scale: 1</span>
+  </div>
+</div>
+
+<script>
+
+const cube = document.getElementById('cube');
+let t0 = performance.now();
+(function loop(now) {
+  const t = (now - t0) / 1000;
+  const orbitPeriod = 6;
+  const phase = (t % orbitPeriod) / orbitPeriod;
+  const tx = Math.round(-220 + 440 * phase);
+  const rot = Math.round((t * 120) % 360);
+  const sc = (1 + 0.35 * Math.sin(t * Math.PI)).toFixed(2);
+  document.getElementById('tx').textContent = 'translateX: ' + tx + 'px';
+  document.getElementById('rot').textContent = 'rotate: ' + rot + 'deg';
+  document.getElementById('sc').textContent = 'scale: ' + sc;
+  requestAnimationFrame(loop);
+})(t0);
+
+</script>
+</body>
+</html>

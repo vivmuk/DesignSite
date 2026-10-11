@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebGPU vs WASM — compute benchmark</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+  table{border-collapse:collapse;font:13px monospace}
+  th,td{border:1px solid #333;padding:6px 14px;text-align:left}
+  th{color:#9a9a9a;font-weight:600}
+  .good{color:#34d399}.bad{color:#f87171}
+  canvas{background:#141414;border:1px solid #2a2a2a;border-radius:12px;margin-top:10px;max-width:100%}
+</style>
+</head>
+<body>
+<h1>WebGPU vs WASM compute paths</h1>
+<p class="sub">Real matrix-multiply workloads on the GPU via WebGPU, compared with a CPU/WASM-style loop. Same math, different hardware — like ONNX Runtime Web's EP selection.</p>
+<div class="row">
+  <button id="bench">▶ Run benchmark</button>
+  <button id="blur">🎨 Simulated backdrop effect</button>
+</div>
+<table><thead><tr><th>Backend</th><th>Size</th><th>ms / run</th><th>GFLOP/s est.</th></tr></thead><tbody id="rows"></tbody></table>
+<canvas id="cv" width="480" height="320"></canvas>
+<script>
+const rows = document.getElementById('rows');
+function addRow(backend, size, ms){
+  const flops = 2 * size**3;
+  const gps = flops / (ms/1000) / 1e9;
+  rows.insertAdjacentHTML('beforeend',
+    `<tr><td>${backend}</td><td>${size}×${size}</td><td>${ms.toFixed(1)}</td><td class="${gps>50?'good':'bad'}">${gps.toFixed(1)}</td></tr>`);
+}
+const hasWebGPU = 'gpu' in navigator;
+
+document.getElementById('bench').onclick = async () => {
+  rows.innerHTML = '';
+  const SIZE = 256, A = new Float32Array(SIZE*SIZE).map(() => Math.random());
+  const B = new Float32Array(SIZE*SIZE).map(() => Math.random());
+  // CPU baseline (what WASM roughly matches)
+  let t0 = performance.now();
+  const C = new Float32Array(SIZE*SIZE);
+  for(let i=0;i<SIZE;i++) for(let k=0;k<SIZE;k++){
+    const a = A[i*SIZE+k];
+    for(let j=0;j<SIZE;j++) C[i*SIZE+j] += a * B[k*SIZE+j];
+  }
+  addRow('CPU (WASM-like)', SIZE, performance.now()-t0);
+
+  if (!hasWebGPU){
+    rows.insertAdjacentHTML('beforeend','<tr><td colspan=4 class="bad">navigator.gpu not available — WebGPU requires Chrome/Edge 113+ (or flag). CPU fallback shown.</td></tr>');
+    return;
+  }
+  try{
+    const adapter = await navigator.gpu.requestAdapter();
+    const device = await adapter.requestDevice();
+    const shader = device.createShaderModule({code: `
+      @group(0) @binding(0) var<storage, read> a: array<f32>;
+      @group(0) @binding(1) var<storage, read> b: array<f32>;
+      @group(0) @binding(2) var<storage, read_write> c: array<f32>;
+      @compute @workgroup_size(8, 8)
+      fn main(@builtin(global_invocation_id) gid: vec3u) {
+        let N: u32 = ${SIZE}u;
+        if (gid.x >= N || gid.y >= N) { return; }
+        var sum: f32 = 0.0;
+        for (var k: u32 = 0u; k < N; k = k + 1u) {
+          sum = sum + a[gid.y * N + k] * b[k * N + gid.x];
+        }
+        c[gid.y * N + gid.x] = sum;
+      }`});
+    const buf = (arr, usage) => { const b = device.createBuffer({size: arr.byteLength, usage}); device.queue.writeBuffer(b, 0, arr); return b; };
+    const ST = GPUBufferUsage.STORAGE, R = GPUBufferUsage.COPY_SRC | GPUBufferUsage.MAP_READ;
+    const bufs = [buf(A, ST|GPUBufferUsage.COPY_DST), buf(B, ST|GPUBufferUsage.COPY_DST), device.createBuffer({size:A.byteLength, usage:ST}), device.createBuffer({size:A.byteLength, usage:R})];
+    const pipe = device.createComputePipeline({layout:'auto', compute:{module:shader, entryPoint:'main'}});
+    const bind = device.createBindGroup({layout:pipe.getBindGroupLayout(0), entries: bufs.map((b,i)=>({binding:i, resource:{buffer:b}}))});
+    // warm up + timed runs
+    const timeIt = async () => {
+      const enc = device.createComputeEncoder = null;
+      const cmd = device.createCommandEncoder();
+      const pass = cmd.beginComputePass();
+      pass.setPipeline(pipe); pass.setBindGroup(0, bind);
+      pass.dispatchWorkgroups(SIZE/8, SIZE/8); pass.end();
+      device.queue.submit([cmd.finish()]);
+      await device.queue.onSubmittedWorkDone();
+    };
+    await timeIt();
+    t0 = performance.now();
+    for(let r=0;r<5;r++) await timeIt();
+    addRow('WebGPU', SIZE, (performance.now()-t0)/5);
+  }catch(e){
+    rows.insertAdjacentHTML('beforeend',`<tr><td colspan=4 class="bad">WebGPU failed: ${e.message} — CPU fallback shown.</td></tr>`);
+  }
+};
+
+// simulated "background blur": draw a scene, blur the periphery only
+document.getElementById('blur').onclick = () => {
+  const cv = document.getElementById('cv'), x = cv.getContext('2d');
+  const g = x.createLinearGradient(0,0,480,320); g.addColorStop(0,'#312e81'); g.addColorStop(1,'#0d0d0d');
+  x.fillStyle = g; x.fillRect(0,0,480,320);
+  for(let i=0;i<40;i++){ x.fillStyle = `hsla(${i*9},60%,55%,.5)`; x.beginPath(); x.arc((i*97)%480,(i*61)%320,14,0,7); x.fill(); }
+  // person-shaped sharp center region
+  x.save(); x.beginPath(); x.ellipse(240,200,70,110,0,0,7); x.clip();
+  x.fillStyle = '#e4e4e4'; x.fillRect(0,0,480,320); x.restore();
+  x.fillStyle = '#e4e4e4'; x.font='12px monospace';
+  x.fillText(hasWebGPU ? 'segmentation mask: WebGPU path' : 'segmentation mask: WASM fallback', 12, 20);
+};
+</script>
+</html>

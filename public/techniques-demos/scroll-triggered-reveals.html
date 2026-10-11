@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll-triggered Reveals</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.page { max-width:680px; margin:0 auto; }
+.hero { min-height:70vh; display:flex; align-items:center; justify-content:center; }
+.hero h1 { font-size:clamp(2rem,6vw,4rem); }
+.block { min-height:55vh; display:flex; flex-direction:column; justify-content:center; gap:1.2rem; padding:4rem 2rem; border-top:1px solid #1e1e1e; }
+.block h2 { font-size:clamp(1.5rem,4vw,2.4rem); }
+.block p { color:#999; line-height:1.7; }
+.imgbox { height:260px; border-radius:12px; background:linear-gradient(135deg, #1e3a5e, #5e2a3a); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.5); letter-spacing:0.3em; }
+.block { opacity:0; }
+.block.in[data-fx="rise"] { opacity:1; transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1); transform:none; }
+.block[data-fx="rise"] { transform:translateY(60px); }
+.block.in[data-fx="wipe"] .imgbox { clip-path:inset(0 0 0 0); transition:clip-path 1s cubic-bezier(0.4,0,0.2,1) 0.2s; }
+.block[data-fx="wipe"] .imgbox { clip-path:inset(0 100% 0 0); }
+.stat { font-variant-numeric:tabular-nums; }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+  <section class="hero"><h1>Scroll down</h1></section>
+  <section class="block" data-fx="rise"><h2>Headings rise</h2><p>Each section reveals once, with its own timing and mask treatment.</p></section>
+  <section class="block" data-fx="wipe"><div class="imgbox">IMAGE</div></section>
+  <section class="block" data-fx="count"><h2 class="stat" data-target="12840">0</h2><p>Stats count up as they enter.</p></section>
+  <section class="block" data-fx="rise"><h2>One-shot reveals</h2><p>IntersectionObserver unobserves after firing — no re-trigger on scroll-back.</p></section>
+</div>
+
+<script>
+
+const io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    el.classList.add('in');
+    if (el.dataset.fx === 'count') {
+      const stat = el.querySelector('.stat'), target = +stat.dataset.target, t0 = performance.now();
+      (function tick(now) {
+        const t = Math.min(1, (now - t0) / 1800);
+        stat.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))).toLocaleString('en-US');
+        if (t < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+    io.unobserve(el);
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.block').forEach(function(b) { io.observe(b); });
+
+</script>
+</body>
+</html>

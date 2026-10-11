@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tag Cloud — spiral packing + year filter</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:14px;align-items:center;margin:10px 0}
+  input[type=range]{flex:1;max-width:300px;accent-color:#60a5fa}
+  #cloud{position:relative;height:420px;max-width:860px;background:#141414;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
+  .tag{position:absolute;white-space:nowrap;cursor:pointer;transition:left .6s cubic-bezier(.4,0,.2,1), top .6s cubic-bezier(.4,0,.2,1), font-size .6s, opacity .4s;color:#e4e4e4}
+  .tag:hover{color:#60a5fa}
+  .tag.off{opacity:.12}
+</style>
+</head>
+<body>
+<h1>Blog archive tag cloud</h1>
+<p class="sub">Font size = post count. Words fly to spiral-packed spots that never overlap; the year slider filters which tags are active.</p>
+<div class="row">
+  <span>All years</span><input id="year" type="range" min="2020" max="2026" value="2026"><span id="yv">2026</span>
+  <button id="all">Show all years</button>
+</div>
+<div id="cloud"></div>
+<script>
+// tag -> {total posts, per-year counts}
+const TAGS = {
+  'css':        {y:64,  by:{2020:8,2021:9,2022:10,2023:11,2024:9,2025:9,2026:8}},
+  'javascript': {y:120, by:{2020:18,2021:20,2022:19,2023:18,2024:17,2025:15,2026:13}},
+  'typescript': {y:71,  by:{2020:4,2021:8,2022:11,2023:12,2024:12,2025:12,2026:12}},
+  'd3':         {y:22,  by:{2020:2,2021:3,2022:3,2023:4,2024:4,2025:3,2026:3}},
+  'webgpu':     {y:15,  by:{2020:0,2021:0,2022:1,2023:2,2024:4,2025:4,2026:4}},
+  'ai':         {y:83,  by:{2020:2,2021:3,2022:5,2023:14,2024:20,2025:20,2026:19}},
+  'pwa':        {y:18,  by:{2020:4,2021:4,2022:3,2023:2,2024:2,2025:2,2026:1}},
+  'accessibility':{y:29,by:{2020:5,2021:5,2022:4,2023:4,2024:4,2025:4,2026:3}},
+  'security':   {y:34,  by:{2020:6,2021:5,2022:5,2023:5,2024:5,2025:4,2026:4}},
+  'three.js':   {y:17,  by:{2020:1,2021:2,2022:3,2023:3,2024:3,2025:3,2026:2}},
+  'svelte':     {y:26,  by:{2020:6,2021:6,2022:4,2023:3,2024:3,2025:2,2026:2}},
+  'testing':    {y:31,  by:{2020:5,2021:5,2022:5,2023:4,2024:4,2025:4,2026:4}},
+};
+const cloud = document.getElementById('cloud');
+const els = {};
+for (const t in TAGS){
+  const s = document.createElement('span'); s.className='tag'; s.textContent = t;
+  s.title = 'posts: ' + TAGS[t].y;
+  s.onclick = () => alert(t + ': ' + TAGS[t].y + ' posts total');
+  cloud.append(s); els[t] = s;
+}
+// Archimedean spiral packing: place each rect, expanding radius until no collision
+function pack(items, W, H){
+  const placed = [];
+  items.forEach((it, rank) => {
+    let placed_ok = false, angle = rank*2.4, r = 0;
+    while (!placed_ok && r < W){
+      const cx = W/2 + Math.cos(angle)*r, cy = H/2 + Math.sin(angle)*r*0.6;
+      const box = {x:cx-it.w/2, y:cy-it.h/2, w:it.w, h:it.h};
+      if (box.x>4 && box.y>4 && box.x+box.w<W-4 && box.y+box.h<H-4 &&
+          placed.every(p => !(box.x < p.x+p.w && box.x+box.w > p.x && box.y < p.y+p.h && box.y+box.h > p.y))){
+        placed.push(box); it.x = box.x; it.y = box.y; placed_ok = true;
+      }
+      angle += 0.35; r += 1.6;
+    }
+    if (!placed_ok){ it.x = 8; it.y = rank*24; }
+  });
+}
+function layout(year){
+  const W = cloud.clientWidth, H = cloud.clientHeight;
+  const active = {};
+  for (const t in TAGS){
+    active[t] = year==='all' ? TAGS[t].y : TAGS[t].by[year] || 0;
+  }
+  const max = Math.max(1, ...Object.values(active));
+  const items = Object.keys(TAGS).map(t => {
+    const fs = 12 + (active[t]/max)*36;
+    els[t].style.fontSize = fs+'px';
+    return {t, fs, w: t.length*fs*0.62, h: fs*1.25, active: active[t]>0};
+  });
+  pack(items, W, H);
+  items.forEach(it => {
+    const el = els[it.t];
+    el.style.left = it.x+'px'; el.style.top = it.y+'px';
+    el.classList.toggle('off', !it.active);
+  });
+}
+document.getElementById('year').oninput = e => {
+  document.getElementById('yv').textContent = e.target.value;
+  layout(+e.target.value);
+};
+document.getElementById('all').onclick = () => { layout('all'); };
+layout('all');
+addEventListener('resize', () => layout('all'));
+</script>
+</html>

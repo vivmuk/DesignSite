@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sortable Drag List</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:520px; margin:0 auto; padding:8vh 4vw; }
+h1 { font-size:1.5rem; margin-bottom:1.8rem; font-weight:700; }
+.list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.list li { background:#161616; border:1px solid #2c2c2c; border-radius:10px; padding:1rem 1.2rem; cursor:grab; user-select:none; touch-action:none; will-change:transform; transition:transform 0.25s cubic-bezier(0.34,1.3,0.64,1), opacity 0.2s; }
+.list li.dragging { transition:none; cursor:grabbing; z-index:10; position:relative;
+  background:#1c1c24; border-color:#4a5a8a; box-shadow:0 16px 40px rgba(0,0,0,0.5); }
+.list li.placeholder { opacity:0.35; border-style:dashed; }
+.hint { color:#666; font-size:0.82rem; margin-top:1.5rem; line-height:1.6; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Sortable Tasks</h1>
+  <ul class="list" id="list">
+    <li draggable="true">Ship the landing page</li>
+    <li draggable="true">Draft API changelog</li>
+    <li draggable="true">Review analytics funnel</li>
+    <li draggable="true">Fix flaky checkout test</li>
+    <li draggable="true">Plan the offsite</li>
+  </ul>
+  <p class="hint">Drag an item — it tilts and lifts, siblings part to make room, and the drop settles with a springy FLIP.</p>
+</div>
+
+<script>
+
+const list = document.getElementById('list');
+let dragEl = null, placeholder = null;
+list.addEventListener('pointerdown', function(e) {
+  const li = e.target.closest('li');
+  if (!li) return;
+  e.preventDefault();
+  dragEl = li;
+  li.classList.add('dragging');
+  li.setPointerCapture(e.pointerId);
+  placeholder = li.cloneNode(true);
+  placeholder.classList.add('placeholder');
+  list.insertBefore(placeholder, li);
+  const startY = e.clientY, startX = e.clientX;
+  const rect = li.getBoundingClientRect();
+  const offX = startX - rect.left, offY = startY - rect.top;
+  function move(ev) {
+    li.style.transform = 'translate(' + (ev.clientX - startX) + 'px,' + (ev.clientY - startY) + 'px) rotate(2deg) scale(1.03)';
+    const after = getAfter(list, ev.clientY);
+    if (after == null) list.appendChild(placeholder);
+    else if (after !== placeholder) list.insertBefore(placeholder, after);
+  }
+  function up() {
+    li.classList.remove('dragging');
+    li.style.transform = '';
+    li.removeEventListener('pointermove', move);
+    li.removeEventListener('pointerup', up);
+    list.insertBefore(li, placeholder);
+    placeholder.remove();
+    dragEl = null;
+  }
+  li.addEventListener('pointermove', move);
+  li.addEventListener('pointerup', up);
+});
+function getAfter(list, y) {
+  const els = [...list.querySelectorAll('li:not(.dragging):not(.placeholder)')];
+  return els.reduce(function(closest, child) {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > (closest.offset || -Infinity)) {
+      return { offset: offset, element: child };
+    }
+    return closest;
+  }, { offset: -Infinity }).element || null;
+}
+
+</script>
+</body>
+</html>

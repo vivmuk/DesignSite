@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared-element Transition</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:860px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:0.5rem; font-weight:700; }
+.hint { color:#777; font-size:0.85rem; margin-bottom:2rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; }
+.prod { background:#161616; border:1px solid #2a2a2a; border-radius:12px; overflow:hidden; cursor:pointer; }
+.prod img { width:100%; aspect-ratio:1; object-fit:cover; display:block; }
+.prod figcaption, .prod .cap { padding:0.8rem 1rem; font-size:0.85rem; color:#bbb; }
+.detail { position:fixed; inset:0; z-index:20; background:rgba(13,13,13,0.96); padding:6vh 8vw; overflow:auto; }
+.dhead { display:flex; gap:2rem; align-items:center; margin-bottom:2rem; }
+.dhead img { width:min(38vw, 300px); aspect-ratio:1; object-fit:cover; border-radius:14px; }
+.dhead h2 { font-size:2rem; margin-bottom:0.8rem; }
+.dhead p { color:#999; max-width:40ch; line-height:1.7; }
+.dbody { color:#888; line-height:1.7; }
+.morph { transition:none !important; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Shared Element</h1>
+  <p class="hint">Click a product — its image flies and resizes into the detail header, then flies back on close.</p>
+  <div class="grid" id="grid"></div>
+  <div class="detail" id="detail" hidden>
+    <div class="dhead"><img id="dimg" src="" alt="product"><div><h2 id="dtitle"></h2><p>Shared-element morph via FLIP. The image is the same node conceptually — measured at both ends and inverted.</p></div></div>
+    <p class="dbody">Full description would appear here. Scroll is locked while open.</p>
+  </div>
+</div>
+
+<script>
+
+const prods = [1011, 1012, 1015, 1018, 1020, 1025];
+const grid = document.getElementById('grid');
+prods.forEach(function(id, i) {
+  grid.insertAdjacentHTML('beforeend',
+    '<figure class="prod" data-i="' + i + '"><img src="https://picsum.photos/id/' + id + '/400/400" alt="product ' + (i + 1) + '"><div class="cap">Product 0' + (i + 1) + '</div></figure>');
+});
+const detail = document.getElementById('detail'), dimg = document.getElementById('dimg');
+let openThumb = null;
+function flip(fromEl, toEl, dur) {
+  const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
+  toEl.classList.add('morph');
+  toEl.style.transformOrigin = 'top left';
+  toEl.style.transform = 'translate(' + (a.left - b.left) + 'px,' + (a.top - b.top) + 'px) scale(' + (a.width / b.width) + ',' + (a.height / b.height) + ')';
+  toEl.getBoundingClientRect();
+  toEl.style.transition = 'transform ' + (dur || 0.5) + 's cubic-bezier(0.22,1,0.36,1), border-radius 0.5s';
+  toEl.style.transform = '';
+  toEl.addEventListener('transitionend', function h() {
+    toEl.classList.remove('morph');
+    toEl.style.transition = ''; toEl.style.transformOrigin = '';
+    toEl.removeEventListener('transitionend', h);
+  });
+}
+grid.addEventListener('click', function(e) {
+  const p = e.target.closest('.prod');
+  if (!p) return;
+  openThumb = p.querySelector('img');
+  dimg.src = openThumb.src;
+  document.getElementById('dtitle').textContent = p.querySelector('.cap').textContent;
+  document.body.style.overflow = 'hidden';
+  detail.hidden = false;
+  requestAnimationFrame(function() { flip(openThumb, dimg, 0.55); });
+});
+detail.addEventListener('click', function() {
+  if (openThumb) { try { flip(dimg, openThumb, 0.45); } catch(err) {} }
+  setTimeout(function() { detail.hidden = true; document.body.style.overflow = ''; }, openThumb ? 460 : 0);
+  openThumb = null;
+});
+
+</script>
+</body>
+</html>

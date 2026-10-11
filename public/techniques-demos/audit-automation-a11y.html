@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Automated A11y Auditing</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px;display:grid;grid-template-columns:1fr 380px;gap:24px}
+h1{font-size:18px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+#report{font:12px ui-monospace,monospace}
+.v{padding:8px;border-bottom:1px solid #1e1e1e;cursor:pointer}
+.v:hover{background:#161616}
+.v .sev{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.critical{background:#f66}.serious{background:#fb5}.moderate{background:#6cf}
+#page img{border-radius:8px}
+#page button{margin:6px 4px}
+.highlight{outline:3px solid #ffd479 !important;outline-offset:2px;position:relative}
+.summary{margin-bottom:12px;padding:10px;background:#161616;border-radius:8px}
+#explanation{margin-top:12px;background:#161616;border-radius:8px;padding:12px;font-size:13px;min-height:60px;color:#aaa}
+</style></head><body>
+<div id="page"><h1>The Buggy Page</h1>
+<p style="color:#888">A deliberately violation-riddled page. Run the audit and click each finding.</p>
+<div id="page"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Crect width='200' height='60' fill='%23333'/%3E%3C/svg%3E">
+<button style="background:#242424">🔍</button><button style="background:#242424">💾</button>
+<a href="#" style="color:#6cf">click here</a>
+<input placeholder="your name" style="background:#111;border:1px solid #333;color:#eee;padding:8px;border-radius:6px;display:block;margin:8px 0">
+<div onclick="alert('hi')" style="color:#6cf;cursor:pointer;text-decoration:underline">Read the docs</div>
+<div style="background:#161616;border-radius:8px;padding:10px;color:#777;margin-top:10px">Low contrast paragraph text on a dark card.</div>
+</div></div>
+<aside><h3 style="margin:0 0 10px">🧪 Audit runner</h3>
+<button onclick="audit()">▶ Run audit</button> <span id="count" style="font:12px monospace;color:#fb5"></span>
+<div class="summary" id="sum" style="margin-top:12px">No audit yet.</div>
+<div id="report"></div>
+<div id="explanation">Click a violation to highlight the offending element and read why it matters.</div>
+</aside>
+<script>
+const violations=[
+ {sev:'critical',sel:'img',why:'Image has no alt attribute — screen readers announce the filename or skip it entirely. Fix: alt="dashboard preview screenshot".',
+  fix:e=>{e.setAttribute('alt','dashboard preview screenshot');}},
+ {sev:'serious',sel:'button',why:'Two icon-only buttons have no accessible name. Fix: aria-label="search" / aria-label="save".',
+  fix:e=>{e.setAttribute('aria-label','icon button '+(e.textContent==='🔍'?'search':'save'));}},
+ {sev:'moderate',sel:'a',why:'Link text "click here" gives no context out of a links list. Fix: describe the destination.',
+  fix:e=>{e.textContent='Read the migration guide';}},
+ {sev:'critical',sel:'input',why:'Input has no associated <label>. Fix: add aria-label or a real label element.',
+  fix:e=>{e.setAttribute('aria-label','your name');}},
+ {sev:'serious',sel:'div[onclick]',why:'Clickable div has no role or keyboard support. Fix: make it a real <a href> or <button>.',
+  fix:e=>{e.setAttribute('tabindex','0');e.setAttribute('role','link');}},
+ {sev:'moderate',sel:'div[style*="color:#777"]',why:'Contrast ratio ~3.2:1 fails AA for 15px text (needs 4.5:1). Fix: lighten to at least #999.',
+  fix:e=>{e.style.color='#999';}},
+];
+function audit(){
+  const out=document.getElementById('report'); out.innerHTML='';
+  violations.forEach((v,i)=>{
+    const el=document.querySelector(v.sel);
+    const d=document.createElement('div'); d.className='v';
+    d.innerHTML=`<span class="sev ${v.sev}"></span>[${v.sev}] ${el.tagName.toLowerCase()}${el.id?'#'+el.id:''} — ${v.why.split('.')[0]}`;
+    d.onclick=()=>{ document.querySelectorAll('.highlight').forEach(x=>x.classList.remove('highlight'));
+      el.classList.add('highlight'); document.getElementById('explanation').innerHTML=`<b>${v.sev.toUpperCase()}</b> — ${v.why}<br><br><button onclick="fix(${i})">Apply suggested fix</button>`; };
+    out.append(d);
+  });
+  document.getElementById('count').textContent=violations.length+' issues';
+  document.getElementById('sum').innerHTML=`<b style="color:#f66">${violations.filter(v=>v.sev==='critical').length} critical</b>, ${violations.filter(v=>v.sev==='serious').length} serious, ${violations.filter(v=>v.sev==='moderate').length} moderate`;
+}
+function fix(i){ const v=violations[i]; const el=document.querySelector(v.sel); v.fix(el);
+  document.getElementById('explanation').innerHTML='✓ Fix applied — re-run the audit pattern in real life with axe-core or Lighthouse.'; }
+</script></body></html>

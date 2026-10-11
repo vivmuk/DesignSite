@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Latent Journey — simulated diffusion</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:10px;align-items:center;margin:12px 0;flex-wrap:wrap}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+  canvas{background:#141414;border:1px solid #2a2a2a;border-radius:12px;image-rendering:pixelated}
+  #tray{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .step{width:72px;height:72px;border-radius:8px;border:1px solid #2a2a2a;cursor:pointer;background:#101010}
+  .step.done{outline:2px solid #60a5fa}
+  .lbl{font:10px monospace;color:#8a8a8a;text-align:center;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>Latent journey</h1>
+<p class="sub">A simulated denoising trajectory: pure noise is progressively "denoised" into a coherent latent scene via frequency-ordered smoothing. Click any tray step to jump back to it.</p>
+<div class="row">
+  <button id="go">▶ Generate</button>
+  <label>Seed <input id="seed" type="number" value="42" style="width:80px;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:6px;padding:4px"></label>
+</div>
+<canvas id="cv" width="256" height="256"></canvas>
+<div id="tray"></div>
+<script>
+const cv = document.getElementById('cv'), x = cv.getContext('2d');
+const W = 128;                                   // latent res, upscaled 2×
+let img = null;
+function mulberry(seed){ return function(){ seed|=0; seed=(seed+0x6D2B79F5)|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; };}
+function noiseImage(seed){
+  const rnd = mulberry(seed), d = new Float32Array(W*W*3);
+  for(let i=0;i<d.length;i++) d[i] = rnd();
+  return d;
+}
+// "denoise": repeatedly replace each pixel with a distance-weighted average of
+// neighbors, driven by a schedule — high-frequency detail decays first,
+// leaving a smooth structure we then re-tint into a stylized scene.
+function denoiseStep(src, strength){
+  const out = new Float32Array(src.length);
+  for(let y=0;y<W;y++) for(let xx=0;xx<W;xx++){
+    for(let c=0;c<3;c++){
+      let sum=0, wsum=0;
+      for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++){
+        const nx=xx+dx, ny=y+dy;
+        if(nx<0||ny<0||nx>=W||ny>=W) continue;
+        const w = (dx===0&&dy===0) ? 1-strength : strength/8;
+        sum += src[(ny*W+nx)*3+c]*w; wsum += w;
+      }
+      out[(y*W+xx)*3+c] = sum/wsum;
+    }
+  }
+  return out;
+}
+function paint(d, t){
+  const im = x.createImageData(W, W);
+  for(let i=0;i<W*W;i++){
+    const r=d[i*3], g=d[i*3+1], b=d[i*3+2];
+    const v = (r+g+b)/3;
+    im.data[i*4]   = (0.5*v + 0.5*r) * 255 * (0.6+0.4*Math.sin(t+v*6));
+    im.data[i*4+1] = (0.3*v + 0.7*g) * 255 * (0.6+0.4*Math.sin(t*1.3+v*8));
+    im.data[i*4+2] = (0.8*v + 0.2*b) * 255;
+    im.data[i*4+3] = 255;
+  }
+  x.putImageData(im, 0, 0);
+  x.drawImage(cv, 0,0,W,W, 0,0,256,256);
+}
+const snapshots = [];
+document.getElementById('go').onclick = function(){
+  this.disabled = true;
+  document.getElementById('tray').innerHTML = ''; snapshots.length = 0;
+  let d = noiseImage(+document.getElementById('seed').value);
+  const STEPS = 12;
+  let s = 0;
+  const tick = () => {
+    d = denoiseStep(d, 0.28 + s*0.05);            // schedule ramps strength
+    paint(d, s);
+    // tray snapshot
+    const c = document.createElement('canvas'); c.width=c.height=72; c.className='step';
+    c.getContext('2d').drawImage(cv, 0,0, 256,256, 0,0, 72,72);
+    c.onclick = () => { paint(snapshots[c.dataset.i].d, snapshots[c.dataset.i].t); document.querySelectorAll('.step').forEach(e=>e.classList.remove('done')); c.classList.add('done'); };
+    c.dataset.i = snapshots.length;
+    const wrap = document.createElement('div');
+    wrap.append(c);
+    const l = document.createElement('div'); l.className='lbl'; l.textContent = 'step '+(s+1);
+    wrap.append(l);
+    document.getElementById('tray').append(wrap);
+    snapshots.push({d: Float32Array.from(d), t: s});
+    if (++s < STEPS){ requestAnimationFrame(tick); }
+    else { document.getElementById('go').disabled = false; }
+  };
+  tick();
+};
+paint(noiseImage(0), 0);
+</script>
+</html>

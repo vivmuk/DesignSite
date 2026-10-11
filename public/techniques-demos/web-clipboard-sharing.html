@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Web Share & Clipboard</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0d0d0d;color:#e4e4e4;font:16px system-ui}
+.card{width:340px;border-radius:16px;overflow:hidden;background:#181818;border:1px solid #2a2a2a}
+canvas{display:block;width:100%}
+.bar{display:flex;gap:8px;padding:14px}
+button{flex:1;padding:10px;border-radius:8px;border:1px solid #3a3a3a;background:#242424;color:#e4e4e4;cursor:pointer;font-size:14px}
+button:hover{background:#333}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2a2a2a;padding:10px 18px;border-radius:99px;opacity:0;transition:.3s;font-size:14px}
+#toast.show{opacity:1}
+#log{position:fixed;top:12px;right:12px;font:11px monospace;color:#777;max-width:280px;text-align:right}
+</style></head><body>
+<div class="card"><canvas id="cv" width="680" height="400"></canvas>
+<div class="bar"><button id="share">↗ Share</button><button id="copy">📋 Copy as image</button><button id="copytxt">Copy text</button></div></div>
+<div id="toast"></div><div id="log"></div>
+<script>
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+// generative art
+function draw(){
+  const g = ctx.createLinearGradient(0,0,680,400);
+  g.addColorStop(0,'#0b1026'); g.addColorStop(1,'#2b0a3d'); ctx.fillStyle=g; ctx.fillRect(0,0,680,400);
+  for(let i=0;i<40;i++){
+    ctx.beginPath();
+    const x=Math.random()*680,y=Math.random()*400,r=10+Math.random()*70;
+    ctx.arc(x,y,r,0,7); ctx.strokeStyle=`hsla(${Math.random()*360},80%,65%,.25)`; ctx.lineWidth=2; ctx.stroke();
+  }
+  ctx.fillStyle='#fff'; ctx.font='bold 40px system-ui'; ctx.fillText('Generative Card',40,80);
+  ctx.font='16px system-ui'; ctx.fillStyle='#aaa'; ctx.fillText('share it anywhere',40,110);
+}
+draw(); document.getElementById('cv').onclick = draw;
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
+function log(m){ const l=document.getElementById('log'); l.innerHTML = m+'<br>'+l.innerHTML; }
+// Share
+document.getElementById('share').onclick = async () => {
+  if (navigator.share){ try { await navigator.share({title:'Generative Card', text:'Made in the browser', url:location.href}); log('navigator.share → sheet opened'); } catch(e){ log('share cancelled'); } }
+  else { log('navigator.share unsupported → text fallback'); toast('Share API unavailable — copied link instead'); navigator.clipboard?.writeText(location.href); }
+};
+// Clipboard image write
+document.getElementById('copy').onclick = async () => {
+  try {
+    const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+    toast('Image copied to clipboard ✓'); log('ClipboardItem(image/png) written');
+  } catch(e){ toast('Image copy blocked: ' + e.message); log('clipboard.write failed: '+e.message); }
+};
+// Clipboard text read/write
+document.getElementById('copytxt').onclick = async () => {
+  await navigator.clipboard.writeText('Generative Card — built with Web APIs');
+  toast('Text copied');
+  try { const t = await navigator.clipboard.readText(); log('readText → "'+t.slice(0,40)+'…"'); }
+  catch(e){ log('readText blocked (permission)'); }
+};
+log('share: '+('share' in navigator)+' | ClipboardItem: '+('ClipboardItem' in window));
+</script></body></html>

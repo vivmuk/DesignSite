@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Auto-fit Responsive Card Grid</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:860px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.2rem; }
+  .slider-row { display:flex; align-items:center; gap:1rem; margin-bottom:1.4rem; }
+  .slider-row input { flex:1; accent-color:#8b7cff; }
+  .readout { font-family:ui-monospace,monospace; font-size:.85rem; color:#8b7cff; min-width:28ch; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(var(--min, 180px), 1fr)); gap:1rem; }
+  .card { background:#141414; border:1px solid #2a2a2a; border-radius:12px; padding:1.1rem; }
+  .card .bar { height:6px; border-radius:3px; background:linear-gradient(90deg,#8b7cff,#4a3aff); margin-bottom:.7rem; width:var(--w, 60%); }
+  .card h3 { margin:0 0 .35rem; font-size:.95rem; }
+  .card p { margin:0; color:#999; font-size:.82rem; line-height:1.55; }
+  .css-panel { margin-top:1.6rem; background:#141414; border:1px solid #262626; border-radius:10px; padding:1rem; font-family:ui-monospace,monospace; font-size:.82rem; color:#a8d4b0; line-height:1.7; }
+  .css-panel b { color:#8b7cff; }
+  .count { position:fixed; bottom:1rem; right:1rem; font-family:ui-monospace,monospace; font-size:.8rem; background:#161616ee; border:1px solid #333; color:#7dd8a0; border-radius:999px; padding:.45rem 1rem; }
+</style>
+</head>
+<body>
+<h1>Auto-fit Responsive Card Grid</h1>
+<p class="sub">Move the slider to change the minimum column width. The grid re-counts columns instantly — zero media queries involved.</p>
+<div class="slider-row">
+  <span style="font-size:.85rem;color:#999">min track</span>
+  <input type="range" id="min" min="120" max="420" value="180" step="10">
+  <span class="readout" id="ro">minmax(180px, 1fr)</span>
+</div>
+<div class="grid" id="grid"></div>
+<div class="css-panel">display: grid;
+grid-template-columns: <b>repeat(auto-fit, minmax(<span id="cssMin">180px</span>, 1fr))</b>;
+gap: 1rem;</div>
+<div class="count" id="count"></div>
+<script>
+  const grid = document.getElementById('grid');
+  for (let i = 1; i <= 12; i++) {
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = '<div class="bar" style="--w:' + (20 + (i * 7) % 75) + '%"></div><h3>Card ' + String(i).padStart(2, '0') + '</h3><p>Track-based column count — this card never knows how many siblings share its row.</p>';
+    grid.appendChild(c);
+  }
+  const slider = document.getElementById('min');
+  function update() {
+    document.documentElement.style.setProperty('--min', slider.value + 'px');
+    document.getElementById('cssMin').textContent = slider.value + 'px';
+    ro.textContent = 'minmax(' + slider.value + 'px, 1fr)';
+    const cards = [...grid.children];
+    const cols = cards.filter(c => Math.abs(c.offsetTop - cards[0].offsetTop) < 4).length;
+    count.textContent = cols + ' column' + (cols === 1 ? '' : 's') + ' × ' + Math.ceil(cards.length / cols) + ' rows';
+  }
+  slider.addEventListener('input', update);
+  addEventListener('resize', update);
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variable Font Axes</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.stage { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.5rem; }
+#vf { font-family:'Fraunces', Georgia, serif; font-size:clamp(3rem,14vw,11rem); font-weight:400; cursor:crosshair; transition:font-variation-settings 0.08s linear; }
+.hint { color:#777; max-width:44ch; text-align:center; line-height:1.6; font-size:0.95rem; }
+button { background:none; border:1px solid #444; color:#e4e4e4; padding:0.7rem 1.6rem; cursor:pointer; letter-spacing:0.15em; text-transform:uppercase; font-size:0.8rem; }
+button:hover { border-color:#e4e4e4; }
+
+</style>
+</head>
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&display=swap">
+<div class="stage">
+  <h1 id="vf">STRETCH</h1>
+  <p class="hint" id="status">Move the cursor — weight leans toward you. Click to toggle the tone that pulses width.</p>
+  <button id="tone">Toggle tone</button>
+</div>
+
+<script>
+
+const h = document.getElementById('vf'), status = document.getElementById('status');
+let toneOn = false, ctx, osc, analyser, data;
+document.getElementById('tone').addEventListener('click', function() {
+  toneOn = !toneOn;
+  if (toneOn) {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    osc = ctx.createOscillator(); const gain = ctx.createGain(); analyser = ctx.createAnalyser();
+    osc.frequency.value = 110; gain.gain.value = 0.15;
+    osc.connect(gain); gain.connect(analyser); analyser.connect(ctx.destination);
+    osc.start(); data = new Uint8Array(analyser.fftSize);
+    status.textContent = 'Tone on - width pulses with amplitude.';
+  } else { try { osc.stop(); ctx.close(); } catch(e) {} status.textContent = 'Tone off.'; }
+});
+addEventListener('pointermove', function(e) {
+  const r = h.getBoundingClientRect();
+  const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+  const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+  const d = Math.min(1, Math.hypot(dx, dy));
+  h.style.fontVariationSettings = '"wght" ' + (900 - d * 700).toFixed(0);
+});
+(function loop() {
+  if (toneOn && analyser) {
+    analyser.getByteTimeDomainData(data);
+    let peak = 0;
+    for (const v of data) peak = Math.max(peak, Math.abs(v - 128));
+    const wght = 300 + (peak / 128) * 600;
+    h.style.fontVariationSettings = '"wght" ' + wght.toFixed(0);
+  }
+  requestAnimationFrame(loop);
+})();
+
+</script>
+</body>
+</html>

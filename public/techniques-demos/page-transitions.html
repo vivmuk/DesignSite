@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Transitions</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+nav { position:fixed; top:0; left:0; right:0; z-index:20; display:flex; gap:0.5rem; padding:1rem 5vw; background:rgba(13,13,13,0.85); backdrop-filter:blur(8px); border-bottom:1px solid #222; }
+nav button { background:none; border:1px solid #333; color:#aaa; padding:0.55rem 1.3rem; cursor:pointer; border-radius:999px; font-size:0.85rem; }
+nav button.on { color:#e4e4e4; border-color:#e4e4e4; }
+main { padding-top:5rem; }
+.page { min-height:calc(100vh - 5rem); display:none; padding:8vh 10vw; }
+.page.on { display:flex; flex-direction:column; justify-content:center; gap:1.2rem; }
+.page h1 { font-size:clamp(2.5rem,7vw,5rem); font-weight:700; }
+.page p { color:#999; max-width:44ch; line-height:1.7; font-size:1.1rem; }
+.page.entering { animation:fadeup 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+@keyframes fadeup { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+.curtain { position:fixed; inset:0; z-index:15; background:linear-gradient(135deg, #1e3a5e, #5e2a3a); transform:scaleY(0); transform-origin:bottom; pointer-events:none; }
+.curtain.sweep { animation:sweep 0.9s cubic-bezier(0.76,0,0.24,1) both; }
+@keyframes sweep {
+  0% { transform:scaleY(0); transform-origin:bottom; }
+  45%, 55% { transform:scaleY(1); transform-origin:bottom; }
+  55% { transform-origin:top; }
+  100% { transform:scaleY(0); transform-origin:top; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <button data-page="home" class="on">Home</button>
+  <button data-page="work">Work</button>
+  <button data-page="about">About</button>
+</nav>
+<main>
+  <section class="page on" id="home"><h1>Home</h1><p>Welcome. Navigation runs a curtain wipe plus content cross-fade — no reload, fully client-routed.</p></section>
+  <section class="page" id="work"><h1>Work</h1><p>Selected projects would live here. The curtain sweep masks the swap so nothing jumps.</p></section>
+  <section class="page" id="about"><h1>About</h1><p>A studio of one. The transition is two layered divs sweeping across with staggered timing.</p></section>
+</main>
+<div class="curtain" id="curtain"></div>
+
+<script>
+
+let busy = false;
+document.querySelectorAll('nav button').forEach(function(b) {
+  b.addEventListener('click', function() {
+    if (busy || b.classList.contains('on')) return;
+    busy = true;
+    document.querySelectorAll('nav button').forEach(function(x) { x.classList.remove('on'); });
+    b.classList.add('on');
+    const curtain = document.getElementById('curtain');
+    curtain.classList.remove('sweep'); void curtain.offsetWidth; curtain.classList.add('sweep');
+    setTimeout(function() {
+      document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('on', 'entering'); });
+      document.getElementById(b.dataset.page).classList.add('on', 'entering');
+    }, 430);
+    setTimeout(function() { busy = false; }, 950);
+  });
+});
+
+</script>
+</body>
+</html>

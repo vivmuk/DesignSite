@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Face Landmarks — MediaPipe FaceMesh</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:20px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .stage{position:relative;width:480px;max-width:100%}
+  video,canvas{width:480px;max-width:100%;border-radius:12px;background:#111;display:block}
+  canvas{position:absolute;inset:0;pointer-events:none}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer;margin:10px 0}
+  #status{color:#9a9a9a;font-size:13px;min-height:40px;max-width:480px}
+  .err{color:#f0a0a0}
+</style>
+</head>
+<body>
+<h1>Face filter mirror</h1>
+<p class="sub">MediaPipe FaceMesh draws a 468-point mesh over your webcam feed; iris tracking moves a cursor with your eyes. Grant camera access to play.</p>
+<button id="start">Enable camera</button>
+<div class="stage">
+  <video id="vid" autoplay playsinline muted></video>
+  <canvas id="overlay" width="480" height="360"></canvas>
+</div>
+<div id="status">Model files load from CDN on first use.</div>
+<script>
+const vid = document.getElementById('vid'), cv = document.getElementById('overlay'), x = cv.getContext('2d');
+const status = document.getElementById('status');
+const CURSOR = {x:240, y:180};
+
+document.getElementById('start').onclick = async () => {
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({video:{width:640}});
+    vid.srcObject = stream;
+    await initFaceMesh();
+  }catch(e){ status.innerHTML = '<span class="err">Camera denied: ' + e.message + '</span>'; }
+};
+
+async function initFaceMesh(){
+  if (!window.FaceMesh){
+    status.innerHTML = '<span class="err">MediaPipe FaceMesh failed to load — check connection. Fallback: this demo needs the CDN for the model.</span>';
+    return;
+  }
+  status.textContent = 'Loading face model…';
+  const fm = new window.FaceMesh({locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
+  fm.setOptions({maxNumFaces:1, refineLandmarks:true, minDetectionConfidence:.5, minTrackingConfidence:.5});
+  fm.onResults(res => {
+    x.clearRect(0,0,cv.width,cv.height);
+    if (!res.multiFaceLandmarks?.length) return;
+    const lms = res.multiFaceLandmarks[0];
+    // mesh: connect a light subset (cheaper than all 468 connections)
+    x.strokeStyle = '#60a5fa66'; x.lineWidth = 1;
+    const PAIRS = [[33,133],[133,144],[144,153],[153,173],[33,173],[362,385],[385,387],[387,373],[373,362]];
+    x.beginPath();
+    for(let i=0;i<lms.length;i+=6){
+      x.moveTo(lms[i].x*480, lms[i].y*360);
+      x.lineTo(lms[(i+6)%lms.length].x*480, lms[(i+6)%lms.length].y*360);
+    }
+    PAIRS.forEach(([a,b])=>{x.moveTo(lms[a].x*480,lms[a].y*360);x.lineTo(lms[b].x*480,lms[b].y*360);});
+    x.stroke();
+    x.fillStyle = '#34d399';
+    for(let i=0;i<lms.length;i+=8){ x.fillRect(lms[i].x*480-1, lms[i].y*360-1, 2, 2); }
+    // iris cursor: use iris centers (468+ with refineLandmarks)
+    const iris = lms[468] || lms[33];
+    CURSOR.x = iris.x*480; CURSOR.y = iris.y*360;
+    x.fillStyle = '#fbbf24';
+    x.beginPath(); x.arc(CURSOR.x, CURSOR.y+60, 10, 0, 7); x.fill();
+    status.textContent = 'Tracking — mesh + iris cursor live.';
+  });
+  status.textContent = 'Warming up inference…';
+  const send = async () => { await fm.send({image: vid}); requestAnimationFrame(send); };
+  await fm.initialize();
+  send();
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+</html>

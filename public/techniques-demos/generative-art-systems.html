@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generative Poster Machine</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;display:grid;place-items:center;min-height:100vh}
+.wrap{display:flex;gap:32px;align-items:flex-start;padding:24px;flex-wrap:wrap;justify-content:center}
+#poster{width:400px;height:500px;border:1px solid #333;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.side{max-width:260px}
+#seed{width:100%;box-sizing:border-box;background:#161616;border:1px solid #333;color:#e4e4e4;border-radius:8px;padding:10px;font:13px monospace}
+button{background:#7ee787;color:#000;border:none;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer;margin-top:8px}
+button.ghost{background:#1c1c1c;color:#e4e4e4;border:1px solid #333}
+p{color:#888;font-size:12px}
+
+</style></head><body>
+
+<div class=wrap><canvas id=poster width=800 height=1000></canvas>
+<div class=side><h1 style="font-size:20px">Poster Machine</h1>
+<p>Same seed → same poster. Deterministic generative art.</p>
+<input id=seed placeholder="seed string"><br>
+<button id=gen>generate</button> <button id=copy class=ghost>copy seed</button>
+<p id=msg></p></div></div>
+<script>
+
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+function cyrb53(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const ch=str.charCodeAt(i);
+  h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+  return(h1^h2)>>>0;}
+const WORDS=['flux','orbital','signal','prism','vertex','echo','drift','apex','lumen','nexus','tide','haze'];
+const cv=document.getElementById('poster'),ctx=cv.getContext('2d');
+function generate(seedStr){
+  const seed=cyrb53(seedStr);
+  const rand=mulberry32(seed);
+  const R=(a,b)=>a+rand()*(b-a);
+  const RI=n=>Math.floor(rand()*n);
+  const palettes=[['#0e1b2a','#7ee787','#ff6b81','#ffd866','#e4e4e4'],['#160b1e','#c792ea','#82aaff','#f78fb3','#efe6ff'],['#1a1206','#ffb454','#ff8c42','#2de2ff','#fff5e6'],['#04120d','#2de2a8','#0f8a5f','#ffd866','#d9ffe8']];
+  const pal=palettes[RI(palettes.length)];
+  ctx.fillStyle=pal[0];ctx.fillRect(0,0,800,1000);
+  // grain
+  for(let i=0;i<4000;i++){ctx.fillStyle=`rgba(255,255,255,${rand()*.05})`;ctx.fillRect(R(0,800),R(0,1000),2,2);}
+  // shapes
+  const n=5+RI(5);
+  for(let i=0;i<n;i++){
+    ctx.save();
+    ctx.globalAlpha=R(.15,.5);
+    ctx.globalCompositeOperation=RI(2)?'multiply':'screen';
+    ctx.fillStyle=pal[1+RI(3)];
+    const kind=RI(3);
+    if(kind===0){ctx.beginPath();ctx.arc(R(100,700),R(150,850),R(60,260),0,Math.PI*2);ctx.fill();}
+    if(kind===1){ctx.translate(R(0,800),R(0,1000));ctx.rotate(R(0,Math.PI));ctx.fillRect(-R(60,220),-R(30,140),R(120,440),R(60,280));}
+    if(kind===2){ctx.beginPath();ctx.arc(R(100,700),R(150,850),R(120,320),R(0,6),R(0,6)+R(1,4));ctx.lineWidth=R(6,26);ctx.strokeStyle=pal[1+RI(3)];ctx.stroke();}
+    ctx.restore();
+  }
+  // bold strokes
+  for(let i=0;i<2+RI(2);i++){
+    ctx.strokeStyle=pal[4];ctx.lineWidth=R(2,7);ctx.globalAlpha=.9;
+    ctx.beginPath();ctx.moveTo(R(-50,850),R(0,1000));
+    ctx.bezierCurveTo(R(0,800),R(0,1000),R(0,800),R(0,1000),R(-50,850),R(0,1000));ctx.stroke();
+  }
+  // typography
+  const title=WORDS[RI(WORDS.length)]+' '+WORDS[RI(WORDS.length)];
+  ctx.globalAlpha=1;
+  ctx.fillStyle=pal[4];
+  ctx.font='900 100px system-ui,sans-serif';
+  ctx.textTransform='uppercase';
+  ctx.fillText(title.toUpperCase(),56,900);
+  ctx.font='400 26px system-ui,sans-serif';
+  ctx.fillStyle=pal[2];
+  ctx.fillText('№ '+seedStr.slice(0,12)+' — generative composition',56,946);
+}
+document.getElementById('gen').onclick=()=>{
+  const s=document.getElementById('seed').value.trim()||Math.random().toString(36).slice(2,10);
+  document.getElementById('seed').value=s;
+  generate(s);
+};
+document.getElementById('copy').onclick=()=>{
+  const s=document.getElementById('seed').value;
+  if(navigator.clipboard){navigator.clipboard.writeText(s).then(()=>document.getElementById('msg').textContent='seed copied ✓');}
+  else{document.getElementById('seed').select();document.getElementById('msg').textContent='select & copy manually';}
+};
+generate('flux-prism');document.getElementById('seed').value='flux-prism';
+</script></body></html>

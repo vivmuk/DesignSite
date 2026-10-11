@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Logical Properties — EN/AR Flip</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:720px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.4rem; }
+  .toggle { display:inline-flex; border:1px solid #333; border-radius:999px; overflow:hidden; margin-bottom:1.8rem; }
+  .toggle button { background:transparent; color:#999; border:0; padding:.5rem 1.4rem; cursor:pointer; font-size:.9rem; }
+  .toggle button[aria-pressed="true"] { background:#8b7cff; color:#0d0d0d; font-weight:700; }
+  article { background:#141414; border:1px solid #2a2a2a; border-inline-start:4px solid #8b7cff; border-radius:12px; padding:1.2rem 1.4rem; margin-block:1rem; }
+  article h2 { margin-block:0 .5rem; font-size:1.1rem; }
+  article p { margin:0; color:#bbb; line-height:1.7; text-align:start; }
+  .meta { display:flex; gap:.8rem; margin-block:1.2rem; align-items:center; }
+  .avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#8b7cff,#4a3aff); flex-shrink:0; }
+  .byline { font-size:.85rem; color:#888; }
+  .pull { float: inline-start; inline-size: 130px; block-size:130px; margin-inline-end:1rem; margin-block-end:.5rem; background:linear-gradient(135deg,#2a7a5a,#7dd8a0); border-radius:10px; }
+  .chip { display:inline-block; border:1px solid #444; border-radius:999px; padding:.2rem .8rem; font-size:.78rem; margin-inline-end:.4rem; color:#9c9cff; }
+  .props { background:#141414; border:1px solid #262626; border-radius:10px; padding:1rem; font-size:.8rem; font-family:ui-monospace,monospace; color:#a8d4b0; line-height:1.8; }
+</style>
+</head>
+<body>
+<h1>Logical Properties</h1>
+<p class="sub">One stylesheet, two directions. Switching dir flips margins, borders, floats — no RTL overrides anywhere.</p>
+<div class="toggle" role="group">
+  <button aria-pressed="true" onclick="setDir('ltr')">English (LTR)</button>
+  <button aria-pressed="false" onclick="setDir('rtl')">العربية (RTL)</button>
+</div>
+<div id="page" dir="ltr">
+  <article>
+    <h2>Flow-relative layout</h2>
+    <p>Every dimension on this page uses logical properties: margin-inline-start, padding-block, border-inline-start, inline-size. When the document direction flips to RTL, the browser maps start/end to the new physical edges automatically.</p>
+  </article>
+  <div class="meta">
+    <div class="avatar"></div>
+    <span class="byline">Written by Mira Chen · 6 min read</span>
+  </div>
+  <article>
+    <span class="pull"></span>
+    <h2>Floated pull-quote block</h2>
+    <p>This colored block floats with float: inline-start and its gap is margin-inline-end. In RTL it drifts to the right edge and its margin follows. The chips below are spaced with margin-inline-end too — spacing that mirrors itself.
+    <span class="chip">css</span><span class="chip">i18n</span><span class="chip">rtl</span></p>
+  </article>
+</div>
+<div class="props">
+/* the entire directional vocabulary */
+margin-inline-start · padding-block
+border-inline-start · inline-size
+float: inline-start · text-align: start
+</div>
+<script>
+  function setDir(d) {
+    document.getElementById('page').dir = d;
+    document.documentElement.dir = d;
+    document.querySelectorAll('.toggle button').forEach(b => b.setAttribute('aria-pressed', b.textContent.includes('LTR') === (d === 'ltr') ? 'true' : 'false'));
+    if (d === 'rtl') document.querySelector('.byline').textContent = 'بقلم ميرا تشين · ٦ دقائق قراءة';
+    else document.querySelector('.byline').textContent = 'Written by Mira Chen · 6 min read';
+  }
+</script>
+</body>
+</html>

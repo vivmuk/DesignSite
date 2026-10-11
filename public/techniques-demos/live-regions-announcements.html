@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Live Regions & Announcements</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;display:grid;grid-template-columns:1fr 340px;min-height:100vh}
+main{padding:24px}
+h1{font-size:18px}
+#ticker{font:22px ui-monospace,monospace;margin-top:20px}
+.tick{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1e1e1e}
+.up{color:#9e9}.down{color:#f66}
+aside{border-left:1px solid #2a2a2a;padding:20px;background:#101010}
+aside h3{margin:0 0 10px;font-size:13px;color:#6cf}
+#stream{font:12px ui-monospace,monospace;color:#aaa;white-space:pre-line;max-height:70vh;overflow:auto}
+.new{color:#9effa1}
+.polite,.assertive{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.controls{margin-top:14px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 14px;border-radius:6px;cursor:pointer;margin-right:8px}
+</style></head><body>
+<main><h1>Stock ticker</h1>
+<p>Prices update every 2s. The right panel shows exactly what a screen reader would announce.</p>
+<div id="ticker"></div>
+<div class="controls"><button onclick="toggleFlow()">⏸ pause announcements</button><button onclick="alertOnce()">⚠ trigger assertive alert</button></div>
+<div class="polite" id="polite" aria-live="polite"></div>
+<div class="assertive" id="assertive" role="alert" aria-live="assertive"></div>
+</main>
+<aside><h3>Screen-reader stream</h3><div id="stream">—</div></aside>
+<script>
+const stocks=[{s:'NVDA',p:118.4},{s:'AAPL',p:227.6},{s:'TSLA',p:244.1},{s:'MSFT',p:415.2}];
+let announcing=true;
+const el=document.getElementById('ticker');
+function render(){
+  el.innerHTML=stocks.map(s=>`<div class="tick"><b>${s.s}</b><span class="${s.d>=0?'up':'down'}">$${s.p.toFixed(2)} ${s.d>=0?'▲':'▲▼'[0]}${Math.abs(s.d).toFixed(2)}</span></div>`).join('');
+}
+function step(){
+  const s=stocks[Math.random()*stocks.length|0];
+  const d=(Math.random()-.45)*3; s.p=Math.max(1,s.p+d); s.d=d;
+  const msg=`${s.s} $${s.p.toFixed(2)}, ${d>=0?'up':'down'} ${Math.abs(d).toFixed(2)} dollars`;
+  if(announcing){
+    const p=document.getElementById('polite');
+    p.textContent=''; setTimeout(()=>p.textContent=msg,60);
+    const st=document.getElementById('stream');
+    st.innerHTML=`<span class="new">«${msg}»</span>\n`+st.innerHTML.split('\n').slice(0,14).join('\n');
+  }
+  render();
+}
+setInterval(step,2000);
+function toggleFlow(){ announcing=!announcing;
+  document.querySelector('.controls button').textContent=announcing?'⏸ pause announcements':'▶ resume announcements';
+  const st=document.getElementById('stream'); st.innerHTML=(announcing?'▶ announcements resumed':'⏸ announcements paused')+'\n'+st.innerHTML; }
+function alertOnce(){
+  const a=document.getElementById('assertive');
+  a.textContent=''; setTimeout(()=>a.textContent='Alert: trading halts in 10 minutes',60);
+  const st=document.getElementById('stream'); st.innerHTML='‼ (assertive) Alert: trading halts in 10 minutes\n'+st.innerHTML;
+}
+render();
+document.getElementById('stream').textContent='announcements will appear here…';
+</script></body></html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Console & Log-point Debugging</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer;margin:4px 8px 4px 0}
+pre{background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;padding:16px;font:12px ui-monospace,monospace;color:#aaa;overflow:auto;margin-top:18px}
+pre .b{color:#6cf;font-weight:700} pre .g{color:#9e9} pre .y{color:#fb5} pre .r{color:#f88}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:420px}
+.cell{background:#161616;border:1px solid #2a2a2a;padding:10px;border-radius:6px;font:12px monospace;cursor:pointer}
+.cell:hover{background:#222}
+</style></head><body>
+<h1>Open DevTools console → then click everything</h1>
+<p>This page drives the console: styled badges, groups, tables, timers, counts, and trace — the debugging vocabulary you should reach for before console.log-everything.</p>
+<button onclick="styled()">1 · %c styled badges</button>
+<button onclick="grp()">2 · group + nested log</button>
+<button onclick="tbl()">3 · console.table</button>
+<button onclick="timer()">4 · time/timeEnd</button>
+<button onclick="cnt()">5 · count()</button>
+<button onclick="tr()">6 · trace()</button>
+<div class="grid" id="g"></div>
+<pre id="mirror">— console mirror (what DevTools shows) —</pre>
+<script>
+const m=document.getElementById('mirror');
+function mir(html){ m.innerHTML+=html+'\n'; m.scrollTop=m.scrollHeight; }
+function styled(){
+  console.log('%c USER %c clicked styled() ', 'background:#6cf;color:#000;padding:1px 6px;border-radius:3px;font-weight:700','background:#222;color:#9e9;padding:1px 6px;border-radius:3px');
+  console.warn('%c deprecated %c use fetch(), not XHR ', 'background:#fb5;color:#000;padding:1px 6px;border-radius:3px','color:#aaa');
+  console.error('%c API %c simulated failure ', 'background:#f66;color:#000;padding:1px 6px;border-radius:3px','color:#f88');
+  mir('<span class="b">[USER]</span> <span class="g">clicked styled()</span>\n<span class="y">[deprecated]</span> use fetch(), not XHR\n<span class="r">[API]</span> simulated failure');
+}
+function grp(){ console.group('🛒 cart operations'); console.log('add → widget ($9.99)'); console.group('nested: totals');
+  console.log('subtotal 9.99'); console.log('tax 0.80'); console.groupEnd(); console.log('total $10.79'); console.groupEnd();
+  mir('<span class="b">▾ 🛒 cart operations</span>\n   add → widget ($9.99)\n   <span class="b">▾ nested: totals</span>\n      subtotal 9.99 · tax 0.80\n   <span class="b">▴</span>\n   total $10.79\n<span class="b">▴</span>'); }
+function tbl(){ console.table([{id:1,user:'ada',ms:120},{id:2,user:'bo',ms:80},{id:3,user:'chen',ms:310}]);
+  mir('<span class="b">console.table</span> → 3 rows × (id, user, ms)'); }
+let tRunning=false;
+function timer(){ if(tRunning){console.timeEnd('demo');tRunning=false;mir('<span class="g">timeEnd demo → ~2000ms</span>');}
+  else{console.time('demo');tRunning=true;mir('<span class="b">time demo ▶ started</span>');setTimeout(()=>{},0);} }
+function cnt(){ console.count('clicks'); mir('<span class="b">count clicks</span> → increments'); }
+function tr(){ console.trace('who called me?'); mir('<span class="y">trace()</span> → full stack printed in DevTools'); }
+for(let i=0;i<6;i++){ const c=document.createElement('div'); c.className='cell'; c.textContent='cell '+(i+1);
+  c.onclick=()=>{ console.log('cell',i+1,'hover-state →',getComputedStyle(c).backgroundColor); mir('log cell '+(i+1)+' bg='+getComputedStyle(c).backgroundColor); };
+  document.getElementById('g').append(c); }
+console.log('%c ready — click the buttons ', 'background:#9e9;color:#000;padding:2px 8px;border-radius:3px');
+</script></body></html>

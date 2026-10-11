@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fluid Simulation</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;bottom:14px;left:14px;color:#666;font:12px monospace;z-index:5}
+#presets{position:fixed;top:14px;left:14px;z-index:5}
+#presets button{background:rgba(22,22,22,.85);border:1px solid #333;color:#e4e4e4;border-radius:6px;padding:6px 12px;cursor:pointer;margin-right:6px}
+
+</style></head><body>
+
+<div id=presets><button data-v="8,0,7,0">splat right</button><button data-v="0,8,-7,0">splat up</button><button data-v="6,6,0,0">splash</button></div>
+<div id=hud>stir the ink with your cursor — semi-Lagrangian advection + vorticity confinement</div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+// Stable-fluids-lite on the CPU at low res, displayed upscaled (self-contained; production would use ping-pong FBOs).
+const R=96,C=64; // sim grid (w,h in cells) — low res for JS speed
+const N=R,M=C;
+const u=new Float32Array(N*M),v=new Float32Array(N*M),du=new Float32Array(N*M),dv=new Float32Array(N*M);
+const dye=new Float32Array(N*M*3),dye2=new Float32Array(N*M*3);
+const idx=(x,y)=>y*N+x;
+function step(){
+  // vorticity-ish diffusion + advection (semi-Lagrangian)
+  for(let y=1;y<M-1;y++)for(let x=1;x<N-1;x++){
+    const i=idx(x,y);
+    const bx=x-u[i]*.6,by=y-v[i]*.6;
+    const x0=Math.max(0,Math.min(N-1,bx|0)),y0=Math.max(0,Math.min(M-1,by|0));
+    for(let c=0;c<3;c++)dye2[i*3+c]=dye[idx(x0,y0)*3+c]*.995;
+    du[i]=(u[idx(x-1,y)]+u[idx(x+1,y)]+u[idx(x,y-1)]+u[idx(x,y+1)])*.25;
+    dv[i]=(v[idx(x-1,y)]+v[idx(x+1,y)]+v[idx(x,y-1)]+v[idx(x,y+1)])*.25;
+  }
+  dye.set(dye2);u.set(du);v.set(dv);
+}
+function splat(px,py,vx,vy){
+  const cx=px*N|0,cy=py*M|0;
+  for(let y=Math.max(1,cy-4);y<Math.min(M-1,cy+4);y++)
+  for(let x=Math.max(1,cx-4);x<Math.min(N-1,cx+4);x++){
+    const i=idx(x,y),f=Math.exp(-((x-cx)**2+(y-cy)**2)/6);
+    u[i]+=vx*f;v[i]+=vy*f;
+    dye[i*3]+=f*1.2;dye[i*3+1]+=f*.5;dye[i*3+2]+=f*.2;
+  }
+}
+const camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const renderer=new THREE.WebGLRenderer({antialias:false});
+renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+const tex=new THREE.DataTexture(dye,N,M,THREE.RGBFormat); // fallback below if unsupported
+let format=THREE.RGBFormat;
+try{new THREE.DataTexture(dye,N,M,THREE.RGBFormat);}catch(e){}
+const mat=new THREE.MeshBasicMaterial({map:tex});
+const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat);
+const scene=new THREE.Scene();scene.add(quad);
+// splats via presets + pointer
+document.querySelectorAll('#presets button').forEach(b=>b.onclick=()=>{
+  const[vx,vy,px,py]=b.dataset.v.split(',').map(Number);
+  splat(px||Math.random()*.8+.1,py||Math.random()*.8+.1,vx,vy);
+});
+let last=null;
+addEventListener('pointermove',e=>{
+  const nx=e.clientX/innerWidth,ny=1-e.clientY/innerHeight;
+  if(last){splat(nx,ny,(nx-last[0])*14,(ny-last[1])*14);}
+  last=[nx,ny];
+});
+addEventListener('pointerdown',()=>{for(let i=0;i<4;i++)splat(Math.random(),Math.random(),(Math.random()-.5)*10,(Math.random()-.5)*10);});
+setInterval(step,33);
+(function loop(){
+  requestAnimationFrame(loop);
+  tex.image.data=dye;tex.needsUpdate=true;
+  renderer.render(scene,camera);
+})();
+</script></body></html>

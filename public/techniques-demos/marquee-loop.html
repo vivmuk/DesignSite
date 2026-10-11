@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seamless Marquee</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { padding:10vh 0; }
+h1 { font-size:1.5rem; text-align:center; margin-bottom:3rem; font-weight:700; }
+.band { overflow:hidden; border-top:1px solid #222; border-bottom:1px solid #222; padding:1.4rem 0; margin-bottom:1rem; white-space:nowrap; }
+.track { display:inline-flex; gap:3.5rem; will-change:transform; }
+.item { display:inline-flex; align-items:center; gap:0.9rem; font-size:1.4rem; font-weight:600; color:#8a8a8a; }
+.item .dot { width:10px; height:10px; border-radius:50%; background:#3a5a8a; }
+.meter { text-align:center; color:#666; font-family:ui-monospace, monospace; font-size:0.8rem; margin-top:3rem; }
+.meter span { color:#8ab4ff; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Velocity Marquee</h1>
+  <div class="band"><div class="track" id="track"></div></div>
+  <div class="band reverse-band"><div class="track r2" id="track2"></div></div>
+  <p class="meter">scroll velocity: <span id="vel">0.0</span> — scroll fast and both bands react; direction follows scroll sign.</p>
+</div>
+
+<script>
+
+const items = ['NOUS', 'HERMES', 'VLM', 'RAILWAY', 'GSAP', 'OKLCH', 'LENIS', 'WAAPI'];
+function fill(track) {
+  let html = '';
+  for (let r = 0; r < 4; r++) items.forEach(function(t) {
+    html += '<span class="item"><span class="dot"></span>' + t + '</span>';
+  });
+  track.innerHTML = html;
+}
+const t1 = document.getElementById('track'), t2 = document.getElementById('track2');
+fill(t1); fill(t2);
+let offset1 = 0, offset2 = 0, sVel = 0, lastY = scrollY, lastT = performance.now();
+addEventListener('scroll', function() {
+  const now = performance.now();
+  const dy = scrollY - lastY;
+  sVel = dy / Math.max(1, now - lastT) * 16;
+  lastY = scrollY; lastT = now;
+}, { passive: true });
+(function loop() {
+  sVel *= 0.94;
+  const base = 0.6, boost = Math.max(-14, Math.min(14, sVel));
+  const w1 = t1.scrollWidth / 4;
+  offset1 -= (base + boost); offset2 += (base + boost);
+  offset1 = ((offset1 % w1) + w1) % w1;
+  offset2 = ((offset2 % w1) + w1) % w1;
+  t1.style.transform = 'translateX(' + (-offset1).toFixed(2) + 'px)';
+  t2.style.transform = 'translateX(' + (offset2 - w1).toFixed(2) + 'px)';
+  document.getElementById('vel').textContent = sVel.toFixed(1);
+  requestAnimationFrame(loop);
+})();
+
+</script>
+</body>
+</html>

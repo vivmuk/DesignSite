@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SVG Filters: Gooey + Ripple</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;min-height:100vh;overflow:hidden}
+#goo-stage{position:relative;height:60vh}
+.blob{position:absolute;width:90px;height:90px;border-radius:50%;cursor:grab;touch-action:none;filter:url(#goo)}
+#b1{background:#7ee787;left:20%;top:30%}
+#b2{background:#7ee787;left:55%;top:45%}
+#b3{background:#57c4ff;left:38%;top:55%}
+#title{position:relative;text-align:center;font-size:56px;font-weight:800;letter-spacing:.02em;padding:30px 0;color:#e4e4e4}
+#title:hover{filter:url(#ripple)}
+#ctrl{position:fixed;bottom:18px;left:18px;color:#888;font-size:12px}
+input{accent-color:#7ee787}
+#fallback{display:none;padding:40px;color:#ff6b81}
+
+</style></head><body>
+
+<svg width=0 height=0 style="position:absolute">
+<defs>
+<filter id="goo">
+<feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
+<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo"/>
+<feBlend in="SourceGraphic" in2="goo"/>
+</filter>
+<filter id="ripple">
+<feTurbulence type="fractalNoise" baseFrequency="0.015 0.05" numOctaves="2" result="noise" seed="7">
+<animate attributeName="baseFrequency" dur="6s" values="0.015 0.05;0.02 0.07;0.015 0.05" repeatCount="indefinite"/>
+</feTurbulence>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="14"/>
+</filter>
+</defs>
+</svg>
+<div id=goo-stage>
+<div class=blob id=b1></div><div class=blob id=b2></div><div class=blob id=b3></div>
+</div>
+<div id=title>HOVER FOR WATER RIPPLE</div>
+<div id=ctrl>goo stdDeviation <input id=sd type=range min=4 max=24 value=12> <span id=sdv>12</span></div>
+<div id=fallback>✗ SVG filters unsupported in this browser — showing fallback text. The gooey merge and ripple would render here with plain rounded shapes instead.</div>
+<script>
+
+if(!(CSS.supports('filter','url(#goo)')||CSS.supports('filter','url(#x)'))){
+  document.getElementById('fallback').style.display='block';
+}
+document.querySelectorAll('.blob').forEach(b=>{
+  let drag=null;
+  b.addEventListener('pointerdown',e=>{drag=b;b.setPointerCapture(e.pointerId);
+    drag._ox=e.clientX-drag.offsetLeft;drag._oy=e.clientY-drag.offsetTop;});
+  b.addEventListener('pointermove',e=>{if(drag!==b)return;
+    b.style.left=e.clientX-drag._ox+'px';b.style.top=e.clientY-drag._oy+'px';});
+  b.addEventListener('pointerup',()=>drag=null);
+});
+const sd=document.getElementById('sd'),sdv=document.getElementById('sdv');
+sd.oninput=()=>{document.querySelector('#goo feGaussianBlur').setAttribute('stdDeviation',sd.value);sdv.textContent=sd.value;};
+</script></body></html>

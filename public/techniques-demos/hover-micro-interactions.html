@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hover Micro-interactions</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:880px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2rem; font-weight:700; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; }
+.demo { background:#141414; border:1px solid #262626; border-radius:12px; overflow:hidden; }
+.demo-stage { height:120px; display:flex; align-items:center; justify-content:center; }
+.demo code { display:block; font-family:ui-monospace, monospace; font-size:0.68rem; color:#8ab4ff; padding:0.7rem 0.9rem; border-top:1px solid #262626; }
+button, .fx-link { font-size:0.95rem; color:#e4e4e4; background:#1c1c1c; border:1px solid #333; padding:0.75rem 1.4rem; cursor:pointer; }
+.fx-link { background:none; border:none; position:relative; }
+.fx-link::after { content:''; position:absolute; left:0; bottom:-3px; height:2px; width:0; background:#7ee8fa; transition:width 0.3s cubic-bezier(0.4,0,0.2,1); }
+.fx-link:hover::after { width:100%; }
+.fx-lift { transition:transform 0.25s, box-shadow 0.25s; }
+.fx-lift:hover { transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,0.5); }
+.fx-nudge span { display:inline-block; transition:transform 0.25s; }
+.fx-nudge:hover span { transform:translateX(5px); }
+.fx-fill { position:relative; overflow:hidden; }
+.fx-fill::before { content:''; position:absolute; inset:0; background:#2d4a8a; transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+.fx-fill:hover::before { transform:scaleX(1); }
+.fx-fill span { position:relative; }
+.fx-tilt { transition:transform 0.25s; }
+.fx-tilt:hover { transform:rotate(-2deg) scale(1.05); }
+.fx-ring { transition:box-shadow 0.3s; border-radius:10px; }
+.fx-ring:hover { box-shadow:0 0 0 3px rgba(126,232,250,0.5); }
+.fx-swap { position:relative; overflow:hidden; }
+.fx-swap span { display:block; transition:transform 0.3s; }
+.fx-swap::after { content:'Hovered!'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transform:translateY(100%); transition:transform 0.3s; background:#1c1c1c; }
+.fx-swap:hover span { transform:translateY(-100%); }
+.fx-swap:hover::after { transform:translateY(0); }
+.fx-glow { transition:border-color 0.3s, box-shadow 0.3s; border-radius:10px; }
+.fx-glow:hover { border-color:#8a5ae8; box-shadow:0 0 18px rgba(138,90,232,0.4); }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Micro-interaction Recipes</h1>
+  <div class="grid">
+    <div class="demo"><div class="demo-stage"><a class="fx-link" href="#">Underline draw</a></div><code>.fx-link::after { width 0→100% }</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-lift">Card lift</button></div><code>translateY(-4px) + shadow</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-nudge">Icon nudge →</button></div><code>child translateX on hover</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-fill">Fill sweep</button></div><code>::before scaleX 0→1</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-tilt">Tilt</button></div><code>rotate(-2deg) scale(1.05)</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-ring">Ring pulse</button></div><code>box-shadow spread</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-swap"><span>Label swap</span></button></div><code>two labels slide</code></div>
+    <div class="demo"><div class="demo-stage"><button class="fx-glow">Glow border</button></div><code>border-color + shadow</code></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>DevTools Overlay Debugging</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.demo{border:1px solid #2a2a2a;border-radius:10px;padding:20px;margin:14px 0;min-height:110px}
+.flex{display:flex;gap:12px}
+.flex div{background:#1e2a3a;border-radius:6px;padding:14px;min-width:60px;text-align:center;font:12px monospace}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid div{background:#2a1e3a;border-radius:6px;padding:14px;font:12px monospace}
+.rel{position:relative}
+.abs{position:absolute;top:10px;right:10px;background:#3a1e1e;padding:8px 12px;border-radius:6px;font:11px monospace}
+.layered{transform:translateZ(0);will-change:transform;background:#1e3a2a;padding:14px;border-radius:6px;font:12px monospace}
+.kbd{background:#1a1a1a;border:1px solid #333;border-radius:4px;padding:2px 8px;font:12px monospace}
+</style></head><body>
+<h1>DevTools overlay cheat-sheet — live demos of what you\'d see in the browser</h1>
+<p>Each panel recreates a DevTools overlay (Grid inspector, Flexbox badges, Layers panel, Box model) with live elements you can inspect with real DevTools too.</p>
+<div class="demo"><b>Grid inspector overlay</b> <span class="kbd">Inspector → Grid badge</span>
+<p style="font-size:12px;color:#777">In DevTools, clicking the grid badge shows line numbers + track sizes. Here is the equivalent visual:</p>
+<div class="grid"><div>track 1fr</div><div>track 1fr</div><div>track 1fr</div><div>track 1fr</div></div></div>
+<div class="demo"><b>Flexbox overlay</b> <span class="kbd">Inspector → flex badge</span>
+<p style="font-size:12px;color:#777">DevTools overlays flex gaps with purple hashes and item order numbers:</p>
+<div class="flex"><div>① item</div><div>② item</div><div>③ item</div></div></div>
+<div class="demo rel"><b>Box model overlay</b> <span class="kbd">Elements → Computed</span>
+<div class="abs">margin 10 / border 1 / padding 14</div>
+<p style="font-size:12px;color:#777">Hover any element in the Elements panel to see the colored box-model overlay: content (blue), padding (green), border (yellow), margin (orange).</p></div>
+<div class="demo layered"><b>Layers panel (compositing)</b> <span class="kbd">⋮ More tools → Layers</span>
+<p style="font-size:12px;color:#777">This card promotes to its own compositing layer via will-change:transform. Open the Layers panel to see it isolated — perfect for diagnosing jank.</p></div>
+<script>
+console.log('%c DevTools demo loaded ', 'background:#6cf;color:#000;padding:2px 6px;border-radius:3px');
+console.log('Try: Elements panel → hover elements for box model; Rendering tab → Paint flashing; Layers panel → compositing layers.');
+const grid=document.querySelector('.grid');
+console.log(grid);
+console.table([...grid.children].map((c,i)=>({track:i+1,content:c.textContent})));
+</script></body></html>

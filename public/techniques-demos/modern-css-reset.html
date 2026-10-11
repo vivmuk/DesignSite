@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern CSS Reset — Before / After</title>
+<style>
+  :root { --bg:#0d0d0d; --fg:#e4e4e4; --accent:#8b7cff; --muted:#777; }
+  body { background:var(--bg); color:var(--fg); font-family:ui-sans-serif,system-ui,sans-serif; padding:2rem; }
+  h1 { font-size:1.6rem; margin-bottom:.3rem; }
+  .sub { color:var(--muted); margin-bottom:2rem; }
+  .toggle { display:flex; gap:.5rem; margin-bottom:2rem; }
+  .toggle button { background:#1a1a1a; color:var(--fg); border:1px solid #333; padding:.5rem 1.2rem; border-radius:8px; cursor:pointer; font-size:.9rem; }
+  .toggle button.active { border-color:var(--accent); color:var(--accent); }
+  .panes { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  @media (max-width:800px){ .panes { grid-template-columns:1fr; } }
+  .pane { background:#141414; border:1px solid #262626; border-radius:12px; padding:1.2rem; }
+  .pane h2 { font-size:.85rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:1rem; }
+  .pane.demo-reset h2 { color:#7dd8a0; }
+  /* The reset, applied only to the second pane */
+  .demo-reset, .demo-reset * { box-sizing:border-box; }
+  .demo-reset * { margin:0; }
+  .demo-reset img, .demo-reset video { max-width:100%; display:block; }
+  .demo-reset input, .demo-reset button, .demo-reset textarea, .demo-reset select { font:inherit; }
+  .demo-reset p, .demo-reset h1, .demo-reset h2, .demo-reset h3, .demo-reset h4 { overflow-wrap:break-word; }
+  .demo-reset { line-height:1.5; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  .demo-reset ul[role='list'] { list-style:none; padding:0; }
+  .card { border:1px solid #333; border-radius:8px; padding:1rem; }
+  .card h3 { color:var(--accent); }
+  .card img { width:100%; height:60px; object-fit:cover; background:linear-gradient(120deg,#333,#555); border-radius:4px; }
+  .card ul { padding-left:1.4rem; }
+  .card form { display:flex; gap:.5rem; }
+  .card button { background:var(--accent); color:#0d0d0d; border:0; padding:.4rem .9rem; border-radius:6px; }
+  .note { color:var(--muted); font-size:.85rem; margin-top:1.4rem; max-width:60ch; }
+  .diff { font-family:ui-monospace,monospace; font-size:.8rem; color:#7dd8a0; background:#101812; border:1px solid #1f3a2a; padding:1rem; border-radius:8px; margin-top:1rem; }
+</style>
+</head>
+<body>
+<h1>Modern CSS Reset</h1>
+<p class="sub">The same markup, rendered with and without a reset. Toggle to see the difference.</p>
+<div class="toggle" role="group" aria-label="Reset toggle">
+  <button id="off" class="active">Without reset</button>
+  <button id="on">With reset</button>
+</div>
+<div class="panes">
+  <section class="pane" id="plain">
+    <h2>Raw UA styles</h2>
+    <div class="card">
+      <h3>Weekly digest</h3>
+      <img alt="placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='60'%3E%3Crect width='400' height='60' fill='%234a4a6a'/%3E%3C/svg%3E">
+      <ul role="list">
+        <li>Browsers give lists margins</li>
+        <li>Images sit on a text baseline</li>
+        <li>Form controls inherit nothing</li>
+      </ul>
+      <form><input placeholder="Type here…"><button type="button">Subscribe</button></form>
+    </div>
+  </section>
+  <section class="pane demo-reset" id="reset">
+    <h2>With modern reset</h2>
+    <div class="card">
+      <h3>Weekly digest</h3>
+      <img alt="placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='60'%3E%3Crect width='400' height='60' fill='%234a4a6a'/%3E%3C/svg%3E">
+      <ul role="list">
+        <li>Margins flattened to zero</li>
+        <li>Images become block, never overflow</li>
+        <li>Buttons &amp; inputs inherit the font</li>
+      </ul>
+      <form><input placeholder="Type here…"><button type="button">Subscribe</button></form>
+    </div>
+  </section>
+</div>
+<p class="note">The reset used on the right pane is the classic modern set: box-sizing, margin zeroing, media max-width, font inheritance for controls, and text-size-adjust.</p>
+<div class="diff">*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+img, video { max-width: 100%; display: block; }
+input, button, textarea, select { font: inherit; }</div>
+<script>
+  const plain = document.getElementById('plain');
+  const on = document.getElementById('on'), off = document.getElementById('off');
+  on.addEventListener('click', () => { plain.classList.add('demo-reset'); on.classList.add('active'); off.classList.remove('active'); });
+  off.addEventListener('click', () => { plain.classList.remove('demo-reset'); off.classList.add('active'); on.classList.remove('active'); });
+</script>
+</body>
+</html>

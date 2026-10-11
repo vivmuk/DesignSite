@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical & Rotated Text</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.mag { display:grid; grid-template-columns:72px 1fr; min-height:100vh; }
+.spine { writing-mode:vertical-rl; background:#141414; border-left:1px solid #2a2a2a; display:flex; align-items:center; justify-content:center; }
+.spine h2 { font-size:1rem; letter-spacing:0.35em; color:#8a8a8a; font-weight:400; }
+article { padding:6vh 8vw; max-width:60ch; }
+h1 { font-size:clamp(2rem,6vw,4.5rem); margin-bottom:2rem; font-weight:700; }
+p { line-height:1.8; margin-bottom:1.5rem; color:#c9c9c9; }
+.pull { writing-mode:vertical-rl; text-orientation:sideways; float:right; margin:0 0 1rem 2.5rem; font-size:1.6rem; font-weight:600; color:#e4e4e4; border-right:3px solid #555; padding-right:1.2rem; height:14em; }
+.ja { writing-mode:vertical-rl; text-orientation:upright; height:11em; font-size:1.05rem; color:#9ad0c2; letter-spacing:0.15em; }
+code { color:#e8b96a; font-size:0.9em; }
+
+</style>
+</head>
+<body>
+
+<div class="mag">
+  <aside class="spine"><h2>季刊・文字の設計 — Vol. 12</h2></aside>
+  <article>
+    <h1>The Vertical Web</h1>
+    <p>Long before screens, book designers solved vertical rhythm. This page borrows their grammar: a spine that reads top-to-bottom, a pull-quote turned ninety degrees, and a bilingual body where horizontal Latin meets vertical Japanese without a seam.</p>
+    <blockquote class="pull">Text flows the way the page breathes.</blockquote>
+    <p class="ja" lang="ja">縦書きの美しさは、余白と流れの調和にある。横書きと縦書きが一つのページで共存するとき、文字は建築になる。</p>
+    <p>Tune the spine with <code>writing-mode: vertical-rl</code>, rotate a quote with <code>text-orientation: sideways</code>, and let CJK stay upright while Latin rotates — one property, three behaviors.</p>
+  </article>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="ocean"><head><meta charset="utf-8"><title>Theme Switching Strategies</title>
+<style>
+:root{--brand:#0ea5e9}
+[data-theme=ocean]{--bg:#0d1b2a;--fg:#e4e4e4;--accent:var(--brand);--card:#152238}
+[data-theme=forest]{--bg:#0d1a0d;--fg:#e4e4e4;--accent:#22c55e;--card:#142414}
+[data-theme=sunset]{--bg:#1a0d08;--fg:#eee4da;--accent:#fb923c;--card:#241510}
+[data-theme=mono]{--bg:#111;--fg:#eee;--accent:#fff;--card:#1c1c1c}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui;padding:24px;transition:background .25s,color .25s}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+button{background:var(--card);color:var(--fg);border:1px solid #333;padding:9px 16px;border-radius:6px;cursor:pointer}
+button.active{border-color:var(--accent);color:var(--accent)}
+.themed{background:var(--card);border-radius:10px;padding:18px;border:1px solid #2a2a2a;margin:12px 0}
+.optout{--card:#2a2a2a;--accent:#e4e4e4;background:#2a2a2a;color:#999;border-radius:10px;padding:18px;border:1px dashed #555;margin:12px 0}
+.optout b{color:#e4e4e4}
+#fw{font:12px monospace;color:#fb5;min-height:16px}
+button.warn{border-color:#f66;color:#f88}
+</style></head><body>
+<header><h1 style="font-size:18px;margin:0">Four themes, one component that opts out</h1>
+<div><button data-t="ocean" class="active">🌊</button><button data-t="forest">🌲</button><button data-t="sunset">🌅</button><button data-t="mono">◐</button>
+<button class="warn" onclick="fwt()">⚡ simulate FOUC</button></div></header>
+<div class="themed">Normal themed card — uses <code style="color:var(--accent)">var(--accent)</code> and follows every theme.</div>
+<div class="optout"><b>Opt-out card</b> — scoped override: this component sets its own <code>--card</code> locally, so theme switches leave it untouched. Scoped custom properties beat !important hacks.</div>
+<div id="fw"></div>
+<script>
+const btns=[...document.querySelectorAll('button[data-t]')];
+function apply(t){ document.documentElement.dataset.theme=t;
+  btns.forEach(b=>b.classList.toggle('active',b.dataset.t===t));
+  try{ localStorage.setItem('theme',t);}catch(e){} }
+btns.forEach(b=>b.onclick=()=>apply(b.dataset.t));
+// persisted theme on load (with FOUC guard discussion)
+let saved=null; try{saved=localStorage.getItem('theme')}catch(e){}
+if(saved){ apply(saved); document.getElementById('fw').textContent='restored "'+saved+'" from localStorage before first paint ✓ (no flash)'; }
+function fwt(){
+  // Bad: applying theme AFTER paint causes flash-of-wrong-theme
+  const html=document.documentElement; const orig=html.dataset.theme;
+  html.dataset.theme='sunset'; document.getElementById('fw').textContent='⚡ WRONG: theme applied after paint → user sees flash. Fix: inline <script> in <head> sets data-theme before CSS paints.';
+  setTimeout(()=>{ html.dataset.theme=orig; document.getElementById('fw').textContent='restored. remember: set theme in a blocking head script.'; },1200);
+}
+</script></body></html>

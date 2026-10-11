@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Audio Synth Graph</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4;padding:20px}
+.wrap{max-width:680px;margin:auto}
+#piano{display:flex;gap:3px;margin:14px 0;user-select:none}
+.key{flex:1;height:90px;background:#1c1c1c;border:1px solid #333;border-radius:0 0 8px 8px;cursor:pointer;display:grid;place-items:end center;padding-bottom:6px;font-size:10px;color:#666}
+.key.active{background:#2a4a2a;border-color:#7ee787;color:#7ee787}
+#knobs{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;font-size:12px;color:#888}
+#knobs label{display:flex;justify-content:space-between}
+#knobs input{accent-color:#7ee787;width:150px}
+#graph{margin-top:16px;border:1px solid #262626;border-radius:10px;padding:10px;background:#111}
+#note{color:#888;font-size:12px}
+b.on{color:#7ee787}
+
+</style></head><body>
+
+<div class=wrap>
+<h1 style="font-weight:300">Two-osc synth → filter → delay</h1>
+<div id=piano></div>
+<div id=knobs>
+<label>cutoff <input id=cut type=range min=100 max=6000 value=1800><b id=cutv>1800Hz</b></label>
+<label>resonance <input id=res type=range min=1 max=18 value=6><b id=resv>6</b></label>
+<label>delay mix <input id=mix type=range min=0 max=1 step=.05 value=.3><b id=mixv>0.30</b></label>
+<label>detune <input id=det type=range min=0 max=30 value=8><b id=detv>8ct</b></label>
+</div>
+<canvas id=graph width=640 height=150></canvas>
+<canvas id=scope width=640 height=90 style="border:1px solid #262626;border-radius:8px;background:#111"></canvas>
+<div id=note>click a key or use A W S E D F T G Y H U J K — audio starts on first interaction</div>
+</div>
+<script>
+
+let ctx=null,nodes=null,active=new Map();
+function ensureAudio(){
+  if(ctx)return;
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const master=ctx.createGain();master.gain.value=.5;
+  const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=1800;filter.Q.value=6;
+  const delay=ctx.createDelay(1);delay.delayTime.value=.28;
+  const fb=ctx.createGain();fb.gain.value=.35;
+  const mix=ctx.createGain();mix.gain.value=.3;
+  const analyser=ctx.createAnalyser();analyser.fftSize=2048;
+  filter.connect(master);
+  filter.connect(delay);delay.connect(fb);fb.connect(delay);delay.connect(mix);mix.connect(master);
+  master.connect(analyser);analyser.connect(ctx.destination);
+  nodes={master,filter,delay,fb,mix,analyser};
+  drawGraph();
+}
+function noteOn(freq,el){
+  ensureAudio();ctx.resume();
+  if(active.has(freq))return;
+  const o1=ctx.createOscillator();o1.type='sawtooth';o1.frequency.value=freq;
+  const o2=ctx.createOscillator();o2.type='square';o2.frequency.value=freq;
+  o2.detune.value=+document.getElementById('det').value;
+  const g=ctx.createGain();
+  g.gain.setValueAtTime(0,ctx.currentTime);
+  g.gain.linearRampToValueAtTime(.18,ctx.currentTime+.02);
+  g.gain.setTargetAtTime(0,ctx.currentTime+.25,.18);
+  o1.connect(g);o2.connect(g);g.connect(nodes.filter);
+  o1.start();o2.start();o1.stop(ctx.currentTime+1.4);o2.stop(ctx.currentTime+1.4);
+  active.set(freq,{o1,o2,g,el});
+  if(el)el.classList.add('active');
+}
+function noteOff(freq){
+  const n=active.get(freq);if(!n)return;
+  n.g.gain.setTargetAtTime(0,ctx.currentTime,.05);
+  setTimeout(()=>{try{n.o1.stop();n.o2.stop();}catch(e){}},300);
+  active.delete(freq);
+  if(n.el)n.el.classList.remove('active');
+}
+// piano
+const NOTES=[['C4',261.63],['C#4',277.18],['D4',293.66],['D#4',311.13],['E4',329.63],['F4',349.23],['F#4',369.99],['G4',392],['G#4',415.3],['A4',440],['A#4',466.16],['B4',493.88],['C5',523.25]];
+const KEYMAP={a:261.63,w:277.18,s:293.66,e:311.13,d:329.63,f:349.23,t:369.99,g:392,y:415.3,h:440,u:466.16,j:493.88,k:523.25};
+const piano=document.getElementById('piano');
+NOTES.forEach(([n,f])=>{
+  const k=document.createElement('div');k.className='key';k.textContent=n;k.dataset.f=f;
+  k.addEventListener('pointerdown',()=>noteOn(f,k));
+  k.addEventListener('pointerup',()=>noteOff(f));
+  k.addEventListener('pointerleave',()=>noteOff(f));
+  piano.appendChild(k);
+});
+addEventListener('keydown',e=>{if(KEYMAP[e.key]&&!e.repeat)noteOn(KEYMAP[e.key],document.querySelector(`[data-f="${KEYMAP[e.key]}"]`));});
+addEventListener('keyup',e=>{if(KEYMAP[e.key])noteOff(KEYMAP[e.key]);});
+// knobs
+const bind=(id,v_id,fn,fmt)=>{const el=document.getElementById(id),v=document.getElementById(v_id);
+  el.addEventListener('input',()=>{fn(+el.value);v.textContent=fmt(+el.value);if(nodes)drawGraph();});};
+bind('cut','cutv',v=>{if(nodes)nodes.filter.frequency.value=v;},v=>v+'Hz');
+bind('res','resv',v=>{if(nodes)nodes.filter.Q.value=v;},v=>v);
+bind('mix','mixv',v=>{if(nodes)nodes.mix.gain.value=v;},v=>v.toFixed(2));
+bind('det','detv',()=>{},v=>v+'ct');
+// node graph diagram
+function drawGraph(){
+  const c=document.getElementById('graph'),x=c.getContext('2d');
+  x.fillStyle='#111';x.fillRect(0,0,640,150);
+  x.font='11px monospace';
+  const box=(bx,by,label,col)=>{
+    x.strokeStyle=col;x.strokeRect(bx,by,84,30);
+    x.fillStyle=col;x.fillText(label,bx+8,by+19);
+  };
+  const arrow=(a,b)=>{x.strokeStyle='#555';x.beginPath();x.moveTo(...a);x.lineTo(...b);x.stroke();
+    x.fillStyle='#555';x.beginPath();x.arc(b[0],b[1],2.5,0,Math.PI*2);x.fill();};
+  box(20,30,'osc1 saw','#7ee787');box(20,90,'osc2 square','#7ee787');
+  box(180,58,'biquad LP','#7eb8ff');box(360,20,'delay','#ffd866');box(360,96,'feedback','#ffd866');
+  box(510,58,'master','#e4e4e4');
+  arrow([104,45],[180,68]);arrow([104,105],[180,80]);
+  arrow([264,66],[360,40]);arrow([444,40],[510,66]);
+  x.strokeStyle='#555';x.beginPath();x.moveTo(402,50);x.lineTo(402,96);x.stroke();
+  x.beginPath();x.moveTo(402,111);x.lineTo(300,111);x.lineTo(300,88);x.stroke();
+  arrow([300,88],[300,73]);
+  arrow([594,73],[594,73]);
+  x.fillStyle='#666';x.fillText('→ destination (analyser scope below)',510,140);
+}
+drawGraph();
+// scope
+const scope=document.getElementById('scope'),sx=scope.getContext('2d');
+(function loop(){
+  requestAnimationFrame(loop);
+  sx.fillStyle='#111';sx.fillRect(0,0,640,90);
+  if(nodes){
+    const buf=new Uint8Array(nodes.analyser.fftSize);
+    nodes.analyser.getByteTimeDomainData(buf);
+    sx.strokeStyle='#7ee787';sx.beginPath();
+    for(let i=0;i<buf.length;i+=4){const X=i/buf.length*640,Y=buf[i]/255*90;i?sx.lineTo(X,Y):sx.moveTo(X,Y);}
+    sx.stroke();
+  } else {
+    sx.fillStyle='#555';sx.font='11px monospace';sx.fillText('output scope — play a note',240,48);
+  }
+})();
+</script></body></html>

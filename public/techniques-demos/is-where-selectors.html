@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>:is() and :where() — Specificity Control</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:720px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  article { background:#141414; border:1px solid #2a2a2a; border-radius:14px; padding:1.4rem; margin-bottom:1.2rem; }
+  article h2 { font-size:1.15rem; margin:0 0 .6rem; }
+  article p { line-height:1.7; color:#ccc; }
+  :where(article) :where(h2, p, li) { color:#9a9a9a; font-size:.95rem; }
+  :where(article) :where(h2) { color:#b9b9b9; }
+  .lead { color:#8b7cff; font-size:1.05rem; }
+  .note-text { color:#7dd8a0; }
+  :is(section, #featured) p { color:#e8c468; }
+  .scores { display:grid; gap:.6rem; font-family:ui-monospace,monospace; font-size:.8rem; }
+  .scores div { background:#101014; border:1px solid #222; border-radius:8px; padding:.6rem 1rem; display:flex; justify-content:space-between; }
+  .win { color:#7dd8a0; } .lose { color:#ff9c6e; }
+</style>
+</head>
+<body>
+<h1>:is() and :where()</h1>
+<p class="sub">Same selector lists, different specificity: :where() contributes zero, :is() inherits its most specific argument.</p>
+<article>
+  <h2>:where() baseline typography</h2>
+  <p class="lead">This paragraph has class lead — one class (0,1,0) overrides the :where() base (0,0,0) even though the base comes later in the sheet.</p>
+  <p class="note-text">Same for note-text: utility classes always win without specificity wars, because :where() adds nothing to the cascade weight.</p>
+  <p>This plain paragraph keeps the :where() baseline gray.</p>
+</article>
+<section id="featured">
+  <article>
+    <h2>:is() raises the stakes</h2>
+    <p>:is(#featured) contributes ID-level specificity (1,0,0) + class — so this paragraph turns gold and a simple class cannot easily beat it.</p>
+  </article>
+</section>
+<div class="scores">
+  <div><span>:where(article) :where(h2)</span><span class="win">(0,0,0)</span></div>
+  <div><span>.lead utility</span><span class="win">(0,1,0) → wins</span></div>
+  <div><span>:is(#featured) p</span><span class="lose">(1,0,1)</span></div>
+  <div><span>plain article p</span><span>(0,0,1)</span></div>
+</div>
+<p style="color:#777;font-size:.85rem">Rule of thumb: wrap forgiving lists in :where() for overridable defaults, :is() when you want grouped intent to carry weight. Both are forgiving — invalid selectors inside never invalidate the whole list.</p>
+</body>
+</html>

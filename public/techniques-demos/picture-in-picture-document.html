@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Picture-in-Picture: Video & Document</title>
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:32px}
+  h1{font-size:20px} button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;margin-right:8px}
+  button:hover{background:#1d4ed8}
+  video{width:480px;max-width:100%;border-radius:12px;background:#000;display:block;margin:16px 0}
+  .filler{max-width:480px;color:#9a9a9a}
+  .err{color:#f0a0a0;font-size:13px}
+</style>
+</head>
+<body>
+<h1>Tutorial player with Picture-in-Picture</h1>
+<p>Pop the lesson video out, or float a live notes panel with Document Picture-in-Picture — both stay on top while you scroll this page.</p>
+<div>
+  <button id="pipVideo">▶ Video PiP</button>
+  <button id="pipDoc">🗒 Document PiP (notes)</button>
+</div>
+<video id="vid" autoplay muted loop playsinline></video>
+<p class="filler" id="filler"></p>
+<p class="err" id="err"></p>
+<script>
+// Procedural "lesson video" — a canvas stream, so no media file is needed
+const c = document.createElement('canvas'); c.width = 640; c.height = 360;
+const x = c.getContext('2d');
+let t = 0;
+(function loop(){
+  x.fillStyle = '#111'; x.fillRect(0,0,640,360);
+  x.fillStyle = `hsl(${t%360},70%,55%)`;
+  x.beginPath(); x.arc(320 + Math.sin(t/20)*160, 180 + Math.cos(t/13)*80, 46 + Math.sin(t/9)*14, 0, 7); x.fill();
+  x.fillStyle = '#fff'; x.font = 'bold 28px monospace';
+  x.fillText('Lesson step ' + (1 + Math.floor(t/180) % 8), 24, 48);
+  t++; requestAnimationFrame(loop);
+})();
+const vid = document.getElementById('vid');
+vid.srcObject = c.captureStream(30);
+
+const err = document.getElementById('err');
+const note = msg => err.textContent = msg;
+
+// --- Video PiP: element.requestPictureInPicture() ---
+document.getElementById('pipVideo').onclick = async () => {
+  try{
+    if (document.pictureInPictureElement) await document.exitPictureInPicture();
+    else await vid.requestPictureInPicture();
+  }catch(e){ note('Video PiP failed: ' + e.message); }
+};
+
+// --- Document PiP: documentPictureInPicture.requestWindow() ---
+let docWin;
+document.getElementById('pipDoc').onclick = async () => {
+  if (!('documentPictureInPicture' in window)) return note('Document PiP is not supported in this browser.');
+  try{
+    if (docWin && !docWin.closed){ docWin.close(); return; }
+    docWin = await documentPictureInPicture.requestWindow({ width: 320, height: 220 });
+    const st = docWin.document.createElement('style');
+    st.textContent = 'body{font:14px system-ui;background:#0d0d0d;color:#e4e4e4;margin:12px}textarea{width:100%;height:110px;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:8px}';
+    docWin.document.head.append(st);
+    const h = docWin.document.createElement('b'); h.textContent = 'Floating notes';
+    const ta = docWin.document.createElement('textarea');
+    ta.placeholder = 'Type while the page scrolls…';
+    docWin.document.body.append(h, ta);
+    ta.addEventListener('input', () => localStorage.setItem('dpip-notes', ta.value));
+    ta.value = localStorage.getItem('dpip-notes') || '';
+  }catch(e){ note('Document PiP failed: ' + e.message); }
+};
+
+// filler content so there is something to scroll past
+document.getElementById('filler').textContent = 'Scroll tip: '.repeat(1) +
+  Array.from({length:14}, (_,i)=>`Paragraph ${i+1} — the floating window stays pinned above every app while you read.`).join(' ');
+</script>
+</html>

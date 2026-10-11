@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Background Removal — MediaPipe Selfie Segmentation</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:20px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .stage{position:relative;width:480px;max-width:100%;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#312e81,#0d9488,#f59e0b)}
+  video,canvas{width:480px;max-width:100%;display:block}
+  canvas{position:absolute;inset:0}
+  .row{display:flex;gap:12px;align-items:center;margin:10px 0}
+  input{accent-color:#60a5fa}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+  #status{color:#9a9a9a;font-size:13px;min-height:20px}
+  .err{color:#f0a0a0}
+</style>
+</head>
+<body>
+<h1>Virtual background, no server</h1>
+<p class="sub">Selfie segmentation masks you per-pixel; the background is replaced by an animated CSS scene behind the canvas. Slider = mask threshold.</p>
+<button id="start">Enable camera</button>
+<div class="row"><label>Mask quality <input id="thresh" type="range" min="0.2" max="0.9" step="0.05" value="0.5"> <b id="tv">0.50</b></label></div>
+<div class="stage">
+  <video id="vid" autoplay playsinline muted style="opacity:0;height:0"></video>
+  <canvas id="out" width="480" height="360"></canvas>
+</div>
+<div id="status"></div>
+<script>
+const vid = document.getElementById('vid'), cv = document.getElementById('out'), x = cv.getContext('2d');
+const status = document.getElementById('status');
+let threshold = 0.5;
+
+document.getElementById('thresh').oninput = e => { threshold = +e.target.value; document.getElementById('tv').textContent = threshold.toFixed(2); };
+
+document.getElementById('start').onclick = async () => {
+  try{
+    vid.srcObject = await navigator.mediaDevices.getUserMedia({video:{width:480,height:360}});
+    if (!window.SelfieSegmentation){ status.innerHTML='<span class="err">SelfieSegmentation failed to load (CDN?)</span>'; return; }
+    status.textContent = 'Loading segmentation model…';
+    const seg = new window.SelfieSegmentation({locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${f}`});
+    seg.setOptions({modelSelection:1});
+    seg.onResults(onResults);
+    await seg.initialize();
+    status.textContent = 'Segmenting live — slide the threshold to sharpen the mask edge.';
+    const loop = async () => { await seg.send({image: vid}); requestAnimationFrame(loop); };
+    loop();
+  }catch(e){ status.innerHTML = '<span class="err">' + e.message + '</span>'; }
+};
+
+function onResults(res){
+  const W=480, H=360;
+  // animated "CSS scene" background painted on canvas each frame
+  const t = performance.now()/1000;
+  const g = x.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,`hsl(${(t*30)%360},50%,30%)`); g.addColorStop(1,`hsl(${(t*30+120)%360},60%,20%)`);
+  x.fillStyle = g; x.fillRect(0,0,W,H);
+  x.fillStyle = '#ffffff33';
+  for(let i=0;i<14;i++){
+    const bx = ((t*20*(i%3+1) + i*40) % (W+40)) - 20, by = (i*67)%H;
+    x.beginPath(); x.arc(bx, by, 8+(i%3)*6, 0, 7); x.fill();
+  }
+  // mask: threshold the segmentation mask, draw person over it
+  const mask = res.segmentationMask;
+  x.save();
+  x.globalCompositeOperation = 'source-over';
+  x.filter = `contrast(${(threshold*4+2).toFixed(1)})`;   // slider sharpens mask edge
+  x.drawImage(mask, 0, 0, W, H);
+  x.restore();
+  x.globalCompositeOperation = 'source-in';
+  x.drawImage(res.image, 0, 0, W, H);
+  x.globalCompositeOperation = 'source-over';
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+</html>

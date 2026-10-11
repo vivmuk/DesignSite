@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Racing with Gamepad API</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .row{display:flex;gap:24px;flex-wrap:wrap}
+  canvas{background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  #pad{background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:14px;width:280px}
+  #pad h2{font-size:12px;color:#9a9a9a;margin:0 0 10px;text-transform:uppercase}
+  .stick{position:relative;width:90px;height:90px;background:#101010;border:1px solid #333;border-radius:50%;display:inline-block;margin-right:14px}
+  .knob{position:absolute;width:34px;height:34px;border-radius:50%;background:#60a5fa;left:28px;top:28px}
+  .btn{display:inline-block;width:34px;height:34px;border-radius:50%;background:#2a2a2a;color:#fff;font-size:11px;line-height:34px;text-align:center;margin:3px}
+  .btn.active{background:#34d399;color:#0d0d0d}
+  .bar{height:8px;background:#101010;border-radius:4px;margin:6px 0;overflow:hidden}
+  .bar i{display:block;height:100%;background:#fbbf24;width:0}
+  #msg{color:#fbbf24;font-size:13px;min-height:22px}
+</style>
+</head>
+<body>
+<h1>Micro racer</h1>
+<p class="sub">Plug in a controller (or use arrow keys / WASD). Triggers = throttle &amp; brake, left stick = steer, crash = rumble.</p>
+<div id="msg">Press any button on your gamepad…</div>
+<div class="row">
+  <canvas id="game" width="520" height="360"></canvas>
+  <div id="pad">
+    <h2>Live gamepad state</h2>
+    <div class="stick"><div class="knob" id="knob"></div></div>
+    <div>
+      <span class="btn" data-i="0">A</span><span class="btn" data-i="1">B</span>
+      <span class="btn" data-i="6">LT</span><span class="btn" data-i="7">RT</span>
+    </div>
+    <div class="bar"><i id="rt"></i></div>
+    <div style="font-size:11px;color:#8a8a8a" id="gname">no gamepad</div>
+  </div>
+</div>
+<script>
+const cv = document.getElementById('game'), x = cv.getContext('2d');
+const msg = document.getElementById('msg');
+const car = {x:260, y:300, a:0, v:0};
+const OBSTACLES = Array.from({length:6}, (_,i) => ({x: 40+ i*80, y: 40 + (i%3)*90, r:16, hit:false}));
+let rumble = 0, keys = {};
+
+addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+
+function pad(){
+  const gps = navigator.getGamepads ? navigator.getGamepads() : [];
+  for (const g of gps) if (g && g.connected) return g;
+  return null;
+}
+addEventListener('gamepadconnected', e => msg.textContent = '🎮 Connected: ' + e.gamepad.id);
+addEventListener('gamepaddisconnected', () => msg.textContent = 'Gamepad disconnected — arrow keys still work.');
+
+function rumblePad(g, ms, mag){
+  const a = g.vibrationActuator;
+  if (a && a.playEffect) a.playEffect('dual-rumble', {duration: ms, strongMagnitude: mag, weakMagnitude: mag*0.6}).catch(()=>{});
+}
+
+function step(){
+  const g = pad();
+  let steer = 0, throttle = 0, brake = 0;
+  if (g){
+    steer = Math.abs(g.axes[0]) > 0.12 ? g.axes[0] : 0;                 // deadzone
+    throttle = g.buttons[7]?.value || 0;                                // RT
+    brake = g.buttons[6]?.value || 0;                                   // LT
+    if (g.buttons[0]?.pressed) throttle = 1;                            // A = full throttle
+    // HUD
+    document.getElementById('knob').style.transform =
+      `translate(${g.axes[0]*26||0}px, ${g.axes[1]*26||0}px)`;
+    document.querySelectorAll('.btn').forEach(el =>
+      el.classList.toggle('active', g.buttons[+el.dataset.i]?.pressed || (+el.dataset.i===7 && throttle>0.1)));
+    document.getElementById('rt').style.width = (throttle*100)+'%';
+    document.getElementById('gname').textContent = g.id.slice(0,38);
+  }
+  if (keys['arrowleft']||keys['a']) steer = -1;
+  if (keys['arrowright']||keys['d']) steer = 1;
+  if (keys['arrowup']||keys['w']) throttle = 1;
+  if (keys['arrowdown']||keys['s']) brake = 1;
+
+  car.a += steer * 0.055 * (0.4 + car.v*0.6);
+  car.v += throttle * 0.09 - brake * 0.14;
+  car.v *= 0.985;
+  car.v = Math.max(0, Math.min(4.2, car.v));
+  car.x += Math.sin(car.a) * car.v;
+  car.y -= Math.cos(car.a) * car.v;
+  // walls
+  car.x = Math.max(20, Math.min(500, car.x));
+  car.y = Math.max(20, Math.min(340, car.y));
+
+  // collisions → rumble + knockback
+  for (const o of OBSTACLES){
+    if (!o.hit && Math.hypot(o.x-car.x, o.y-car.y) < o.r+14){
+      o.hit = true; car.v *= -0.4; rumble = 10;
+      if (g) rumblePad(g, 220, Math.min(1, car.v));
+      setTimeout(() => o.hit=false, 900);
+    }
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+function draw(){
+  x.fillStyle = '#141414'; x.fillRect(0,0,520,360);
+  x.strokeStyle = '#232323';
+  for(let gx=0;gx<520;gx+=40){x.beginPath();x.moveTo(gx,0);x.lineTo(gx,360);x.stroke();}
+  for(let gy=0;gy<360;gy+=40){x.beginPath();x.moveTo(0,gy);x.lineTo(520,gy);x.stroke();}
+  OBSTACLES.forEach(o=>{
+    x.fillStyle = o.hit ? '#f87171' : '#2f2f2f';
+    x.beginPath(); x.arc(o.x,o.y,o.r,0,7); x.fill();
+  });
+  x.save(); x.translate(car.x, car.y); x.rotate(car.a);
+  x.fillStyle = rumble-- > 0 ? '#f87171' : '#fbbf24';
+  x.fillRect(-14,-9,28,18);
+  x.fillStyle='#0d0d0d'; x.fillRect(6,-6,6,4); x.fillRect(6,2,6,4);
+  x.restore();
+  x.fillStyle='#9a9a9a'; x.font='11px monospace';
+  x.fillText('speed: ' + car.v.toFixed(2), 10, 16);
+}
+step();
+</script>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Semantic Notes Search</title>
+<script src="https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2/dist/transformers.min.js"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  input{width:640px;max-width:100%;box-sizing:border-box;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:10px;padding:12px;font:inherit}
+  .note{background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:14px 16px;margin-top:10px;max-width:640px}
+  .note b{font-size:14px}
+  .note p{margin:4px 0 0;color:#9a9a9a;font-size:13px}
+  .sim{height:5px;background:#1a1a1a;border-radius:3px;margin-top:8px;overflow:hidden}
+  .sim i{display:block;height:100%;background:#34d399;border-radius:3px;transition:width .4s}
+  .score{font:11px monospace;color:#7ee787}
+  #status{color:#9a9a9a;font-size:13px;margin:10px 0;min-height:22px}
+</style>
+</head>
+<body>
+<h1>Notes that search by meaning</h1>
+<p class="sub">Sentences are embedded locally (MiniLM via transformers.js); queries cosine-rank against the vectors. Try "how to keep my drink cold" — no note contains those words together.</p>
+<input id="q" placeholder="Search by meaning… try: how to keep my drink cold">
+<div id="status">Embedding notes…</div>
+<div id="results"></div>
+<script>
+const NOTES = [
+  {t:'Coffee brewing ratios',   p:'Use 15 grams of water per gram of beans; 94°C for light roasts.'},
+  {t:'Ice bath recovery',       p:'Fill the tub, add ice, submerge legs for 10 minutes after training.'},
+  {t:'Fridge organization',     p:'Dairy on the top shelf, produce in crisper drawers, freezer below.'},
+  {t:'Insulated bottle test',   p:'Vacuum flasks keep water cold for 24 hours; hand-wash the lid.'},
+  {t:'Marathon hydration plan', p:'Drink every 15 minutes, 150ml per intake, electrolytes after 60 min.'},
+  {t:'Cold brew recipe',        p:'Steep coarse grounds in cold water 16 hours, strain, dilute 1:1.'},
+];
+const model_id = 'Xenova/all-MiniLM-L6-v2';
+let extractor = null, vecs = [];
+
+const dot = (a,b) => a.reduce((s,v,i)=>s+v*b[i],0);
+const cosine = (a,b) => dot(a,b)/(Math.hypot(...a)*Math.hypot(...b));
+
+async function embed(texts){
+  const out = await extractor(texts, {pooling:'mean', normalize:true});
+  // out.tolist() gives one vector per input
+  return out.tolist();
+}
+async function init(){
+  const status = document.getElementById('status');
+  try{
+    if (!window.transformers) throw new Error('transformers.js unavailable');
+    const { pipeline } = window.transformers;
+    status.textContent = 'Loading MiniLM (~30 MB, cached after first run)…';
+    extractor = await pipeline('feature-extraction', model_id);
+    vecs = await embed(NOTES.map(n => n.t + '. ' + n.p));
+    status.textContent = 'Ready — semantic search is live.';
+    search('');
+  }catch(e){
+    status.textContent = 'Embedding model unavailable (' + e.message + '). Showing keyword fallback.';
+    search(''); // still list notes
+  }
+}
+function search(q){
+  const box = document.getElementById('results'); box.innerHTML = '';
+  let ranked = NOTES.map((n,i) => ({n, i, s: vecs[i] ? cosine(vecs[i], null) : 0}));
+  if (q.trim() && vecs.length){
+    // synchronous-ish: kick off async query embedding
+    embed([q]).then(qv => {
+      ranked = NOTES.map((n,i) => ({n, s: cosine(vecs[i], qv[0])}))
+        .sort((a,b)=>b.s-a.s);
+      render(ranked, true);
+    });
+    return;
+  }
+  render(ranked.map(r=>({n:r.n, s:null})), false);
+}
+function render(ranked, semantic){
+  const box = document.getElementById('results'); box.innerHTML = '';
+  ranked.forEach(({n,s}) => {
+    const d = document.createElement('div'); d.className='note';
+    d.innerHTML = `<b>${n.t}</b><p>${n.p}</p>` +
+      (semantic ? `<div class="sim"><i style="width:${(s*100).toFixed(0)}%"></i></div><span class="score">similarity ${(s*100).toFixed(1)}%</span>` : '');
+    box.append(d);
+  });
+}
+document.getElementById('q').oninput = e => search(e.target.value);
+init();
+</script>
+</html>

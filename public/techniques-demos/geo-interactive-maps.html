@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>City Map — Leaflet</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:16px}
+  h1{font-size:18px} .row{display:flex;gap:8px;margin-bottom:10px}
+  input{flex:1;background:#1a1a1a;color:#e4e4e4;border:1px solid #333;border-radius:8px;padding:8px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+  #map{height:70vh;min-height:420px;border-radius:12px;border:1px solid #2a2a2a}
+  .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#1f1f1f;color:#e4e4e4}
+  .leaflet-control-attribution{background:#161616cc !important;color:#888 !important}
+  #status{color:#9a9a9a;font-size:13px;margin-top:8px;min-height:20px}
+</style>
+</head>
+<body>
+<h1>City explorer (simulated tiles + markers)</h1>
+<div class="row">
+  <input id="q" list="places" placeholder="Search a district…">
+  <datalist id="places"></datalist>
+  <button id="go">Fly to</button>
+</div>
+<div id="map"></div>
+<div id="status"></div>
+<script>
+// Dark canvas tiles drawn per-request — no external tile servers or keys needed
+const PLACES = [
+  {name:'Old Town',  lat:48.858, lng:2.345, pop: 'historic core', n: 42},
+  {name:'Harbor',    lat:48.840, lng:2.380, pop: 'docks & market', n: 27},
+  {name:'Tech Park', lat:48.872, lng:2.360, pop: 'startup cluster', n: 18},
+  {name:'Museum Row',lat:48.862, lng:2.320, pop: 'galleries', n: 12},
+  {name:'Gardens',   lat:48.848, lng:2.300, pop: 'parks', n: 9},
+];
+const map = L.map('map', {center:[48.856,2.345], zoom:13, zoomControl:true});
+L.CanvasLayer = L.GridLayer.extend({
+  createTile: function(coords){
+    const c = document.createElement('canvas'); c.width = c.height = 256;
+    const x = c.getContext('2d');
+    x.fillStyle = '#101418'; x.fillRect(0,0,256,256);
+    // deterministic pseudo streets per tile
+    let seed = coords.x*7919 + coords.y*104729 + coords.z*13;
+    const rnd = () => (seed = (seed*9301+49297)%233280) / 233280;
+    x.strokeStyle = '#26313a'; x.lineWidth = 4;
+    for(let i=0;i<5;i++){
+      x.beginPath();
+      x.moveTo(rnd()*256, rnd()*256);
+      x.lineTo(rnd()*256, rnd()*256);
+      x.stroke();
+    }
+    x.strokeStyle = '#1b242c'; x.lineWidth = 2;
+    for(let i=0;i<8;i++){
+      x.beginPath(); x.moveTo(rnd()*256,0); x.lineTo(rnd()*256,256); x.stroke();
+    }
+    return c;
+  }
+});
+map.addLayer(new L.CanvasLayer());
+
+// clustered-ish markers (radius by count) + popup with district info
+PLACES.forEach(p => {
+  L.circleMarker([p.lat,p.lng], {radius: 8+p.n/4, color:'#60a5fa', weight:2, fillColor:'#2563eb', fillOpacity:.55})
+    .bindPopup(`<b>${p.name}</b><br>${p.pop}<br>${p.n} locations`)
+    .addTo(map);
+});
+// choropleth-style district overlays
+PLACES.forEach(p => {
+  L.rectangle([[p.lat-.006,p.lng-.006],[p.lat+.006,p.lng+.006]],
+    {color:'#34d39955', weight:1, fillColor:'#34d399', fillOpacity:.08}).addTo(map);
+});
+
+const dl = document.getElementById('places');
+PLACES.forEach(p => dl.append(new Option(p.name)));
+const status = document.getElementById('status');
+function fly(){
+  const hit = PLACES.find(p => p.name.toLowerCase() === document.getElementById('q').value.trim().toLowerCase());
+  if (!hit){ status.textContent = 'No match — try: ' + PLACES.map(p=>p.name).join(', '); return; }
+  map.flyTo([hit.lat,hit.lng], 15, {duration:1.6});
+  status.textContent = `Flying to ${hit.name} — ${hit.n} locations`;
+}
+document.getElementById('go').onclick = fly;
+document.getElementById('q').addEventListener('keydown', e => e.key === 'Enter' && fly());
+</script>
+</html>

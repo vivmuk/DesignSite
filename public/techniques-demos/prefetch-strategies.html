@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Prefetching Strategies</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;display:grid;grid-template-columns:1fr 340px;min-height:100vh}
+main{padding:24px} a{display:block;margin:14px 0;color:#6cf;font-size:18px;text-decoration:none;width:fit-content;padding:6px 10px;border-radius:6px}
+a:hover{background:#1a2a3a}
+a.done::after{content:" ✓prefetched";color:#9effa1;font-size:12px}
+aside{border-left:1px solid #2a2a2a;padding:20px;font:12px ui-monospace,monospace}
+h1{font-size:18px} .row{padding:6px;border-bottom:1px solid #222;opacity:0;animation:in .3s forwards}
+@keyframes in{to{opacity:1}}
+.t{color:#9effa1;float:right}
+#goto{margin-top:16px;padding:10px;background:#242424;border-radius:6px;display:none}
+.mode{margin:16px 0;color:#888} select{background:#222;color:#e4e4e4;border:1px solid #3a3a3a;border-radius:4px;padding:4px}
+</style></head><body>
+<main><h1>Hover-prefetch mini-site</h1>
+<div class="mode">Strategy: <select id="s"><option>hover (fetch on mouseover, 60ms intent delay)</option><option>none (baseline)</option><option>viewport (fetch when visible)</option></select></div>
+<a href="#/docs" data-p="docs">📖 Documentation</a>
+<a href="#/pricing" data-p="pricing">💰 Pricing</a>
+<a href="#/blog" data-p="blog">📝 Blog</a>
+<a href="#/api" data-p="api">🔧 API Reference</a>
+<div id="goto"></div></main>
+<aside><h3>Prefetch log</h3><div id="log"></div>
+<p style="color:#777">Navigation after prefetch ≈ instant. Without prefetch, every click pays full latency.</p></aside>
+<script>
+const pages = {docs:'Docs content',pricing:'Pricing table',blog:'Blog post',api:'API reference'};
+const cache = new Map(); const log = document.getElementById('log');
+function addLog(txt, ms){ const d=document.createElement('div');d.className='row';
+  d.innerHTML=`${txt}<span class="t">${ms?ms+'ms':'cache ✓'}</span>`;log.prepend(d); }
+function fakeFetch(p){ const t0=performance.now();
+  return new Promise(r=>setTimeout(()=>r(pages[p]), 400+Math.random()*300)).then(html=>{ addLog(`GET /${p}`, performance.now()-t0|0); cache.set(p,html); return html; }); }
+document.querySelectorAll('a').forEach(a=>{
+  const p=a.dataset.p;
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>{ if(es[0].isIntersecting && mode().startsWith('viewport') && !cache.has(p)) fakeFetch(p); }).observe(a);
+  let timer;
+  a.addEventListener('mouseenter', ()=>{ if(mode()!=='hover')return; timer=setTimeout(()=>{ if(!cache.has(p)){ addLog(`hover→prefetch /${p}`); fakeFetch(p); a.classList.add('done'); } },60); });
+  a.addEventListener('mouseleave', ()=>clearTimeout(timer));
+  a.addEventListener('click', e=>{ e.preventDefault();
+    if(cache.has(p)){ addLog(`navigate /${p} (0ms — served from cache)`); show(p, cache.get(p)); }
+    else { addLog(`navigate /${p} — cold!`); fakeFetch(p).then(h=>show(p,h)); } });
+});
+function mode(){ return document.getElementById('s').value; }
+function show(p,h){ const g=document.getElementById('goto'); g.style.display='block';
+  g.innerHTML=`<b>/${p}</b> rendered${mode()==='hover'&&cache.has(p)?' — <span style="color:#9effa1">instant (prefetched)</span>':''}<br><small>${h}</small>`; }
+addLog('mode: ' + mode());
+document.getElementById('s').onchange=()=>{ log.prepend(Object.assign(document.createElement('div'),{className:'row',textContent:'mode → '+mode()})); };
+</script></body></html>

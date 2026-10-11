@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Streaming SSR & Suspense Boundaries</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.panel{border:1px solid #2a2a2a;border-radius:10px;padding:14px;min-height:130px;position:relative}
+.panel h4{margin:0 0 10px;font-size:13px;color:#aaa}
+.sk{background:linear-gradient(90deg,#1a1a1a 25%,#242424 50%,#1a1a1a 75%);background-size:200% 100%;animation:sh 1.1s infinite;border-radius:6px;height:70px}
+@keyframes sh{to{background-position:-200% 0}}
+.data{opacity:0;transform:translateY(6px);transition:.4s}
+.data.on{opacity:1;transform:none}
+.big{font-size:26px;font-weight:700} .up{color:#9effa1}.down{color:#f66}
+.tag{position:absolute;top:10px;right:10px;font:10px monospace;background:#1e2a1e;color:#9e9;padding:2px 7px;border-radius:99px;opacity:0;transition:.3s}
+.tag.on{opacity:1}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+#stream{margin-top:14px;font:11px ui-monospace,monospace;color:#777;white-space:pre-line;min-height:60px}
+</style></head><body>
+<h1>Streaming SSR — shell first, panels stream in</h1>
+<p>The HTML shell paints at 0ms. Each Suspense boundary resolves server-side at its own time and streams in.</p>
+<button onclick="stream()">▶ Replay stream</button>
+<div class="dash" id="dash">
+<div class="panel"><h4>Revenue</h4><div class="sk"></div><div class="tag"> streamed @ms</div></div>
+<div class="panel"><h4>Active users</h4><div class="sk"></div><div class="tag"></div></div>
+<div class="panel"><h4>Churn risk</h4><div class="sk"></div><div class="tag"></div></div>
+<div class="panel"><h4>NPS score</h4><div class="sk"></div><div class="tag"></div></div>
+</div>
+<div id="stream">$ curl page (chunked)…</div>
+<script>
+const data=[
+ {sel:0,ms:300,html:'<div class="big">$48.2K</div><span class="up">▲ 12.4% wk/wk</span>'},
+ {sel:1,ms:650,html:'<div class="big">1,284</div><span class="up">▲ 3.1% wk/wk</span>'},
+ {sel:2,ms:1100,html:'<div class="big" style="color:#f66">4.2%</div><span class="down">▲ 0.8% — investigate</span>'},
+ {sel:3,ms:1500,html:'<div class="big">62</div><span class="up">▲ 5 pts</span>'}];
+function stream(){
+  const panels=[...document.querySelectorAll('.panel')];
+  panels.forEach(p=>{ p.querySelector('.sk')?.classList.remove('off'); p.querySelector('.data')?.remove();
+    const sk=p.querySelector('.sk'); if(sk) sk.style.display='block';
+    p.querySelector('.tag').classList.remove('on'); p.querySelector('.tag').textContent=' streamed @…'; });
+  const out=document.getElementById('stream'); out.textContent='$ <html>…shell flushed @0ms\n';
+  data.forEach(d=>setTimeout(()=>{
+    const p=panels[d.sel]; const sk=p.querySelector('.sk'); sk.style.display='none';
+    const div=document.createElement('div'); div.className='data'; div.innerHTML=d.html; p.append(div);
+    requestAnimationFrame(()=>div.classList.add('on'));
+    const tag=p.querySelector('.tag'); tag.textContent=` streamed @${d.ms}ms`; tag.classList.add('on');
+    out.textContent+=`<div data-panel="${d.sel}">…</div>  ← flushed @${d.ms}ms\n`;
+  }, d.ms));
+}
+stream();
+</script></body></html>

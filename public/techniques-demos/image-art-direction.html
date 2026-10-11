@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Art Direction</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:900px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:1.5rem; font-weight:700; }
+.gallery { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:2rem; }
+.frame { border-radius:10px; overflow:hidden; background:#161616; border:1px solid #2a2a2a; }
+.frame img { width:100%; display:block; }
+.f-wide img { aspect-ratio:16/9; object-fit:cover; }
+.f-square img { aspect-ratio:1; object-fit:cover; }
+.f-tall img { aspect-ratio:3/4; object-fit:cover; }
+.log { background:#161616; border:1px solid #2a2a2a; border-radius:10px; padding:1.2rem; }
+.log h2 { font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em; color:#888; margin-bottom:0.8rem; }
+.log li { font-family:ui-monospace, monospace; font-size:0.72rem; color:#8ab4ff; padding:0.2rem 0; list-style:none; }
+.hint { color:#777; font-size:0.85rem; margin-top:1rem; line-height:1.6; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Art Direction Lab</h1>
+  <div class="gallery" id="gal"></div>
+  <div class="log"><h2>Source log</h2><ul id="log"></ul></div>
+  <p class="hint">Resize the window — each frame serves a different crop via media attributes and different resolution via srcset + sizes.</p>
+</div>
+
+<script>
+
+const specs = [
+  { cls: 'f-wide', base: 1011, medias: ['(max-width:500px) 640w', '(max-width:900px) 960w'] },
+  { cls: 'f-square', base: 1025, medias: ['(max-width:500px) 480w', '(max-width:900px) 720w'] },
+  { cls: 'f-tall', base: 1035, medias: ['(max-width:500px) 400w', '(max-width:900px) 600w'] }
+];
+const gal = document.getElementById('gal'), log = document.getElementById('log');
+specs.forEach(function(s, i) {
+  const sizes = '(max-width:500px) 100vw, (max-width:900px) 50vw, 33vw';
+  const srcset = [320, 640, 960, 1280].map(function(w) {
+    return 'https://picsum.photos/id/' + s.base + '/' + (s.cls === 'f-wide' ? w : Math.round(w * 0.75)) + '/' + (s.cls === 'f-tall' ? w : Math.round(w * 0.75)) + ' ' + w + 'w';
+  }).join(', ');
+  gal.insertAdjacentHTML('beforeend',
+    '<div class="frame ' + s.cls + '"><img id="im' + i + '" src="https://picsum.photos/id/' + s.base + '/640/480" alt="art directed image" srcset="' + srcset + '" sizes="' + sizes + '"></div>');
+});
+function logSources() {
+  const li = document.createElement('li');
+  li.textContent = new Date().toLocaleTimeString() + ' viewport ' + innerWidth + 'px - density ' + (devicePixelRatio).toFixed(1) + 'x - sizes="' + document.querySelector('img').sizes + '"';
+  log.prepend(li);
+  while (log.children.length > 6) log.lastChild.remove();
+}
+let rt;
+addEventListener('resize', function() { clearTimeout(rt); rt = setTimeout(logSources, 250); });
+logSources();
+
+</script>
+</body>
+</html>

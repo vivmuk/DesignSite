@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keyboard Navigation & Roving Focus</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:640px;margin:32px auto}
+#viz{position:fixed;top:12px;right:12px;background:#161616;border:1px solid #333;border-radius:8px;padding:10px 14px;font-family:monospace;min-width:140px}
+#viz .key{color:#7ee787}
+[role=menubar]{display:flex;gap:4px;background:#161616;border:1px solid #333;border-radius:8px;padding:6px;margin-bottom:24px}
+[role=menuitem]{padding:6px 14px;border-radius:6px;cursor:pointer}
+[role=menuitem]:focus{outline:2px solid #7ee787;background:#222}
+[role=listbox]{border:1px solid #333;border-radius:8px;width:280px}
+[role=option]{padding:8px 12px;cursor:pointer}
+[role=option].active{background:#2a4a2a;outline:1px solid #7ee787}
+:focus{outline:2px solid #7ee787;outline-offset:2px}
+p.hint{color:#888}
+
+</style></head><body>
+
+<div id="viz">keys: <span class="key" id="last">–</span></div>
+<div class="wrap">
+<h1>Roving tabindex navigation</h1>
+<p class="hint">Tab into a widget, then use ←/→ or ↑/↓ to move focus between items.</p>
+<div role="menubar" aria-label="Demo menubar" id="menubar">
+<div role="menuitem" tabindex="-1">File</div><div role="menuitem" tabindex="-1">Edit</div><div role="menuitem" tabindex="0">View</div><div role="menuitem" tabindex="-1">Help</div>
+</div>
+<div role="listbox" aria-label="Pick a fruit" id="listbox">
+<div role="option" tabindex="-1">🍎 Apple</div><div role="option" tabindex="-1">🍌 Banana</div><div role="option" tabindex="0" class="active">🍇 Grape</div><div role="option" tabindex="-1">🍊 Orange</div>
+</div>
+<p class="hint">Roving tabindex: exactly one item per widget has <code>tabindex="0"</code>; arrow keys move it.</p>
+</div>
+<script>
+
+const viz=document.getElementById('last');
+document.addEventListener('keydown',e=>{viz.textContent=e.key;});
+function rove(container,keys){
+  const items=[...container.querySelectorAll('[role=menuitem],[role=option]')];
+  const fwd=keys.includes('ArrowRight');
+  container.addEventListener('keydown',e=>{
+    if(!keys.includes(e.key))return;
+    e.preventDefault();
+    let i=items.indexOf(document.activeElement);
+    if(i<0)i=items.findIndex(x=>x.tabIndex===0);
+    i=(i+(fwd?1:-1)+items.length)%items.length;
+    items.forEach(x=>x.tabIndex=-1);
+    items[i].tabIndex=0;items[i].focus();
+  });
+  container.addEventListener('click',e=>{
+    const it=e.target.closest('[role=menuitem],[role=option]');if(!it)return;
+    items.forEach(x=>{x.tabIndex=-1;x.classList?.remove('active')});
+    it.tabIndex=0;if(it.role==='option')it.classList.add('active');
+  });
+}
+rove(document.getElementById('menubar'),['ArrowLeft','ArrowRight']);
+rove(document.getElementById('listbox'),['ArrowUp','ArrowDown']);
+</script></body></html>

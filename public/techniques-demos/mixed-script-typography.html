@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixed-script Typography</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:56ch; margin:0 auto; padding:10vh 6vw; }
+h1 { font-size:clamp(1.8rem,5vw,3.2rem); margin-bottom:2.5rem; font-weight:700; }
+.mix { font-size:1.35rem; line-height:2; color:#dcdcdc; }
+.s-ar { font-family:'Geeza Pro','Noto Naskh Arabic','Segoe UI',serif; font-size:1.12em; }
+.s-zh { font-family:'PingFang SC','Hiragino Sans GB','Noto Sans SC','Microsoft YaHei',sans-serif; font-size:1.02em; }
+.specs { margin:3rem 0; border-top:1px solid #2a2a2a; border-bottom:1px solid #2a2a2a; }
+.row { display:flex; align-items:baseline; gap:1.5rem; padding:1rem 0; border-bottom:1px dashed #2a2a2a; }
+.row:last-child { border-bottom:none; }
+.tag { min-width:5ch; color:#777; font-size:0.85rem; }
+.note { color:#8a8a8a; font-size:0.95rem; line-height:1.7; margin-bottom:2rem; }
+button { background:none; border:1px solid #444; color:#e4e4e4; padding:0.7rem 1.4rem; cursor:pointer; letter-spacing:0.12em; text-transform:uppercase; font-size:0.8rem; }
+body.grid-on .mix span { background:linear-gradient(transparent 62%, rgba(230,140,90,0.35) 62%); }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>One Paragraph, Three Scripts</h1>
+  <p class="mix">Typography is <span lang="ar" dir="rtl" class="s-ar">الخط الجميل</span> — a contract between <span lang="zh" class="s-zh">字形</span> and the reader. Every script carries its own metrics, yet the baselines hold: <span lang="en" class="s-lat">design</span>, <span lang="ar" dir="rtl" class="s-ar">تصميم</span>, <span lang="zh" class="s-zh">設計</span>.</p>
+  <div class="specs">
+    <div class="row"><span class="tag">Latin</span><span lang="en" class="s-lat">Hamburgefonstiv 123</span></div>
+    <div class="row"><span class="tag" lang="ar" dir="rtl">العربية</span><span lang="ar" dir="rtl" class="s-ar">تصميم الحروف ١٢٣</span></div>
+    <div class="row"><span class="tag" lang="zh">汉字</span><span lang="zh" class="s-zh">字體設計 一二三</span></div>
+  </div>
+  <p class="note">Each script span carries its own font-family stack and a size adjustment, so x-heights and stroke weights stay harmonious mid-sentence. Toggle the highlight band to check the baseline contract.</p>
+  <button id="grid">Toggle baseline check</button>
+</div>
+
+<script>
+
+document.getElementById('grid').addEventListener('click', function() {
+  document.body.classList.toggle('grid-on');
+});
+
+</script>
+</body>
+</html>

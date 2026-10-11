@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duotone Images</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+:root { --c1:#2d4a8a; --c2:#e8b96a; }
+.wrap { max-width:900px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:1.5rem; font-weight:700; }
+.chips { display:flex; gap:0.7rem; margin-bottom:1.5rem; }
+.chip { border:1px solid #3a3a3a; background:none; color:#bbb; padding:0.55rem 1.1rem; border-radius:999px; cursor:pointer; font-size:0.85rem; transition:all 0.25s; }
+.chip.on { border-color:var(--c2); color:var(--c2); }
+.gallery { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; }
+.ph { position:relative; aspect-ratio:4/3; overflow:hidden; border-radius:10px; }
+.ph img { width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05); display:block; }
+.ph::after { content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, var(--c1), var(--c2));
+  mix-blend-mode:color; pointer-events:none; transition:background 0.4s; }
+.hint { margin-top:1.5rem; color:#777; font-size:0.85rem; line-height:1.6; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Duotone Engine</h1>
+  <div class="chips">
+    <button class="chip on" data-c1="#2d4a8a" data-c2="#e8b96a">Midnight</button>
+    <button class="chip" data-c1="#5e1a3c" data-c2="#f0d0a0">Ember</button>
+    <button class="chip" data-c1="#1a4a3c" data-c2="#c2f0d8">Moss</button>
+    <button class="chip" data-c1="#3a1a5e" data-c2="#d0a0f0">Violet</button>
+  </div>
+  <div class="gallery" id="gal"></div>
+  <p class="hint">Every image is grayscale(1) under a two-color gradient overlay in color blend mode — recolor happens in real time, no re-export.</p>
+</div>
+
+<script>
+
+const pics = [12, 24, 36, 48, 64, 72];
+const gal = document.getElementById('gal');
+pics.forEach(function(n) {
+  gal.insertAdjacentHTML('beforeend',
+    '<div class="ph"><img src="https://picsum.photos/id/' + n + '/480/360" alt="gallery photo" loading="lazy"></div>');
+});
+document.querySelectorAll('.chip').forEach(function(c) {
+  c.addEventListener('click', function() {
+    document.querySelectorAll('.chip').forEach(function(x) { x.classList.remove('on'); });
+    c.classList.add('on');
+    document.documentElement.style.setProperty('--c1', c.dataset.c1);
+    document.documentElement.style.setProperty('--c2', c.dataset.c2);
+  });
+});
+if (!CSS.supports('mix-blend-mode', 'color')) {
+  document.querySelector('.hint').textContent = 'Fallback text: blend modes unsupported - images shown in grayscale.';
+}
+
+</script>
+</body>
+</html>

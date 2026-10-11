@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Feature Detection & Progressive Enhancement</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+.demo{border:1px solid #2a2a2a;border-radius:10px;padding:18px;margin:14px 0;position:relative}
+/* BASE: works everywhere */
+.card{background:#161616;border:1px solid #2a2a2a;border-radius:6px;padding:14px;margin:8px 0}
+/* LEVEL 1: @supports layer */
+@supports (backdrop-filter: blur(4px)){
+  .card{backdrop-filter:blur(4px);background:rgba(30,30,30,.75);border-color:#3a4a5a}
+  .card::before{content:'✓ level 1: backdrop-filter';position:absolute;right:14px;font:10px monospace;color:#6cf}
+}
+/* LEVEL 2: anchor positioning where available */
+@supports (anchor-name: --a){
+  .card{border-color:#6c6}
+  .card::before{content:'✓ level 2: anchor positioning available'}
+}
+.tip{position:fixed;background:#7c3aed;color:#fff;padding:8px 12px;border-radius:6px;font-size:12px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:5}
+.tip.show{opacity:1}
+#report{font:12px ui-monospace,monospace;color:#9e9;background:#111;border-radius:8px;padding:12px;white-space:pre-line;margin-top:14px}
+</style></head><body>
+<h1>This component upgrades itself as support allows</h1>
+<p>Same markup, three capability tiers. The report below lists exactly which checks passed in YOUR browser.</p>
+<div class="demo"><div class="card"><b>Card A</b><p style="font-size:13px;color:#999;margin:6px 0 0">Base: solid dark card, readable everywhere. Hover me for the tooltip — positioned differently per capability tier.</p></div></div>
+<div id="report">running checks…</div>
+<script>
+const report=[];
+function check(label, fn){ let ok=false; try{ ok=fn(); }catch(e){} report.push((ok?'✓ ':'✗ ')+label); return ok; }
+check('@supports backdrop-filter', ()=>CSS.supports('backdrop-filter','blur(4px)')||CSS.supports('-webkit-backdrop-filter','blur(4px)'));
+check('anchor-name (CSS anchor positioning)', ()=>CSS.supports('anchor-name','--a'));
+check('CSS.supports API itself', ()=>!!window.CSS?.supports);
+check('IntersectionObserver', ()=>!!window.IntersectionObserver);
+check('Popover API', ()=>HTMLElement.prototype.hasOwnProperty?.('popover'));
+document.getElementById('report').textContent=report.join('\n')+'\n\n— the .card styles stack: base rules always apply; each @supports block only ADDS polish. Never gate content behind enhancement.';
+// tooltip: anchor-positioned if available, JS fallback otherwise
+const card=document.querySelector('.card'), tip=document.createElement('div');
+tip.className='tip'; tip.textContent='tooltip';
+document.body.append(tip);
+if(CSS.supports('anchor-name','--a')){
+  card.style.anchorName='--cardA'; tip.style.positionAnchor='--cardA';
+  tip.style.positionArea='bottom span-right'; tip.style.position='absolute';
+} 
+card.addEventListener('mouseenter',()=>{ 
+  if(!CSS.supports('anchor-name','--a')){ const r=card.getBoundingClientRect();
+    tip.style.left=r.left+'px'; tip.style.top=(r.bottom+8)+'px'; tip.style.position='fixed'; }
+  tip.classList.add('show'); });
+card.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+</script></body></html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noise Displacement</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:16px;left:16px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:14px;width:210px;font-size:13px}
+#ui label{display:flex;justify-content:space-between;margin:8px 0}
+#ui input{accent-color:#7ee787;width:110px}
+#ui b{color:#7ee787}
+
+</style></head><body>
+
+<div id=ui><h3 style="margin:0 0 4px">Breathing sphere</h3>
+<label>frequency <input id=f type=range min=0.2 max=4 step=.1 value=1.4><b id=fv>1.4</b></label>
+<label>amplitude <input id=a type=range min=0 max=.6 step=.02 value=.25><b id=av>0.25</b></label>
+</div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+scene.add(new THREE.AmbientLight(0xffffff,.4));
+const key=new THREE.DirectionalLight(0xffffff,1.4);key.position.set(4,5,3);scene.add(key);
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,50);camera.position.z=3.2;
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.appendChild(renderer.domElement);
+const vert=`
+uniform float uTime,uFreq,uAmp;
+varying float vDisp;varying vec3 vNormal,vView;
+vec3 simplexNoise(vec3 p){ // cheap 3D pseudo-noise from sines
+  return vec3(
+    sin(p.y*2.1+uTime)*sin(p.z*1.7-uTime*.7),
+    sin(p.z*2.3+uTime*.8)*sin(p.x*1.9),
+    sin(p.x*2.0-uTime*.6)*sin(p.y*1.5));
+}
+void main(){
+  vec3 n=simplexNoise(position*uFreq);
+  float d=dot(n,normalize(position))*.5+.5;
+  vDisp=d;
+  vec3 pos=position+normal*d*uAmp;
+  vNormal=normalMatrix*normal;
+  vec4 mv=modelViewMatrix*vec4(pos,1.);
+  vView=-mv.xyz;
+  gl_Position=projectionMatrix*mv;
+}`;
+const frag=`
+varying float vDisp;varying vec3 vNormal,vView;
+void main(){
+  vec3 N=normalize(vNormal),V=normalize(vView);
+  float fres=pow(1.-max(dot(N,V),0.),2.5);       // fresnel rim glow
+  vec3 base=mix(vec3(.05,.09,.16),vec3(.1,.7,.55),vDisp);
+  vec3 col=base+fres*vec3(.5,1.,.85)*1.2;
+  col+=vec3(.4)*max(dot(N,normalize(vec3(4.,5.,3.))),0.);
+  gl_FragColor=vec4(col,1.);
+}`;
+const uniforms={uTime:{value:0},uFreq:{value:1.4},uAmp:{value:.25}};
+const mat=new THREE.ShaderMaterial({vertexShader:vert,fragmentShader:frag,uniforms});
+const sphere=new THREE.Mesh(new THREE.IcosahedronGeometry(1,64),mat);
+scene.add(sphere);
+const bind=(id,v_id,u)=>{const el=document.getElementById(id),v=document.getElementById(v_id);
+  el.addEventListener('input',()=>{uniforms[u].value=+el.value;v.textContent=(+el.value).toFixed(2);});};
+bind('f','fv','uFreq');bind('a','av','uAmp');
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);uniforms.uTime.value=t*.001;sphere.rotation.y=t*.0002;renderer.render(scene,camera);})(0);
+</script></body></html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relative Color Syntax</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+:root { --brand: oklch(0.65 0.18 260); }
+.wrap { max-width:900px; margin:0 auto; padding:8vh 5vw; }
+h1 { font-size:1.7rem; margin-bottom:1rem; font-weight:700; }
+.intro { color:#999; margin-bottom:2.5rem; line-height:1.6; }
+.intro code { color:#e8b96a; font-size:0.95em; }
+.board { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; }
+.cell { height:130px; border-radius:10px; display:flex; align-items:flex-end; padding:10px; font-family:ui-monospace, monospace; font-size:0.7rem; line-height:1.5; color:rgba(255,255,255,0.9); background:rgba(0,0,0,0.35); text-shadow:0 1px 2px rgba(0,0,0,0.6); }
+.cell b { display:block; font-size:0.78rem; }
+.fb { margin-top:2rem; color:#e8b96a; font-size:0.9rem; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>One Token, Twelve Colors</h1>
+  <p class="intro">Every swatch below derives from <code id="base-label">--brand: oklch(0.65 0.18 260)</code> using relative color syntax.</p>
+  <div id="board" class="board"></div>
+  <p id="fb" class="fb"></p>
+</div>
+
+<script>
+
+const variants = [
+  ['Tint +10% L', 'oklch(from var(--brand) calc(l + 0.1) c h)'],
+  ['Tint +20% L', 'oklch(from var(--brand) calc(l + 0.2) c h)'],
+  ['Tint +30% L', 'oklch(from var(--brand) calc(l + 0.3) c h)'],
+  ['Shade −15% L', 'oklch(from var(--brand) calc(l - 0.15) c h)'],
+  ['Shade −30% L', 'oklch(from var(--brand) calc(l - 0.3) c h)'],
+  ['Shade −45% L', 'oklch(from var(--brand) calc(l - 0.45) c h)'],
+  ['Desat ×0.5', 'oklch(from var(--brand) l calc(c * 0.5) h)'],
+  ['Desat ×0.15', 'oklch(from var(--brand) l calc(c * 0.15) h)'],
+  ['Hue +40', 'oklch(from var(--brand) l c calc(h + 40))'],
+  ['Hue +120', 'oklch(from var(--brand) l c calc(h + 120))'],
+  ['Hue −120', 'oklch(from var(--brand) l c calc(h - 120))'],
+  ['Complement', 'oklch(from var(--brand) l c calc(h + 180))']
+];
+const board = document.getElementById('board');
+let supported = CSS.supports('color', 'oklch(from red l c h)');
+variants.forEach(function(v) {
+  const d = document.createElement('div');
+  d.className = 'cell';
+  const val = supported ? v[1] : v[1].replace(/from var\(--brand\) ([lch0-9*+\-\(). cale]+) /, function(m, g) {
+    if (g.includes('l +')) return '0.75 0.18 260';
+    if (g.includes('l + 0.2') || g.includes('l + 0.3')) return '0.85 0.18 260';
+    return '0.65 0.18 260';
+  });
+  d.style.background = supported ? v[1] : 'hsl(258 60% ' + (40 + Math.random() * 30).toFixed(0) + '%)';
+  d.innerHTML = '<div><b>' + v[0] + '</b>' + (supported ? v[1] : 'hsl fallback') + '</div>';
+  board.appendChild(d);
+});
+if (!supported) document.getElementById('fb').textContent = 'Fallback text: relative color syntax unsupported - hsl approximations shown.';
+
+</script>
+</body>
+</html>

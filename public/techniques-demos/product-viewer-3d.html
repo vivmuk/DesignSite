@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Product Viewer</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:16px;left:16px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:14px;font-size:13px}
+.sw{display:inline-block;width:26px;height:26px;border-radius:50%;cursor:pointer;margin:3px;border:2px solid transparent;vertical-align:middle}
+.sw.on{border-color:#7ee787}
+#toggle{margin-top:10px;background:#1c1c1c;border:1px solid #444;color:#e4e4e4;border-radius:6px;padding:6px 12px;cursor:pointer;display:block;width:100%}
+#hud{position:fixed;bottom:14px;left:14px;color:#666;font:12px monospace}
+.hot{position:absolute;color:#7ee787;font:11px monospace;background:rgba(13,13,13,.85);border:1px solid #2f5c42;border-radius:6px;padding:4px 8px;pointer-events:none;white-space:nowrap}
+
+</style></head><body>
+
+<div id=ui><h3 style="margin:0 0 6px">Headphone viewer</h3>
+<div id=swatches></div><button id=toggle>exploded view</button></div>
+<div id=hud>drag to orbit · click swatches · toggle explode</div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+import {OrbitControls} from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+scene.add(new THREE.AmbientLight(0xffffff,.5));
+const key=new THREE.DirectionalLight(0xffffff,2);key.position.set(3,5,4);scene.add(key);
+const fill=new THREE.DirectionalLight(0x88aaff,.8);fill.position.set(-3,1,-2);scene.add(fill);
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,50);camera.position.set(0,.4,4);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+document.body.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.enablePan=false;
+// procedural "product": headphones
+const product=new THREE.Group();
+const shellMats=[0x222831,0xc0392b,0x27ae60,0xf1c40f,0x8e44ad].map(c=>new THREE.MeshStandardMaterial({color:c,metalness:.5,roughness:.35}));
+let mi=0;
+const band=new THREE.Mesh(new THREE.TorusGeometry(1,.09,16,64,Math.PI),shellMats[0]);
+band.rotation.z=Math.PI/2;
+const earL=new THREE.Mesh(new THREE.CylinderGeometry(.42,.42,.28,32),shellMats[0]);
+earL.rotation.z=Math.PI/2;earL.position.set(-1.05,0,0);
+const earR=earL.clone();earR.position.x=1.05;
+const padL=new THREE.Mesh(new THREE.TorusGeometry(.36,.09,12,32),new THREE.MeshStandardMaterial({color:0x111111,roughness:.9}));
+padL.rotation.y=Math.PI/2;padL.position.x=-1.2;
+const padR=padL.clone();padR.position.x=1.2;
+product.add(band,earL,earR,padL,padR);
+product.position.y=.2;scene.add(product);
+const sw=document.getElementById('swatches');
+[0x222831,0xc0392b,0x27ae60,0xf1c40f,0x8e44ad].forEach((c,i)=>{
+  const d=document.createElement('div');d.className='sw'+(i===0?' on':'');d.style.background='#'+c.toString(16).padStart(6,'0');
+  d.onclick=()=>{mi=i;[band,earL,earR].forEach(m=>m.material=shellMats[i]);[...sw.children].forEach((x,j)=>x.classList.toggle('on',j===i));};
+  sw.appendChild(d);
+});
+// exploded view
+const parts=[band,earL,earR,padL,padR];
+const home=parts.map(p=>p.position.clone());
+const out=[new THREE.Vector3(0,.6,0),new THREE.Vector3(-1.7,0,0),new THREE.Vector3(1.7,0,0),new THREE.Vector3(-1.95,0,0),new THREE.Vector3(1.95,0,0)];
+let exploded=false;
+const tg=document.getElementById('toggle');
+tg.onclick=()=>{exploded=!exploded;tg.textContent=exploded?'reassemble':'exploded view';};
+// hotspots (projected DOM labels)
+const spots=[{p:new THREE.Vector3(0,1.15,0),t:'padded headband'},{p:new THREE.Vector3(-1.2,.2,0),t:'memory-foam pad'},{p:new THREE.Vector3(1.2,.2,0),t:'40mm driver'}];
+const els=spots.map(s=>{const d=document.createElement('div');d.className='hot';d.textContent=s.t;document.body.appendChild(d);return d;});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(t){
+  requestAnimationFrame(loop);controls.update();
+  parts.forEach((p,i)=>p.position.lerp(exploded?out[i]:home[i],.08));
+  const v=new THREE.Vector3();
+  spots.forEach((s,i)=>{v.copy(s.p).applyMatrix4(product.matrixWorld).project(camera);
+    els[i].style.left=(v.x*.5+.5)*innerWidth+'px';els[i].style.top=(-v.y*.5+.5)*innerHeight+'px';});
+  renderer.render(scene,camera);
+})(0);
+</script></body></html>

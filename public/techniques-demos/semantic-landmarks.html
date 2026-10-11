@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Semantic HTML & Landmarks</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui}
+.top{padding:12px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2a2a2a}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 14px;border-radius:6px;cursor:pointer}
+header,nav,main,aside,footer,section,form{transition:outline .2s}
+/* landmark overlay mode */
+body.map header{outline:2px solid #f66 !important;outline-offset:-2px}
+body.map nav{outline:2px solid #fb5 !important;outline-offset:-2px}
+body.map main{outline:2px solid #6cf !important;outline-offset:-2px}
+body.map aside{outline:2px solid #9e9 !important;outline-offset:-2px}
+body.map footer{outline:2px solid #c6f !important;outline-offset:-2px}
+body.map section{outline:2px dashed #888 !important;outline-offset:-2px}
+body.map h1,body.map h2,body.map h3{position:relative}
+body.map h1::after{content:"h1";font:9px monospace;background:#f66;color:#000;padding:1px 5px;border-radius:3px;margin-left:8px}
+body.map h2::after{content:"h2";font:9px monospace;background:#fb5;color:#000;padding:1px 5px;border-radius:3px;margin-left:8px}
+.lbl{display:none;font:10px monospace;padding:1px 6px;border-radius:3px;color:#000;position:absolute;top:2px;left:2px;z-index:2}
+body.map .lbl{display:block}
+header .lbl{background:#f66} nav .lbl{background:#fb5} main .lbl{background:#6cf} aside .lbl{background:#9e9} footer .lbl{background:#c6f}
+header,nav,main,aside,footer{position:relative}
+main{padding:24px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
+nav{padding:10px 24px;border-bottom:1px solid #1e1e1e}
+nav a{color:#6cf;margin-right:16px}
+aside{padding:16px} footer{padding:16px 24px;border-top:1px solid #2a2a2a;color:#777;font-size:13px}
+#keyhint{color:#777;font-size:12px}
+</style></head><body>
+<div class="top"><strong>Landmark Map</strong><button id="t">🗺 Toggle landmark map</button><span id="keyhint">(shortcut: press L)</span></div>
+<header><span class="lbl">banner &lt;header&gt;</span><h1 style="margin:8px 24px;font-size:20px">The Daily Pixel</h1></header>
+<nav aria-label="Main"><span class="lbl">navigation &lt;nav&gt;</span><a href="#">Home</a><a href="#">Tech</a><a href="#">Culture</a><a href="#">About</a></nav>
+<main><span class="lbl">main &lt;main&gt;</span>
+<div><h2>Why semantics beat divs</h2>
+<p>Screen readers navigate by landmark: banner, navigation, main, complementary, contentinfo. Sighted users navigate by scanning — both groups win when regions are real elements.</p>
+<section aria-labelledby="s2"><h3 id="s2">A section inside main</h3><p>Sections give document outline structure. The overlay shows heading levels so you can spot skipped levels instantly.</p></section>
+<section aria-labelledby="s3"><h3 id="s3">Another section</h3><p>Every heading in this page gets a tiny level badge in map mode — h1, h2, h3 — making hierarchy auditable at a glance.</p></section>
+</div>
+<aside aria-label="Related"><span class="lbl">complementary &lt;aside&gt;</span><h3>Related</h3><p style="font-size:13px;color:#888">Sidebar content lives in an aside landmark.</p></aside>
+</main>
+<footer><span class="lbl">contentinfo &lt;footer&gt;</span>© 2026 The Daily Pixel — contentinfo landmark</footer>
+<script>
+const btn=document.getElementById('t');
+function toggle(){ document.body.classList.toggle('map');
+  btn.textContent=document.body.classList.contains('map')?'✕ Exit landmark map':'🗺 Toggle landmark map'; }
+btn.onclick=toggle;
+addEventListener('keydown',e=>{ if(e.key==='l'||e.key==='L'){ if(document.activeElement.tagName!=='INPUT') toggle(); }});
+</script></body></html>

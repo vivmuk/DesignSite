@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Camera Booth — Filters & MediaRecorder</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:24px}
+  h1{font-size:20px}
+  video, canvas.recorded{width:480px;max-width:100%;border-radius:12px;background:#111;display:block}
+  video{filter:var(--f,none)}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0;align-items:center}
+  button,select{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+  select{background:#1a1a1a;border:1px solid #333}
+  button:disabled{opacity:.4;cursor:default}
+  .rec{background:#dc2626 !important}
+  .err{color:#f0a0a0;min-height:22px}
+  a.dl{color:#7ee787}
+</style>
+</head>
+<body>
+<h1>Camera Booth</h1>
+<p>Live webcam with CSS filters, a 5-second MediaRecorder capture, and a download link.</p>
+<div class="row">
+  <button id="start">Enable camera</button>
+  <select id="filter">
+    <option value="none">No filter</option>
+    <option value="grayscale(1)">Noir</option>
+    <option value="sepia(.9)">Sepia</option>
+    <option value="hue-rotate(180deg)">Alien</option>
+    <option value="saturate(3) contrast(1.3)">Pop</option>
+    <option value="invert(1)">Negative</option>
+  </select>
+  <button id="rec" disabled class="rec">● Record 5s</button>
+</div>
+<video id="vid" autoplay playsinline muted></video>
+<p class="err" id="err"></p>
+<div id="out"></div>
+<script>
+const vid = document.getElementById('vid'), err = document.getElementById('err'), out = document.getElementById('out');
+const recBtn = document.getElementById('rec');
+let stream, recorder, chunks;
+
+document.getElementById('start').onclick = async () => {
+  if (!navigator.mediaDevices?.getUserMedia){ err.textContent = 'getUserMedia is not supported here (needs HTTPS or localhost).'; return; }
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({video:{width:1280}, audio:false});
+    vid.srcObject = stream;
+    recBtn.disabled = false;
+  }catch(e){ err.textContent = 'Camera denied or unavailable: ' + e.message; }
+};
+
+document.getElementById('filter').onchange = e => vid.style.setProperty('--f', e.target.value);
+
+recBtn.onclick = () => {
+  if (!window.MediaRecorder){ err.textContent = 'MediaRecorder is not supported in this browser.'; return; }
+  chunks = [];
+  const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+  recorder = new MediaRecorder(stream, {mimeType: mime});
+  recorder.ondataavailable = e => e.data.size && chunks.push(e.data);
+  recorder.onstop = () => {
+    const blob = new Blob(chunks, {type: 'video/webm'});
+    const url = URL.createObjectURL(blob);
+    out.innerHTML = '<video class="recorded" src="' + url + '" controls></video>' +
+      '<p><a class="dl" download="booth-clip.webm" href="' + url + '">⬇ Download clip (' + (blob.size/1e6).toFixed(2) + ' MB)</a></p>';
+    recBtn.textContent = '● Record 5s'; recBtn.disabled = false;
+  };
+  recorder.start();
+  recBtn.disabled = true;
+  let left = 5;
+  const tick = setInterval(() => recBtn.textContent = '● Recording ' + (--left) + 's…', 1000);
+  setTimeout(() => { clearInterval(tick); recorder.stop(); }, 5000);
+};
+</script>
+</html>

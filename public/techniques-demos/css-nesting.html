@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Native CSS Nesting</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:760px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:2rem; }
+  .split { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; align-items:start; }
+  @media (max-width:720px){ .split { grid-template-columns:1fr; } }
+  .pane h2 { font-size:.78rem; text-transform:uppercase; letter-spacing:.1em; color:#777; margin-bottom:.8rem; }
+  pre { background:#141414; border:1px solid #262626; border-radius:10px; padding:1rem; font-size:.74rem; line-height:1.55; overflow:auto; color:#a8d4b0; margin:0; }
+  .card {
+    --pad: 1.3rem;
+    background: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    padding: var(--pad);
+
+    & header {
+      display:flex; align-items:center; gap:.7rem; margin-bottom:.9rem;
+      & img { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#8b7cff,#4a3aff); }
+      & h3 { margin:0; font-size:1rem; }
+      & small { color:#777; display:block; }
+    }
+    & p { color:#c9c9c9; line-height:1.55; margin:0 0 .9rem; }
+    & footer {
+      display:flex; gap:.5rem;
+      & button {
+        background:#1e1e1e; color:#e4e4e4; border:1px solid #333; border-radius:8px;
+        padding:.35rem .85rem; font-size:.82rem; cursor:pointer;
+        transition: border-color .15s, color .15s;
+        &:hover { border-color:#8b7cff; color:#8b7cff; }
+        &:nth-child(2) { margin-left:auto; }
+      }
+    }
+    &:hover { border-color:#4a3aff; }
+    &:has(p.highlight) { border-color:#7dd8a0; }
+  }
+</style>
+</head>
+<body>
+<h1>Native CSS Nesting</h1>
+<p class="sub">Real nested rules — parent styles, child selectors with <code>&amp;</code>, hover states, even <code>:has()</code> — all inline, no preprocessor.</p>
+<div class="split">
+  <div class="pane">
+    <h2>Rendered result</h2>
+    <article class="card">
+      <header>
+        <img alt="avatar">
+        <div><h3>Mira Chen</h3><small>@mirabuilds · 2h</small></div>
+      </header>
+      <p>Nested CSS shipped to every evergreen browser. Parent selectors, descendant blocks, pseudo-classes — all without Sass.</p>
+      <footer>
+        <button>Reply</button>
+        <button>Share</button>
+      </footer>
+    </article>
+  </div>
+  <div class="pane">
+    <h2>The nested source</h2>
+<pre>.card {
+  --pad: 1.3rem;
+  padding: var(--pad);
+
+  & header {
+    display: flex; gap: .7rem;
+    & img { border-radius: 50%; }
+    & h3 { margin: 0; }
+  }
+  & p { color: #c9c9c9; }
+  & footer button {
+    &:hover { color: #8b7cff; }
+  }
+  &:hover { border-color: #4a3aff; }
+}</pre>
+  </div>
+</div>
+<script>
+  if (!CSS.supports('selector(&)') && !CSS.supports(' nesting-selector: &')) {
+    document.querySelector('.sub').textContent = 'Your browser does not support native nesting — the card above may look unstyled.';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Signals — Fine-grained Reactivity</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px system-ui;padding:24px}
+h1{font-size:20px} p{color:#888;max-width:640px}
+table{border-collapse:collapse;margin-top:16px}
+td{border:1px solid #2a2a2a;width:70px;height:44px;text-align:center;font-family:monospace;font-size:15px;cursor:cell;transition:background .15s}
+td.input{color:#9ecbff} td.formula{color:#9effa1}
+td.hit{background:#2a5c2a;box-shadow:0 0 0 2px #4f4 inset}
+td.editing{outline:2px solid #6cf}
+#log{margin-top:16px;font:12px monospace;color:#777;white-space:pre-line}
+</style></head><body>
+<h1>Signals spreadsheet — watch ONLY dependents flash green</h1>
+<p>Click an input cell (A/B columns) and type a number. The signals system tracks exact dependencies: only cells whose value actually changed re-render — the rest never touch the DOM.</p>
+<table id="grid"></table>
+<div id="log"></div>
+<script>
+// Minimal signals implementation: value + effect graph
+function signal(v){
+  const subs = new Set();
+  const s = () => v;
+  s.set = nv => { if (nv === v) return; v = nv; for (const fn of subs) fn(); };
+  s._subs = subs; return s;
+}
+function computed(fn, deps){
+  const out = signal(fn());
+  const update = () => { const old = out(); out.set(fn()); };
+  deps.forEach(d => d._subs.add(update));
+  out._isComputed = true; return out;
+}
+function effect(fn, deps){ deps.forEach(d => d._subs.add(fn)); fn(); }
+// Data: A1,B1 inputs; A2=A1*2, B2=B1+A1, C2=A2+B2
+const A1 = signal(2), B1 = signal(3);
+const A2 = computed(() => A1() * 2, [A1]);
+const B2 = computed(() => B1() + A1(), [B1, A1]);
+const C2 = computed(() => A2() + B2(), [A2, B2]);
+const cells = {A1,B1,A2,B2,C2};
+const kinds = {A1:'input',B1:'input',A2:'formula',B2:'formula',C2:'formula'};
+const grid = document.getElementById('grid');
+const ids = [['A1','B1'],['A2','B2','C2']];
+// render each cell as its OWN DOM node subscribed to its own signal
+const nodes = {};
+ids.forEach((row,r)=>{ const tr=document.createElement('tr');
+  row.forEach(id=>{ const td=document.createElement('td'); td.className=kinds[id]; td.title=id; tr.append(td); nodes[id]=td;
+    const sig=cells[id];
+    effect(()=>{ // fine-grained: only this node updates
+      td.textContent = sig();
+      td.classList.add('hit'); setTimeout(()=>td.classList.remove('hit'), 450);
+      document.getElementById('log').textContent = `update → ${id} = ${sig()}\n` + document.getElementById('log').textContent.split('\n').slice(0,6).join('\n');
+    }, [sig]);
+    if (kinds[id]==='input') td.onclick = ()=>{ td.contentEditable=true; td.classList.add('editing'); td.focus();
+      td.onblur = ()=>{ td.contentEditable=false; td.classList.remove('editing');
+        const n = parseFloat(td.textContent); if(!isNaN(n)) sig.set(n); else td.textContent = sig(); };
+    };
+  }); grid.append(tr); });
+</script></body></html>

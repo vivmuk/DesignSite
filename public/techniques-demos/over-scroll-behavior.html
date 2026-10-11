@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>overscroll-behavior — Scroll Containment</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:680px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.4rem; }
+  .controls { display:flex; gap:.6rem; margin-bottom:1.4rem; flex-wrap:wrap; }
+  .controls button { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:8px; padding:.45rem 1rem; cursor:pointer; font-size:.85rem; }
+  .controls button.active { border-color:#8b7cff; color:#8b7cff; }
+  .modal-backdrop { position:fixed; inset:0; background:#000a; display:none; z-index:10; overflow-y:auto; padding:3rem 1rem; box-sizing:border-box; }
+  .modal-backdrop.open { display:block; }
+  .modal { max-width:420px; margin:auto; background:#141414; border:1px solid #2a2a2a; border-radius:14px; padding:1.4rem; }
+  .modal h2 { margin:0 0 .6rem; font-size:1.1rem; }
+  .modal p { color:#aaa; font-size:.9rem; line-height:1.65; }
+  .scroller { height:200px; overflow-y:auto; border:1px solid #333; border-radius:10px; padding:1rem; background:#0f0f0f; font-size:.88rem; line-height:1.7; color:#bbb; margin-bottom:1rem; }
+  .scroller p { margin:.2rem 0; }
+  .state { font-family:ui-monospace,monospace; font-size:.8rem; color:#8b7cff; }
+  .long-page p { color:#666; line-height:1.9; }
+  .close { background:#8b7cff; color:#0d0d0d; border:0; border-radius:8px; padding:.5rem 1.2rem; font-weight:700; cursor:pointer; }
+</style>
+</head>
+<body>
+<h1>overscroll-behavior &amp; Scroll Containment</h1>
+<p class="sub">Open the modal, scroll its inner panel to the end, and keep scrolling: with overscroll-behavior: contain the page behind stays still.</p>
+<div class="controls">
+  <button onclick="openModal()">Open modal</button>
+  <button id="bAuto" class="active" onclick="setOB('auto')">inner: auto</button>
+  <button id="bContain" onclick="setOB('contain')">inner: contain</button>
+</div>
+<div class="long-page">
+  <p>Scroll down this long page first so there is scroll momentum available. Then open the modal above. Inside the modal is an inner scrollable panel with forty items.</p>
+  <p>When the inner panel's overscroll-behavior is auto, hitting its scroll end chains the scroll to the page behind — the background moves while you think you are scrolling the panel. With contain, the scroll stops at the boundary; with none, even rubber-banding bounce is suppressed.</p>
+  <p>This is critical for modals, drawers, chat logs, and embedded feeds — anywhere nested scrolling tricks users. Scroll chaining was default browser behavior since forever; overscroll-behavior finally lets you cut the chain declaratively, one line of CSS, no scroll-lock JavaScript hacks like body position fixed locks.</p>
+  <p>Keep reading — filler paragraphs maintain scroll depth so the page behind has real momentum when you test the chaining difference between auto and contain.</p>
+  <p>Filler paragraph five, still padding out the document height for a fair test.</p>
+</div>
+<div class="modal-backdrop" id="backdrop">
+  <div class="modal">
+    <h2>Modal with inner scroller</h2>
+    <div class="scroller" id="scroller" style="overscroll-behavior:auto"></div>
+    <p class="state">inner: <span id="stateTxt">auto</span> — flick to the bottom, then keep flicking.</p>
+    <button class="close" onclick="backdrop.classList.remove('open')">Close</button>
+  </div>
+</div>
+<script>
+  const sc = document.getElementById('scroller');
+  sc.innerHTML = Array.from({length:40}, (_, i) => '<p>Inner item ' + (i + 1) + ' — keep scrolling me.</p>').join('');
+  function openModal() { backdrop.classList.add('open'); sc.scrollTop = 0; }
+  function setOB(v) {
+    sc.style.overscrollBehavior = v;
+    document.getElementById('stateTxt').textContent = v;
+    bAuto.classList.toggle('active', v === 'auto');
+    bContain.classList.toggle('active', v === 'contain');
+  }
+</script>
+</body>
+</html>

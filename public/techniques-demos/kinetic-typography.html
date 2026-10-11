@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Typography</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+#headline { font-size:clamp(3rem,10vw,8rem); font-weight:800; line-height:0.95; letter-spacing:-0.02em; cursor:pointer; user-select:none; }
+#headline .w { display:inline-block; will-change:transform; }
+#headline .line { display:block; overflow:hidden; padding:0 0.1em; }
+.hint { color:#666; font-size:0.9rem; letter-spacing:0.2em; text-transform:uppercase; }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1 id="headline" title="Click to replay">MOTION<br>IS THE<br>MESSAGE</h1>
+  <p class="hint">Click the headline to replay the entrance</p>
+</div>
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<script>
+
+function split() {
+  const h = document.getElementById('headline');
+  const lines = h.textContent.split('\n').length > 1 ? h.textContent.split('\n') : ['MOTION','IS THE','MESSAGE'];
+  h.innerHTML = lines.map(function(l) {
+    return '<span class="line">' + l.trim().split(' ').map(function(w) {
+      return '<span class="w">' + w + '</span>';
+    }).join(' ') + '</span>';
+  }).join('');
+}
+split();
+function replay() {
+  if (!window.gsap) return;
+  gsap.fromTo('#headline .w',
+    { yPercent: 120, rotation: function() { return gsap.utils.random(-25, 25); }, opacity: 0 },
+    { yPercent: 0, rotation: 0, opacity: 1, duration: 1.1, ease: 'elastic.out(1, 0.55)',
+      stagger: { each: 0.09, from: 'random' } });
+}
+replay();
+document.getElementById('headline').addEventListener('click', replay);
+
+</script>
+</body>
+</html>

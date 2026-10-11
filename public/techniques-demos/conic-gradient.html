@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conic Gradients Dashboard</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:900px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2rem; font-weight:700; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; }
+.panel { background:#161616; border:1px solid #2a2a2a; border-radius:14px; padding:1.4rem; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+.donut { width:150px; height:150px; border-radius:50%; position:relative;
+  background:conic-gradient(var(--fill) 0 calc(var(--p) * 1%), #222 0);
+  display:flex; align-items:center; justify-content:center; }
+.donut::after { content:''; position:absolute; inset:22px; border-radius:50%; background:#161616; }
+.donut span { position:relative; z-index:1; font-weight:700; font-size:1.3rem; font-variant-numeric:tabular-nums; }
+.dial { width:150px; height:75px; border-radius:150px 150px 0 0; position:relative; overflow:hidden;
+  background:conic-gradient(from 225deg, var(--fill) 0 calc(var(--p) * 0.75%), #222 0); }
+.needle { position:absolute; bottom:0; left:50%; width:3px; height:60px; background:#e4e4e4; transform-origin:bottom center; transform:translateX(-50%) rotate(0deg); transition:transform 0.2s; border-radius:2px; }
+label { display:flex; flex-direction:column; gap:0.4rem; font-size:0.8rem; color:#999; width:100%; }
+input[type=range] { accent-color:#8ab4ff; }
+@property --p { syntax:'<number>'; inherits:false; initial-value:0; }
+.donut, .dial { transition:--p 0.3s; }
+.panel { --fill:#8ab4ff; }
+.panel:nth-child(2) { --fill:#7ee8c2; }
+.panel:nth-child(3) { --fill:#e8a87e; }
+.panel:nth-child(4) { --fill:#eec07e; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Conic Dashboard</h1>
+  <div class="grid">
+    <div class="panel"><div id="d1" class="donut"><span id="v1">45%</span></div><label>Disk usage <input type="range" id="r1" min="0" max="100" value="45"></label></div>
+    <div class="panel"><div id="d2" class="donut"><span id="v2">72%</span></div><label>Bandwidth <input type="range" id="r2" min="0" max="100" value="72"></label></div>
+    <div class="panel"><div id="d3" class="donut"><span id="v3">18%</span></div><label>Memory <input type="range" id="r3" min="0" max="100" value="18"></label></div>
+    <div class="panel dial-panel"><div id="dial" class="dial"><div class="needle"></div></div><label>Dial <input type="range" id="rd" min="0" max="270" value="120"></label></div>
+  </div>
+</div>
+
+<script>
+
+function bind(rid, did, vid, maxScale) {
+  const r = document.getElementById(rid), d = document.getElementById(did), v = document.getElementById(vid);
+  function upd() {
+    const val = +r.value;
+    d.style.setProperty('--p', val);
+    v.textContent = val + '%';
+    if (maxScale) d.querySelector('.needle').style.transform = 'translateX(-50%) rotate(' + (val - 135) + 'deg)';
+  }
+  r.addEventListener('input', upd);
+  upd();
+}
+bind('r1', 'd1', 'v1');
+bind('r2', 'd2', 'v2');
+bind('r3', 'd3', 'v3');
+bind('rd', 'dial', null, true);
+
+</script>
+</body>
+</html>

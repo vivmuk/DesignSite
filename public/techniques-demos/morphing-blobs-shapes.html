@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Shape Morphing</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:520px; margin:0 auto; padding:6vh 5vw; text-align:center; }
+h1 { font-size:1.6rem; margin-bottom:1.5rem; font-weight:700; }
+.stage-svg { width:300px; height:300px; }
+.row { display:flex; gap:0.7rem; justify-content:center; margin-top:1.5rem; }
+button { background:none; border:1px solid #3a3a3a; color:#bbb; padding:0.6rem 1.4rem; cursor:pointer; border-radius:999px; font-size:0.85rem; }
+button:hover { border-color:#7ee8fa; color:#7ee8fa; }
+.hint { color:#666; font-size:0.82rem; margin-top:1.5rem; line-height:1.6; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Blob Moods</h1>
+  <svg viewBox="0 0 200 200" class="stage-svg">
+    <path id="blob" fill="#7ee8fa" opacity="0.9"/>
+  </svg>
+  <div class="row">
+    <button data-mood="0">Calm</button><button data-mood="1">Star</button><button data-mood="2">Splash</button>
+  </div>
+  <p class="hint">Same point count per shape — path points interpolate linearly, so the morph stays smooth.</p>
+</div>
+
+<script>
+
+const N = 10;
+function shape(fn) {
+  const pts = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const r = fn(a);
+    pts.push([100 + r * Math.cos(a), 100 + r * Math.sin(a)]);
+  }
+  return pts;
+}
+const moods = [
+  shape(function() { return 62; }),
+  shape(function(a) { return 62 + 34 * Math.cos(5 * a); }),
+  shape(function(a) { return 62 + 26 * Math.cos(3 * a) * Math.sin(2 * a); })
+];
+function toPath(pts) {
+  let d = '';
+  pts.forEach(function(p, i) {
+    const prev = pts[(i - 1 + N) % N], next = pts[(i + 1) % N];
+    const c1 = [prev[0] + (p[0] - pts[(i - 2 + N) % N][0]) / 6, prev[1] + (p[1] - pts[(i - 2 + N) % N][1]) / 6];
+    const c2 = [p[0] - (next[0] - prev[0]) / 6, p[1] - (next[1] - prev[1]) / 6];
+    if (i === 0) d += 'M' + p[0].toFixed(1) + ',' + p[1].toFixed(1);
+    else d += 'C' + c1[0].toFixed(1) + ',' + c1[1].toFixed(1) + ' ' + c2[0].toFixed(1) + ',' + c2[1].toFixed(1) + ' ' + p[0].toFixed(1) + ',' + p[1].toFixed(1);
+  });
+  return d + 'Z';
+}
+const blobEl = document.getElementById('blob');
+let cur = moods[0].map(function(p) { return p.slice(); });
+function lerpTo(target) {
+  const t0 = performance.now(), from = cur.map(function(p) { return p.slice(); });
+  (function step(now) {
+    const t = Math.min(1, (now - t0) / 700);
+    const e = 1 - Math.pow(1 - t, 3);
+    cur = from.map(function(p, i) {
+      return [p[0] + (target[i][0] - p[0]) * e, p[1] + (target[i][1] - p[1]) * e];
+    });
+    blobEl.setAttribute('d', toPath(cur));
+    if (t < 1) requestAnimationFrame(step);
+  })(t0);
+}
+document.querySelectorAll('.row button').forEach(function(b) {
+  b.addEventListener('click', function() { lerpTo(moods[+b.dataset.mood]); });
+});
+blobEl.setAttribute('d', toPath(moods[0]));
+setInterval(function() { lerpTo(moods[Math.floor(Math.random() * 3)]); }, 3000);
+
+</script>
+</body>
+</html>

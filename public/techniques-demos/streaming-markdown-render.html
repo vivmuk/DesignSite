@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Incremental Markdown Streaming</title>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;display:grid;place-items:center;min-height:100vh}
+  .wrap{width:640px;max-width:94vw}
+  h1{font-size:17px} .sub{color:#9a9a9a;font-size:13px}
+  .answer{background:#161616;border:1px solid #2a2a2a;border-radius:14px;padding:20px;min-height:220px}
+  .answer h1,.answer h2{border-bottom:1px solid #2a2a2a;padding-bottom:4px}
+  .answer pre{background:#101010;border:1px solid #2f2f2f;border-radius:10px;padding:12px;overflow-x:auto}
+  .answer code{font:13px monospace;color:#7ee787}
+  .answer table{border-collapse:collapse;font-size:13px}
+  .answer th,.answer td{border:1px solid #333;padding:4px 10px}
+  .cursor{display:inline-block;width:9px;height:17px;background:#60a5fa;animation:blink .7s steps(1) infinite;vertical-align:text-bottom}
+  @keyframes blink{50%{opacity:0}}
+  .btns{margin-top:12px;display:flex;gap:10px}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Streaming markdown, stable layout</h1>
+  <p class="sub">The "model" streams raw markdown; the renderer re-parses the whole partial each tick so blocks close gracefully mid-stream — no flicker, no layout jumps.</p>
+  <div class="answer" id="out"><span class="typing">waiting for stream…</span></div>
+  <div class="btns">
+    <button id="replay">▶ Replay stream</button>
+    <button id="full">Show final</button>
+  </div>
+</div>
+<script>
+const MD = `## Deployment runbook
+
+Follow these steps **in order**:
+
+1. Freeze deploys (\`ship lock\`)
+2. Run migrations
+3. Roll forward
+
+| Env | Check | Owner |
+|-----|-------|-------|
+| prod | healthz 200 | oncall |
+| staging | smoke tests | release bot |
+
+> **Rule of thumb:** if a rollback takes >5 min, you needed a canary.
+
+\`\`\`bash
+ship deploy --canary 5%
+ship promote --watch
+\`\`\`
+
+That's the whole loop — *small batches win*.`;
+const out = document.getElementById('out');
+let timer = null, i = 0;
+const tokens = MD.match(/\\S+\\s*|\\n/g) || [];
+
+function renderPartial(){
+  const partial = tokens.slice(0, i).join('');
+  // re-parse the entire partial each tick: marked closes what it can,
+  // leaving unterminated blocks as plain-ish HTML that never jumps layout
+  out.innerHTML = marked.parse(partial) + '<span class="cursor"></span>';
+}
+function stream(){
+  clearInterval(timer); i = 0;
+  renderPartial();
+  timer = setInterval(() => {
+    i += 1 + Math.floor(Math.random()*2);          // variable chunk size
+    if (i >= tokens.length){
+      i = tokens.length; clearInterval(timer);
+      out.innerHTML = marked.parse(MD);
+      return;
+    }
+    renderPartial();
+  }, 45);
+}
+document.getElementById('replay').onclick = stream;
+document.getElementById('full').onclick = () => {
+  clearInterval(timer); i = tokens.length;
+  out.innerHTML = marked.parse(MD);
+};
+if (window.marked){ marked.setOptions({breaks:true, gfm:true}); stream(); }
+else document.getElementById('out').textContent = 'marked failed to load — raw markdown would appear here.';
+</script>
+</html>

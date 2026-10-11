@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Design Tokens System</title>
+<style>
+:root{
+  /* primitives */
+  --blue-500:#3b82f6; --blue-700:#1d4ed8; --green-500:#22c55e; --red-500:#ef4444;
+  --gray-100:#f3f4f6; --gray-700:#374151; --space-2:8px; --space-4:16px; --radius-8:8px;
+  /* semantic (mapped) */
+  --bg:var(--gray-100); --surface:#fff; --text:var(--gray-700); --primary:var(--blue-500); --primary-hover:var(--blue-700); --danger:var(--red-500);
+}
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px;display:grid;grid-template-columns:1fr 320px;gap:24px}
+.panel{background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:18px;margin-bottom:14px}
+.preview{background:var(--bg);border-radius:10px;padding:18px;color:var(--text)}
+.card{background:var(--surface);border-radius:var(--radius-8);padding:var(--space-4);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.btn{background:var(--primary);color:#fff;border:none;padding:10px 20px;border-radius:var(--radius-8);cursor:pointer;margin:var(--space-2) var(--space-2) 0 0;font-size:14px}
+.btn:hover{background:var(--primary-hover)}
+.btn.danger{background:var(--danger)}
+aside{font:13px system-ui}
+h3{color:#6cf;font-size:13px;margin:18px 0 8px}
+.tok{display:flex;align-items:center;gap:8px;margin:6px 0;font:12px monospace}
+.tok .sw{width:26px;height:18px;border-radius:4px;border:1px solid #444}
+.tok input{background:#111;border:1px solid #333;color:#e4e4e4;width:88px;font:12px monospace;padding:4px;border-radius:4px}
+input[type=range]{accent-color:#6cf}
+#changed{color:#9e9;font:11px monospace;min-height:16px;margin-top:8px}
+</style></head><body>
+<div><h1 style="font-size:18px">Token explorer — edit primitives, watch everything update</h1>
+<div class="preview"><div class="card">
+<b>Order summary</b><p style="font-size:13px;margin:8px 0">2 items · ships tomorrow</p>
+<button class="btn">Checkout</button><button class="btn danger">Remove all</button>
+</div></div>
+<p style="color:#888;font-size:13px">The card above consumes ONLY semantic tokens. Components never reference primitives directly — rebranding is a one-file change.</p></div>
+<aside><h3>PRIMITIVES (edit me)</h3>
+<div class="tok"><span class="sw" style="background:var(--blue-500)"></span>--blue-500 <input id="p1" value="#3b82f6"></div>
+<div class="tok"><span class="sw" style="background:var(--red-500)"></span>--red-500 <input id="p2" value="#ef4444"></div>
+<div class="tok"><span class="sw" style="background:var(--gray-100)"></span>--gray-100 <input id="p3" value="#f3f4f6"></div>
+<h3>SEMANTIC (auto-mapped)</h3>
+<div class="tok">--primary = var(--blue-500)</div>
+<div class="tok">--danger = var(--red-500)</div>
+<div class="tok">--bg = var(--gray-100)</div>
+<h3>SPACING / RADIUS</h3>
+<div class="tok">--space-4 <input type="range" id="p4" min="4" max="32" value="16"></div>
+<div class="tok">--radius-8 <input type="range" id="p5" min="0" max="24" value="8"></div>
+<div id="changed"></div>
+<script>
+const changed=document.getElementById('changed');
+function set(prop,val,note){ document.documentElement.style.setProperty(prop,val);
+  changed.textContent='✓ set '+prop+' = '+val; }
+document.getElementById('p1').onchange=e=>set('--blue-500',e.target.value);
+document.getElementById('p2').onchange=e=>set('--red-500',e.target.value);
+document.getElementById('p3').onchange=e=>set('--gray-100',e.target.value);
+document.getElementById('p4').oninput=e=>set('--space-4',e.target.value+'px');
+document.getElementById('p5').oninput=e=>set('--radius-8',e.target.value+'px');
+</script></aside></body></html>

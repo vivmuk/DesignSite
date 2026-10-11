@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Gradient Composer</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:720px; margin:0 auto; padding:7vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2rem; font-weight:700; }
+.bar-wrap { position:relative; margin-bottom:2rem; }
+.bar { height:130px; border-radius:12px; border:1px solid #333; }
+.stops { position:absolute; top:-14px; left:0; right:0; height:0; }
+.stop-dot { position:absolute; top:0; width:16px; height:16px; border-radius:50%; border:2px solid #0d0d0d; transform:translateX(-50%); box-shadow:0 0 0 1px #555; }
+.ctrl { display:grid; grid-template-columns:1fr 1fr; gap:1rem 2rem; margin-bottom:1.5rem; }
+label { display:flex; align-items:center; gap:0.7rem; font-size:0.85rem; color:#aaa; }
+input[type=range] { flex:1; accent-color:#7ee8fa; }
+input[type=color] { width:44px; height:32px; border:none; background:none; cursor:pointer; }
+.out { background:#161616; border:1px solid #2c2c2c; border-radius:8px; padding:1rem; }
+code { font-family:ui-monospace, monospace; color:#8ab4ff; font-size:0.85rem; word-break:break-all; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Linear Gradient Composer</h1>
+  <div class="bar-wrap"><div id="bar" class="bar"></div><div id="stops" class="stops"></div></div>
+  <div class="ctrl">
+    <label>Angle <input type="range" id="angle" min="0" max="360" value="90"> <span id="angv">90deg</span></label>
+    <label>Stop A <input type="color" id="c1" value="#7ee8fa"></label>
+    <label>Stop B <input type="color" id="c2" value="#e86aa8"></label>
+    <label>A position <input type="range" id="p1" min="0" max="100" value="0"></label>
+    <label>B position <input type="range" id="p2" min="0" max="100" value="100"></label>
+  </div>
+  <div class="out"><code id="css">linear-gradient(90deg, #7ee8fa 0%, #e86aa8 100%)</code></div>
+</div>
+
+<script>
+
+function upd() {
+  const a = +angle.value, c1 = document.getElementById('c1').value, c2 = document.getElementById('c2').value;
+  const p1 = +document.getElementById('p1').value, p2 = +document.getElementById('p2').value;
+  const css = 'linear-gradient(' + a + 'deg, ' + c1 + ' ' + p1 + '%, ' + c2 + ' ' + p2 + '%)';
+  bar.style.background = css;
+  document.getElementById('css').textContent = css;
+  document.getElementById('angv').textContent = a + 'deg';
+  stops.innerHTML = '';
+  [p1, p2].forEach(function(p, i) {
+    const d = document.createElement('div');
+    d.className = 'stop-dot';
+    d.style.left = p + '%';
+    d.style.background = i === 0 ? c1 : c2;
+    stops.appendChild(d);
+  });
+}
+['angle','c1','c2','p1','p2'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', upd);
+});
+upd();
+
+</script>
+</body>
+</html>

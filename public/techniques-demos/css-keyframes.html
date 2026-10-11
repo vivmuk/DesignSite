@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keyframe Loading Scene</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.scene { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3rem; position:relative; }
+.orbit { position:relative; width:180px; height:180px; animation:spin 2.4s linear infinite; }
+.dot { position:absolute; top:0; left:50%; width:14px; height:14px; margin-left:-7px; border-radius:50%; }
+.d1 { background:#7ee8fa; animation:pulse 1.2s ease-in-out infinite; }
+.d2 { background:#e86aa8; top:auto; bottom:0; animation:pulse 1.2s ease-in-out 0.2s infinite; }
+.d3 { background:#eec07e; top:50%; left:0; margin-top:-7px; margin-left:0; animation:pulse 1.2s ease-in-out 0.4s infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+@keyframes pulse { 0%,100% { transform:scale(1); opacity:0.6; } 50% { transform:scale(1.8); opacity:1; } }
+.pulse { position:absolute; width:120px; height:120px; border:2px solid #7ee8fa; border-radius:50%; animation:ring 2s ease-out infinite; }
+@keyframes ring { 0% { transform:scale(0.5); opacity:0.9; } 100% { transform:scale(1.6); opacity:0; } }
+.label { font-size:0.9rem; letter-spacing:0.4em; text-transform:uppercase; color:#999; }
+.tdots span { display:inline-block; animation:bounce 1.2s infinite; }
+.tdots span:nth-child(2) { animation-delay:0.15s; }
+.tdots span:nth-child(3) { animation-delay:0.3s; }
+@keyframes bounce { 0%,100% { transform:translateY(0); opacity:0.4; } 50% { transform:translateY(-6px); opacity:1; } }
+
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="orbit">
+    <div class="dot d1"></div><div class="dot d2"></div><div class="dot d3"></div>
+  </div>
+  <div class="pulse"></div>
+  <p class="label">LOADING<span class="tdots"><span>.</span><span>.</span><span>.</span></span></p>
+</div>
+
+</body>
+</html>

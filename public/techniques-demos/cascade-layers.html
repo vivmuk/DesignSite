@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>@layer — Clash Resolution</title>
+<style>
+  /* Two 'libraries' define the same class. Layer ORDER decides the winner. */
+  @layer reset, theme, utilities;
+
+  @layer theme {
+    .callout { background:#1a1a2e; color:#8b7cff; border:2px solid #8b7cff; padding:1.2rem; border-radius:12px; }
+    .callout::before { content:"THEME → "; font-weight:700; }
+  }
+  @layer utilities {
+    .callout { background:#12211a; color:#7dd8a0; border-color:#7dd8a0; }
+    .callout::before { content:"UTILITIES → "; font-weight:700; }
+  }
+  /* Unlayered styles always beat layered ones */
+  .callout.override { background:#241412 !important; color:#ff9c6e !important; border-color:#ff9c6e; }
+  .callout.override::before { content:"UNLAYERED (inline override) → " !important; }
+
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:720px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  .controls { display:flex; gap:.6rem; margin-bottom:1.4rem; flex-wrap:wrap; }
+  .controls button { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:8px; padding:.45rem 1rem; cursor:pointer; }
+  .controls button:hover { border-color:#8b7cff; color:#8b7cff; }
+  .demo { margin-bottom:1.2rem; }
+  code { color:#e8c468; font-size:.8rem; }
+  .order { font-family:ui-monospace,monospace; font-size:.85rem; background:#141414; border:1px solid #262626; border-radius:8px; padding:.8rem 1rem; color:#8b7cff; }
+</style>
+</head>
+<body>
+<h1>Cascade Layers: @layer</h1>
+<p class="sub">The same class <code>.callout</code> is declared in two layers. Reorder the layer statement and watch the winner flip — specificity plays no part.</p>
+<div class="controls">
+  <button onclick="setOrder('utilities, theme')">utilities first</button>
+  <button onclick="setOrder('theme, utilities')">theme first</button>
+</div>
+<p class="order" id="order">@layer <span id="orderText">utilities, theme</span>;</p>
+<div class="demo">
+  <div class="callout">Same .callout class, no !important anywhere in the layers.</div>
+</div>
+<div class="demo">
+  <div class="callout override">Unlayered override — unlayered styles always win over layered ones.</div>
+</div>
+<p>Declared at the top of this file: <code>@layer reset, theme, utilities;</code>. Layers earlier in the statement lose; later layers win, regardless of specificity or source position. The <code>.override</code> card skips layers entirely and trumps both.</p>
+<script>
+  function setOrder(list) {
+    // Rewrite the layer statement: this is the ONLY thing that changes
+    const style = document.styleSheets[0];
+    const rules = [...style.cssRules];
+    const idx = rules.findIndex(r => r.name !== undefined);
+    if (idx > -1) style.deleteRule(idx);
+    style.insertRule(`@layer ${list};`, 0);
+    document.getElementById('orderText').textContent = list;
+  }
+</script>
+</body>
+</html>

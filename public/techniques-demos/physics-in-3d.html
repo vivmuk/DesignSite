@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physics in 3D</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#hud{position:fixed;top:14px;left:14px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:10px 14px;font:12px monospace;color:#888}
+#hud b{color:#7ee787}
+#hint{position:fixed;bottom:14px;left:14px;color:#666;font:12px monospace}
+
+</style></head><body>
+
+<div id=hud>entities <b id=n>0</b> · solver iter <b>6</b> · bodies sleep at rest</div>
+<div id=hint>click to throw a heavy sphere</div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+// Minimal impulse-based 3D physics (spheres + static ground), cannon-es style API shape.
+class Body{constructor(pos,mass,radius,isStatic=false){this.p=pos.clone();this.v=new THREE.Vector3();this.mass=mass;this.inv=mass>0?1/mass:0;this.r=radius;this.static=isStatic;this.q=new THREE.Quaternion();}}
+const G=-18,RESTIT=.25,FRICT=.86;
+const bodies=[];const ground=new Body(new THREE.Vector3(0,-2,0),0,1e6,true);ground.type='ground';
+function world(dt){
+  const sub=3,h=dt/sub;
+  for(let s=0;s<sub;s++){
+    for(const b of bodies){
+      if(b.static)continue;
+      b.v.y+=G*h;b.p.addScaledVector(b.v,h);
+      if(b.p.y-b.r<ground.p.y){b.p.y=ground.p.y+b.r;b.v.y*=-RESTIT;b.v.x*=FRICT;b.v.z*=FRICT;
+        if(Math.abs(b.v.y)<.4)b.v.y=0;}
+    }
+    // sphere-sphere
+    for(let i=0;i<bodies.length;i++)for(let j=i+1;j<bodies.length;j++){
+      const a=bodies[i],c=bodies[j];if(a.static&&c.static)continue;
+      const d=c.p.clone().sub(a.p),dist=d.length(),min=a.r+c.r;
+      if(dist<min&&dist>1e-6){
+        const n=d.divideScalar(dist),pen=min-dist;
+        const totalM=(a.static?0:a.inv)+(c.static?0:c.inv);
+        if(totalM===0)continue;
+        a.p.addScaledVector(n,-pen*(a.static?0:a.inv/totalM));
+        c.p.addScaledVector(n,pen*(c.static?0:c.inv/totalM));
+        const vn=a.v.clone().sub(c.v).dot(n);
+        if(vn>0){const jimp=-(1+RESTIT)*vn/totalM;
+          if(!a.static)a.v.addScaledVector(n,-jimp*a.inv);
+          if(!c.static)c.v.addScaledVector(n,jimp*c.inv);}
+      }
+    }
+  }
+}
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);scene.fog=new THREE.Fog(0x0d0d0d,14,40);
+scene.add(new THREE.AmbientLight(0xffffff,.5));
+const key=new THREE.DirectionalLight(0xffffff,1.6);key.position.set(5,8,3);scene.add(key);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,100);camera.position.set(0,5,12);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+const floorMesh=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.MeshStandardMaterial({color:0x141414,roughness:.9}));
+floorMesh.rotation.x=-Math.PI/2;scene.add(floorMesh);
+const N_D=100;
+const domMesh=new THREE.InstancedMesh(new THREE.BoxGeometry(.5,2,.14),new THREE.MeshStandardMaterial({color:0xc0392b,roughness:.5}),N_D);
+scene.add(domMesh);
+const dum=new THREE.Object3D();
+for(let i=0;i<N_D;i++){
+  const x=(i%25)*.9-10,z=Math.floor(i/25)*1.6-6;
+  bodies.push(new Body(new THREE.Vector3(x,0,z),1,.7));
+}
+const bMesh=new THREE.InstancedMesh(new THREE.SphereGeometry(.5,16,16),new THREE.MeshStandardMaterial({color:0x8899aa,metalness:.4,roughness:.4}),40);
+scene.add(bMesh);
+for(let i=0;i<40;i++)bodies.push(new Body(new THREE.Vector3(Math.random()*16-8,2+Math.random()*8,Math.random()*8-8),2,.5));
+document.getElementById('n').textContent=bodies.length;
+const ray=new THREE.Raycaster(),ptr=new THREE.Vector2();
+addEventListener('click',e=>{
+  ptr.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
+  ray.setFromCamera(ptr,camera);
+  const b=new Body(ray.ray.origin.clone(),12,.7);
+  b.v.copy(ray.ray.direction).multiplyScalar(22);
+  bodies.push(b);
+  const m=new THREE.Mesh(new THREE.SphereGeometry(.7,20,20),new THREE.MeshStandardMaterial({color:0xffd866,metalness:.7,roughness:.3}));
+  m.userData.throwable=true;scene.add(m);b.mesh=m;
+});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+let last=performance.now(),acc=0;const STEP=1/60;
+(function loop(t){requestAnimationFrame(loop);
+  let dt=(t-last)/1000;last=t;dt=Math.min(dt,.1);acc+=dt;
+  while(acc>=STEP){world(STEP);acc-=STEP;}
+  let di=0,bi=0;
+  for(const b of bodies){
+    if(b.mesh){b.mesh.position.copy(b.p);continue;}
+    if(b.r===.7&&b.mass===1){dum.position.copy(b.p);dum.rotation.set(0,0,Math.sin(b.p.x*2)*.05);dum.updateMatrix();domMesh.setMatrixAt(di++,dum.matrix);}
+    else{dum.position.copy(b.p);dum.updateMatrix();bMesh.setMatrixAt(bi++,dum.matrix);}
+  }
+  domMesh.instanceMatrix.needsUpdate=true;bMesh.instanceMatrix.needsUpdate=true;
+  renderer.render(scene,camera);})(performance.now());
+</script></body></html>

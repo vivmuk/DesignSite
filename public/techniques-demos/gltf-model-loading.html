@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLTF Loading</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#bar{position:fixed;inset:0;display:grid;place-items:center;background:#0d0d0d;z-index:10;font-family:monospace}
+#prog{width:280px;height:6px;background:#222;border-radius:3px;margin-top:12px;overflow:hidden}
+#prog>div{height:100%;width:0;background:#7ee787;transition:width .2s}
+#status{text-align:center;color:#888}
+#hud{position:fixed;bottom:16px;left:16px;color:#888;font-size:12px;font-family:monospace}
+#hud b{color:#7ee787}
+
+</style></head><body>
+
+<div id=bar><div id=status>loading…<div id=prog><div></div></div></div></div>
+<div id=hud>drag to orbit · scroll to zoom · <b id=mat>material: base</b> (click model to swap)</div>
+<script type="module">
+
+import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+import {OrbitControls} from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d0d);
+scene.add(new THREE.AmbientLight(0xffffff,.5));
+const key=new THREE.DirectionalLight(0xffffff,2);key.position.set(3,5,4);scene.add(key);
+const rim=new THREE.DirectionalLight(0x7ee7ff,1);rim.position.set(-4,2,-3);scene.add(rim);
+const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,100);camera.position.set(0,.6,4);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+// Procedural "asset" built from primitives (keeps the demo self-contained, no external model file).
+// In production you'd use: new GLTFLoader().load(url, onLoad, onProgress, onError)
+const status=document.getElementById('status'),prog=document.querySelector('#prog>div'),bar=document.getElementById('bar');
+const group=new THREE.Group();
+const mats=[
+  new THREE.MeshStandardMaterial({color:0x8899aa,metalness:.8,roughness:.2}),
+  new THREE.MeshStandardMaterial({color:0xff6b81,metalness:.1,roughness:.6}),
+  new THREE.MeshStandardMaterial({color:0x7ee787,metalness:.3,roughness:.35}),
+];
+const body=new THREE.Mesh(new THREE.CapsuleGeometry(.7,.9,8,24),mats[0]);
+const visor=new THREE.Mesh(new THREE.SphereGeometry(.52,32,16,0,Math.PI*2,0,Math.PI/2),new THREE.MeshPhysicalMaterial({color:0x111111,roughness:.05,metalness:.9}));
+visor.position.set(0,.55,.2);visor.rotation.x=-.3;
+group.add(body,visor);
+group.traverse(o=>{o.userData.pickable=true});
+scene.add(group);
+// simulate streaming progress so the loader UI is demonstrated
+let p=0;const iv=setInterval(()=>{p+=Math.random()*22;if(p>=100){p=100;clearInterval(iv);
+  setTimeout(()=>{bar.style.display='none';},250);}
+prog.style.width=p+'%';status.firstChild.textContent='streaming asset… '+Math.floor(p)+'%';
+},120);
+const ray=new THREE.Raycaster(),ptr=new THREE.Vector2();
+let mi=0;const label=document.getElementById('mat');
+addEventListener('click',e=>{
+  ptr.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
+  ray.setFromCamera(ptr,camera);
+  if(ray.intersectObject(group,true).length){mi=(mi+1)%mats.length;body.material=mats[mi];label.textContent='material: '+['base','rose','jade'][mi];}
+});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+(function loop(t){requestAnimationFrame(loop);controls.update();group.rotation.y=t*.0003;renderer.render(scene,camera);})(0);
+</script></body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pull-to-Refresh</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:420px;margin:20px auto}
+#scroller{height:70vh;overflow-y:auto;border:1px solid #333;border-radius:12px;background:#111;position:relative;overscroll-behavior:contain}
+#pull{position:sticky;top:0;height:0;display:grid;place-items:center;pointer-events:none;z-index:2}
+.spin{width:28px;height:28px;border:3px solid #444;border-top-color:#7ee787;border-radius:50%;opacity:0;transition:opacity .2s}
+.spin.armed{opacity:1}.spin.loading{opacity:1;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.item{padding:14px 18px;border-bottom:1px solid #1c1c1c;color:#aaa}
+.item b{color:#e4e4e4}
+#scroller.dragging #pull .spin{transform:translateY(calc(var(--p) * 1px))}
+.item.new{animation:flash .8s}
+@keyframes flash{from{background:#2a4a2a}}
+
+</style></head><body>
+
+<div class="wrap">
+<h1>Pull to refresh</h1>
+<div id="scroller"><div id="pull"><div class="spin"></div></div><div id="feed"></div></div>
+</div>
+<script>
+
+const scroller=document.getElementById('scroller'),spin=scroller.querySelector('.spin'),feed=document.getElementById('feed');
+let n=0;
+function addItem(t){const d=document.createElement('div');d.className='item';d.innerHTML='<b>'+t+'</b><br>Item #'+(++n);feed.prepend(d);}
+['Alpha release shipped','Design review notes','Sprint retro summary','API latency fixed','New hire joined'].forEach(addItem);
+let startY=0,pulling=false,armed=false,loading=false;
+const THRESHOLD=70;
+scroller.addEventListener('pointerdown',e=>{if(scroller.scrollTop<=0&&!loading){pulling=true;startY=e.clientY;}});
+scroller.addEventListener('pointermove',e=>{
+  if(!pulling||loading)return;
+  const p=e.clientY-startY;
+  if(p>0&&scroller.scrollTop<=0){
+    const over=Math.min(p,140);
+    spin.style.setProperty('--p',over);
+    spin.style.transform=`translateY(${Math.min(over,90)}px) rotate(${over*3}deg)`;
+    spin.classList.add('armed');armed=over>=THRESHOLD;
+    spin.style.borderTopColor=armed?'#7ee787':'#444';
+    if(scroller.scrollTop>0){pulling=false;}
+  }
+});
+function release(){
+  if(!pulling)return;pulling=false;
+  if(armed&&!loading){
+    loading=true;armed=false;
+    spin.classList.add('loading');spin.classList.remove('armed');
+    setTimeout(()=>{
+      ['Fresh data '+new Date().toLocaleTimeString()].forEach(t=>{addItem(t);feed.firstChild.classList.add('new')});
+      loading=false;spin.classList.remove('loading');spin.style.transform='';
+    },1200);
+  } else {spin.classList.remove('armed');spin.style.transform='';}
+}
+scroller.addEventListener('pointerup',release);
+scroller.addEventListener('pointercancel',release);
+</script></body></html>

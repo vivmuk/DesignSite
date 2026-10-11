@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8"><title>RTL Layout Mirroring</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px}
+.toggle{margin:12px 0;display:flex;gap:10px;align-items:center}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+.dash{border:1px solid #2a2a2a;border-radius:10px;padding:16px;margin-top:14px}
+.dash-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.bar-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.bar-row .name{width:90px;font-size:13px}
+.bar{flex:1;height:14px;background:#1a1a1a;border-radius:7px;position:relative;overflow:hidden}
+.bar i{position:absolute;top:0;height:100%;background:linear-gradient(90deg,#6cf,#26a);border-radius:7px;width:var(--w);inset-inline-start:0}
+[dir=rtl] .bar i{background:linear-gradient(270deg,#6cf,#26a)}
+.pct{font:12px monospace;color:#888;width:40px}
+.btn{background:#6cf;color:#000;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn svg{transition:transform .2s}
+[dir=rtl] .btn svg{transform:scaleX(-1)}
+[dir=rtl] .dash-head{flex-direction:row-reverse}
+.bidi{margin-top:16px;padding:12px;background:#161616;border-radius:8px;font-size:14px}
+code{background:#1a1a1a;padding:2px 6px;border-radius:4px}
+#dirnow{font:12px monospace;color:#6cf}
+</style></head><body>
+<h1>RTL layout mirroring — one stylesheet, two directions</h1>
+<div class="toggle"><button onclick="flip()">🔄 Flip to Arabic (RTL)</button><span id="dirnow">dir=ltr</span></div>
+<div class="dash">
+<div class="dash-head"><h3 style="margin:0">Deployment progress</h3>
+<button class="btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 5l7 7-7 7"/></svg> Continue</button></div>
+<div class="bar-row"><span class="name">Build</span><div class="bar"><i style="--w:82%"></i></div><span class="pct">82%</span></div>
+<div class="bar-row"><span class="name">Tests</span><div class="bar"><i style="--w:64%"></i></div><span class="pct">64%</span></div>
+<div class="bar-row"><span class="name">Deploy</span><div class="bar"><i style="--w:31%"></i></div><span class="pct">31%</span></div>
+</div>
+<div class="bidi">Mixed-direction line: <bdo dir="rtl">هذا نص عربي</bdo> with an English term <code>flexbox</code> embedded — <code>dir="auto"</code> handles this correctly.</div>
+<script>
+function flip(){
+  const html=document.documentElement;
+  const rtl=html.dir!=='rtl';
+  html.dir=rtl?'rtl':'ltr'; html.lang=rtl?'ar':'en';
+  document.getElementById('dirnow').textContent='dir='+html.dir;
+  document.querySelector('h1').textContent=rtl?'انعكاس التخطيط من اليمين إلى اليسار':'RTL layout mirroring — one stylesheet, two directions';
+  document.querySelector('button').textContent=rtl?'🔄 Flip back to English':'🔄 Flip to Arabic (RTL)';
+  document.querySelector('.btn').lastChild.textContent=rtl?' متابعة ':' Continue ';
+}
+</script></body></html>

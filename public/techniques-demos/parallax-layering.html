@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parallax Layering</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.scene-wrap { min-height:250vh; position:relative; }
+.layer { position:fixed; left:0; right:0; will-change:transform; }
+.sky { top:0; height:60vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(#0d1420, #0d0d0d); z-index:0; }
+.sky h1 { font-size:clamp(2.5rem,8vw,6rem); letter-spacing:0.2em; font-weight:200; }
+.mountains { bottom:0; height:300px; width:100%; }
+.far { z-index:1; } .mid { z-index:2; } .near { z-index:3; }
+.spacer { height:250vh; }
+.controls { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10; background:rgba(20,20,20,0.85); border:1px solid #2c2c2c; border-radius:10px; padding:0.8rem 1.4rem; }
+label { display:flex; gap:0.8rem; align-items:center; font-size:0.85rem; color:#aaa; }
+input[type=range] { width:180px; accent-color:#8ab4ff; }
+
+</style>
+</head>
+<body>
+
+<div class="scene-wrap" id="wrap">
+  <div class="sky layer" data-depth="0.1"><h1>PARALLAX</h1></div>
+  <svg class="mountains far layer" data-depth="0.3" viewBox="0 0 1200 300" preserveAspectRatio="none"><path d="M0 300 L0 180 L200 90 L380 200 L560 60 L760 190 L940 100 L1200 220 L1200 300 Z" fill="#1a2233"/></svg>
+  <svg class="mountains mid layer" data-depth="0.55" viewBox="0 0 1200 300" preserveAspectRatio="none"><path d="M0 300 L0 220 L260 130 L480 240 L700 110 L920 230 L1200 150 L1200 300 Z" fill="#111722"/></svg>
+  <svg class="mountains near layer" data-depth="0.85" viewBox="0 0 1200 300" preserveAspectRatio="none"><path d="M0 300 L0 260 L180 190 L420 280 L640 180 L880 270 L1080 210 L1200 260 L1200 300 Z" fill="#0a0d13"/></svg>
+  <div class="spacer"></div>
+  <div class="controls"><label>Depth factor <input type="range" id="depth" min="0" max="2" step="0.05" value="1"></label></div>
+</div>
+
+<script>
+
+const layers = document.querySelectorAll('.layer');
+let factor = 1, ticking = false;
+function upd() {
+  const y = scrollY;
+  layers.forEach(function(l) {
+    const d = +l.dataset.depth * factor;
+    l.style.transform = 'translateY(' + (y * d) + 'px)';
+  });
+  ticking = false;
+}
+addEventListener('scroll', function() {
+  if (!ticking) { ticking = true; requestAnimationFrame(upd); }
+}, { passive: true });
+document.getElementById('depth').addEventListener('input', function(e) {
+  factor = +e.target.value;
+  upd();
+});
+upd();
+
+</script>
+</body>
+</html>

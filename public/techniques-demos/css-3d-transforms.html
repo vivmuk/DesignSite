@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSS 3D Transforms</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;font-family:system-ui,sans-serif;background:#0d0d0d;color:#e4e4e4}
+.scene{perspective:1000px;display:grid;place-items:center;height:380px}
+.ring{position:relative;width:120px;height:170px;transform-style:preserve-3d;animation:spin 24s linear infinite}
+.scene:hover .ring{animation-play-state:paused}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.card{position:absolute;inset:0;background:linear-gradient(160deg,#1c1c1c,#0a0a0a);border:1px solid #444;border-radius:10px;display:grid;place-items:center;font-size:40px;box-shadow:0 0 20px rgba(0,0,0,.5)}
+.card::after{content:attr(data-n);position:absolute;bottom:8px;font-size:11px;color:#666}
+.ring .card:nth-child(1){transform:rotateY(0deg) translateZ(260px)}
+.ring .card:nth-child(2){transform:rotateY(36deg) translateZ(260px)}
+.ring .card:nth-child(3){transform:rotateY(72deg) translateZ(260px)}
+.ring .card:nth-child(4){transform:rotateY(108deg) translateZ(260px)}
+.ring .card:nth-child(5){transform:rotateY(144deg) translateZ(260px)}
+.ring .card:nth-child(6){transform:rotateY(180deg) translateZ(260px)}
+.ring .card:nth-child(7){transform:rotateY(216deg) translateZ(260px)}
+.ring .card:nth-child(8){transform:rotateY(252deg) translateZ(260px)}
+.ring .card:nth-child(9){transform:rotateY(288deg) translateZ(260px)}
+.ring .card:nth-child(10){transform:rotateY(324deg) translateZ(260px)}
+.flipzone{display:flex;gap:24px;justify-content:center;padding:20px 0 60px}
+.flip{width:160px;height:210px;perspective:800px;cursor:pointer}
+.flip .inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.flip:hover .inner,.flip.on .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:12px;display:grid;place-items:center;backface-visibility:hidden;border:1px solid #444;font-size:40px}
+.face.front{background:#1c1c1c}
+.face.back{background:linear-gradient(160deg,#1d3a2a,#0d2418);transform:rotateY(180deg);font-size:14px;padding:18px;text-align:center}
+h1{text-align:center;font-size:22px}
+p.note{text-align:center;color:#666;font-size:12px}
+
+</style></head><body>
+
+<h1>Pure CSS 3D</h1>
+<div class="scene"><div class="ring">
+<div class=card data-n="01">🍎</div><div class=card data-n="02">🍌</div><div class=card data-n="03">🍇</div><div class=card data-n="04">🍊</div><div class=card data-n="05">🍐</div>
+<div class=card data-n="06">🥝</div><div class=card data-n="07">🍑</div><div class=card data-n="08">🍒</div><div class=card data-n="09">🫐</div><div class=card data-n="10">🍉</div>
+</div></div>
+<p class="note">perspective on .scene · preserve-3d on .ring · rotateY(i×36°) translateZ(260px) per card · hover pauses</p>
+<div class=flipzone>
+<div class=flip><div class=inner><div class="face front">🔒</div><div class=back>backface-visibility: hidden hides the rear; inner rotates 180°</div></div></div>
+<div class=flip><div class=inner><div class="face front">🎨</div><div class=back>transform-style: preserve-3d keeps children in 3D space</div></div></div>
+<div class=flip><div class=inner><div class="face front">📐</div><div class=back>perspective: 800px sets the vanishing-point depth</div></div></div>
+</div>
+<script>
+
+if(!CSS.supports('transform-style','preserve-3d')){
+  document.body.innerHTML='<p style="padding:40px;color:#ff6b81">✗ This browser lacks 3D transform support (transform-style: preserve-3d). Showing fallback text — the carousel would render as a flat grid here.</p>';
+}
+</script></body></html>

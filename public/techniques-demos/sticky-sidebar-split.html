@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sticky Sidebar + Independent TOC</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; margin:0; }
+  header { padding:1rem 2rem; border-bottom:1px solid #262626; background:#0d0d0d; position:sticky; top:0; z-index:10; display:flex; gap:1rem; align-items:center; }
+  header .logo { color:#8b7cff; font-weight:800; }
+  .shell { display:grid; grid-template-columns:200px 1fr 180px; gap:2rem; padding:1.5rem 2rem; max-width:1100px; margin:auto; box-sizing:border-box; }
+  aside.nav, aside.toc { position:sticky; top:5.5rem; align-self:start; max-height:calc(100vh - 7rem); overflow:auto; }
+  aside.nav { border-right:1px solid #262626; }
+  aside h4 { font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:#666; margin:0 0 .7rem; }
+  aside a { display:block; color:#aaa; text-decoration:none; padding:.35rem .6rem; border-radius:6px; font-size:.87rem; }
+  aside a:hover { background:#1a1a1a; color:#e4e4e4; }
+  aside a.active { background:#1c1830; color:#8b7cff; font-weight:600; }
+  article section { margin-bottom:4rem; scroll-margin-top:5.5rem; }
+  article h2 { font-size:1.25rem; margin:0 0 .6rem; }
+  article p { color:#a9a9a9; line-height:1.75; }
+  .toc a { font-size:.8rem; padding:.3rem .6rem; border-inline-start:2px solid transparent; }
+  .toc a.active { border-color:#8b7cff; background:none; }
+  .foot { color:#555; font-size:.8rem; text-align:center; padding:2rem; }
+</style>
+</head>
+<body>
+<header><span class="logo">◆ StickyDocs</span><span style="color:#666;font-size:.85rem">two independent sticky rails</span></header>
+<div class="shell">
+  <aside class="nav"><h4>Product</h4>
+    <a href="#s1" class="active">Introduction</a><a href="#s2">Installation</a><a href="#s3">Configuration</a><a href="#s4">Deployment</a><a href="#s5">FAQ</a>
+  </aside>
+  <article>
+    <section id="s1"><h2>Introduction</h2><p>This docs page has three scroll regions in one viewport: the main article, the product nav rail, and the table of contents. Both rails are position:sticky with different containment so they hold while the center column scrolls beneath them.</p><p>Sticky positioning works within the nearest scrolling ancestor — because the rails are grid children with align-self:start, each pins independently at top:5.5rem, just below the sticky header.</p></section>
+    <section id="s2"><h2>Installation</h2><p>Filler installation copy — scroll to watch the rails hold position. Notice the TOC highlights the section currently in view; that is a tiny IntersectionObserver, not scroll math.</p><p>More filler paragraphs give the article enough height for both rails to demonstrate their stickiness across the full page.</p></section>
+    <section id="s3"><h2>Configuration</h2><p>Each rail clamps to max-height:calc(100vh - 7rem) with overflow:auto, so even long nav lists scroll internally without ever pushing the page.</p><p>scroll-margin-top on sections keeps anchor jumps from hiding headings under the sticky header — a small but pro-grade detail.</p></section>
+    <section id="s4"><h2>Deployment</h2><p>Deployment filler. The grid is 200px, 1fr, 180px; both side rails would collapse to static flow on narrow screens in a real build via a single media query.</p></section>
+    <section id="s5"><h2>FAQ</h2><p>Final section. When you reach the bottom, note that neither rail has moved an inch since you passed its scroll window — that is the pattern working.</p></section>
+  </article>
+  <aside class="toc"><h4>On this page</h4>
+    <a href="#s1" class="active">Introduction</a><a href="#s2">Installation</a><a href="#s3">Configuration</a><a href="#s4">Deployment</a><a href="#s5">FAQ</a>
+  </aside>
+</div>
+<div class="foot">end of document</div>
+<script>
+  const links = [...document.querySelectorAll('aside a')];
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('article section').forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Object Detection — COCO-SSD</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:20px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  .stage{position:relative;width:480px;max-width:100%}
+  video,canvas{width:480px;max-width:100%;border-radius:12px;display:block}
+  video{background:#111}
+  canvas{position:absolute;inset:0;pointer-events:none}
+  button{background:#2563eb;color:#fff;border:0;border-radius:8px;padding:8px 16px;font:inherit;cursor:pointer;margin:10px 0}
+  #status{color:#9a9a9a;font-size:13px;min-height:40px}
+  .err{color:#f0a0a0}
+</style>
+</head>
+<body>
+<h1>Point at things → labeled boxes</h1>
+<p class="sub">COCO-SSD runs on-device via TensorFlow.js; bounding boxes with class + confidence bars are drawn over the live feed.</p>
+<button id="start">Enable camera &amp; detect</button>
+<div class="stage">
+  <video id="vid" autoplay playsinline muted></video>
+  <canvas id="overlay" width="480" height="360"></canvas>
+</div>
+<div id="status"></div>
+<script>
+const vid = document.getElementById('vid'), cv = document.getElementById('overlay'), x = cv.getContext('2d');
+const status = document.getElementById('status');
+const COLORS = ['#60a5fa','#34d399','#fbbf24','#f472b6','#a78bfa','#fb923c'];
+
+document.getElementById('start').onclick = async () => {
+  try{
+    vid.srcObject = await navigator.mediaDevices.getUserMedia({video:{width:640,height:480}});
+  }catch(e){ status.innerHTML = '<span class="err">Camera denied: ' + e.message + '</span>'; return; }
+  if (!window.tf || !window.cocoSsd){
+    status.innerHTML = '<span class="err">TensorFlow.js / COCO-SSD failed to load — this demo needs the CDN for the model.</span>'; return;
+  }
+  status.textContent = 'Loading COCO-SSD model (~10 MB)…';
+  try{
+    const model = await cocoSsd.load({base:'lite_mobilenet_v2'});
+    status.textContent = 'Detecting — point at mugs, books, plants, phones…';
+    detect(model);
+  }catch(e){ status.innerHTML = '<span class="err">Model load failed: ' + e.message + '</span>'; }
+};
+
+async function detect(model){
+  while (true){
+    const preds = await model.detect(vid, 8, 0.45);
+    x.clearRect(0,0,480,360);
+    preds.forEach((p,i) => {
+      const [bx, by, bw, bh] = p.bbox;
+      const sx = 480/vid.videoWidth, sy = 360/vid.videoHeight;
+      const c = COLORS[i % COLORS.length];
+      x.strokeStyle = c; x.lineWidth = 2.5;
+      x.strokeRect(bx*sx, by*sy, bw*sx, bh*sy);
+      // label + confidence bar
+      const label = `${p.class} ${(p.score*100).toFixed(0)}%`;
+      x.font = '12px system-ui';
+      const tw = x.measureText(label).width + 10;
+      x.fillStyle = c;
+      x.fillRect(bx*sx, by*sy-20, tw, 18);
+      x.fillStyle = '#0d0d0d'; x.fillText(label, bx*sx+5, by*sy-7);
+      // confidence bar under box
+      x.fillStyle = '#0d0d0d88'; x.fillRect(bx*sx, by*sy+bh*sy+3, bw*sx, 5);
+      x.fillStyle = c; x.fillRect(bx*sx, by*sy+bh*sy+3, bw*sx*p.score, 5);
+    });
+    await new Promise(r => setTimeout(r, 120));   // ~8 FPS detection cadence
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CSS Custom Properties — Theme Playground</title>
+<style>
+  :root {
+    --hue-bg: 240; --hue-accent: 258; --hue-text: 0;
+    --bg: hsl(var(--hue-bg), 12%, 7%);
+    --surface: hsl(var(--hue-bg), 12%, 11%);
+    --accent: hsl(var(--hue-accent), 85%, 68%);
+    --text: hsl(var(--hue-text), 0%, 90%);
+    --radius: 12px;
+  }
+  body { background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; padding:2rem; max-width:820px; margin:auto; transition:background .25s; }
+  h1 { font-size:1.6rem; } .sub { color:#888; }
+  .card { background:var(--surface); border:1px solid hsl(var(--hue-bg),12%,20%); border-radius:var(--radius); padding:1.4rem; margin:1rem 0; }
+  .btn { background:var(--accent); color:hsl(var(--hue-bg),30%,8%); border:0; border-radius:calc(var(--radius) / 2); padding:.6rem 1.3rem; font-weight:700; cursor:pointer; }
+  .tag { color:var(--accent); border:1px solid var(--accent); border-radius:999px; padding:.15rem .7rem; font-size:.8rem; display:inline-block; }
+  .swatches { display:flex; gap:.8rem; flex-wrap:wrap; margin:1.4rem 0; }
+  .swatch { width:54px; height:54px; border-radius:10px; border:2px solid transparent; cursor:pointer; }
+  .swatch:hover { transform:scale(1.08); } .swatch:focus-visible { border-color:var(--text); }
+  .swatch[data-set="iris"]   { background:hsl(258,85%,68%); }
+  .swatch[data-set="mint"]   { background:hsl(152,70%,55%); }
+  .swatch[data-set="ember"]  { background:hsl(24,95%,62%); }
+  .swatch[data-set="rose"]   { background:hsl(340,85%,65%); }
+  .swatch[data-set="sky"]    { background:hsl(198,90%,60%); }
+  code { color:var(--accent); font-size:.8rem; }
+  .readout { font-family:ui-monospace,monospace; font-size:.8rem; color:#888; }
+</style>
+</head>
+<body>
+<h1>Custom Property Theme Playground</h1>
+<p class="sub">Three custom properties — <code>--hue-bg</code>, <code>--hue-accent</code>, <code>--hue-text</code> — recolor everything. Nothing else changes.</p>
+<div class="swatches" role="group" aria-label="Pick accent hue">
+  <button class="swatch" data-set="iris" aria-label="Iris" onclick="setTheme(258)"></button>
+  <button class="swatch" data-set="mint" aria-label="Mint" onclick="setTheme(152)"></button>
+  <button class="swatch" data-set="ember" aria-label="Ember" onclick="setTheme(24)"></button>
+  <button class="swatch" data-set="rose" aria-label="Rose" onclick="setTheme(340)"></button>
+  <button class="swatch" data-set="sky" aria-label="Sky" onclick="setTheme(198)"></button>
+</div>
+<article class="card">
+  <span class="tag">live theme</span>
+  <h2 style="color:var(--accent)">Derived from the same tokens</h2>
+  <p>Every surface, border, button and badge below reads from <code>var()</code>. The accent button, tag, code color and headings all shift together because they resolve the same custom properties on <code>:root</code>.</p>
+  <p style="margin-top:1rem"><button class="btn">Accent action</button></p>
+</article>
+<p class="readout" id="readout"></p>
+<script>
+  const root = document.documentElement;
+  function setTheme(hue) {
+    root.style.setProperty('--hue-accent', hue);
+    root.style.setProperty('--hue-bg', (hue + 320) % 360); // shift background away from accent
+    readout.textContent = `:root { --hue-accent: ${hue}; --hue-bg: ${(hue + 320) % 360} }`;
+  }
+  const readout = document.getElementById('readout');
+  setTheme(258);
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Masks</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:760px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:1.5rem; font-weight:700; }
+.stage { position:relative; aspect-ratio:1; max-width:420px; margin:0 auto 2rem; border-radius:16px; overflow:hidden; }
+.portrait { position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  -webkit-mask-image:radial-gradient(circle 220px at var(--mx,50%) var(--my,50%), #000 45%, transparent 72%);
+  mask-image:radial-gradient(circle 220px at var(--mx,50%) var(--my,50%), #000 45%, transparent 72%);
+  transition:-webkit-mask-image 0.1s; }
+.ring { position:absolute; width:440px; height:440px; border:1px dashed rgba(126,232,250,0.4); border-radius:50%;
+  transform:translate(-50%,-50%); left:var(--mx,50%); top:var(--my,50%); pointer-events:none; }
+.lanes { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.lane { height:90px; border-radius:10px; background:linear-gradient(135deg,#7ee8fa,#e86aa8);
+  -webkit-mask-image:linear-gradient(90deg,#000 30%,transparent 70%); mask-image:linear-gradient(90deg,#000 30%,transparent 70%);
+  display:flex; align-items:flex-end; padding:0.6rem; }
+.lane span { font-size:0.7rem; color:rgba(255,255,255,0.85); background:rgba(0,0,0,0.5); padding:3px 7px; border-radius:4px; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Mask Reveal</h1>
+  <div class="stage" id="stage">
+    <img class="portrait" src="https://picsum.photos/id/1027/700/700" alt="portrait">
+    <div class="ring" id="ring"></div>
+  </div>
+  <div class="lanes">
+    <div class="lane" style="-webkit-mask-image:linear-gradient(90deg,#000 30%,transparent 70%)"><span>linear mask feather</span></div>
+    <div class="lane" style="-webkit-mask-image:radial-gradient(circle at 50% 50%, #000 40%, transparent 72%)"><span>radial mask spot</span></div>
+    <div class="lane" style="-webkit-mask-image:linear-gradient(135deg,#000 50%,transparent 50%)"><span>hard-edge diagonal</span></div>
+  </div>
+</div>
+
+<script>
+
+const stage = document.getElementById('stage');
+stage.addEventListener('pointermove', function(e) {
+  const r = stage.getBoundingClientRect();
+  stage.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+  stage.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+});
+if (!CSS.supports('mask-image', 'linear-gradient(#000,#fff)') && !CSS.supports('-webkit-mask-image', 'linear-gradient(#000,#fff)')) {
+  document.querySelector('h1').insertAdjacentText('afterend', 'Fallback text: mask-image unsupported - portrait shown unmasked.');
+}
+
+</script>
+</body>
+</html>

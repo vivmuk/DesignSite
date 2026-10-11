@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Selection, Caret & Autofill Styling</title>
+<style>
+:root{--accent:#7c3aed;--bg:#0d0d0d;--fg:#e4e4e4;--inputbg:#161616}
+body.branded{--sel:#7c3aed;--sel-fg:#fff;--caret:#7c3aed;--autofill:#2a1e4a}
+body.default{--sel:#3390ff;--sel-fg:#fff;--caret:auto;--autofill:#fff8c4}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px system-ui;padding:24px;max-width:640px}
+p::selection, h1::selection{background:var(--sel);color:var(--sel-fg)}
+input{width:100%;box-sizing:border-box;background:var(--inputbg);border:1px solid #333;color:var(--fg);padding:12px;border-radius:8px;font-size:15px;caret-color:var(--caret)}
+input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px var(--autofill) inset;-webkit-text-fill-color:var(--fg);transition:background-color 9999s}
+input::selection{background:var(--sel);color:var(--sel-fg)}
+.bar{display:flex;gap:10px;margin-bottom:16px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:8px 16px;border-radius:6px;cursor:pointer}
+button.on{border-color:#7c3aed;color:#c4b5fd}
+.note{font-size:13px;color:#888;margin-top:12px}
+code{background:#1a1a1a;padding:2px 6px;border-radius:4px;color:#9effa1}
+</style></head><body class="branded">
+<h1 style="font-size:18px">Branded selection, caret & autofill</h1>
+<div class="bar"><button id="b1" class="on">Brand theme</button><button id="b2">Browser defaults</button></div>
+<p>Select this paragraph with your mouse — the highlight should be brand <b style="color:#a78bfa">violet</b>, not browser blue.</p>
+<form autocomplete="on">
+<label style="font-size:13px" for="n">Your name (autofill me — Chrome remembered values will tint violet)</label>
+<input id="n" name="name" autocomplete="name" placeholder="type or pick an autofill suggestion">
+</form>
+<div class="note">The blinking caret inside the input is also violet (<code>caret-color</code>). Toggle to defaults to see everything revert to browser chrome.</div>
+<script>
+const b1=document.getElementById('b1'), b2=document.getElementById('b2');
+function mode(m){ document.body.className=m;
+  b1.classList.toggle('on',m==='branded'); b2.classList.toggle('on',m==='default'); }
+b1.onclick=()=>mode('branded'); b2.onclick=()=>mode('default');
+// report actual computed values
+const cs=getComputedStyle(document.body);
+console.log('caret-color:', cs.getPropertyValue('caret-color'));
+document.querySelector('input').addEventListener('animationstart',e=>{
+  if(e.animationName.includes('autofill')) console.log('autofill detected →', e.animationName); });
+</script></body></html>

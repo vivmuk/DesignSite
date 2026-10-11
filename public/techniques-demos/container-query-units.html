@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Container Query Units (cqi/cqw)</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:860px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.4rem; }
+  .resizer { container-type: inline-size; resize: horizontal; overflow:hidden; border:2px dashed #4a3aff; border-radius:12px; min-width:220px; max-width:100%; width:520px; padding:.4rem; }
+  .hint { font-size:.72rem; color:#666; text-transform:uppercase; letter-spacing:.1em; margin:.4rem 0 .8rem; }
+  .pane { background:#141414; border:1px solid #2a2a2a; border-radius:10px; }
+  .pane h2 { font-size: 6cqi; margin:.4em .4em .2em; }
+  .pane p { font-size: 3.2cqi; line-height:1.5; padding: 0 4cqi 4cqi; margin:0; color:#aaa; }
+  .badge-row { display:flex; gap:2cqw; padding:2cqi; border-bottom:1px solid #2a2a2a; }
+  .badge { background:#8b7cff22; color:#8b7cff; border:1px solid #8b7cff55; border-radius:999px; padding:.6cqi 2.4cqi; font-size:2.6cqi; }
+  .panes { display:grid; gap:1rem; margin-top:1.4rem; }
+  @media (min-width:760px){ .panes { grid-template-columns:1fr 1fr; } }
+  .half { container-type:inline-size; resize:horizontal; overflow:hidden; border:2px dashed #2a7a5a; border-radius:12px; min-width:180px; }
+  .half .inner h2 { font-size:8cqi; margin:.2em; color:#7dd8a0; }
+  .half .inner p { font-size:3cqi; padding:0 3cqi 3cqi; margin:0; color:#aaa; line-height:1.5; }
+  .meter { font-family:ui-monospace,monospace; font-size:.78rem; color:#e8c468; background:#141414; border:1px solid #262626; border-radius:8px; padding:.7rem 1rem; margin-top:1.2rem; }
+  code { color:#e8c468; }
+</style>
+</head>
+<body>
+<h1>Container Query Units: cqi / cqw</h1>
+<p class="sub">Drag the dashed edges — type and spacing scale with the <em>container</em> width, not the viewport. <code>1cqi</code> = 1% of the container's inline size.</p>
+<div class="resizer">
+  <p class="hint">↔ drag my right edge (6cqi / 3.2cqi units)</p>
+  <div class="pane">
+    <div class="badge-row"><span class="badge">2.6cqi text</span><span class="badge">padded 2.4cqi</span></div>
+    <h2>Headline at 6cqi</h2>
+    <p>This paragraph is 3.2cqi and its padding 4cqi — everything breathes with the container.</p>
+  </div>
+</div>
+<div class="panes">
+  <div class="half"><p class="hint">independent container A</p>
+    <div class="half-inner"><div class="inner"><h2>8cqi</h2><p>Each dashed box below is its own container, so identical 8cqi type renders at different absolute sizes side by side.</p></div></div>
+  </div>
+  <div class="half"><p class="hint">independent container B</p>
+    <div class="half-inner"><div class="inner"><h2>8cqi</h2><p>Same units, different pixels — proof that cqi tracks the container, not the page.</p></div></div>
+  </div>
+</div>
+<p class="meter" id="meter"></p>
+<script>
+  const r = document.querySelector('.resizer');
+  const ro = new ResizeObserver(entries => {
+    for (const e of entries) {
+      meter.textContent = `container width: ${Math.round(e.contentRect.width)}px → headline = 6cqi = ${Math.round(e.contentRect.width * 0.06)}px`;
+    }
+  });
+  ro.observe(r);
+</script>
+</body>
+</html>

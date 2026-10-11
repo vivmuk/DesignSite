@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Responsive Flex Toolbar</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:760px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.2rem; }
+  .handle-row { display:flex; align-items:center; gap:.8rem; margin-bottom:1.2rem; }
+  .handle-row input { flex:1; accent-color:#8b7cff; }
+  .width-read { font-family:ui-monospace,monospace; font-size:.8rem; color:#8b7cff; min-width:9ch; }
+  .frame { border:2px dashed #333; border-radius:12px; padding:.6rem; resize:horizontal; overflow:hidden; min-width:200px; }
+  .toolbar { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
+  .tb-btn { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:8px; padding:.45rem .9rem; font-size:.85rem; cursor:pointer; white-space:nowrap; }
+  .tb-btn:hover { border-color:#8b7cff; color:#8b7cff; }
+  .tb-btn.icon { padding:.45rem .65rem; }
+  .spacer { flex:1 1 auto; }
+  .more-wrap { position:relative; }
+  .more-menu { display:none; position:absolute; top:calc(100% + .4rem); right:0; background:#1c1c1c; border:1px solid #3a3a3a; border-radius:10px; padding:.4rem; min-width:150px; z-index:5; box-shadow:0 10px 30px #000a; }
+  .more-wrap.open .more-menu { display:block; }
+  .more-menu button { display:block; width:100%; text-align:left; background:transparent; color:#e4e4e4; border:0; border-radius:6px; padding:.45rem .7rem; cursor:pointer; font-size:.85rem; }
+  .more-menu button:hover { background:#2a2a2a; }
+  .note { color:#777; font-size:.85rem; margin-top:1.4rem; }
+</style>
+</head>
+<body>
+<h1>Responsive Flex Toolbar</h1>
+<p class="sub">Drag the slider (or the dashed frame corner). A flexible spacer pushes trailing actions right; wrapping kicks in when space runs out.</p>
+<div class="handle-row">
+  <span style="font-size:.8rem;color:#777">container width</span>
+  <input type="range" id="w" min="200" max="700" value="560">
+  <span class="width-read" id="wr">560px</span>
+</div>
+<div class="frame" id="frame">
+  <div class="toolbar">
+    <button class="tb-btn icon">☰</button>
+    <button class="tb-btn">File</button>
+    <button class="tb-btn">Edit</button>
+    <button class="tb-btn">View</button>
+    <button class="tb-btn">Insert</button>
+    <button class="tb-btn">Format</button>
+    <div class="spacer"></div>
+    <button class="tb-btn icon">🔍</button>
+    <div class="more-wrap" id="moreWrap">
+      <button class="tb-btn icon" onclick="moreWrap.classList.toggle('open')">⋯</button>
+      <div class="more-menu">
+        <button>Tools</button><button>Extensions</button><button>Settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="note">The .spacer element with flex: 1 1 auto eats all free space, pushing trailing actions right. When buttons no longer fit, flex-wrap: wrap reflows them. Try setting the width below 340px to see wrapping kick in — a production toolbar would move overflow items into the ⋯ menu with a ResizeObserver.</p>
+<script>
+  const frame = document.getElementById('frame');
+  w.addEventListener('input', () => { frame.style.width = w.value + 'px'; });
+  new ResizeObserver(es => { wr.textContent = Math.round(es[0].contentRect.width) + 'px'; }).observe(frame);
+  frame.style.width = '560px';
+</script>
+</body>
+</html>

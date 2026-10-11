@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Budget Sankey — D3 sankey</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  svg{width:100%;max-width:860px;height:460px;background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  .node rect{cursor:pointer} .node text{fill:#e4e4e4;font-size:12px}
+  .link{fill:none;stroke-opacity:.35;cursor:pointer}
+  .dim{opacity:.12;transition:opacity .25s}
+  #info{margin-top:10px;min-height:24px;color:#9a9a9a}
+</style>
+</head>
+<body>
+<h1>Personal budget flow</h1>
+<p class="sub">Income → categories → merchants. Hover a node to isolate its ribbons and see totals; click to clear.</p>
+<svg id="chart" viewBox="0 0 860 460"></svg>
+<div id="info">Hover a node…</div>
+<script>
+const nodes = [
+  {name:'Salary'},{name:'Side gigs'},
+  {name:'Housing'},{name:'Food'},{name:'Transport'},{name:'Fun'},{name:'Savings'},
+  {name:'Rent'},{name:'Groceries'},{name:'Restaurants'},{name:'Metro'},{name:'Gas'},{name:'Streaming'},{name:'Gym'}
+];
+const links = [
+  {source:0,target:2,value:1200},{source:0,target:3,value:500},{source:0,target:4,value:250},{source:0,target:6,value:800},
+  {source:1,target:5,value:300},{source:1,target:6,value:250},
+  {source:2,target:7,value:1200},
+  {source:3,target:8,value:330},{source:3,target:9,value:170},
+  {source:4,target:10,value:150},{source:4,target:11,value:100},
+  {source:5,target:12,value:130},{source:5,target:13,value:170}
+];
+const W=860, H=460;
+const sankey = d3.sankey().nodeWidth(16).nodePadding(18).extent([[10,10],[W-10,H-10]]);
+const graph = sankey({nodes:nodes.map(d=>({...d})), links:links.map(d=>({...d}))});
+
+const svg = d3.select('#chart');
+const color = d3.scaleOrdinal(d3.schemeTableau10);
+
+const link = svg.append('g').selectAll('path').data(graph.links)
+  .join('path').attr('class','link')
+  .attr('d', d3.sankeyLinkHorizontal())
+  .attr('stroke', d => color(d.source.name))
+  .attr('stroke-width', d => Math.max(1.5, d.width));
+
+const node = svg.append('g').selectAll('g').data(graph.nodes)
+  .join('g').attr('class','node')
+  .attr('transform', d => `translate(${d.x0},${d.y0})`);
+node.append('rect').attr('width', d => d.x1-d.x0).attr('height', d => d.y1-d.y0)
+  .attr('fill', d => color(d.name)).attr('rx',3);
+node.append('text').attr('x', d => d.x0 < W/2 ? 22 : -22)
+  .attr('y', d => (d.y1-d.y0)/2 + 4)
+  .attr('text-anchor', d => d.x0 < W/2 ? 'start' : 'end')
+  .text(d => `${d.name}  $${d.value}`);
+
+function isolate(n){
+  const keep = new Set([n.name]);
+  graph.links.forEach(l => {
+    if (l.source === n) keep.add(l.target.name);
+    if (l.target === n) keep.add(l.source.name);
+  });
+  link.classed('dim', l => !(l.source.name===n.name || l.target.name===n.name));
+  node.classed('dim', d => d!==n && !keep.has(d.name) && !graph.links.some(l =>
+    (l.source===n && l.target===d) || (l.target===n && l.source===d)));
+  document.getElementById('info').textContent = `${n.name}: $${n.value} total`;
+}
+node.on('mouseenter', (e,d) => isolate(d))
+    .on('click', () => { link.classed('dim',false); node.classed('dim',false); document.getElementById('info').textContent='Hover a node…'; });
+svg.on('mouseleave', () => { link.classed('dim',false); node.classed('dim',false); });
+</script>
+</html>

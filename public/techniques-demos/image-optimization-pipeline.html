@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Image Optimization Pipeline</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} .bar{display:flex;align-items:center;gap:16px;margin:12px 0}
+.toggle{display:flex;background:#1a1a1a;border-radius:99px;padding:4px}
+.toggle button{border:none;background:transparent;color:#888;padding:8px 18px;border-radius:99px;cursor:pointer}
+.toggle button.on{background:#2a4a2a;color:#9effa1}
+#payload{font:14px ui-monospace,monospace} #meter{flex:1;max-width:300px;height:8px;background:#222;border-radius:4px;overflow:hidden}
+#fill{height:100%;background:#f66;width:100%;transition:.6s}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:#161616;border:1px solid #2a2a2a;border-radius:10px;overflow:hidden}
+.imgwrap{position:relative;aspect-ratio:4/3;background:#222}
+.imgwrap img{width:100%;height:100%;object-fit:cover;display:block}
+.lqip{position:absolute;inset:0;filter:blur(18px);transform:scale(1.1);transition:opacity .8s}
+.loaded .lqip{opacity:0}
+.badge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.7);font:10px monospace;padding:2px 6px;border-radius:4px}
+.kb{padding:8px 10px;font:11px monospace;color:#888}
+</style></head><body>
+<h1>Image pipeline — naive vs optimized</h1>
+<div class="bar"><div class="toggle"><button id="naive" class="on">Naive</button><button id="opt">Optimized (LQIP + lazy + sized)</button></div>
+<span id="payload">payload: —</span><div id="meter"><div id="fill"></div></div></div>
+<div class="grid" id="grid"></div>
+<script>
+const picsum = (id,w)=>`https://picsum.photos/seed/${id}/${w}/${Math.round(w*0.75)}`;
+const items = Array.from({length:9},(_,i)=>({id:'p'+i, w:800}));
+let totalKB = 0;
+function naive(){
+  document.getElementById('grid').innerHTML='';
+  items.forEach(it=>{
+    const c=document.createElement('div');c.className='card';
+    c.innerHTML=`<div class="imgwrap"><img src="${picsum(it.id,1200)}"><span class="badge">1200px raw ~240KB</span></div><div class="kb">eager · full-size · no placeholder</div>`;
+    document.getElementById('grid').append(c);
+  });
+  setPayload(2160,'#f66');
+}
+function optimized(){
+  document.getElementById('grid').innerHTML='';
+  items.forEach(it=>{
+    const c=document.createElement('div');c.className='card';
+    c.innerHTML=`<div class="imgwrap"><div class="lqip" style="background:#3a3a55"></div><img loading="lazy" src="${picsum(it.id,400)}" style="opacity:0;transition:opacity .5s"><span class="badge">400px +lazy ~32KB</span></div><div class="kb">lazy · responsive size · blur-up</div>`;
+    const img=c.querySelector('img');
+    img.onload=()=>{ img.style.opacity=1; c.querySelector('.imgwrap').classList.add('loaded'); };
+  });
+  setPayload(288,'#9e9');
+}
+function setPayload(kb,color){
+  document.getElementById('payload').textContent=`payload: ${kb} KB (9 images)`;
+  document.getElementById('fill').style.width=Math.min(100,kb/22)+'%';
+  document.getElementById('fill').style.background=color;
+}
+document.getElementById('naive').onclick=e=>{set('naive')};document.getElementById('opt').onclick=e=>{set('opt')};
+function set(m){ document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('on'));
+  document.getElementById(m).classList.add('on'); m==='naive'?naive():optimized(); }
+optimized();
+</script></body></html>

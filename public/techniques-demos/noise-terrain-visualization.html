@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perlin Noise Terrain</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+#ui{position:fixed;top:14px;left:14px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:12px;font-size:12px;width:190px;z-index:5}
+#ui label{display:flex;justify-content:space-between;margin:6px 0;color:#888}
+#ui input{accent-color:#7ee787;width:105px}
+#ui b{color:#7ee787}
+
+</style></head><body>
+
+<div id=ui><label>octaves <input id=o type=range min=1 max=5 value=3><b id=ov>3</b></label>
+<label>speed <input id=s type=range min=0 max=3 step=.1 value=1><b id=sv>1.0</b></label>
+<label>height <input id=h type=range min=10 max=120 value=55><b id=hv>55</b></label></div>
+<script>
+
+function makeNoise(seed){
+  let s=seed>>>0;
+  const rnd=()=>{s=Math.imul(s^s>>>15,2246822519);s=Math.imul(s^s>>>13,3266489917);return((s^=s>>>16)>>>0)/4294967296;};
+  const P=512,perm=new Uint8Array(P);for(let i=0;i<P;i++)perm[i]=i&255;
+  for(let i=255;i>0;i--){const j=rnd()*(i+1)|0;[perm[i],perm[j]]=[perm[j],perm[i]];}
+  const fade=t=>t*t*(3-2*t);
+  function n2(x,y){
+    const xi=Math.floor(x)&255,yi=Math.floor(y)&255,xf=x-Math.floor(x),yf=y-Math.floor(y);
+    const v=(a,b)=>perm[(perm[a]+b)&255]/255;
+    const tl=v(xi,yi),tr=v(xi+1,yi),bl=v(xi,yi+1),br=v(xi+1,yi+1);
+    const u=fade(xf),w=fade(yf);
+    return tl+(tr-tl)*u+((bl+(br-bl)*u)-(tl+(tr-tl)*u))*w;
+  }
+  return n2;
+}
+const noise=makeNoise(42);
+const cv=document.createElement('canvas');document.body.appendChild(cv);
+const ctx=cv.getContext('2d');
+let W,H;function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+'px';cv.style.height='100vh';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit();addEventListener('resize',fit);
+let octaves=3,speed=1,hscale=55,t=0;
+const bind=(id,v_id,set)=>{const el=document.getElementById(id),v=document.getElementById(v_id);
+  el.addEventListener('input',()=>{set(+el.value);({o:()=>v.textContent=el.value,s:()=>v.textContent=(+el.value).toFixed(1),h:()=>v.textContent=el.value})[id]();});};
+bind('o','ov',v=>octaves=v);bind('s','sv',v=>speed=v);bind('h','hv',v=>hscale=v);
+const GR=48,cols=GR,rows=28;
+let last=performance.now(),fps=60,acc=0;
+(function loop(now){
+  requestAnimationFrame(loop);
+  const dt=Math.min((now-last)/1000,.05);last=now;fps+=(1/dt-fps)*.05;
+  t+=dt*speed;
+  ctx.fillStyle='#0d0d0d';ctx.fillRect(0,0,innerWidth,innerHeight);
+  const cell=innerWidth/(cols*.9);
+  const ox=innerWidth/2;
+  for(let r=rows-1;r>=0;r--){
+    ctx.beginPath();
+    for(let c=0;c<cols;c++){
+      // fbm octaves
+      let h=0,amp=1,freq=.09, tot=0;
+      for(let o=0;o<octaves;o++){h+=noise(c*freq+t*.6,r*freq+o*17.7)*amp;tot+=amp;amp*=.5;freq*=2;}
+      h/=tot;
+      const sx=ox+(c-r*.5)*cell*.9;
+      const sy=innerHeight*.32+(c+r)*cell*.42-h*hscale;
+      c?ctx.lineTo(sx,sy):ctx.moveTo(sx,sy);
+    }
+    // fill under row for depth
+    ctx.strokeStyle=`hsla(${200+h*0},70%,${35+r}% , .9)`;
+    ctx.lineWidth=1.2;
+    ctx.stroke();
+    ctx.lineTo(ox+(cols-1-r*.5)*cell*.9,innerHeight+50);
+    ctx.lineTo(ox+(0-r*.5)*cell*.9,innerHeight+50);
+    ctx.closePath();
+    ctx.fillStyle=`hsla(210,60%,${8+r*1.2}%,.35)`;
+    ctx.fill();
+  }
+  ctx.fillStyle='#555';ctx.font='11px monospace';
+  ctx.fillText(`${fps|0} fps · ${octaves} octaves · fbm sum Σ amp·noise(x·2ⁱ, y·2ⁱ)`,14,innerHeight-16);
+})(performance.now());
+</script></body></html>

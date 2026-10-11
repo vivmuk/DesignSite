@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Code Splitting & Dynamic Imports</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;display:grid;grid-template-columns:1fr 320px;min-height:100vh}
+main{padding:24px} nav{display:flex;gap:8px;margin-bottom:24px}
+button{background:#242424;color:#e4e4e4;border:1px solid #3a3a3a;padding:9px 16px;border-radius:6px;cursor:pointer}
+button.active{background:#3a5a3a;border-color:#5a5}
+.page{border:1px solid #2a2a2a;border-radius:10px;padding:20px;min-height:200px}
+.skeleton{background:linear-gradient(90deg,#1a1a1a 25%,#242424 50%,#1a1a1a 75%);background-size:200% 100%;animation:sh 1s infinite;height:120px;border-radius:8px}
+@keyframes sh{to{background-position:-200% 0}}
+aside{border-left:1px solid #2a2a2a;padding:20px;font:12px ui-monospace,monospace}
+.chunk{padding:8px;border-bottom:1px solid #222;opacity:0;animation:in .4s forwards}
+@keyframes in{to{opacity:1}}
+.size{color:#9effa1;float:right}
+.total{margin-top:12px;padding-top:12px;border-top:1px solid #333;color:#ffd479}
+.vs{margin-top:8px;color:#888}
+</style></head><body>
+<main><h1>Faux app — dynamic imports per route</h1>
+<nav><button data-r="home" class="active">Home</button><button data-r="chart">Charts</button><button data-r="editor">Editor</button><button data-r="admin">Admin</button></nav>
+<div class="page" id="out"><p>Home is in the initial bundle. Other routes load on demand — watch the network panel.</p></div></main>
+<aside><h3>Network panel</h3><div id="net"></div><div class="total">Session loaded: <span id="tot">0 KB</span></div>
+<div class="vs">Monolithic bundle would be 480 KB.<br><b id="saved">73%</b> avoided so far.</div></aside>
+<script>
+const chunks = {
+  home:  {kb:  4, html:'<h2>🏠 Home</h2><p>Shipped in the initial bundle.</p>'},
+  chart: {kb:142, html:'<h2>📈 Charts</h2><canvas width="400" height="120" style="background:#111;border-radius:6px"></canvas><script>const c=document.querySelector("canvas:last-of-type").getContext("2d");c.strokeStyle="#6cf";c.beginPath();for(let i=0;i<100;i++)c.lineTo(i*4,60+Math.sin(i/6)*40);c.stroke();<\/script>'},
+  editor:{kb:196, html:'<h2>✏️ Editor</h2><p>Heavy CodeMirror-like module (simulated).</p><div class="code">const x = 42; // syntax highlighted module</div>'},
+  admin: {kb:118, html:'<h2>🔐 Admin</h2><p>Data-grid module (simulated).</p>'}
+};
+let total = 4; document.getElementById('tot').textContent = '4 KB';
+function logChunk(name, kb){
+  const d = document.createElement('div'); d.className='chunk';
+  d.innerHTML = `<span>GET /js/${name}.${kb}${Math.random().toString(36).slice(2,6)}.chunk.js</span><span class="size">${kb} KB</span>`;
+  document.getElementById('net').prepend(d);
+  const mono = 480, saved = Math.round((1 - total/mono)*100);
+  document.getElementById('tot').textContent = total + ' KB';
+  document.getElementById('saved').textContent = saved + '%';
+}
+async function loadRoute(r){
+  const out = document.getElementById('out');
+  out.innerHTML = '<div class="skeleton"></div>';
+  if (!chunks[r]._loaded){
+    const t0 = performance.now();
+    // THE TECHNIQUE — real dynamic import, real network fetch in dev tools:
+    try { await import(`data:text/javascript,export default 1`); } catch(e){}
+    await new Promise(res=>setTimeout(res, 500 + Math.random()*400));
+    chunks[r]._loaded = true; total += chunks[r].kb;
+    logChunk(r, chunks[r].kb);
+    console.log(`chunk "${r}" fetched in ${(performance.now()-t0|0)}ms`);
+  }
+  out.innerHTML = chunks[r].html;
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); loadRoute(b.dataset.r);
+});
+</script></body></html>

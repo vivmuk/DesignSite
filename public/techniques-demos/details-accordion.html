@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ accordion — &lt;details&gt; only</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:32px}
+  h1{font-size:19px} .sub{color:#9a9a9a;font-size:13px}
+  details{background:#161616;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:10px;overflow:hidden;
+    interpolate-size: allow-keywords;                    /* enables height auto animation */
+  }
+  summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';font-size:18px;color:#60a5fa;transition:rotate .3s}
+  details[open] summary::after{rotate:45deg}
+  .body{padding:0 18px;transition:height .3s, content-visibility .3s allow-discrete;height:0;overflow:hidden}
+  details[open] .body{height:auto;padding-bottom:14px}
+  .body p{margin:0;color:#9a9a9a;font-size:14px}
+  @supports not (interpolate-size: allow-keywords){
+    details{interpolate-size:auto}
+  }
+  .fallback{color:#fbbf24;font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<h1>FAQ — zero JavaScript</h1>
+<p class="sub">Exclusive accordion via <code>name="faq"</code> (only one open at a time — browser-managed), animated purely with <code>interpolate-size: allow-keywords</code>.</p>
+<details name="faq" open>
+  <summary>What makes this accordion special?</summary>
+  <div class="body"><p>No ARIA attributes, no state management, no JS. The <code>name</code> attribute on &lt;details&gt; gives exclusive-open behavior natively — the browser closes siblings when one opens, with correct semantics baked in.</p></div>
+</details>
+<details name="faq">
+  <summary>How does the height animation work?</summary>
+  <div class="body"><p><code>interpolate-size: allow-keywords</code> lets CSS transition to and from <code>height:auto</code>. The .body wrapper starts at height:0 and transitions to auto when the [open] attribute appears — smooth in Chromium 129+.</p></div>
+</details>
+<details name="faq">
+  <summary>What about browsers without those features?</summary>
+  <div class="body"><p>Everything still works: details open and close instantly (the base HTML behavior from 2010), and the fallback notice below tells you what's missing. Progressive enhancement all the way down.</p></div>
+</details>
+<details name="faq">
+  <summary>Can users deep-link to an open item?</summary>
+  <div class="body"><p>Yes — give each details an id and it will auto-open when navigated to via a fragment URL. That's native behavior too, no scripting required.</p></div>
+</details>
+<p class="fallback" id="note"></p>
+<script>
+if (CSS.supports('interpolate-size','allow-keywords')){
+  document.getElementById('note').textContent = '✓ interpolate-size supported — smooth animation active.';
+}else{
+  document.getElementById('note').textContent = '⚠ interpolate-size not supported here — accordion works, just without the smooth height animation (Chromium 129+ for animation).';
+}
+</script>
+</html>

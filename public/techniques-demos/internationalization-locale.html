@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>i18n & Locale Formatting</title>
+<style>
+body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px system-ui;padding:24px}
+h1{font-size:18px} p{color:#888}
+select{background:#222;color:#e4e4e4;border:1px solid #3a3a3a;border-radius:6px;padding:8px 14px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px}
+.cell{background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:16px}
+.cell h4{margin:0 0 8px;font:11px monospace;color:#6cf;text-transform:uppercase}
+.cell .v{font-size:17px}
+#stress{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:10px 18px;border-radius:8px;border:1px solid #3a3a3a;background:#242424;color:#e4e4e4;cursor:pointer}
+#code{margin-top:14px;font:12px ui-monospace,monospace;color:#9e9;background:#111;border-radius:8px;padding:12px;white-space:pre-line}
+</style></head><body>
+<h1>Intl API — one codebase, every locale</h1>
+<p>Switch locale; dates, currency, plurals, and relative time all reformat through <code>Intl.*</code> with zero translation tables.</p>
+<div><label>Locale: </label><select id="loc">
+<option>en-US</option><option>de-DE</option><option>ja-JP</option><option>ar-EG</option><option>hi-IN</option><option>pt-BR</option></select></div>
+<div class="grid">
+<div class="cell"><h4>Intl.DateTimeFormat</h4><div class="v" id="d1"></div></div>
+<div class="cell"><h4>Intl.NumberFormat (currency)</h4><div class="v" id="d2"></div></div>
+<div class="cell"><h4>Intl.PluralRules</h4><div class="v" id="d3"></div></div>
+<div class="cell"><h4>Intl.RelativeTimeFormat</h4><div class="v" id="d4"></div></div>
+<div class="cell"><h4>Intl.ListFormat</h4><div class="v" id="d5"></div></div>
+<div class="cell"><h4>Intl.Collator (sorted names)</h4><div class="v" id="d6" style="font-size:14px"></div></div>
+</div>
+<div id="stress"><button class="btn" style="min-width:180px" id="b1">Subscribe — $49.99/mo</button><button class="btn" style="min-width:180px" id="b2">5 files selected</button></div>
+<div id="code"></div>
+<script>
+const loc=document.getElementById('loc');
+const msgs={ 'en-US':{n1:'Subscribe — {p}/mo',n2:'{n} files selected'},
+ 'de-DE':{n1:'Abonnieren — {p}/Monat',n2:'{n} Dateien ausgewählt'},
+ 'ja-JP':{n1:'購読 — {p}/月',n2:'{n} 件のファイルを選択'},
+ 'ar-EG':{n1:'اشترك — {p}/شهر',n2:'تم اختيار {n} من الملفات'},
+ 'hi-IN':{n1:'सब्सक्राइब — {p}/माह',n2:'{n} फ़ाइलें चयनित'},
+ 'pt-BR':{n1:'Assinar — {p}/mês',n2:'{n} arquivos selecionados'}};
+function fmt(){
+  const L=loc.value, now=new Date();
+  const r={};
+  r.d1=new Intl.DateTimeFormat(L,{dateStyle:'full',timeStyle:'short'}).format(now);
+  r.d2=new Intl.NumberFormat(L,{style:'currency',currency:'USD',notation:'compact'}).format(1234567.89);
+  const n=5, cat=new Intl.PluralRules(L).select(n);
+  const files=msgs[L].n2.replace('{n}',new Intl.NumberFormat(L).format(n));
+  r.d3=`PluralRules(5) → "${cat}" · ${files}`;
+  const rtf=new Intl.RelativeTimeFormat(L,{numeric:'auto'});
+  r.d4=rtf.format(-3,'day')+' · '+rtf.format(2,'week');
+  r.d5=new Intl.ListFormat(L,{style:'long',type:'conjunction'}).format(['Alice','Bo','Chen']);
+  r.d6=['Zoë','Álvaro','Åse','Bernard'].sort(new Intl.Collator(L).compare).join(' · ');
+  for(const k in r) document.getElementById(k).textContent=r[k];
+  // layout stress: buttons reformat with localized strings
+  document.getElementById('b1').textContent=msgs[L].n1.replace('{p}',new Intl.NumberFormat(L,{style:'currency',currency:'USD'}).format(49.99));
+  document.getElementById('b2').textContent=files;
+  document.getElementById('code').textContent=`new Intl.DateTimeFormat('${L}',{dateStyle:'full'}).format(now) → ${r.d1}`;
+}
+loc.onchange=fmt; fmt();
+</script></body></html>

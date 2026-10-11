@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inertial Smooth Scrolling</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+body { overflow:hidden; height:100vh; }
+#track { position:absolute; top:0; left:0; right:0; will-change:transform; }
+.blk { height:100vh; display:flex; align-items:center; justify-content:center; border-bottom:1px solid #1c1c1c; }
+.blk h1 { font-size:clamp(3rem,9vw,7rem); font-weight:700; letter-spacing:-0.02em; }
+.fixed { position:fixed; top:1.2rem; right:1.2rem; z-index:10; background:rgba(20,20,20,0.85); border:1px solid #2c2c2c; border-radius:10px; padding:1rem 1.2rem; display:flex; flex-direction:column; gap:0.7rem; }
+.meter { display:flex; align-items:center; gap:0.6rem; font-family:ui-monospace, monospace; font-size:0.72rem; color:#8ab4ff; }
+.vbar { width:90px; height:4px; background:#2a2a2a; border-radius:2px; overflow:hidden; }
+#vfill { height:100%; width:0; background:#8ab4ff; }
+label { font-size:0.8rem; color:#aaa; display:flex; gap:0.5rem; }
+.tip { font-size:0.7rem; color:#666; max-width:22ch; }
+
+</style>
+</head>
+<body>
+
+<div class="fixed" id="fixed">
+  <div class="meter"><span>velocity</span><div class="vbar"><div id="vfill"></div></div><span id="vnum">0.00</span></div>
+  <label><input type="checkbox" id="smooth" checked> Inertial scroll (lerp)</label>
+  <p class="tip">Scroll the page — content skews with velocity when inertia is on.</p>
+</div>
+<div id="track">
+  <section class="blk"><h1>Weight</h1></section>
+  <section class="blk"><h1>Momentum</h1></section>
+  <section class="blk"><h1>Ease</h1></section>
+  <section class="blk"><h1>Settle</h1></section>
+</div>
+
+<script>
+
+let target = 0, current = 0, vel = 0;
+addEventListener('wheel', function(e) {
+  e.preventDefault();
+  target += e.deltaY;
+  target = Math.max(0, Math.min((document.querySelectorAll('.blk').length - 1) * innerHeight, target));
+}, { passive: false });
+addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown' || e.key === 'PageDown') target = Math.min(target + innerHeight * 0.8, 3 * innerHeight);
+  if (e.key === 'ArrowUp' || e.key === 'PageUp') target = Math.max(target - innerHeight * 0.8, 0);
+});
+const track = document.getElementById('track'), fill = document.getElementById('vfill'), vnum = document.getElementById('vnum');
+let last = performance.now();
+(function loop(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  const smooth = document.getElementById('smooth').checked;
+  if (smooth) {
+    const prev = current;
+    current += (target - current) * Math.min(1, dt * 8);
+    vel = (current - prev) / Math.max(dt, 0.001);
+  } else {
+    current = target;
+    vel = 0;
+  }
+  const skew = Math.max(-6, Math.min(6, vel * 0.012));
+  track.style.transform = 'translateY(' + (-current).toFixed(2) + 'px) skewY(' + skew.toFixed(3) + 'deg)';
+  const vAbs = Math.abs(vel);
+  fill.style.width = Math.min(100, vAbs / 25) + '%';
+  vnum.textContent = vAbs.toFixed(2);
+  requestAnimationFrame(loop);
+})(last);
+
+</script>
+</body>
+</html>

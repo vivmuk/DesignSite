@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transition Playground</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:820px; margin:0 auto; padding:8vh 5vw; }
+h1 { font-size:1.6rem; margin-bottom:2rem; font-weight:700; }
+.bench { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.card { height:300px; border-radius:16px; background:#1a1a20; border:1px solid #2a2a2a; display:flex; align-items:center; justify-content:center; cursor:pointer; will-change:transform; }
+.card span { font-size:1.1rem; color:#888; letter-spacing:0.1em; }
+.panel { background:#161616; border:1px solid #2a2a2a; border-radius:16px; padding:1.6rem; display:flex; flex-direction:column; gap:1.2rem; }
+label { display:flex; flex-direction:column; gap:0.4rem; font-size:0.82rem; color:#999; }
+input[type=range] { accent-color:#8ab4ff; }
+select { background:#0d0d0d; color:#e4e4e4; border:1px solid #333; padding:0.5rem; border-radius:6px; font-size:0.85rem; }
+code { font-family:ui-monospace, monospace; font-size:0.78rem; color:#8ab4ff; border-top:1px solid #2a2a2a; padding-top:0.8rem; word-break:break-all; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>Transition Playground</h1>
+  <div class="bench">
+    <div class="card" id="card"><span>Hover me</span></div>
+    <div class="panel">
+      <label>Duration <input type="range" id="dur" min="0" max="1200" value="350"> <span id="durv">350ms</span></label>
+      <label>Delay <input type="range" id="del" min="0" max="500" value="0"> <span id="delv">0ms</span></label>
+      <label>Easing <select id="ease">
+        <option value="ease">ease</option>
+        <option value="ease-in-out">ease-in-out</option>
+        <option value="cubic-bezier(0.34, 1.56, 0.64, 1)">overshoot bezier</option>
+        <option value="steps(5, end)">steps(5)</option>
+        <option value="linear">linear</option>
+      </select></label>
+      <label>Property <select id="prop">
+        <option value="transform">transform (lift + scale)</option>
+        <option value="background">background</option>
+        <option value="all">all</option>
+      </select></label>
+      <code id="cssout">transition: transform 350ms ease</code>
+    </div>
+  </div>
+</div>
+
+<script>
+
+const card = document.getElementById('card');
+function upd() {
+  const dur = dur.value, del = del.value, ease = easeSel.value, prop = propSel.value;
+  const t = prop + ' ' + dur + 'ms ' + ease + ' ' + del + 'ms';
+  card.style.transition = t;
+  document.getElementById('cssout').textContent = 'transition: ' + t;
+  document.getElementById('durv').textContent = dur + 'ms';
+  document.getElementById('delv').textContent = del + 'ms';
+  if (prop === 'background') {
+    card.dataset.bg = '1';
+  } else { card.dataset.bg = ''; }
+}
+const dur = document.getElementById('dur'), del = document.getElementById('del');
+const easeSel = document.getElementById('ease'), propSel = document.getElementById('prop');
+[dur, del, easeSel, propSel].forEach(function(el) { el.addEventListener('input', upd); });
+card.addEventListener('mouseenter', function() {
+  if (card.dataset.bg === '1') card.style.background = '#2d4a8a';
+  else card.style.transform = 'translateY(-12px) scale(1.03)';
+});
+card.addEventListener('mouseleave', function() {
+  card.style.background = '';
+  card.style.transform = '';
+});
+upd();
+
+</script>
+</body>
+</html>

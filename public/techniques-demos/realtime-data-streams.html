@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Server Monitor — streaming chart</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui;padding:20px}
+  h1{font-size:18px} .sub{color:#9a9a9a;font-size:13px}
+  .grid{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0}
+  .spark{background:#161616;border:1px solid #2a2a2a;border-radius:10px;padding:10px 14px;min-width:150px}
+  .spark h3{margin:0 0 4px;font-size:12px;color:#9a9a9a}
+  .spark b{font-size:20px}
+  canvas#stream{width:100%;max-width:860px;height:260px;background:#141414;border:1px solid #2a2a2a;border-radius:12px}
+  #ticker{font:12px/1.7 monospace;color:#8a8a8a;max-width:860px;height:84px;overflow:hidden;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>Server monitor</h1>
+<p class="sub">Simulated WebSocket feed at 20 Hz — ring-buffer render with a smooth left-shift, sparkline row, and event ticker.</p>
+<div class="grid" id="sparks"></div>
+<canvas id="stream" width="860" height="260"></canvas>
+<div id="ticker"></div>
+<script>
+const N = 240;                     // ring buffer length
+const metrics = {
+  cpu:  {data:new Array(N).fill(50),  color:'#60a5fa', unit:'%'},
+  mem:  {data:new Array(N).fill(60),  color:'#34d399', unit:'%'},
+  net:  {data:new Array(N).fill(30),  color:'#fbbf24', unit:'MB/s'},
+};
+const EVENTS = ['deploy finished','GC pause 120ms','cache miss spike','healthcheck OK','autoscaler +1 node','p99 latency 84ms'];
+
+// sparkline cards
+const sparkRow = document.getElementById('sparks');
+const sparkCtx = {};
+for (const k in metrics){
+  const d = document.createElement('div'); d.className='spark';
+  d.innerHTML = `<h3>${k.toUpperCase()}</h3><b id="v-${k}">–</b><canvas id="s-${k}" width="140" height="34"></canvas>`;
+  sparkRow.append(d);
+  sparkCtx[k] = document.getElementById('s-'+k).getContext('2d');
+}
+
+const canvas = document.getElementById('stream'), ctx = canvas.getContext('2d');
+function drawMain(){
+  const W = canvas.width, H = canvas.height;
+  ctx.fillStyle = '#141414'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle = '#222'; for(let gy=0;gy<=4;gy++){ctx.beginPath();ctx.moveTo(0,gy*H/4);ctx.lineTo(W,gy*H/4);ctx.stroke();}
+  for (const k in metrics){
+    const m = metrics[k], min = 0, max = 100;
+    ctx.beginPath();
+    m.data.forEach((v,i) => {
+      const x = i/(N-1)*W, y = H - (v-min)/(max-min)*(H-20) - 10;
+      i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+    });
+    ctx.strokeStyle = m.color; ctx.lineWidth = 1.8; ctx.stroke();
+  }
+  ctx.fillStyle = '#9a9a9a'; ctx.font = '11px monospace';
+  ctx.fillText('cpu', 8, 16); ctx.fillText('mem', 8, 30); ctx.fillText('net', 8, 44);
+}
+function drawSpark(k){
+  const m = metrics[k], c = sparkCtx[k], W=140, H=34;
+  c.clearRect(0,0,W,H);
+  c.beginPath();
+  m.data.forEach((v,i)=>{ const x=i/(N-1)*W, y=H-(v/100)*(H-4)-2; i?c.lineTo(x,y):c.moveTo(x,y); });
+  c.strokeStyle = m.color; c.lineWidth = 1.4; c.stroke();
+}
+let tick = 0;
+setInterval(() => {                       // simulated WebSocket stream
+  tick++;
+  for (const k in metrics){
+    const m = metrics[k];
+    const last = m.data[m.data.length-1];
+    const next = Math.max(2, Math.min(100, last + (Math.random()-.5)*8 + Math.sin(tick/30)*.8));
+    m.data.push(next); m.data.shift();     // ring buffer: push+shift, no re-layout
+    document.getElementById('v-'+k).textContent = next.toFixed(1) + m.unit;
+    drawSpark(k);
+  }
+  drawMain();
+  if (tick % 25 === 0){
+    const line = document.createElement('div');
+    line.textContent = new Date().toLocaleTimeString() + '  ·  ' + EVENTS[Math.floor(Math.random()*EVENTS.length)];
+    const t = document.getElementById('ticker');
+    t.prepend(line); while (t.children.length > 5) t.lastChild.remove();
+  }
+}, 50);
+drawMain();
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Custom Elements — stat-counter &amp; theme-toggle</title>
+<style>
+  body{margin:0;background:#0d0d0d;color:#e4e4e4;font:15px/1.6 system-ui;padding:32px;transition:background .3s}
+  body[data-theme=light]{background:#f2f2f2;color:#111}
+  h1{font-size:19px} .sub{color:#8a8a8a;font-size:13px}
+  body[data-theme=light] .sub{color:#555}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0}
+</style>
+</head>
+<body>
+<h1>&lt;stat-counter&gt; &amp; &lt;theme-toggle&gt;</h1>
+<p class="sub">Two real custom elements used like ordinary tags — inspect them in devtools: they're first-class DOM with attributes, lifecycle, and Shadow DOM styling.</p>
+<div class="stats">
+  <stat-counter label="Deploys" value="128" trend="+12 this week"></stat-counter>
+  <stat-counter label="Latency p99" value="84ms" trend="steady"></stat-counter>
+  <stat-counter label="Errors" value="3" trend="-2 vs yesterday"></stat-counter>
+</div>
+<theme-toggle></theme-toggle>
+<p>Click any counter to "bump" its value — the element re-renders from attributes plus internal state, entirely self-contained.</p>
+<script>
+class StatCounter extends HTMLElement{
+  static observedAttributes = ['value','trend','label'];
+  constructor(){
+    super();
+    this.attachShadow({mode:'open'});
+    this._bumps = 0;
+  }
+  connectedCallback(){ this.render(); this.shadowRoot.addEventListener('click', () => { this._bumps++; this.render(); }); }
+  attributeChangedCallback(){ if (this.shadowRoot) this.render(); }
+  get value(){ return this.getAttribute('value'); }
+  render(){
+    const light = this.closest('[data-theme=light]');
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host{display:block;min-width:170px;border:1px solid #2a2a2a;border-radius:12px;padding:14px;cursor:pointer;background:var(--card,#161616);color:var(--fg,#e4e4e4);font:14px system-ui;transition:border-color .2s}
+        :host(:hover){border-color:#60a5fa}
+        .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut,#8a8a8a)}
+        .value{font-size:26px;font-weight:700;margin:4px 0 2px}
+        .trend{font-size:12px;color:var(--mut,#8a8a8a)}
+        .bump{font-size:11px;color:#7ee787}
+      </style>
+      <div class="label">${this.getAttribute('label')||''}</div>
+      <div class="value">${this.getAttribute('value')||'–'}</div>
+      <div class="trend">${this.getAttribute('trend')||''} ${this._bumps ? `<span class="bump">+${this._bumps} bumps</span>` : ''}</div>`;
+  }
+}
+class ThemeToggle extends HTMLElement{
+  connectedCallback(){
+    this.attachShadow({mode:'open'}).innerHTML = `
+      <style>
+        button{font:inherit;background:var(--card,#161616);color:var(--fg,#e4e4e4);border:1px solid #2a2a2a;border-radius:10px;padding:8px 14px;cursor:pointer}
+      </style>
+      <button>🌗 Toggle theme</button>`;
+    this.shadowRoot.querySelector('button').onclick = () => {
+      const b = document.body;
+      b.dataset.theme = b.dataset.theme === 'light' ? '' : 'light';
+      // notify other custom elements via a custom event they can listen to
+      b.dispatchEvent(new CustomEvent('theme-change', {bubbles:true, detail:b.dataset.theme}));
+    };
+  }
+}
+customElements.define('stat-counter', StatCounter);
+customElements.define('theme-toggle', ThemeToggle);
+document.body.addEventListener('theme-change', () =>
+  document.querySelectorAll('stat-counter').forEach(el => el.render()));
+</script>
+</html>

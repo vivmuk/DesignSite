@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Particle Systems 2D</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+body{margin:0;overflow:hidden}
+canvas{display:block;touch-action:none}
+#ui{position:fixed;top:14px;left:14px;background:rgba(22,22,22,.85);border:1px solid #333;border-radius:10px;padding:12px;font-size:12px;width:190px}
+#ui .row{display:flex;gap:5px;margin-bottom:8px}
+#ui button{flex:1;background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:5px;padding:5px 0;cursor:pointer;font-size:11px}
+#ui button.on{border-color:#7ee787;color:#7ee787}
+#ui label{display:flex;justify-content:space-between;margin:5px 0;color:#888}
+#ui input{accent-color:#7ee787;width:90px}
+#hud{position:fixed;bottom:12px;left:14px;color:#555;font:11px monospace}
+
+</style></head><body>
+
+<div id=ui><div class=row><button data-m=gravity class=on>gravity</button><button data-m=attract>attract</button><button data-m=vortex>vortex</button></div>
+<label>speed <input id=sp type=range min=1 max=10 value=4></label>
+<label>life <input id=lf type=range min=20 max=120 value=60></label>
+<label>rate <input id=rt type=range min=1 max=20 value=8></label></div>
+<div id=hud></div>
+<script>
+
+const cv=document.createElement('canvas');document.body.appendChild(cv);
+const ctx=cv.getContext('2d');
+let W,H;function fit(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+fit();addEventListener('resize',fit);
+const MAX=800,parts=[];
+const P={x:innerWidth/2,y:innerHeight/2,down:false};
+addEventListener('pointermove',e=>{P.x=e.clientX;P.y=e.clientY;});
+addEventListener('pointerdown',e=>{P.down=true;
+  for(let i=0;i<60;i++){const a=Math.random()*Math.PI*2,s=2+Math.random()*6;
+    spawn(e.clientX,e.clientY,Math.cos(a)*s,Math.sin(a)*s);}});
+addEventListener('pointerup',()=>P.down=false);
+function spawn(x,y,vx,vy){
+  if(parts.length>=MAX)parts.shift();
+  parts.push({x,y,vx,vy,life:1,hue:190+Math.random()*120});
+}
+let mode='gravity',speed=4,life=60,rate=8,acc=0;
+const sliders={sp:'speed',lf:'life',rt:'rate'};
+for(const[id,key]of Object.entries(sliders)){const el=document.getElementById(id);
+  el.addEventListener('input',()=>{({sp:()=>speed=+el.value,lf:()=>life=+el.value,rt:()=>rate=+el.value})[id]();});}
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{mode=b.dataset.m;
+  document.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b));});
+let last=performance.now(),fps=60;
+(function loop(t){
+  requestAnimationFrame(loop);
+  const dt=Math.min((t-last)/1000,.032);last=t;fps+=((1/dt)-fps)*.05;
+  acc+=dt*rate*10;while(acc>1){acc--;spawn(P.x,P.y,(Math.random()-.5)*3,(Math.random()-.5)*3);}
+  // trail fade
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle='rgba(13,13,13,.18)';ctx.fillRect(0,0,innerWidth,innerHeight);
+  ctx.globalCompositeOperation='lighter';
+  for(let i=parts.length-1;i>=0;i--){
+    const p=parts[i];
+    if(mode==='gravity')p.vy+=220*dt;
+    if(mode==='attract'){const dx=P.x-p.x,dy=P.y-p.y,d=Math.hypot(dx,dy)+8;p.vx+=dx/d*300*dt;p.vy+=dy/d*300*dt;}
+    if(mode==='vortex'){const dx=P.x-p.x,dy=P.y-p.y,d=Math.hypot(dx,dy)+8;p.vx+=(-dy/d*260+dx/d*60)*dt;p.vy+=(dx/d*260+dy/d*60)*dt;}
+    p.x+=p.vx*speed*dt;p.y+=p.vy*speed*dt;
+    p.life-=dt*(70/life);
+    if(p.life<=0){parts.splice(i,1);continue;}
+    const a=p.life;
+    ctx.fillStyle=`hsla(${p.hue},90%,65%,${a*.8})`;
+    ctx.beginPath();ctx.arc(p.x,p.y,1+a*2.2,0,Math.PI*2);ctx.fill();
+  }
+  document.getElementById('hud').textContent=`${parts.length} particles · ${fps|0} fps · mode: ${mode}`;
+})(performance.now());
+</script></body></html>

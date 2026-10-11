@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Focus Management & Trapping</title><style>:root{color-scheme:dark}body{background:#0d0d0d;color:#e4e4e4;font:14px/1.5 system-ui,sans-serif;margin:0;min-height:100vh}
+
+.wrap{max-width:600px;margin:40px auto}
+button{background:#1c1c1c;border:1px solid #333;color:#e4e4e4;border-radius:8px;padding:8px 14px;cursor:pointer}
+dialog{background:#161616;color:#e4e4e4;border:1px solid #333;border-radius:12px;padding:24px;min-width:320px}
+dialog::backdrop{background:rgba(0,0,0,.7)}
+input,select{display:block;width:100%;box-sizing:border-box;margin:8px 0 16px;background:#0d0d0d;border:1px solid #333;color:#e4e4e4;border-radius:6px;padding:8px}
+#path{color:#888;font-family:monospace;font-size:12px;margin-top:16px;min-height:60px}
+#path b{color:#7ee787}
+:focus{outline:2px solid #7ee787;outline-offset:1px}
+
+</style></head><body>
+
+<div class="wrap">
+<h1>Layered modals with focus trap</h1>
+<button id="openSettings">Open Settings…</button>
+<dialog id="settings"><h2>Settings</h2>
+<label>Name<input></label>
+<label>Theme<select><option>Dark</option><option>Light</option></select></label>
+<button id="openConfirm">Delete account…</button> <button id="closeSettings" autofocus>Close</button>
+</dialog>
+<dialog id="confirm"><h2>Confirm delete</h2><p>This traps focus inside this topmost layer only.</p>
+<button id="cancelConfirm">Cancel</button> <button id="okConfirm" autofocus>Delete</button>
+</dialog>
+<div id="path">focus path: <b>—</b></div>
+</div>
+<script>
+
+const settings=document.getElementById('settings'),confirm=document.getElementById('confirm'),path=document.getElementById('path');
+let opener=null,confirmOpener=null;
+function showPath(){path.innerHTML='focus path: <b>'+[...document.querySelectorAll(':focus')].map(e=>e.id||e.tagName).join(' → ')+'</b> | document.activeElement: <b>'+(document.activeElement.id||document.activeElement.tagName)+'</b>';}
+document.addEventListener('focusin',showPath);
+document.getElementById('openSettings').addEventListener('click',e=>{opener=e.target;settings.showModal();});
+document.getElementById('closeSettings').addEventListener('click',()=>{settings.close();if(opener)opener.focus();});
+document.getElementById('openConfirm').addEventListener('click',e=>{confirmOpener=e.target;confirm.showModal();});
+document.getElementById('cancelConfirm').addEventListener('click',()=>{confirm.close();confirmOpener.focus();});
+document.getElementById('okConfirm').addEventListener('click',()=>{confirm.close();settings.close();if(opener)opener.focus();});
+// Fallback trap for browsers without <dialog>: keep focus cycling inside open dialog
+function trap(dlg){dlg.addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const f=[...dlg.querySelectorAll('button,input,select')].filter(x=>!x.disabled);
+  const first=f[0],last=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});}
+trap(settings);trap(confirm);
+</script></body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>text-wrap: balance & pretty</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:760px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  .toggle { display:flex; gap:.6rem; margin-bottom:1.8rem; flex-wrap:wrap; }
+  .toggle button { background:#1a1a1a; color:#e4e4e4; border:1px solid #333; border-radius:999px; padding:.45rem 1.2rem; cursor:pointer; font-size:.85rem; }
+  .toggle button.active { border-color:#8b7cff; color:#8b7cff; }
+  .pair { display:grid; gap:1.2rem; margin-bottom:2rem; }
+  @media (min-width:680px){ .pair { grid-template-columns:1fr 1fr; } }
+  .box { background:#141414; border:1px solid #2a2a2a; border-radius:12px; padding:1.2rem; }
+  .box h3 { margin:0 0 .7rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; color:#777; }
+  .head { font-size:1.9rem; line-height:1.15; margin:0; font-weight:800; }
+  .body { line-height:1.65; color:#bbb; font-size:.95rem; margin:0; }
+  .w-balance .head, .w-balance .body { text-wrap: balance; }
+  .w-pretty .head { text-wrap: balance; }
+  .w-pretty .body { text-wrap: pretty; }
+  .badge { display:inline-block; margin-top:.8rem; font-family:ui-monospace,monospace; font-size:.72rem; color:#e8c468; background:#101014; border:1px solid #262626; border-radius:6px; padding:.3rem .6rem; }
+  .fb { display:none; color:#e8c468; background:#1d160f; border:1px solid #4a3a2a; padding:.8rem 1rem; border-radius:10px; margin-bottom:1.4rem; font-size:.85rem; }
+</style>
+</head>
+<body>
+<h1>text-wrap: balance &amp; pretty</h1>
+<p class="sub">Same text, three wrapping algorithms. Balance evens line lengths; pretty avoids orphans in body copy.</p>
+<div class="fb" id="fb">text-wrap values beyond default aren't supported here — all columns will look identical.</div>
+<div class="toggle" role="group">
+  <button data-w="" class="active">normal</button>
+  <button data-w="w-balance">balance</button>
+  <button data-w="w-pretty">pretty</button>
+</div>
+<div class="pair">
+  <div class="box"><h3>Headline</h3>
+    <p class="head">Designing interfaces that survive their third redesign</p>
+    <span class="badge">headline · watch the rag</span>
+  </div>
+  <div class="box"><h3>Body copy</h3>
+    <p class="body">Ragged paragraph endings create orphan words — a lone short line dangling after a full paragraph. Pretty widens earlier lines slightly so the final line never sits alone, which typographers have done by hand for a century.</p>
+    <span class="badge">body · orphan avoidance</span>
+  </div>
+</div>
+<div class="pair">
+  <div class="box"><h3>Short headline test</h3>
+    <p class="head">Ship it</p><span class="badge">balance does nothing under ~3 lines</span>
+  </div>
+  <div class="box"><h3>Long headline test</h3>
+    <p class="head">The quick brown fox jumps over the lazy dog while balancing ragged edges</p><span class="badge">balance shines here</span>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.toggle button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.toggle button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    document.body.className = b.dataset.w;
+  }));
+  if (!CSS.supports('text-wrap: balance')) document.getElementById('fb').style.display = 'block';
+</script>
+</body>
+</html>

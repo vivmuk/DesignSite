@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>min() / max() / clamp() — Fluid Sizing</title>
+<style>
+  body { background:#0d0d0d; color:#e4e4e4; font-family:system-ui,sans-serif; padding:2rem; max-width:900px; margin:auto; }
+  h1 { font-size:1.5rem; } .sub { color:#777; margin-bottom:1.6rem; }
+  .hero { background:#141414; border:1px solid #2a2a2a; border-radius:16px; padding: clamp(1rem, 4vw, 3rem); }
+  .hero h2 { font-size: clamp(1.6rem, 5vw, 3.4rem); margin: 0 0 .6rem; line-height:1.1; }
+  .hero p { color:#999; max-width: 65ch; line-height:1.65; margin:0 0 1.4rem; }
+  .hero img { width: clamp(220px, 60%, 480px); aspect-ratio: 16/7; border-radius:10px; display:block;
+    background:linear-gradient(120deg,#8b7cff44,#2a7a5a44); }
+  .gap-demo { display:grid; gap: clamp(.6rem, 2vw, 2rem); grid-template-columns:repeat(auto-fit, minmax(min(200px, 100%), 1fr)); margin-top:1.6rem; }
+  .tile { background:#181818; border:1px solid #2a2a2a; border-radius:10px; padding:1rem; font-size:.85rem; color:#aaa; }
+  .labels { display:grid; gap:1rem; margin-top:1.6rem; font-family:ui-monospace,monospace; font-size:.78rem; }
+  .labels div { background:#101014; border:1px solid #222; border-radius:8px; padding:.7rem 1rem; color:#e8c468; }
+  .labels b { color:#8b7cff; }
+  .readout { position:fixed; bottom:0; left:0; right:0; background:#161616ee; border-top:1px solid #262626; padding:.5rem 1rem; font-family:ui-monospace,monospace; font-size:.78rem; color:#8b7cff; }
+</style>
+</head>
+<body>
+<h1>Fluid Sizing with min() / max() / clamp()</h1>
+<p class="sub">Resize the window — every value below breathes between hard floors and ceilings. No media queries.</p>
+<section class="hero">
+  <h2>Heading clamps between 1.6rem and 3.4rem</h2>
+  <p>The paragraph column is capped at max-width: 65ch. Padding is clamp(1rem, 4vw, 3rem). The media block is clamp(220px, 60%, 480px) wide — it can never collapse below 220px or balloon past 480px.</p>
+  <img alt="gradient placeholder">
+</section>
+<div class="gap-demo">
+  <div class="tile">Grid gap: clamp(.6rem, 2vw, 2rem)</div>
+  <div class="tile">minmax(min(200px, 100%), 1fr) — the min() inside prevents overflow on tiny screens</div>
+  <div class="tile">Each tile keeps its padding proportional to viewport, not container</div>
+</div>
+<div class="labels">
+  <div><b>heading</b> clamp(1.6rem, 5vw, 3.4rem) → <span id="r1"></span></div>
+  <div><b>padding</b> clamp(1rem, 4vw, 3rem) → <span id="r2"></span></div>
+  <div><b>media</b> clamp(220px, 60%, 480px) → <span id="r3"></span></div>
+</div>
+<div class="readout" id="readout"></div>
+<script>
+  const fmt = n => Math.round(n * 100) / 100 + 'px';
+  function update() {
+    const h2 = document.querySelector('.hero h2');
+    const hero = document.querySelector('.hero');
+    const img = document.querySelector('.hero img');
+    r1.textContent = fmt(parseFloat(getComputedStyle(h2).fontSize));
+    r2.textContent = fmt(parseFloat(getComputedStyle(hero).paddingTop));
+    r3.textContent = fmt(img.getBoundingClientRect().width);
+    readout.textContent = 'viewport: ' + innerWidth + 'px';
+  }
+  addEventListener('resize', update); update();
+</script>
+</body>
+</html>

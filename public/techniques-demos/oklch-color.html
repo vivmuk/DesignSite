@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKLCH Palette Generator</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; color:#e4e4e4; font-family:'Helvetica Neue', Arial, sans-serif; min-height:100vh; }
+
+.wrap { max-width:860px; margin:0 auto; padding:6vh 5vw; }
+h1 { font-size:1.7rem; margin-bottom:2rem; font-weight:700; }
+.ctrl { display:flex; flex-direction:column; gap:0.9rem; margin-bottom:2rem; }
+label { display:flex; align-items:center; gap:1rem; font-size:0.9rem; color:#aaa; }
+input[type=range] { flex:1; accent-color:#8ab4ff; }
+.ramp { display:grid; grid-template-columns:repeat(11, 1fr); gap:6px; }
+.step { height:120px; border-radius:8px; display:flex; flex-direction:column; justify-content:flex-end; padding:8px 6px; font-size:0.68rem; color:rgba(0,0,0,0.75); }
+.step span { display:block; line-height:1.4; }
+.cssout { font-family:ui-monospace, monospace; font-size:0.8rem; color:#8ab4ff; white-space:pre-wrap; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1>OKLCH Palette Generator</h1>
+  <div class="ctrl">
+    <label>Hue <input type="range" id="hue" min="0" max="360" value="260"></label>
+    <label>Chroma <input type="range" id="chroma" min="0" max="0.32" step="0.005" value="0.16"></label>
+    <div id="cssout" class="cssout"></div>
+  </div>
+  <div id="ramp" class="ramp"></div>
+</div>
+
+<script>
+
+function build() {
+  const h = +document.getElementById('hue').value;
+  const c = +document.getElementById('chroma').value;
+  const ramp = document.getElementById('ramp');
+  const lvals = [];
+  for (let i = 0; i <= 10; i++) lvals.push(0.95 - i * 0.09);
+  ramp.innerHTML = '';
+  let css = '--scale:\n';
+  lvals.forEach(function(l, i) {
+    const col = 'oklch(' + l.toFixed(2) + ' ' + c.toFixed(3) + ' ' + h + ')';
+    css += '  step-' + i + ': ' + col + ';\n';
+    const lum = l;
+    const fg = lum > 0.6 ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.85)';
+    const d = document.createElement('div');
+    d.className = 'step';
+    d.style.background = col;
+    d.style.color = fg;
+    d.innerHTML = '<span>L ' + l.toFixed(2) + '</span><span>' + cr(l) + ':1</span>';
+    ramp.appendChild(d);
+  });
+  document.getElementById('cssout').textContent = css;
+}
+function cr(l) {
+  const y = l <= 0.008856 ? l * 903.3 / 12.92 : Math.pow(l, 3) * 0.888888 + 0.111111;
+  const Y = Math.max(0.00001, y);
+  const f = function(v) { return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  const L1 = 1.0 * 0.2126 + f(Y) * 0.7152 + f(Y) * 0.0722;
+  return Math.max(1, Math.min(21, (1.05) / (Y * 1.0 + 0.05)).toFixed(1));
+}
+document.getElementById('hue').addEventListener('input', build);
+document.getElementById('chroma').addEventListener('input', build);
+build();
+
+</script>
+</body>
+</html>
