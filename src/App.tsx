@@ -7,6 +7,7 @@ import { ExploreTab } from './components/ExploreTab';
 import { StyleDetailPage } from './components/StyleDetailPage';
 import { GuidesTab } from './components/GuidesTab';
 import { StylesDBTab } from './components/StylesDBTab';
+import { TechniquesTab } from './components/TechniquesTab';
 import { Top200Tab } from './components/Top200Tab';
 import { TopSiteDetail } from './components/TopSiteDetail';
 import './App.css';
@@ -1555,19 +1556,14 @@ function WebsitePreview({
 // Root App with 5-tab navigation
 // ─────────────────────────────────────────────────────────────────────────────────
 const TABS = [
-  { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 100 },
-  { id: 'explore', label: 'Explore', emoji: '🔍', count: enrichedStyles.length },
-  { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
-  { id: 'systems', label: 'Design Systems', emoji: '🧩', count: openDesignSystems.length },
-  { id: 'skills', label: 'Skills', emoji: '⚡', count: openDesignSkills.length },
-  { id: 'directions', label: 'Directions', emoji: '🧭', count: 5 },
-  { id: 'showcase', label: 'Showcase', emoji: '🔥', count: allShowcaseItems.length },
-  { id: 'guides', label: 'Guides', emoji: '📖' },
+  { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 100 },
+  { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
+  { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];
 
 function App() {
-  const [activeTab, setActiveTab] = useState<string>('explore');
+  const [activeTab, setActiveTab] = useState<string>('styles');
   const [selectedStyle, setSelectedStyle] = useState<EnrichedStyle | null>(null);
   const [selectedSite, setSelectedSite] = useState<any | null>(null);
 
@@ -1598,19 +1594,12 @@ function App() {
         </div>
       </header>
       <main className="root-main">
-        {activeTab === 'explore' && (selectedStyle
-          ? <StyleDetailPage style={selectedStyle} onBack={() => setSelectedStyle(null)} onSelectStyle={handleSelectStyle} />
-          : <ExploreTab onSelectStyle={handleSelectStyle} />)}
         {activeTab === 'top200' && (selectedSite
           ? <TopSiteDetail site={selectedSite} onBack={() => setSelectedSite(null)} />
           : <Top200Tab onSelectSite={handleSelectSite} />)}
         {activeTab === 'styles' && <DesignStylesTab />}
-        {activeTab === 'systems' && <DesignSystemsTab />}
-        {activeTab === 'skills' && <SkillsTab />}
-        {activeTab === 'directions' && <DirectionsTab />}
-        {activeTab === 'showcase' && <ShowcaseTab />}
         {activeTab === 'stylesdb' && <StylesDBTab />}
-        {activeTab === 'guides' && <GuidesTab />}
+        {activeTab === 'techniques' && <TechniquesTab />}
       </main>
     </div>
   );
