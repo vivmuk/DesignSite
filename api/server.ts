@@ -26,25 +26,23 @@ function j(data: unknown, status = 200): Response {
 async function getStyles(filters: {
   category?: string; technique?: string; component?: string; q?: string; limit?: number; offset?: number;
 }) {
-  const conds: string[] = [];
-  const params: unknown[] = [];
-  if (filters.category) { params.push(filters.category); conds.push(`category = $${params.length}`); }
-  if (filters.technique) { params.push(filters.technique); conds.push(`techniques ? $${params.length}`); }
-  if (filters.component) { params.push(filters.component); conds.push(`component_focus ? $${params.length}`); }
-  if (filters.q) {
-    params.push(`%${filters.q.toLowerCase()}%`);
-    const n = params.length;
-    conds.push(`(lower(name) LIKE $${n} OR lower(intent) LIKE $${n} OR lower(description) LIKE $${n} OR lower(agent_prompt) LIKE $${n} OR lower(source::text) LIKE $${n})`);
-  }
-  const where = conds.length ? `WHERE ${conds.join(" AND ")}` : "";
   const limit = Math.min(filters.limit ?? 50, 500);
   const offset = filters.offset ?? 0;
-  params.push(limit); const lim = `$${params.length}`;
-  params.push(offset); const off = `$${params.length}`;
-  return await sql(
-    `SELECT * FROM styles ${where} ORDER BY source='core' DESC, n ASC LIMIT ${lim} OFFSET ${off}`,
-    params as string[]
-  );
+  // Compose with tagged templates only
+  let rows;
+  if (filters.category) {
+    rows = await sql`SELECT * FROM styles WHERE category = ${filters.category} ORDER BY source='core' DESC, n ASC LIMIT ${limit} OFFSET ${offset}`;
+  } else if (filters.technique) {
+    rows = await sql`SELECT * FROM styles WHERE techniques ? ${filters.technique} ORDER BY source='core' DESC, n ASC LIMIT ${limit} OFFSET ${offset}`;
+  } else if (filters.component) {
+    rows = await sql`SELECT * FROM styles WHERE component_focus ? ${filters.component} ORDER BY source='core' DESC, n ASC LIMIT ${limit} OFFSET ${offset}`;
+  } else if (filters.q) {
+    const like = "%" + filters.q.toLowerCase() + "%";
+    rows = await sql`SELECT * FROM styles WHERE lower(name) LIKE ${like} OR lower(intent) LIKE ${like} OR lower(description) LIKE ${like} OR lower(agent_prompt) LIKE ${like} OR lower(category) LIKE ${like} ORDER BY source='core' DESC, n ASC LIMIT ${limit} OFFSET ${offset}`;
+  } else {
+    rows = await sql`SELECT * FROM styles ORDER BY source='core' DESC, n ASC LIMIT ${limit} OFFSET ${offset}`;
+  }
+  return rows;
 }
 
 async function handler(req: Request): Promise<Response> {
@@ -55,7 +53,7 @@ async function handler(req: Request): Promise<Response> {
   try {
     if (path === "/health") {
       const [{ count }] = await sql`SELECT count(*)::int AS count FROM styles`;
-      return j({ ok: true, styles: count, time: new Date().toISOString() });
+      return j({ ok: true, v: "v2-patched", styles: count, time: new Date().toISOString() });
     }
 
     if (path === "/styles") {
