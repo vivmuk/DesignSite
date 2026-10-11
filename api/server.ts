@@ -99,6 +99,21 @@ async function handler(req: Request): Promise<Response> {
       return j({ query: q, count: rows.length, results: rows.map((r: Record<string, unknown>) => ({ id: r.id, name: r.name, category: r.category, tagline: r.tagline })) });
     }
 
+    if (path === "/legacy") {
+      const kind = url.searchParams.get("kind") ?? undefined;
+      let rows;
+      const limit = Math.min(Number(url.searchParams.get("limit") ?? 50), 500);
+      if (kind) {
+        rows = await sql`SELECT uid,kind,name,category,palette,summary,source_url FROM legacy_styles WHERE kind = ${kind} ORDER BY uid LIMIT ${limit}`;
+      } else if (url.searchParams.get("q")) {
+        const like = "%" + (url.searchParams.get("q") || "").toLowerCase() + "%";
+        rows = await sql`SELECT uid,kind,name,category,palette,summary,source_url FROM legacy_styles WHERE lower(name) LIKE ${like} OR lower(summary) LIKE ${like} ORDER BY uid LIMIT ${limit}`;
+      } else {
+        rows = await sql`SELECT uid,kind,name,category,palette,summary,source_url FROM legacy_styles ORDER BY kind, uid LIMIT ${limit}`;
+      }
+      return j({ count: rows.length, results: rows });
+    }
+
     if (path === "/vocab") {
       return j({
         categories: ["classic","contemporary","dark-tech","immersive-3d","scrollcraft","expressive","luxe-brand","data-pro","cultural","component-kit"],
