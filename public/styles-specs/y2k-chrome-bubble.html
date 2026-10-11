@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Y2K Chrome Bubble — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Outfit&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#C8CCE4;--surface:#E4E7F7;--fg:#1A1A2E;--muted:#5B5B7E;--accent:#FF6EC7;--accent2:#7DF9FF;--border:#9FA4C8}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Outfit',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Zen Dots',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Y2K Chrome Bubble</h1><div class="tagline">Liquid chrome dreams and bubble optimism, Y2K forever.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">fashion</span><span class="tag">music</span><span class="tag">gen-z brands</span><span class="tag">css-3d-transforms</span><span class="tag">metaball-gooey-blob</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/y2k-chrome-bubble.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/y2k-chrome-bubble.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/y2k-chrome-bubble.png" alt="Y2K Chrome Bubble preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#C8CCE4"></div><code>bg: #C8CCE4</code></div><div class="sw"><div class="chip" style="background:#E4E7F7"></div><code>surface: #E4E7F7</code></div><div class="sw"><div class="chip" style="background:#1A1A2E"></div><code>fg: #1A1A2E</code></div><div class="sw"><div class="chip" style="background:#5B5B7E"></div><code>muted: #5B5B7E</code></div><div class="sw"><div class="chip" style="background:#FF6EC7"></div><code>accent: #FF6EC7</code></div><div class="sw"><div class="chip" style="background:#7DF9FF"></div><code>accent2: #7DF9FF</code></div><div class="sw"><div class="chip" style="background:#9FA4C8"></div><code>border: #9FA4C8</code></div><p><code>linear-gradient(135deg,#E8EAF6 0%,#9FA4C8 35%,#FFFFFF 50%,#7B7FA8 65%,#F0F2FB 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Zen Dots</p><p><strong>Body:</strong> Outfit</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Futuristic bubble display over clean geometric body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Outfit&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>chrome-type-shimmer</strong></td><td>Display type carries a background-clip chrome gradient that slides (background-position 0%→200%) over 3.5s ease-in-out infinite.</td></tr><tr><td><strong>bubble-poke-squish</strong></td><td>Bubble buttons squish on hover (scaleX 1.08/scaleY .92, 150ms) then overshoot back with 400ms bounce — irresistible poking.</td></tr><tr><td><strong>gooey-blob-merge</strong></td><td>SVG gooey filter merges floating blobs; blobs drift on 14-22s ease-in-out loops and visibly merge/split near each other.</td></tr><tr><td><strong>star-sparkle-twinkle</strong></td><td>Four-pointed ✦ sparkles rotate 45° and scale 0→1→0 over 1.8s, random 2-5s delays, positioned at layout corners.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Liquid chrome gradient display type</li><li>Glossy 3D bubble buttons with highlight spots</li><li>Four-pointed ✦ star sparkle scatter</li><li>Gooey metaball blobs oozing at section edges</li><li>Silver-on-candy holographic surfaces</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">nav-bar</span><span class="tag">marquee-ticker</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Zen Dots + Outfit webfonts</span><span class="tag">SVG gooey filter (feGaussianBlur+feColorMatrix)</span><span class="tag">background-clip chrome shimmer</span><span class="tag">CSS 3D bubble buttons</span><span class="tag">vanilla JS sparkle scatter</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Millennium-optimism maximalism: liquid chrome letterforms, glossy bubble buttons you want to poke, four-pointed star sparkles, and gooey metaball shapes oozing at the edges. Silver gradients meet candy colors on glossy backgrounds. Built for fashion drops, music acts and Gen-Z brands that want unapologetic shine with playful futurism.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a fashion/music brand site in the Y2K Chrome Bubble style — liquid shine, bubble physics, millennium optimism, fully deliberate.
+LOOK: periwinkle-lavender #C8CCE4 background, raised #E4E7F7 surfaces, ink #1A1A2E, muted #5B5B7E, chrome border #9FA4C8. The two leads: candy pink #FF6EC7 and ice cyan #7DF9FF. Import fonts: https://fonts.googleapis.com/css2?family=Zen+Dots&amp;family=Outfit:wght@400;500;700;900&amp;display=swap — Zen Dots for small futuristic labels, Outfit 900 for display. Chrome text: background linear-gradient(135deg,#E8EAF6,#9FA4C8,#FFF 50%,#7B7FA8,#F0F2FB) with background-clip:text and animated background-position. Bubble buttons: pill radius, glossy overlay (inset highlight top-left), drop shadow below.
+LAYOUT: top marquee ticker (✦ NEW DROP FRIDAY ✦ type) scrolling infinitely; nav as floating chrome pill; hero with giant chrome headline, glossy CTA pair, floating gooey blobs behind; a product/drop row of 3 holographic cards with sparkle corners; a &#x27;manifesto&#x27; strip on silver gradient; mega footer with newsletter bubble input.
+MOTION: chrome gradient slides 0%→200% over 3.5s ease-in-out infinite; bubble buttons hover-squish scaleX(1.08)/scaleY(.92) 150ms with 400ms bounce return; 3 gooey blobs (SVG feGaussianBlur+feColorMatrix filter on a blur-group) drift on 14-22s ease-in-out infinite alternate loops; ✦ sparkles twinkle scale 0→1→0 rotate 45° over 1.8s with staggered random delays. Vanilla JS only for sparkle scatter and blob drift seeds.
+SIGNATURE: (1) liquid chrome shimmering display type; (2) glossy bubble buttons that beg to be poked; (3) gooey metaball merge at edges; (4) sparkle scatter as confetti dust.
+CONSTRAINTS: semantic HTML; WCAG AA — chrome text always sits on solid candy/silver surfaces, verify #1A1A2E contrast; sparkles and blobs aria-hidden decorative; responsive: blobs hidden under 700px, chrome type scales via clamp; prefers-reduced-motion stops shimmer/drift/twinkle (static chrome gradient remains); no photos — gradients and emoji only; total JS &lt; 10KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/y2k-chrome-bubble/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/y2k-chrome-bubble/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;CHROME CLUB — y2k fashion&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Zen+Dots&amp;family=Outfit:wght@400;500;700;900&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#C8CCE4;--surface:#E4E7F7;--fg:#1A1A2E;--muted:#5B5B7E;--accent:#FF6EC7;--accent2:#7DF9FF;--border:#9FA4C8;--chrome:linear-gradient(135deg,#E8EAF6 0%,#9FA4C8 25%,#FFFFFF 50%,#7B7FA8 70%,#F0F2FB 100%)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Outfit&#x27;,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--fg);text-decoration:none}
+.ticker{background:var(--fg);color:#fff;font-family:&#x27;Zen Dots&#x27;,monospace;font-size:.75rem;padding:10px 0;white-space:nowrap;overflow:hidden}
+.ticker div{display:inline-block;animation:tick 18s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative}
+header{padding:18px 0}
+.navpill{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:10px 10px 10px 26px;box-shadow:0 6px 0 rgba(26,26,46,.15), inset 0 2px 2px rgba(255,255,255,.8)}
+.logo{font-family:&#x27;Zen Dots&#x27;,monospace;font-size:1rem}
+.navpill nav{display:flex;gap:16px;font-weight:700;font-size:.85rem}
+.navpill nav a:hover{color:var(--accent)}
+.bubble{display:inline-block;background:linear-gradient(160deg,#FFD3EC 0%,var(--accent) 40%,#E0509E 100%);color:#fff;font-weight:900;padding:12px 28px;border-radius:999px;box-shadow:0 6px 0 #B8459B, inset 0 3px 4px rgba(255,255,255,.7);transition:transform .15s ease;position:relative}
+.bubble:hover{transform:scaleX(1.08) scaleY(.92)}
+.bubble:active{transform:scale(.94)}
+.bubble.cy{background:linear-gradient(160deg,#D8FCFF 0%,var(--accent2) 40%,#2BC8D6 100%);box-shadow:0 6px 0 #1FA9B6, inset 0 3px 4px rgba(255,255,255,.7)}
+.sparkle{position:absolute;color:#fff;font-size:1.4rem;animation:tw 1.8s ease-in-out infinite;pointer-events:none;text-shadow:0 0 8px rgba(255,255,255,.8)}
+@keyframes tw{0%,100%{transform:scale(0) rotate(0deg);opacity:0}50%{transform:scale(1) rotate(45deg);opacity:1}}
+.hero{position:relative;padding:56px 0 80px;text-align:center;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.85;z-index:-1;animation:drift 18s ease-in-out infinite alternate}
+.b1{width:340px;height:280px;background:radial-gradient(circle at 30% 30%,#fff,var(--accent2) 60%);top:-60px;left:-80px;animation-duration:14s}
+.b2{width:420px;height:340px;background:radial-gradient(circle at 30% 30%,#fff,var(--accent) 60%);bottom:-120px;right:-100px;animation-duration:22s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.15)}}
+.hero h1{font-weight:900;font-size:clamp(2.8rem,8vw,5.5rem);letter-spacing:-.02em;line-height:1;background:var(--chrome);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 3.5s ease-in-out infinite}
+@keyframes shimmer{to{background-position:200% 0}}
+.hero .kicker{font-family:&#x27;Zen Dots&#x27;,monospace;font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.hero p{color:var(--muted);max-width:440px;margin:20px auto 28px;font-weight:500}
+.goo{filter:url(#goo)}
+.drops{padding:56px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:24px;text-align:center;box-shadow:0 8px 0 rgba(26,26,46,.12), inset 0 2px 2px rgba(255,255,255,.7);transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.pcard:hover{transform:translateY(-8px) rotate(-1deg)}
+.holo{height:180px;border-radius:16px;margin-bottom:16px;position:relative;overflow:hidden}
+.holo::after{content:&#x27;&#x27;;position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.6) 45%,transparent 60%)}
+.h1c{background:linear-gradient(140deg,#FF9ED4,#B47CFF 50%,#7DF9FF)}
+.h2c{background:linear-gradient(140deg,#C4CBE8,#8F96C4 50%,#FFD3EC)}
+.h3c{background:linear-gradient(140deg,#7DF9FF,#9FA4C8 50%,#FF9ED4)}
+.pcard h3{font-family:&#x27;Zen Dots&#x27;,monospace;font-size:.9rem;margin-bottom:6px}
+.pcard .pr{font-weight:900;font-size:1.2rem}
+.pcard .drop{color:var(--muted);font-size:.8rem;margin-bottom:12px}
+.manifesto{background:var(--chrome);border-radius:32px;padding:64px 40px;text-align:center;margin:40px 0}
+.manifesto h2{font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);color:var(--fg)}
+footer{background:var(--fg);color:#fff;padding:48px 0;margin-top:24px}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px;font-size:.85rem}
+footer h4{font-family:&#x27;Zen Dots&#x27;,monospace;margin-bottom:12px;color:var(--accent2)}
+footer a{display:block;color:#C8CCE4;padding:3px 0}
+.nbub{display:flex;background:rgba(255,255,255,.15);border-radius:999px;padding:4px;margin-top:12px}
+.nbub input{flex:1;background:none;border:none;color:#fff;padding:8px 14px;font-family:inherit;outline:none}
+.nbub button{background:var(--accent);border:none;border-radius:999px;padding:8px 18px;font-weight:900;color:#fff}
+@media(max-width:760px){.grid,footer .wrap{grid-template-columns:1fr}.navpill nav{display:none}.blob{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;svg width=&amp;quot;0&amp;quot; height=&amp;quot;0&amp;quot; style=&amp;quot;position:absolute&amp;quot;&gt;&lt;filter id=&amp;quot;goo&amp;quot;&gt;&lt;feGaussianBlur in=&amp;quot;SourceGraphic&amp;quot; stdDeviation=&amp;quot;12&amp;quot; result=&amp;quot;b&amp;quot;/&gt;&lt;feColorMatrix in=&amp;quot;b&amp;quot; mode=&amp;quot;matrix&amp;quot; values=&amp;quot;1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9&amp;quot; result=&amp;quot;g&amp;quot;/&gt;&lt;feComposite in=&amp;quot;SourceGraphic&amp;quot; in2=&amp;quot;g&amp;quot;/&gt;&lt;/filter&gt;&lt;/svg&gt;
+&lt;div class=&amp;quot;ticker&amp;quot;&gt;&lt;div&gt;✦ NEW DROP FRIDAY ✦ CHROME CLUB SS27 ✦ FREE SHIPPING OVER $80 ✦ MEMBERS GET FIRST ACCESS ✦ NEW DROP FRIDAY ✦ CHROME CLUB SS27 ✦ FREE SHIPPING OVER $80 ✦ MEMBERS GET FIRST ACCESS ✦ &lt;/div&gt;&lt;/div&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;navpill&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;✦ CHROME CLUB&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#drops&amp;quot;&gt;Drops&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Archive&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Club&lt;/a&gt;&lt;/nav&gt;&lt;a class=&amp;quot;bubble&amp;quot; href=&amp;quot;#cta&amp;quot; style=&amp;quot;margin-left:auto;padding:9px 20px&amp;quot;&gt;JOIN ✦&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div class=&amp;quot;blob b1 goo&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;blob b2 goo&amp;quot;&gt;&lt;/div&gt;
+&lt;p class=&amp;quot;kicker&amp;quot;&gt;✦ SS27 — THE SHINE COLLECTION ✦&lt;/p&gt;
+&lt;h1&gt;SHINE LIKE&lt;br/&gt;IT&#x27;S 2001&lt;/h1&gt;
+&lt;p&gt;Liquid chrome outerwear, bubble accessories and holographic everything. Made for the future we were promised.&lt;/p&gt;
+&lt;a class=&amp;quot;bubble&amp;quot; href=&amp;quot;#drops&amp;quot;&gt;Shop the drop&lt;/a&gt; &lt;a class=&amp;quot;bubble cy&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Join the club&lt;/a&gt;
+&lt;span class=&amp;quot;sparkle&amp;quot; style=&amp;quot;top:20%;left:12%&amp;quot;&gt;✦&lt;/span&gt;&lt;span class=&amp;quot;sparkle&amp;quot; style=&amp;quot;top:60%;right:10%;animation-delay:1s&amp;quot;&gt;✦&lt;/span&gt;&lt;span class=&amp;quot;sparkle&amp;quot; style=&amp;quot;bottom:12%;left:30%;animation-delay:2.4s;font-size:1rem&amp;quot;&gt;✦&lt;/span&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;drops&amp;quot; id=&amp;quot;drops&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;pcard&amp;quot;&gt;&lt;div class=&amp;quot;holo h1c&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;LIQUID BOMBER&lt;/h3&gt;&lt;div class=&amp;quot;drop&amp;quot;&gt;drop 01 · 12 made&lt;/div&gt;&lt;div class=&amp;quot;pr&amp;quot;&gt;$240&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;pcard&amp;quot;&gt;&lt;div class=&amp;quot;holo h2c&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;BUBBLE TOTE&lt;/h3&gt;&lt;div class=&amp;quot;drop&amp;quot;&gt;drop 01 · 40 made&lt;/div&gt;&lt;div class=&amp;quot;pr&amp;quot;&gt;$120&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;pcard&amp;quot;&gt;&lt;div class=&amp;quot;holo h3c&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;STAR SHADES&lt;/h3&gt;&lt;div class=&amp;quot;drop&amp;quot;&gt;drop 02 · 25 made&lt;/div&gt;&lt;div class=&amp;quot;pr&amp;quot;&gt;$88&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;manifesto&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;✦ We dress like the future we were promised — shiny, soft, and slightly too optimistic. ✦&lt;/h2&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;manifesto&amp;quot; style=&amp;quot;margin:0 0 48px&amp;quot;&gt;&lt;h2&gt;GET FIRST ACCESS&lt;/h2&gt;&lt;p style=&amp;quot;color:var(--muted);font-weight:500;margin:10px 0 0&amp;quot;&gt;Club members shop every drop 24 hours early.&lt;/p&gt;&lt;div class=&amp;quot;nbub&amp;quot; style=&amp;quot;max-width:360px;margin:20px auto 0&amp;quot;&gt;&lt;input type=&amp;quot;email&amp;quot; placeholder=&amp;quot;you@star.mail&amp;quot; aria-label=&amp;quot;Email&amp;quot;/&gt;&lt;button&gt;JOIN ✦&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div&gt;&lt;h4&gt;✦ CHROME CLUB&lt;/h4&gt;&lt;p style=&amp;quot;color:#C8CCE4&amp;quot;&gt;Shine forever.&lt;/p&gt;&lt;/div&gt;
+&lt;div&gt;&lt;h4&gt;SHOP&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Drops&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Archive&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Gift cards&lt;/a&gt;&lt;/div&gt;
+&lt;div&gt;&lt;h4&gt;CLUB&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Membership&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Discord&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Contact&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+document.querySelectorAll(&#x27;.holo&#x27;).forEach(h=&gt;{for(let i=0;i&lt;3;i++){const s=document.createElement(&#x27;span&#x27;);s.className=&#x27;sparkle&#x27;;s.textContent=&#x27;✦&#x27;;s.style.cssText=`top:${10+Math.random()*70}%;left:${10+Math.random()*70}%;animation-delay:${Math.random()*3}s;font-size:${.8+Math.random()*.9}rem`;h.appendChild(s)}});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

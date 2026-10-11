@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ecommerce PDP Showcase — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--surface:#F6F5F2;--fg:#191919;--muted:#74716B;--accent:#1A1A1A;--accent2:#C96F4A;--border:#E6E4DF}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Archivo',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Ecommerce PDP Showcase</h1><div class="tagline">Gallery zoom, size selectors, sticky buy bar</div>
+<div class="meta"><span class="tag">component-kit</span><span class="tag">e-commerce</span><span class="tag">DTC</span><span class="tag">marketplaces</span><span class="tag">3d-product-configurator</span><span class="tag">infinite-carousel</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/ecommerce-pdp-showcase.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/ecommerce-pdp-showcase.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/ecommerce-pdp-showcase.png" alt="Ecommerce PDP Showcase preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>bg: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#F6F5F2"></div><code>surface: #F6F5F2</code></div><div class="sw"><div class="chip" style="background:#191919"></div><code>fg: #191919</code></div><div class="sw"><div class="chip" style="background:#74716B"></div><code>muted: #74716B</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>accent: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#C96F4A"></div><code>accent2: #C96F4A</code></div><div class="sw"><div class="chip" style="background:#E6E4DF"></div><code>border: #E6E4DF</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Archivo</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Assertive Archivo display with quiet Inter detail</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>zoom lens</strong></td><td>gallery hover reveals a 2× lens region with 120ms ease-out and crosshair cursor</td></tr><tr><td><strong>thumb crossfade</strong></td><td>thumbnail click crossfades the main image 250ms ease with a subtle scale 1.02→1</td></tr><tr><td><strong>buy bar rise</strong></td><td>sticky buy bar translates up from 100% over 320ms cubic-bezier(0.22,1,0.36,1) when the hero CTA scrolls out</td></tr><tr><td><strong>size pulse</strong></td><td>selected size chip pulses its ring once, 300ms, on selection</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>sticky buy bar with price + size + CTA</li><li>zoomable main gallery with lens</li><li>size selector chips with sold-out strikes</li><li>accordion: materials, shipping, returns</li><li>trust row: shipping/warranty/returns icons</li><li>review histogram with bars</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">pdp-gallery</span><span class="tag">product-card</span><span class="tag">shopping-cart-drawer</span><span class="tag">checkout-flow</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS zoom lens via background-position</span><span class="tag">IntersectionObserver sticky bar trigger</span><span class="tag">CSS grid PDP layout</span><span class="tag">Google Fonts (Archivo, Inter)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A product-detail kit done properly: gallery with pinch-free zoom lens, size selector rows with stock states, sticky buy bar that rises on scroll, and an accordion of materials and shipping. For e-commerce, DTC, and marketplaces that treat the PDP as the store&#x27;s front door. The signature is a confident, quiet layout that makes one product feel enormous.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page product detail page in the Ecommerce PDP Showcase style. LOOK: background #FFFFFF, warm-gray panels #F6F5F2, near-black text #191919, muted #74716B, accents #1A1A1A (primary buttons) and #C96F4A (terracotta highlights), border #E6E4DF. No gradients — restraint is the look. Load https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&amp;family=Inter:wght@400;500;600&amp;display=swap — Archivo display, Inter body. LAYOUT: (1) slim header with cart icon; (2) PDP split — left 60% gallery with main image, zoom lens on hover, thumbnail strip beneath; right 40%: Archivo title, price, rating row, size selector chips (one sold-out with strike), quantity stepper, add-to-cart button, trust row of three icons; (3) accordion for materials, shipping, returns; (4) review histogram with bars; (5) related-products row of three product cards; (6) footer. MOTION: hover shows a 2× zoom lens over 120ms ease-out; thumbnails crossfade the main image 250ms with scale 1.02→1; a sticky buy bar (price, size, CTA) rises from the bottom over 320ms cubic-bezier(0.22,1,0.36,1) once the hero CTA leaves view; the chosen size chip pulses its ring once for 300ms. SIGNATURE: (a) sticky buy bar, (b) zoom lens gallery, (c) sold-out strike chips. CONSTRAINTS: semantic HTML, 4.5:1 contrast, single column stacking gallery above buy-box below 800px, keyboard-operable accordion, lazy-load images. DELIVERY: Ship one self-contained index.html. Define CSS custom properties --bg:#FFFFFF, --surface:#F6F5F2, --fg:#191919, --muted:#74716B, --accent:#1A1A1A, --accent2:#C96F4A, --border:#E6E4DF on :root and use them everywhere — no hard-coded colors. Preconnect to fonts.googleapis.com and fonts.gstatic.com, load Archivo, Inter with display=swap and a system-font fallback stack to prevent layout shift. Implement the motions (zoom lens, thumb crossfade, buy bar rise, size pulse) exactly as specified; wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable. Verify before delivery: all headings in a logical h1→h3 order, focus-visible outlines on interactive elements, no horizontal overflow at 360px viewport, and images with width/height attributes to avoid CLS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/ecommerce-pdp-showcase/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/ecommerce-pdp-showcase/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Atlas Weekender — 42L&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&amp;family=Inter:wght@400;500;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#FFFFFF; --surface:#F6F5F2; --fg:#191919; --muted:#74716B;
+  --accent:#1A1A1A; --accent2:#C96F4A; --border:#E6E4DF;
+  --grad:none;
+  --display:&#x27;Archivo&#x27;, serif; --body:&#x27;Inter&#x27;, sans-serif;
+  --mono:&#x27;monospace&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.buybar{position:sticky;bottom:0;display:flex;justify-content:space-between;align-items:center;gap:12px;background:#191919;color:#fff;padding:12px 18px;border-radius:12px;max-width:420px;margin:24px auto 0}.buybar .p{font-size:.9rem}.bb-cta{background:var(--accent2);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:600;cursor:pointer;transition:transform .2s}.bb-cta:hover{transform:translateY(-2px)}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;CARRY &amp; CO&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Shop&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Journal&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Support&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Add to Cart&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;Carry &amp; Co · Travel line&lt;/p&gt;
+    &lt;h1&gt;Atlas Weekender 42L&lt;/h1&gt;
+    &lt;p&gt;Waxed canvas, brass hardware, and a laptop sleeve that actually fits. Carry-on approved.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Add to cart — $245&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Free shipping&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;buybar&amp;quot;&gt;&lt;span class=&amp;quot;p&amp;quot;&gt;$245 · Olive 42L&lt;/span&gt;&lt;button class=&amp;quot;bb-cta&amp;quot;&gt;Add to cart&lt;/button&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Waxed canvas&lt;/h3&gt;&lt;p&gt;Weatherproofed English-milled canvas.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Brass hardware&lt;/h3&gt;&lt;p&gt;Solid brass, ages beautifully.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Ten-year warranty&lt;/h3&gt;&lt;p&gt;Repairs or replaces, always.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Built for the long haul&lt;/h2&gt;
+    &lt;p&gt;Every seam is double-stitched and every zipper is user-replaceable. Ten-year warranty, no questions.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Add to cart&lt;/h2&gt;
+      &lt;p&gt;Ships tomorrow from Brooklyn.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Carry &amp; Co&lt;/span&gt;
+  &lt;span&gt;E-commerce · DTC · Marketplaces&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Airbnb Humanist — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Nunito&family=Nunito+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--surface:#F7F7F7;--fg:#222222;--muted:#717171;--accent:#FF385C;--accent2:#00A699;--border:#DDDDDD}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Nunito',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Airbnb Humanist</h1><div class="tagline">Rounded warmth, coral accents, photography leads every card.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">marketplaces</span><span class="tag">travel</span><span class="tag">communities</span><span class="tag">infinite-carousel</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/airbnb-humanist.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/airbnb-humanist.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/airbnb-humanist.png" alt="Airbnb Humanist preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>bg: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#F7F7F7"></div><code>surface: #F7F7F7</code></div><div class="sw"><div class="chip" style="background:#222222"></div><code>fg: #222222</code></div><div class="sw"><div class="chip" style="background:#717171"></div><code>muted: #717171</code></div><div class="sw"><div class="chip" style="background:#FF385C"></div><code>accent: #FF385C</code></div><div class="sw"><div class="chip" style="background:#00A699"></div><code>accent2: #00A699</code></div><div class="sw"><div class="chip" style="background:#DDDDDD"></div><code>border: #DDDDDD</code></div><p><code>linear-gradient(135deg,#FF385C 0%,#E61E4D 50%,#D70466 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Nunito</p><p><strong>Body:</strong> Nunito Sans</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Cereal stand-in: Nunito&#x27;s rounded terminals, warm weights.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Nunito&family=Nunito+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>carousel-drag-loop</strong></td><td>Photo carousels drag with momentum (0.92 friction), snap to card, and loop infinitely by cloning edges — 320ms ease-out snap.</td></tr><tr><td><strong>heart-pop-like</strong></td><td>Save-heart scales 1→1.3→1 over 260ms cubic-bezier(.3,1.4,.5,1) and fills coral; count increments with 8px rise.</td></tr><tr><td><strong>card-photo-zoom</strong></td><td>Card photos scale 1.08 over 280ms ease-out on hover with border-radius staying 16px; title gains no change — restraint.</td></tr><tr><td><strong>search-pill-grow</strong></td><td>Search bar expands from pill to full-width panel over 280ms ease-out with staged child fades (60ms stagger).</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Photography-first listing cards, 16px radius</li><li>Rounded Cereal-style type everywhere</li><li>Coral gradient reserved for brand moments</li><li>Infinite draggable photo carousels</li><li>Save-heart with bouncy fill animation</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">product-card</span><span class="tag">nav-bar</span><span class="tag">filter-sidebar</span><span class="tag">pagination</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Nunito/Nunito Sans webfonts</span><span class="tag">vanilla JS carousel with pointer events</span><span class="tag">CSS scroll-snap fallback</span><span class="tag">aspect-ratio image frames</span><span class="tag">semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Airbnb&#x27;s humanist language: photography-forward cards with Cereal-style rounded type, a warm coral accent used with discipline, and infinite carousels that invite browsing forever. Whitespace is generous but cozy — the page feels like a host welcoming you in. Purpose-built for marketplaces, travel and communities where trust and warmth must coexist with transactional clarity.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a travel marketplace in the Airbnb Humanist style — warm, photographic, trustworthy, transactionally crisp.
+LOOK: white #FFFFFF base, soft gray #F7F7F7 surfaces, ink #222222, secondary #717171, hairlines #DDDDDD. Coral #FF385C is reserved for the wordmark, save-hearts and one primary CTA — never for text fills. Teal #00A699 marks availability and success. Import fonts: https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;family=Nunito+Sans:wght@400;600&amp;display=swap — Nunito 700–800 for headings and buttons (Cereal stand-in), Nunito Sans for body. Border radius: 16px cards, 999px pills, 8px small controls.
+LAYOUT: transparent-over-photo sticky nav that gains white bg on scroll: logo, pill search &#x27;Where to? — Add dates — Add guests&#x27; center, &#x27;Become a host&#x27; + avatar right; hero is an edge-to-edge photo with the search pill floating over it; below, a filter-chips row then a responsive listing grid (aspect-ratio 4/3 photos, heart button top-right, title/location/rating/dates/price lines); infinite-feel carousels per category; a &#x27;host&#x27; promo band; mega footer.
+MOTION: carousels drag with pointer events (momentum friction 0.92, 320ms ease-out snap, cloned edges for infinite loop); heart pop 1→1.3→1 over 260ms cubic-bezier(.3,1.4,.5,1) filling coral; card photos zoom 1.08 over 280ms ease-out on hover; search pill expands to a full panel 280ms ease-out with 60ms-staggered child fades. Vanilla JS only.
+SIGNATURE: (1) photography leads — every card is 70% image; (2) coral gradient used sparingly for brand moments only; (3) rounded humanist type on everything; (4) the bouncy heart as the emotional signature.
+CONSTRAINTS: semantic HTML (nav, main, article, ul lists); WCAG AA — #717171 on white passes; hearts are &lt;button aria-pressed&gt;; carousels keyboard-accessible (arrow keys) with visible focus; responsive: 4-col grid → 2 → 1; nav search collapses to icon under 900px; prefers-reduced-motion disables momentum and pops; images lazy-loaded with LQIP placeholder backgrounds; total JS &lt; 18KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/airbnb-humanist/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/airbnb-humanist/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Staywild — humanist marketplace&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;family=Nunito+Sans:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#fff;--surface:#F7F7F7;--fg:#222;--muted:#717171;--accent:#FF385C;--accent2:#00A699;--border:#DDD;--grad:linear-gradient(135deg,#FF385C 0%,#E61E4D 50%,#D70466 100%)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Nunito Sans&#x27;,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-family:&#x27;Nunito&#x27;,sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent)}
+.searchpill{display:flex;gap:0;border:1px solid var(--border);border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow:hidden}
+.searchpill span{padding:12px 20px;font-size:.85rem;font-weight:600}
+.searchpill span+span{border-left:1px solid var(--border)}
+.searchpill .go{background:var(--grad);color:#fff;border-radius:999px;width:34px;display:grid;place-items:center;margin:4px;padding:0}
+.hlinks{display:flex;align-items:center;gap:18px;font-size:.85rem;font-weight:600}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center}
+.hero{position:relative;height:480px;overflow:hidden}
+.hero .ph{position:absolute;inset:0;background:linear-gradient(160deg,#F3D1C0 0%,#C8DCCB 60%,#A9C4D8 100%)}
+.hero .vign{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.25))}
+.hero h1{position:absolute;top:40px;left:50%;transform:translateX(-50%);font-family:&#x27;Nunito&#x27;,sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.6rem);color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.3);text-align:center;width:90%}
+.chips{display:flex;gap:10px;padding:20px 0;overflow-x:auto}
+.chip{white-space:nowrap;border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-size:.85rem;font-weight:600;transition:border-color .2s,background .2s}
+.chip.on,.chip:hover{background:var(--fg);color:#fff;border-color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:48px}
+.card{position:relative}
+.frame{aspect-ratio:4/3;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(140deg,#D8C8BE,#B8C2C8)}
+.frame .img{position:absolute;inset:0;transition:transform .28s ease-out;background:linear-gradient(150deg,rgba(255,255,255,.15),transparent)}
+.card:hover .frame .img{transform:scale(1.08)}
+.heart{position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.4rem;cursor:pointer;transition:transform .26s cubic-bezier(.3,1.4,.5,1);z-index:2}
+.heart.pop{transform:scale(1.3)}
+.heart.on{color:var(--accent)}
+.card h3{font-family:&#x27;Nunito&#x27;,sans-serif;font-weight:700;font-size:1rem;margin:10px 0 2px}
+.card .loc,.card .dates{color:var(--muted);font-size:.85rem}
+.card .rate{font-size:.85rem;font-weight:600}
+.card .price{margin-top:4px;font-size:.9rem}
+.card .price b{font-weight:800}
+.badge{position:absolute;top:14px;left:14px;background:#fff;border-radius:8px;padding:4px 10px;font-size:.75rem;font-weight:800;z-index:2}
+.hostband{background:var(--surface);border-radius:24px;padding:40px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;margin-bottom:56px}
+.hostband h2{font-family:&#x27;Nunito&#x27;,sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:8px}
+.hostband p{color:var(--muted);margin-bottom:18px}
+.btn{display:inline-block;background:var(--grad);color:#fff;padding:12px 24px;border-radius:8px;font-family:&#x27;Nunito&#x27;,sans-serif;font-weight:800;font-size:.95rem}
+.hostart{height:160px;border-radius:16px;background:linear-gradient(140deg,#FFD8A8,#FF9DB0 70%,#C08CE0)}
+footer{border-top:1px solid var(--border);padding:40px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:32px}
+footer h4{color:var(--fg);font-family:&#x27;Nunito&#x27;,sans-serif;margin-bottom:10px}
+footer a{display:block;padding:3px 0;color:var(--muted)}
+footer a:hover{color:var(--fg)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.searchpill{display:none}.hostband{grid-template-columns:1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt; staywild&lt;/a&gt;&lt;div class=&amp;quot;searchpill&amp;quot;&gt;&lt;span&gt;Anywhere&lt;/span&gt;&lt;span&gt;Any week&lt;/span&gt;&lt;span&gt;Add guests&lt;/span&gt;&lt;span class=&amp;quot;go&amp;quot;&gt;🔍&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;hlinks&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Become a host&lt;/a&gt;&lt;span class=&amp;quot;avatar&amp;quot;&gt;V&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;ph&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;vign&amp;quot;&gt;&lt;/div&gt;&lt;h1&gt;Stay somewhere with a story&lt;/h1&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;chips&amp;quot;&gt;&lt;span class=&amp;quot;chip on&amp;quot;&gt;✨ All&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;🌊 Coast&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;🏔 Cabins&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;🏙 City lofts&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;🏕 Off-grid&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;🏡 Countryside&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;grid&amp;quot; id=&amp;quot;grid&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;hostband&amp;quot;&gt;&lt;div&gt;&lt;h2&gt;Try hosting on Staywild&lt;/h2&gt;&lt;p&gt;Earn up to $2,400 a month sharing your spare room, cabin or camper. We handle payments, insurance and the awkward questions.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Learn how hosting works&lt;/a&gt;&lt;/div&gt;&lt;div class=&amp;quot;hostart&amp;quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div&gt;&lt;h4&gt;Support&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Help center&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Cancellation options&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Safety&lt;/a&gt;&lt;/div&gt;
+&lt;div&gt;&lt;h4&gt;Community&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Staywild magazine&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Host club&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Gift cards&lt;/a&gt;&lt;/div&gt;
+&lt;div&gt;&lt;h4&gt;About&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Our story&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Careers&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Press&lt;/a&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;border-top:1px solid var(--border);padding-top:20px;margin-bottom:0&amp;quot;&gt;&lt;span&gt;© 2026 Staywild, Inc. · Privacy · Terms · Sitemap&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+const H=[&#x27;🏠&#x27;,&#x27;🛖&#x27;,&#x27;🌊&#x27;,&#x27;🏔️&#x27;,&#x27;🌿&#x27;];
+const data=[[&#x27;Cedarlight Cabin&#x27;,&#x27;Fern Valley, Oregon&#x27;,4.94,&#x27;$182 night&#x27;],[&#x27;Duneview Loft&#x27;,&#x27;Cornwall, UK&#x27;,4.88,&#x27;$141 night&#x27;],[&#x27;Fjordlight Boathouse&#x27;,&#x27;Lofoten, Norway&#x27;,4.97,&#x27;$220 night&#x27;],[&#x27;Olive Grove House&#x27;,&#x27;Puglia, Italy&#x27;,4.91,&#x27;$165 night&#x27;],[&#x27;Cloudline A-frame&#x27;,&#x27;Nagano, Japan&#x27;,4.89,&#x27;$198 night&#x27;],[&#x27;Saltmarsh Bothy&#x27;,&#x27;Hebrides, Scotland&#x27;,4.92,&#x27;$127 night&#x27;],[&#x27;Papaya Courtyard&#x27;,&#x27;Oaxaca, Mexico&#x27;,4.96,&#x27;$94 night&#x27;],[&#x27;Stonefall Cottage&#x27;,&#x27;Dingle, Ireland&#x27;,4.9,&#x27;$138 night&#x27;]];
+document.getElementById(&#x27;grid&#x27;).innerHTML=data.map((d,i)=&gt;`&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;frame&amp;quot;&gt;&lt;div class=&amp;quot;img&amp;quot; style=&amp;quot;background:${[&#x27;#E8C4B0,#C2A896&#x27;,&#x27;#B8C8D4,#8FA8BC&#x27;,&#x27;#C4D4C4,#9AB8A4&#x27;,&#x27;#D4C4A8&#x27;,&#x27;#B0B8CC&#x27;][i]}&amp;quot;&gt;&lt;/div&gt;&lt;span class=&amp;quot;badge&amp;quot;&gt;★ Guest favorite&lt;/span&gt;&lt;button class=&amp;quot;heart&amp;quot; aria-pressed=&amp;quot;false&amp;quot; aria-label=&amp;quot;Save ${d[0]}&amp;quot;&gt;♡&lt;/button&gt;&lt;/div&gt;&lt;h3&gt;${d[0]}&lt;/h3&gt;&lt;div class=&amp;quot;loc&amp;quot;&gt;${d[1]}&lt;/div&gt;&lt;div class=&amp;quot;rate&amp;quot;&gt;★ ${d[2]} &lt;span style=&amp;quot;color:var(--muted)&amp;quot;&gt;(212)&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;dates&amp;quot;&gt;Oct 12 – 18&lt;/div&gt;&lt;div class=&amp;quot;price&amp;quot;&gt;&lt;b&gt;${d[3]}&lt;/b&gt;&lt;/div&gt;&lt;/article&gt;`).join(&#x27;&#x27;);
+document.querySelectorAll(&#x27;.heart&#x27;).forEach(h=&gt;h.addEventListener(&#x27;click&#x27;,()=&gt;{const on=h.classList.toggle(&#x27;on&#x27;);h.setAttribute(&#x27;aria-pressed&#x27;,on);h.textContent=on?&#x27;❤️&#x27;:&#x27;♡&#x27;;h.classList.add(&#x27;pop&#x27;);setTimeout(()=&gt;h.classList.remove(&#x27;pop&#x27;),280)}));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

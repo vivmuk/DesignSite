@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taisho Deco Japanese — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&family=Zen+Kaku+Gothic+New&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6EDDE;--surface:#FDF8EE;--fg:#2B2118;--muted:#8A7A66;--accent:#C1442E;--accent2:#3E6E5B;--border:#E0CFB2}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Zen Kaku Gothic New',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Shippori Mincho',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Taisho Deco Japanese</h1><div class="tagline">Tokyo 1925: lantern glow, lattice, quiet glamour</div>
+<div class="meta"><span class="tag">cultural</span><span class="tag">restaurants</span><span class="tag">craft brands</span><span class="tag">publishing</span><span class="tag">noise-grain-overlay</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/taisho-deco-japanese.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/taisho-deco-japanese.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/taisho-deco-japanese.png" alt="Taisho Deco Japanese preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F6EDDE"></div><code>bg: #F6EDDE</code></div><div class="sw"><div class="chip" style="background:#FDF8EE"></div><code>surface: #FDF8EE</code></div><div class="sw"><div class="chip" style="background:#2B2118"></div><code>fg: #2B2118</code></div><div class="sw"><div class="chip" style="background:#8A7A66"></div><code>muted: #8A7A66</code></div><div class="sw"><div class="chip" style="background:#C1442E"></div><code>accent: #C1442E</code></div><div class="sw"><div class="chip" style="background:#3E6E5B"></div><code>accent2: #3E6E5B</code></div><div class="sw"><div class="chip" style="background:#E0CFB2"></div><code>border: #E0CFB2</code></div><p><code>linear-gradient(135deg,#F6EDDE 0%,#F0E2C8 55%,#EAD5B0 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Shippori Mincho</p><p><strong>Body:</strong> Zen Kaku Gothic New</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Taisho-era Mincho display with warm gothic body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&family=Zen+Kaku+Gothic+New&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>andon flicker</strong></td><td>hero glow pulses via opacity keyframes 0.5→0.62→0.5 over 6s ease-in-out infinite, like paper lantern light</td></tr><tr><td><strong>lattice draw-in</strong></td><td>SVG asanoha borders stroke-dashoffset animate 600ms ease-out on IntersectionObserver</td></tr><tr><td><strong>panel rise</strong></td><td>content panels translateY(18px)+fade 500ms cubic-bezier(0.2,0.6,0.2,1) staggered 90ms on scroll into view</td></tr><tr><td><strong>seal stamp</strong></td><td>vermilion stamp scales 1.15→1 with rotate(-4deg→0) 400ms spring when footer enters</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>vertical tategaki rule lines with small kanji-cap labels</li><li>asanoha/seigaiha SVG pattern borders on section edges</li><li>vermilion hanko seal-stamp motifs</li><li>stepped deco corner brackets on cards</li><li>paper-grain overlay at 4% opacity</li><li>thin double-rule dividers with center diamond</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">footer-mega</span><span class="tag">tab-system</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">pure CSS custom properties</span><span class="tag">SVG pattern backgrounds</span><span class="tag">IntersectionObserver reveals</span><span class="tag">Google Fonts (Shippori Mincho, Zen Kaku)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Taisho-era Tokyo modernism: warm andon-lantern cream lit by vermilion and pine-green, asanoha and seigaiha lattice patterns edging every panel, and slender vertical rule lines that organize content like hanging scrolls. Use it for restaurants, craft houses, and publishers who want heritage without stuffiness. The distinctive move is East-meets-West geometry — deco symmetry drawn with Japanese pattern vocabulary.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site for a Taisho-era Japanese craft brand in the Taisho Deco Japanese style. LOOK: background #F6EDDE, surfaces #FDF8EE, text #2B2118, muted #8A7A66, accents #C1442E (vermilion) and #3E6E5B (pine), border #E0CFB2, with a soft cream linear-gradient wash. Load fonts via https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&amp;family=Zen+Kaku+Gothic+New:wght@400;500&amp;display=swap — Shippori Mincho for display, Zen Kaku Gothic New for body. LAYOUT in order: (1) header with brand mark, four links, vermilion CTA button; (2) hero with a large Mincho headline, one supporting paragraph, and a decorative asanoha lattice band; (3) three-card feature grid describing craft, material, and provenance; (4) about section with a vertical-rule flourish and seal stamp; (5) full-width vermilion CTA band; (6) footer with columns and a hanko mark. MOTION: use IntersectionObserver to fade+translateY(18px) panels over 500ms with 90ms stagger; animate SVG lattice borders with stroke-dashoffset over 600ms ease-out; add a slow 6s lantern-glow opacity pulse on the hero accent; give the footer seal a 400ms spring stamp-in. SIGNATURE: (a) every section framed by thin double rules with a center diamond, (b) a vermilion hanko seal motif used at least twice, (c) a vertical rule line with small caption text along the hero edge. CONSTRAINTS: semantic HTML (header/nav/main/section/footer), contrast ratio at least 4.5:1 for body text, responsive single-column layout below 760px, no external JS libraries, total page under 150 lines excluding SVG paths, lazy-load any images.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/taisho-deco-japanese/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/taisho-deco-japanese/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Tsubaki Craft House&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&amp;family=Zen+Kaku+Gothic+New:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#F6EDDE; --surface:#FDF8EE; --fg:#2B2118; --muted:#8A7A66;
+  --accent:#C1442E; --accent2:#3E6E5B; --border:#E0CFB2;
+  --grad:linear-gradient(135deg,#F6EDDE 0%,#F0E2C8 55%,#EAD5B0 100%);
+  --display:&#x27;Shippori Mincho&#x27;, serif; --body:&#x27;Zen Kaku Gothic New&#x27;, sans-serif;
+  --mono:&#x27;monospace&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.lattice-band{height:26px;background:repeating-linear-gradient(60deg,transparent 0 9px,var(--border) 9px 10px),repeating-linear-gradient(-60deg,transparent 0 9px,var(--border) 9px 10px);border-top:1px solid var(--border);border-bottom:1px solid var(--border);opacity:.55}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;TSUBAKI 椿&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Craft&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Collection&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Atelier&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Journal&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Visit the Atelier&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;Taisho-era craft, Tokyo&lt;/p&gt;
+    &lt;h1&gt;Lantern-lit craft for the modern table&lt;/h1&gt;
+    &lt;p&gt;Hand-thrown porcelain and washi goods from a Tokyo atelier that has kept its 1925 patterns alive.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Browse the Collection&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Our Story&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;lattice-band&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Hand-glazed porcelain&lt;/h3&gt;&lt;p&gt;Vermilion and pine glazes mixed in-house each morning.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Asanoha washi&lt;/h3&gt;&lt;p&gt;Lattice papers block-printed on century-old carved blocks.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Atelier journal&lt;/h3&gt;&lt;p&gt;Monthly notes from the wheel, the kiln, and the drawing room.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;A century of quiet glamour&lt;/h2&gt;
+    &lt;p&gt;Founded in the Taisho era, Tsubaki pairs deco geometry with Japanese pattern work — every glaze and print drawn from the atelier&#x27;s original 1920s ledgers.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Reserve a kiln-side visit&lt;/h2&gt;
+      &lt;p&gt;Tours run monthly; seats are limited to twelve guests.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Tsubaki Craft House, Tokyo&lt;/span&gt;
+  &lt;span&gt;Craft · Washi · Porcelain&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

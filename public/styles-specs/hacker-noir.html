@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hacker Noir — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070707;--surface:#111111;--fg:#EDEDED;--muted:#6B6B6B;--accent:#FF2A2A;--accent2:#8A8A8A;--border:#262626}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'IBM Plex Mono',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Hacker Noir</h1><div class="tagline">One red accent, monochrome everything, film tension.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">security</span><span class="tag">crypto</span><span class="tag">studios</span><span class="tag">noise-grain-overlay</span><span class="tag">hover-invert</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/hacker-noir.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/hacker-noir.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/hacker-noir.png" alt="Hacker Noir preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#070707"></div><code>bg: #070707</code></div><div class="sw"><div class="chip" style="background:#111111"></div><code>surface: #111111</code></div><div class="sw"><div class="chip" style="background:#EDEDED"></div><code>fg: #EDEDED</code></div><div class="sw"><div class="chip" style="background:#6B6B6B"></div><code>muted: #6B6B6B</code></div><div class="sw"><div class="chip" style="background:#FF2A2A"></div><code>accent: #FF2A2A</code></div><div class="sw"><div class="chip" style="background:#8A8A8A"></div><code>accent2: #8A8A8A</code></div><div class="sw"><div class="chip" style="background:#262626"></div><code>border: #262626</code></div><p><code>radial-gradient(circle at 70% 20%, rgba(255,42,42,0.06), transparent 55%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> IBM Plex Mono</p><p><strong>Body:</strong> IBM Plex Mono</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">One mono family at weight contrast keeps everything cold and clinical.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>hover-invert</strong></td><td>Links and cards invert to bg/fg swap in 100ms using mix-blend-mode: difference.</td></tr><tr><td><strong>redacted-reveal</strong></td><td>Black redaction bars wipe away (scaleX origin right, 500ms) on scroll into view.</td></tr><tr><td><strong>film-grain</strong></td><td>SVG turbulence noise layer flickers frames at 8fps via steps() animation, 4% opacity.</td></tr><tr><td><strong>cursor-blink</strong></td><td>Terminal-style underscore cursor after the hero verb blinks 1.1s steps(2).</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Single red accent used once per viewport</li><li>Film grain overlay</li><li>Redacted-bar text reveals</li><li>Letterboxed hero with thin white rules</li><li>Inverted hover states</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">testimonial-wall</span><span class="tag">faq-accordion</span><span class="tag">nav-bar</span><span class="tag">modal-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">mix-blend-mode: difference</span><span class="tag">SVG feTurbulence grain</span><span class="tag">vanilla JS IntersectionObserver</span><span class="tag">pure CSS, zero deps</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Pure black with a single blood-red accent; everything else is grayscale monospace set like film titles. Negative space is heavy, hover states invert like darkroom prints, and a film-grain layer keeps the mood uneasy. For security firms, crypto protocols and studios that trade in secrecy.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a security company&#x27;s site in the Hacker Noir style — minimal, monochrome, film-noir tension with exactly one red accent.
+LOOK: pure #070707 background, #EDEDED grayscale text, #6B6B6B muted, #262626 borders, and blood-red #FF2A2A used sparingly — at most one red element per viewport. Import: https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap and use IBM Plex Mono for everything; hierarchy comes from size, weight and case, never color. Surfaces are #111111. Add a fixed film-grain layer (SVG feTurbulence, 4% opacity, animating steps() at 8fps).
+LAYOUT: letterboxed hero — thin white rules above and below a full-bleed dark image with a giant monospace title and a blinking underscore cursor; testimonials as isolated quotes with redacted bars that wipe away; FAQ accordion with plus/minus monospace glyphs; nav as a thin uppercase row; CTA section almost empty with one red button.
+MOTION: hover inverts elements via mix-blend-mode: difference in 100ms; redaction bars wipe away with scaleX from right over 500ms when scrolled into view (IntersectionObserver); red accent pulses subtly 3s ease-in-out infinite.
+SIGNATURE: (1) the single red accent per viewport; (2) redaction-bar reveals; (3) letterbox rules framing the hero.
+CONSTRAINTS: semantic HTML, all text at least 4.5:1 contrast, responsive, prefers-reduced-motion stops grain and blinks, zero external images, ship under 50KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/hacker-noir/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/hacker-noir/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Hacker Noir&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#070707;--surface:#111111;--fg:#EDEDED;--muted:#6B6B6B;--accent:#FF2A2A;--accent2:#8A8A8A;--border:#262626;--grad:radial-gradient(circle at 70% 20%, rgba(255,42,42,0.06), transparent 55%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;IBM Plex Mono&#x27;,monospace;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#070707;border-radius:0px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:0px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;IBM Plex Mono&#x27;,monospace;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.04;z-index:50;background-image:url(&amp;quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;120&#x27; height=&#x27;120&#x27;%3E%3Cfilter id=&#x27;n&#x27;%3E%3CfeTurbulence type=&#x27;fractalNoise&#x27; baseFrequency=&#x27;0.9&#x27; numOctaves=&#x27;2&#x27;/%3E%3C/filter%3E%3Crect width=&#x27;120&#x27; height=&#x27;120&#x27; filter=&#x27;url(%23n)&#x27;/%3E%3C/svg%3E&amp;quot;);animation:grain .5s steps(4) infinite}
+@keyframes grain{50%{transform:translate(-2%,1%)}}
+.redbar{display:inline-block;background:#000;color:transparent;transform-origin:right;animation:wipe .5s ease forwards}
+@keyframes wipe{to{transform:scaleX(0)}}
+.inv{transition:filter .1s}.inv:hover{filter:invert(1)}
+.cursor{display:inline-block;width:.55em;height:1.1em;background:var(--fg);animation:blink 1.1s steps(2) infinite;vertical-align:-.15em}
+@keyframes blink{50%{opacity:0}}
+.quote{font-size:1.25rem;line-height:1.7;max-width:640px}
+.letterbox{border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);padding:80px 0}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Hacker&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap letterbox&amp;quot;&gt;&lt;p style=&amp;quot;letter-spacing:.3em;font-size:.8rem;color:var(--muted)&amp;quot;&gt;CLASSIFIED // ZERO-TRUST INFRASTRUCTURE&lt;/p&gt;
+&lt;h1 style=&amp;quot;margin:24px 0&amp;quot;&gt;YOUR STACK HAS SECRETS.&lt;br/&gt;WE KEEP THEM&lt;span class=&amp;quot;cursor&amp;quot;&gt;&lt;/span&gt;&lt;/h1&gt;
+&lt;a class=&amp;quot;btn&amp;quot; style=&amp;quot;background:var(--accent);color:#070707&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Request access&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card inv&amp;quot;&gt;&lt;h3&gt;Zero-trust mesh&lt;/h3&gt;&lt;p&gt;Every packet authenticated. No VPNs, no implicit trust, no exceptions.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Air-gapped audit&lt;/h3&gt;&lt;p&gt;Immutable logs shipped to &lt;span class=&amp;quot;redbar&amp;quot;&gt;████████████&lt;/span&gt; storage every 90 seconds.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card inv&amp;quot;&gt;&lt;h3&gt;Red team included&lt;/h3&gt;&lt;p&gt;Our own operators attack your deployment monthly. You get the tape.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Need to know basis&lt;/h2&gt;&lt;p&gt;We can&#x27;t name most of our customers. That&#x27;s the point. Nine of the ten largest exchanges you&#x27;ve heard of run on BlackSite, and none of them will admit it. Trust is verified here — never assumed.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;&lt;span class=&amp;quot;redbar&amp;quot;&gt;████████████████&lt;/span&gt;&lt;/h2&gt;&lt;p style=&amp;quot;color:var(--muted);margin-bottom:24px&amp;quot;&gt;Clearance required.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; style=&amp;quot;background:var(--accent);color:#070707&amp;quot; href=&amp;quot;#&amp;quot;&gt;Begin vetting&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Hacker. All rights reserved.&lt;/span&gt;&lt;span&gt;signal/noise — encrypted end to end&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

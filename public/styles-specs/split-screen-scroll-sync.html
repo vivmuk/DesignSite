@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Split-Screen Scroll Sync — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Manrope&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f1;--surface:#ffffff;--fg:#1c1b18;--muted:#8c8880;--accent:#a33e2e;--accent2:#2e4a5a;--border:#e3e0da}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Manrope',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Split-Screen Scroll Sync</h1><div class="tagline">Two halves scroll against each other, captions in lockstep</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">fashion</span><span class="tag">photography</span><span class="tag">comparisons</span><span class="tag">horizontal-scroll-section</span><span class="tag">parallax-depth-layers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/split-screen-scroll-sync.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/split-screen-scroll-sync.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/split-screen-scroll-sync.png" alt="Split-Screen Scroll Sync preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#f5f4f1"></div><code>bg: #f5f4f1</code></div><div class="sw"><div class="chip" style="background:#ffffff"></div><code>surface: #ffffff</code></div><div class="sw"><div class="chip" style="background:#1c1b18"></div><code>fg: #1c1b18</code></div><div class="sw"><div class="chip" style="background:#8c8880"></div><code>muted: #8c8880</code></div><div class="sw"><div class="chip" style="background:#a33e2e"></div><code>accent: #a33e2e</code></div><div class="sw"><div class="chip" style="background:#2e4a5a"></div><code>accent2: #2e4a5a</code></div><div class="sw"><div class="chip" style="background:#e3e0da"></div><code>border: #e3e0da</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cormorant Garamond</p><p><strong>Body:</strong> Manrope</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">High-contrast serif plates with a calm caption sans</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Manrope&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Counter-flow columns</strong></td><td>Left column scrolls native; right column translates Y negative via GSAP ScrollTrigger, scrub 1, matched total heights.</td></tr><tr><td><strong>Caption lock</strong></td><td>Captions rest at 0.25 opacity until their plate crosses center, then settle to 1 in 0.4s ease-out.</td></tr><tr><td><strong>Center rule breathe</strong></td><td>The 1px divider&#x27;s accent segment slides to the active plate&#x27;s y-position, 0.5s ease.</td></tr><tr><td><strong>Plate parallax</strong></td><td>Inside each plate, the image drifts 6% opposite its column for a double-parallax read.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Center-split counter-scrolling columns</li><li>Synced numbered plate captions</li><li>Accent-tracked center divider rule</li><li>Plate numbers 01–10 in serif small caps</li><li>Before/after mirrored pairs</li><li>Quiet gallery whitespace bands</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">image-lightbox</span><span class="tag">pagination</span><span class="tag">feature-grid</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger (dual-track sync)</span><span class="tag">Lenis smooth scroll</span><span class="tag">CSS sticky split panes</span><span class="tag">pure CSS caption fades</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The viewport splits down a center rule: the left column scrolls down while the right scrolls up, images counter-flowing past each other with captions locked to each plate. Gallery-calm palette and high-contrast serif captions. A fashion-editorial device that turns comparison and sequence into one elegant contradiction.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a fashion-editorial page in the Split-Screen Scroll Sync style. Ship one polished, self-contained page.
+
+LOOK: Gallery-calm editorial. Palette hexes exactly: bg #f5f4f1, surface #ffffff, fg #1c1b18, muted #8c8880, accent #a33e2e (terracotta), accent2 #2e4a5a (slate blue), border #e3e0da. Fonts: load https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap — Cormorant Garamond for display and plate numerals (small caps, letter-spacing .2em), Manrope for captions and body.
+
+LAYOUT, in order: (1) minimal header with serif wordmark and four links; (2) hero headline centered over the split; (3) the core split region: a 3-column grid (left plates / 1px rule / right plates) where the left column scrolls down and the right translates up in sync — six plates total, each with serif PLATE NN numeral, image, and a Manrope caption that locks to full opacity as its plate crosses center; (4) mirrored before/after pair; (5) about block &#x27;Why counter-flow&#x27;; (6) appointment CTA in terracotta; (7) footer. The accent segment on the rule tracks the active plate.
+
+MOTION: GSAP ScrollTrigger drives the right column&#x27;s negative Y translation against native left-column scroll, scrub 1, heights matched. Captions sit at 0.25 opacity and settle to 1 in 0.4s ease-out at center-cross. The rule&#x27;s accent segment slides to the active plate&#x27;s position in 0.5s. Each plate&#x27;s image drifts 6% opposite its column for double parallax.
+
+SIGNATURE: (a) the counter-flowing columns with the breathing accent rule between; (b) serif small-caps plate numerals; (c) captions that physically lock as plates center.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; under 768px collapse to a single scrolling column with the rule as a horizontal divider; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, figure, figcaption, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by disabling counter-flow.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/split-screen-scroll-sync/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/split-screen-scroll-sync/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;ATELIER NORD&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Manrope:wght@400;500;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#f5f4f1; --surface:#ffffff; --fg:#1c1b18; --muted:#8c8880;
+  --accent:#a33e2e; --accent2:#2e4a5a; --border:#e3e0da;
+  --font-display:&#x27;Cormorant Garamond&#x27;,sans-serif; --font-body:&#x27;Manrope&#x27;,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-body)}
+.split{display:grid;grid-template-columns:1fr 3px 1fr;gap:0 1.5rem;padding:0 2rem}
+.plate{margin-bottom:2.5rem}
+.plate .num{font-family:var(--font-display);font-size:1rem;letter-spacing:.2em;color:var(--muted)}
+.plate .img{aspect-ratio:3/4;background:linear-gradient(160deg,#dcd8d0,#c8c2b6);border:1px solid var(--border)}
+.plate figcaption{font-size:.8rem;color:var(--muted);margin-top:.5rem;opacity:.35;transition:opacity .4s}
+.plate figcaption.on{opacity:1}
+.rule{background:var(--border);position:relative}
+.rule i{position:absolute;left:-1px;width:3px;height:56px;background:var(--accent);top:30%;transition:top .5s ease}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;ATELIER NORD&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Collection&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Plates&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Stockists&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Journal&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;COLLECTION VII — PLATES&lt;/p&gt;&lt;h1&gt;Plates, in counterpoint.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;Two columns, two directions, one sequence. The left column falls as the right rises; the rule between them knows which plate you&#x27;re reading.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;View the plates&lt;/a&gt;
+&lt;div class=&amp;quot;split&amp;quot; style=&amp;quot;padding:0&amp;quot;&gt;&lt;div&gt;&lt;figure class=&amp;quot;plate&amp;quot;&gt;&lt;span class=&amp;quot;num&amp;quot;&gt;PLATE 01&lt;/span&gt;&lt;div class=&amp;quot;img&amp;quot;&gt;&lt;/div&gt;&lt;figcaption class=&amp;quot;on&amp;quot;&gt;Wool, unpressed — look 01&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;&lt;div class=&amp;quot;rule&amp;quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;figure class=&amp;quot;plate&amp;quot;&gt;&lt;span class=&amp;quot;num&amp;quot;&gt;PLATE 02&lt;/span&gt;&lt;div class=&amp;quot;img&amp;quot; style=&amp;quot;background:linear-gradient(20deg,#c2ccd4,#9fb0bb)&amp;quot;&gt;&lt;/div&gt;&lt;figcaption class=&amp;quot;on&amp;quot;&gt;Twill, pressed — look 02&lt;/figcaption&gt;&lt;/figure&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;The sequence&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Plate 03 — Wool, unpressed&lt;/h3&gt;&lt;p&gt;Shown against pressed twill so the hand of the cloth argues for itself.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Plate 06 — Indigo, overdyed&lt;/h3&gt;&lt;p&gt;The right column rises through the dye baths in reverse order.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Plate 09 — Selvedge, raw&lt;/h3&gt;&lt;p&gt;Final pair meets at the center rule and holds still.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;Why counter-flow&lt;/h2&gt;&lt;p&gt;Comparisons read faster when the eye doesn&#x27;t travel. Splitting the flow and syncing captions lets two garments, two fabrics or two seasons occupy the same glance — opposition as a layout device.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Book a viewing&lt;/h2&gt;&lt;p&gt;The full collection hangs in Copenhagen and online by appointment.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Request a slot&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 ATELIER NORD&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;MADE IN DENMARK · SIZES XS–XL&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

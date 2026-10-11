@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terminal CRT Phosphor — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050A06;--surface:#0A1610;--fg:#33FF66;--muted:#1D8A4A;--accent:#00FF41;--accent2:#B8FFD9;--border:#1E4D33}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'VT323',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Terminal CRT Phosphor</h1><div class="tagline">Green phosphor glow on near-black terminal glass.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">devtools</span><span class="tag">CLI products</span><span class="tag">hacker brand</span><span class="tag">noise-grain-overlay</span><span class="tag">typographic-hero</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/terminal-crt-phosphor.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/terminal-crt-phosphor.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/terminal-crt-phosphor.png" alt="Terminal CRT Phosphor preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#050A06"></div><code>bg: #050A06</code></div><div class="sw"><div class="chip" style="background:#0A1610"></div><code>surface: #0A1610</code></div><div class="sw"><div class="chip" style="background:#33FF66"></div><code>fg: #33FF66</code></div><div class="sw"><div class="chip" style="background:#1D8A4A"></div><code>muted: #1D8A4A</code></div><div class="sw"><div class="chip" style="background:#00FF41"></div><code>accent: #00FF41</code></div><div class="sw"><div class="chip" style="background:#B8FFD9"></div><code>accent2: #B8FFD9</code></div><div class="sw"><div class="chip" style="background:#1E4D33"></div><code>border: #1E4D33</code></div><p><code>radial-gradient(ellipse at 50% 0%, rgba(0,255,65,0.08), transparent 60%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> VT323</p><p><strong>Body:</strong> IBM Plex Mono</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">CRT-era pixel terminal face with a workhorse mono for body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>boot-typewriter</strong></td><td>Hero lines type char-by-char at 38ms/char via vanilla JS; block cursor blinks 1s steps(2) infinite.</td></tr><tr><td><strong>scanline-drift</strong></td><td>Repeating-linear-gradient overlay translates down 100% over 9s linear infinite at 6% opacity.</td></tr><tr><td><strong>phosphor-flicker</strong></td><td>Screen brightness keyframes 0.97–1.03 over 4s ease-in-out; disabled under prefers-reduced-motion.</td></tr><tr><td><strong>ascii-hover-invert</strong></td><td>Panel hover swaps fg/bg in 120ms ease and prepends a &#x27;&gt; &#x27; prompt glyph.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>ASCII box-drawing panel borders (┌─┬─┐)</li><li>Blinking block cursor after headings</li><li>Scanline + vignette CRT overlay</li><li>Boot-log hero with fake timestamps</li><li>Prompt-prefixed nav labels ($ cd features)</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">command-palette</span><span class="tag">hero-section</span><span class="tag">data-table</span><span class="tag">form-stack</span><span class="tag">nav-bar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">vanilla JS typewriter</span><span class="tag">pure CSS scanlines + text-shadow glow</span><span class="tag">semantic HTML, zero framework</span><span class="tag">CSS color-mix theming</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A full-screen CRT terminal simulation: phosphor-green monospace text glows over a near-black screen with drifting scanlines and a blinking block cursor. Panels are framed with ASCII box-drawing borders and copy reads like a boot log. Built for developer tools, CLI products and hacker-adjacent brands that want hardcore credibility.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a marketing site for a developer CLI tool in the Terminal CRT Phosphor style — everything on screen must feel like a living green-phosphor terminal.
+LOOK: near-black #050A06 background, phosphor green #33FF66 primary text, bright #00FF41 accents, muted #1D8A4A labels, borders #1E4D33. Every text element carries text-shadow: 0 0 8px rgba(0,255,65,.45). Import fonts: https://fonts.googleapis.com/css2?family=VT323&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap — VT323 for display, IBM Plex Mono for everything else. Add a scanline overlay (repeating-linear-gradient, 6% opacity) and subtle vignette over the whole page.
+LAYOUT: sticky one-line status bar nav with prompt-prefixed links; full-viewport boot-log hero where the headline types out character-by-character below a fake uptime line; features as three ASCII-bordered panels; about section styled as a terminal transcript; CTA as a giant prompt line &#x27;press [ENTER] to deploy&#x27;; footer as a single status row.
+MOTION: vanilla JS typewriter at 38ms/char with a block cursor blinking 1s steps(2) infinite; scanline overlay drifting 9s linear infinite; phosphor flicker keyframes 0.97–1.03 over 4s; panel hover inverts colors in 120ms ease and prepends &#x27;&gt; &#x27;.
+SIGNATURE: (1) ASCII box-drawing borders around every panel; (2) blinking block cursor after every heading; (3) boot-log lines with millisecond timestamps.
+CONSTRAINTS: semantic HTML5, contrast green-on-black passes WCAG AAA, responsive single column under 768px, prefers-reduced-motion kills flicker and typewriter, no external images, all decorative overlays aria-hidden.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/terminal-crt-phosphor/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/terminal-crt-phosphor/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Terminal CRT Phosphor&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=VT323&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#050A06;--surface:#0A1610;--fg:#33FF66;--muted:#1D8A4A;--accent:#00FF41;--accent2:#B8FFD9;--border:#1E4D33;--grad:radial-gradient(ellipse at 50% 0%, rgba(0,255,65,0.08), transparent 60%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;IBM Plex Mono&#x27;,monospace;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;VT323&#x27;,monospace;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;VT323&#x27;,monospace;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#050A06;border-radius:0px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:0px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;VT323&#x27;,monospace;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;VT323&#x27;,monospace;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;VT323&#x27;,monospace;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.cursor{display:inline-block;animation:blink 1s steps(2) infinite;color:var(--accent)}
+@keyframes blink{50%{opacity:0}}
+.crt::after{content:&#x27;&#x27;;position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,255,65,.06) 0 1px,transparent 1px 3px);animation:drift 9s linear infinite}
+@keyframes drift{to{background-position:0 100vh}}
+.glow{text-shadow:0 0 8px rgba(0,255,65,.45)}
+.boot{font-size:.85rem;color:var(--muted);text-align:left;max-width:560px;margin:0 auto 24px;border:1px solid var(--border);padding:16px;background:var(--surface)}
+.card:hover{background:var(--accent);color:var(--bg)}
+.card:hover h3,.card:hover p{color:var(--bg)}
+.card h3::after{content:&#x27; █&#x27;;color:var(--accent);animation:blink 1s steps(2) infinite}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Terminal&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;p class=&amp;quot;boot glow&amp;quot;&gt;[ 0.000012] kernel: neural_stack v2.4 loaded&lt;br/&gt;[ 0.004801] net: uplink established — 12ms&lt;br/&gt;[ 0.009233] ai: 3 models resident in memory&lt;/p&gt;
+&lt;h1 class=&amp;quot;glow&amp;quot;&gt;&amp;gt; ship faster from the terminal&lt;span class=&amp;quot;cursor&amp;quot;&gt;█&lt;/span&gt;&lt;/h1&gt;
+&lt;p&gt;The deploy pipeline for people who live in a shell. Zero dashboards. One binary. Total control.&lt;/p&gt;
+&lt;a class=&amp;quot;btn glow&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;./install.sh&lt;/a&gt; &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#features&amp;quot;&gt;man stack&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;$ zero-config&lt;/h3&gt;&lt;p&gt;Sensible defaults parsed from your repo. First deploy in under 60 seconds, guaranteed.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;$ signed builds&lt;/h3&gt;&lt;p&gt;Every artifact is checksummed and signed. Verify provenance with a single command.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;$ 12ms cold start&lt;/h3&gt;&lt;p&gt;Resident in memory, not on disk. Your pipeline never waits on us.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;glow&amp;quot;&gt;$ man neural-stack&lt;/h2&gt;&lt;p&gt;NeuralStack was built by infrastructure engineers who were tired of clicking. One binary, one config file, one command to ship. It respects your time because it was built by people whose time was being wasted too.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;glow&amp;quot;&gt;&amp;gt; ready to deploy?&lt;span class=&amp;quot;cursor&amp;quot;&gt;█&lt;/span&gt;&lt;/h2&gt;&lt;a class=&amp;quot;btn glow&amp;quot; href=&amp;quot;#&amp;quot;&gt;curl -sL get.neuralstack.dev | sh&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Terminal. All rights reserved.&lt;/span&gt;&lt;span&gt;exit 0 — uptime 99.99%&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

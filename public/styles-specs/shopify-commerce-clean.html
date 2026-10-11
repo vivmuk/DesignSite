@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shopify Commerce Clean — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--surface:#F6F6F7;--fg:#1A1A1A;--muted:#6D7175;--accent:#008060;--accent2:#5C5F62;--border:#E1E3E5}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Shopify Commerce Clean</h1><div class="tagline">Trust-first retail: crisp cards, frictionless cart, green go.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">e-commerce</span><span class="tag">subscriptions</span><span class="tag">infinite-carousel</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/shopify-commerce-clean.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/shopify-commerce-clean.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/shopify-commerce-clean.png" alt="Shopify Commerce Clean preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>bg: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#F6F6F7"></div><code>surface: #F6F6F7</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>fg: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#6D7175"></div><code>muted: #6D7175</code></div><div class="sw"><div class="chip" style="background:#008060"></div><code>accent: #008060</code></div><div class="sw"><div class="chip" style="background:#5C5F62"></div><code>accent2: #5C5F62</code></div><div class="sw"><div class="chip" style="background:#E1E3E5"></div><code>border: #E1E3E5</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Utility-grade Inter; mono only for SKUs and prices-that-count.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>add-to-cart-fly</strong></td><td>Clicking Add flies a 40px product thumb to the cart icon on a 500ms cubic-bezier(.4,0,.2,1) arc; cart badge bumps +1 with 200ms scale pulse.</td></tr><tr><td><strong>drawer-slide-in</strong></td><td>Cart drawer slides from right 320px wide, 280ms cubic-bezier(.32,.72,.24,1); backdrop fades 200ms; ESC/overlay closes with reverse.</td></tr><tr><td><strong>price-ticker-settle</strong></td><td>Cart subtotal updates as a rolling odometer: old digits slide up 240ms while new slide in from below — money never &#x27;jumps&#x27;.</td></tr><tr><td><strong>stock-urgency-pulse</strong></td><td>&#x27;Only 3 left&#x27; badges pulse opacity 1→.6→1 over 1.8s ease-in-out, max 3 pulses, only when stock &lt; 5.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Crisp product cards with exact 1px shadows</li><li>Persistent green &#x27;go&#x27; CTAs</li><li>Slide-in cart drawer with subtotal odometer</li><li>Trust row: reviews, returns, shipping promise</li><li>&#x27;Only N left&#x27; scarcity pulse badges</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">product-card</span><span class="tag">shopping-cart-drawer</span><span class="tag">checkout-flow</span><span class="tag">pdp-gallery</span><span class="tag">filter-sidebar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Inter webfont</span><span class="tag">vanilla JS cart state</span><span class="tag">FLIP fly-to-cart animation</span><span class="tag">CSS scroll-snap carousels</span><span class="tag">semantic HTML + microdata</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Shopify&#x27;s commerce school: crisp white product cards with exact shadows, a confident green accent signaling &#x27;go&#x27;, and a cart drawer engineered to remove every thought between want and buy. Prices, reviews and shipping promises are always visible — trust is the layout. The reference style for e-commerce and subscription brands that need conversion without pressure.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an e-commerce storefront in the Shopify Commerce Clean style — trust-first retail where every pixel earns the checkout.
+LOOK: white #FFFFFF base, cards #F6F6F7 with 1px #E1E3E5 borders and 0 1px 2px rgba(0,0,0,.05) shadows, ink #1A1A1A, secondary #6D7175. Commerce green #008060 is THE action color — every Add-to-cart, checkout step and success state; #5C5F62 for neutral secondary. Import fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap — Inter everywhere (600 headings, 700 prices), IBM Plex Mono only for SKUs and stock counts. Radii: 12px cards, 8px buttons, 999px pills.
+LAYOUT: 64px utility nav with store name, category links, search field and cart icon with count badge; below, a clean collection hero (headline + one trust line, no photo overload); product grid 4-col — photo on #F6F6F7, title, rating stars, price, green Add button; trust row (returns/shipping/reviews with icons); a subscription-upsell band; footer with payment-method marks. A cart drawer (320px) lives off-canvas right with line items, quantity steppers, rolling subtotal and a green checkout button.
+MOTION: Add-to-cart flies a 40px thumbnail along an arc to the cart icon over 500ms cubic-bezier(.4,0,.2,1) (FLIP technique), badge pulses 200ms; drawer slides in 280ms cubic-bezier(.32,.72,.24,1) with 200ms backdrop fade; subtotal digits roll odometer-style 240ms (old slide up, new from below); &#x27;Only 3 left&#x27; badges pulse opacity over 1.8s, max 3 cycles. Vanilla JS, no libraries.
+SIGNATURE: (1) the fly-to-cart arc as the conversion signature; (2) rolling money — subtotal and totals never jump; (3) green reserved exclusively for commerce actions; (4) trust row always within one screen of products.
+CONSTRAINTS: semantic HTML with Product microdata (name, price, availability); WCAG AA — verify #6D7175 on white; cart is a focusable dialog (focus trap, Esc close, aria-live subtotal announcements); responsive 4→2→1 columns, drawer full-width under 480px; prefers-reduced-motion replaces fly/roll with instant state updates; images lazy with fixed aspect boxes (zero CLS); total JS &lt; 20KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/shopify-commerce-clean/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/shopify-commerce-clean/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Counterline Goods — clean commerce&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#fff;--surface:#F6F6F7;--fg:#1A1A1A;--muted:#6D7175;--accent:#008060;--accent2:#5C5F62;--border:#E1E3E5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;gap:28px;height:64px}
+.logo{font-weight:700;font-size:1.05rem}
+nav{display:flex;gap:20px}
+nav a{color:var(--fg);font-size:.875rem;font-weight:500}
+nav a:hover{color:var(--accent)}
+.cartbtn{margin-left:auto;position:relative;background:none;border:1px solid var(--border);border-radius:8px;width:40px;height:40px;display:grid;place-items:center;font-size:1.1rem}
+.badge{position:absolute;top:-6px;right:-6px;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px;transition:transform .2s}
+.badge.pulse{transform:scale(1.25)}
+.hero{padding:56px 0 8px}
+.hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;letter-spacing:-.02em}
+.hero p{color:var(--muted);margin-top:8px}
+.trust{display:flex;gap:24px;flex-wrap:wrap;padding:16px 0 8px;font-size:.85rem;color:var(--muted)}
+.trust b{color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:28px 0 56px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative;display:flex;flex-direction:column}
+.photo{aspect-ratio:1/1;background:linear-gradient(150deg,#E8E4DE,#D4D8DC)}
+.photo .glyph{position:absolute;inset:0;display:grid;place-items:center;font-size:3rem;opacity:.5}
+.card .info{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:.95rem;font-weight:600}
+.stars{color:#E8A33D;font-size:.8rem;letter-spacing:1px}
+.stars span{color:var(--muted)}
+.sku{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.65rem;color:var(--muted)}
+.price{font-weight:700}
+.add{margin-top:auto;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px;font-weight:600;font-size:.875rem;transition:background .2s}
+.add:hover{background:#006E52}
+.stock{position:absolute;top:10px;left:10px;background:#fff;border:1px solid var(--border);border-radius:6px;font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.65rem;padding:3px 8px;color:#B42318;animation:urg 1.8s ease-in-out 3}
+@keyframes urg{50%{opacity:.55}}
+.drawerback{position:fixed;inset:0;background:rgba(26,26,26,.4);opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:320px;background:#fff;box-shadow:-8px 0 32px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .28s cubic-bezier(.32,.72,.24,1);z-index:31;display:flex;flex-direction:column}
+.open .drawerback{opacity:1;pointer-events:auto}
+.open .drawer{transform:none}
+.drawer header{position:static;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.drawer .items{flex:1;overflow-y:auto;padding:16px 20px}
+.line{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:center}
+.thumb{width:56px;height:56px;border-radius:8px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;flex-shrink:0}
+.line .n{font-size:.85rem;font-weight:600}
+.line .p{font-size:.8rem;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:24px;height:24px;border:1px solid var(--border);border-radius:6px;background:#fff}
+.drawer .foot{border-top:1px solid var(--border);padding:16px 20px}
+.subrow{display:flex;justify-content:space-between;font-weight:700;margin-bottom:12px}
+.odom{display:inline-block;overflow:hidden;height:1.2em}
+.odom span{display:inline-block;transition:transform .24s ease}
+.checkout{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:13px;font-weight:600;font-size:.95rem}
+.subband{background:var(--surface);border-radius:12px;padding:36px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;margin-bottom:56px}
+.subband h2{font-size:1.4rem;font-weight:600;letter-spacing:-.02em}
+.subband p{color:var(--muted);margin-top:6px;max-width:480px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.8rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.pays{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.7rem}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.subband{grid-template-columns:1fr}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.drawer{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.drawer{transition:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Counterline&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Kitchen&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Desk&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Travel&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Subscriptions&lt;/a&gt;&lt;/nav&gt;&lt;button class=&amp;quot;cartbtn&amp;quot; id=&amp;quot;cartbtn&amp;quot; aria-label=&amp;quot;Open cart&amp;quot;&gt;🛒&lt;span class=&amp;quot;badge&amp;quot; id=&amp;quot;badge&amp;quot;&gt;0&lt;/span&gt;&lt;/button&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero wrap&amp;quot;&gt;&lt;h1&gt;Tools that earn counter space.&lt;/h1&gt;&lt;p&gt;Small-batch kitchen and desk goods, built to outlast trends.&lt;/p&gt;
+&lt;div class=&amp;quot;trust&amp;quot;&gt;&lt;span&gt;↩ &lt;b&gt;30-day returns&lt;/b&gt;&lt;/span&gt;&lt;span&gt;🚚 &lt;b&gt;Free shipping&lt;/b&gt; over $50&lt;/span&gt;&lt;span&gt;★ &lt;b&gt;4.8/5&lt;/b&gt; from 12,400 reviews&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot; id=&amp;quot;grid&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;subband&amp;quot;&gt;&lt;div&gt;&lt;h2&gt;Never run out again&lt;/h2&gt;&lt;p&gt;Subscribe to any consumable — filters, soap, coffee — and save 15%. Pause or swap anytime, no phone calls.&lt;/p&gt;&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; style=&amp;quot;padding:12px 24px&amp;quot; onclick=&amp;quot;openCart()&amp;quot;&gt;Build a subscription&lt;/button&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;div class=&amp;quot;drawerback&amp;quot; id=&amp;quot;back&amp;quot;&gt;&lt;/div&gt;
+&lt;aside class=&amp;quot;drawer&amp;quot; id=&amp;quot;drawer&amp;quot; role=&amp;quot;dialog&amp;quot; aria-label=&amp;quot;Shopping cart&amp;quot;&gt;
+&lt;header&gt;&lt;b&gt;Your cart&lt;/b&gt;&lt;button onclick=&amp;quot;closeCart()&amp;quot; style=&amp;quot;background:none;border:none;font-size:1.1rem&amp;quot; aria-label=&amp;quot;Close cart&amp;quot;&gt;✕&lt;/button&gt;&lt;/header&gt;
+&lt;div class=&amp;quot;items&amp;quot; id=&amp;quot;items&amp;quot;&gt;&lt;p style=&amp;quot;color:var(--muted);font-size:.85rem;padding:12px 0&amp;quot;&gt;Your cart is empty. The grid is right there. 😉&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;foot&amp;quot;&gt;&lt;div class=&amp;quot;subrow&amp;quot;&gt;&lt;span&gt;Subtotal&lt;/span&gt;&lt;span class=&amp;quot;odom&amp;quot; id=&amp;quot;sub&amp;quot;&gt;$0.00&lt;/span&gt;&lt;/div&gt;&lt;button class=&amp;quot;checkout&amp;quot;&gt;Checkout →&lt;/button&gt;&lt;p style=&amp;quot;color:var(--muted);font-size:.7rem;text-align:center;margin-top:8px&amp;quot;&gt;Shipping &amp;amp; taxes calculated at checkout&lt;/p&gt;&lt;/div&gt;
+&lt;/aside&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Counterline Goods Co.&lt;/span&gt;&lt;span class=&amp;quot;pays&amp;quot;&gt;VISA · MASTERCARD · AMEX · PAYPAL · SHOP PAY&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+const P=[[&#x27; pour-over kettle&#x27;,&#x27;$89.00&#x27;,&#x27;KTL-041&#x27;,0],[&#x27;walnut desk tray&#x27;,&#x27;$54.00&#x27;,&#x27;DSK-118&#x27;,0],[&#x27;ceramic pour set&#x27;,&#x27;$42.00&#x27;,&#x27;CRM-207&#x27;,2],[&#x27;field notebook 3-pack&#x27;,&#x27;$18.00&#x27;,&#x27;NTB-033&#x27;,0],[&#x27;insulated bottle 750ml&#x27;,&#x27;$38.00&#x27;,&#x27;BTL-522&#x27;,0],[&#x27;brass desk lamp&#x27;,&#x27;$124.00&#x27;,&#x27;LMP-090&#x27;,1],[&#x27;linen apron&#x27;,&#x27;$46.00&#x27;,&#x27;APR-014&#x27;,0],[&#x27;spice grinder&#x27;,&#x27;$64.00&#x27;,&#x27;SPC-311&#x27;,3]];
+const items={};let count=0;
+const grid=document.getElementById(&#x27;grid&#x27;);
+grid.innerHTML=P.map((p,i)=&gt;`&lt;article class=&amp;quot;card&amp;quot; itemscope itemtype=&amp;quot;https://schema.org/Product&amp;quot;&gt;&lt;div class=&amp;quot;photo&amp;quot;&gt;&lt;span class=&amp;quot;glyph&amp;quot;&gt;${[&#x27;☕&#x27;,&#x27;📐&#x27;,&#x27;🍶&#x27;,&#x27;📓&#x27;,&#x27;🧴&#x27;,&#x27;💡&#x27;,&#x27;🧵&#x27;,&#x27;🧂&#x27;][i]}&lt;/span&gt;&lt;/div&gt;${p[3]?`&lt;span class=&amp;quot;stock&amp;quot;&gt;ONLY ${5-p[3]} LEFT&lt;/span&gt;`:&#x27;&#x27;}&lt;div class=&amp;quot;info&amp;quot;&gt;&lt;span class=&amp;quot;sku&amp;quot;&gt;${p[2]}&lt;/span&gt;&lt;h3 itemprop=&amp;quot;name&amp;quot;&gt;${p[0]}&lt;/h3&gt;&lt;div class=&amp;quot;stars&amp;quot;&gt;★★★★★ &lt;span&gt;(${120+i*37})&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;price&amp;quot; itemprop=&amp;quot;price&amp;quot; content=&amp;quot;${p[1]}&amp;quot;&gt;${p[1]}&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; data-i=&amp;quot;${i}&amp;quot;&gt;Add to cart&lt;/button&gt;&lt;/div&gt;&lt;/article&gt;`).join(&#x27;&#x27;);
+function renderCart(){const box=document.getElementById(&#x27;items&#x27;);const keys=Object.keys(items);
+if(!keys.length){box.innerHTML=&#x27;&lt;p style=&amp;quot;color:var(--muted);font-size:.85rem;padding:12px 0&amp;quot;&gt;Your cart is empty. The grid is right there. 😉&lt;/p&gt;&#x27;}
+else{box.innerHTML=keys.map(k=&gt;{const it=items[k];return `&lt;div class=&amp;quot;line&amp;quot;&gt;&lt;div class=&amp;quot;thumb&amp;quot;&gt;${it.g}&lt;/div&gt;&lt;div style=&amp;quot;flex:1&amp;quot;&gt;&lt;div class=&amp;quot;n&amp;quot;&gt;${it.name}&lt;/div&gt;&lt;div class=&amp;quot;p&amp;quot;&gt;${it.price}&lt;/div&gt;&lt;div class=&amp;quot;qty&amp;quot;&gt;&lt;button onclick=&amp;quot;bump(&#x27;${k}&#x27;,-1)&amp;quot; aria-label=&amp;quot;Decrease&amp;quot;&gt;−&lt;/button&gt;&lt;b&gt;${it.q}&lt;/b&gt;&lt;button onclick=&amp;quot;bump(&#x27;${k}&#x27;,1)&amp;quot; aria-label=&amp;quot;Increase&amp;quot;&gt;+&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`}).join(&#x27;&#x27;)}
+const sub=Object.values(items).reduce((s,i)=&gt;s+i.q*parseFloat(i.price.slice(1)),0);
+const el=document.getElementById(&#x27;sub&#x27;);el.textContent=&#x27;$&#x27;+sub.toFixed(2);
+const b=document.getElementById(&#x27;badge&#x27;);b.textContent=count;b.classList.add(&#x27;pulse&#x27;);setTimeout(()=&gt;b.classList.remove(&#x27;pulse&#x27;),200)}
+window.bump=(k,d)=&gt;{items[k].q+=d;if(items[k].q&lt;1)delete items[k];count+=d;renderCart()};
+grid.addEventListener(&#x27;click&#x27;,e=&gt;{const btn=e.target.closest(&#x27;.add&#x27;);if(!btn)return;const i=+btn.dataset.i,p=P[i];
+if(items[p[2]])items[p[2]].q++;else items[p[2]]={name:p[0],price:p[1],q:1,g:[&#x27;☕&#x27;,&#x27;📐&#x27;,&#x27;🍶&#x27;,&#x27;📓&#x27;,&#x27;🧴&#x27;,&#x27;💡&#x27;,&#x27;🧵&#x27;,&#x27;🧂&#x27;][i]};count++;
+const thumb=btn.closest(&#x27;.card&#x27;).querySelector(&#x27;.photo&#x27;).cloneNode(true);
+thumb.style.cssText=&#x27;position:fixed;width:40px;height:40px;z-index:50;border-radius:8px;pointer-events:none&#x27;;
+const r=btn.getBoundingClientRect(),c=document.getElementById(&#x27;cartbtn&#x27;).getBoundingClientRect();
+thumb.style.left=r.left+&#x27;px&#x27;;thumb.style.top=r.top+&#x27;px&#x27;;document.body.appendChild(thumb);
+thumb.animate([{transform:&#x27;translate(0,0) scale(1)&#x27;,opacity:1},{transform:`translate(${c.left-r.left}px,${c.top-r.top}px) scale(.3)`,opacity:.6}],{duration:500,easing:&#x27;cubic-bezier(.4,0,.2,1)&#x27;}).onfinish=()=&gt;thumb.remove();
+renderCart()});
+function openCart(){document.body.classList.add(&#x27;open&#x27;);document.getElementById(&#x27;drawer&#x27;).querySelector(&#x27;button&#x27;).focus()}
+window.openCart=openCart;
+function closeCart(){document.body.classList.remove(&#x27;open&#x27;)}
+window.closeCart=closeCart;
+document.getElementById(&#x27;cartbtn&#x27;).addEventListener(&#x27;click&#x27;,openCart);
+document.getElementById(&#x27;back&#x27;).addEventListener(&#x27;click&#x27;,closeCart);
+addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Escape&#x27;)closeCart()});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

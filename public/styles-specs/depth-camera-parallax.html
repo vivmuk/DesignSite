@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Depth-Camera Parallax — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0C0F14;--surface:#141922;--fg:#F2F5F9;--muted:#8B96A5;--accent:#FFD166;--accent2:#5FA8D3;--border:#222A38}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Depth-Camera Parallax</h1><div class="tagline">Photos split into layers; the cursor walks between them.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">travel</span><span class="tag">photography</span><span class="tag">film</span><span class="tag">parallax-depth-layers</span><span class="tag">mouse-parallax</span><span class="tag">webgl-shader-hero</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/depth-camera-parallax.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/depth-camera-parallax.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/depth-camera-parallax.png" alt="Depth-Camera Parallax preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0C0F14"></div><code>bg: #0C0F14</code></div><div class="sw"><div class="chip" style="background:#141922"></div><code>surface: #141922</code></div><div class="sw"><div class="chip" style="background:#F2F5F9"></div><code>fg: #F2F5F9</code></div><div class="sw"><div class="chip" style="background:#8B96A5"></div><code>muted: #8B96A5</code></div><div class="sw"><div class="chip" style="background:#FFD166"></div><code>accent: #FFD166</code></div><div class="sw"><div class="chip" style="background:#5FA8D3"></div><code>accent2: #5FA8D3</code></div><div class="sw"><div class="chip" style="background:#222A38"></div><code>border: #222A38</code></div><p><code>linear-gradient(180deg,#0C0F14 0%,#11161F 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Expressive serif display with humanist body for captions.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>depth-parallax</strong></td><td>Cursor moves planes at depth-scaled factors (fg 24px, mid 12px, bg 6px), lerped 120ms.</td></tr><tr><td><strong>scroll-separate</strong></td><td>Scroll increases layer separation from 0 to 40px over the hero&#x27;s 150vh.</td></tr><tr><td><strong>focus-breathe</strong></td><td>Active layer gains 2% brightness with a 3s ease breathing loop.</td></tr><tr><td><strong>caption-drift</strong></td><td>Location captions drift at a depth factor of 1.4× — in front of the frame.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Multi-layer sliced photo parallax</li><li>Floating depth captions in front</li><li>Mouse-driven scene separation</li><li>Cinematic letterboxed frames</li><li>Depth-map hover on gallery thumbs</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">image-lightbox</span><span class="tag">pdp-gallery</span><span class="tag">testimonial-wall</span><span class="tag">nav-bar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS 3D translateZ layered parallax</span><span class="tag">pointer lerp rAF</span><span class="tag">IntersectionObserver scroll factor</span><span class="tag">poster fallback images</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Photography goes 2.5D: each hero image is sliced into depth planes that separate under cursor and scroll movement, creating a window-into-the-scene effect. Type floats between layers at its own depth. For travel, photography portfolios and film promotion.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a travel-photography site in the Depth-Camera Parallax style — photographs split into 2.5D layers that respond to cursor and scroll like a window into the scene.
+LOOK: cinematic dark #0C0F14 base, panels #141922, borders #222A38; text #F2F5F9, muted #8B96A5; warm #FFD166 sunrise accents and cool #5FA8D3 shadow accents. Import: https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&amp;family=Karla:wght@400;500&amp;display=swap — Fraunces for display with its expressive optical axis, Karla for captions and body.
+LAYOUT: letterboxed hero: a mountain-valley photo sliced into 4 stacked planes (foreground rocks, mid trees, far ridges, sky) using absolutely positioned layers with translateZ, pointer parallax moving each at depth-scaled factors (24px/12px/6px/3px); a location caption floats in front at 1.4× factor; gallery of 6 thumbs below, each splitting into 2 layers on hover; image-lightbox opens full-bleed with the deepest parallax; journal/testimonial section; minimal nav.
+MOTION: pointer movement lerps layer offsets over 120ms via rAF; scrolling the hero increases separation from 0 to 40px across 150vh; active layer breathes brightness ±2% over 3s; captions drift at 1.4× for a floating feel.
+SIGNATURE: (1) visible layer separation — you can see the photo&#x27;s bones; (2) captions floating IN FRONT of the scene; (3) letterbox bars framing every frame.
+CONSTRAINTS: layers are pre-sliced static images (or CSS gradients for the demo) — no runtime depth maps needed; pointer parallax disabled on touch (use device-orientation or scroll only); provide flat fallback for prefers-reduced-motion; lazy-load gallery; contrast at least 4.5:1.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/depth-camera-parallax/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/depth-camera-parallax/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Depth-Camera Parallax&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&amp;family=Karla:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0C0F14;--surface:#141922;--fg:#F2F5F9;--muted:#8B96A5;--accent:#FFD166;--accent2:#5FA8D3;--border:#222A38;--grad:linear-gradient(180deg,#0C0F14 0%,#11161F 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Karla&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Fraunces&#x27;,serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Fraunces&#x27;,serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#0C0F14;border-radius:6px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Fraunces&#x27;,serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Fraunces&#x27;,serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Fraunces&#x27;,serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+h1,h2{font-family:&#x27;Fraunces&#x27;,serif;font-weight:700}
+.scene{position:relative;height:64vh;overflow:hidden;border-radius:8px;border:1px solid var(--border)}
+.layer{position:absolute;inset:0;transition:transform .12s ease-out;will-change:transform}
+.l1{background:linear-gradient(180deg,#1A2436 0%,#0C0F14 100%);z-index:1}
+.l2{background:linear-gradient(180deg,transparent 30%,rgba(95,168,211,.25) 45%,transparent 60%);z-index:2}
+.l3{background:linear-gradient(180deg,transparent 45%,rgba(255,209,102,.30) 55%,rgba(255,209,102,.08) 70%,transparent 85%);z-index:3;animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{50%{filter:brightness(1.04)}}
+.l4{background:linear-gradient(180deg,transparent 62%,#3A2E24 78%,#241B14 100%);z-index:4}
+.caption-float{position:absolute;bottom:24px;left:24px;z-index:6;font-family:&#x27;Fraunces&#x27;,serif;font-size:1.4rem;color:#FFF}
+.letterbox{max-width:1000px;margin:0 auto;border-top:24px solid #000;border-bottom:24px solid #000}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.thumb{height:140px;border-radius:6px;overflow:hidden;position:relative;cursor:pointer;transition:transform .25s}
+.thumb::before{content:&#x27;&#x27;;position:absolute;inset:0;background:linear-gradient(180deg,rgba(95,168,211,.2),transparent 50%);opacity:0;transition:opacity .25s}
+.thumb:hover{transform:scale(1.03) translateY(-4px)}
+.thumb:hover::before{opacity:1}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Depth-Camera&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;letterbox&amp;quot;&gt;&lt;div class=&amp;quot;scene&amp;quot;&gt;
+&lt;div class=&amp;quot;layer l1&amp;quot; data-depth=&amp;quot;3&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;layer l2&amp;quot; data-depth=&amp;quot;6&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;layer l3&amp;quot; data-depth=&amp;quot;12&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;layer l4&amp;quot; data-depth=&amp;quot;24&amp;quot;&gt;&lt;/div&gt;
+&lt;p class=&amp;quot;caption-float&amp;quot;&gt;Dolomites · 6:41 am · f/8&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 style=&amp;quot;text-align:center;margin:32px 0 12px&amp;quot;&gt;Walk into the frame&lt;/h1&gt;
+&lt;p style=&amp;quot;text-align:center;max-width:520px;margin:0 auto 40px&amp;quot;&gt;Move your cursor — the mountain answers. Every photograph here is a place you can lean into.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Dolomites, Italy&lt;/h3&gt;&lt;p&gt;Four planes of alpine dawn. Shot from a tent at 2,300m, edited in one sitting.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Kyoto, Japan&lt;/h3&gt;&lt;p&gt;Rain layers over lantern glow. The parallax separation makes the drizzle physical.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Patagonia, Chile&lt;/h3&gt;&lt;p&gt;Wind at three depths — grass, mist, granite. Prints available, depth included.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Depth is memory&lt;/h2&gt;&lt;p&gt;A flat photograph is a postcard; a layered one is a doorway. I slice every frame the way I remember it — foreground underfoot, weather at arm&#x27;s length, sky forever. The cursor just does what your eyes would.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Step through the lightbox.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;View the full journal&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Depth-Camera. All rights reserved.&lt;/span&gt;&lt;span&gt;Open for commissions 2027 · Prints ship worldwide&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

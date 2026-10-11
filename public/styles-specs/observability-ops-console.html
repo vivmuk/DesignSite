@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Observability Ops Console — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter+Tight&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1220;--surface:#111B2E;--fg:#DCE6F5;--muted:#64789C;--accent:#3B82F6;--accent2:#F59E0B;--border:#1E2C4A}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter Tight',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Observability Ops Console</h1><div class="tagline">Dense charts, status dots, p99 latency histograms.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">devops</span><span class="tag">monitoring</span><span class="tag">enterprise</span><span class="tag">count-up-numbers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/observability-ops-console.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/observability-ops-console.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/observability-ops-console.png" alt="Observability Ops Console preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0B1220"></div><code>bg: #0B1220</code></div><div class="sw"><div class="chip" style="background:#111B2E"></div><code>surface: #111B2E</code></div><div class="sw"><div class="chip" style="background:#DCE6F5"></div><code>fg: #DCE6F5</code></div><div class="sw"><div class="chip" style="background:#64789C"></div><code>muted: #64789C</code></div><div class="sw"><div class="chip" style="background:#3B82F6"></div><code>accent: #3B82F6</code></div><div class="sw"><div class="chip" style="background:#F59E0B"></div><code>accent2: #F59E0B</code></div><div class="sw"><div class="chip" style="background:#1E2C4A"></div><code>border: #1E2C4A</code></div><p><code>linear-gradient(180deg,#0B1220 0%,#0E1730 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter Tight</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Inter maximizes UI density; JetBrains Mono carries metrics.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter+Tight&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>live-sparkline</strong></td><td>Sparklines append a point every 2s and shift left with a 300ms linear transition.</td></tr><tr><td><strong>status-pulse</strong></td><td>Status dots emit an expanding ring (scale 1→2, fade) every 2.4s.</td></tr><tr><td><strong>kpi-countup</strong></td><td>Error-rate and p99 figures tick up 1s ease-out on viewport entry.</td></tr><tr><td><strong>panel-lift</strong></td><td>Panel hover raises border to accent color and lifts 2px, 180ms ease.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Status dot grid with pulse rings</li><li>Sparkline row headers</li><li>Severity badges (P1/P2/P3)</li><li>Latency histogram panels</li><li>Uptime bar strips</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">chart-suite</span><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">notification-center</span><span class="tag">nav-bar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">uPlot or canvas sparklines</span><span class="tag">CSS grid dashboard layout</span><span class="tag">vanilla JS count-up</span><span class="tag">CSS custom properties theming</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Datadog-school operations room: a navy-dark canvas packed with sparklines, latency histograms, status dots and severity badges, where every pixel reports something. Screens feel monitored, not decorated. For devops platforms, monitoring products and enterprise consoles.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a monitoring platform&#x27;s marketing page in the Observability Ops Console style — dense, live and relentlessly informative.
+LOOK: navy #0B1220 background, panels on #111B2E with #1E2C4A borders; text #DCE6F5, muted #64789C, primary blue #3B82F6, warn amber #F59E0B, error red #EF4444, ok green #22C55E. Import: https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap. Every numeric value renders in JetBrains Mono, tabular-nums. Panels are compact: 12px padding, 1px borders, small-caps titles.
+LAYOUT: top nav with a live incident counter badge; hero split as an actual dashboard — headline left, a 2×3 wall of live panels right (sparklines, status grid, p99 histogram); stats band of five KPI tiles counting up; a data-table section listing recent incidents with severity badges; notification-center style alert rail; CTA framed as &#x27;start monitoring in 90 seconds&#x27;.
+MOTION: sparklines append a point every 2s and shift with a 300ms linear transition (canvas or uPlot); status dots pulse an expanding ring scale 1→2 fading over 2.4s; KPIs count up 1s ease-out when visible; panels lift 2px with accent border on hover in 180ms.
+SIGNATURE: (1) pulsing status dot grid; (2) sparkline-prefixed panel titles; (3) severity badge taxonomy used consistently.
+CONSTRAINTS: semantic HTML, at least 4.5:1 contrast, responsive — the panel wall stacks under 900px, prefers-reduced-motion freezes sparkline appends, keep JS under 15KB, throttle rAF.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/observability-ops-console/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/observability-ops-console/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Observability Ops Console&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0B1220;--surface:#111B2E;--fg:#DCE6F5;--muted:#64789C;--accent:#3B82F6;--accent2:#F59E0B;--border:#1E2C4A;--grad:linear-gradient(180deg,#0B1220 0%,#0E1730 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#0B1220;border-radius:8px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Inter Tight&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;transition:transform .18s ease,border-color .18s ease}
+.panel:hover{transform:translateY(-2px);border-color:var(--accent)}
+.panel h4{font-size:.7rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:#22C55E;position:relative;flex:none}
+.dot::after{content:&#x27;&#x27;;position:absolute;inset:0;border-radius:50%;background:#22C55E;animation:ring 2.4s ease-out infinite}
+@keyframes ring{to{transform:scale(2.4);opacity:0}}
+.dot.warn{background:var(--accent2)}.dot.warn::after{background:var(--accent2)}
+.spark{height:36px;width:100%}
+.badge{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.65rem;padding:2px 8px;border-radius:4px}
+.b1{background:rgba(239,68,68,.2);color:#EF4444}.b2{background:rgba(245,158,11,.2);color:var(--accent2)}
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.num{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-variant-numeric:tabular-nums}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Observability&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center&amp;quot;&gt;
+&lt;div&gt;&lt;h1&gt;See the failure&lt;br/&gt;before your users do.&lt;/h1&gt;&lt;p style=&amp;quot;margin-top:16px&amp;quot;&gt;Pulsewatch watches 40,000 metrics per host so your pager only fires when it matters.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Start monitoring&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;wall&amp;quot;&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;p99 latency&lt;/h4&gt;&lt;svg class=&amp;quot;spark&amp;quot; viewBox=&amp;quot;0 0 100 36&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot;&gt;&lt;polyline points=&amp;quot;0,28 15,24 30,26 45,18 60,20 75,12 100,8&amp;quot; fill=&amp;quot;none&amp;quot; stroke=&amp;quot;#3B82F6&amp;quot; stroke-width=&amp;quot;2&amp;quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot warn&amp;quot;&gt;&lt;/span&gt;error rate&lt;/h4&gt;&lt;svg class=&amp;quot;spark&amp;quot; viewBox=&amp;quot;0 0 100 36&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot;&gt;&lt;polyline points=&amp;quot;0,30 20,28 40,24 55,26 70,14 85,16 100,10&amp;quot; fill=&amp;quot;none&amp;quot; stroke=&amp;quot;#F59E0B&amp;quot; stroke-width=&amp;quot;2&amp;quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;req/s&lt;/h4&gt;&lt;svg class=&amp;quot;spark&amp;quot; viewBox=&amp;quot;0 0 100 36&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot;&gt;&lt;polyline points=&amp;quot;0,20 15,22 30,16 45,18 60,10 75,14 100,6&amp;quot; fill=&amp;quot;none&amp;quot; stroke=&amp;quot;#22C55E&amp;quot; stroke-width=&amp;quot;2&amp;quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;status grid&lt;/h4&gt;&lt;div style=&amp;quot;display:grid;grid-template-columns:repeat(8,1fr);gap:4px&amp;quot;&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot warn&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;p99 histogram&lt;/h4&gt;&lt;div style=&amp;quot;display:flex;align-items:flex-end;gap:3px;height:36px&amp;quot;&gt;&lt;span style=&amp;quot;width:8%;height:20%;background:var(--accent)&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;width:8%;height:45%;background:var(--accent)&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;width:8%;height:70%;background:var(--accent)&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;width:8%;height:100%;background:var(--accent2)&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;width:8%;height:55%;background:var(--accent)&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;width:8%;height:30%;background:var(--accent)&amp;quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;uptime 90d&lt;/h4&gt;&lt;div style=&amp;quot;display:flex;gap:2px;height:10px&amp;quot;&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#F59E0B&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;span style=&amp;quot;flex:1;background:#22C55E&amp;quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;anomaly detection&lt;/h4&gt;&lt;p&gt;Baselines learn your traffic in 7 days and flag what looks wrong, not what is new.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;90-second setup&lt;/h4&gt;&lt;p&gt;One agent, auto-detected integrations, first dashboard before your coffee cools.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;h4&gt;&lt;span class=&amp;quot;dot&amp;quot;&gt;&lt;/span&gt;retention you control&lt;/h4&gt;&lt;p&gt;Full-resolution metrics for 13 months. Downsample on your terms, not our invoice.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Built by former on-call scars&lt;/h2&gt;&lt;p&gt;Pulsewatch exists because a 3 a.m. page should be actionable, not atmospheric. Every alert links to the exact dashboard, trace and deploy that caused it. Median time-to-acknowledge across our customers: 4 minutes 12 seconds.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Your pager deserves better.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Free 14-day trial&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Observability. All rights reserved.&lt;/span&gt;&lt;span&gt;99.99% uptime SLA · SOC2 · 40k metrics/host&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

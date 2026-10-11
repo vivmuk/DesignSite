@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bloomberg Terminal Amber — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--surface:#0E0D0A;--fg:#FFB000;--muted:#9C6B00;--accent:#FFD54A;--accent2:#00C853;--border:#3A2E10}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'IBM Plex Mono',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Bloomberg Terminal Amber</h1><div class="tagline">Amber-on-black monospace market data, zero frills</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">finance</span><span class="tag">trading</span><span class="tag">terminals</span><span class="tag">data-table</span><span class="tag">count-up-numbers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/bloomberg-terminal-amber.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/bloomberg-terminal-amber.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/bloomberg-terminal-amber.png" alt="Bloomberg Terminal Amber preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#050505"></div><code>bg: #050505</code></div><div class="sw"><div class="chip" style="background:#0E0D0A"></div><code>surface: #0E0D0A</code></div><div class="sw"><div class="chip" style="background:#FFB000"></div><code>fg: #FFB000</code></div><div class="sw"><div class="chip" style="background:#9C6B00"></div><code>muted: #9C6B00</code></div><div class="sw"><div class="chip" style="background:#FFD54A"></div><code>accent: #FFD54A</code></div><div class="sw"><div class="chip" style="background:#00C853"></div><code>accent2: #00C853</code></div><div class="sw"><div class="chip" style="background:#3A2E10"></div><code>border: #3A2E10</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> IBM Plex Mono</p><p><strong>Body:</strong> IBM Plex Mono</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">One monospace family everywhere — the terminal way</p>
+<p><a href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Quote flash</strong></td><td>Changed cells flash background amber 400ms then fade; negative values flash red #FF5252</td></tr><tr><td><strong>Ticker crawl</strong></td><td>Bottom ticker crawls at constant 60px/s, pauses on hover</td></tr><tr><td><strong>Cursor blink</strong></td><td>Block caret blinks 530ms step-end infinite in command line</td></tr><tr><td><strong>Row repaint</strong></td><td>New rows insert with 150ms height expand, no easing library needed</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Amber monospace quote grid with column headers underlined</li><li>Function-key chrome bar (F1 HELP F2 GOVMT …) at bottom</li><li>Command line with blinking block caret</li><li>Blinking up/down triangles for bid/ask</li><li>Panel borders made of box-drawing characters</li><li>All-caps amber status line with clock (UTC)</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">data-table</span><span class="tag">chart-suite</span><span class="tag">stats-band</span><span class="tag">command-palette</span><span class="tag">toast-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">pure CSS monospace grid</span><span class="tag">WebSocket-driven DOM patching</span><span class="tag">rAF ticker loop</span><span class="tag">xterm.js (command line)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The trading floor distilled: amber monospace columns on pure black, function-key chrome along the bottom, and every row a live quote. No rounded corners, no gradients, no mercy. Information density is the aesthetic — built for terminals, tickers, and people who price risk for a living.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a terminal-emulator UI engineer. Build a single-page market terminal in the Bloomberg Terminal Amber style.
+
+LOOK: Black bg #050505, panel #0E0D0A, amber text #FFB000, dim amber #9C6B00, bright amber #FFD54A, green up #00C853, red down #FF5252, border #3A2E10, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. IBM Plex Mono exclusively, 13px base, uppercase headers.
+
+LAYOUT: 1) Top status line: ALL-CAPS amber, UTC clock right. 2) Main grid of panels: quotes table (8 columns), candlestick chart panel, order book, news headlines. 3) Command line with blinking block caret. 4) Crawling ticker above the function-key bar. 5) Function-key chrome: F1 HELP F2 GOVMT F3 EQUITY F8 NEWS F9 EXECUTE.
+
+MOTION: Quote cells flash bg amber 400ms on change (add/remove class). Green/red flash for direction. Ticker crawls 60px/s via rAF, pauses on hover. Caret blinks 530ms step-end. Row insert expands 150ms. No easing libraries — keep it raw.
+
+SIGNATURE: (a) box-drawing-character panel borders, (b) function-key chrome bar, (c) blinking block caret command line.
+
+CONSTRAINTS: Semantic &lt;table&gt; for quotes with proper &lt;th scope&gt;, tabular-nums everywhere, AA contrast is inherent (amber on black = 9:1), keyboard-first: number keys jump panels, `/` focuses command line; throttle DOM updates at 250ms; no layout shift (fixed row heights); reduced-motion stops ticker.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/bloomberg-terminal-amber/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/bloomberg-terminal-amber/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;OTC TERMINAL v4.2&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;800&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#050505; --surface:#0E0D0A; --fg:#FFB000; --muted:#9C6B00;
+  --accent:#FFD54A; --accent2:#00C853; --border:#3A2E10;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;IBM Plex Mono&#x27;,sans-serif; line-height:1.6;;color:#FFB000 }
+h1,h2 { font-family:&#x27;IBM Plex Mono&#x27;,sans-serif; line-height:1.1;;text-transform:uppercase }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;IBM Plex Mono&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#111111; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;min-height:60vh }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease;;font-family:&#x27;IBM Plex Mono&#x27;,monospace }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;IBM Plex Mono&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#FFB000; color:#050505; text-align:center; }
+.cta .btn { background:#00C853; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;OTC TERMINAL&lt;/span&gt;
+  &lt;nav&gt;EQUITY&lt;br&gt;FIXED&lt;br&gt;NEWS&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;MARKETS LIVE&lt;/span&gt;
+  &lt;h1&gt;GLOBAL QUOTE GRID — ALL SESSIONS OPEN&lt;/h1&gt;
+  &lt;p&gt;FX: EURUSD 1.0842 +0.03% · USDJPY 149.31 -0.11% · GBPUSD 1.2718 +0.02%&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;F9 EXECUTE&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;PANELS&lt;/span&gt;
+  &lt;h2&gt;WORKSPACES&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;QUOTES&lt;/h3&gt;&lt;p&gt;8-column live grid. Flash on change. Triangles on bid/ask.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;CHARTS&lt;/h3&gt;&lt;p&gt;Candlesticks in line glyphs. Tick, minute, day.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;NEWS&lt;/h3&gt;&lt;p&gt;Headline feed, all-caps, timestamps to the second.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;SYSTEM&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;9:41&lt;/b&gt;&lt;br&gt;&lt;span&gt;UTC clock&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;24&lt;/b&gt;&lt;br&gt;&lt;span&gt;Markets open&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;0&lt;/b&gt;&lt;br&gt;&lt;span&gt;Feed lag (ms)&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;PRESS F1 FOR HELP&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;TERMINAL ACCESS REQUIRES CREDENTIALS. ALL SESSIONS LOGGED.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;F9 EXECUTE&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 OTC TERMINAL. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;F1 HELP · F2 GOVMT · F3 EQUITY · F8 NEWS&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

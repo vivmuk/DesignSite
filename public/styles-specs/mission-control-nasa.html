@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Control NASA — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#120B02;--surface:#1C1204;--fg:#FFB000;--muted:#8A5D10;--accent:#FF8C00;--accent2:#FFE0A3;--border:#3D2A08}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Share Tech Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'VT323',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Mission Control NASA</h1><div class="tagline">Amber CRT consoles and vector plots, 1970 Houston.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">aerospace</span><span class="tag">data products</span><span class="tag">docs</span><span class="tag">count-up-numbers</span><span class="tag">data-table</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/mission-control-nasa.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/mission-control-nasa.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/mission-control-nasa.png" alt="Mission Control NASA preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#120B02"></div><code>bg: #120B02</code></div><div class="sw"><div class="chip" style="background:#1C1204"></div><code>surface: #1C1204</code></div><div class="sw"><div class="chip" style="background:#FFB000"></div><code>fg: #FFB000</code></div><div class="sw"><div class="chip" style="background:#8A5D10"></div><code>muted: #8A5D10</code></div><div class="sw"><div class="chip" style="background:#FF8C00"></div><code>accent: #FF8C00</code></div><div class="sw"><div class="chip" style="background:#FFE0A3"></div><code>accent2: #FFE0A3</code></div><div class="sw"><div class="chip" style="background:#3D2A08"></div><code>border: #3D2A08</code></div><p><code>linear-gradient(180deg,#120B02 0%,#1A1003 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> VT323</p><p><strong>Body:</strong> Share Tech Mono</p>
+<p><strong>Monospace:</strong> Share Tech Mono</p><p class="tagline">Dot-matrix amber console faces for display and body alike.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>telemetry-countup</strong></td><td>KPI numbers count up over 1.2s ease-out when scrolled into view via IntersectionObserver.</td></tr><tr><td><strong>vector-plot-redraw</strong></td><td>SVG polylines draw with stroke-dashoffset over 1.6s ease on section entry.</td></tr><tr><td><strong>status-blink</strong></td><td>GO/NO-GO lamps pulse 1.4s steps(2); amber lamp for caution states.</td></tr><tr><td><strong>met-clock</strong></td><td>Mission-elapsed-time counter in the nav ticks every second, tabular-nums.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Amber numeric readout panels</li><li>Vector-line plot charts on grids</li><li>Mission patch / stamp motif</li><li>MET elapsed-time clock</li><li>Console panel bezels with labels</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">chart-suite</span><span class="tag">hero-section</span><span class="tag">timeline</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">vanilla JS count-up + IntersectionObserver</span><span class="tag">SVG stroke-dashoffset draw</span><span class="tag">CSS grid console layout</span><span class="tag">tabular-nums font features</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Flight-control room aesthetics: warm amber phosphor readouts, vector-line plot graphics and grid-lined console panels on deep brown-black. Data always looks live — counters tick, telemetry lines redraw, clocks count mission time. Built for aerospace brands, data products and technical docs that want mission-critical gravitas.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a data-platform marketing site in the Mission Control NASA style — the page must feel like a live 1970s flight-control console, amber phosphor and all.
+LOOK: deep brown-black #120B02 background, amber #FFB000 primary readouts, bright #FF8C00 accents, cream #FFE0A3 highlights, borders #3D2A08. All numerals monospaced with font-variant-numeric: tabular-nums. Import: https://fonts.googleapis.com/css2?family=VT323&amp;family=Share+Tech+Mono&amp;display=swap — VT323 for giant display digits, Share Tech Mono everywhere else. Console panels sit on #1C1204 surfaces with 2px bezel borders and small-caps labels like &#x27;TELEMETRY — CH 04&#x27;.
+LAYOUT: top bar with MET elapsed clock (ticks every second) and nav; hero split 60/40 — huge amber count-up KPIs left, live vector-plot chart right; stats band of five console tiles; data table of mission events; timeline of mission milestones as console steps; CTA framed as an &#x27;AUTHORIZE LAUNCH&#x27; console switch panel; footer as a console bank.
+MOTION: KPIs count up 1.2s ease-out on scroll into view (IntersectionObserver); SVG chart polylines draw via stroke-dashoffset 1.6s ease; GO/NO-GO lamps blink 1.4s steps(2); MET clock ticks live.
+SIGNATURE: (1) bezel-framed console panels with small-caps labels; (2) vector-line plots drawn live; (3) the always-ticking MET clock.
+CONSTRAINTS: semantic HTML, amber on brown-black meets WCAG AA minimum (use #FFE0A3 for small text), responsive stacks on mobile, prefers-reduced-motion stops blink and count-up, no heavy frameworks.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/mission-control-nasa/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/mission-control-nasa/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Mission Control NASA&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=VT323&amp;family=Share+Tech+Mono&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#120B02;--surface:#1C1204;--fg:#FFB000;--muted:#8A5D10;--accent:#FF8C00;--accent2:#FFE0A3;--border:#3D2A08;--grad:linear-gradient(180deg,#120B02 0%,#1A1003 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Share Tech Mono&#x27;,monospace;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;VT323&#x27;,monospace;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;VT323&#x27;,monospace;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#120B02;border-radius:4px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;VT323&#x27;,monospace;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;VT323&#x27;,monospace;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;VT323&#x27;,monospace;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.bezel{border:2px solid var(--border);border-radius:4px;background:var(--surface);padding:20px;position:relative}
+.bezel::before{content:attr(data-label);position:absolute;top:-10px;left:12px;background:var(--bg);padding:0 8px;font-size:.7rem;letter-spacing:.15em;color:var(--muted)}
+.readout{font-family:&#x27;VT323&#x27;,monospace;font-size:3rem;color:var(--accent);text-shadow:0 0 12px rgba(255,140,0,.5)}
+.lamp{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);animation:lamp 1.4s steps(2) infinite}
+@keyframes lamp{50%{opacity:.25}}
+.met{font-variant-numeric:tabular-nums;color:var(--accent2)}
+.plot polyline{stroke:var(--accent);fill:none;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Mission&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;bezel&amp;quot; data-label=&amp;quot;TELEMETRY — CH 04&amp;quot;&gt;&lt;h1&gt;Uptime is a mission,&lt;br/&gt;not a metric.&lt;/h1&gt;
+&lt;p&gt;Telemetry-grade monitoring for systems that cannot blink. Every packet accounted for, every second counted.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;AUTHORIZE LAUNCH&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;bezel card&amp;quot; data-label=&amp;quot;PANEL A1&amp;quot;&gt;&lt;h3&gt;Live telemetry&lt;/h3&gt;&lt;p&gt;1.2M events/sec ingested with 40ms end-to-end latency. Nothing lost, ever.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;bezel card&amp;quot; data-label=&amp;quot;PANEL B2&amp;quot;&gt;&lt;h3&gt;Vector plots&lt;/h3&gt;&lt;p&gt;Every trajectory drawn, replays and annotated for post-mission review.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;bezel card&amp;quot; data-label=&amp;quot;PANEL C3&amp;quot;&gt;&lt;h3&gt;GO/NO-GO gates&lt;/h3&gt;&lt;p&gt;Automated health checks gate every deploy like a launch sequence.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Flight-proven reliability&lt;/h2&gt;&lt;p&gt;Built by operators who ran on-call for rockets. OrbitalWatch treats every release like T-minus zero: checklists, gates and full telemetry retention. If Houston could land a module on the moon with less compute than your phone, your fleet deserves the same discipline.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;T-minus zero. Are you go for launch?&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Request console access&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Mission. All rights reserved.&lt;/span&gt;&lt;span&gt;MET clock running · all systems nominal&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

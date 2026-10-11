@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Risograph Print — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Syne&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F1E7;--surface:#FCFAF3;--fg:#211D19;--muted:#8A8172;--accent:#FF48B0;--accent2:#2B44FF;--border:#211D19}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Syne',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Risograph Print</h1><div class="tagline">Two spot inks, one happy accident — print imperfection as beauty.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">studios</span><span class="tag">publishing</span><span class="tag">events</span><span class="tag">mix-blend-modes</span><span class="tag">noise-grain-overlay</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/risograph-print.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/risograph-print.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/risograph-print.png" alt="Risograph Print preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F6F1E7"></div><code>bg: #F6F1E7</code></div><div class="sw"><div class="chip" style="background:#FCFAF3"></div><code>surface: #FCFAF3</code></div><div class="sw"><div class="chip" style="background:#211D19"></div><code>fg: #211D19</code></div><div class="sw"><div class="chip" style="background:#8A8172"></div><code>muted: #8A8172</code></div><div class="sw"><div class="chip" style="background:#FF48B0"></div><code>accent: #FF48B0</code></div><div class="sw"><div class="chip" style="background:#2B44FF"></div><code>accent2: #2B44FF</code></div><div class="sw"><div class="chip" style="background:#211D19"></div><code>border: #211D19</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Syne</p><p><strong>Body:</strong> IBM Plex Sans</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Poster-bold Syne display with workhorse Plex body and mono for print specs.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Syne&family=IBM+Plex+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>misregister-drift</strong></td><td>Display headlines carry pink and blue offset copies (±3px) that drift slowly apart and back on a 6s ease-in-out loop — plates never quite aligned.</td></tr><tr><td><strong>halftone-roll</strong></td><td>Halftone dot fills (radial-gradient pattern) roll their background-position diagonally over 20s linear infinite — ink on a moving drum.</td></tr><tr><td><strong>multiply-hover</strong></td><td>Overlapping ink blocks use mix-blend-mode: multiply; hovering saturates them 1.15 and darkens the overprint zone in 200ms.</td></tr><tr><td><strong>grain-breathe</strong></td><td>SVG feTurbulence paper-grain overlay breathes opacity .05→.075 on an 4s ease-in-out loop — live stock.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Fluorescent pink + blue spot-ink accents</li><li>Misregistered duplicate headline layers</li><li>Halftone dot pattern fills</li><li>Overprint multiply overlaps</li><li>Paper grain + deckled section edges</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">timeline</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Syne + IBM Plex Sans/Mono webfonts</span><span class="tag">mix-blend-mode multiply overprints</span><span class="tag">CSS radial-gradient halftone patterns</span><span class="tag">SVG feTurbulence grain overlay</span><span class="tag">text-shadow misregistration layers</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The risograph press as an interface: two fluorescent spot inks (pink and blue) that misregister on purpose, halftone dot fills, overprint multiply blends where inks overlap, and paper grain over everything. Typography reads like poster proofs, sections feel like stacked prints pulled by hand. For studios, publishers and events that want warmth, texture and print-shop credibility.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a studio/publishing site in the Risograph Print style — spot-ink posters, misregistration as a feature, print-shop honesty on screen.
+LOOK: warm paper #F6F1E7 background, brighter #FCFAF3 surfaces, ink-black #211D19, muted #8A8172, and exactly two spot inks: fluorescent pink #FF48B0 and riso blue #2B44FF. Import fonts: https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=IBM+Plex+Sans:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap — Syne 700-800 for display, IBM Plex Sans for body, IBM Plex Mono for captions/specs. Misregistration technique: headline has data-ink layers — the pink copy offset 3px up-left, blue 3px down-right, text-shadow or absolutely-positioned clones. Halftone fills: repeating radial-gradient dots at 4px pitch. Overprints: overlapping shapes get mix-blend-mode: multiply.
+LAYOUT: nav as a thin ink-black rule with mono links; hero = big misregistered headline, halftone blob shapes in pink and blue overlapping behind (multiply), a mono &#x27;EDITION 001 / INK: FLUO PINK + BLUE&#x27; spec line; feature grid as print-swatch cards with halftone headers; timeline as a horizontal ink roller strip; footer with colophon-style credits in mono.
+MOTION: headline ghost layers drift ±3px apart on 6s ease-in-out infinite alternate; halftone fills roll background-position diagonally 20s linear infinite; multiply blocks saturate 1.15 on hover in 200ms; grain overlay breathes opacity .05→.075 over 4s. IntersectionObserver only for section fade-ups.
+SIGNATURE: (1) two-ink discipline — pink and blue only; (2) misregistered duplicates; (3) halftone dot fills; (4) multiply overprint zones; (5) mono spec captions.
+CONSTRAINTS: semantic HTML; WCAG AA — #211D19 on paper passes, never set body text in pink or blue on paper (fails); grain overlay aria-hidden and pointer-events:none; responsive: misregistration offset reduces to 2px under 700px, halftone fills may simplify to solid inks; prefers-reduced-motion stops drift and rolls.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/risograph-print/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/risograph-print/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;TWO INKS PRESS — studio &amp;amp; print&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=IBM+Plex+Sans:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#F6F1E7;--surface:#FCFAF3;--fg:#211D19;--muted:#8A8172;--pink:#FF48B0;--blue:#2B44FF;--border:#211D19}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;IBM Plex Sans&#x27;,sans-serif;line-height:1.65}
+a{color:var(--fg);text-decoration:none}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.06;animation:breathe 4s ease-in-out infinite;background-image:url(&amp;quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;140&#x27; height=&#x27;140&#x27;%3E%3Cfilter id=&#x27;n&#x27;%3E%3CfeTurbulence baseFrequency=&#x27;0.9&#x27;/%3E%3C/filter%3E%3Crect width=&#x27;140&#x27; height=&#x27;140&#x27; filter=&#x27;url(%23n)&#x27; opacity=&#x27;.5&#x27;/%3E%3C/svg%3E&amp;quot;)}
+@keyframes breathe{0%,100%{opacity:.05}50%{opacity:.075}}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header{border-bottom:2px solid var(--border)}
+header .wrap{display:flex;align-items:baseline;gap:28px;padding:16px 24px}
+.logo{font-family:&#x27;Syne&#x27;;font-weight:800;font-size:1.15rem}
+nav{display:flex;gap:18px;font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.78rem}
+nav a:hover{color:var(--blue)}
+.hero{position:relative;padding:90px 0 80px;overflow:hidden}
+.blob{position:absolute;border-radius:50%;mix-blend-mode:multiply;transition:filter .2s}
+.blob:hover{filter:saturate(1.15) brightness(.94)}
+.b1{width:340px;height:340px;background:radial-gradient(circle,var(--pink) 1px,transparent 1.6px);background-size:8px 8px;left:-70px;top:60px;animation:roll 20s linear infinite}
+.b2{width:300px;height:300px;background:radial-gradient(circle,var(--blue) 1px,transparent 1.6px);background-size:8px 8px;right:-40px;top:10px;animation:roll 20s linear infinite reverse}
+@keyframes roll{to{background-position:80px 80px}}
+h1{font-family:&#x27;Syne&#x27;;font-weight:800;font-size:clamp(2.6rem,7vw,4.8rem);line-height:1.02;position:relative;max-width:700px}
+h1 .mis{position:absolute;inset:0;animation:drift 6s ease-in-out infinite alternate;pointer-events:none}
+h1 .mis.p{color:var(--pink);transform:translate(-3px,-3px);z-index:-1}
+h1 .mis.b{color:var(--blue);transform:translate(3px,3px);z-index:-2}
+@keyframes drift{to{transform:translate(-7px,-4px)}}
+h1 .mis.b{animation-name:driftB}
+@keyframes driftB{to{transform:translate(7px,4px)}}
+.spec{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.75rem;color:var(--muted);margin-top:18px;letter-spacing:.06em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:30px 0 70px}
+.card{background:var(--surface);border:2px solid var(--border);padding:18px}
+.card .swatch{height:90px;margin:-18px -18px 14px;border-bottom:2px solid var(--border)}
+.card:nth-child(1) .swatch{background:radial-gradient(circle,var(--pink) 1.4px,transparent 2px);background-size:7px 7px}
+.card:nth-child(2) .swatch{background:radial-gradient(circle,var(--blue) 1.4px,transparent 2px);background-size:7px 7px}
+.card:nth-child(3) .swatch{background:repeating-linear-gradient(45deg,var(--pink) 0 6px,var(--blue) 6px 12px);mix-blend-mode:multiply}
+.card h3{font-family:&#x27;Syne&#x27;;font-weight:700;font-size:1.05rem}
+.card p{font-size:.9rem;color:var(--muted)}
+timeline,.tl{display:flex;gap:0;padding:0 0 70px}
+.tl .stop{flex:1;border-top:6px solid var(--blue);padding-top:14px;position:relative}
+.tl .stop::before{content:&#x27;&#x27;;position:absolute;top:-14px;left:0;width:22px;height:22px;border-radius:50%;background:var(--pink);mix-blend-mode:multiply;border:2px solid var(--border)}
+.tl b{font-family:&#x27;Syne&#x27;;font-weight:700;display:block}
+.tl span{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.72rem;color:var(--muted)}
+footer{border-top:2px solid var(--border);padding:34px 0;font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.75rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.tl{flex-direction:column;gap:22px}.blob{width:220px;height:220px}}
+&lt;/style&gt;&lt;body&gt;
+&lt;div class=&amp;quot;grain&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;span class=&amp;quot;logo&amp;quot;&gt;TWO-INKS PRESS&lt;/span&gt;
+&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Work&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Editions&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Shop&lt;/a&gt;&lt;/nav&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div class=&amp;quot;blob b1&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;blob b2&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;h1&gt;&lt;span class=&amp;quot;mis p&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;Printed twice, aligned never.&lt;/span&gt;&lt;span class=&amp;quot;mis b&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;Printed twice, aligned never.&lt;/span&gt;Printed twice, aligned never.&lt;/h1&gt;
+&lt;p class=&amp;quot;spec&amp;quot;&gt;EDITION 001 · INKS: FLUO PINK #FF48B0 + RISO BLUE #2B44FF · STOCK: MUNKEN 120GSM&lt;/p&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;swatch&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Poster Studies&lt;/h3&gt;&lt;p&gt;Two-color silkscreen series on live stock, editions of 100.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;swatch&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Zine Quarterly&lt;/h3&gt;&lt;p&gt;Misregistration as editorial voice. Printed on a duplicator.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;swatch&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Overprint Type&lt;/h3&gt;&lt;p&gt;Letters that only exist where two inks multiply.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;tl&amp;quot;&gt;
+&lt;div class=&amp;quot;stop&amp;quot;&gt;&lt;b&gt;Concept&lt;/b&gt;&lt;span&gt;INK LAYER 1&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;stop&amp;quot;&gt;&lt;b&gt;Proof&lt;/b&gt;&lt;span&gt;REGISTRATION TEST&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;stop&amp;quot;&gt;&lt;b&gt;Print&lt;/b&gt;&lt;span&gt;RUN OF 100&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;stop&amp;quot;&gt;&lt;b&gt;Ship&lt;/b&gt;&lt;span&gt;PAPER WRAP&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© TWO-INKS PRESS STUDIO&lt;/span&gt;&lt;span&gt;SET IN SYNE + IBM PLEX · PRINTED IN WEBKIT&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

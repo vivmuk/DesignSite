@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sticker Bomb Pop — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF6D6;--surface:#FFFFFF;--fg:#17171B;--muted:#716C63;--accent:#FF4D6D;--accent2:#4CC9F0;--border:#17171B}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Titan One',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Sticker Bomb Pop</h1><div class="tagline">Die-cut everything: stickers peel, tilt and pop off the page.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">youth brands</span><span class="tag">games</span><span class="tag">merch</span><span class="tag">physics-spring-motion</span><span class="tag">hover-invert</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/sticker-bomb-pop.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/sticker-bomb-pop.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/sticker-bomb-pop.png" alt="Sticker Bomb Pop preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFF6D6"></div><code>bg: #FFF6D6</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#17171B"></div><code>fg: #17171B</code></div><div class="sw"><div class="chip" style="background:#716C63"></div><code>muted: #716C63</code></div><div class="sw"><div class="chip" style="background:#FF4D6D"></div><code>accent: #FF4D6D</code></div><div class="sw"><div class="chip" style="background:#4CC9F0"></div><code>accent2: #4CC9F0</code></div><div class="sw"><div class="chip" style="background:#17171B"></div><code>border: #17171B</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Titan One</p><p><strong>Body:</strong> Nunito</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Fat rounded sticker display over friendly rounded body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>sticker-drop-spring</strong></td><td>Stickers fall into place from -60px with a ±8deg rotation, settling via 600ms cubic-bezier(.34,1.56,.64,1) overshoot — visible spring physics.</td></tr><tr><td><strong>peel-corner-hover</strong></td><td>Hovering a sticker lifts and rotates it (-2deg, scale 1.04) over 180ms while its hard shadow grows — peeling off the sheet.</td></tr><tr><td><strong>invert-flash-hover</strong></td><td>Nav chips and badges hard-invert (fg↔bg) in 0ms on hover — sticker flash, no transition.</td></tr><tr><td><strong>idle-wobble</strong></td><td>Decorative stickers wobble rotate -3→3deg on 5s ease-in-out infinite loops, each phase-offset.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Die-cut white kiss-cut borders on every card</li><li>Chunky 4px black outlines with hard offset shadows</li><li>Overlapping rotated sticker collage layout</li><li>Holographic foil badges (conic-gradient)</li><li>Rounded &#x27;pop-off&#x27; CTA buttons with spring press</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">nav-bar</span><span class="tag">badge-system</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Titan One + Nunito webfonts</span><span class="tag">spring cubic-bezier(.34,1.56,.64,1) transitions</span><span class="tag">die-cut outline+border technique</span><span class="tag">conic-gradient foil badges</span><span class="tag">IntersectionObserver drop-in triggers</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Every element behaves like a die-cut sticker: thick white kiss-cut borders, black outlines, hard drop shadows, and layouts built from overlapping rotated stickers instead of flat blocks. Elements drop in with spring overshoot, peel at the corners on hover, and hard-invert like a flash print. For youth brands, games and merch drops where the page should feel like a sticker sheet come alive.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a merch/sticker shop in the Sticker Bomb Pop style — a sticker sheet come alive, playful physics, thick outlines, fully shoppable underneath.
+LOOK: pale banana-cream #FFF6D6 background, white #FFFFFF sticker surfaces, near-black #17171B ink AND borders, muted #716C63, hot pink #FF4D6D and sky teal #4CC9F0 as the pop pair, plus banana #FFD60A splashes. Import fonts: https://fonts.googleapis.com/css2?family=Titan+One&amp;family=Nunito:wght@400;700;900&amp;display=swap — Titan One for display (it IS a sticker font), Nunito 400/700/900 for body and UI. Every card gets the die-cut treatment: 4px black border, 14px radius, 6px 6px 0 hard shadow; hero pieces get a 5px white kiss-cut border plus 3px black outline. No gradients except holographic foil badges.
+LAYOUT: nav as a row of rounded sticker chips; hero = tilted collage of 3-4 overlapping stickers with a fat Titan One headline slab, CTA as a pink pop-off button; product row of die-cut cards (image block, title, price, ADD sticker button); a &#x27;sticker sheet&#x27; strip showing the whole collection; mega footer with a newsletter sticker and wobbly social chips.
+MOTION: stickers drop in from -60px with ±8deg rotation settling on 600ms cubic-bezier(.34,1.56,.64,1) when scrolled into view; hover peels them (-2deg, scale 1.04, 180ms, shadow grows); nav chips and badges hard-invert in 0ms; decorative stickers wobble ±3deg on 5s phase-offset loops. IntersectionObserver adds .drop to reveal elements.
+SIGNATURE: (1) white kiss-cut die-cut borders; (2) 4px black outlines + hard shadows; (3) overlapping rotated collage; (4) foil conic-gradient badges.
+CONSTRAINTS: semantic HTML; WCAG AA — #17171B on #FFF6D6 passes hugely, keep pink/teal for accents not body text; stickers decorative layer aria-hidden; ≤1.04 hover scale to avoid layout jank; responsive: collage collapses to a 2-sticker stack under 700px, shadows shrink to 4px; reduced-motion turns drops and wobbles into simple fades.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/sticker-bomb-pop/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/sticker-bomb-pop/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;POP SHOP — sticker everything&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Titan+One&amp;family=Nunito:wght@400;700;900&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#FFF6D6;--surface:#FFFFFF;--fg:#17171B;--muted:#716C63;--accent:#FF4D6D;--accent2:#4CC9F0;--banana:#FFD60A;--border:#17171B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Nunito&#x27;,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--fg);text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px;position:relative}
+header{padding:20px 0}
+header .wrap{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.chip{background:var(--surface);border:4px solid var(--border);border-radius:999px;padding:8px 18px;font-weight:900;font-size:.85rem;transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{background:var(--fg);color:var(--bg)}
+.chip.logo{background:var(--banana)}
+.btn{background:var(--accent);color:#fff;border:4px solid var(--border);border-radius:18px;padding:12px 26px;font-family:&#x27;Nunito&#x27;;font-weight:900;box-shadow:6px 6px 0 var(--border);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:rotate(-2deg) scale(1.04);box-shadow:8px 8px 0 var(--border)}
+.sticker{position:absolute;animation:wob 5s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.hero{padding:72px 0 80px;position:relative;text-align:center}
+.hero .slab{display:inline-block;background:var(--accent);color:#fff;font-family:&#x27;Titan One&#x27;;font-size:clamp(2.4rem,6.5vw,4.4rem);padding:14px 34px;border:5px solid var(--border);border-radius:22px;box-shadow:8px 8px 0 var(--border);transform:rotate(-2deg)}
+.hero p{max-width:560px;margin:22px auto 28px;font-weight:700;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding:40px 0 70px}
+.card{background:var(--surface);border:4px solid var(--border);border-radius:16px;box-shadow:6px 6px 0 var(--border);padding:18px;transform:rotate(-1deg);transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s}
+.card:nth-child(2n){transform:rotate(1.4deg)}
+.card:hover{transform:rotate(0) scale(1.04);box-shadow:10px 10px 0 var(--border)}
+.card .art{background:linear-gradient(135deg,var(--accent2),var(--banana));border:3px solid var(--border);border-radius:10px;height:120px;margin-bottom:12px}
+.card h3{font-family:&#x27;Titan One&#x27;;font-size:1.05rem;font-weight:400}
+.card .price{font-weight:900;color:var(--accent)}
+.card .add{margin-top:10px;display:inline-block;background:var(--accent2);border:3px solid var(--border);border-radius:999px;padding:6px 18px;font-weight:900;box-shadow:4px 4px 0 var(--border);cursor:pointer}
+.drop{opacity:0;transform:translateY(-60px) rotate(-8deg)}
+.drop.in{opacity:1;transform:none;transition:opacity .6s,transform .6s cubic-bezier(.34,1.56,.64,1)}
+footer{background:var(--fg);color:var(--bg);padding:40px 0;text-align:center}
+footer .fchip{display:inline-block;background:var(--surface);color:var(--fg);border:4px solid var(--border);border-radius:999px;padding:10px 24px;font-weight:900;transform:rotate(1deg)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.hero .slab{transform:none}.sticker{display:none}}
+&lt;/style&gt;&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;a class=&amp;quot;chip logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;POP SHOP&lt;/a&gt;
+&lt;a class=&amp;quot;chip&amp;quot; href=&amp;quot;#&amp;quot;&gt;New Drops&lt;/a&gt;&lt;a class=&amp;quot;chip&amp;quot; href=&amp;quot;#&amp;quot;&gt;Sheets&lt;/a&gt;&lt;a class=&amp;quot;chip&amp;quot; href=&amp;quot;#&amp;quot;&gt;Packs&lt;/a&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Get Stickers&lt;/a&gt;
+&lt;div class=&amp;quot;sticker&amp;quot; style=&amp;quot;right:6%;top:8px;background:var(--accent2);width:64px;height:64px;border:4px solid var(--border);border-radius:50%&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div class=&amp;quot;sticker&amp;quot; style=&amp;quot;left:10%;top:40px;background:var(--accent);width:46px;height:46px;border:4px solid var(--border);border-radius:12px&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;sticker&amp;quot; style=&amp;quot;right:12%;top:110px;background:var(--banana);width:56px;height:56px;border:4px solid var(--border);border-radius:50%;animation-delay:1.2s&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;h1 class=&amp;quot;slab drop&amp;quot;&gt;STICKER BOMB!&lt;/h1&gt;
+&lt;p&gt;Die-cut vinyl, holographic foil and chunky outlines. Every sticker peels, every pack slaps.&lt;/p&gt;
+&lt;a class=&amp;quot;btn drop&amp;quot; href=&amp;quot;#&amp;quot;&gt;Shop the sheet →&lt;/a&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;article class=&amp;quot;card drop&amp;quot;&gt;&lt;div class=&amp;quot;art&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Chrome Skull Pack&lt;/h3&gt;&lt;div class=&amp;quot;price&amp;quot;&gt;$12&lt;/div&gt;&lt;span class=&amp;quot;add&amp;quot;&gt;ADD&lt;/span&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card drop&amp;quot;&gt;&lt;div class=&amp;quot;art&amp;quot; style=&amp;quot;background:linear-gradient(135deg,var(--accent),#FFD60A)&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Smiley Foil Set&lt;/h3&gt;&lt;div class=&amp;quot;price&amp;quot;&gt;$9&lt;/div&gt;&lt;span class=&amp;quot;add&amp;quot;&gt;ADD&lt;/span&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card drop&amp;quot;&gt;&lt;div class=&amp;quot;art&amp;quot; style=&amp;quot;background:linear-gradient(135deg,var(--accent2),var(--accent))&amp;quot;&gt;&lt;/div&gt;&lt;h3&gt;Doodle Bomb Roll&lt;/h3&gt;&lt;div class=&amp;quot;price&amp;quot;&gt;$15&lt;/div&gt;&lt;span class=&amp;quot;add&amp;quot;&gt;ADD&lt;/span&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span class=&amp;quot;fchip&amp;quot;&gt;⭐ FREE SLAP WITH EVERY ORDER ⭐&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;const io=new IntersectionObserver(e=&gt;e.forEach(x=&gt;x.isIntersecting&amp;&amp;x.target.classList.add(&#x27;in&#x27;)),{threshold:.15});document.querySelectorAll(&#x27;.drop&#x27;).forEach(el=&gt;io.observe(el));&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Punk Zine Collage — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2EFE6;--surface:#FFFFFF;--fg:#1A1A1A;--muted:#6B6B60;--accent:#D42B1F;--accent2:#1A1A1A;--border:#1A1A1A}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Courier Prime',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Special Elite',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Punk Zine Collage</h1><div class="tagline">Torn paper, tape strips, photocopier rage — cut &amp;amp; paste live.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">music</span><span class="tag">activism</span><span class="tag">zines</span><span class="tag">noise-grain-overlay</span><span class="tag">hover-invert</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/punk-zine-collage.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/punk-zine-collage.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/punk-zine-collage.png" alt="Punk Zine Collage preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F2EFE6"></div><code>bg: #F2EFE6</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>fg: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#6B6B60"></div><code>muted: #6B6B60</code></div><div class="sw"><div class="chip" style="background:#D42B1F"></div><code>accent: #D42B1F</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>accent2: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>border: #1A1A1A</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Special Elite</p><p><strong>Body:</strong> Courier Prime</p>
+<p><strong>Monospace:</strong> Courier Prime</p><p class="tagline">Typewriter for everything — zine-authentic mono.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>grain-flicker</strong></td><td>Photocopier grain overlay (SVG noise, 5% opacity) flickers opacity .04→.07 at 8fps via steps(8) 750ms infinite — cheap-xerox life.</td></tr><tr><td><strong>tape-peel-hover</strong></td><td>Tape strips holding headings lift on hover: rotate +3deg translateY(-4px) 200ms ease with shadow deepening — barely holding it down.</td></tr><tr><td><strong>hover-invert-print</strong></td><td>Links and stamps invert fully (fg↔bg swap) on hover in 0ms — instant photocopied negative flash.</td></tr><tr><td><strong>scrawl-write-in</strong></td><td>Red annotation scrawl (handwritten font) fades in rotated -8deg after its section loads, 400ms, like someone just marked it up.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Torn-paper section edges (clip-path)</li><li>Masking-tape strips at crooked angles</li><li>Ransom-note mixed type headlines</li><li>Photocopier grain + slight misregistration</li><li>Red hand-scrawl margin annotations</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">data-table</span><span class="tag">image-lightbox</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Special Elite + Courier Prime webfonts</span><span class="tag">SVG feTurbulence noise grain</span><span class="tag">clip-path torn edges</span><span class="tag">instant hover-invert CSS</span><span class="tag">transform tape strips</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A webpage assembled like a 1982 photocopied zine: torn-paper edges, strips of tape holding sections down, ransom-note mixed type, and photocopier grain over everything. Links invert on hover like overexposed prints, margins are crooked on purpose, and red hand-scrawl annotations correct the layout. For music, activism and indie publishing with something to say.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an underground zine/music site in the Punk Zine Collage style — photocopied rage, hand-assembled, deliberately crooked but fully functional.
+LOOK: aged paper #F2EFE6, white paste-up surfaces #FFFFFF, near-black #1A1A1A, stencil red #D42B1F (the only color that matters), muted #6B6B60. Import fonts: https://fonts.googleapis.com/css2?family=Special+Elite&amp;family=Courier+Prime:wght@400;700&amp;display=swap — Special Elite for display/headlines, Courier Prime for ALL body, lists, tables and captions. Photocopier grain sits over everything (SVG feTurbulence noise at 5% opacity, flickering).
+LAYOUT: nav as a strip of tape-pasted labels (each link on its own slightly-rotated paper scrap); hero headline in ransom-note style — alternating font families/sizes/weights per word, one word in red stencil; sections separated by torn-paper edges (CSS clip-path jagged polygon); photos held down with masking-tape pseudo-elements at ±4deg; a typed gig-listing table; red hand-scrawl annotations (rotated, one per section) that appear after load; stamp badges (&#x27;APPROVED BY NOBODY&#x27;); footer as the zine back page with contact/address in typewriter mono.
+MOTION: grain flickers opacity .04→.07 in steps(8) over 750ms infinite; tape strips lift on hover (rotate +3deg, translateY -4px, 200ms ease, shadow grows); links and stamps hard-invert (fg↔bg, 0ms transition — instant xerox flash); scrawls fade in rotated after 400ms delay when their section enters. No easing curves beyond linear/ease — this aesthetic distrusts smoothness.
+SIGNATURE: (1) torn edges between every section; (2) tape as the joining material; (3) ransom-note display type; (4) red scrawl annotations arguing with the layout.
+CONSTRAINTS: semantic HTML; WCAG AA — #1A1A1A on paper passes hugely; never animate full-page flicker beyond 5% opacity delta (photosensitivity safe); keep one readable hierarchy under the chaos — headings remain in DOM order; responsive: scrap rotation reduces under 700px, table becomes stacked rows; prefers-reduced-motion kills flicker and scrawl animation; no external images — CSS shapes, emoji stamps and gradient paper textures only; total JS &lt; 6KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/punk-zine-collage/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/punk-zine-collage/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;SIDE B zine — issue #14&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Special+Elite&amp;family=Courier+Prime:wght@400;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#F2EFE6;--surface:#fff;--fg:#1A1A1A;--muted:#6B6B60;--accent:#D42B1F;--border:#1A1A1A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Courier Prime&#x27;,monospace;line-height:1.6}
+a{color:var(--fg);text-decoration:underline}
+a:hover,.stamp:hover{background:var(--fg);color:var(--bg)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.05;animation:flick 750ms steps(8) infinite}
+@keyframes flick{0%,100%{opacity:.05}50%{opacity:.08}}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+.tape{position:absolute;width:110px;height:28px;background:rgba(222,214,180,.85);box-shadow:0 1px 3px rgba(0,0,0,.15);transform:rotate(-4deg);transition:transform .2s ease,box-shadow .2s}
+.tape:hover{transform:rotate(-1deg) translateY(-4px);box-shadow:0 4px 8px rgba(0,0,0,.2)}
+header{position:relative;padding:28px 0 12px;border-bottom:3px solid var(--border)}
+header .wrap{position:relative}
+h1{font-family:&#x27;Special Elite&#x27;,cursive;font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.05}
+h1 .w{display:inline-block}
+h1 .w:nth-child(2n){font-size:.85em;transform:rotate(-2deg) translateY(2px)}
+h1 .w:nth-child(3n){letter-spacing:.05em}
+h1 .red{color:var(--accent);font-size:1.1em;transform:rotate(1deg)}
+.sub{color:var(--muted);margin-top:8px;font-size:.9rem}
+nav.scraps{display:flex;gap:10px;flex-wrap:wrap;padding:16px 0;position:relative}
+.scrap{background:var(--surface);border:1px solid var(--border);padding:6px 14px;font-size:.85rem;font-weight:700;box-shadow:2px 2px 0 rgba(0,0,0,.2)}
+.scrap:nth-child(odd){transform:rotate(-2deg)}
+.scrap:nth-child(even){transform:rotate(1.5deg)}
+section{position:relative;padding:40px 0}
+.torn{clip-path:polygon(0 6px,4% 0,9% 5px,15% 1px,22% 6px,30% 0,38% 4px,46% 1px,55% 6px,63% 0,71% 5px,79% 1px,87% 6px,94% 0,100% 4px,100% 100%,0 100%)}
+h2{font-family:&#x27;Special Elite&#x27;,cursive;font-size:1.6rem;margin-bottom:14px;position:relative}
+.scrawl{font-family:&#x27;Special Elite&#x27;,cursive;color:var(--accent);transform:rotate(-8deg);position:absolute;right:6%;top:-8px;font-size:1.1rem;opacity:0;transition:opacity .4s}
+section.seen .scrawl{opacity:1}
+.photo{position:relative;background:linear-gradient(140deg,#B8B2A2,#8E8A7E 60%,#A39D8F);height:240px;margin:28px 0;transform:rotate(-2deg);border:1px solid var(--border);box-shadow:4px 4px 0 rgba(0,0,0,.25)}
+.photo .ptape{position:absolute;top:-12px;left:40%;width:90px;height:24px;background:rgba(222,214,180,.85);transform:rotate(3deg);transition:transform .2s}
+.photo:hover .ptape{transform:rotate(6deg) translateY(-4px)}
+.photo figcaption{position:absolute;bottom:8px;left:12px;color:#fff;font-size:.75rem;text-shadow:1px 1px 0 #000}
+.copy p{margin-bottom:14px;max-width:60ch}
+.copy p b{background:var(--fg);color:var(--bg);padding:0 4px}
+.stamp{display:inline-block;border:3px double var(--accent);color:var(--accent);font-family:&#x27;Special Elite&#x27;,cursive;padding:6px 14px;transform:rotate(-6deg);font-size:1rem;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:.85rem;margin:20px 0}
+th{font-family:&#x27;Special Elite&#x27;,cursive;text-align:left;border-bottom:3px solid var(--border);padding:8px 10px}
+td{border-bottom:1px dashed var(--muted);padding:9px 10px}
+td:first-child{font-weight:700}
+.misprint{color:var(--accent)}
+footer{border-top:3px solid var(--border);padding:28px 20px 48px;color:var(--muted);font-size:.8rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+@media(max-width:700px){.photo{transform:none;height:180px}.scrawl{position:static;display:block;margin-bottom:10px}}
+@media(prefers-reduced-motion:reduce){.grain{animation:none}*{transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&amp;quot;grain&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;svg width=&amp;quot;100%&amp;quot; height=&amp;quot;100%&amp;quot;&gt;&lt;filter id=&amp;quot;n&amp;quot;&gt;&lt;feTurbulence baseFrequency=&amp;quot;0.9&amp;quot; numOctaves=&amp;quot;2&amp;quot;/&gt;&lt;/filter&gt;&lt;rect width=&amp;quot;100%&amp;quot; height=&amp;quot;100%&amp;quot; filter=&amp;quot;url(#n)&amp;quot;/&gt;&lt;/svg&gt;&lt;/div&gt;
+&lt;header class=&amp;quot;torn&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span class=&amp;quot;tape&amp;quot; style=&amp;quot;left:8%;top:-8px&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;tape&amp;quot; style=&amp;quot;right:12%;top:6px;transform:rotate(5deg)&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/span&gt;
+&lt;h1&gt;SIDE&amp;nbsp;&lt;span class=&amp;quot;red&amp;quot;&gt;B&lt;/span&gt;&amp;nbsp;&lt;span class=&amp;quot;w&amp;quot;&gt;ZINE&lt;/span&gt;&amp;nbsp;&lt;span class=&amp;quot;w&amp;quot;&gt;ISSUE&lt;/span&gt;&amp;nbsp;&lt;span class=&amp;quot;red&amp;quot;&gt;#14&lt;/span&gt;&lt;/h1&gt;
+&lt;p class=&amp;quot;sub&amp;quot;&gt;photocopied in an actual basement · 300 copies · gone by tuesday · £2 or trade&lt;/p&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;nav class=&amp;quot;scraps wrap&amp;quot;&gt;&lt;a class=&amp;quot;scrap&amp;quot; href=&amp;quot;#gigs&amp;quot;&gt;GIG LIST&lt;/a&gt;&lt;a class=&amp;quot;scrap&amp;quot; href=&amp;quot;#rant&amp;quot;&gt;RANT&lt;/a&gt;&lt;a class=&amp;quot;scrap&amp;quot; href=&amp;quot;#reviews&amp;quot;&gt;REVIEWS&lt;/a&gt;&lt;a class=&amp;quot;scrap&amp;quot; href=&amp;quot;#distro&amp;quot;&gt;DISTRO&lt;/a&gt;&lt;/nav&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;seen&amp;quot; style=&amp;quot;position:relative&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h2&gt;GIG LIST — NOV&lt;span class=&amp;quot;scrawl&amp;quot;&gt;all ages!!&lt;/span&gt;&lt;/h2&gt;
+&lt;table&gt;&lt;tr&gt;&lt;th&gt;DATE&lt;/th&gt;&lt;th&gt;BAND&lt;/th&gt;&lt;th&gt;PLACE&lt;/th&gt;&lt;th&gt;£&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;NOV 08&lt;/td&gt;&lt;td class=&amp;quot;misprint&amp;quot;&gt;THE CONCRETE PETALS&lt;/td&gt;&lt;td&gt;Old laundrette, Leeds&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;NOV 15&lt;/td&gt;&lt;td&gt;COPING MECHANISM&lt;/td&gt;&lt;td&gt;Squat venue, Rotterdam&lt;/td&gt;&lt;td&gt;donate&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;NOV 22&lt;/td&gt;&lt;td&gt;STATIC HALO + 2&lt;/td&gt;&lt;td&gt;Bookshop basement, Porto&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;NOV 29&lt;/td&gt;&lt;td class=&amp;quot;misprint&amp;quot;&gt;FUSEBOX RIOT&lt;/td&gt;&lt;td&gt;Bowling alley bar, Ghent&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p style=&amp;quot;font-size:.8rem;color:var(--muted)&amp;quot;&gt;* venues kept secret-ish until day-of for reasons you understand. email the distro.&lt;/p&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;torn&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h2&gt;THE RANT&lt;span class=&amp;quot;scrawl&amp;quot;&gt;tell &#x27;em!!&lt;/span&gt;&lt;/h2&gt;
+&lt;span class=&amp;quot;stamp&amp;quot;&gt;APPROVED BY NOBODY&lt;/span&gt;
+&lt;div class=&amp;quot;copy&amp;quot;&gt;&lt;p&gt;They told us print was dead. Then they told us &lt;b&gt;zines&lt;/b&gt; were a nostalgia item you could buy at the airport. Meanwhile we&#x27;re here, stapling 300 copies by hand at 1am because somebody needed to say it and the algorithm wasn&#x27;t going to.&lt;/p&gt;
+&lt;p&gt;This issue: four bands that exist outside your playlist, one essay about laundrette acoustics, and the usual &lt;b&gt;zero sponsorship&lt;/b&gt;. If you can&#x27;t afford £2, trade us a mixtape. We&#x27;re serious.&lt;/p&gt;&lt;/div&gt;
+&lt;figure class=&amp;quot;photo&amp;quot;&gt;&lt;span class=&amp;quot;ptape&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/span&gt;&lt;figcaption&gt;fig. 1 — the petal soundcheck, oct. 2026 (overexposed on purpose)&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section id=&amp;quot;distro&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h2&gt;DISTRO &amp;amp; CONTACT&lt;/h2&gt;
+&lt;div class=&amp;quot;copy&amp;quot;&gt;&lt;p&gt;Trades: &lt;a href=&amp;quot;#&amp;quot;&gt;sidebzine@riseup.example&lt;/a&gt; · Patches &amp;amp; tapes: the box at GIGS · Wholesale (for actual shops): 10+ copies at £1 each, we deliver by bike within 40km.&lt;/p&gt;
+&lt;span class=&amp;quot;stamp&amp;quot;&gt;NO SPONSORS · NO ADS · NO MASTERS&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© printed october 2026 · recycled paper · staple #2 bent&lt;/span&gt;&lt;span&gt;next issue: december (if the copier survives)&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.classList.add(&#x27;seen&#x27;);io.unobserve(e.target)}}),{threshold:.3});
+document.querySelectorAll(&#x27;section&#x27;).forEach(s=&gt;io.observe(s));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

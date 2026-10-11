@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quant Grid Tableau — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F6F8;--surface:#FFFFFF;--fg:#1F2933;--muted:#6B7785;--accent:#0E7C86;--accent2:#E86A33;--border:#D9E0E7}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Quant Grid Tableau</h1><div class="tagline">Sparklines everywhere, dense filters, export buttons ready</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">analytics</span><span class="tag">BI</span><span class="tag">research</span><span class="tag">data-table</span><span class="tag">chart-suite</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/quant-grid-tableau.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/quant-grid-tableau.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/quant-grid-tableau.png" alt="Quant Grid Tableau preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F4F6F8"></div><code>bg: #F4F6F8</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1F2933"></div><code>fg: #1F2933</code></div><div class="sw"><div class="chip" style="background:#6B7785"></div><code>muted: #6B7785</code></div><div class="sw"><div class="chip" style="background:#0E7C86"></div><code>accent: #0E7C86</code></div><div class="sw"><div class="chip" style="background:#E86A33"></div><code>accent2: #E86A33</code></div><div class="sw"><div class="chip" style="background:#D9E0E7"></div><code>border: #D9E0E7</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Neutral UI sans plus tabular mono for all figures</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Sparkline draw</strong></td><td>Inline sparklines draw left-to-right 500ms ease-out when their row enters viewport</td></tr><tr><td><strong>Filter apply</strong></td><td>Table rows fade/condense 250ms with stagger 20ms after filter change</td></tr><tr><td><strong>Sort nudge</strong></td><td>Column header arrow rotates 180° over 200ms ease-in-out on sort toggle</td></tr><tr><td><strong>Export toast</strong></td><td>Export button triggers toast sliding up 300ms cubic-bezier(0.2,0.8,0.2,1), auto-dismiss 4s</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Dense data table with inline sparkline column</li><li>Left filter rail with faceted checkboxes and range sliders</li><li>Sticky toolbar: saved views, date range, export dropdown</li><li>KPI strip of four stat cards above the grid</li><li>Zebra rows with hover row-highlight and cell focus rings</li><li>Pagination footer with rows-per-page selector</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">data-table</span><span class="tag">filter-sidebar</span><span class="tag">chart-suite</span><span class="tag">stats-band</span><span class="tag">pagination</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">TanStack Table (or plain DOM grid)</span><span class="tag">uPlot (sparklines + charts)</span><span class="tag">TanStack Virtual (row virtualization)</span><span class="tag">pure CSS grid layout</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>An analyst&#x27;s cockpit: every cell earns its place, sparklines inline with figures, dense filter rails, and export buttons within reach. Slate-and-teal dashboard palette with tabular numerals and disciplined 8px spacing. Built for BI, research, and anyone who says &#x27;just show me the table&#x27;.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a BI dashboard engineer. Build a single-page analytics workspace in the Quant Grid Tableau style.
+
+LOOK: Slate bg #F4F6F8, white surface #FFFFFF, ink #1F2933, muted #6B7785, teal accent #0E7C86, signal orange #E86A33, border #D9E0E7, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Inter for UI, JetBrains Mono with tabular-nums for every figure.
+
+LAYOUT: 1) Top bar: workspace name, saved-views dropdown, export button. 2) KPI strip: four stat cards with deltas. 3) Main split: left filter rail (facets, range sliders), right data table with sparkline column, sortable headers, sticky first column. 4) Right detail drawer opens on row click with a line chart. 5) Pagination footer with rows-per-page.
+
+MOTION: uPlot sparklines draw 500ms ease-out on intersection. Filter changes re-render rows with 250ms fade + 20ms stagger. Sort arrow rotates 200ms. Toasts slide up 300ms cubic-bezier(0.2,0.8,0.2,1), auto-dismiss 4s.
+
+SIGNATURE: (a) inline sparkline column, (b) faceted filter rail with live result counts, (c) export dropdown that actually triggers a CSV download client-side.
+
+CONSTRAINTS: Semantic &lt;table&gt; + &lt;button aria-sort&gt;, row virtualization past 500 rows, keyboard: arrows navigate cells, `f` focuses filters; AA contrast; responsive: filter rail collapses to a drawer under 1024px; debounce filters 150ms; no external chart bloat — uPlot is ~40KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/quant-grid-tableau/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/quant-grid-tableau/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Gridline — Analytics Workspace&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#F4F6F8; --surface:#FFFFFF; --fg:#1F2933; --muted:#6B7785;
+  --accent:#0E7C86; --accent2:#E86A33; --border:#D9E0E7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Inter&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Inter&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Inter&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw; }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease;;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.9rem }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Inter&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#1F2933; color:#F4F6F8; text-align:center; }
+.cta .btn { background:#E86A33; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;GRIDLINE&lt;/span&gt;
+  &lt;nav&gt;Views&lt;br&gt;Sources&lt;br&gt;Exports&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Q3 REVIEW&lt;/span&gt;
+  &lt;h1&gt;Revenue cohort table, sliced 40 ways&lt;/h1&gt;
+  &lt;p&gt;Every figure tabular, every sparkline inline, every view saved and shareable in one click.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Open the Grid&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Capabilities&lt;/span&gt;
+  &lt;h2&gt;Built for analysts&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Inline Sparklines&lt;/h3&gt;&lt;p&gt;Trend per row without leaving the table.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Faceted Filters&lt;/h3&gt;&lt;p&gt;Checkboxes and range sliders with live counts.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;One-Click Export&lt;/h3&gt;&lt;p&gt;CSV, XLSX, or a shareable snapshot link.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;At a glance&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;1.2M&lt;/b&gt;&lt;br&gt;&lt;span&gt;Rows queried&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;40ms&lt;/b&gt;&lt;br&gt;&lt;span&gt;Median filter&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;9&lt;/b&gt;&lt;br&gt;&lt;span&gt;Saved views&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Your data, unminced&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Connect a warehouse and get a workspace in minutes.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Start Free&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 GRIDLINE. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Docs · Changelog · Pricing&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

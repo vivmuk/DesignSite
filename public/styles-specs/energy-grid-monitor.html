@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Energy Grid Monitor — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111417;--surface:#1A1F24;--fg:#DDE4E8;--muted:#77848C;--accent:#39C6FF;--accent2:#FFC53D;--border:#2A333B}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Saira Condensed',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Energy Grid Monitor</h1><div class="tagline">SCADA flow diagrams, MW counters, alarm state colors</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">energy</span><span class="tag">utilities</span><span class="tag">industrial</span><span class="tag">count-up-numbers</span><span class="tag">chart-suite</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/energy-grid-monitor.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/energy-grid-monitor.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/energy-grid-monitor.png" alt="Energy Grid Monitor preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#111417"></div><code>bg: #111417</code></div><div class="sw"><div class="chip" style="background:#1A1F24"></div><code>surface: #1A1F24</code></div><div class="sw"><div class="chip" style="background:#DDE4E8"></div><code>fg: #DDE4E8</code></div><div class="sw"><div class="chip" style="background:#77848C"></div><code>muted: #77848C</code></div><div class="sw"><div class="chip" style="background:#39C6FF"></div><code>accent: #39C6FF</code></div><div class="sw"><div class="chip" style="background:#FFC53D"></div><code>accent2: #FFC53D</code></div><div class="sw"><div class="chip" style="background:#2A333B"></div><code>border: #2A333B</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Saira Condensed</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Industrial condensed labels, mono for all measurements</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Saira+Condensed&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Flow arrows</strong></td><td>Diagram connectors animate dash offset 1s linear infinite showing direction</td></tr><tr><td><strong>MW roll</strong></td><td>Megawatt counters roll digits 400ms per change, ease-out</td></tr><tr><td><strong>Alarm state</strong></td><td>Alarm tiles blink amber 1.2s x3 then hold solid; critical holds red solid</td></tr><tr><td><strong>Trend repaint</strong></td><td>Trend charts append a point every 2s with 300ms left-slide</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Single-line electrical diagram with animated flow</li><li>Rolling MW/MWh counters with units in mono</li><li>Alarm tile grid: red/amber/green state colors</li><li>Engineering tag numbers (TX-04, BUS-7) on equipment</li><li>Trend strip charts with time axis</li><li>Operator header: substation name, mode, UTC time</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">chart-suite</span><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">toast-system</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG single-line diagram + dash-flow</span><span class="tag">uPlot (trend strips)</span><span class="tag">WebSocket telemetry feed</span><span class="tag">rAF counter component</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A control-room page: single-line diagrams of the grid with animated flow direction, megawatt counters rolling, and alarm states painted in unambiguous red/amber/green. Dense panels, engineering labels, ISA-101 restraint. For utilities and industrial dashboards where misreading a state is not an option.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a SCADA/HMI web engineer. Build a single-page grid monitor in the Energy Grid Monitor style.
+
+LOOK: Near-black bg #111417, panel #1A1F24, light #DDE4E8, muted #77848C, cyan accent #39C6FF, amber #FFC53D, alarm red #FF4D4D, green nominal #3BA272, border #2A333B, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600&amp;family=Inter:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Saira Condensed labels, Inter body, IBM Plex Mono measurements.
+
+LAYOUT: 1) Operator header: substation name, operation mode, UTC clock. 2) Main: single-line diagram SVG (grid→transformers→buses→loads) with tag labels and flow animation. 3) Alarm tile grid right (state colors). 4) Rolling MW counter band. 5) Trend strip charts bottom. 6) Footer with alarm log link.
+
+MOTION: Connectors dash-offset animate 1s linear infinite (direction). Counters roll digits 400ms ease-out on change. Alarm tiles blink amber 1.2s x3 then hold; critical red holds solid. Trend charts append points every 2s with 300ms slide.
+
+SIGNATURE: (a) animated single-line diagram, (b) ISA-101 alarm color discipline (color = state only), (c) engineering tag numbers on all equipment.
+
+CONSTRAINTS: Semantic HTML, alarms announced via aria-live=assertive, AA contrast, all states also encoded with icons/text (not color alone); WebSocket feed with 5s fallback polling; counters tabular-nums; reduced-motion = static dashes, no blink; diagram keyboard-zoomable.
+
+EXTRA: Provide a 15-minute alarm-log table below the trends; equipment tags are abbreviations with title attributes; add a manual data-refresh button; keep the diagram legible at 320px width with zoom.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/energy-grid-monitor/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/energy-grid-monitor/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;GRID OPS — Northbank Substation&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Saira+Condensed&amp;family=Inter:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#111417; --surface:#1A1F24; --fg:#DDE4E8; --muted:#77848C;
+  --accent:#39C6FF; --accent2:#FFC53D; --border:#2A333B;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Inter&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Saira Condensed&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Saira Condensed&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#111111; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;min-height:50vh }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease;;font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.9rem }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Saira Condensed&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#DDE4E8; color:#111417; text-align:center; }
+.cta .btn { background:#FFC53D; color:#111111; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;NORTHBANK GRID OPS&lt;/span&gt;
+  &lt;nav&gt;DIAGRAM&lt;br&gt;ALARMS&lt;br&gt;TRENDS&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;SUBSTATION LIVE&lt;/span&gt;
+  &lt;h1&gt;Single-line diagram: all flows nominal&lt;/h1&gt;
+  &lt;p&gt;TX-04 412.6 MW up · BUS-7 138kV NOMINAL · TX-02 amber: oil temp trending&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;OPEN ALARM LOG&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;EQUIPMENT&lt;/span&gt;
+  &lt;h2&gt;Tags in service&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;TX-04 — Main Transformer&lt;/h3&gt;&lt;p&gt;412.6 MW · 78C oil · load 82% nominal&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;BUS-7 — Distribution&lt;/h3&gt;&lt;p&gt;138 kV · breaker 7-2 closed · relay armed&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;TL-12 — Interconnect&lt;/h3&gt;&lt;p&gt;Import 96 MW · schedule follows ACE curve&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;State&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;412.6&lt;/b&gt;&lt;br&gt;&lt;span&gt;MW delivered&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;82%&lt;/b&gt;&lt;br&gt;&lt;span&gt;Peak load&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;0&lt;/b&gt;&lt;br&gt;&lt;span&gt;Critical alarms&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Operator access&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Alarm history and switching orders require authorization.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Open Console&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 NORTHBANK GRID OPS. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Procedure Library · Audit Log · Contact&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

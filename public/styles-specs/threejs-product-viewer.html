@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Three.js Product Viewer — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2EE;--surface:#FFFFFF;--fg:#1A1A1A;--muted:#8A8578;--accent:#FF5A1F;--accent2:#1A1A1A;--border:#E2DFD8}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Space Grotesk',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Three.js Product Viewer</h1><div class="tagline">Orbit the product in a real-time studio stage.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">hardware</span><span class="tag">sneakers</span><span class="tag">furniture</span><span class="tag">three-js-scene</span><span class="tag">gltf-model-viewer</span><span class="tag">3d-product-configurator</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/threejs-product-viewer.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/threejs-product-viewer.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/threejs-product-viewer.png" alt="Three.js Product Viewer preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F4F2EE"></div><code>bg: #F4F2EE</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>fg: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#8A8578"></div><code>muted: #8A8578</code></div><div class="sw"><div class="chip" style="background:#FF5A1F"></div><code>accent: #FF5A1F</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>accent2: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#E2DFD8"></div><code>border: #E2DFD8</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Space Grotesk</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Grotesk display with neutral body; product studio mood.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>orbit-drag</strong></td><td>three.js OrbitControls with damping 0.08, auto-rotate 0.6 speed until first user drag.</td></tr><tr><td><strong>material-swap</strong></td><td>Color swatches tween material color 300ms ease-out and trigger a 500ms light pulse.</td></tr><tr><td><strong>entrance-settle</strong></td><td>Model drops in with a spring (GSAP, y+1.2→0, elastic.out 1.2s) on load.</td></tr><tr><td><strong>hotspot-pulse</strong></td><td>Annotation hotspots pulse scale 1→1.15 every 2s; click opens spec card.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-bleed 3D viewport with soft shadow</li><li>Material/color swatch rail</li><li>Annotation hotspots on the model</li><li>Exploded-view toggle</li><li>Studio softbox lighting rig look</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">pdp-gallery</span><span class="tag">product-card</span><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">tab-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">three.js + GLTFLoader</span><span class="tag">OrbitControls + RoomEnvironment</span><span class="tag">DracoGLTF compression</span><span class="tag">GSAP for entrance tween</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A real-time 3D product stage takes center screen: drag to orbit, scroll to zoom, swap materials and colors live under studio lighting. Supporting content stays minimal so the object remains the star. For hardware, sneakers and furniture brands selling craft through inspection.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a product page in the Three.js Product Viewer style — a real-time 3D stage where the customer inspects the object like it is in their hands.
+LOOK: warm paper-white #F4F2EE background, #FFFFFF surfaces, #1A1A1A text, #8A8578 muted, #E2DFD8 borders, orange #FF5A1F accent for selection states. Import: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap. The 3D viewport is full-bleed on desktop (60vh) with a soft radial floor shadow baked under the model.
+LAYOUT: slim top nav; hero = 3D viewport occupying most of the viewport with headline overlaid top-left and a vertical swatch rail right (5 colors, active one ringed in #FF5A1F); annotation hotspots on the model opening small spec cards; below, a tab-system (Specs / Materials / Care) with real content; three product-card recommendations; CTA add-to-cart bar that stays sticky on scroll.
+MOTION: three.js OrbitControls with enableDamping 0.08 and autoRotate 0.6 until first pointerdown; model entrance via GSAP from y+1.2 with elastic.out(1, 0.6) over 1.2s; swatch clicks tween material.color over 300ms ease-out plus a 500ms key-light intensity pulse; hotspots pulse scale 1→1.15 every 2s.
+SIGNATURE: (1) the always-grabbable model — cursor becomes grab/grabbing; (2) swatch rail with live material tween; (3) hotspot annotations tied to spec data.
+CONSTRAINTS: load GLTF with Draco compression, show a progress bar during load and a static fallback image if WebGL fails, cap pixelRatio at 2, pause rendering when tab hidden (visibilitychange), semantic HTML, contrast ≥4.5:1.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/threejs-product-viewer/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/threejs-product-viewer/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Three.js Product Viewer&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#F4F2EE;--surface:#FFFFFF;--fg:#1A1A1A;--muted:#8A8578;--accent:#FF5A1F;--accent2:#1A1A1A;--border:#E2DFD8;--grad:none;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#FFFFFF;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Space Grotesk&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.viewport{height:52vh;background:radial-gradient(ellipse at 50% 70%,#EAE7E0 0%,#F4F2EE 70%);border-radius:16px;display:grid;place-items:center;position:relative;cursor:grab}
+.viewport:active{cursor:grabbing}
+.swatches{display:flex;gap:10px;justify-content:center;margin-top:16px}
+.sw{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);cursor:pointer;transition:transform .2s}
+.sw:hover{transform:scale(1.15)}
+.sw.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,90,31,.25)}
+.hotspot{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--accent);animation:hp 2s ease-in-out infinite}
+@keyframes hp{50%{transform:scale(1.15)}}
+.spec{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.8rem;color:var(--muted)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Three.js&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h1&gt;AeroKnit Runner 02&lt;/h1&gt;&lt;p style=&amp;quot;margin:12px 0 24px;color:var(--muted)&amp;quot;&gt;Drag to orbit. Every angle earns its keep.&lt;/p&gt;
+&lt;div class=&amp;quot;viewport&amp;quot;&gt;&lt;span class=&amp;quot;hotspot&amp;quot; style=&amp;quot;top:30%;left:40%&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;hotspot&amp;quot; style=&amp;quot;top:60%;left:62%;animation-delay:.6s&amp;quot;&gt;&lt;/span&gt;
+&lt;p class=&amp;quot;spec&amp;quot; style=&amp;quot;position:absolute;bottom:16px;left:16px&amp;quot;&gt;drag · scroll · 60fps&lt;/p&gt;
+&lt;div style=&amp;quot;text-align:center&amp;quot;&gt;&lt;div style=&amp;quot;width:180px;height:100px;background:linear-gradient(135deg,#FF5A1F,#FF8A5C);border-radius:50% 50% 45% 45%;clip-path:polygon(0 40%,15% 10%,85% 10%,100% 40%,80% 100%,20% 100%);margin:0 auto&amp;quot;&gt;&lt;/div&gt;&lt;div style=&amp;quot;width:200px;height:16px;background:rgba(0,0,0,.08);border-radius:50%;margin-top:12px&amp;quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;swatches&amp;quot;&gt;&lt;span class=&amp;quot;sw on&amp;quot; style=&amp;quot;background:#FF5A1F&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;sw&amp;quot; style=&amp;quot;background:#1A1A1A&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;sw&amp;quot; style=&amp;quot;background:#4A7CFF&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;sw&amp;quot; style=&amp;quot;background:#E8E3D8&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;sw&amp;quot; style=&amp;quot;background:#2E7D4F&amp;quot;&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot; style=&amp;quot;margin-top:24px&amp;quot;&gt;Add to cart — $189&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Recycled knit&lt;/h3&gt;&lt;p&gt;Upper woven from 7 recovered bottles. Zero waste pattern-cutting.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Hotspot specs&lt;/h3&gt;&lt;p&gt;Tap any pulsing point on the model to read the exact material spec.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;True-fit AR&lt;/h3&gt;&lt;p&gt;Drop the shoe on your floor in AR before you commit to a size.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Built to be inspected&lt;/h2&gt;&lt;p&gt;We put the whole shoe online — inside, out and underneath — because a product this considered shouldn&#x27;t hide from a rotating camera. If a stitch can survive a 400-degree review, it can survive your Monday.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Orbit it. Then own it.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Free returns for 60 days&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Three.js. All rights reserved.&lt;/span&gt;&lt;span&gt;Carbon-neutral shipping · Repairs for life&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

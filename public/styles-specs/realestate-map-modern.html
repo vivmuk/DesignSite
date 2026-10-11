@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RealEstate Map Modern — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F8F7;--surface:#FFFFFF;--fg:#1D2733;--muted:#64748B;--accent:#1E6E5C;--accent2:#E85D3D;--border:#E2E8E6}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'DM Sans',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>RealEstate Map Modern</h1><div class="tagline">Split map/list, synced pins, price overlays, tour CTAs</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">real estate</span><span class="tag">travel</span><span class="tag">local</span><span class="tag">map-view</span><span class="tag">filter-sidebar</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/realestate-map-modern.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/realestate-map-modern.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/realestate-map-modern.png" alt="RealEstate Map Modern preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F7F8F7"></div><code>bg: #F7F8F7</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1D2733"></div><code>fg: #1D2733</code></div><div class="sw"><div class="chip" style="background:#64748B"></div><code>muted: #64748B</code></div><div class="sw"><div class="chip" style="background:#1E6E5C"></div><code>accent: #1E6E5C</code></div><div class="sw"><div class="chip" style="background:#E85D3D"></div><code>accent2: #E85D3D</code></div><div class="sw"><div class="chip" style="background:#E2E8E6"></div><code>border: #E2E8E6</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> DM Sans</p><p><strong>Body:</strong> DM Sans</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Geometric sans with tabular figures for prices</p>
+<p><a href="https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Pin-card sync</strong></td><td>Hovering a card pulses its pin (scale 1→1.3→1, 600ms) and vice versa</td></tr><tr><td><strong>List slide</strong></td><td>New result cards slide in from bottom 350ms cubic-bezier(0.22,1,0.36,1), staggered 40ms</td></tr><tr><td><strong>Price pill settle</strong></td><td>Map price pills fade-scale in 250ms after tiles finish loading</td></tr><tr><td><strong>Filter sheet</strong></td><td>Mobile filter sheet springs up 400ms with slight overshoot</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>50/50 split map-and-list layout</li><li>Price pills pinned to map coordinates</li><li>Heart/save button on every card with count</li><li>Map style toggle (map/satellite) chip top-right</li><li>Synced hover highlight across card and pin</li><li>Draw-on-map search boundary tool</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">map-view</span><span class="tag">filter-sidebar</span><span class="tag">product-card</span><span class="tag">pagination</span><span class="tag">form-stack</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">MapLibre GL JS (map + custom markers)</span><span class="tag">TanStack Virtual (long list)</span><span class="tag">Swiper.js (card carousels)</span><span class="tag">CSS grid split layout</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The property-search workhorse: a live map filling half the screen, synced cards sliding on the other half, price pills pinned to every parcel. Hover a card, the pin pulses; move the map, cards reorder. Practical modernism — clean tiles, clean type, and zero ambiguity about what costs what.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a proptech front-end engineer. Build a single-page property search in the RealEstate Map Modern style.
+
+LOOK: Pale bg #F7F8F7, white cards #FFFFFF, ink #1D2733, muted #64748B, forest accent #1E6E5C, coral highlight #E85D3D, border #E2E8E6, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. DM Sans with tabular-nums for prices.
+
+LAYOUT: 1) Toolbar: location input, bed/bath/price chips, save-search, map toggle. 2) Split body: left map with custom price-pill markers; right virtualized card list (photo, price, beds/baths/sqft, heart). 3) Hover sync both directions. 4) Mobile: map toggles full-screen, filter bottom-sheet.
+
+MOTION: Hover pin pulse scale 1→1.3→1 600ms both ways. Cards slide in 350ms cubic-bezier(0.22,1,0.36,1) staggered 40ms on new results. Price pills fade-scale 250ms post tile-load. Filter sheet springs 400ms with overshoot.
+
+SIGNATURE: (a) price pills as map markers, (b) two-way card↔pin hover sync, (c) draw-on-map boundary search.
+
+CONSTRAINTS: Semantic &lt;ul&gt; of results with &lt;article&gt; cards, all interactive elements keyboard-reachable, map has text alternative list; virtualize past 60 cards; debounce map-move queries 400ms; cluster markers past 200; AA contrast; lazy tile + image loading; heart state persists to localStorage.
+
+EXTRA: Price pill markers are DOM buttons with aria-labels like &#x27;749000 dollars, 3 bed on 9th&#x27;; map and list scroll independently; a compare-tray holds up to three saved cards at the bottom.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/realestate-map-modern/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/realestate-map-modern/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Fieldmark — Property Search&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;800&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#F7F8F7; --surface:#FFFFFF; --fg:#1D2733; --muted:#64748B;
+  --accent:#1E6E5C; --accent2:#E85D3D; --border:#E2E8E6;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;DM Sans&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;DM Sans&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;DM Sans&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;min-height:50vh }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;DM Sans&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#1D2733; color:#F7F8F7; text-align:center; }
+.cta .btn { background:#E85D3D; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;FIELDMARK&lt;/span&gt;
+  &lt;nav&gt;Buy&lt;br&gt;Rent&lt;br&gt;Sell&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Maple District&lt;/span&gt;
+  &lt;h1&gt;42 homes match your map&lt;/h1&gt;
+  &lt;p&gt;Draw a boundary, set a budget, and watch price pins appear exactly where you want to live.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Draw Your Search&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Featured&lt;/span&gt;
+  &lt;h2&gt;New this week&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Brickrow on 9th&lt;/h3&gt;&lt;p&gt;3 bd · 2 ba · 1,840 sqft — $749,000&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Garden Flat, Alder St&lt;/h3&gt;&lt;p&gt;2 bd · 1 ba · 980 sqft — $2,850/mo&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Corner Lot on Vine&lt;/h3&gt;&lt;p&gt;4 bd · 3 ba · 2,650 sqft — $1.1M&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;The Market&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;42&lt;/b&gt;&lt;br&gt;&lt;span&gt;Active listings&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;6d&lt;/b&gt;&lt;br&gt;&lt;span&gt;Median to offer&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;+4.2%&lt;/b&gt;&lt;br&gt;&lt;span&gt;YoY median&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;See it before it lists&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Save this search and get pings the minute a pin appears.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Save Search&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 FIELDMARK. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Agents · Mortgages · About&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

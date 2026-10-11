@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Victorian Almanac — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+SC&family=EB+Garamond&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1E8D4;--surface:#F8F1E1;--fg:#3B2F23;--muted:#8A7A63;--accent:#7B2D26;--accent2:#55613B;--border:#D8C7A4}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'EB Garamond',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cormorant SC',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Victorian Almanac</h1><div class="tagline">Engraved ornament on aged paper, by candlelight.</div>
+<div class="meta"><span class="tag">classic</span><span class="tag">whiskey</span><span class="tag">publishing</span><span class="tag">boutique</span><span class="tag">svg-draw-on-scroll</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/victorian-almanac.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/victorian-almanac.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/victorian-almanac.png" alt="Victorian Almanac preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F1E8D4"></div><code>bg: #F1E8D4</code></div><div class="sw"><div class="chip" style="background:#F8F1E1"></div><code>surface: #F8F1E1</code></div><div class="sw"><div class="chip" style="background:#3B2F23"></div><code>fg: #3B2F23</code></div><div class="sw"><div class="chip" style="background:#8A7A63"></div><code>muted: #8A7A63</code></div><div class="sw"><div class="chip" style="background:#7B2D26"></div><code>accent: #7B2D26</code></div><div class="sw"><div class="chip" style="background:#55613B"></div><code>accent2: #55613B</code></div><div class="sw"><div class="chip" style="background:#D8C7A4"></div><code>border: #D8C7A4</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cormorant SC</p><p><strong>Body:</strong> EB Garamond</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Small-caps engraving display with garalde body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cormorant+SC&family=EB+Garamond&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Ornament Draw</strong></td><td>Filigree SVG rules stroke-draw via dasharray, 1.2s ease-out, on section entry.</td></tr><tr><td><strong>Wax Seal Press</strong></td><td>Seal stamps down scale 1.3 to 1 with slight rotate, 400ms cubic-bezier(.2,.9,.3,1.2), on load.</td></tr><tr><td><strong>Flourish Fade</strong></td><td>Copperplate flourishes fade in with blur(4px) to 0 over 900ms.</td></tr><tr><td><strong>Table Row Reveal</strong></td><td>Almanac rows slide in 12px sequentially, 60ms stagger.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Engraved filigree borders</li><li>Wax seal stamps</li><li>Almanac data tables with double rules</li><li>Copperplate script accents</li><li>Ornamental section dividers</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">timeline</span><span class="tag">data-table</span><span class="tag">faq-accordion</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG stroke-dasharray animation</span><span class="tag">pure CSS transitions</span><span class="tag">EB Garamond + Cormorant SC</span><span class="tag">GSAP for draw sequencing</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Aged-paper backgrounds carry engraved-style ornaments, copperplate flourishes, dense almanac tables, and a deep oxblood accent — a page that smells of cedar and wax seals. Use it for whiskey, fine publishing, and boutiques. Distinctive because every rule and border appears to have been etched by hand.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a heritage whiskey brand site in the Victorian Almanac style — engraved ornament, aged paper, antiquarian density.
+LOOK: Palette — bg #F1E8D4, surface #F8F1E1, fg #3B2F23, muted #8A7A63, accent #7B2D26 (oxblood), accent2 #55613B (botanical green), border #D8C7A4, no gradient. Load fonts via https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap — Cormorant SC small-caps for display, EB Garamond for body and italic annotations. Add a subtle paper grain via an SVG feTurbulence overlay at opacity 0.05.
+LAYOUT: (1) nav — centered small-caps links under a double rule; (2) hero — engraved filigree flourish, Cormorant wordmark, wax seal stamp, headline in Garamond italic; (3) the story as a timeline of decades; (4) almanac data-table of bottlings (age, cask, proof) with double-rule borders; (5) tasting notes with botanical green annotations; (6) FAQ accordion styled as index questions; (7) footer-mega with copperplate contact script.
+MOTION: SVG stroke-draw — filigree borders animate stroke-dashoffset over 1.2s ease-out on section entry (GSAP); wax seal presses scale 1.3 to 1, rotate -4° to 0°, 400ms cubic-bezier(.2,.9,.3,1.2) on load; flourishes fade with blur(4px) to 0, 900ms; table rows slide in 12px with 60ms stagger.
+SIGNATURE: The wax seal that stamps once on load; double-ruled almanac tables; fleuron dividers between every section.
+CONSTRAINTS: Semantic HTML, tables with proper th scope, print stylesheet (the page must look right on paper), single column under 720px, ornament SVGs inline and under 30KB, AA contrast for #8A7A63 at 1rem and above.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/victorian-almanac/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/victorian-almanac/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Oakmoor &amp; Sons — Distilled since 1849&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#F1E8D4;--surface:#F8F1E1;--fg:#3B2F23;--muted:#8A7A63;--accent:#7B2D26;--accent2:#55613B;--border:#D8C7A4;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&amp;quot;EB Garamond&amp;quot;,serif;line-height:1.6}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;font-weight:700;font-size:1.2rem;color:var(--fg);text-decoration:none;letter-spacing:.02em}
+nav a{margin-left:22px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+nav .cta-link{color:var(--accent);font-weight:600}
+.hero{padding:96px 0 72px}
+.kicker{color:var(--accent);font-weight:600;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.08;letter-spacing:-.02em;max-width:820px}
+.hero .lede{max-width:600px;margin:22px 0 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:13px 30px;background:var(--accent);color:#fff;border-radius:2px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--accent) 35%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.section-h{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;font-size:2rem;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:80px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;font-size:1.9rem;margin-bottom:18px}
+.about p{color:var(--muted);max-width:680px;margin-bottom:14px}
+.cta{padding:88px 0;text-align:center}
+.cta h2{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px}
+.cta p{color:var(--muted);max-width:560px;margin:0 auto 28px}
+footer{border-top:1px solid var(--border);padding:34px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer h4{font-family:&amp;quot;Cormorant SC&amp;quot;,serif;color:var(--fg);margin-bottom:8px;font-size:.95rem}
+footer nav a{display:block;margin:0 0 6px}
+
+.filigree{border:3px double var(--accent);padding:5px}
+.filigree-inner{border:1px solid var(--border);padding:2px}
+.wax{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#a03a31,var(--accent) 60%,#5e1f1a);display:grid;place-items:center;color:#F1E8D4;font-family:var(--font-display);font-weight:700;font-size:1.6rem;box-shadow:0 3px 8px rgba(59,47,35,.4),inset 0 2px 4px rgba(255,255,255,.25);margin:0 auto;transition:transform .3s ease}
+.wax:hover{transform:rotate(-8deg) scale(1.05)}
+.almanac{width:100%;border-collapse:collapse;font-size:.95rem}
+.almanac caption{font-family:var(--font-display);font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding-bottom:10px;color:var(--accent)}
+.almanac th{font-family:var(--font-display);font-weight:600;text-align:left}
+.almanac thead tr{border-top:3px double var(--fg);border-bottom:3px double var(--fg)}
+.almanac tbody tr{border-bottom:1px solid var(--border)}
+.almanac th,.almanac td{padding:10px 12px}
+.card{background:var(--surface);border:1px solid var(--border);padding:28px}
+.card h3{font-family:var(--font-display);font-weight:600;font-size:1.35rem;color:var(--accent);margin-bottom:.5rem}
+.kicker{font-family:var(--font-display);letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;color:var(--accent2)}
+.orn{color:var(--accent2);letter-spacing:.4em}
+
+.fleuron{text-align:center;color:var(--accent);font-size:1.4rem;margin:2rem 0}
+.fleuron::before,.fleuron::after{content:&amp;quot;&amp;quot;;display:inline-block;width:90px;height:1px;background:var(--border);vertical-align:middle;margin:0 1rem}
+.seal{width:84px;height:84px;border-radius:50%;background:var(--accent);color:#F1E8D4;display:grid;place-items:center;font-family:var(--font-display);font-size:.7rem;text-align:center;margin:1.5rem auto 0;box-shadow:0 3px 8px rgba(59,47,35,.35);transform:rotate(-4deg)}
+.hero,.about,.cta{text-align:center}
+table{width:100%;border-collapse:collapse;margin:2rem auto;max-width:720px;font-size:.95rem;border-top:3px double var(--border);border-bottom:3px double var(--border)}
+th,td{padding:.7rem .8rem;border-bottom:1px solid var(--border);text-align:left}
+th{font-family:var(--font-display);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.script{font-style:italic;color:var(--accent);font-size:1.1rem}
+.btn{border-radius:2px;background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn-primary{background:var(--accent);color:#F1E8D4}
+.card{border:1px solid var(--border);border-radius:2px;background:var(--surface)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.stats-band{grid-template-columns:repeat(2,1fr)}.side-cap{display:none}.tategaki{display:none}.hero{padding:64px 0 48px}.cols{column-count:1}nav a{margin-left:12px}footer .cols3{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Oakmoor &amp; Sons&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Spirits&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;Almanac&lt;/a&gt;&lt;a href=&amp;quot;#journal&amp;quot;&gt;Journal&lt;/a&gt;&lt;a class=&amp;quot;cta-link&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Visit the yard&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;p class=&amp;quot;kicker&amp;quot;&gt;Distillers · Est. 1849 · Single estate&lt;/p&gt;
+&lt;h1&gt;Distilled the slow way, since 1849.&lt;/h1&gt;
+&lt;p class=&amp;quot;lede&amp;quot;&gt;Oakmoor is a single estate distillery: one field of barley, one stream, one warehouse of oxblood-red brick and patience.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#features&amp;quot;&gt;The bottlings&lt;/a&gt;&lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Our story&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section style=&amp;quot;padding:8px 0&amp;quot;&gt;&lt;div class=&amp;quot;wax&amp;quot; title=&amp;quot;Sealed in 1849&amp;quot;&gt;O&amp;amp;S&lt;/div&gt;
+&lt;div class=&amp;quot;almanac-wrap filigree&amp;quot;&gt;&lt;div class=&amp;quot;filigree-inner&amp;quot; style=&amp;quot;padding:22px&amp;quot;&gt;&lt;table class=&amp;quot;almanac&amp;quot;&gt;&lt;caption&gt;The Cask Ledger&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Cask&lt;/th&gt;&lt;th&gt;Fill&lt;/th&gt;&lt;th&gt;Summers&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;No. 214&lt;/td&gt;&lt;td&gt;Spring 2009&lt;/td&gt;&lt;td&gt;Seventeen&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;No. 215&lt;/td&gt;&lt;td&gt;Autumn 2009&lt;/td&gt;&lt;td&gt;Seventeen&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;No. 216&lt;/td&gt;&lt;td&gt;Spring 2010&lt;/td&gt;&lt;td&gt;Sixteen&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p class=&amp;quot;orn&amp;quot; style=&amp;quot;text-align:center;margin-top:14px&amp;quot;&gt;❦ ❦ ❦&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;section-h&amp;quot;&gt;The bottlings&lt;/h2&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The 1849 Expression&lt;/h3&gt;&lt;p&gt;Our founding recipe, unaltered: ex-bourbon cask, seventeen summers.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Almanac Reserve&lt;/h3&gt;&lt;p&gt;A single cask chosen each year by the master distiller&#x27;s own hand.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Hedgerow Series&lt;/h3&gt;&lt;p&gt;Limited editions finished in casks that once held orchard cider.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;From the ledger of 1849&lt;/h2&gt;&lt;p&gt;The founding entry reads: &#x27;Filled forty barrels. We shall wait.&#x27; Seven generations later we are still waiting, on purpose, in the same warehouse.&lt;/p&gt;&lt;p&gt;Every bottle carries its cask number, fill date, and the year the barley was sown — because a whiskey should be as accountable as an almanac.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Book a tasting at the yard&lt;/h2&gt;&lt;p&gt;The tasting room seats twelve, by the fire in winter and among the barley in summer. One sitting daily.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Reserve a sitting&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot; style=&amp;quot;font-size:1rem&amp;quot;&gt;Oakmoor &amp; Sons&lt;/a&gt;&lt;p style=&amp;quot;margin-top:6px&amp;quot;&gt;We shall wait.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;cols3&amp;quot; style=&amp;quot;display:grid;grid-template-columns:repeat(3,auto);gap:32px&amp;quot;&gt;
+&lt;nav&gt;&lt;h4&gt;Spirits&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Bottlings&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Almanac&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Casks&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;Estate&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;History&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Journal&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;The yard&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;Correspondence&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Letters&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Stockists&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Trade&lt;/a&gt;&lt;/nav&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" sandbox="allow-same-origin"></iframe>
+</div></body></html>

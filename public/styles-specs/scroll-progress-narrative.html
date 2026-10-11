@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scroll Progress Narrative — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Spectral&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfaf7;--surface:#ffffff;--fg:#21201b;--muted:#77736a;--accent:#0f766e;--accent2:#d97706;--border:#e7e3da}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Spectral',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Scroll Progress Narrative</h1><div class="tagline">A progress rail conducts chapters, color and counts</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">reports</span><span class="tag">courses</span><span class="tag">docs</span><span class="tag">scroll-driven-animations</span><span class="tag">count-up-numbers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/scroll-progress-narrative.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/scroll-progress-narrative.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/scroll-progress-narrative.png" alt="Scroll Progress Narrative preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#fbfaf7"></div><code>bg: #fbfaf7</code></div><div class="sw"><div class="chip" style="background:#ffffff"></div><code>surface: #ffffff</code></div><div class="sw"><div class="chip" style="background:#21201b"></div><code>fg: #21201b</code></div><div class="sw"><div class="chip" style="background:#77736a"></div><code>muted: #77736a</code></div><div class="sw"><div class="chip" style="background:#0f766e"></div><code>accent: #0f766e</code></div><div class="sw"><div class="chip" style="background:#d97706"></div><code>accent2: #d97706</code></div><div class="sw"><div class="chip" style="background:#e7e3da"></div><code>border: #e7e3da</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Spectral</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Bookish serif headings with a quiet UI sans</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Spectral&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Progress rail fill</strong></td><td>Fixed left rail fills top→bottom via scroll-driven animation (animation-timeline: scroll()); chapter nodes ignite in accent as passed.</td></tr><tr><td><strong>Chapter tick-over</strong></td><td>Chapter numeral crossfades 0.4s ease when a section crosses 40% viewport.</td></tr><tr><td><strong>Temperature warm-up</strong></td><td>Accent CSS variable interpolates #0f766e→#d97706 linearly with document progress.</td></tr><tr><td><strong>Count-up stats</strong></td><td>Figures count 0→target in 1.2s cubic-bezier(.2,.7,.2,1) when their section enters 60% viewport.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Fixed chapter progress rail</li><li>Igniting chapter nodes with numerals</li><li>Accent color that warms with scroll</li><li>Count-up stat plates per chapter</li><li>End-of-chapter takeaway blocks</li><li>&#x27;You are here&#x27; marker on the rail</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">timeline</span><span class="tag">stats-band</span><span class="tag">faq-accordion</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS scroll-driven animations</span><span class="tag">IntersectionObserver</span><span class="tag">requestAnimationFrame count-up</span><span class="tag">pure CSS custom-property interpolation</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A fixed progress rail conducts the whole page: chapter numbers tick over, accent color warms from teal to amber, and stats count up as their chapter arrives. Bookish serif over a calm sans keeps it course-and-report serious. For long documents that deserve a sense of journey rather than a wall of text.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a longform report page in the Scroll Progress Narrative style. Ship one polished, self-contained page.
+
+LOOK: Scholarly and guided. Palette hexes exactly: bg #fbfaf7, surface #ffffff, fg #21201b, muted #77736a, accent #0f766e (teal, chapter 01 state), accent2 #d97706 (amber, warmed state), border #e7e3da. Fonts: load https://fonts.googleapis.com/css2?family=Spectral:wght@500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap — Spectral for display and chapter numerals, Inter for body, JetBrains Mono for rail labels and figures.
+
+LAYOUT, in order: (1) slim header with report title and download link; (2) hero: Spectral headline, Inter lede, teal &#x27;Begin Chapter 01&#x27; CTA; (3) four chapter sections, each with a serif chapter chip, lede, and an end-of-chapter takeaway block bordered in accent; (4) stats band of three white plates with counting mono numerals inside chapter 02; (5) a vertical timeline chapter; (6) FAQ accordion of methodology questions; (7) download CTA band; (8) footer with mono reading-progress line. A fixed left progress rail spans the document.
+
+MOTION: The rail fills top→bottom using CSS scroll-driven animation (animation-timeline: scroll()); nodes ignite in the current accent as passed. The accent variable interpolates #0f766e→#d97706 with document progress. Chapter numerals crossfade 0.4s when a section crosses 40% viewport. Stats count 0→target in 1.2s cubic-bezier(.2,.7,.2,1) at 60% entry.
+
+SIGNATURE: (a) the igniting chapter rail with a YOU-ARE-HERE marker; (b) accent color literally warming as the narrative deepens; (c) takeaway blocks that close each chapter.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; hide the rail under 900px and show a top progress bar instead; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by showing static filled states.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/scroll-progress-narrative/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/scroll-progress-narrative/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;The Battery Decade&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Spectral:wght@500;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --fg:#21201b; --muted:#77736a;
+  --accent:#0f766e; --accent2:#d97706; --border:#e7e3da;
+  --font-display:&#x27;Spectral&#x27;,sans-serif; --font-body:&#x27;Inter&#x27;,sans-serif;
+  --font-mono:&#x27;JetBrains Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.rail{position:fixed;left:1.25rem;top:20%;bottom:20%;width:2px;background:var(--border)}
+.rail i{position:absolute;left:0;top:0;width:100%;height:28%;background:var(--accent)}
+.node{position:absolute;left:-6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--border)}
+.node.on{border-color:var(--accent);background:var(--accent)}
+.node span{position:absolute;left:20px;font-family:var(--font-mono);font-size:.7rem;color:var(--muted);white-space:nowrap}
+.statplate{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center}
+.statplate b{font-family:var(--font-mono);font-size:1.8rem;color:var(--accent2)}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;The Battery Decade&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Ch.1&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Ch.2&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Ch.3&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Download&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;FIELD REPORT — 2026&lt;/p&gt;&lt;h1&gt;The Battery Decade, chapter by chapter.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;The rail on the left knows where you are. Chapters ignite as you pass, the accent warms as the story does, and every stat counts itself in.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Start Chapter 01&lt;/a&gt;
+&lt;div class=&amp;quot;rail&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;span class=&amp;quot;node on&amp;quot; style=&amp;quot;top:0&amp;quot;&gt;&lt;span&gt;01 RAW&lt;/span&gt;&lt;/span&gt;&lt;span class=&amp;quot;node&amp;quot; style=&amp;quot;top:33%&amp;quot;&gt;&lt;span&gt;02 SCALE&lt;/span&gt;&lt;/span&gt;&lt;span class=&amp;quot;node&amp;quot; style=&amp;quot;top:66%&amp;quot;&gt;&lt;span&gt;03 SORROW&lt;/span&gt;&lt;/span&gt;&lt;span class=&amp;quot;node&amp;quot; style=&amp;quot;top:100%&amp;quot;&gt;&lt;span&gt;04 AFTER&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Chapter 02 — Scale&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;2,140 GWh&lt;/h3&gt;&lt;p&gt;Global cell capacity coming online this year, counting up as you arrive.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;−61%&lt;/h3&gt;&lt;p&gt;Cost per kWh since 2019, plotted along the rail&#x27;s own gradient.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;38 plants&lt;/h3&gt;&lt;p&gt;Gigafactories under construction, mapped in the fold-out appendix.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Chapter 02 — Scale&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;&lt;div class=&amp;quot;statplate&amp;quot;&gt;&lt;b&gt;2,140&lt;/b&gt;&lt;p&gt;GWh new capacity&lt;/p&gt;&lt;/div&gt;&lt;div class=&amp;quot;statplate&amp;quot;&gt;&lt;b&gt;−61%&lt;/b&gt;&lt;p&gt;cost per kWh since 2019&lt;/p&gt;&lt;/div&gt;&lt;div class=&amp;quot;statplate&amp;quot;&gt;&lt;b&gt;38&lt;/b&gt;&lt;p&gt;plants under construction&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;Why the rail matters&lt;/h2&gt;&lt;p&gt;Long documents lose readers at the fold. A visible journey — filled rail, igniting chapters, warming color — gives the eye a reason to keep moving and a place to return to.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Take the report with you&lt;/h2&gt;&lt;p&gt;PDF, EPUB and a 12-slide brief for the meeting you&#x27;re dreading.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Download the pack&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 The Battery Decade&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;READING PROGRESS 28% · 14 MIN LEFT&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

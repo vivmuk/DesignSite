@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notion Warm Docs — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lora&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF9F4;--surface:#FFFFFF;--fg:#2F2B26;--muted:#78716A;--accent:#C96F4A;--accent2:#5B8A72;--border:#E8E2D6}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Lora',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Notion Warm Docs</h1><div class="tagline">Warm paper, emoji icons, content does the talking.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">docs</span><span class="tag">wikis</span><span class="tag">communities</span><span class="tag">page-view-transitions</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/notion-warm-docs.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/notion-warm-docs.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/notion-warm-docs.png" alt="Notion Warm Docs preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FBF9F4"></div><code>bg: #FBF9F4</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2F2B26"></div><code>fg: #2F2B26</code></div><div class="sw"><div class="chip" style="background:#78716A"></div><code>muted: #78716A</code></div><div class="sw"><div class="chip" style="background:#C96F4A"></div><code>accent: #C96F4A</code></div><div class="sw"><div class="chip" style="background:#5B8A72"></div><code>accent2: #5B8A72</code></div><div class="sw"><div class="chip" style="background:#E8E2D6"></div><code>border: #E8E2D6</code></div><p><code>linear-gradient(180deg,#FBF9F4 0%,#F5F0E6 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Lora</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Serif display warmth over humanist sans body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Lora&family=Karla&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>page-flip-transition</strong></td><td>Nav-driven section swaps use View Transitions: outgoing fades 100ms, incoming rises 10px over 200ms cubic-bezier(.3,.7,.4,1) — a paper flip.</td></tr><tr><td><strong>emoji-nudge-hover</strong></td><td>Emoji bullets scaleX(1.25) rotate(-6deg) over 180ms spring ease when their list item is hovered.</td></tr><tr><td><strong>callout-slide-in</strong></td><td>💡 callout boxes slide in from left 12px + fade over 240ms ease-out when scrolled into view, once.</td></tr><tr><td><strong>toc-active-morph</strong></td><td>TOC active item background morphs: a 100% width #F0E9DC pill slides between entries over 180ms ease-out via view-transition.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Emoji as section icons (📘 ✅ 💡)</li><li>Warm paper background with soft grain</li><li>Serif display headings, sans body</li><li>Hand-feel callout boxes with emoji labels</li><li>Generous 96px section spacing</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">faq-accordion</span><span class="tag">form-stack</span><span class="tag">breadcrumb</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Lora + Karla webfonts</span><span class="tag">View Transitions API</span><span class="tag">IntersectionObserver reveals</span><span class="tag">pure CSS accordion</span><span class="tag">semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A warm off-white canvas where content is the interface: emoji stand in for icons, generous whitespace breathes between sections, and gentle page-view transitions make navigation feel like flipping paper. Typography is friendly and rounded, hierarchy is soft but unmistakable. Ideal for docs, wikis and community hubs that want to feel human without getting cute.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a documentation wiki in the Notion Warm Docs style — warm, human, content-first, zero chrome.
+LOOK: warm paper #FBF9F4 background (fade to #F5F0E6 at page bottom), white #FFFFFF cards, ink #2F2B26 headings, muted #78716A body-secondary, borders #E8E2D6, coral #C96F4A links, sage #5B8A72 for tags/success. Import fonts: https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Karla:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400&amp;display=swap — Lora 600 for headings, Karla for body (16px/1.7), IBM Plex Mono for inline code. Emoji ARE the icon system — 📘 docs, 💡 tips, ✅ done, 🧭 nav; never use an icon font.
+LAYOUT: top bar 60px with wordmark, rounded pill search field, and &#x27;New page&#x27; button; below, 240px TOC sidebar (paper-tone, pill highlight on active entry) + 720px content column with 96px section rhythm; content anatomy: emoji-prefixed h2s, tip callouts (soft #F0E9DC, 12px radius, 💡 label), checklist blocks (✅), inline mono chips. End with a warm CTA band and 4-column footer.
+MOTION: page/route swaps use the View Transitions API — 100ms fade out, incoming rises 10px over 200ms cubic-bezier(.3,.7,.4,1); emoji bullets nudge scaleX(1.25) rotate(-6deg) 180ms spring on item hover; callouts slide in 12px from left + fade over 240ms ease-out via IntersectionObserver once; the TOC active pill slides between entries over 180ms. Vanilla JS + CSS only.
+SIGNATURE: (1) emoji as the entire icon system; (2) warm paper texture and cream fade; (3) serif-over-sans typographic pairing; (4) generous whitespace as the primary luxury signal.
+CONSTRAINTS: semantic HTML (nav, main, article, aside); WCAG AA — verify #78716A on #FBF9F4 ≥ 4.5:1 for body-sized text; emoji get aria-labels when informative; responsive: TOC collapses to a sticky top-chip row under 900px; prefers-reduced-motion kills transitions and reveals; system emoji rendering means no emoji webfont; total payload under 120KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/notion-warm-docs/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/notion-warm-docs/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Fieldnotes — Warm Docs&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Karla:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#FBF9F4;--surface:#fff;--fg:#2F2B26;--muted:#78716A;--accent:#C96F4A;--accent2:#5B8A72;--border:#E8E2D6;--callout:#F0E9DC}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(180deg,var(--bg) 0%,#F5F0E6 100%);color:var(--fg);font-family:&#x27;Karla&#x27;,sans-serif;font-size:16px;line-height:1.7}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.shell{max-width:1080px;margin:0 auto;padding:0 24px}
+header{border-bottom:1px solid var(--border);background:rgba(251,249,244,.9);position:sticky;top:0;backdrop-filter:blur(8px);z-index:10}
+header .shell{display:flex;align-items:center;height:60px;gap:20px}
+.logo{font-family:&#x27;Lora&#x27;,serif;font-weight:600;font-size:1.1rem}
+.search{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:7px 16px;color:var(--muted);font-size:.85rem;flex:0 0 260px}
+.newbtn{margin-left:auto;background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:700}
+.body{display:grid;grid-template-columns:240px minmax(0,720px);gap:56px;padding:48px 0 96px}
+.toc{position:sticky;top:84px;align-self:start;font-size:.9rem}
+.toc .pill{display:block;padding:7px 14px;border-radius:999px;color:var(--muted);transition:background .18s ease-out,color .18s}
+.toc .pill:hover{color:var(--fg)}
+.toc .pill.active{background:var(--callout);color:var(--fg);font-weight:700}
+.toc .grp{margin:18px 0 6px;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+article h1{font-family:&#x27;Lora&#x27;,serif;font-weight:600;font-size:2.1rem;margin-bottom:12px}
+.crumbs{color:var(--muted);font-size:.8rem;margin-bottom:28px}
+article h2{font-family:&#x27;Lora&#x27;,serif;font-size:1.35rem;margin:56px 0 14px}
+article h2 .em{display:inline-block;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
+article h2:hover .em{transform:scaleX(1.25) rotate(-6deg)}
+article p{color:var(--muted);margin-bottom:14px}
+article p b{color:var(--fg)}
+.callout{background:var(--callout);border-radius:12px;padding:16px 18px;margin:24px 0;font-size:.95rem;opacity:0;transform:translateX(-12px);transition:opacity .24s ease-out,transform .24s ease-out}
+.callout.in{opacity:1;transform:none}
+.check{list-style:none;margin:14px 0}
+.check li{padding:5px 0;color:var(--muted)}
+code{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:.85em;background:var(--callout);border-radius:6px;padding:2px 7px;color:var(--fg)}
+.tag{display:inline-block;background:var(--surface);border:1px solid var(--border);color:var(--accent2);font-size:.75rem;padding:3px 10px;border-radius:999px;margin:2px 4px 2px 0}
+.cta{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:center;margin:24px 0 0}
+.cta h2{font-family:&#x27;Lora&#x27;,serif;margin-top:0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 22px;border-radius:8px;font-weight:700;font-size:.9rem;margin-top:8px}
+footer{border-top:1px solid var(--border);padding:40px 0 56px;color:var(--muted);font-size:.85rem}
+footer .shell{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer a{color:var(--muted);margin-right:16px}
+@media(max-width:900px){.body{grid-template-columns:1fr}.toc{position:static;display:flex;flex-wrap:wrap;gap:4px}.toc .grp{display:none}.search{flex:1}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.callout{opacity:1;transform:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;shell&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;📗 Fieldnotes&lt;/a&gt;&lt;span class=&amp;quot;search&amp;quot;&gt;🔍 Search the wiki…&lt;/span&gt;&lt;a class=&amp;quot;newbtn&amp;quot; href=&amp;quot;#&amp;quot;&gt;+ New page&lt;/a&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;div class=&amp;quot;body shell&amp;quot;&gt;
+&lt;nav class=&amp;quot;toc&amp;quot;&gt;&lt;span class=&amp;quot;grp&amp;quot;&gt;📘 Handbook&lt;/span&gt;&lt;a class=&amp;quot;pill active&amp;quot; href=&amp;quot;#start&amp;quot;&gt;🧭 Getting started&lt;/a&gt;&lt;a class=&amp;quot;pill&amp;quot; href=&amp;quot;# rituals&amp;quot;&gt;✍️ Writing rituals&lt;/a&gt;&lt;a class=&amp;quot;pill&amp;quot; href=&amp;quot;#roles&amp;quot;&gt;🧑‍🤝‍🧑 Roles&lt;/a&gt;&lt;span class=&amp;quot;grp&amp;quot;&gt;✅ Ops&lt;/span&gt;&lt;a class=&amp;quot;pill&amp;quot; href=&amp;quot;#ship&amp;quot;&gt;🚢 Shipping checklist&lt;/a&gt;&lt;a class=&amp;quot;pill&amp;quot; href=&amp;quot;#faq&amp;quot;&gt;💬 FAQ&lt;/a&gt;&lt;/nav&gt;
+&lt;main&gt;
+&lt;article&gt;
+&lt;p class=&amp;quot;crumbs&amp;quot;&gt;📘 Handbook / 🧭 Getting started&lt;/p&gt;
+&lt;h1&gt;🧭 Getting started at Fieldnotes&lt;/h1&gt;
+&lt;p&gt;Welcome! This handbook is the single source of truth for how we work. It is &lt;b&gt;alive&lt;/b&gt; — if something is stale, fix it the moment you notice. That&#x27;s the whole culture in one sentence.&lt;/p&gt;
+&lt;div class=&amp;quot;callout in&amp;quot;&gt;💡 Everything here is editable by everyone. Blank pages are bugs; wrong pages are worse bugs.&lt;/div&gt;
+&lt;h2&gt;&lt;span class=&amp;quot;em&amp;quot;&gt;📖&lt;/span&gt; How we write things down&lt;/h2&gt;
+&lt;p&gt;Decisions live in pages, not in chat scrollback. Any discussion that ends with a choice gets a &lt;code&gt;/decision&lt;/code&gt; page with context, options, and the call. Two paragraphs beats an hour of re-explaining.&lt;/p&gt;
+&lt;ul class=&amp;quot;check&amp;quot;&gt;&lt;li&gt;✅ Write the page before the meeting&lt;/li&gt;&lt;li&gt;✅ Link every claim to its source&lt;/li&gt;&lt;li&gt;✅ Date-stamp anything time-sensitive&lt;/li&gt;&lt;/ul&gt;
+&lt;h2&gt;&lt;span class=&amp;quot;em&amp;quot;&gt;🧑‍🤝‍🧑&lt;/span&gt; Roles, loosely held&lt;/h2&gt;
+&lt;p&gt;People wear hats: &lt;span class=&amp;quot;tag&amp;quot;&gt;🧭 guide&lt;/span&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;✍️ editor&lt;/span&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;🔧 builder&lt;/span&gt;. Hats rotate quarterly. Nobody owns a page forever — the wiki outlives all of us.&lt;/p&gt;
+&lt;h2 id=&amp;quot;ship&amp;quot;&gt;&lt;span class=&amp;quot;em&amp;quot;&gt;🚢&lt;/span&gt; Shipping checklist&lt;/h2&gt;
+&lt;p&gt;Before anything goes to the community: docs updated, changelog written, one person assigned to answer questions for the first 48 hours. That last one is the whole trick.&lt;/p&gt;
+&lt;div class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;💬 Got five minutes?&lt;/h2&gt;&lt;p style=&amp;quot;color:var(--muted)&amp;quot;&gt;Fix one stale page today. The next reader will thank you.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Open a page&lt;/a&gt;&lt;/div&gt;
+&lt;/article&gt;
+&lt;/main&gt;
+&lt;/div&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;shell&amp;quot;&gt;&lt;span&gt;© 2026 Fieldnotes collective&lt;/span&gt;&lt;span&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Contribute&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Style guide&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Contact&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

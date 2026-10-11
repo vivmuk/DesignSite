@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitHub Dark Dense — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0D1117;--surface:#161B22;--fg:#E6EDF3;--muted:#7D8590;--accent:#2F81F7;--accent2:#7EE787;--border:#30363D}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>GitHub Dark Dense</h1><div class="tagline">Information-maximal dark UI with syntax-color pop.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">code products</span><span class="tag">docs</span><span class="tag">dashboards</span><span class="tag">data-table</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/github-dark-dense.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/github-dark-dense.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/github-dark-dense.png" alt="GitHub Dark Dense preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0D1117"></div><code>bg: #0D1117</code></div><div class="sw"><div class="chip" style="background:#161B22"></div><code>surface: #161B22</code></div><div class="sw"><div class="chip" style="background:#E6EDF3"></div><code>fg: #E6EDF3</code></div><div class="sw"><div class="chip" style="background:#7D8590"></div><code>muted: #7D8590</code></div><div class="sw"><div class="chip" style="background:#2F81F7"></div><code>accent: #2F81F7</code></div><div class="sw"><div class="chip" style="background:#7EE787"></div><code>accent2: #7EE787</code></div><div class="sw"><div class="chip" style="background:#30363D"></div><code>border: #30363D</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> Fira Code</p><p class="tagline">Neutral UI sans with ligature-rich code mono for snippets.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>row-wash</strong></td><td>Table rows wash to rgba(177,186,196,.06) on hover, 120ms ease.</td></tr><tr><td><strong>tab-slide</strong></td><td>Active tab underline slides between tabs with 200ms cubic-bezier(.3,.7,.3,1).</td></tr><tr><td><strong>code-reveal</strong></td><td>Code blocks fade in and shift up 8px, 300ms ease-out, on scroll.</td></tr><tr><td><strong>counter-tick</strong></td><td>Stars/issues counters count up 800ms ease-out when visible.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Syntax-highlighted code blocks</li><li>File-tree sidebar</li><li>Diff green/red line gutters</li><li>Reaction badges</li><li>Underlined sliding tabs</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">tab-system</span><span class="tag">data-table</span><span class="tag">nav-bar</span><span class="tag">stats-band</span><span class="tag">command-palette</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">highlight.js syntax coloring</span><span class="tag">CSS variables theming</span><span class="tag">vanilla JS tab controller</span><span class="tag">tabular-nums counters</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The developer&#x27;s home turf: charcoal panels, tabular everything, syntax-colored code embedded mid-page and dense metadata rows. It is comfortable at very high information density and never wastes a pixel. For code products, docs and engineering dashboards.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a code-platform landing page in the GitHub Dark Dense style — maximum information, zero fluff, developer-native comfort.
+LOOK: charcoal #0D1117 background, #161B22 panels, #30363D hairline borders; text #E6EDF3, muted #7D8590, blue #2F81F7, code-green #7EE787, diff-red #F85149. Import: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Fira+Code:wght@400;500&amp;display=swap. Counters use tabular-nums. Density is high: 12–14px body, 8–12px paddings, tight line heights — but hierarchy stays crisp via weight and muted color, never blur or shadow.
+LAYOUT: top nav with search box, org switcher and counter badges; hero as two columns: headline + install command left, a live-looking file browser with tabs right; a diff/PR section showing green and red gutters; stats band (stars, forks, issues) counting up; feature table with row hovers; command-palette CTA section (⌘K hint); footer as a dense link grid.
+MOTION: rows wash to rgba(177,186,196,.06) on hover in 120ms; tab underline slides between tabs 200ms cubic-bezier(.3,.7,.3,1); code blocks fade-up 8px on scroll; counters tick up 800ms ease-out.
+SIGNATURE: (1) syntax-highlighted code as hero content; (2) red/green diff gutters; (3) the ⌘K command-palette affordance.
+CONSTRAINTS: semantic HTML with real table markup, keyboard-navigable tabs (arrow keys), contrast at least 4.5:1, responsive collapse to single column, prefers-reduced-motion removes sliding, keep highlight.js lexers minimal for size.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/github-dark-dense/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/github-dark-dense/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;GitHub Dark Dense&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Fira+Code:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0D1117;--surface:#161B22;--fg:#E6EDF3;--muted:#7D8590;--accent:#2F81F7;--accent2:#7EE787;--border:#30363D;--grad:none;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Inter&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Inter&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#0D1117;border-radius:6px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Inter&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Inter&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Inter&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border)}
+.tab{padding:8px 16px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;font-size:.9rem;transition:color .2s}
+.tab:hover{color:var(--fg)}
+.tab.on{color:var(--fg);border-bottom-color:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;color:var(--muted);font-weight:500;padding:8px 12px;border-bottom:1px solid var(--border)}
+td{padding:8px 12px;border-bottom:1px solid var(--border);transition:background .12s}
+tr:hover td{background:rgba(177,186,196,.06)}
+.code{background:#010409;border:1px solid var(--border);border-radius:6px;padding:16px;font-family:&#x27;Fira Code&#x27;,monospace;font-size:.82rem;line-height:1.7;overflow-x:auto}
+.ck{color:#79C0FF}.cs{color:#7EE787}.cc{color:#8B949E}
+.diff-add{border-left:3px solid #7EE787;background:rgba(126,231,135,.08);padding-left:8px}
+.diff-del{border-left:3px solid #F85149;background:rgba(248,81,73,.08);padding-left:8px;text-decoration:line-through}
+.fork{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;GitHub&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center&amp;quot;&gt;
+&lt;div&gt;&lt;h1&gt;Where good ideas&lt;br/&gt;get merged.&lt;/h1&gt;&lt;p style=&amp;quot;margin-top:16px&amp;quot;&gt;Forge is the code platform your team already knows how to use — reviews, CI and packages in one dense, fast surface.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;$ git clone forge&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;code&amp;quot;&gt;&lt;span class=&amp;quot;cc&amp;quot;&gt;# .forge/pipeline.yaml&lt;/span&gt;&lt;br/&gt;&lt;span class=&amp;quot;ck&amp;quot;&gt;build&lt;/span&gt;:&lt;br/&gt;&amp;nbsp;&amp;nbsp;&lt;span class=&amp;quot;ck&amp;quot;&gt;runs_on&lt;/span&gt;: &lt;span class=&amp;quot;cs&amp;quot;&gt;forge-runner-4x&lt;/span&gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&lt;span class=&amp;quot;ck&amp;quot;&gt;steps&lt;/span&gt;:&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;span class=&amp;quot;ck&amp;quot;&gt;run&lt;/span&gt;: &lt;span class=&amp;quot;cs&amp;quot;&gt;make test ci&lt;/span&gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;span class=&amp;quot;ck&amp;quot;&gt;run&lt;/span&gt;: &lt;span class=&amp;quot;cs&amp;quot;&gt;make publish&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;fork&amp;quot;&gt;&lt;h3 style=&amp;quot;font-size:1rem&amp;quot;&gt;Pull requests&lt;/h3&gt;&lt;p style=&amp;quot;font-size:.85rem;color:var(--muted)&amp;quot;&gt;Diff-aware reviews with suggested changes you can commit in one click.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;fork&amp;quot;&gt;&lt;h3 style=&amp;quot;font-size:1rem&amp;quot;&gt;Actions CI&lt;/h3&gt;&lt;p style=&amp;quot;font-size:.85rem;color:var(--muted)&amp;quot;&gt;Matrix builds on managed runners. Cached, hermetic, 3-minute median.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;fork&amp;quot;&gt;&lt;h3 style=&amp;quot;font-size:1rem&amp;quot;&gt;Packages&lt;/h3&gt;&lt;p style=&amp;quot;font-size:.85rem;color:var(--muted)&amp;quot;&gt;Publish containers and libs straight from CI with provenance attestations.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Dense by design&lt;/h2&gt;&lt;p&gt;Engineers scan, they don&#x27;t read. Forge packs more signal per pixel than any competitor: keyboard everything, tabs that slide, diffs that read like prose. Teams switching from legacy tools report 31% faster review turnaround in the first month.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Ready to forge?&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Create an org — free for teams ≤3&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 GitHub. All rights reserved.&lt;/span&gt;&lt;span&gt;150M repositories hosted · 99.95% SLA · ⌘K to search&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

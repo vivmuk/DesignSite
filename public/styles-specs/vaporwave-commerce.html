@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vaporwave Commerce — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Monoton&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1A0B2E;--surface:#2A1250;--fg:#F8E8FF;--muted:#A67FC8;--accent:#FF71CE;--accent2:#01CDCF;--border:#4A2580}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'VT323',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Monoton',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Vaporwave Commerce</h1><div class="tagline">Aesthetic storefront: grids, busts, scanlines — actually shoppable.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">e-commerce</span><span class="tag">music</span><span class="tag">collectibles</span><span class="tag">noise-grain-overlay</span><span class="tag">marquee-ticker</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/vaporwave-commerce.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/vaporwave-commerce.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/vaporwave-commerce.png" alt="Vaporwave Commerce preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#1A0B2E"></div><code>bg: #1A0B2E</code></div><div class="sw"><div class="chip" style="background:#2A1250"></div><code>surface: #2A1250</code></div><div class="sw"><div class="chip" style="background:#F8E8FF"></div><code>fg: #F8E8FF</code></div><div class="sw"><div class="chip" style="background:#A67FC8"></div><code>muted: #A67FC8</code></div><div class="sw"><div class="chip" style="background:#FF71CE"></div><code>accent: #FF71CE</code></div><div class="sw"><div class="chip" style="background:#01CDCF"></div><code>accent2: #01CDCF</code></div><div class="sw"><div class="chip" style="background:#4A2580"></div><code>border: #4A2580</code></div><p><code>linear-gradient(180deg,#1A0B2E 0%,#2A1250 40%,#FF71CE22 75%,#01CDCF22 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Monoton</p><p><strong>Body:</strong> VT323</p>
+<p><strong>Monospace:</strong> VT323</p><p class="tagline">Neon-outline display with CRT terminal body text.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Monoton&family=VT323&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>scanline-crawl</strong></td><td>Full-page VHS scanline overlay (repeating-linear-gradient, 8% opacity) crawls downward 8s linear infinite; occasional 90ms chromatic aberration flicker every 11s.</td></tr><tr><td><strong>perspective-grid-drive</strong></td><td>Bottom-of-hero synthwave grid (CSS 3D rotateX) translates toward viewer continuously 2.4s linear infinite — driving into the sunset forever.</td></tr><tr><td><strong>bust-float</strong></td><td>Roman bust ASCII/emoji floats ±8px on 6s ease-in-out alternate with 3deg tilt oscillation.</td></tr><tr><td><strong>price-glitch-reveal</strong></td><td>Prices decode with a 400ms character scramble (random glyphs → final digits) when scrolled into view.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Pink-teal perspective grid horizon</li><li>Roman bust ASCII/emoji guardians</li><li>Full-page VHS scanline + chromatic aberration</li><li>Japanese/ASCII caption subtitles (ＡＥＳＴＨＥＴＩＣ)</li><li>Sunset gradient circle behind hero</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">product-card</span><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">shopping-cart-drawer</span><span class="tag">marquee-ticker</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Monoton + VT323 webfonts</span><span class="tag">CSS 3D perspective grid</span><span class="tag">scanline + aberration overlays</span><span class="tag">vanilla JS text-scramble</span><span class="tag">marquee ticker</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Vaporwave aesthetics powering a genuine storefront: pink-teal infinite grids, roman bust ASCII, VHS scanline overlays — yet every product is real, priced and one click from a working cart. Nostalgia is the wrapper; commerce is the engine. For e-commerce, music merch and collectibles where the vibe IS the differentiation.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a collectibles storefront in the Vaporwave Commerce style — full aesthetic commitment, but the commerce underneath is real and functional.
+LOOK: deep purple #1A0B2E base, raised #2A1250 surfaces, lavender-white #F8E8FF text, muted #A67FC8, border #4A2580, neon pink #FF71CE and teal #01CDCF. Import fonts: https://fonts.googleapis.com/css2?family=Monoton&amp;family=VT323&amp;display=swap — Monoton for hero/section display (neon outline feel, use sparingly, large sizes only), VT323 for ALL body/UI/prices (20px minimum — it&#x27;s small at par). Hero backdrop: linear-gradient(180deg,#1A0B2E,#2A1250 40%,#FF71CE22 75%,#01CDCF22 100%) plus a gradient sun circle and 3D perspective grid floor.
+LAYOUT: marquee ticker top (ＡＥＳＴＨＥＴＩＣ ＳＨＯＰ ✦ ｎｅｗ ｓｔｏｃｋ); nav with VHS-style logo; hero with sun + grid + bust statues + Monoton headline; product row of VHS-box cards (each: gradient &#x27;cover art&#x27; block, VT323 title, ＡＥＳＴＨＥＴＩＣ subtitle, price, pink ADD button); &#x27;about the archive&#x27; strip with ASCII bust; cart drawer in terminal-green-on-purple style; footer with fake VHS credits.
+MOTION: scanline overlay (repeating-linear-gradient 8% opacity) crawls down 8s linear infinite, plus a 90ms chromatic-aberration flicker (text-shadow ±2px pink/teal) every 11s via JS interval; hero grid translates toward viewer 2.4s linear infinite (background-position on a 3D-rotated plane); busts float ±8px/3deg on 6s ease-in-out alternate; prices decode with a 400ms character scramble when scrolled into view. Vanilla JS ~40 lines.
+SIGNATURE: (1) perspective grid + sun horizon; (2) scanlines + chromatic aberration; (3) Roman bust guardians; (4) full-width full-width ＡＥＳＴＨＥＴＩＣ caption subtitles.
+CONSTRAINTS: semantic HTML; VT323 needs ≥20px for readability and AA contrast (#F8E8FF on #1A0B2E passes hugely); scanline/aberration overlays pointer-events none + aria-hidden; cart remains fully functional (add/remove/count); responsive: hero grid scales, cards stack under 700px; prefers-reduced-motion freezes scanlines/grid/flicker and prints prices directly; no real brand names or busts imagery — emoji + CSS only; total JS &lt; 12KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/vaporwave-commerce/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/vaporwave-commerce/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;ＶＨＳ ＶＡＵＬＴ — aesthetic goods&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Monoton&amp;family=VT323&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#1A0B2E;--surface:#2A1250;--fg:#F8E8FF;--muted:#A67FC8;--accent:#FF71CE;--accent2:#01CDCF;--border:#4A2580}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(180deg,var(--bg) 0%,var(--surface) 40%,#3A1A6E 100%);color:var(--fg);font-family:&#x27;VT323&#x27;,monospace;font-size:20px;line-height:1.5;overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px);animation:crawl 8s linear infinite}
+@keyframes crawl{to{background-position:0 100vh}}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.ticker{background:var(--accent);color:var(--bg);padding:8px 0;overflow:hidden;white-space:nowrap}
+.ticker div{display:inline-block;animation:tick 16s linear infinite;font-size:.9rem;letter-spacing:.1em}
+@keyframes tick{to{transform:translateX(-50%)}}
+header{display:flex;align-items:center;gap:24px;padding:16px 24px;border-bottom:1px solid var(--border)}
+.logo{font-family:&#x27;Monoton&#x27;,cursive;font-size:1.3rem;color:var(--accent);text-shadow:0 0 12px rgba(255,113,206,.6)}
+nav{display:flex;gap:18px}
+nav a{color:var(--muted);font-size:.95rem}
+nav a:hover{color:var(--fg)}
+.cartlink{margin-left:auto;border:1px solid var(--border);padding:6px 16px;border-radius:4px;color:var(--accent2)}
+.hero{position:relative;text-align:center;padding:72px 24px 140px;overflow:hidden}
+.sun{width:260px;height:260px;border-radius:50%;background:linear-gradient(180deg,var(--accent) 0%,#B967FF 55%,var(--accent2) 100%);margin:0 auto;position:relative;box-shadow:0 0 80px rgba(255,113,206,.5)}
+.sun::after{content:&#x27;&#x27;;position:absolute;inset:auto 0 30% 0;height:14px;background:var(--bg);box-shadow:0 -26px 0 var(--bg),0 -52px 0 var(--bg);opacity:.9}
+.gridfloor{position:absolute;left:-50%;right:-50%;bottom:-120px;height:240px;background:linear-gradient(transparent 0,var(--accent2) 2px,transparent 2px),linear-gradient(90deg,transparent 0,var(--accent2) 2px,transparent 2px);background-size:60px 60px;transform:perspective(300px) rotateX(60deg);opacity:.5;animation:drive 2.4s linear infinite}
+@keyframes drive{to{background-position:0 60px,0 0}}
+.bust{font-size:3.4rem;position:absolute;top:40px;animation:float 6s ease-in-out infinite alternate}
+.bust.l{left:6%}.bust.r{right:6%;animation-delay:2s}
+@keyframes float{from{transform:translateY(-8px) rotate(-3deg)}to{transform:translateY(8px) rotate(3deg)}}
+.hero h1{font-family:&#x27;Monoton&#x27;,cursive;font-size:clamp(2.4rem,7vw,4.6rem);color:var(--fg);margin:-120px 0 8px;position:relative;text-shadow:2px 0 var(--accent),-2px 0 var(--accent2)}
+.hero .sub{color:var(--muted);position:relative}
+.hero .sub .jp{letter-spacing:.3em;color:var(--accent)}
+.products{padding:32px 0 64px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.vhs{background:var(--surface);border:1px solid var(--border);padding:14px;text-align:center;box-shadow:0 0 24px rgba(255,113,206,.12);transition:transform .2s,box-shadow .2s}
+.vhs:hover{transform:translateY(-6px);box-shadow:0 0 32px rgba(1,205,207,.3)}
+.cover{aspect-ratio:4/5;margin-bottom:10px;position:relative;display:grid;place-items:center;font-size:2.6rem}
+.c1{background:linear-gradient(160deg,#FF71CE44,#01CDCF44)}.c2{background:linear-gradient(160deg,#01CDCF44,#B967FF44)}.c3{background:linear-gradient(160deg,#B967FF44,#FF71CE44)}.c4{background:linear-gradient(160deg,#FFB86C44,#FF71CE44)}
+.vhs .t{font-size:1.1rem}
+.vhs .aes{color:var(--muted);letter-spacing:.25em;font-size:.8rem;margin:2px 0 8px}
+.vhs .p{color:var(--accent2);font-size:1.2rem;margin-bottom:8px}
+.add{background:var(--accent);color:var(--bg);border:none;font-family:inherit;font-size:1rem;padding:8px 20px;cursor:pointer}
+.add:hover{background:var(--accent2)}
+.about{border-top:1px solid var(--border);padding:48px 24px;text-align:center;color:var(--muted)}
+.about b{color:var(--fg)}
+.bustbig{font-size:5rem;animation:float 6s ease-in-out infinite alternate}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.9rem}
+.scram{display:inline-block}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.bust{display:none}.hero h1{margin-top:-80px}}
+@media(max-width:480px){.grid{template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&amp;quot;scan&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;ticker&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;div&gt; ＡＥＳＴＨＥＴＩＣ ＳＨＯＰ ✦ ｎｅｗ ｓｔｏｃｋ ｅｖｅｒｙ ｆｒｉｄａｙ ✦ ＶＩＥＷ ＩＮ ４００Ｐ ＦＯＲ ＡＵＴＨＥＮＴＩＣＩＴＹ ✦ ＡＥＳＴＨＥＴＩＣ ＳＨＯＰ ✦ ｎｅｗ ｓｔｏｃｋ ｅｖｅｒｙ ｆｒｉｄａｙ ✦ ＶＩＥＷ ＩＮ ４００Ｐ ＦＯＲ ＡＵＴＨＥＮＴＩＣＩＴＹ ✦ &lt;/div&gt;&lt;/div&gt;
+&lt;header&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;ＶＨＳ ＶＡＵＬＴ&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#shop&amp;quot;&gt;ＴＡＰＥＳ&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;ＡＲＣＨＩＶＥ&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;ＴＲＡＤＥ&lt;/a&gt;&lt;/nav&gt;&lt;a class=&amp;quot;cartlink&amp;quot; href=&amp;quot;#&amp;quot;&gt;🛒 CART [&lt;span id=&amp;quot;ct&amp;quot;&gt;0&lt;/span&gt;]&lt;/a&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+&lt;span class=&amp;quot;bust l&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;🗿&lt;/span&gt;&lt;span class=&amp;quot;bust r&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;🗿&lt;/span&gt;
+&lt;div class=&amp;quot;sun&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;h1&gt;ＶＩＤＥＯ ＳＴＯＲＥ&lt;/h1&gt;
+&lt;p class=&amp;quot;sub&amp;quot;&gt;&lt;span class=&amp;quot;jp&amp;quot;&gt;ｂｅ　ａｅｓｔｈｅｔｉｃ&lt;/span&gt; — rare tapes, reissues &amp;amp; relics. shipped worldwide. rewind included.&lt;/p&gt;
+&lt;div class=&amp;quot;gridfloor&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;products wrap&amp;quot; id=&amp;quot;shop&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;vhs&amp;quot;&gt;&lt;div class=&amp;quot;cover c1&amp;quot;&gt;📼&lt;/div&gt;&lt;div class=&amp;quot;t&amp;quot;&gt;MIAMI REWIND 88&lt;/div&gt;&lt;div class=&amp;quot;aes&amp;quot;&gt;ＶＨＳ－ＲＩＰ&lt;/div&gt;&lt;div class=&amp;quot;p scram&amp;quot; data-v=&amp;quot;$34.00&amp;quot;&gt;$34.00&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; onclick=&amp;quot;add()&amp;quot;&gt;+ ADD&lt;/button&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;vhs&amp;quot;&gt;&lt;div class=&amp;quot;cover c2&amp;quot;&gt;📺&lt;/div&gt;&lt;div class=&amp;quot;t&amp;quot;&gt;CHANNEL NOISE 12&lt;/div&gt;&lt;div class=&amp;quot;aes&amp;quot;&gt;ＥＰＥＲＩＳＯＤＥ&lt;/div&gt;&lt;div class=&amp;quot;p scram&amp;quot; data-v=&amp;quot;$28.00&amp;quot;&gt;$28.00&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; onclick=&amp;quot;add()&amp;quot;&gt;+ ADD&lt;/button&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;vhs&amp;quot;&gt;&lt;div class=&amp;quot;cover c3&amp;quot;&gt;🗿&lt;/div&gt;&lt;div class=&amp;quot;t&amp;quot;&gt;BUST POSTER A2&lt;/div&gt;&lt;div class=&amp;quot;aes&amp;quot;&gt;ＲＩＳＯＧＲＡＰＨ&lt;/div&gt;&lt;div class=&amp;quot;p scram&amp;quot; data-v=&amp;quot;$19.00&amp;quot;&gt;$19.00&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; onclick=&amp;quot;add()&amp;quot;&gt;+ ADD&lt;/button&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;vhs&amp;quot;&gt;&lt;div class=&amp;quot;cover c4&amp;quot;&gt;🌴&lt;/div&gt;&lt;div class=&amp;quot;t&amp;quot;&gt;SUNSET STICKER PACK&lt;/div&gt;&lt;div class=&amp;quot;aes&amp;quot;&gt;１２ＰＣＳ&lt;/div&gt;&lt;div class=&amp;quot;p scram&amp;quot; data-v=&amp;quot;$9.00&amp;quot;&gt;$9.00&lt;/div&gt;&lt;button class=&amp;quot;add&amp;quot; onclick=&amp;quot;add()&amp;quot;&gt;+ ADD&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;span class=&amp;quot;bustbig&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;🗿&lt;/span&gt;&lt;p&gt;&lt;b&gt;ＡＢＯＵＴ ＴＨＥ ＡＲＣＨＩＶＥ&lt;/b&gt;&lt;br/&gt;We rescue beautiful obsolete media from thrift-store bins and digitize, restore and reship it to people who still believe 480p had soul. Every tape is cleaned, degaussed (the good kind) and ships in archival plastic.&lt;/p&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;ＶＨＳ ＶＡＵＬＴ ｉｎｃ．✦ ｎｏ ｔｒａｃｋｉｎｇ， ｏｎｌｙ ｔｒａｃｋｓ ✦ © 2026&lt;/footer&gt;
+&lt;script&gt;
+let cart=0;function add(){cart++;document.getElementById(&#x27;ct&#x27;).textContent=cart}
+const glyphs=&#x27;▚▞▛01&lt;&gt;#$%&amp;&#x27;;
+const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){const el=e.target,v=el.dataset.v;let i=0;const iv=setInterval(()=&gt;{i++;el.textContent=v.split(&#x27;&#x27;).map((c,n)=&gt;c===&#x27;$&#x27;||c===&#x27;.&#x27;?c:(Math.random()&lt;i/v.length?c:glyphs[Math.floor(Math.random()*glyphs.length)])).join(&#x27;&#x27;);if(i&gt;=v.length){el.textContent=v;clearInterval(iv)}},40);io.unobserve(el)}}),{threshold:.5});
+document.querySelectorAll(&#x27;.scram&#x27;).forEach(el=&gt;io.observe(el));
+setInterval(()=&gt;{document.querySelector(&#x27;.hero h1&#x27;).style.textShadow=&#x27;2px 0 var(--accent),-2px 0 var(--accent2),0 0 1px #fff&#x27;;setTimeout(()=&gt;document.querySelector(&#x27;.hero h1&#x27;).style.textShadow=&#x27;2px 0 var(--accent),-2px 0 var(--accent2)&#x27;,90)},11000);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

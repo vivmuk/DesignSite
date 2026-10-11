@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Consulting McKinsey Grid — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4&family=Source+Sans+3&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBFBF9;--surface:#FFFFFF;--fg:#122A44;--muted:#5C6B7A;--accent:#0F3D6E;--accent2:#C7A252;--border:#DEE4EA}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Source Serif 4',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Consulting McKinsey Grid</h1><div class="tagline">Action-title charts, exhibition whitespace, navy authority</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">consulting</span><span class="tag">B2B</span><span class="tag">reports</span><span class="tag">chart-suite</span><span class="tag">count-up-numbers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/consulting-mckinsey-grid.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/consulting-mckinsey-grid.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/consulting-mckinsey-grid.png" alt="Consulting McKinsey Grid preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FBFBF9"></div><code>bg: #FBFBF9</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#122A44"></div><code>fg: #122A44</code></div><div class="sw"><div class="chip" style="background:#5C6B7A"></div><code>muted: #5C6B7A</code></div><div class="sw"><div class="chip" style="background:#0F3D6E"></div><code>accent: #0F3D6E</code></div><div class="sw"><div class="chip" style="background:#C7A252"></div><code>accent2: #C7A252</code></div><div class="sw"><div class="chip" style="background:#DEE4EA"></div><code>border: #DEE4EA</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Source Serif 4</p><p><strong>Body:</strong> Source Sans 3</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Serif authority headlines with crisp sans support</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Source+Serif+4&family=Source+Sans+3&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Chart build</strong></td><td>Bar/line charts build in 900ms ease-out, series staggered 150ms, on scroll entry</td></tr><tr><td><strong>Number verdict</strong></td><td>KPI numbers count up 1.2s ease-out then underline draws 300ms</td></tr><tr><td><strong>Title fade</strong></td><td>Action titles fade from 0.4 to 1 opacity over 400ms as charts complete</td></tr><tr><td><strong>Insight callout</strong></td><td>Gold-ruled insight boxes slide 16px left 350ms after their chart</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-sentence action titles atop every chart</li><li>Gold-ruled &#x27;So what&#x27; insight callout boxes</li><li>Exhibition-grade whitespace around exhibits</li><li>Exhibit numbering (Exhibit 1, Exhibit 2…)</li><li>Navy section dividers with thin gold line</li><li>Footnote-grade source lines under each chart</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">chart-suite</span><span class="tag">stats-band</span><span class="tag">data-table</span><span class="tag">timeline</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">D3.js (governed chart grammar)</span><span class="tag">GSAP ScrollTrigger</span><span class="tag">pure CSS governed grid</span><span class="tag">CountUp.js</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The deck made flesh: every chart carries a full-sentence action title, whitespace is exhibition-grade, and navy confidence anchors the page. Governed grid, restrained palette, numbers that count up to their boardroom conclusions. Built for B2B, research, and reports that must persuade executives.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a strategy-house presentation engineer. Build a single-page insight report in the Consulting McKinsey Grid style.
+
+LOOK: Warm white bg #FBFBF9, white surface #FFFFFF, navy ink #122A44, muted #5C6B7A, deep navy #0F3D6E, antique gold #C7A252, border #DEE4EA, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&amp;family=Source+Sans+3:wght@400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Source Serif 4 for action titles, Source Sans 3 for body and chart labels.
+
+LAYOUT: 1) Title band with report name + date. 2) Executive summary: three KPI stats with verdicts. 3) Exhibits 1–4: each a full-sentence action title, chart, gold-ruled &#x27;So what&#x27; box, source footnote. 4) Recommendation section on navy band with white text. 5) Appendix mini-table. 6) Footer with methodology notes.
+
+MOTION: Charts build 900ms ease-out, series staggered 150ms (ScrollTrigger). KPI numbers count up 1.2s then underline draws 300ms. Insight boxes slide 16px 350ms after chart completion. Keep total motion under 2.5s per exhibit.
+
+SIGNATURE: (a) action titles as full sentences, (b) gold-ruled insight callouts, (c) exhibit numbering system.
+
+CONSTRAINTS: Semantic &lt;figure&gt;/&lt;figcaption&gt; per exhibit, data in &lt;table&gt; fallback for screen readers, AA contrast, responsive: charts resize via viewBox + resize observer; print stylesheet collapses to deck feel; reduced-motion = final chart state; no chart lib heavier than D3 core.
+
+EXTRA: Each exhibit footnote cites a fictional internal source line; chart colors limited to navy, gold, and two grays; the executive summary precedes all exhibits and stands alone if read exclusively.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/consulting-mckinsey-grid/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/consulting-mckinsey-grid/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Northpeak Advisory — Insights&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Source+Serif+4&amp;family=Source+Sans+3:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#FBFBF9; --surface:#FFFFFF; --fg:#122A44; --muted:#5C6B7A;
+  --accent:#0F3D6E; --accent2:#C7A252; --border:#DEE4EA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Source Sans 3&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Source Serif 4&#x27;,Georgia, serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Source Serif 4&#x27;,Georgia, serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw; }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Source Serif 4&#x27;,Georgia, serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#122A44; color:#FBFBF9; text-align:center; }
+.cta .btn { background:#C7A252; color:#111111; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;NORTHPEAK&lt;/span&gt;
+  &lt;nav&gt;Industries&lt;br&gt;Insights&lt;br&gt;Cases&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Exhibit 1&lt;/span&gt;
+  &lt;h1&gt;Margin pools are shifting to services&lt;/h1&gt;
+  &lt;p&gt;Hardware margins compress 40bps annually while attach-services expand at 3× that rate.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Read the Report&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Exhibits&lt;/span&gt;
+  &lt;h2&gt;The evidence&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Exhibit 2 — Price Realization&lt;/h3&gt;&lt;p&gt;Top-quartile operators capture 2.3× the pricing power.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Exhibit 3 — Cost Structure&lt;/h3&gt;&lt;p&gt;Indirect spend is the unexplored 11% of COGS.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Exhibit 4 — Playbook&lt;/h3&gt;&lt;p&gt;Three moves separate leaders from the median.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;The Headline&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;2.3x&lt;/b&gt;&lt;br&gt;&lt;span&gt;Pricing power&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;-40bps&lt;/b&gt;&lt;br&gt;&lt;span&gt;Annual margin drift&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;11%&lt;/b&gt;&lt;br&gt;&lt;span&gt;COGS upside&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;The board-ready version&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;A 12-page summary with the full methodology appendix.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Download Report&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 NORTHPEAK. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Methodology · Team · Contact&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

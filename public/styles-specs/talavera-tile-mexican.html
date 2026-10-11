@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talavera Tile Mexican — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Lobster&family=Work+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF4E6;--surface:#FFFFFF;--fg:#33261F;--muted:#8C7360;--accent:#1E5AA8;--accent2:#E2701A;--border:#E8D8BE}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Work Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Lobster',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Talavera Tile Mexican</h1><div class="tagline">Hand-painted cobalt-orange tile, refined fiesta energy</div>
+<div class="meta"><span class="tag">cultural</span><span class="tag">food</span><span class="tag">travel</span><span class="tag">craft</span><span class="tag">noise-grain-overlay</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/talavera-tile-mexican.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/talavera-tile-mexican.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/talavera-tile-mexican.png" alt="Talavera Tile Mexican preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FBF4E6"></div><code>bg: #FBF4E6</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#33261F"></div><code>fg: #33261F</code></div><div class="sw"><div class="chip" style="background:#8C7360"></div><code>muted: #8C7360</code></div><div class="sw"><div class="chip" style="background:#1E5AA8"></div><code>accent: #1E5AA8</code></div><div class="sw"><div class="chip" style="background:#E2701A"></div><code>accent2: #E2701A</code></div><div class="sw"><div class="chip" style="background:#E8D8BE"></div><code>border: #E8D8BE</code></div><p><code>linear-gradient(180deg,#FBF4E6 0%,#F5E8D0 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Lobster</p><p><strong>Body:</strong> Work Sans</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Playful Lobster display with sturdy Work Sans body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Lobster&family=Work+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>tile cascade</strong></td><td>tile strips offset-animate downward 12px and fade in, 500ms ease-out, staggered 80ms per strip</td></tr><tr><td><strong>plate spin</strong></td><td>decorative plate SVGs rotate slowly 360deg over 30s linear infinite</td></tr><tr><td><strong>warm hover</strong></td><td>cards lift 4px and shift border to orange over 220ms ease-out</td></tr><tr><td><strong>confetti pop</strong></td><td>CTA click emits 12 CSS confetti dots falling 700ms with random x-drift</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>talavera tile-pattern border strips</li><li>scallop-edge section dividers</li><li>cobalt-orange plate/medallion motifs</li><li>wrought-iron style thin scrollwork dividers</li><li>cream plaster card surfaces with tile edging</li><li>hand-painted style drop caps</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">feature-grid</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS repeating gradients for tile patterns</span><span class="tag">SVG medallion assets</span><span class="tag">Google Fonts (Lobster, Work Sans)</span><span class="tag">CSS keyframes</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Hand-painted Talavera tilework translated to UI: cobalt and orange pattern tiles as borders and backgrounds, warm cream plaster between them, fiesta energy kept refined through disciplined spacing. Ideal for food, travel, and craft brands. The signature is pattern used structurally — tile strips frame content the way azulejos frame a courtyard.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site for a Mexican restaurant in the Talavera Tile Mexican style. LOOK: background #FBF4E6 with a warm linear-gradient wash, white card surfaces, text #33261F, muted #8C7360, accents #1E5AA8 (cobalt) and #E2701A (orange), border #E8D8BE. Load https://fonts.googleapis.com/css2?family=Lobster&amp;family=Work+Sans:wght@400;500;700&amp;display=swap — Lobster for display, Work Sans for body. LAYOUT in order: (1) header with tile-edged nav bar; (2) hero: talavera tile strips above and below a Lobster headline, one paragraph, two buttons, hero photo framed like a hand-painted plate; (3) menu feature grid of three cards with scalloped tile borders; (4) testimonial wall with medallion avatars; (5) about section with hand-painted drop cap; (6) orange CTA band with cobalt text; (7) footer with scrollwork divider. MOTION: tile strips cascade in 12px with 80ms stagger; decorative plate SVGs rotate 360deg over 30s linear; cards lift 4px with orange border on hover over 220ms; CTA click emits 12 CSS confetti dots falling 700ms. SIGNATURE: (a) talavera tile strips framing at least three sections, (b) scalloped card borders, (c) a rotating plate medallion. CONSTRAINTS: semantic HTML, 4.5:1 contrast (cobalt on cream passes), single column below 760px, pure CSS patterns — no bitmap tiles, lazy-load food photography. DELIVERY: Ship one self-contained index.html. Define CSS custom properties --bg:#FBF4E6, --surface:#FFFFFF, --fg:#33261F, --muted:#8C7360, --accent:#1E5AA8, --accent2:#E2701A, --border:#E8D8BE on :root and use them everywhere — no hard-coded colors. Preconnect to fonts.googleapis.com and fonts.gstatic.com, load Lobster, Work Sans with display=swap and a system-font fallback stack to prevent layout shift. Implement the motions (tile cascade, plate spin, warm hover, confetti pop) exactly as specified; wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable. Verify before delivery: all headings in a logical h1→h3 order, focus-visible outlines on interactive elements, no horizontal overflow at 360px viewport, and images with width/height attributes to avoid CLS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/talavera-tile-mexican/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/talavera-tile-mexican/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Casa Azulejo — Oaxacan Kitchen&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Lobster&amp;family=Work+Sans:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#FBF4E6; --surface:#FFFFFF; --fg:#33261F; --muted:#8C7360;
+  --accent:#1E5AA8; --accent2:#E2701A; --border:#E8D8BE;
+  --grad:linear-gradient(180deg,#FBF4E6 0%,#F5E8D0 100%);
+  --display:&#x27;Lobster&#x27;, serif; --body:&#x27;Work Sans&#x27;, sans-serif;
+  --mono:&#x27;monospace&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.tile-strip{height:34px;background:repeating-linear-gradient(45deg,var(--accent) 0 12px,var(--accent2) 12px 24px,#fff 24px 30px,var(--accent) 30px 42px);border-radius:6px;opacity:.9}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;Casa Azulejo&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Menu&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Molé Bar&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Mezcal&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Visit&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Reserve a Table&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;Oaxacan kitchen · est. 2009&lt;/p&gt;
+    &lt;h1&gt;Molé ground by hand, daily&lt;/h1&gt;
+    &lt;p&gt;Twenty-one ingredients, one stone molcajete, and a family recipe from San Pablo Villa de Mitla.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;See tonight&#x27;s menu&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Meet the kitchen&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;tile-strip&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Molé negro&lt;/h3&gt;&lt;p&gt;Two-day recipe, 21 ingredients, stone-ground.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Barbacoa de hoyo&lt;/h3&gt;&lt;p&gt;Pit-cooked lamb, weekends only.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Mezcal library&lt;/h3&gt;&lt;p&gt;Forty bottles from small Oaxacan palenques.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Cooked over wood, always&lt;/h2&gt;
+    &lt;p&gt;Our comal runs on mesquite from 6am. Tortillas are pressed to order; the molé takes two days and never rushes.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Reserve for Friday&lt;/h2&gt;
+      &lt;p&gt;The mezcal bar takes walk-ins after 9pm.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Casa Azulejo&lt;/span&gt;
+  &lt;span&gt;Food · Travel · Craft&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

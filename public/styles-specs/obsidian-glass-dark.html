@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Obsidian Glass Dark — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter+Tight&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06070B;--surface:#10131C;--fg:#E8ECF7;--muted:#7C86A3;--accent:#6C8CFF;--accent2:#9A7CFF;--border:#232A3D}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter Tight',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Obsidian Glass Dark</h1><div class="tagline">Frosted glass layers stacked over glowing black depth.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">fintech</span><span class="tag">dashboards</span><span class="tag">desktop apps</span><span class="tag">glassmorphism-layering</span><span class="tag">spotlight-cursor-glow</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/obsidian-glass-dark.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/obsidian-glass-dark.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/obsidian-glass-dark.png" alt="Obsidian Glass Dark preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#06070B"></div><code>bg: #06070B</code></div><div class="sw"><div class="chip" style="background:#10131C"></div><code>surface: #10131C</code></div><div class="sw"><div class="chip" style="background:#E8ECF7"></div><code>fg: #E8ECF7</code></div><div class="sw"><div class="chip" style="background:#7C86A3"></div><code>muted: #7C86A3</code></div><div class="sw"><div class="chip" style="background:#6C8CFF"></div><code>accent: #6C8CFF</code></div><div class="sw"><div class="chip" style="background:#9A7CFF"></div><code>accent2: #9A7CFF</code></div><div class="sw"><div class="chip" style="background:#232A3D"></div><code>border: #232A3D</code></div><p><code>radial-gradient(1200px 600px at 50% -10%, rgba(108,140,255,0.18), transparent 60%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter Tight</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Tight neutral grotesk pairing keeps the glass surfaces quiet.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter+Tight&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>cursor-spotlight</strong></td><td>Radial gradient (400px, 10% alpha) follows pointer with 80ms lerp via rAF.</td></tr><tr><td><strong>glass-tilt</strong></td><td>Panels tilt 2deg toward cursor (perspective 800px) with 300ms ease-out.</td></tr><tr><td><strong>staggered-rise</strong></td><td>Panels fade-up 20px, 500ms ease-out, 80ms stagger on scroll entry.</td></tr><tr><td><strong>counter-tick</strong></td><td>Stat digits tick up 1.4s cubic-bezier(.2,.8,.2,1) when visible.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Frosted glass panels with 1px glow rims</li><li>Cursor spotlight beneath glass</li><li>Layered blur depth (3 planes)</li><li>Floating pill navigation</li><li>Ambient radial light from above</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">stats-band</span><span class="tag">chart-suite</span><span class="tag">settings-panel</span><span class="tag">nav-bar</span><span class="tag">pricing-tiers</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS backdrop-filter blur(20px)</span><span class="tag">vanilla JS pointer lerp (rAF)</span><span class="tag">CSS perspective transforms</span><span class="tag">font-variant-numeric tabular-nums</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Deep-black canvas with translucent frosted panels stacked at different blur depths, each rimmed with a faint blue glow. A cursor spotlight reveals light beneath the glass as you move. Premium and calm — made for fintech dashboards, desktop apps and flagship SaaS.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a fintech dashboard landing page in the Obsidian Glass Dark style — layered frosted glass over glowing black, calm and expensive-feeling.
+LOOK: near-black #06070B background with a radial #6C8CFF ambient light bleeding from the top edge; text #E8ECF7, muted #7C86A3, borders #232A3D. Import: https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap. Glass panels use background rgba(16,19,28,.55), backdrop-filter blur(20px) saturate(140%), 1px borders with a top-edge highlight and a faint #6C8CFF glow rim (box-shadow inset + outer). A soft cursor spotlight (radial gradient, about 10% alpha, 400px) lerps after the pointer.
+LAYOUT: floating pill nav; hero with headline left and one large glass KPI panel right; stats band of four glass tiles; chart-suite section with layered glass charts at three blur planes; settings-panel-style feature list; pricing as three glass tiers with the middle one lifted and brighter; footer as a thin glass strip.
+MOTION: spotlight follows the pointer with an 80ms lerp via requestAnimationFrame; panels tilt 2deg toward the cursor (perspective 800px, 300ms ease-out); panels fade-up 20px with 80ms stagger on entry; KPI digits tick up 1.4s cubic-bezier(.2,.8,.2,1).
+SIGNATURE: (1) visible blur-depth layering between panels; (2) glow rims on every glass edge; (3) the ambient top light.
+CONSTRAINTS: semantic HTML, text contrast at least 4.5:1 over glass, provide -webkit-backdrop-filter fallback and a solid-color fallback, responsive stacks, prefers-reduced-motion disables tilt and spotlight.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/obsidian-glass-dark/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/obsidian-glass-dark/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Obsidian Glass Dark&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#06070B;--surface:#10131C;--fg:#E8ECF7;--muted:#7C86A3;--accent:#6C8CFF;--accent2:#9A7CFF;--border:#232A3D;--grad:radial-gradient(1200px 600px at 50% -10%, rgba(108,140,255,0.18), transparent 60%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#06070B;border-radius:16px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Inter Tight&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Inter Tight&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.glass{background:rgba(16,19,28,.55);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--border);border-top-color:rgba(232,236,247,.14);border-radius:16px;box-shadow:0 0 0 1px rgba(108,140,255,.08),inset 0 1px 0 rgba(255,255,255,.06),0 20px 60px rgba(0,0,0,.45)}
+.kpi{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:2.6rem;font-variant-numeric:tabular-nums;color:var(--fg)}
+.pill{border-radius:999px;background:rgba(16,19,28,.6);backdrop-filter:blur(16px);border:1px solid var(--border)}
+.card{transition:transform .3s ease,box-shadow .3s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 0 0 1px rgba(108,140,255,.25),0 20px 60px rgba(0,0,0,.5)}
+.rise{animation:rise .5s ease-out both}.rise:nth-child(2){animation-delay:.08s}.rise:nth-child(3){animation-delay:.16s}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Obsidian&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center&amp;quot;&gt;
+&lt;div&gt;&lt;h1&gt;Banking that feels&lt;br/&gt;like glass.&lt;/h1&gt;&lt;p style=&amp;quot;margin-top:20px&amp;quot;&gt;Vault gives your treasury a live pulse — balances, yield and risk on one calm surface.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Open vault&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;glass&amp;quot; style=&amp;quot;padding:32px&amp;quot;&gt;&lt;p style=&amp;quot;color:var(--muted);font-size:.85rem&amp;quot;&gt;TOTAL BALANCE&lt;/p&gt;&lt;p class=&amp;quot;kpi&amp;quot;&gt;$4,281,930&lt;/p&gt;&lt;p style=&amp;quot;color:#4ADE9E;font-size:.85rem;margin-top:8px&amp;quot;&gt;▲ 2.4% APY accrued daily&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;glass card rise&amp;quot;&gt;&lt;h3&gt;Live yield&lt;/h3&gt;&lt;p&gt;Interest accrues every block. Watch it compound in real time, down to the cent.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;glass card rise&amp;quot;&gt;&lt;h3&gt;Policy engine&lt;/h3&gt;&lt;p&gt;Spending rules your CFO writes once and the protocol enforces forever.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;glass card rise&amp;quot;&gt;&lt;h3&gt;Bank-grade keys&lt;/h3&gt;&lt;p&gt;HSM-backed signing with quorum approval. Nothing moves without two hands.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Depth you can feel&lt;/h2&gt;&lt;p&gt;Vault&#x27;s interface is built in layers — the closer information is to the present, the closer it floats to the glass. Focus stays on the number that matters right now, and everything else recedes with the blur.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;glass&amp;quot; style=&amp;quot;padding:48px&amp;quot;&gt;&lt;h2&gt;Put your treasury on glass&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot; style=&amp;quot;margin-top:16px&amp;quot;&gt;Book a demo&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Obsidian. All rights reserved.&lt;/span&gt;&lt;span&gt;SOC2 Type II · ISO 27001 · Built for treasury teams&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

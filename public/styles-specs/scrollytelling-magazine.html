@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrollytelling Magazine — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Source+Serif+4&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f0;--surface:#fffdf8;--fg:#1c1a17;--muted:#6e6659;--accent:#b3261e;--accent2:#2f5d7c;--border:#ded5c3}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Source Serif 4',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Scrollytelling Magazine</h1><div class="tagline">Pinned visuals, stepped reveals, data woven into narrative</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">journalism</span><span class="tag">annual reports</span><span class="tag">case studies</span><span class="tag">scrollytelling-narrative</span><span class="tag">pinned-scroll-sections</span><span class="tag">svg-draw-on-scroll</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/scrollytelling-magazine.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/scrollytelling-magazine.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/scrollytelling-magazine.png" alt="Scrollytelling Magazine preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#faf7f0"></div><code>bg: #faf7f0</code></div><div class="sw"><div class="chip" style="background:#fffdf8"></div><code>surface: #fffdf8</code></div><div class="sw"><div class="chip" style="background:#1c1a17"></div><code>fg: #1c1a17</code></div><div class="sw"><div class="chip" style="background:#6e6659"></div><code>muted: #6e6659</code></div><div class="sw"><div class="chip" style="background:#b3261e"></div><code>accent: #b3261e</code></div><div class="sw"><div class="chip" style="background:#2f5d7c"></div><code>accent2: #2f5d7c</code></div><div class="sw"><div class="chip" style="background:#ded5c3"></div><code>border: #ded5c3</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Source Serif 4</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Warm editorial serifs with a data-grade mono for figures</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Source+Serif+4&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Pinned stage steps</strong></td><td>GSAP ScrollTrigger pins the figure column for 300vh; each 100vh of copy triggers the next chart state with a 0.4s crossfade.</td></tr><tr><td><strong>SVG draw-on-scroll</strong></td><td>Chart axes and map outlines animate stroke-dashoffset from 1 to 0 over the pinned range, scrub 0.5, ease none.</td></tr><tr><td><strong>Count-up numerals</strong></td><td>Stats count 0 to final value in 1.4s with power2.out when their step enters view; tabular-nums prevent jitter.</td></tr><tr><td><strong>Stepped text reveals</strong></td><td>IntersectionObserver fades copy blocks up 16px over 0.6s, staggered 80ms, once per page load.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Pinned figure stage with step counter</li><li>Chapter numerals set in the margin</li><li>Hairline column rules between text columns</li><li>Drop caps opening each section</li><li>Annotated data callouts with leader lines</li><li>Thin scroll progress rail under the masthead</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">timeline</span><span class="tag">stats-band</span><span class="tag">data-table</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger</span><span class="tag">IntersectionObserver</span><span class="tag">D3 for pinned charts</span><span class="tag">pure CSS column rules</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A New York Times-style scrollytelling layout: a visual stage stays pinned beside copy that scrolls past, stepping charts and diagrams through annotated states. Warm paper, editorial serifs and hairline column rules keep it feeling like journalism rather than a product page. Use it when data and narrative must build an argument together.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a scrollytelling annual-report page in the Scrollytelling Magazine style. Ship one polished, self-contained page.
+
+LOOK: Warm paper aesthetic. Use palette hexes exactly: bg #faf7f0, surface #fffdf8, fg #1c1a17, muted #6e6659, accent #b3261e (editorial red), accent2 #2f5d7c (slate navy), border #ded5c3. Fonts: load https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap — Fraunces for display headlines, Source Serif 4 for body columns, IBM Plex Mono for figures and captions. Hairline column rules, generous drop caps, margin chapter numerals.
+
+LAYOUT, in order: (1) sticky masthead bar with brand and thin red scroll progress line beneath it; (2) hero: red kicker eyebrow, giant Fraunces headline, two-column lede; (3) scrollytelling core: a sticky left figure stage (300vh pin) beside three steps of right-column copy, each step crossfading the chart state; (4) stats band with three count-up plates in IBM Plex Mono; (5) a data-table section of regional figures with hairline rules; (6) methodology block with drop cap; (7) full-width CTA band in accent red with white text; (8) footer with ISSN-style mono line.
+
+MOTION: GSAP ScrollTrigger pins the figure stage for 300vh with scrub 0.5; each 100vh of copy swaps the chart state in 0.4s. SVG chart lines animate stroke-dashoffset 1→0 across the pin. Stats count 0→final over 1.4s power2.out with font-variant-numeric: tabular-nums. Copy blocks fade up 16px over 0.6s staggered 80ms via IntersectionObserver.
+
+SIGNATURE: (a) the pinned figure stage with step dots that ignite as states change; (b) red drop caps opening each prose block; (c) annotated data callouts with hairline leader lines pointing into the chart.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, and keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by disabling scroll-driven animation.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/scrollytelling-magazine/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/scrollytelling-magazine/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Meridian Annual&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#faf7f0; --surface:#fffdf8; --fg:#1c1a17; --muted:#6e6659;
+  --accent:#b3261e; --accent2:#2f5d7c; --border:#ded5c3;
+  --font-display:&#x27;Fraunces&#x27;,sans-serif; --font-body:&#x27;Source Serif 4&#x27;,sans-serif;
+  --font-mono:&#x27;IBM Plex Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.figure-stage{border:1px solid var(--border);background:var(--surface);padding:1.25rem;position:sticky;top:110px;margin-top:1.5rem}
+.steps{display:flex;gap:.5rem;margin-top:.75rem}
+.step{width:10px;height:10px;border-radius:50%;background:var(--border)}
+.step.on{background:var(--accent)}
+.dropcap::first-letter{font-size:3.1em;float:left;line-height:.8;padding-right:.4rem;color:var(--accent)}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;Meridian Annual&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Report&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Chapters&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Data&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;About&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;2026 Impact Report&lt;/p&gt;&lt;h1&gt;The year the grid learned to breathe.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;Twelve months of data, three continents of reporting, one stubborn question: what does a cleaner grid actually feel like on the street where you live.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Begin Chapter 01&lt;/a&gt;
+&lt;div class=&amp;quot;figure-stage&amp;quot;&gt;&lt;span style=&amp;quot;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)&amp;quot;&gt;FIG. 01 — CAPACITY MIX, 2001–2026&lt;/span&gt;&lt;svg viewBox=&amp;quot;0 0 300 90&amp;quot; style=&amp;quot;width:100%&amp;quot;&gt;&lt;polyline points=&amp;quot;0,80 60,70 120,55 180,30 240,18 300,10&amp;quot; fill=&amp;quot;none&amp;quot; stroke=&amp;quot;#2f5d7c&amp;quot; stroke-width=&amp;quot;2&amp;quot;/&gt;&lt;polyline points=&amp;quot;0,60 60,58 120,50 180,44 240,40 300,38&amp;quot; fill=&amp;quot;none&amp;quot; stroke=&amp;quot;#b3261e&amp;quot; stroke-width=&amp;quot;2&amp;quot;/&gt;&lt;/svg&gt;&lt;div class=&amp;quot;steps&amp;quot;&gt;&lt;span class=&amp;quot;step on&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;step&amp;quot;&gt;&lt;/span&gt;&lt;span class=&amp;quot;step&amp;quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Three findings, pinned and stepped&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The coal exit curve&lt;/h3&gt;&lt;p&gt;Pinned chart walks through retirements month by month as copy explains each step.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Where batteries bloomed&lt;/h3&gt;&lt;p&gt;A map draws its storage sites in as the reader passes each annotation.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;What households paid&lt;/h3&gt;&lt;p&gt;Counting figures settle into a table of regional tariffs, footnoted inline.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; style=&amp;quot;max-width:100%&amp;quot;&gt;&lt;h2&gt;Chapter 02 — The storage boom&lt;/h2&gt;&lt;div style=&amp;quot;display:grid;grid-template-columns:2fr 1fr;gap:2rem;align-items:start&amp;quot;&gt;&lt;p class=&amp;quot;dropcap&amp;quot;&gt;Batteries arrived faster than the models predicted. Between dawn and dusk the grid now swings on four-hour storage, and the figure beside this text holds still while the numbers beneath it change state as you scroll — the pinned-stage pattern this whole layout is built on.&lt;/p&gt;&lt;div class=&amp;quot;figure-stage&amp;quot;&gt;&lt;p style=&amp;quot;font-family:var(--font-mono);font-size:.8rem;color:var(--muted)&amp;quot;&gt;MW ONLINE&lt;/p&gt;&lt;p style=&amp;quot;font-family:var(--font-mono);font-size:2.2rem;color:var(--accent)&amp;quot;&gt;12,480&lt;/p&gt;&lt;p style=&amp;quot;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)&amp;quot;&gt;+38% YOY&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;How we reported this&lt;/h2&gt;&lt;p&gt;Every figure in this report comes from public filings and eighty-one interviews. Where we estimate, we say so in the margin; where we couldn&#x27;t confirm, we cut the claim. Read the methodology chapter for the receipts.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Get the print edition&lt;/h2&gt;&lt;p&gt;The full report ships as a 96-page almanac with fold-out charts.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Reserve a copy&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 Meridian Annual&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;ISSN 2765-4402 · PRINTED ON RECYCLED STOCK&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

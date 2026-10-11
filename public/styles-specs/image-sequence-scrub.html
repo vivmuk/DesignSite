@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image Sequence Scrub — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0d;--surface:#14141a;--fg:#ececf1;--muted:#8b8b95;--accent:#4d7cff;--accent2:#ff6b3d;--border:#23232c}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Sora',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Image Sequence Scrub</h1><div class="tagline">Scroll scrubs through 120 rendered frames of product</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">hardware</span><span class="tag">product demos</span><span class="tag">automotive</span><span class="tag">image-sequence-scrub</span><span class="tag">pinned-scroll-sections</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/image-sequence-scrub.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/image-sequence-scrub.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/image-sequence-scrub.png" alt="Image Sequence Scrub preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0a0a0d"></div><code>bg: #0a0a0d</code></div><div class="sw"><div class="chip" style="background:#14141a"></div><code>surface: #14141a</code></div><div class="sw"><div class="chip" style="background:#ececf1"></div><code>fg: #ececf1</code></div><div class="sw"><div class="chip" style="background:#8b8b95"></div><code>muted: #8b8b95</code></div><div class="sw"><div class="chip" style="background:#4d7cff"></div><code>accent: #4d7cff</code></div><div class="sw"><div class="chip" style="background:#ff6b3d"></div><code>accent2: #ff6b3d</code></div><div class="sw"><div class="chip" style="background:#23232c"></div><code>border: #23232c</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Sora</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Technical display over quiet sans, mono for the HUD</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Sora&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Frame scrub</strong></td><td>GSAP ScrollTrigger pins a full-viewport canvas for 400vh; progress maps frame 0→119, scrub 0.5, ease none.</td></tr><tr><td><strong>Callout fade-in</strong></td><td>Spec callouts fade and slide 12px at exact frame thresholds (24/60/96) with 0.3s ease-out.</td></tr><tr><td><strong>HUD counter</strong></td><td>Fixed mono counter shows FRAME 037/119 and updates each scrub tick, tabular-nums.</td></tr><tr><td><strong>Idle breathe</strong></td><td>When scrubbed to a stop, the canvas frame eases 1% scale over 3s, looping, for a living still.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Pinned full-bleed scrub canvas</li><li>Frame counter HUD (037/119)</li><li>Floating spec callouts with hairline leaders</li><li>Scrub progress bar under the stage</li><li>Stage floor reflection</li><li>End-of-sequence product settle</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">pdp-gallery</span><span class="tag">product-card</span><span class="tag">stats-band</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">canvas 2D image-sequence player</span><span class="tag">GSAP ScrollTrigger (scrub pin)</span><span class="tag">IntersectionObserver</span><span class="tag">pure CSS HUD</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A pinned canvas scrubs through a preloaded image sequence — the AirPods trick — so the product rotates, opens or explodes as the wheel turns. Near-black stage lighting, floating spec callouts and a frame counter HUD make the scrub feel like operating a camera rig. The gold standard for hardware reveals.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a hardware reveal page in the Image Sequence Scrub style. Ship one polished, self-contained page.
+
+LOOK: Dark studio stage. Palette hexes exactly: bg #0a0a0d, surface #14141a, fg #ececf1, muted #8b8b95, accent #4d7cff (HUD blue), accent2 #ff6b3d (signal orange), border #23232c. Fonts: load https://fonts.googleapis.com/css2?family=Sora:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap — Sora for display, Inter for body, JetBrains Mono for every HUD element (counter, callouts, progress).
+
+LAYOUT, in order: (1) slim dark nav with product name and buy link; (2) hero: pinned full-bleed canvas stage (400vh scrub region) showing the product rotating; mono HUD frame counter top-right, hairline-leader spec callout, thin scrub progress bar under the stage; (3) three-frame feature row keyed to scrub thresholds (frame 024 yoke, 060 driver, 096 hinge); (4) spec data-table with mono numerals; (5) gallery strip of still frames; (6) CTA band in orange with price; (7) footer with mono revision line.
+
+MOTION: GSAP ScrollTrigger pins the canvas for 400vh; progress maps to frame 0→119 with scrub 0.5. Callouts fade and slide 12px at exact frame thresholds 24/60/96 in 0.3s ease-out. The HUD counter updates every scrub tick with tabular-nums. When scrubbing stops the current frame breathes 1% scale over 3s looped. Preload the full sequence with a progress readout before enabling scroll scrub.
+
+SIGNATURE: (a) the frame-counter HUD that ticks like a camera viewfinder; (b) hairline-leader callouts that appear at defined frames; (c) the scrub progress bar mirroring wheel position under the stage.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; on mobile use a swipeable frame strip instead of scroll scrub; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load offscreen frames, defer JavaScript, keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by showing a static hero frame.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/image-sequence-scrub/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/image-sequence-scrub/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;AUREX&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Sora:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#0a0a0d; --surface:#14141a; --fg:#ececf1; --muted:#8b8b95;
+  --accent:#4d7cff; --accent2:#ff6b3d; --border:#23232c;
+  --font-display:&#x27;Sora&#x27;,sans-serif; --font-body:&#x27;Inter&#x27;,sans-serif;
+  --font-mono:&#x27;JetBrains Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.stage{height:56vh;background:radial-gradient(60% 50% at 50% 45%,#1c1d26 0%,var(--bg) 80%);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;margin-top:2rem}
+.hud{position:absolute;top:1rem;right:1rem;font-family:var(--font-mono);font-size:.75rem;color:var(--accent);letter-spacing:.15em}
+.scrubbar{position:absolute;bottom:1rem;left:10%;right:10%;height:2px;background:var(--border)}
+.scrubbar i{position:absolute;left:0;top:0;bottom:0;width:31%;background:var(--accent)}
+.callout{position:absolute;font-family:var(--font-mono);font-size:.7rem;color:var(--muted);border-left:1px solid var(--accent);padding-left:.5rem}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;AUREX&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;A1 Pro&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Tech&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Gallery&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Buy&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;A1 PRO — REFERENCE HEADPHONES&lt;/p&gt;&lt;h1&gt;Turn the wheel. Turn the product.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;One hundred twenty rendered frames stand between you and every angle of the A1 Pro. Scroll to scrub the rig yourself.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Skip to gallery&lt;/a&gt;
+&lt;div class=&amp;quot;stage&amp;quot;&gt;&lt;span style=&amp;quot;font-size:9rem;filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))&amp;quot;&gt;🎧&lt;/span&gt;&lt;span class=&amp;quot;hud&amp;quot;&gt;FRAME 037 / 119&lt;/span&gt;&lt;span class=&amp;quot;callout&amp;quot; style=&amp;quot;left:12%;top:58%&amp;quot;&gt;MAGNESIUM YOKE — 41 G&lt;/span&gt;&lt;div class=&amp;quot;scrubbar&amp;quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Scrub the details&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Frame 024 — The yoke&lt;/h3&gt;&lt;p&gt;Milled magnesium, 41 grams, cold to the touch and warm to wear.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Frame 060 — The driver&lt;/h3&gt;&lt;p&gt;40mm beryllium-coated diaphragm behind an acoustically open grille.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Frame 096 — The fold&lt;/h3&gt;&lt;p&gt;Hinge tolerance 0.02mm. It sounds like a bank vault closing.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;Why we scrub&lt;/h2&gt;&lt;p&gt;A video plays at the pace it chooses. A scrub plays at yours. We render every angle once, at 4K, so the product can be examined — not just watched.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;A1 Pro — $549&lt;/h2&gt;&lt;p&gt;Ships worldwide in 3 days. Two-week listening trial.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Add to bag&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 AUREX&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;REV A.2 · RENDERED AT 4K · 120 FRAMES&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

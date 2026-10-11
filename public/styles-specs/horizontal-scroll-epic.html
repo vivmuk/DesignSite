@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Horizontal Scroll Epic — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#101014;--surface:#191921;--fg:#f2efe8;--muted:#8b8a94;--accent:#e0532f;--accent2:#d9a441;--border:#2a2a35}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Archivo',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Horizontal Scroll Epic</h1><div class="tagline">Vertical wheel, horizontal journey through cinematic panels</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">automotive</span><span class="tag">film</span><span class="tag">fashion</span><span class="tag">horizontal-scroll-section</span><span class="tag">pinned-scroll-sections</span><span class="tag">gsap-scrolltrigger</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/horizontal-scroll-epic.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/horizontal-scroll-epic.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/horizontal-scroll-epic.png" alt="Horizontal Scroll Epic preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#101014"></div><code>bg: #101014</code></div><div class="sw"><div class="chip" style="background:#191921"></div><code>surface: #191921</code></div><div class="sw"><div class="chip" style="background:#f2efe8"></div><code>fg: #f2efe8</code></div><div class="sw"><div class="chip" style="background:#8b8a94"></div><code>muted: #8b8a94</code></div><div class="sw"><div class="chip" style="background:#e0532f"></div><code>accent: #e0532f</code></div><div class="sw"><div class="chip" style="background:#d9a441"></div><code>accent2: #d9a441</code></div><div class="sw"><div class="chip" style="background:#2a2a35"></div><code>border: #2a2a35</code></div><p><code>linear-gradient(120deg, rgba(224,83,47,.18), rgba(217,164,65,.06))</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Archivo</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Wide cinematic grotesk with a neutral UI sans</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Horizontal pin track</strong></td><td>GSAP ScrollTrigger pins a 500vw track; xPercent goes 0 to -80 mapped to total scroll, scrub 1, ease none.</td></tr><tr><td><strong>In-panel parallax</strong></td><td>Each panel&#x27;s image layer moves xPercent -12 over the panel&#x27;s own travel; background moves slower than foreground.</td></tr><tr><td><strong>Panel counter roll</strong></td><td>A fixed counter rolls digit-strings vertically 0.5s cubic-bezier(.7,0,.3,1) as each panel crosses the 60% mark.</td></tr><tr><td><strong>Letterbox settle</strong></td><td>Black bars ease from 12vh to 4vh over 1s on section entry, cinematic-in feel.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-bleed horizontal panel track</li><li>Fixed rolling panel counter (01/08)</li><li>Cinematic letterbox bars top and bottom</li><li>Parallax foreground silhouettes per panel</li><li>Chapter title slates between acts</li><li>Wheel-direction hint arrow on entry</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">image-lightbox</span><span class="tag">stats-band</span><span class="tag">timeline</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger (horizontal pin)</span><span class="tag">Lenis smooth scroll</span><span class="tag">GSAP Draggable (touch fallback)</span><span class="tag">pure CSS letterbox</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The page pins itself while the vertical wheel translates into a lateral journey through wide cinematic panels, each one a full-bleed frame with parallax layers inside. Letterboxed chrome, a panel counter and film-grade typography make it feel like a moving long take. Built for launches where the product deserves a road trip.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a cinematic launch page in the Horizontal Scroll Epic style. Ship one polished, self-contained page.
+
+LOOK: Near-black cinematic stage. Palette hexes exactly: bg #101014, surface #191921, fg #f2efe8, muted #8b8a94, accent #e0532f (ember orange), accent2 #d9a441 (brass), border #2a2a35, plus gradient linear-gradient(120deg, rgba(224,83,47,.18), rgba(217,164,65,.06)) on hero panels. Fonts: load https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap — Archivo 800 for display, Inter for body, JetBrains Mono for the counter and slates.
+
+LAYOUT, in order: (1) minimal top bar with brand and four links over letterbox black; (2) hero panel: full-bleed image with headline, subline and mono wheel-direction hint &#x27;SCROLL ▼ →&#x27;; (3) the core pinned horizontal track of 5 cinematic panels (500vw) each with a mono slate tag, gradient wash and in-panel parallax; (4) spec band with amber numerals; (5) film-credits-style about section in centered columns; (6) CTA panel with reserve button in accent; (7) footer with mono spec line. Fixed rolling counter &#x27;02 / 08&#x27; bottom-right.
+
+MOTION: GSAP ScrollTrigger pins the track for 500vh and maps x from 0 to -80% with scrub 1. Each panel&#x27;s inner image parallaxes xPercent -12 relative to its own travel. The counter rolls digits vertically 0.5s cubic-bezier(.7,0,.3,1) on panel change. Letterbox bars ease 12vh→4vh over 1s on entry.
+
+SIGNATURE: (a) the fixed rolling panel counter; (b) cinematic letterbox bars framing every panel; (c) mono chapter slates (PANEL 02 / DAWN LAUNCH) pinned to each frame&#x27;s lower-left.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; on touch/mobile fall back to native horizontal swipe panels and disable the pin; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, and keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by disabling scroll-driven animation.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/horizontal-scroll-epic/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/horizontal-scroll-epic/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;VELOCERA&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#101014; --surface:#191921; --fg:#f2efe8; --muted:#8b8a94;
+  --accent:#e0532f; --accent2:#d9a441; --border:#2a2a35;
+  --font-display:&#x27;Archivo&#x27;,sans-serif; --font-body:&#x27;Inter&#x27;,sans-serif;
+  --font-mono:&#x27;JetBrains Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.track{display:flex;gap:2rem;padding:0 2rem;overflow:hidden}
+.panel{flex:0 0 78vw;height:60vh;background:linear-gradient(120deg,rgba(224,83,47,.18),rgba(217,164,65,.06)),var(--surface);border:1px solid var(--border);position:relative}
+.panel .tag{position:absolute;left:1.25rem;bottom:1rem;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)}
+.counter{position:fixed;right:2rem;bottom:2rem;font-family:var(--font-mono);color:var(--accent2);letter-spacing:.2em}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;VELOCERA&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;GT Line&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Film&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Specs&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Dealers&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;GRAND TOURER — 2027&lt;/p&gt;&lt;h1&gt;Eight panels. One long take.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;Scroll straight down and the road moves sideways. This is the GT line told as a single unbroken travelling shot, from first sketch to final lap.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Start the journey&lt;/a&gt;
+&lt;div style=&amp;quot;display:flex;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)&amp;quot;&gt;SCROLL ▼ → TRACK MOVES →&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Stills from the drive&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Panel 02 — Dawn launch&lt;/h3&gt;&lt;p&gt;Cold-start telemetry overlays the sunrise plate as it slides past.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Panel 05 — Alpine pass&lt;/h3&gt;&lt;p&gt;Parallax pines and guardrail separate the layers of the climb.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Panel 08 — Paddock close&lt;/h3&gt;&lt;p&gt;Final panel settles into macro carbon weave and a spec table.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;div class=&amp;quot;track&amp;quot;&gt;&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;PANEL 02 / DAWN LAUNCH&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;PANEL 03 / TUNNEL PASS&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;panel&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;PANEL 04 / ALPINE CLIMB&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&amp;quot;counter&amp;quot;&gt;02 / 08&lt;/div&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;Shot, not rendered&lt;/h2&gt;&lt;p&gt;Every plate was captured on location over nine days with a stabilized rig. The horizontal track keeps the original edit order intact — what you scroll is the sequence the director approved.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Reserve the first drive&lt;/h2&gt;&lt;p&gt;Eighty cars. One list. Doors open Friday.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Join the list&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 VELOCERA&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;0–100 IN 3.1S · 620 HP · RWD&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

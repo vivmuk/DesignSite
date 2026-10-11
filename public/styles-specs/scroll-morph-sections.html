@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scroll Morph Sections — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Unbounded&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f1ee;--surface:#ffffff;--fg:#141318;--muted:#6f6c74;--accent:#7a5cff;--accent2:#ff5c8a;--border:#dcdad4}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Unbounded',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Scroll Morph Sections</h1><div class="tagline">Sections pour into each other as you scroll</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">agencies</span><span class="tag">product tours</span><span class="tag">scroll-driven-animations</span><span class="tag">clip-path-reveals</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/scroll-morph-sections.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/scroll-morph-sections.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/scroll-morph-sections.png" alt="Scroll Morph Sections preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#f2f1ee"></div><code>bg: #f2f1ee</code></div><div class="sw"><div class="chip" style="background:#ffffff"></div><code>surface: #ffffff</code></div><div class="sw"><div class="chip" style="background:#141318"></div><code>fg: #141318</code></div><div class="sw"><div class="chip" style="background:#6f6c74"></div><code>muted: #6f6c74</code></div><div class="sw"><div class="chip" style="background:#7a5cff"></div><code>accent: #7a5cff</code></div><div class="sw"><div class="chip" style="background:#ff5c8a"></div><code>accent2: #ff5c8a</code></div><div class="sw"><div class="chip" style="background:#dcdad4"></div><code>border: #dcdad4</code></div><p><code>linear-gradient(135deg, #7a5cff22, #ff5c8a11)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Unbounded</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> Space Mono</p><p class="tagline">Rounded-wide display over a neutral workhorse sans</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Unbounded&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Clip-path morph</strong></td><td>Section masks tween between blob/corner clip-paths across scroll progress, scrub 0.8, direct GSAP tween.</td></tr><tr><td><strong>Crossfade layouts</strong></td><td>Outgoing section fades to 0 and scales 1→0.97 while incoming reverses it, 0.7s synced to scroll.</td></tr><tr><td><strong>Temperature shift</strong></td><td>A fixed overlay&#x27;s hue rotates from cool #7a5cff tint to warm #ff5c8a tint across the page, opacity 0.08.</td></tr><tr><td><strong>Blob divider wobble</strong></td><td>SVG divider blobs breathe via border-radius keyframes, 8s ease-in-out infinite.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Morphing clip-path section seams</li><li>Crossfading layout scenes</li><li>Hue-temperature overlay tied to progress</li><li>Blob-shaped media containers</li><li>Scene chapter chips that swap color</li><li>Continuous background canvas</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">onboarding-steps</span><span class="tag">faq-accordion</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS clip-path morphing</span><span class="tag">GSAP ScrollTrigger crossfades</span><span class="tag">Framer Motion</span><span class="tag">scroll-driven animations API</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Hard section breaks are gone: layouts morph into one another as clip-paths deform, backgrounds cross-fade and color temperature shifts with scroll progress. One continuous scroll experience instead of stacked pages. Great for product tours where each chapter should feel like a scene change, not a page break.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a product-tour page in the Scroll Morph Sections style. Ship one polished, self-contained page.
+
+LOOK: Continuous scene-based flow. Palette hexes exactly: bg #f2f1ee, surface #ffffff, fg #141318, muted #6f6c74, accent #7a5cff (violet), accent2 #ff5c8a (pink), border #dcdad4, gradient linear-gradient(135deg, #7a5cff22, #ff5c8a11). Fonts: load https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Inter:wght@400;500;600&amp;family=Space+Mono:wght@400&amp;display=swap — Unbounded for display, Inter for body, Space Mono for scene chips.
+
+LAYOUT, in order: (1) slim nav with brand and scene counter; (2) hero scene with Unbounded headline and three mono scene chips (01 CAPTURE / 02 SHAPE / 03 SHIP) where the active chip inverts; (3) scenes 2–4 as full sections that morph into one another: a blob-shaped media container, a feature grid, an onboarding-steps rail — no hard edges, wavy clip-path seams between them; (4) FAQ accordion; (5) CTA scene resolving to solid white with one button; (6) footer. A fixed hue-temperature overlay tint shifts from violet to pink across the page.
+
+MOTION: Section masks tween between blob and corner clip-paths with scrub 0.8. Outgoing scenes fade to 0 and scale to 0.97 while incoming scenes reverse it, 0.7s synced to scroll. The temperature overlay interpolates accent #7a5cff→#ff5c8a hue with document progress at 0.08 opacity. Divider blobs breathe via border-radius keyframes, 8s ease-in-out infinite.
+
+SIGNATURE: (a) wavy clip-path seams that make sections pour into each other; (b) scene chips whose active state inverts and swaps color; (c) blob-shaped containers whose border-radius keeps breathing.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, and keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by replacing morphs with simple fades.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/scroll-morph-sections/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/scroll-morph-sections/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Nimbus&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&amp;family=Inter:wght@400;500;600&amp;family=Space+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#f2f1ee; --surface:#ffffff; --fg:#141318; --muted:#6f6c74;
+  --accent:#7a5cff; --accent2:#ff5c8a; --border:#dcdad4;
+  --font-display:&#x27;Unbounded&#x27;,sans-serif; --font-body:&#x27;Inter&#x27;,sans-serif;
+  --font-mono:&#x27;Space Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.blob{border-radius:58% 42% 55% 45%/45% 55% 42% 58%;background:linear-gradient(135deg,#7a5cff22,#ff5c8a11);border:1px solid var(--border);padding:2.5rem;transition:border-radius 6s ease-in-out}
+.blob:hover{border-radius:45% 55% 42% 58%/58% 42% 55% 45%}
+.seam{height:70px;background:var(--bg);-webkit-mask:radial-gradient(60px 40px at 50% 0,#0000 98%,#000) 50%/40px 100%;mask:radial-gradient(60px 40px at 50% 0,#0000 98%,#000) 50%/40px 100%}
+.scenechip{font-family:var(--font-mono);font-size:.75rem;border:1px solid var(--border);border-radius:999px;padding:.3rem .9rem;color:var(--muted)}
+.scenechip.hot{background:var(--accent);color:#fff;border-color:var(--accent)}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;Nimbus&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Tour&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Scenes&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Pricing&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Start&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;PRODUCT TOUR — SCENE 02&lt;/p&gt;&lt;h1&gt;No page breaks. Only scenes.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;The tour pours from chapter to chapter: layouts melt, hues warm up, and one continuous scroll carries you through the whole product.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Enter scene 02&lt;/a&gt;
+&lt;div style=&amp;quot;display:flex;gap:.5rem&amp;quot;&gt;&lt;span class=&amp;quot;scenechip&amp;quot;&gt;01 CAPTURE&lt;/span&gt;&lt;span class=&amp;quot;scenechip hot&amp;quot;&gt;02 SHAPE&lt;/span&gt;&lt;span class=&amp;quot;scenechip&amp;quot;&gt;03 SHIP&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Scenes in the tour&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Scene 02 — Capture&lt;/h3&gt;&lt;p&gt;Ideas land in a cool violet workspace with a blob-shaped canvas.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Scene 04 — Shape&lt;/h3&gt;&lt;p&gt;The seam morphs; the palette warms toward pink as editing begins.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Scene 06 — Ship&lt;/h3&gt;&lt;p&gt;Final scene resolves to solid white, one CTA, zero chrome.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Where scenes meet&lt;/h2&gt;&lt;div class=&amp;quot;blob&amp;quot;&gt;&lt;h3&gt;The capture canvas&lt;/h3&gt;&lt;p&gt;Ideas land in a cool violet workspace shaped like something organic — because rigid rectangles end a scene.&lt;/p&gt;&lt;/div&gt;&lt;div class=&amp;quot;seam&amp;quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;One scroll, one story&lt;/h2&gt;&lt;p&gt;We deleted the dividers. Instead of stacked pages, scenes crossfade through deforming seams so the tour reads like a single take — progress is felt in temperature, not in scrollbars.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Start the tour&lt;/h2&gt;&lt;p&gt;Six scenes, four minutes, no signup until the end.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Begin at scene 01&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 Nimbus&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;SCENE-BASED TOUR · v4.1&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

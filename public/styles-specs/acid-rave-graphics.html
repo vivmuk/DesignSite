@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acid Rave Graphics — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Space+Grotesk&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0D0D0D;--surface:#1A1A1A;--fg:#F2F207;--muted:#8C8C3A;--accent:#FF1AAD;--accent2:#00F0FF;--border:#3A3A10}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Rubik Glitch',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Acid Rave Graphics</h1><div class="tagline">Warped type, strobe colors, smileys at 140 BPM.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">events</span><span class="tag">music</span><span class="tag">streetwear</span><span class="tag">kinetic-typography</span><span class="tag">glitch-hover</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/acid-rave-graphics.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/acid-rave-graphics.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/acid-rave-graphics.png" alt="Acid Rave Graphics preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0D0D0D"></div><code>bg: #0D0D0D</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>surface: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#F2F207"></div><code>fg: #F2F207</code></div><div class="sw"><div class="chip" style="background:#8C8C3A"></div><code>muted: #8C8C3A</code></div><div class="sw"><div class="chip" style="background:#FF1AAD"></div><code>accent: #FF1AAD</code></div><div class="sw"><div class="chip" style="background:#00F0FF"></div><code>accent2: #00F0FF</code></div><div class="sw"><div class="chip" style="background:#3A3A10"></div><code>border: #3A3A10</code></div><p><code>conic-gradient(from 180deg at 50% 50%,#F2F207 0deg,#FF1AAD 120deg,#00F0FF 240deg,#F2F207 360deg)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Rubik Glitch</p><p><strong>Body:</strong> Space Grotesk</p>
+<p><strong>Monospace:</strong> Space Mono</p><p class="tagline">Glitched display face over solid grotesque body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Space+Grotesk&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>bpm-pulse-type</strong></td><td>Headline scales 1→1.06 at 140 BPM equivalent (429ms half-beat), stepping on the kick — CSS keyframes 429ms ease-in-out infinite alternate.</td></tr><tr><td><strong>glitch-hover-slice</strong></td><td>Hovering headings triggers RGB-split: two ::before/::after clones offset ±3px in magenta/cyan flickering steps(2) for 300ms.</td></tr><tr><td><strong>marquee-flyer-scroll</strong></td><td>Lineup marquee scrolls at 12s loop, alternating direction rows, each row skewed ±2deg — classic flyer stack.</td></tr><tr><td><strong>smiley-spin-reaction</strong></td><td>Acid smileys rotate 360° with 500ms bounce when any button is clicked; nearest smiley only.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Acid smiley 🙂 motif at every turn</li><li>Warped/rotated display type beyond legibility (briefly)</li><li>Strobe trio: acid green, magenta, UV cyan</li><li>Skewed lineup marquee rows</li><li>Ticket-stub perforated section dividers</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">data-table</span><span class="tag">footer-mega</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Rubik Glitch + Space Grotesk webfonts</span><span class="tag">CSS steps() glitch keyframes</span><span class="tag">BPM-synced transform pulse</span><span class="tag">text-shadow RGB split technique</span><span class="tag">marquee keyframes</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Rave-flyer chaos disciplined into a layout: acid smileys, type warped and rotated beyond recognition, and a strobe palette of acid green, hot magenta and UV purple. Kinetic typography pulses to an implied 140 BPM and hover states glitch like a broken VJ feed. For events, music acts and streetwear that need pure serotonin on a webpage.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an event/rave site in the Acid Rave Graphics style — flyer chaos, strobe palette, kinetic energy, but a working ticket flow underneath.
+LOOK: near-black #0D0D0D base, raised #1A1A1A, acid green #F2F207 is the primary voice, magenta #FF1AAD and UV cyan #00F0FF the strobe pair, border #3A3A10. Import fonts: https://fonts.googleapis.com/css2?family=Rubik+Glitch&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap — Rubik Glitch ONLY for hero/section display (it&#x27;s barely legible, that&#x27;s the point, but keep body fully readable), Space Grotesk for everything functional, Space Mono for timestamps. Headlines rotate ±2deg and can overlap.
+LAYOUT: skewed top marquee (dates + lineup); nav with smiley logo and TICKETS button in acid green; hero = giant glitch headline + event card (date/venue/age in a bordered flyer block) + TICKETS CTA; lineup section as alternating-direction skewed marquee rows; &#x27;practical info&#x27; as a bordered data table (age/doors/cloak/last entry); ticket tiers as perforated stubs; footer as flyer back with fake credits.
+MOTION: headline pulses scale 1→1.06 on a 429ms half-beat (140 BPM) ease-in-out infinite alternate; hover on headings fires RGB-split glitch — ::before/::after clones in magenta/cyan offset ±3px flickering steps(2) for 300ms; marquees loop 12s linear with rows skewed ±2deg; clicking any CTA spins the nearest smiley 360° with 500ms bounce. Vanilla JS minimal.
+SIGNATURE: (1) acid smileys as wayfinding; (2) strobe palette discipline — green for actions, magenta/cyan for chaos; (3) perforated ticket-stub dividers (dashed borders + notch cutouts); (4) BPM-synced type pulse.
+CONSTRAINTS: semantic HTML; body text contrast — #F2F207 on #0D0D0D is 15:1+, but verify #8C8C3A only on large text; marquee content duplicated for screen readers is aria-hidden with an offscreen readable list; flashing/glitch effects capped (no full-screen strobe — WCAG 2.3.1 three-flashes rule); responsive: marquees slow down on mobile, table stacks under 700px; prefers-reduced-motion kills pulse/glitch/marquee (static lineup list shown); total JS &lt; 8KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/acid-rave-graphics/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/acid-rave-graphics/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;ACID BASEMENT — warehouse rave&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Rubik+Glitch&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Space+Mono:wght@400;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0D0D0D;--surface:#1A1A1A;--fg:#F2F207;--muted:#8C8C3A;--accent:#FF1AAD;--accent2:#00F0FF;--border:#3A3A10}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Space Grotesk&#x27;,sans-serif;line-height:1.55;overflow-x:hidden}
+a{color:var(--fg);text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.marq{border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);padding:10px 0;overflow:hidden;white-space:nowrap}
+.marq div{display:inline-block;font-family:&#x27;Space Mono&#x27;,monospace;font-size:.75rem;color:var(--muted);animation:mq 12s linear infinite}
+.marq.rev div{animation-direction:reverse}
+.marq:nth-child(odd){transform:rotate(-.6deg)}
+.marq:nth-child(even){transform:rotate(.6deg)}
+@keyframes mq{to{transform:translateX(-50%)}}
+header{display:flex;align-items:center;gap:22px;padding:18px 24px;position:sticky;top:0;background:rgba(13,13,13,.92);backdrop-filter:blur(8px);z-index:10;border-bottom:1px solid var(--border)}
+.logo{font-family:&#x27;Rubik Glitch&#x27;,monospace;font-size:1.3rem;color:var(--fg)}
+nav{display:flex;gap:16px;font-weight:700;font-size:.85rem}
+nav a:hover{color:var(--accent)}
+.tix{margin-left:auto;background:var(--fg);color:var(--bg);font-weight:700;padding:10px 22px;border:none;font-size:.9rem;transform:rotate(-1deg)}
+.hero{text-align:center;padding:80px 24px 64px}
+.hero h1{font-family:&#x27;Rubik Glitch&#x27;,monospace;font-size:clamp(3rem,10vw,7rem);line-height:.95;color:var(--fg);transform:rotate(-2deg);animation:bpm .429s ease-in-out infinite alternate;position:relative;display:inline-block}
+@keyframes bpm{to{transform:rotate(-2deg) scale(1.06)}}
+.hero h1::before,.hero h1::after{content:attr(data-t);position:absolute;inset:0;opacity:0}
+.hero h1.glitch::before{color:var(--accent);opacity:1;transform:translate(-3px,0);animation:gl .3s steps(2)}
+.hero h1.glitch::after{color:var(--accent2);opacity:1;transform:translate(3px,0);animation:gl .3s steps(2)}
+@keyframes gl{0%,100%{opacity:0}25%,75%{opacity:1}}
+.hero .sub{font-family:&#x27;Space Mono&#x27;,monospace;color:var(--muted);margin-top:18px;font-size:.9rem}
+.flyer{display:inline-block;background:var(--surface);border:2px solid var(--fg);padding:24px 36px;margin-top:28px;transform:rotate(1deg);text-align:left}
+.flyer b{font-size:1.1rem}
+.flyer .row{display:flex;gap:14px;font-family:&#x27;Space Mono&#x27;,monospace;font-size:.8rem;color:var(--muted);margin-top:6px}
+.smiley{font-size:2.6rem;display:inline-block;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.smiley.spin{transform:rotate(360deg)}
+.stub{border:2px dashed var(--border);position:relative;padding:28px;margin:16px 0;background:var(--surface)}
+.stub::before,.stub::after{content:&#x27;&#x27;;position:absolute;top:50%;width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px dashed var(--border);transform:translateY(-50%)}
+.stub::before{left:-14px}.stub::after{right:-14px}
+.tier{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px}
+.tier h3{font-weight:700}
+.tier .p{font-family:&#x27;Space Mono&#x27;,monospace;font-size:1.4rem;font-weight:700}
+.tier .soldout{color:var(--muted);text-decoration:line-through}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:.9rem}
+th,td{border:1px solid var(--border);padding:12px 16px;text-align:left}
+th{background:var(--surface);font-family:&#x27;Space Mono&#x27;,monospace;font-size:.75rem;color:var(--muted)}
+.cta{text-align:center;padding:64px 24px}
+.bigbtn{display:inline-block;background:var(--fg);color:var(--bg);font-weight:700;font-size:1.2rem;padding:16px 42px;border:none;transform:rotate(-1deg);box-shadow:6px 6px 0 var(--accent)}
+.bigbtn:hover{box-shadow:3px 3px 0 var(--accent);transform:rotate(-1deg) translate(3px,3px)}
+footer{border-top:2px dashed var(--border);padding:32px 24px;font-family:&#x27;Space Mono&#x27;,monospace;font-size:.7rem;color:var(--muted);text-align:center}
+@media(max-width:700px){.tier{grid-template-columns:1fr}nav{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.marq div{animation:none;transform:none}.marq:nth-child(odd),.marq:nth-child(even){transform:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&amp;quot;marq&amp;quot;&gt;&lt;div&gt; 06.11.26 WAREHOUSE 9, ROTTERDAM — 23:00–08:00 — 140BPM AND UP — 06.11.26 WAREHOUSE 9, ROTTERDAM — 23:00–08:00 — 140BPM AND UP — 06.11.26 WAREHOUSE 9, ROTTERDAM — 23:00–08:00 — 140BPM AND UP — &lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;marq rev&amp;quot;&gt;&lt;div&gt; LINE-UP: ACID PONY / VKTR-9 / MARSHA DON / SUB-LOW SISTER / ACID PONY / VKTR-9 / MARSHA DON / SUB-LOW SISTER / ACID PONY / VKTR-9 / MARSHA DON / SUB-LOW SISTER / &lt;/div&gt;&lt;/div&gt;
+&lt;header&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;ACID✆BASEMENT&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#lineup&amp;quot;&gt;Line-up&lt;/a&gt;&lt;a href=&amp;quot;#info&amp;quot;&gt;Info&lt;/a&gt;&lt;a href=&amp;quot;#tix&amp;quot;&gt;Tickets&lt;/a&gt;&lt;/nav&gt;&lt;button class=&amp;quot;tix&amp;quot; onclick=&amp;quot;smile(&#x27;t&#x27;)&amp;quot;&gt;TICKETS&lt;/button&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+&lt;span class=&amp;quot;smiley&amp;quot; id=&amp;quot;s-h&amp;quot;&gt;🙂&lt;/span&gt;
+&lt;h1 data-t=&amp;quot;ACID BASEMENT&amp;quot; id=&amp;quot;bigtitle&amp;quot;&gt;ACID BASEMENT&lt;/h1&gt;
+&lt;p class=&amp;quot;sub&amp;quot;&gt;12 HOURS · 4 ROOMS · ONE SMILEY · 18+&lt;/p&gt;
+&lt;div class=&amp;quot;flyer&amp;quot;&gt;&lt;b&gt;SAT 06.11.26 — WAREHOUSE 9, ROTTERDAM&lt;/b&gt;&lt;div class=&amp;quot;row&amp;quot;&gt;&lt;span&gt;DOORS 23:00&lt;/span&gt;&lt;span&gt;LAST ENTRY 01:00&lt;/span&gt;&lt;span&gt;CURFEW NEVER&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;row&amp;quot;&gt;&lt;span&gt;CLOAKROOM €3&lt;/span&gt;&lt;span&gt;CASHLESS ONLY&lt;/span&gt;&lt;span&gt;EARPLUGS FREE&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;lineup&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h2 style=&amp;quot;font-family:&#x27;Rubik Glitch&#x27;,monospace;font-size:2rem;transform:rotate(-1deg)&amp;quot;&gt;THE LINE-UP&lt;/h2&gt;
+&lt;div class=&amp;quot;marq&amp;quot; style=&amp;quot;margin:20px 0&amp;quot;&gt;&lt;div&gt; 00:30 ACID PONY (LIVE) — 02:00 VKTR-9 — 04:00 MARSHA DON — 06:00 SUB-LOW SISTER — 00:30 ACID PONY (LIVE) — 02:00 VKTR-9 — 04:00 MARSHA DON — 06:00 SUB-LOW SISTER — &lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;marq rev&amp;quot; style=&amp;quot;margin:20px 0&amp;quot;&gt;&lt;div&gt; ROOM 2: LO-FI ACID ALL NIGHT — DJS FROM THE BASEMENT ARCHIVE — ROOM 2: LO-FI ACID ALL NIGHT — DJS FROM THE BASEMENT ARCHIVE — &lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section id=&amp;quot;info&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h2 style=&amp;quot;font-size:1.6rem;font-weight:700;transform:rotate(.5deg)&amp;quot;&gt;PRACTICAL STUFF 🙂&lt;/h2&gt;
+&lt;table&gt;&lt;tr&gt;&lt;th&gt;THING&lt;/th&gt;&lt;th&gt;DETAIL&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Minimum age&lt;/td&gt;&lt;td&gt;18. ID required, no exceptions.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Sound&lt;/td&gt;&lt;td&gt;4 stacks, 142dB max. Free earplugs at the bar.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chill room&lt;/td&gt;&lt;td&gt;Room 4, always open, water free, judgement free.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Getting home&lt;/td&gt;&lt;td&gt;Night buses every 20min until 09:00 from Gate B.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section id=&amp;quot;tix&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div class=&amp;quot;stub tier&amp;quot;&gt;&lt;h3&gt;EARLY WORM 🐛&lt;/h3&gt;&lt;div class=&amp;quot;p&amp;quot;&gt;€22 &lt;span style=&amp;quot;color:var(--muted);font-size:.8rem&amp;quot;&gt;SOLD OUT&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;stub tier&amp;quot;&gt;&lt;h3&gt;REGULAR RAVE&lt;/h3&gt;&lt;div class=&amp;quot;p&amp;quot;&gt;€32 &lt;button class=&amp;quot;tix&amp;quot; style=&amp;quot;margin:0;padding:8px 18px;font-size:.8rem&amp;quot; onclick=&amp;quot;smile(this)&amp;quot;&gt;GET IT&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;stub tier&amp;quot;&gt;&lt;h3&gt;LATE LEGEND (05:00 ENTRY)&lt;/h3&gt;&lt;div class=&amp;quot;p&amp;quot;&gt;€24 &lt;button class=&amp;quot;tix&amp;quot; style=&amp;quot;margin:0;padding:8px 18px;font-size:.8rem&amp;quot; onclick=&amp;quot;smile(this)&amp;quot;&gt;GET IT&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;span class=&amp;quot;smiley&amp;quot; id=&amp;quot;s-c&amp;quot;&gt;🙂&lt;/span&gt;&lt;br/&gt;&lt;button class=&amp;quot;bigbtn&amp;quot; onclick=&amp;quot;smile(this)&amp;quot;&gt;GET TICKETS BEFORE THEY&#x27;RE GONE&lt;/button&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;FUNDED BY NO ONE · ORGANISED BY VOLUNTEERS · LEAVE NO TRACE ✦ · site by the basement crew&lt;/footer&gt;
+&lt;script&gt;
+function smile(el){const all=document.querySelectorAll(&#x27;.smiley&#x27;);const s=all[Math.floor(Math.random()*all.length)];s.classList.add(&#x27;spin&#x27;);setTimeout(()=&gt;s.classList.remove(&#x27;spin&#x27;),520)}
+document.getElementById(&#x27;bigtitle&#x27;).addEventListener(&#x27;mouseenter&#x27;,function(){this.classList.add(&#x27;glitch&#x27;);setTimeout(()=&gt;this.classList.remove(&#x27;glitch&#x27;),320)});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

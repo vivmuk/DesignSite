@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLTF Scrollytelling — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0F1115;--surface:#171A21;--fg:#EEF1F5;--muted:#7E8794;--accent:#FF6B35;--accent2:#7EC8FF;--border:#252A33}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Archivo Expanded',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>GLTF Scrollytelling</h1><div class="tagline">One model, disassembled by your scroll finger.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">hardware</span><span class="tag">explainers</span><span class="tag">automotive</span><span class="tag">gltf-model-viewer</span><span class="tag">gsap-scrolltrigger</span><span class="tag">scrollytelling-narrative</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/gltf-scrollytelling.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/gltf-scrollytelling.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/gltf-scrollytelling.png" alt="GLTF Scrollytelling preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0F1115"></div><code>bg: #0F1115</code></div><div class="sw"><div class="chip" style="background:#171A21"></div><code>surface: #171A21</code></div><div class="sw"><div class="chip" style="background:#EEF1F5"></div><code>fg: #EEF1F5</code></div><div class="sw"><div class="chip" style="background:#7E8794"></div><code>muted: #7E8794</code></div><div class="sw"><div class="chip" style="background:#FF6B35"></div><code>accent: #FF6B35</code></div><div class="sw"><div class="chip" style="background:#7EC8FF"></div><code>accent2: #7EC8FF</code></div><div class="sw"><div class="chip" style="background:#252A33"></div><code>border: #252A33</code></div><p><code>linear-gradient(180deg,#0F1115 0%,#131820 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Archivo Expanded</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Expanded display anchors engineering captions; Inter carries prose.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Archivo+Expanded&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>scroll-assemble</strong></td><td>GSAP ScrollTrigger scrub maps scroll progress to part transforms (explode factor 0→1).</td></tr><tr><td><strong>pinned-caption</strong></td><td>Each stage caption pins beside the model for 80vh of scroll, cross-fading 300ms.</td></tr><tr><td><strong>turntable-idle</strong></td><td>Model rotates 8°/s when user is idle; pauses on any pointer input.</td></tr><tr><td><strong>part-highlight</strong></td><td>Active part emissive-boosts to #FF6B35 with a 400ms ramp; others dim 40%.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Persistent hero model across sections</li><li>Exploded-view scroll scrub</li><li>Pinned stage captions with numbers</li><li>Part hotspots with leader lines</li><li>Progress rail of assembly stages</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">timeline</span><span class="tag">feature-grid</span><span class="tag">onboarding-steps</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">three.js + GLTFLoader (Draco)</span><span class="tag">GSAP ScrollTrigger scrub pin</span><span class="tag">part-name node traversal</span><span class="tag">scroll progress → lerp mapping</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A single GLTF object persists across the entire page while scroll rotates, explodes and reassembles it part by part, with captions pinning beside each stage. The 3D model is the storyline. For hardware explainers, automotive reveals and engineering deep-dives.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a hardware product page in the GLTF Scrollytelling style — one persistent 3D model that scroll disassembles and reassembles like an exploded diagram.
+LOOK: charcoal #0F1115 background, #171A21 panels, #252A33 borders; text #EEF1F5, muted #7E8794; ember #FF6B35 highlights the active part, cool #7EC8FF tints idle parts. Import: https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap (use Archivo wide-stretch if available).
+LAYOUT: sticky viewport: the 3D model occupies a fixed 70vh stage while content scrolls beside it. Five pinned caption stages, each 80vh of scroll: (1) overview turntable, (2) shell lifts away, (3) circuit board slides out with hotspot labels, (4) battery and sensors separate with leader lines, (5) full reassembly + CTA. Progress rail on the right shows stage 01–05. Below the scrollytelling, a calm feature grid and mega footer.
+MOTION: GSAP ScrollTrigger with scrub 0.5 maps scroll progress to per-part transforms (node names like &#x27;shell&#x27;, &#x27;board&#x27;, &#x27;battery&#x27; lerp along their axis); captions cross-fade 300ms as stages change; idle turntable rotates 8°/s, pausing on pointer input; active part emissive ramps to #FF6B35 over 400ms while others dim to 60% opacity.
+SIGNATURE: (1) the model never leaves the screen — it IS the page; (2) exploded-view scrub synced to scroll; (3) leader-line hotspots on the active part.
+CONSTRAINTS: Draco-compressed GLTF under 2MB, lazy-load after first paint, cap DPR at 2, static exploded-diagram fallback for no-WebGL and reduced-motion, semantic captions with real headings, contrast at least 4.5:1.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/gltf-scrollytelling/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/gltf-scrollytelling/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;GLTF Scrollytelling&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0F1115;--surface:#171A21;--fg:#EEF1F5;--muted:#7E8794;--accent:#FF6B35;--accent2:#7EC8FF;--border:#252A33;--grad:linear-gradient(180deg,#0F1115 0%,#131820 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Archivo&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Archivo&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#0F1115;border-radius:6px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Archivo&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Archivo&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Archivo&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.stage-wrap{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
+.stage3d{position:sticky;top:80px;height:70vh;background:radial-gradient(500px 300px at 50% 60%,rgba(126,200,255,.08),transparent 65%),var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:grid;place-items:center}
+.exploded{display:flex;flex-direction:column;gap:14px;align-items:center}
+.part{width:200px;height:26px;border-radius:4px;background:linear-gradient(90deg,#2A3040,#171A21);border:1px solid var(--border);transition:transform .4s ease,box-shadow .4s}
+.part.hot{background:linear-gradient(90deg,#FF6B35,#8A3A1C);box-shadow:0 0 24px rgba(255,107,53,.4);transform:translateX(-24px)}
+.caption{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.75rem;color:var(--muted)}
+.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:5}
+.rail span{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.rail span.on{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;GLTF&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap stage-wrap&amp;quot;&gt;&lt;div class=&amp;quot;stage3d&amp;quot;&gt;&lt;div class=&amp;quot;exploded&amp;quot;&gt;&lt;div class=&amp;quot;part hot&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;part&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;part&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;part&amp;quot; style=&amp;quot;width:120px&amp;quot;&gt;&lt;/div&gt;&lt;p class=&amp;quot;caption&amp;quot;&gt;STAGE 02 — SHELL LIFTED · explode 0.42&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;p style=&amp;quot;color:var(--accent);letter-spacing:.2em;font-size:.75rem&amp;quot;&gt;TEARDOWN · 5 STAGES&lt;/p&gt;
+&lt;h1 style=&amp;quot;margin:16px 0&amp;quot;&gt;Read the machine&lt;br/&gt;like a sentence.&lt;/h1&gt;
+&lt;p&gt;Scroll to disassemble the Halo Ring layer by layer — every part annotated, every choice explained.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Start teardown ↓&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;01 · The shell&lt;/h3&gt;&lt;p&gt;Aerospace aluminum, 0.8mm walls. Sandblasted twice for the matte you can&#x27;t unlove.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;03 · The board&lt;/h3&gt;&lt;p&gt;Dual-core sensor hub reading 9 axes at 400Hz. Solder-mask in ember orange, obviously.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;05 · Back together&lt;/h3&gt;&lt;p&gt;IP68 sealed with a single toroidal gasket. No glue. Every screw services with one driver.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Nothing to hide&lt;/h2&gt;&lt;p&gt;Companies that hide their boards expect you to buy on faith. We published the full teardown because the Halo Ring is engineered to be opened — repairability scored 9.4/10 by an independent lab, and the screws are standard Torx on purpose.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Own the whole machine.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Preorder — $249&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 GLTF. All rights reserved.&lt;/span&gt;&lt;span&gt;Full schematics public · Repair score 9.4 · Torx everywhere&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

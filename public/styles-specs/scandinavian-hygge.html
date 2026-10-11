@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scandinavian Hygge — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1EB;--surface:#FDFBF7;--fg:#2F2C28;--muted:#8B8378;--accent:#B5824C;--accent2:#6B7F72;--border:#E2DACE}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Scandinavian Hygge</h1><div class="tagline">Pale wood, wool light, calm functional warmth</div>
+<div class="meta"><span class="tag">cultural</span><span class="tag">furniture</span><span class="tag">lifestyle</span><span class="tag">wellness</span><span class="tag">parallax-depth-layers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/scandinavian-hygge.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/scandinavian-hygge.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/scandinavian-hygge.png" alt="Scandinavian Hygge preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F4F1EB"></div><code>bg: #F4F1EB</code></div><div class="sw"><div class="chip" style="background:#FDFBF7"></div><code>surface: #FDFBF7</code></div><div class="sw"><div class="chip" style="background:#2F2C28"></div><code>fg: #2F2C28</code></div><div class="sw"><div class="chip" style="background:#8B8378"></div><code>muted: #8B8378</code></div><div class="sw"><div class="chip" style="background:#B5824C"></div><code>accent: #B5824C</code></div><div class="sw"><div class="chip" style="background:#6B7F72"></div><code>accent2: #6B7F72</code></div><div class="sw"><div class="chip" style="background:#E2DACE"></div><code>border: #E2DACE</code></div><p><code>linear-gradient(180deg,#F4F1EB 0%,#ECE7DD 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Soft Fraunces display with approachable Karla text</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>daylight fade</strong></td><td>sections fade from opacity 0.4→1 with no translation over 700ms ease-out — light arriving, not objects</td></tr><tr><td><strong>wool shadow breathe</strong></td><td>card shadows expand/contract subtly via keyframes over 5s ease-in-out</td></tr><tr><td><strong>soft press</strong></td><td>buttons depress 2px with shadow tightening over 120ms on active</td></tr><tr><td><strong>slow parallax</strong></td><td>background texture layer scrolls at 0.3x rate via transform on scroll</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>pale-wood grain divider textures</li><li>wool/knit pattern background fills</li><li>rounded soft-shadow cards (matt ceramic feel)</li><li>small hand-drawn line icons</li><li>oversized whitespace paddings</li><li>muted olive-and-oat swatch strips</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">feature-grid</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS custom properties</span><span class="tag">subtle parallax via rAF scroll</span><span class="tag">Google Fonts (Fraunces, Karla)</span><span class="tag">CSS box-shadow keyframes</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Danish living-room comfort: pale wood tones, oat and moss accents, wool-grain textures, and photography bathed in soft window daylight. For furniture, lifestyle, and wellness brands that sell calm. The distinctive move is tactility — everything from shadows to buttons feels like wool, oak, and matte ceramic.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site for a Scandinavian furniture brand in the Scandinavian Hygge style. LOOK: background #F4F1EB with a gentle top-to-bottom gradient, panels #FDFBF7, text #2F2C28, muted #8B8378, accents #B5824C (oak) and #6B7F72 (moss), border #E2DACE. Load https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&amp;family=Karla:wght@400;500;700&amp;display=swap — Fraunces for display, Karla for body. LAYOUT in order: (1) header with wordmark and three links; (2) hero: split layout, headline left, sunlit product photo right, single CTA; (3) product grid of three white cards with soft wool shadows; (4) oak-swatch divider strip; (5) about section on craft and materials; (6) testimonial quote; (7) moss-green CTA band; (8) minimal footer. MOTION: sections fade in from opacity 0.4 over 700ms with no movement (light arriving); card shadows breathe via 5s ease-in-out keyframes; buttons depress 2px over 120ms on active; a wood-grain background layer parallaxes at 0.3x scroll rate. SIGNATURE: (a) wool-texture card shadows that visibly breathe, (b) pale-wood swatch divider strips, (c) extremely generous whitespace (96px+ section padding). CONSTRAINTS: semantic HTML, 4.5:1 contrast, single column below 760px, no JS libraries beyond a tiny rAF parallax, images lazy-loaded. DELIVERY: Ship one self-contained index.html. Define CSS custom properties --bg:#F4F1EB, --surface:#FDFBF7, --fg:#2F2C28, --muted:#8B8378, --accent:#B5824C, --accent2:#6B7F72, --border:#E2DACE on :root and use them everywhere — no hard-coded colors. Preconnect to fonts.googleapis.com and fonts.gstatic.com, load Fraunces, Karla with display=swap and a system-font fallback stack to prevent layout shift. Implement the motions (daylight fade, wool shadow breathe, soft press, slow parallax) exactly as specified; wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable. Verify before delivery: all headings in a logical h1→h3 order, focus-visible outlines on interactive elements, no horizontal overflow at 360px viewport, and images with width/height attributes to avoid CLS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/scandinavian-hygge/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/scandinavian-hygge/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Nordlys — Quiet Furniture&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&amp;family=Karla:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#F4F1EB; --surface:#FDFBF7; --fg:#2F2C28; --muted:#8B8378;
+  --accent:#B5824C; --accent2:#6B7F72; --border:#E2DACE;
+  --grad:linear-gradient(180deg,#F4F1EB 0%,#ECE7DD 100%);
+  --display:&#x27;Fraunces&#x27;, serif; --body:&#x27;Karla&#x27;, sans-serif;
+  --mono:&#x27;monospace&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.swatch-strip{height:18px;border-radius:9px;background:linear-gradient(90deg,#E8D9C3 0 25%,#D9C6A8 25% 50%,#B5824C 50% 62%,#6B7F72 62% 75%,#FDFBF7 75% 100%);border:1px solid var(--border)}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;Nordlys&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Collection&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Materials&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Studio&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Journal&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Shop the Collection&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;Made in Jutland&lt;/p&gt;
+    &lt;h1&gt;Furniture for slow mornings&lt;/h1&gt;
+    &lt;p&gt;Solid oak, undyed wool, and joinery that outlives trends — built in small batches since 1962.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;View collection&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Our materials&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;swatch-strip&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Oak lounge chair&lt;/h3&gt;&lt;p&gt;Steam-bent arms, 12-year warranty.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Wool textiles&lt;/h3&gt;&lt;p&gt;Undyed lambswool from Jutland farms.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Repair for life&lt;/h3&gt;&lt;p&gt;Free re-oiling and joint repair, forever.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Nothing extra&lt;/h2&gt;
+    &lt;p&gt;Each piece is drawn, joined, and oiled in our Jutland workshop. We make eleven designs and improve them yearly.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Visit the showroom&lt;/h2&gt;
+      &lt;p&gt;Open Tuesday–Saturday in Copenhagen.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Nordlys Møbelsnedkeri&lt;/span&gt;
+  &lt;span&gt;Furniture · Lifestyle · Wellness&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

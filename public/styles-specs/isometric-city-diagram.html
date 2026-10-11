@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Isometric City Diagram — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Chillax&family=Outfit&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#101623;--surface:#1A2233;--fg:#E9EFF9;--muted:#6E7C96;--accent:#FFB03A;--accent2:#4FD08C;--border:#242E44}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Outfit',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Chillax',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Isometric City Diagram</h1><div class="tagline">The product map is an isometric city; districts are features.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">infra</span><span class="tag">logistics</span><span class="tag">crypto</span><span class="tag">three-js-scene</span><span class="tag">css-3d-transforms</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/isometric-city-diagram.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/isometric-city-diagram.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/isometric-city-diagram.png" alt="Isometric City Diagram preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#101623"></div><code>bg: #101623</code></div><div class="sw"><div class="chip" style="background:#1A2233"></div><code>surface: #1A2233</code></div><div class="sw"><div class="chip" style="background:#E9EFF9"></div><code>fg: #E9EFF9</code></div><div class="sw"><div class="chip" style="background:#6E7C96"></div><code>muted: #6E7C96</code></div><div class="sw"><div class="chip" style="background:#FFB03A"></div><code>accent: #FFB03A</code></div><div class="sw"><div class="chip" style="background:#4FD08C"></div><code>accent2: #4FD08C</code></div><div class="sw"><div class="chip" style="background:#242E44"></div><code>border: #242E44</code></div><p><code>linear-gradient(180deg,#101623 0%,#141B2C 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Chillax</p><p><strong>Body:</strong> Outfit</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Rounded display over geometric body keeps the city friendly.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Chillax&family=Outfit&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>packet-flow</strong></td><td>Dashed SVG paths animate dash-offset along roads, 2.4s linear infinite, in accent colors.</td></tr><tr><td><strong>district-hover</strong></td><td>Hovered district extrudes 6px (CSS translateZ) and lifts with 200ms ease-out.</td></tr><tr><td><strong>city-buildup</strong></td><td>On load, districts rise sequentially with 60ms stagger, 400ms each, spring ease.</td></tr><tr><td><strong>camera-drift</strong></td><td>Whole isometric plane drifts ±2° rotation very slowly (30s alternate) for life.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Isometric extruded district blocks</li><li>Animated packet trails on roads</li><li>District hover-lift with label chips</li><li>Tiny moving vehicles/icons</li><li>Minimap with current viewport box</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">map-view</span><span class="tag">feature-grid</span><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">nav-bar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS 3D isometric transforms (or three.js ortho)</span><span class="tag">SVG dash-offset packet animation</span><span class="tag">IntersectionObserver buildup</span><span class="tag">zoom-to-district lerp camera</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Infrastructure rendered as a living isometric metropolis: districts are product areas, roads are data flows and animated packets travel the streets. Tilt, pan and click a district to zoom into real documentation. Playful precision for infra, logistics and crypto platforms.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an infrastructure platform page in the Isometric City Diagram style — the product shown as a living isometric metropolis where districts are features and roads carry animated packets.
+LOOK: slate-navy #101623 background, blocks on #1A2233 with #242E44 edges; text #E9EFF9, muted #6E7C96; amber #FFB03A for the compute district and highlights, green #4FD08C for the healthy/status district. Import: https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap and a rounded display face (Chillax, or fallback Bricolage Grotesque). The isometric plane uses a 30° grid: each district is an extruded block (CSS transform: rotateX(60deg) rotateZ(45deg) on a parent, or an orthographic three.js scene).
+LAYOUT: nav with a tiny live status dot; hero headline above a large isometric cityscape — districts labeled Compute, Storage, Edge, Observability, Payments; roads between them carry SVG dashed packet trails animating continuously; hovering a district lifts it 6px and shows a stats chip; clicking deep-links to that feature&#x27;s docs section; below, a stats band and data table of regional latency; footer with a minimap-style sitemap.
+MOTION: packets animate via stroke-dashoffset 2.4s linear infinite; districts rise in a load sequence with 60ms stagger and a spring overshoot; hovered district extrudes with 200ms ease-out; the whole plane drifts ±2° over 30s alternate for ambient life.
+SIGNATURE: (1) animated packet trails along the roads; (2) hover-lift + label chips on districts; (3) the corner minimap tracking viewport.
+CONSTRAINTS: prefers-reduced-motion shows a static labeled diagram; keyboard users get a district list mirroring the map as real links; contrast at least 4.5:1; keep the CSS-3D version under 30KB JS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/isometric-city-diagram/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/isometric-city-diagram/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Isometric City Diagram&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&amp;family=Outfit:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#101623;--surface:#1A2233;--fg:#E9EFF9;--muted:#6E7C96;--accent:#FFB03A;--accent2:#4FD08C;--border:#242E44;--grad:linear-gradient(180deg,#101623 0%,#141B2C 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Outfit&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Bricolage Grotesque&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Bricolage Grotesque&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#101623;border-radius:10px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Bricolage Grotesque&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Bricolage Grotesque&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Bricolage Grotesque&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.iso{perspective:1200px;height:420px;display:grid;place-items:center;overflow:hidden}
+.plane{transform:rotateX(55deg) rotateZ(45deg);transform-style:preserve-3d;display:grid;grid-template-columns:repeat(3,140px);gap:22px;animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{from{rotate:0deg}to{rotate:1.5deg}}
+.district{height:80px;background:var(--surface);border:1px solid var(--border);border-radius:6px;position:relative;transform-style:preserve-3d;transition:transform .2s ease,box-shadow .2s ease;box-shadow:-8px 8px 0 rgba(0,0,0,.35)}
+.district::before{content:&#x27;&#x27;;position:absolute;inset:0;transform:translateZ(24px);background:var(--surface);border:1px solid var(--border);border-radius:6px}
+.district span{position:absolute;inset:0;display:grid;place-items:center;transform:translateZ(30px) rotateZ(-45deg) rotateX(-55deg);font-size:.8rem;font-weight:600}
+.district:hover{transform:translateZ(14px)}
+.district.amber{box-shadow:-8px 8px 0 rgba(255,176,58,.25)}
+.district.green{box-shadow:-8px 8px 0 rgba(79,208,140,.25)}
+.chip{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.7rem;color:var(--accent)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Isometric&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;text-align:center&amp;quot;&gt;&lt;h1&gt;Your stack, mapped&lt;br/&gt;like a city&lt;/h1&gt;&lt;p style=&amp;quot;max-width:520px;margin:16px auto 8px&amp;quot;&gt;Every district of GridMetro is a product. Watch packets flow between them — or click one to zoom in.&lt;/p&gt;
+&lt;div class=&amp;quot;iso&amp;quot;&gt;&lt;div class=&amp;quot;plane&amp;quot;&gt;
+&lt;div class=&amp;quot;district amber&amp;quot; style=&amp;quot;grid-column:2&amp;quot;&gt;&lt;span&gt;Compute · &lt;b class=&amp;quot;chip&amp;quot;&gt;12ms&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;district&amp;quot;&gt;&lt;span&gt;Storage&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;district green&amp;quot;&gt;&lt;span&gt;Edge · live&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;district&amp;quot;&gt;&lt;span&gt;Observability&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;district green&amp;quot;&gt;&lt;span&gt;Payments&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;district&amp;quot;&gt;&lt;span&gt;Identity&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Compute district&lt;/h3&gt;&lt;p&gt;Autoscaling from 0 to 40k vCPU in 90 seconds. Amber lights mean it&#x27;s working hard for you.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Edge district&lt;/h3&gt;&lt;p&gt;210 points of presence. Packets take the shortest street, always.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Observability district&lt;/h3&gt;&lt;p&gt;Every street has cameras. Traces, metrics and logs cross-referenced per request.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Civic engineering&lt;/h2&gt;&lt;p&gt;We designed GridMetro&#x27;s docs the way city planners design transit: if you can&#x27;t see where a packet goes, the platform is failing you. The map above isn&#x27;t marketing — it&#x27;s the actual topology, refreshed live from our router tables.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Take the grand tour.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Deploy your first district&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Isometric. All rights reserved.&lt;/span&gt;&lt;span&gt;210 PoPs · 99.99% SLA · Map live-updates hourly&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

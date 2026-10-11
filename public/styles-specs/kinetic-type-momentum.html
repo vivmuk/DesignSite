@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kinetic Type Momentum — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f1e8;--surface:#ffffff;--fg:#121212;--muted:#7a746a;--accent:#ff3b1f;--accent2:#1f44ff;--border:#e5ded0}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Anton',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Kinetic Type Momentum</h1><div class="tagline">Type with mass: headlines fly, skew and settle</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">agencies</span><span class="tag">music</span><span class="tag">campaigns</span><span class="tag">kinetic-typography</span><span class="tag">split-text-reveal</span><span class="tag">variable-font-animation</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/kinetic-type-momentum.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/kinetic-type-momentum.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/kinetic-type-momentum.png" alt="Kinetic Type Momentum preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#f5f1e8"></div><code>bg: #f5f1e8</code></div><div class="sw"><div class="chip" style="background:#ffffff"></div><code>surface: #ffffff</code></div><div class="sw"><div class="chip" style="background:#121212"></div><code>fg: #121212</code></div><div class="sw"><div class="chip" style="background:#7a746a"></div><code>muted: #7a746a</code></div><div class="sw"><div class="chip" style="background:#ff3b1f"></div><code>accent: #ff3b1f</code></div><div class="sw"><div class="chip" style="background:#1f44ff"></div><code>accent2: #1f44ff</code></div><div class="sw"><div class="chip" style="background:#e5ded0"></div><code>border: #e5ded0</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Anton</p><p><strong>Body:</strong> Space Grotesk</p>
+<p><strong>Monospace:</strong> Space Mono</p><p class="tagline">Massive condensed poster face with grotesk utility</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Velocity skew</strong></td><td>Scroll velocity drives skewY ±6° and letter-spacing on display lines; spring returns at 0.9 stiffness when idle.</td></tr><tr><td><strong>Split-line fly-in</strong></td><td>GSAP SplitText: lines rise 120% with stagger 0.06s, power4.out, triggered per section.</td></tr><tr><td><strong>Variable weight morph</strong></td><td>wght axis sweeps 400→900 across the hero as scroll progresses 0→1, scrub true.</td></tr><tr><td><strong>Hover invert chips</strong></td><td>Tag chips invert fg/bg in 120ms on hover with a 2px translate kick.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Viewport-filling Anton headlines</li><li>Split-line reveal on every heading</li><li>Scroll-velocity skew and stretch</li><li>Outlined + solid type pairs</li><li>Oversized index numerals</li><li>Marquee strip of campaign words</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">stats-band</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger + SplitText</span><span class="tag">Lenis smooth scroll</span><span class="tag">variable font wght-axis animation</span><span class="tag">CSS clip-path reveals</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Headlines behave like objects with mass: split into lines or words, they fly in with scroll velocity, skew under speed and settle with friction. Variable font weight breathes with the scroll. Off-white paper, two loud inks and zero photography put all the drama into the letterforms themselves.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an agency campaign page in the Kinetic Type Momentum style. Ship one polished, self-contained page.
+
+LOOK: Pure typographic poster energy, zero photography. Palette hexes exactly: bg #f5f1e8, surface #ffffff, fg #121212, muted #7a746a, accent #ff3b1f (poster red), accent2 #1f44ff (ultramarine), border #e5ded0. Fonts: load https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Space+Mono:wght@400&amp;display=swap — Anton for viewport-filling display lines (uppercase, line-height .95), Space Grotesk for body and chips, Space Mono for footer strips. Pair solid and outlined type: outline lines use -webkit-text-stroke 2px in accent2 with transparent fill.
+
+LAYOUT, in order: (1) minimal top bar with wordmark and four links; (2) hero: three stacked Anton display lines filling the viewport — one near-black, one solid red, one outlined blue — mid-skew as if moving; (3) services section as inverted-on-hover chips (BRAND, FILM, TYPE, MOTION, WEB) plus an oversized accent numeral; (4) stats band with two huge mono figures; (5) a marquee strip of campaign words; (6) studio about block in narrow measure; (7) CTA: giant Anton line acting as the button itself; (8) footer with mono sign-off.
+
+MOTION: Scroll velocity (Lenis) drives skewY ±6° and letter-spacing on display lines, springing back at stiffness 0.9 when idle. GSAP SplitText flies each line up 120% with 0.06s stagger and power4.out per section. A variable-font wght axis sweeps 400→900 across the hero scrubbed to scroll. Chips invert fg/bg in 120ms on hover with a 2px translate kick.
+
+SIGNATURE: (a) outlined + solid type pairs on adjacent lines; (b) velocity-driven skew that makes type feel heavy; (c) oversized accent index numerals anchoring sections.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, and keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by disabling scroll-driven animation.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/kinetic-type-momentum/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/kinetic-type-momentum/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;FUSEWORKS&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;700&amp;family=Space+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#f5f1e8; --surface:#ffffff; --fg:#121212; --muted:#7a746a;
+  --accent:#ff3b1f; --accent2:#1f44ff; --border:#e5ded0;
+  --font-display:&#x27;Anton&#x27;,sans-serif; --font-body:&#x27;Space Grotesk&#x27;,sans-serif;
+  --font-mono:&#x27;Space Mono&#x27;,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-mono)}
+.kin{display:block;font-family:var(--font-display);font-size:clamp(3rem,10vw,8rem);line-height:.95;text-transform:uppercase}
+.kin.outline{color:transparent;-webkit-text-stroke:2px var(--accent2)}
+.kin.red{color:var(--accent)}
+.chip{display:inline-block;border:2px solid var(--fg);padding:.35rem 1rem;margin:.25rem;font-weight:700;transition:all .12s}
+.chip:hover{background:var(--fg);color:var(--bg);transform:translate(2px,-2px)}
+.bignum{font-family:var(--font-display);font-size:clamp(4rem,14vw,11rem);color:var(--accent);line-height:1}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;FUSEWORKS&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Work&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Studio&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;News&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Contact&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;CAMPAIGN 04 — 2026&lt;/p&gt;&lt;h1&gt;WORDS WITH WEIGHT&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;A studio that treats headlines as objects: they arrive fast, lean into the scroll, and land exactly where the argument needs them.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;See the reel&lt;/a&gt;
+&lt;div&gt;&lt;span class=&amp;quot;kin&amp;quot;&gt;WORDS WITH&lt;/span&gt;&lt;span class=&amp;quot;kin red&amp;quot;&gt;WEIGHT AND&lt;/span&gt;&lt;span class=&amp;quot;kin outline&amp;quot;&gt;MOMENTUM&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;What we make move&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Launch films&lt;/h3&gt;&lt;p&gt;Sixty-second arguments cut for the feed and the big screen alike.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Type systems&lt;/h3&gt;&lt;p&gt;Identities that flex from poster to favicon without losing their voice.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Kinetic campaigns&lt;/h3&gt;&lt;p&gt;Words that move because the media plan says they must.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Services, at speed&lt;/h2&gt;&lt;div style=&amp;quot;display:flex;flex-wrap:wrap;align-items:baseline&amp;quot;&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;BRAND&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;FILM&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;TYPE&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;MOTION&lt;/span&gt;&lt;span class=&amp;quot;chip&amp;quot;&gt;WEB&lt;/span&gt;&lt;/div&gt;&lt;p class=&amp;quot;bignum&amp;quot;&gt;03&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;The studio&lt;/h2&gt;&lt;p&gt;Twelve people, four time zones, one rule: if a headline can be felt before it is read, it is doing its job. We ship loud things quietly and quiet things loudly.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Give us your loudest brief&lt;/h2&gt;&lt;p&gt;We answer within one working day, usually with a sketch.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Start a project&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 FUSEWORKS&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;MADE LOUD · SHIPPED QUIET&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

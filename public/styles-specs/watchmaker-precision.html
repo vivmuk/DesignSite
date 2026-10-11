@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watchmaker Precision — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Sans+3&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F3EF;--surface:#FFFFFF;--fg:#1C1A17;--muted:#6E6A63;--accent:#9A7B3F;--accent2:#3E4A52;--border:#D8D3CA}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Marcellus',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Watchmaker Precision</h1><div class="tagline">Exploded diagrams, guilloché patterns, horological spec tables</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">watches</span><span class="tag">hardware</span><span class="tag">luxury</span><span class="tag">svg-draw-on-scroll</span><span class="tag">gltf-model-viewer</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/watchmaker-precision.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/watchmaker-precision.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/watchmaker-precision.png" alt="Watchmaker Precision preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F5F3EF"></div><code>bg: #F5F3EF</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1C1A17"></div><code>fg: #1C1A17</code></div><div class="sw"><div class="chip" style="background:#6E6A63"></div><code>muted: #6E6A63</code></div><div class="sw"><div class="chip" style="background:#9A7B3F"></div><code>accent: #9A7B3F</code></div><div class="sw"><div class="chip" style="background:#3E4A52"></div><code>accent2: #3E4A52</code></div><div class="sw"><div class="chip" style="background:#D8D3CA"></div><code>border: #D8D3CA</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Marcellus</p><p><strong>Body:</strong> Source Sans 3</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Engraved-classical display, technical sans, mono for spec values</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Sans+3&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Diagram draw</strong></td><td>Exploded movement SVG strokes draw on at 1.6s ease-in-out when scrolled into view, dash-offset technique</td></tr><tr><td><strong>Guilloché spin</strong></td><td>Background engine-turned pattern rotates 360° over 120s linear infinite, barely perceptible</td></tr><tr><td><strong>Spec count</strong></td><td>Specifications ( jewels, Hz, power reserve ) count up over 900ms ease-out on reveal</td></tr><tr><td><strong>Cross-section peel</strong></td><td>Watch layers separate vertically 40px with 700ms cubic-bezier(0.2,0.8,0.2,1) staggered 120ms</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Exploded-view technical diagram with numbered callouts</li><li>Guilloché engine-turned background pattern at 4% opacity</li><li>Dense spec table with mono numerals and hairline rules</li><li>Drafting-style dimension arrows and annotation lines</li><li>Serial-number plate typography under each watch</li><li>Crown-and-case detail crops in alternating grid</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">data-table</span><span class="tag">pdp-gallery</span><span class="tag">stats-band</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG stroke-dashoffset draw-on-scroll</span><span class="tag">GSAP ScrollTrigger</span><span class="tag">three.js + GLTFLoader (exploded 3D view)</span><span class="tag">pure CSS hairline tables</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A horological page where every movement is explained with exploded technical diagrams, engraved guilloché textures, and dense specification tables. Steel-and-champagne palette with drafting-line precision. For buyers who read the specs before the romance: engineering presented as craft.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a technical-luxury web engineer. Build a single-page watchmaker site in the Watchmaker Precision style.
+
+LOOK: Paper bg #F5F3EF, white surfaces #FFFFFF, ink #1C1A17, muted #6E6A63, champagne accent #9A7B3F, steel blue #3E4A52, borders #D8D3CA, no gradient. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Source+Sans+3:wght@300;400;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Marcellus for display, Source Sans 3 for body, IBM Plex Mono for spec values.
+
+LAYOUT: 1) Top nav with caliber index. 2) Hero: exploded movement diagram with draw-on-scroll strokes and numbered callouts. 3) Craftsmanship narrative with drafting annotations. 4) Full spec table (mono numerals, hairline rules, alternating rows). 5) Detail-crop grid alternating macro photography and line art. 6) Stats band counting up jewels/Hz/reserve. 7) Footer with service + heritage columns.
+
+MOTION: SVG diagrams draw via stroke-dashoffset over 1.6s ease-in-out on intersection (GSAP ScrollTrigger). Guilloché pattern rotates 360°/120s linear. Spec numbers count up 900ms ease-out. Exploded layers separate 40px, 700ms cubic-bezier(0.2,0.8,0.2,1), staggered 120ms.
+
+SIGNATURE: (a) numbered exploded diagram with leader lines, (b) faint engine-turned guilloché texture, (c) mono-numeral spec table with hairline rules.
+
+CONSTRAINTS: Semantic HTML (table elements for specs), AA contrast, responsive: diagram scales via viewBox, table becomes stacked rows under 640px; lazy 3D load only on request; reduced-motion stops rotation; no horizontal overflow.
+
+EXTRA: Serve the diagram as inline SVG so strokes are animatable; add a sticky caliber quick-nav on desktop; date all footnotes; keep charts in #3E4A52 only; hero LCP under 2s on 4G.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/watchmaker-precision/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/watchmaker-precision/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Calibre Meridian — Horology&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Source+Sans+3:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#F5F3EF; --surface:#FFFFFF; --fg:#1C1A17; --muted:#6E6A63;
+  --accent:#9A7B3F; --accent2:#3E4A52; --border:#D8D3CA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Source Sans 3&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Marcellus&#x27;,Georgia, serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Marcellus&#x27;,Georgia, serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw; }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease;;font-family:&#x27;IBM Plex Mono&#x27;,monospace }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Marcellus&#x27;,Georgia, serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#1C1A17; color:#F5F3EF; text-align:center; }
+.cta .btn { background:#3E4A52; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;MERIDIAN&lt;/span&gt;
+  &lt;nav&gt;Calibres&lt;br&gt;Heritage&lt;br&gt;Service&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Calibre 44&lt;/span&gt;
+  &lt;h1&gt;Engineered to outlive its owner&lt;/h1&gt;
+  &lt;p&gt;417 components. 28,800 vibrations per hour. A power reserve of 96 hours, measured — not claimed.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Explore the Calibre&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Specifications&lt;/span&gt;
+  &lt;h2&gt;Technical dossier&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Balance Wheel&lt;/h3&gt;&lt;p&gt;Free-sprung, 4 Hz, regulated in six positions over fifteen days.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Power Reserve&lt;/h3&gt;&lt;p&gt;96 hours from a twin barrel, indicated on the caseback.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Finishing&lt;/h3&gt;&lt;p&gt;Côtes de Genève strips, applied by a single watchmaker per movement.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;In Figures&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;417&lt;/b&gt;&lt;br&gt;&lt;span&gt;Components&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;96h&lt;/b&gt;&lt;br&gt;&lt;span&gt;Reserve&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;6&lt;/b&gt;&lt;br&gt;&lt;span&gt;Positions regulated&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;The full technical dossier&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Download the exploded diagrams and service manual.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Request Dossier&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 MERIDIAN. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Service · Heritage · Warranty&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

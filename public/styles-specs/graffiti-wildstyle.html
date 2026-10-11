@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graffiti Wildstyle — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&family=Barlow&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#16110D;--surface:#221A14;--fg:#F5EBDD;--muted:#9A8C7C;--accent:#FF6B00;--accent2:#35D0BA;--border:#3B2F24}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Barlow',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Sedgwick Ave Display',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Graffiti Wildstyle</h1><div class="tagline">Wildstyle on concrete: spray fades, drips, letters that bite back.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">streetwear</span><span class="tag">music</span><span class="tag">sports</span><span class="tag">kinetic-typography</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/graffiti-wildstyle.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/graffiti-wildstyle.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/graffiti-wildstyle.png" alt="Graffiti Wildstyle preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#16110D"></div><code>bg: #16110D</code></div><div class="sw"><div class="chip" style="background:#221A14"></div><code>surface: #221A14</code></div><div class="sw"><div class="chip" style="background:#F5EBDD"></div><code>fg: #F5EBDD</code></div><div class="sw"><div class="chip" style="background:#9A8C7C"></div><code>muted: #9A8C7C</code></div><div class="sw"><div class="chip" style="background:#FF6B00"></div><code>accent: #FF6B00</code></div><div class="sw"><div class="chip" style="background:#35D0BA"></div><code>accent2: #35D0BA</code></div><div class="sw"><div class="chip" style="background:#3B2F24"></div><code>border: #3B2F24</code></div><p><code>radial-gradient(ellipse at 18% 0%,rgba(255,107,0,.22),transparent 55%), radial-gradient(ellipse at 85% 85%,rgba(53,208,186,.16),transparent 50%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Sedgwick Ave Display</p><p><strong>Body:</strong> Barlow</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Tag-style graffiti display over steady grotesque body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&family=Barlow&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>spray-reveal</strong></td><td>Headlines fade in from blur(8px) + opacity 0 to sharp over 700ms ease-out when scrolled into view — paint materializing.</td></tr><tr><td><strong>drip-grow</strong></td><td>SVG drip underlines stretch downward (scaleY 0→1, transform-origin top) over 700ms ease-out, 300ms after their headline reveals.</td></tr><tr><td><strong>tag-tilt-hover</strong></td><td>Hovering nav items or letters tilts them alternately ±6deg with a 150ms spring — letters elbowing each other.</td></tr><tr><td><strong>wall-flicker</strong></td><td>Grain/spray-texture overlay flickers subtly (opacity .06→.09) in steps(4) 900ms infinite — flickering sodium light.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Wildstyle overlapping tilted letterforms</li><li>Spray-gradient headline fills with hard outlines</li><li>SVG drip underlines</li><li>Stencil-cut label plates</li><li>Concrete grain + spray-mist texture</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">nav-bar</span><span class="tag">badge-system</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Sedgwick Ave Display + Barlow webfonts</span><span class="tag">SVG drip paths with scaleY animation</span><span class="tag">feTurbulence spray/grain texture</span><span class="tag">CSS text-shadow outline + spray gradient text</span><span class="tag">IntersectionObserver blur reveals</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The wall as a website: wildstyle headlines with overlapping tilted letterforms, spray-fade reveals that blur in like fresh paint, drip underlines that run down the page, and stencil outlines on everything. Concrete-dark surfaces keep the colors loud but legal. For streetwear, music and sports brands that earned their tags.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a streetwear/music site in the Graffiti Wildstyle style — the wall as interface, spray and drip everywhere, commerce underneath kept clean.
+LOOK: dark concrete #16110D background with a subtle grain/spray texture overlay, raised #221A14 panels, chalk-white #F5EBDD text, muted #9A8C7C, border #3B2F24, spray orange #FF6B00 and teal #35D0BA as the paint pair. Import fonts: https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&amp;family=Barlow:wght@400;600;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap — Sedgwick Ave Display ONLY for display headlines (large sizes, allow ±6deg per-letter tilt), Barlow for body/UI, JetBrains Mono for placard-style captions. Headline fill: spray gradient via background-clip:text with a 2px chalk text-shadow outline. Hero backdrop gets radial spray-mist glows in the two accent colors.
+LAYOUT: nav as stencil plates; hero = wildstyle headline with drip SVGs below, a product drop card pinned like a poster, CTA in orange; shop row of 3 product cards with tilted tag badges; a &#x27;crew / stockists&#x27; strip in mono; footer as a wall with guestbook-style mono credits.
+MOTION: headlines reveal blur(8px)→0 + opacity over 700ms ease-out via IntersectionObserver; drips scaleY 0→1 (transform-origin top) 700ms ease-out starting 300ms after their headline; hover tilts nav items and headline letters alternately ±6deg with 150ms spring; texture overlay flickers opacity .06→.09 in steps(4) 900ms. No JS beyond the observer.
+SIGNATURE: (1) wildstyle tilted overlapping type; (2) spray-gradient fills with chalk outlines; (3) SVG drips under headlines; (4) stencil plates; (5) mist glows in accent colors.
+CONSTRAINTS: semantic HTML; WCAG AA — #F5EBDD on #16110D passes hugely; Sedgwick Ave never below 28px and never for body; drips and texture aria-hidden; flicker delta ≤3% opacity (photosensitivity safe); responsive: headline clamps via clamp(), letter tilt reduced to ±3deg under 700px; prefers-reduced-motion renders everything static.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/graffiti-wildstyle/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/graffiti-wildstyle/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;WALLWRITE — wildstyle streetwear drop&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&amp;family=Barlow:wght@400;600;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#16110D;--surface:#221A14;--fg:#F5EBDD;--muted:#9A8C7C;--accent:#FF6B00;--accent2:#35D0BA;--border:#3B2F24}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Barlow&#x27;,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--fg);text-decoration:none}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.07;animation:flick 900ms steps(4) infinite;background-image:url(&amp;quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;160&#x27; height=&#x27;160&#x27;%3E%3Cfilter id=&#x27;n&#x27;%3E%3CfeTurbulence baseFrequency=&#x27;0.85&#x27;/%3E%3C/filter%3E%3Crect width=&#x27;160&#x27; height=&#x27;160&#x27; filter=&#x27;url(%23n)&#x27; opacity=&#x27;.55&#x27;/%3E%3C/svg%3E&amp;quot;)}
+@keyframes flick{0%,100%{opacity:.06}50%{opacity:.09}}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header .wrap{display:flex;gap:14px;align-items:center;padding:18px 24px;flex-wrap:wrap}
+.plate{background:var(--surface);border:2px solid var(--border);padding:7px 16px;font-weight:800;font-size:.85rem;letter-spacing:.08em;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%);transition:transform .15s cubic-bezier(.34,1.56,.64,1)}
+.plate:hover{transform:rotate(3deg) scale(1.06);background:var(--accent);color:#16110D}
+.plate.brand{font-family:&#x27;Sedgwick Ave Display&#x27;;font-size:1.25rem;font-weight:400;color:var(--accent);background:transparent;border-color:transparent;clip-path:none}
+.hero{position:relative;padding:90px 0 70px;overflow:hidden}
+.hero::before{content:&#x27;&#x27;;position:absolute;inset:0;background:radial-gradient(ellipse at 15% 0%,rgba(255,107,0,.22),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(53,208,186,.16),transparent 50%);pointer-events:none}
+h1{font-family:&#x27;Sedgwick Ave Display&#x27;;font-weight:400;font-size:clamp(3rem,9vw,6.4rem);line-height:.95;position:relative}
+h1 span{display:inline-block;transition:transform .15s cubic-bezier(.34,1.56,.64,1);background:linear-gradient(180deg,var(--accent) 0%,var(--accent2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:2px 2px 0 rgba(245,235,221,.25)}
+h1 span:hover{transform:rotate(-6deg) translateY(-4px)}
+.rise{opacity:0;filter:blur(8px);transform:translateY(20px)}
+.rise.in{opacity:1;filter:blur(0);transform:none;transition:opacity .7s ease-out,filter .7s ease-out,transform .7s ease-out}
+.drip{height:34px;display:block;margin:-4px 0 24px}
+.drip path{stroke:var(--accent);stroke-width:3;fill:none;transform-origin:top;transform:scaleY(0);transition:transform .7s ease-out .3s}
+.in+.drip path{transform:scaleY(1)}
+.dropcard{background:var(--surface);border:2px solid var(--border);padding:22px;max-width:420px;transform:rotate(1.5deg);position:relative}
+.tag{position:absolute;top:-14px;right:18px;background:var(--accent2);color:#16110D;font-weight:800;font-size:.75rem;padding:5px 14px;transform:rotate(4deg)}
+.cta{display:inline-block;background:var(--accent);color:#16110D;font-weight:800;padding:12px 30px;margin-top:14px;clip-path:polygon(4% 0,100% 0,96% 100%,0 100%);transition:transform .15s}
+.cta:hover{transform:scale(1.05) rotate(-1deg)}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:40px 0 70px}
+.prod{background:var(--surface);border:2px solid var(--border);padding:16px;transition:transform .15s cubic-bezier(.34,1.56,.64,1)}
+.prod:hover{transform:rotate(-2deg) translateY(-6px)}
+.prod .img{height:130px;border:2px solid var(--border);background:linear-gradient(135deg,var(--accent) 0%,#221A14 100%);margin-bottom:10px}
+.prod b{font-weight:800}
+.prod .m{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.72rem;color:var(--muted)}
+.crew{border-top:2px solid var(--border);border-bottom:2px solid var(--border);padding:26px 0;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.78rem;color:var(--muted)}
+footer{padding:36px 0;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.75rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){.row{grid-template-columns:1fr}h1 span:hover{transform:none}}
+&lt;/style&gt;&lt;body&gt;
+&lt;div class=&amp;quot;grain&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;a class=&amp;quot;plate brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;WALLWRITE&lt;/a&gt;
+&lt;a class=&amp;quot;plate&amp;quot; href=&amp;quot;#&amp;quot;&gt;DROPS&lt;/a&gt;&lt;a class=&amp;quot;plate&amp;quot; href=&amp;quot;#&amp;quot;&gt;CREW&lt;/a&gt;&lt;a class=&amp;quot;plate&amp;quot; href=&amp;quot;#&amp;quot;&gt;ARCHIVE&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h1 class=&amp;quot;rise&amp;quot; id=&amp;quot;h&amp;quot;&gt;&lt;span&gt;PAIN&lt;/span&gt;&lt;span style=&amp;quot;transform:rotate(4deg)&amp;quot;&gt;T&lt;/span&gt; &lt;span style=&amp;quot;transform:rotate(-3deg)&amp;quot;&gt;THE&lt;/span&gt; &lt;span&gt;TOW&lt;/span&gt;&lt;span style=&amp;quot;transform:rotate(5deg)&amp;quot;&gt;N&lt;/span&gt;&lt;/h1&gt;
+&lt;svg class=&amp;quot;drip&amp;quot; viewBox=&amp;quot;0 0 400 34&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;path d=&amp;quot;M8 0v22c0 6 5 6 5 0V0M60 0v30c0 5 5 5 5 0V0M140 0v18c0 6 5 6 5 0V0M260 0v28c0 5 5 5 5 0V0M340 0v20c0 6 5 6 5 0V0&amp;quot;/&gt;&lt;/svg&gt;
+&lt;div class=&amp;quot;dropcard rise&amp;quot;&gt;
+&lt;div class=&amp;quot;tag&amp;quot;&gt;NEW DROP&lt;/div&gt;
+&lt;h2 style=&amp;quot;font-weight:800&amp;quot;&gt;Nightshift Hoodie&lt;/h2&gt;
+&lt;p class=&amp;quot;m&amp;quot; style=&amp;quot;margin-top:6px&amp;quot;&gt;HEAVY FLEECE · 400GSM · PUFF PRINT · ED. OF 150&lt;/p&gt;
+&lt;a class=&amp;quot;cta&amp;quot; href=&amp;quot;#&amp;quot;&gt;COP IT — $88&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;row&amp;quot;&gt;
+&lt;article class=&amp;quot;prod rise&amp;quot;&gt;&lt;div class=&amp;quot;img&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Tag Tee&lt;/b&gt;&lt;div class=&amp;quot;m&amp;quot;&gt;$42 · S-XL&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;prod rise&amp;quot;&gt;&lt;div class=&amp;quot;img&amp;quot; style=&amp;quot;background:linear-gradient(135deg,var(--accent2),#16110D)&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Stencil Cap&lt;/b&gt;&lt;div class=&amp;quot;m&amp;quot;&gt;$36 · ONE SIZE&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;prod rise&amp;quot;&gt;&lt;div class=&amp;quot;img&amp;quot; style=&amp;quot;background:linear-gradient(135deg,#5A4632,var(--accent))&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Wall Crew&lt;/b&gt;&lt;div class=&amp;quot;m&amp;quot;&gt;$76 · ED. OF 80&lt;/div&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;crew&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;WILDSTYLE SPRAY SERIES · STENCIL PLATES · DRIP UNDERLINES · CREW STOCKISTS: KOPENHAGEN · OSAKA · SÃO PAULO · PHILLY — PAINT RESPONSIBLY&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© WALLWRITE CREW&lt;/span&gt;&lt;span&gt;PAINTED IN CSS · NO PERMISSION ASKED&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;const io=new IntersectionObserver(e=&gt;e.forEach(x=&gt;x.isIntersecting&amp;&amp;x.target.classList.add(&#x27;in&#x27;)),{threshold:.2});document.querySelectorAll(&#x27;.rise&#x27;).forEach(el=&gt;io.observe(el));&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

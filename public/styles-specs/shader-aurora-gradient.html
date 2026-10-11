@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shader Aurora Gradient — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070B12;--surface:#0E1522;--fg:#E9EEF7;--muted:#71809B;--accent:#4FD1C5;--accent2:#A78BFA;--border:#1B2436}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Outfit',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Instrument Serif',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Shader Aurora Gradient</h1><div class="tagline">A living aurora breathes behind everything you say.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">AI</span><span class="tag">SaaS</span><span class="tag">web3</span><span class="tag">shader-gradient-aurora</span><span class="tag">noise-displacement-shader</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/shader-aurora-gradient.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/shader-aurora-gradient.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/shader-aurora-gradient.png" alt="Shader Aurora Gradient preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#070B12"></div><code>bg: #070B12</code></div><div class="sw"><div class="chip" style="background:#0E1522"></div><code>surface: #0E1522</code></div><div class="sw"><div class="chip" style="background:#E9EEF7"></div><code>fg: #E9EEF7</code></div><div class="sw"><div class="chip" style="background:#71809B"></div><code>muted: #71809B</code></div><div class="sw"><div class="chip" style="background:#4FD1C5"></div><code>accent: #4FD1C5</code></div><div class="sw"><div class="chip" style="background:#A78BFA"></div><code>accent2: #A78BFA</code></div><div class="sw"><div class="chip" style="background:#1B2436"></div><code>border: #1B2436</code></div><p><code>linear-gradient(140deg,#0A1E2E 0%,#1A103A 50%,#2A1030 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Instrument Serif</p><p><strong>Body:</strong> Outfit</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Serif display over the aurora adds warmth; geometric body stays clear.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>aurora-flow</strong></td><td>Fragment shader: fbm noise domain-warped, 0.05 scroll speed, 60fps, dithered to avoid banding.</td></tr><tr><td><strong>hue-drift</strong></td><td>Aurora palette rotates 12° hue over 30s — imperceptibly alive.</td></tr><tr><td><strong>content-hover</strong></td><td>Panels add a faint backdrop-blur so the aurora refracts behind text on hover.</td></tr><tr><td><strong>scroll-parallax</strong></td><td>Aurora plane shifts 40px slower than content for gentle depth.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-bleed living aurora shader</li><li>Glass panels refracting the aurora</li><li>Serif display over atmospheric bg</li><li>Scroll-depth parallax between layers</li><li>Dithered gradient (no banding)</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">pricing-tiers</span><span class="tag">testimonial-wall</span><span class="tag">nav-bar</span><span class="tag">faq-accordion</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GLSL fragment shader (fbm + domain warp)</span><span class="tag">raw WebGL2 or three.js plane</span><span class="tag">dither noise post-process</span><span class="tag">scroll parallax listener</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A full-bleed fragment-shader aurora — slow silk waves of teal, violet and rose — flows behind calm, well-set content that never competes with it. The background is alive at 60fps but so quiet you could read on it. For AI, SaaS and web3 brands that want atmosphere without noise.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an AI/SaaS landing page in the Shader Aurora Gradient style — a living fragment-shader aurora breathes behind calm, confident content.
+LOOK: deep navy #070B12 base; the aurora shader blends teal #4FD1C5, violet #A78BFA and rose (#E879A6) silk waves via fbm noise with domain warping, scrolling at 0.05 speed, dithered with blue noise to prevent banding. Surfaces #0E1522, borders #1B2436, text #E9EEF7, muted #71809B. Import: https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Outfit:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap — Instrument Serif for display headlines, Outfit for everything else.
+LAYOUT: glass nav; hero with a large serif headline and one CTA floating over the aurora (no card, let the light show); pricing as three glass tiers whose backdrop-blur refracts the aurora differently at each depth; testimonial wall as glass quote panels; FAQ accordion; thin footer. Content panels always use backdrop-filter so the aurora visibly flows beneath them.
+MOTION: shader runs at 60fps with hue palette rotating 12° over 30s; the aurora plane parallaxes 40px behind scroll for depth; panels gain extra backdrop blur on hover (200ms); no other motion — restraint is the signature.
+SIGNATURE: (1) the aurora is visible THROUGH every panel (blur refraction); (2) serif display type floating directly on the light; (3) imperceptible 30s hue drift keeping the page alive.
+CONSTRAINTS: shader paused when tab hidden or hero offscreen; static CSS gradient fallback for prefers-reduced-motion and no-WebGL; dither to kill banding; DPR cap 1.5; semantic HTML; body text contrast at least 4.5:1 over the darkest aurora regions.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/shader-aurora-gradient/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/shader-aurora-gradient/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Shader Aurora Gradient&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Outfit:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#070B12;--surface:#0E1522;--fg:#E9EEF7;--muted:#71809B;--accent:#4FD1C5;--accent2:#A78BFA;--border:#1B2436;--grad:linear-gradient(140deg,#0A1E2E 0%,#1A103A 50%,#2A1030 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Outfit&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Instrument Serif&#x27;,serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Instrument Serif&#x27;,serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#070B12;border-radius:14px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Instrument Serif&#x27;,serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Instrument Serif&#x27;,serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Instrument Serif&#x27;,serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.aurora{position:fixed;inset:0;z-index:-1;background:linear-gradient(115deg,rgba(79,209,197,.20) 0%,transparent 30%),linear-gradient(245deg,rgba(167,139,250,.22) 0%,transparent 35%),linear-gradient(25deg,rgba(232,121,166,.14) 0%,transparent 40%),#070B12;filter:blur(30px);animation:hue 30s linear infinite}
+@keyframes hue{to{filter:hue-rotate(12deg) blur(30px)}}
+.glass{background:rgba(14,21,34,.5);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:14px;transition:backdrop-filter .2s}
+.glass:hover{backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px)}
+h1,h2{font-family:&#x27;Instrument Serif&#x27;,serif;font-weight:400;letter-spacing:-.01em}
+.tier{padding:32px}.tier.hot{border-color:var(--accent);transform:translateY(-6px)}
+.quote{font-size:1.15rem;line-height:1.7}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Shader&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;text-align:center;padding:110px 0 80px&amp;quot;&gt;&lt;p style=&amp;quot;letter-spacing:.3em;color:var(--accent);font-size:.8rem&amp;quot;&gt;INFERENCE, ILLUMINATED&lt;/p&gt;
+&lt;h1 style=&amp;quot;font-size:clamp(2.6rem,6vw,4.6rem);margin:20px 0&amp;quot;&gt;The quiet engine&lt;br/&gt;under loud ideas&lt;/h1&gt;
+&lt;p style=&amp;quot;max-width:520px;margin:0 auto 32px&amp;quot;&gt;Northlight serves 2 billion tokens a day through an aurora of GPUs — and you&#x27;ll never think about it.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Start building&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;glass card tier&amp;quot;&gt;&lt;h3&gt;Spark&lt;/h3&gt;&lt;p class=&amp;quot;quote&amp;quot; style=&amp;quot;font-size:2rem;margin:8px 0&amp;quot;&gt;$0.18&lt;/p&gt;&lt;p&gt;per 1M tokens. Ideal for prototypes and weekend hacks.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;glass card tier hot&amp;quot;&gt;&lt;h3&gt;Signal&lt;/h3&gt;&lt;p class=&amp;quot;quote&amp;quot; style=&amp;quot;font-size:2rem;margin:8px 0&amp;quot;&gt;$0.09&lt;/p&gt;&lt;p&gt;per 1M tokens at scale. Priority lanes, 99.99% SLA.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;glass card tier&amp;quot;&gt;&lt;h3&gt;Beacon&lt;/h3&gt;&lt;p class=&amp;quot;quote&amp;quot; style=&amp;quot;font-size:2rem;margin:8px 0&amp;quot;&gt;Custom&lt;/p&gt;&lt;p&gt;Dedicated capacity with your own reserved aurora.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 style=&amp;quot;text-align:center&amp;quot;&gt;Light under the work&lt;/h2&gt;&lt;p style=&amp;quot;max-width:640px;margin:0 auto;text-align:center&amp;quot;&gt;We believe infrastructure should be felt, not watched. Northlight&#x27;s dashboard is one screen, its API is one call, and its pricing is one line. The complexity lives below the waterline — where it belongs.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 style=&amp;quot;text-align:center&amp;quot;&gt;Bring your loudest idea.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot; style=&amp;quot;margin-top:20px&amp;quot;&gt;Get an API key&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Shader. All rights reserved.&lt;/span&gt;&lt;span&gt;SOC2 · GDPR · 2B tokens/day served&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

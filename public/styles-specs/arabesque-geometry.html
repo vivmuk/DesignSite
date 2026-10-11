@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arabesque Geometry — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Amiri&family=Readex+Pro&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E2233;--surface:#143247;--fg:#F2E9D8;--muted:#93AAB5;--accent:#C9A227;--accent2:#1E9E8F;--border:#28455C}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Readex Pro',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Amiri',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Arabesque Geometry</h1><div class="tagline">Girih tessellation, lapis-turquoise, gold arch light</div>
+<div class="meta"><span class="tag">cultural</span><span class="tag">hospitality</span><span class="tag">culture</span><span class="tag">luxury</span><span class="tag">animated-svg-icons</span><span class="tag">svg-draw-on-scroll</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/arabesque-geometry.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/arabesque-geometry.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/arabesque-geometry.png" alt="Arabesque Geometry preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0E2233"></div><code>bg: #0E2233</code></div><div class="sw"><div class="chip" style="background:#143247"></div><code>surface: #143247</code></div><div class="sw"><div class="chip" style="background:#F2E9D8"></div><code>fg: #F2E9D8</code></div><div class="sw"><div class="chip" style="background:#93AAB5"></div><code>muted: #93AAB5</code></div><div class="sw"><div class="chip" style="background:#C9A227"></div><code>accent: #C9A227</code></div><div class="sw"><div class="chip" style="background:#1E9E8F"></div><code>accent2: #1E9E8F</code></div><div class="sw"><div class="chip" style="background:#28455C"></div><code>border: #28455C</code></div><p><code>radial-gradient(circle at 50% 20%,#1A3C54 0%,#0E2233 70%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Amiri</p><p><strong>Body:</strong> Readex Pro</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Naskh-inspired Amiri display with modern Readex Pro body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Amiri&family=Readex+Pro&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>tessellation draw</strong></td><td>girih SVG strapwork strokes draw via dashoffset 1s ease-in-out on section entry</td></tr><tr><td><strong>arch reveal</strong></td><td>clip-path polygon arches open top-down over 700ms cubic-bezier(0.4,0,0.2,1)</td></tr><tr><td><strong>star pulse</strong></td><td>eight-point star motifs glow via box-shadow keyframes 4s ease-in-out infinite</td></tr><tr><td><strong>lantern sway</strong></td><td>hanging-lantern ornaments sway rotate ±3deg over 6s ease-in-out infinite</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>pointed-arch (mihrab-style) content frames</li><li>girih tessellation pattern fills</li><li>eight-point star motif accents</li><li>gold strapwork dividers</li><li>lapis-turquoise gradient depth washes</li><li>lantern-style drop ornaments</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">testimonial-wall</span><span class="tag">pricing-tiers</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG girih tessellation patterns</span><span class="tag">CSS clip-path arches</span><span class="tag">Google Fonts (Amiri, Readex Pro)</span><span class="tag">IntersectionObserver reveals</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Girih tessellations and pointed-arch frames in deep lapis, turquoise, and gold — ornament as mathematics, never as noise. Suited to hospitality, culture, and luxury that want ceremonial depth. The signature is geometric precision: every arch, star, and strapwork line follows real tessellation rules.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site for a luxury Middle Eastern hospitality group in the Arabesque Geometry style. LOOK: background #0E2233 with a radial depth wash, panels #143247, text #F2E9D8, muted #93AAB5, accents #C9A227 (gold) and #1E9E8F (turquoise), border #28455C. Load https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Readex+Pro:wght@300;400;600&amp;display=swap — Amiri for display, Readex Pro for body. LAYOUT in order: (1) header with gold strapwork underline; (2) hero inside a large pointed-arch frame: gold Amiri headline, paragraph, two buttons, girih tessellation behind; (3) three feature cards inside smaller arches; (4) testimonial band under a row of lantern ornaments; (5) pricing/suites as three tiered arch cards; (6) gold CTA band with tessellation edge; (7) footer. MOTION: girih strapwork SVGs draw in over 1s ease-in-out per section; arch frames reveal via clip-path opening top-down over 700ms; eight-point stars pulse with a 4s glow loop; lantern ornaments sway ±3deg over 6s. SIGNATURE: (a) pointed-arch framing on hero and cards, (b) mathematically correct girih tessellation fills, (c) gold strapwork dividers between all sections. CONSTRAINTS: semantic HTML, 4.5:1 contrast (cream on lapis passes), single column below 760px with arches widened, no bitmap textures — SVG only, lazy-load imagery. DELIVERY: Ship one self-contained index.html. Define CSS custom properties --bg:#0E2233, --surface:#143247, --fg:#F2E9D8, --muted:#93AAB5, --accent:#C9A227, --accent2:#1E9E8F, --border:#28455C on :root and use them everywhere — no hard-coded colors. Preconnect to fonts.googleapis.com and fonts.gstatic.com, load Amiri, Readex Pro with display=swap and a system-font fallback stack to prevent layout shift. Implement the motions (tessellation draw, arch reveal, star pulse, lantern sway) exactly as specified; wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable. Verify before delivery: all headings in a logical h1→h3 order, focus-visible outlines on interactive elements, no horizontal overflow at 360px viewport, and images with width/height attributes to avoid CLS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/arabesque-geometry/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/arabesque-geometry/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Bayt Al-Qamar — Residences&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Readex+Pro:wght@300;400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#0E2233; --surface:#143247; --fg:#F2E9D8; --muted:#93AAB5;
+  --accent:#C9A227; --accent2:#1E9E8F; --border:#28455C;
+  --grad:radial-gradient(circle at 50% 20%,#1A3C54 0%,#0E2233 70%);
+  --display:&#x27;Amiri&#x27;, serif; --body:&#x27;Readex Pro&#x27;, sans-serif;
+  --mono:&#x27;monospace&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.arch-frame{max-width:280px;margin:0 auto;padding:34px 20px 44px;text-align:center;color:var(--accent);border:1px solid var(--border);border-bottom:none;border-radius:140px 140px 0 0;background:var(--surface);font-family:var(--display);font-size:1.4rem}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;بيت القمر&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Residences&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Dining&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Spa&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Culture&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Request a Stay&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;Heritage hospitality&lt;/p&gt;
+    &lt;h1&gt;Courtyards carved in light&lt;/h1&gt;
+    &lt;p&gt;Twenty-eight residences behind a restored 1890s facade, where geometry keeps the cool and gold keeps the calm.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;View residences&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Our story&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;arch-frame&amp;quot;&gt;&lt;span&gt;السلام&lt;/span&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Courtyard residences&lt;/h3&gt;&lt;p&gt;Private plunge pools behind lattice screens.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Diwan dining&lt;/h3&gt;&lt;p&gt;Levantine menus served under the great arch.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Hammam spa&lt;/h3&gt;&lt;p&gt;Marble rooms heated as the old city intended.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Pattern with purpose&lt;/h2&gt;
+    &lt;p&gt;Every arch and lattice is drawn from regional girih traditions — shade, privacy, and breeze choreographed by geometry.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Plan your visit&lt;/h2&gt;
+      &lt;p&gt;Concierge replies within one day.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Bayt Al-Qamar&lt;/span&gt;
+  &lt;span&gt;Hospitality · Culture · Luxury&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

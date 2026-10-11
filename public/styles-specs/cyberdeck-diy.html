@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cyberdeck DIY — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0E0C08;--surface:#1A160E;--fg:#FFC46B;--muted:#93743B;--accent:#FF9E1F;--accent2:#E8DCC8;--border:#35291A}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Space Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Chakra Petch',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Cyberdeck DIY</h1><div class="tagline">Hand-built future: amber OLED, greebles, gaffer tape.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">hardware</span><span class="tag">makers</span><span class="tag">games</span><span class="tag">noise-grain-overlay</span><span class="tag">custom-cursor</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/cyberdeck-diy.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/cyberdeck-diy.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/cyberdeck-diy.png" alt="Cyberdeck DIY preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0E0C08"></div><code>bg: #0E0C08</code></div><div class="sw"><div class="chip" style="background:#1A160E"></div><code>surface: #1A160E</code></div><div class="sw"><div class="chip" style="background:#FFC46B"></div><code>fg: #FFC46B</code></div><div class="sw"><div class="chip" style="background:#93743B"></div><code>muted: #93743B</code></div><div class="sw"><div class="chip" style="background:#FF9E1F"></div><code>accent: #FF9E1F</code></div><div class="sw"><div class="chip" style="background:#E8DCC8"></div><code>accent2: #E8DCC8</code></div><div class="sw"><div class="chip" style="background:#35291A"></div><code>border: #35291A</code></div><p><code>linear-gradient(135deg,#0E0C08 0%,#1C1509 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Chakra Petch</p><p><strong>Body:</strong> Space Mono</p>
+<p><strong>Monospace:</strong> Space Mono</p><p class="tagline">Squared techy display over DIY mono with stencil energy.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Chakra+Petch&family=Space+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>power-on-flicker</strong></td><td>OLED panels flicker on with 3-step opacity keyframes over 600ms on load.</td></tr><tr><td><strong>servo-slide</strong></td><td>Panels slide in with a stiff cubic-bezier(.2,.9,.3,1.2) overshoot, 500ms.</td></tr><tr><td><strong>led-blink</strong></td><td>Status LEDs blink 2s steps(1) at staggered delays per panel.</td></tr><tr><td><strong>tape-highlight</strong></td><td>Hover draws a masking-tape underline (skewed div) growing 240ms ease.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Amber OLED module panels</li><li>Stenciled warning labels (CAUTION / HIGH VOLTAGE)</li><li>Greeble texture corners (screws, vents)</li><li>Cable-run section dividers</li><li>Serial-number stamps on cards</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">feature-grid</span><span class="tag">settings-panel</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">pure CSS textures (repeating gradients)</span><span class="tag">vanilla JS IntersectionObserver</span><span class="tag">clip-path stencil shapes</span><span class="tag">no framework</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A lovingly soldered mess: amber OLED readouts bolted onto brushed-metal surfaces, cable runs, masking-tape labels and stenciled warnings. Every panel feels built in a garage at 2 a.m. — and that is the point. For hardware companies, maker communities and indie games.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a hardware startup&#x27;s site in the Cyberdeck DIY style — the page must look hand-assembled from salvage, yet stay usable.
+LOOK: near-black #0E0C08 background, amber #FFC46B OLED text, hot #FF9E1F accents, tape-cream #E8DCC8 labels, borders #35291A. Import: https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap — Chakra Petch for headers, Space Mono everywhere. Panels sit on #1A160E metal surfaces with screw-head dots in corners (radial-gradient pseudo-elements) and vent-slat textures.
+LAYOUT: top rail styled as a power switch + nav; hero as the deck&#x27;s main OLED screen with a boot self-test readout; feature grid as bolted modules; product cards with serial-number stamps and stenciled CAUTION labels; settings-panel-style comparison table; CTA as a big red-guard switch; mega footer with a &#x27;schematics&#x27; sitemap.
+MOTION: OLED panels power on with a 3-step 600ms flicker; modules slide in with cubic-bezier(.2,.9,.3,1.2) servo overshoot; LEDs blink staggered 2s steps(1); hover draws a skewed masking-tape underline over 240ms.
+SIGNATURE: (1) screw and vent greebles on every panel corner; (2) masking-tape labels at slight rotations; (3) serial-number stamps (DECK-042 / REV C).
+CONSTRAINTS: semantic HTML, amber-on-dark text at least 4.5:1 contrast, single-column mobile layout, prefers-reduced-motion kills flicker, textures must be pure CSS — no image assets. Ensure the boot self-test readout in the hero displays believable diagnostics that update on each visit. Keep every panel titled like workshop documentation — &#x27;MODULE&#x27;, &#x27;BATCH&#x27;, &#x27;REV&#x27; — so the whole page reads as one continuous bench build.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/cyberdeck-diy/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/cyberdeck-diy/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Cyberdeck DIY&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#0E0C08;--surface:#1A160E;--fg:#FFC46B;--muted:#93743B;--accent:#FF9E1F;--accent2:#E8DCC8;--border:#35291A;--grad:linear-gradient(135deg,#0E0C08 0%,#1C1509 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Space Mono&#x27;,monospace;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Chakra Petch&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Chakra Petch&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#0E0C08;border-radius:6px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Chakra Petch&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Chakra Petch&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Chakra Petch&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.module{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;position:relative}
+.module::before{content:&#x27;&#x27;;position:absolute;top:10px;left:10px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#5a4a2a,#241c10)}
+.module::after{content:&#x27;&#x27;;position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#5a4a2a,#241c10)}
+.oled{background:#050403;border:2px solid var(--border);border-radius:4px;padding:18px;color:var(--accent);animation:flicker .6s steps(3) 1}
+@keyframes flicker{0%{opacity:0}40%{opacity:.4}70%{opacity:.2}100%{opacity:1}}
+.tape{display:inline-block;background:var(--accent2);color:#0E0C08;padding:2px 14px;transform:rotate(-2deg);font-weight:700;font-size:.8rem}
+.led{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:led 2s steps(1) infinite}
+@keyframes led{50%{opacity:.2}}
+.module:hover .tape{background:var(--accent);color:#0E0C08}
+.module{transition:transform .3s}.module:hover{transform:translateY(-3px) rotate(.4deg)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Cyberdeck&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;oled&amp;quot; style=&amp;quot;max-width:720px;margin:0 auto&amp;quot;&gt;&lt;p style=&amp;quot;font-size:.8rem;opacity:.7&amp;quot;&gt;SELF-TEST 0x2F ... PASS · PSU 12V OK · OLED OK · REV C&lt;/p&gt;
+&lt;h1 style=&amp;quot;margin-top:12px&amp;quot;&gt;BUILD THE FUTURE&lt;br/&gt;IN YOUR GARAGE&lt;/h1&gt;&lt;/div&gt;
+&lt;p style=&amp;quot;margin-top:20px&amp;quot;&gt;Open-hardware dev kits for people who solder on weeknights. &lt;span class=&amp;quot;tape&amp;quot;&gt;HAND-ASSEMBLED&lt;/span&gt;&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot; style=&amp;quot;margin-top:16px&amp;quot;&gt;Order kit · DECK-042&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;module card&amp;quot;&gt;&lt;span class=&amp;quot;tape&amp;quot;&gt;NEW&lt;/span&gt;&lt;h3&gt;Deck One — $189&lt;/h3&gt;&lt;p&gt;Quad-core RP2350-class MCU, 4.2 inch amber OLED, expansion rail. Ships with schematics.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;module card&amp;quot;&gt;&lt;span class=&amp;quot;led&amp;quot; style=&amp;quot;display:inline-block;margin-bottom:8px&amp;quot;&gt;&lt;/span&gt;&lt;h3&gt;Mesh Radio Pack&lt;/h3&gt;&lt;p&gt;LoRa module with 15km range. Community firmware, zero vendor lock.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;module card&amp;quot;&gt;&lt;h3&gt;Case + Greeble Set&lt;/h3&gt;&lt;p&gt;CNC aluminum shell with screw posts, vent slots and a proper big red switch.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;CAUTION: fully open&lt;/h2&gt;&lt;p&gt;Every board ships with full schematics, KiCad files and a serial you can trace to the batch. We believe hardware should be repairable with a soldering iron and stubbornness. Join 40,000 makers building on Deck One.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Power on your ideas&lt;/h2&gt;&lt;p style=&amp;quot;color:var(--muted);margin-bottom:20px&amp;quot;&gt;Batch 7 ships in March. &lt;span class=&amp;quot;tape&amp;quot;&gt;CAUTION: sells out&lt;/span&gt;&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Reserve DECK-042&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Cyberdeck. All rights reserved.&lt;/span&gt;&lt;span&gt;REV C · Batch 7 · Made with flux and coffee&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

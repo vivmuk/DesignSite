@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vogue Editorial Serif — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Jost&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF8F4;--surface:#FFFFFF;--fg:#14110F;--muted:#8C8480;--accent:#1A1A1A;--accent2:#B49A5E;--border:#E4DED6}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Jost',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Playfair Display',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Vogue Editorial Serif</h1><div class="tagline">Fashion authority set in didone, whitespace as wealth</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">fashion</span><span class="tag">magazines</span><span class="tag">beauty</span><span class="tag">text-mask-reveal</span><span class="tag">horizontal-scroll-section</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/vogue-editorial-serif.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/vogue-editorial-serif.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/vogue-editorial-serif.png" alt="Vogue Editorial Serif preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FAF8F4"></div><code>bg: #FAF8F4</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#14110F"></div><code>fg: #14110F</code></div><div class="sw"><div class="chip" style="background:#8C8480"></div><code>muted: #8C8480</code></div><div class="sw"><div class="chip" style="background:#1A1A1A"></div><code>accent: #1A1A1A</code></div><div class="sw"><div class="chip" style="background:#B49A5E"></div><code>accent2: #B49A5E</code></div><div class="sw"><div class="chip" style="background:#E4DED6"></div><code>border: #E4DED6</code></div><p><code>linear-gradient(120deg, #FAF8F4 0%, #F1EDE6 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Playfair Display</p><p><strong>Body:</strong> Jost</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Didone display against quiet geometric sans captions</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Jost&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Masthead reveal</strong></td><td>Title rises from a clip-path mask over 1.1s cubic-bezier(0.77,0,0.18,1) on load, letters tracking in from 0.3em to 0.05em</td></tr><tr><td><strong>Issue cover fade</strong></td><td>Hero photograph scales 1.08→1.0 with 1.4s ease-out opacity ramp on section enter</td></tr><tr><td><strong>Horizontal lookbook</strong></td><td>Outfit gallery translates horizontally, scrubbed by scroll at 1px-per-3px wheel, panels easing with power3.out</td></tr><tr><td><strong>Caption rise</strong></td><td>Small caps captions fade+translateY(14px) 600ms staggered 90ms per line on intersection</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Oversized Didone masthead with hairline rules above and below</li><li>Full-bleed fashion photography spanning viewport edges</li><li>Tiny letter-spaced uppercase captions (0.2em tracking)</li><li>Issue number + date slug in top corner like a magazine cover</li><li>Hairline column rules dividing editorial spreads</li><li>Pull-quote set at 4rem with hanging quotation marks</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">hero-section</span><span class="tag">image-lightbox</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger</span><span class="tag">Lenis smooth scroll</span><span class="tag">pure CSS grid + clip-path</span><span class="tag">next/image priority loading</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A runway-magazine page: towering Didone masthead, full-bleed photography bleeding to page edges, and copy that whispers in tiny letter-spaced caps. Every element is aligned to a strict editorial grid so the photography carries the drama. Used when the brand itself is the story and restraint reads as luxury.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior editorial-web art director. Build a single-page fashion magazine site in the Vogue Editorial Serif style for a couture house.
+
+LOOK: Background #FAF8F4, surfaces #FFFFFF, ink #14110F, muted captions #8C8480, accent black #1A1A1A, gold hairlines #B49A5E, borders #E4DED6, soft ivory gradient `linear-gradient(120deg,#FAF8F4,#F1EDE6)`. Import fonts: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Playfair Display for masthead and headlines, Jost for captions in uppercase with 0.2em tracking.
+
+LAYOUT: 1) Slim top bar with issue number and date slug. 2) Giant masthead with hairline rules. 3) Full-bleed hero photograph with clip-path reveal. 4) Editorial spread: two-column text with drop cap. 5) Horizontal lookbook gallery pinned by ScrollTrigger. 6) Pull-quote section at 4rem. 7) Full-width CTA banner in #1A1A1A with ivory text. 8) Editorial footer with columns of tiny links.
+
+MOTION: Use GSAP ScrollTrigger + Lenis. Masthead letters track from 0.3em to 0.05em over 1.1s cubic-bezier(0.77,0,0.18,1); hero image scales 1.08→1.0 over 1.4s on enter; lookbook translates horizontally scrubbed to scroll; captions stagger 90ms rising 14px.
+
+SIGNATURE: (a) masthead with double hairline rules, (b) captions in tiny letter-spaced caps aligned to the photo&#x27;s bottom edge, (c) a pull-quote with hanging quotation marks.
+
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on ivory, responsive: single column under 768px with masthead scaled via clamp(), lazy-load non-hero images, total JS under 150KB, no layout shift (reserve aspect-ratio boxes).</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/vogue-editorial-serif/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/vogue-editorial-serif/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;MAISON NOIRE — Fall Issue&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Playfair+Display&amp;family=Jost:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#FAF8F4; --surface:#FFFFFF; --fg:#14110F; --muted:#8C8480;
+  --accent:#1A1A1A; --accent2:#B49A5E; --border:#E4DED6;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Jost&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Playfair Display&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Playfair Display&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;background:linear-gradient(120deg,var(--bg),#F1EDE6) }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Playfair Display&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#14110F; color:#FAF8F4; text-align:center; }
+.cta .btn { background:#B49A5E; color:#111111; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;MAISON NOIRE&lt;/span&gt;
+  &lt;nav&gt;Collections&lt;br&gt;Atelier&lt;br&gt;Journal&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Fall–Winter 2026&lt;/span&gt;
+  &lt;h1&gt;The Architecture of Silence&lt;/h1&gt;
+  &lt;p&gt;A collection built on negative space — twelve looks where the fabric breathes and the body speaks.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Read the Issue&lt;/a&gt;
+  &lt;p style=&#x27;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-top:48px;&#x27;&gt;Issue № 41 — Photography by L. Marchand&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;In this issue&lt;/span&gt;
+  &lt;h2&gt;Editorial Highlights&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Wool Hour&lt;/h3&gt;&lt;p&gt;Tailoring that refuses to raise its voice, photographed at dawn in Porto.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Gold, Quietly&lt;/h3&gt;&lt;p&gt;Jewellery editor Ada Marsh on the return of the fine chain.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Backstage, Unposed&lt;/h3&gt;&lt;p&gt;Forty frames between the fitting and the runway.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;This Season&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;12&lt;/b&gt;&lt;br&gt;&lt;span&gt;Looks in collection&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;3&lt;/b&gt;&lt;br&gt;&lt;span&gt;Cover stories&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;48h&lt;/b&gt;&lt;br&gt;&lt;span&gt;Atelier shoots&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;The digital issue arrives Thursday&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Subscribe to receive the fall issue before the stands do.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Get the Issue&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 MAISON NOIRE. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Stockists · Careers · Press&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calendar Booking Suite — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FCFCFD;--surface:#FFFFFF;--fg:#1B1F27;--muted:#767E8C;--accent:#4F46E5;--accent2:#F59E0B;--border:#E8EAF1}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Plus Jakarta Sans',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Calendar Booking Suite</h1><div class="tagline">Month grids, timezone chips, one-tap slot picks</div>
+<div class="meta"><span class="tag">component-kit</span><span class="tag">scheduling</span><span class="tag">health</span><span class="tag">salons</span><span class="tag">micro-interactions</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/calendar-booking-suite.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/calendar-booking-suite.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/calendar-booking-suite.png" alt="Calendar Booking Suite preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FCFCFD"></div><code>bg: #FCFCFD</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1B1F27"></div><code>fg: #1B1F27</code></div><div class="sw"><div class="chip" style="background:#767E8C"></div><code>muted: #767E8C</code></div><div class="sw"><div class="chip" style="background:#4F46E5"></div><code>accent: #4F46E5</code></div><div class="sw"><div class="chip" style="background:#F59E0B"></div><code>accent2: #F59E0B</code></div><div class="sw"><div class="chip" style="background:#E8EAF1"></div><code>border: #E8EAF1</code></div><p><code>linear-gradient(180deg,#FCFCFD 0%,#F4F5FA 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Plus Jakarta Sans</p><p><strong>Body:</strong> Plus Jakarta Sans</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Geometric Jakarta Sans family, mono for times</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&family=Plus+Jakarta+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>slot snap</strong></td><td>hovered slot chip lifts 2px and fills accent over 140ms ease-out; selected slots lock with 200ms pop</td></tr><tr><td><strong>month slide</strong></td><td>calendar months crossfade+slide 24px over 260ms cubic-bezier(0.2,0.8,0.2,1) on prev/next</td></tr><tr><td><strong>day pulse</strong></td><td>today&#x27;s cell pulses a ring via box-shadow keyframes 3s ease-in-out infinite</td></tr><tr><td><strong>drawer rise</strong></td><td>booking summary drawer slides up 100% with 320ms cubic-bezier(0.22,1,0.36,1)</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>month grid with availability density dots</li><li>timezone selector chip row</li><li>bookable time-slot chip columns</li><li>selected-slot summary drawer</li><li>avatar + duration header pill</li><li>confirmation with add-to-calendar row</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">calendar-picker</span><span class="tag">form-stack</span><span class="tag">badge-system</span><span class="tag">modal-system</span><span class="tag">onboarding-steps</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS grid calendar layout</span><span class="tag">vanilla JS state for slots</span><span class="tag">Web Animations API drawer</span><span class="tag">Google Fonts (Plus Jakarta Sans, JetBrains Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A Cal.com-school scheduling kit: month grids with availability dots, timezone selector chips, bookable slot chips that snap on hover, and a booking summary drawer. For scheduling, health, and salon flows where choosing a time is the whole product. The signature is effortless slot selection — hover states, keyboard arrows, and instant confirm.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page scheduling product page in the Calendar Booking Suite style. LOOK: background #FCFCFD with a faint gradient, white panels, text #1B1F27, muted #767E8C, accents #4F46E5 (indigo) and #F59E0B (amber for pending), border #E8EAF1. Load https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap — Jakarta Sans throughout, mono for time numerals. LAYOUT in order: (1) header with brand and a booking-link pill; (2) booking hero: host avatar pill with name, duration, and description; (3) two-panel workspace — left month calendar grid with availability density dots and prev/next controls, right two columns of bookable slot chips grouped morning/afternoon; (4) selected-slot summary drawer with confirm button and add-to-calendar row; (5) FAQ strip; (6) footer. MOTION: slot chips lift 2px and fill indigo on hover over 140ms, locking with a 200ms pop when selected; months crossfade with 24px slide over 260ms cubic-bezier(0.2,0.8,0.2,1); today&#x27;s cell pulses a ring every 3s; the drawer rises with 320ms cubic-bezier(0.22,1,0.36,1). SIGNATURE: (a) availability dots inside calendar cells, (b) timezone chip row, (c) the rising confirm drawer. CONSTRAINTS: semantic HTML (button elements for slots), arrow-key calendar navigation, aria-selected states, 4.5:1 contrast, single column below 720px, no frameworks. DELIVERY: Ship one self-contained index.html. Define CSS custom properties --bg:#FCFCFD, --surface:#FFFFFF, --fg:#1B1F27, --muted:#767E8C, --accent:#4F46E5, --accent2:#F59E0B, --border:#E8EAF1 on :root and use them everywhere — no hard-coded colors. Preconnect to fonts.googleapis.com and fonts.gstatic.com, load Plus Jakarta Sans, Plus Jakarta Sans, and JetBrains Mono with display=swap and a system-font fallback stack to prevent layout shift. Implement the motions (slot snap, month slide, day pulse, drawer rise) exactly as specified; wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable. Verify before delivery: all headings in a logical h1→h3 order, focus-visible outlines on interactive elements, no horizontal overflow at 360px viewport, and images with width/height attributes to avoid CLS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/calendar-booking-suite/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/calendar-booking-suite/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Book with Mara Chen&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#FCFCFD; --surface:#FFFFFF; --fg:#1B1F27; --muted:#767E8C;
+  --accent:#4F46E5; --accent2:#F59E0B; --border:#E8EAF1;
+  --grad:linear-gradient(180deg,#FCFCFD 0%,#F4F5FA 100%);
+  --display:&#x27;Plus Jakarta Sans&#x27;, serif; --body:&#x27;Plus Jakarta Sans&#x27;, sans-serif;
+  --mono:&#x27;JetBrains Mono&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.cal-demo{max-width:320px;margin:0 auto;text-align:left}.tz-chips{display:flex;gap:6px;margin-bottom:12px}.tz{font-size:.72rem;padding:5px 12px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}.tz.active{background:var(--accent);color:#fff;border-color:var(--accent)}.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px}.slot{padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;font-family:var(--mono);font-size:.85rem;cursor:pointer;transition:transform .14s ease-out,background .14s,border-color .14s}.slot:hover,.slot.hot{transform:translateY(-2px);background:var(--accent);border-color:var(--accent);color:#fff}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;Slotwise&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Home&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Pricing&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Help&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Log in&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Book Now&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;30 min · Zoom · Free&lt;/p&gt;
+    &lt;h1&gt;Pick a time, we&#x27;ll bring the coffee&lt;/h1&gt;
+    &lt;p&gt;Mara&#x27;s calendar syncs live across three timezones. Choose any open slot and get an instant invite.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Confirm 10:00&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;See next month&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;cal-demo&amp;quot;&gt;&lt;div class=&amp;quot;tz-chips&amp;quot;&gt;&lt;span class=&amp;quot;tz active&amp;quot;&gt;CET (you)&lt;/span&gt;&lt;span class=&amp;quot;tz&amp;quot;&gt;PDT&lt;/span&gt;&lt;span class=&amp;quot;tz&amp;quot;&gt;JST&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;slots&amp;quot;&gt;&lt;button class=&amp;quot;slot&amp;quot;&gt;09:30&lt;/button&gt;&lt;button class=&amp;quot;slot hot&amp;quot;&gt;10:00&lt;/button&gt;&lt;button class=&amp;quot;slot&amp;quot;&gt;11:15&lt;/button&gt;&lt;button class=&amp;quot;slot&amp;quot;&gt;14:00&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Live sync&lt;/h3&gt;&lt;p&gt;Google, Outlook, and iCloud in one view.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Timezone aware&lt;/h3&gt;&lt;p&gt;Slots always render in guest time.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Buffers built in&lt;/h3&gt;&lt;p&gt;Breaks between meetings, automatically.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Scheduling without ping-pong&lt;/h2&gt;
+    &lt;p&gt;Slotwise reads real availability from your calendars and only shows slots that are genuinely free.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Get your own link&lt;/h2&gt;
+      &lt;p&gt;Free for individual use.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Slotwise&lt;/span&gt;
+  &lt;span&gt;Scheduling · Health · Salons&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

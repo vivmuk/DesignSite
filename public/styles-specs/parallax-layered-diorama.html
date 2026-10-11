@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parallax Layered Diorama — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6ec;--surface:#ffffff;--fg:#332f28;--muted:#8a8176;--accent:#e8833a;--accent2:#4a90a4;--border:#ecdcc6}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Parallax Layered Diorama</h1><div class="tagline">Six illustrated layers drift at six scroll speeds</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">storytelling</span><span class="tag">tourism</span><span class="tag">games</span><span class="tag">parallax-depth-layers</span><span class="tag">scroll-driven-animations</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/parallax-layered-diorama.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/parallax-layered-diorama.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/parallax-layered-diorama.png" alt="Parallax Layered Diorama preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#fdf6ec"></div><code>bg: #fdf6ec</code></div><div class="sw"><div class="chip" style="background:#ffffff"></div><code>surface: #ffffff</code></div><div class="sw"><div class="chip" style="background:#332f28"></div><code>fg: #332f28</code></div><div class="sw"><div class="chip" style="background:#8a8176"></div><code>muted: #8a8176</code></div><div class="sw"><div class="chip" style="background:#e8833a"></div><code>accent: #e8833a</code></div><div class="sw"><div class="chip" style="background:#4a90a4"></div><code>accent2: #4a90a4</code></div><div class="sw"><div class="chip" style="background:#ecdcc6"></div><code>border: #ecdcc6</code></div><p><code>linear-gradient(180deg, #fbe3c2 0%, #fdf6ec 70%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Storybook serif over friendly humanist sans</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Layer speed stack</strong></td><td>Six SVG layers translate Y at 0.08×–0.6× scroll speed via GSAP ScrollTrigger, scrub true, farthest slowest.</td></tr><tr><td><strong>Sun arc</strong></td><td>The sun travels a 90° arc across the hero over the first 150vh of scroll; light warm-shifts with it.</td></tr><tr><td><strong>Drift clouds</strong></td><td>Cloud layer eases x ±3% on a 14s ease-in-out loop, independent of scroll.</td></tr><tr><td><strong>Critter blink</strong></td><td>Foreground animal silhouettes scale-blink 1→1.06→1 every 4s, transform-origin bottom.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Six-layer parallax scene stack</li><li>Foreground silhouette vignette</li><li>Scrolling sun/moon arc</li><li>Layered mist gradients between planes</li><li>Hand-lettered trail signage</li><li>Floating leaf/particle drift</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger (layer parallax)</span><span class="tag">scroll-driven CSS animations</span><span class="tag">inline SVG illustration layers</span><span class="tag">pure CSS mist gradients</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>An illustrated diorama built from six or more depth layers — sky, ridges, trees, characters, foreground silhouettes — each scrolling at its own speed so the scene has real dimensional depth. Warm daylight palette and storybook serif make it feel hand-built. Perfect for tourism, narrative brands and game worlds.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an illustrated tourism page in the Parallax Layered Diorama style. Ship one polished, self-contained page.
+
+LOOK: Hand-built storybook daylight. Palette hexes exactly: bg #fdf6ec, surface #ffffff, fg #332f28, muted #8a8176, accent #e8833a (sunset orange), accent2 #4a90a4 (ridge blue), border #ecdcc6, gradient linear-gradient(180deg, #fbe3c2 0%, #fdf6ec 70%) for the sky. Fonts: load https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&amp;family=Karla:wght@400;600&amp;display=swap — Fraunces for display and signage, Karla for body. All artwork as inline SVG layers, no photography.
+
+LAYOUT, in order: (1) top nav over the sky; (2) hero diorama: six stacked SVG layers (sky+sun, far ridges, mist band, mid pines, cabin card, foreground silhouette) filling ~60vh with title and CTA floating in the sky and a hand-lettered trail signpost; (3) seasons feature grid of three cards; (4) a testimonial wall styled as carved-wood quotes; (5) about block &#x27;A hand-built scene&#x27;; (6) cabin-reservation CTA band in accent orange; (7) mega footer with trail-map style link columns.
+
+MOTION: GSAP ScrollTrigger translates the six layers at 0.08×–0.6× scroll speed (scrub true, farthest slowest). The sun arcs 90° across the first 150vh of scroll while the light warm-shifts. Cloud layer drifts x ±3% on a 14s ease-in-out loop. Foreground critters scale-blink 1→1.06→1 every 4s from transform-origin bottom.
+
+SIGNATURE: (a) the readable six-layer depth stack with mist between planes; (b) the sun arc that shifts color temperature; (c) hand-lettered trail signage as UI furniture.
+
+CONSTRAINTS: Build responsively with breakpoints at 768px and 1200px; keep all text at WCAG AA contrast (4.5:1 body, 3:1 large); use semantic HTML (header, nav, main, section, article, footer) with descriptive headings; lazy-load below-fold images, defer JavaScript, and keep total JS under 120KB gzipped; ensure every interactive element is keyboard-reachable with a visible :focus-visible state; respect prefers-reduced-motion by freezing layers at rest positions.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/parallax-layered-diorama/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/parallax-layered-diorama/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Pinewood Ridge&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&amp;family=Karla:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#fdf6ec; --surface:#ffffff; --fg:#332f28; --muted:#8a8176;
+  --accent:#e8833a; --accent2:#4a90a4; --border:#ecdcc6;
+  --font-display:&#x27;Fraunces&#x27;,sans-serif; --font-body:&#x27;Karla&#x27;,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.6}
+header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.05em}
+nav a{color:var(--fg);text-decoration:none;margin-left:1.5rem;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;padding:3rem 2rem;gap:1.1rem}
+.eyebrow{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.05}
+.hero .sub{color:var(--muted);max-width:44ch;font-size:1.05rem}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:.8rem 1.6rem;text-decoration:none;font-weight:600;border-radius:var(--radius,6px);transition:transform .2s,box-shadow .2s;width:max-content}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.features{padding:3rem 2rem}
+.features h2,.about h2,.cta h2{font-family:var(--font-display);margin-bottom:1.5rem}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius,6px);padding:1.5rem;transition:transform .25s ease}
+.card:hover{transform:translateY(-4px)}
+.card h3{font-family:var(--font-display);margin-bottom:.5rem;font-size:1.1rem}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:3rem 2rem;max-width:62ch}
+.about p{color:var(--muted)}
+.cta{margin:2rem;padding:3rem 2rem;text-align:center;background:var(--accent);color:#fff;border-radius:var(--radius,6px)}
+.cta .btn{background:var(--fg);color:var(--bg)}
+footer{border-top:1px solid var(--border);padding:2rem;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+footer .mono{font-family:var(--font-body)}
+.diorama{position:relative;height:52vh;overflow:hidden;background:linear-gradient(180deg,#fbe3c2 0%,#fdf6ec 70%);margin-top:2rem;border-radius:12px}
+.sun{position:absolute;width:64px;height:64px;border-radius:50%;background:var(--accent);top:18%;left:20%;box-shadow:0 0 40px rgba(232,131,58,.5)}
+.mist{position:absolute;left:0;right:0;height:30px;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.75),rgba(255,255,255,0))}
+.signpost{position:absolute;right:14%;bottom:18%;font-family:var(--font-display);background:var(--surface);border:2px solid var(--border);padding:.4rem .9rem;border-radius:6px}
+.diorama svg{position:absolute;left:0;bottom:0;width:100%}
+@media(max-width:760px){.cards{grid-template-columns:1fr}header{flex-direction:column;gap:.5rem}nav a{margin-left:.75rem}.split{grid-template-columns:1fr}.rule{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;brand&amp;quot;&gt;Pinewood Ridge&lt;/div&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Trails&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Stays&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Seasons&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Book&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;p class=&amp;quot;eyebrow&amp;quot;&gt;A NATIONAL-PARK STORY&lt;/p&gt;&lt;h1&gt;The mountain, in six layers.&lt;/h1&gt;&lt;p class=&amp;quot;sub&amp;quot;&gt;Scroll slowly. The ridges drift at their own speeds, the sun crosses its arc, and the pines step out of the fog exactly when the trail demands it.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Plan your visit&lt;/a&gt;
+&lt;div class=&amp;quot;diorama&amp;quot;&gt;&lt;div class=&amp;quot;sun&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;mist&amp;quot; style=&amp;quot;bottom:34%&amp;quot;&gt;&lt;/div&gt;&lt;svg viewBox=&amp;quot;0 0 400 80&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot; style=&amp;quot;height:22%&amp;quot;&gt;&lt;path d=&amp;quot;M0,80 L0,50 60,30 120,55 200,25 280,50 340,35 400,55 400,80 Z&amp;quot; fill=&amp;quot;#4a90a4&amp;quot; opacity=&amp;quot;.55&amp;quot;/&gt;&lt;/svg&gt;&lt;svg viewBox=&amp;quot;0 0 400 60&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot; style=&amp;quot;height:14%&amp;quot;&gt;&lt;path d=&amp;quot;M0,60 L0,35 40,20 90,40 150,12 220,38 300,20 360,42 400,28 400,60 Z&amp;quot; fill=&amp;quot;#4a90a4&amp;quot;/&gt;&lt;/svg&gt;&lt;svg viewBox=&amp;quot;0 0 400 40&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot; style=&amp;quot;height:8%&amp;quot;&gt;&lt;path d=&amp;quot;M0,40 L0,22 30,10 80,26 140,4 210,24 290,8 350,26 400,14 400,40 Z&amp;quot; fill=&amp;quot;#332f28&amp;quot;/&gt;&lt;/svg&gt;&lt;span class=&amp;quot;signpost&amp;quot;&gt;Trailhead → 2 mi&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot;&gt;&lt;h2&gt;Seasons on the ridge&lt;/h2&gt;&lt;div class=&amp;quot;cards&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Spring melt&lt;/h3&gt;&lt;p&gt;Waterfalls at full voice and the first wildflowers on the south faces.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;High summer&lt;/h3&gt;&lt;p&gt;Lakes warm enough to swim and meadows loud with marmots.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;First snow&lt;/h3&gt;&lt;p&gt;The diorama trades green for hush; lodges light their stoves.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot;&gt;&lt;h2&gt;A hand-built scene&lt;/h2&gt;&lt;p&gt;Every layer in the header is drawn by one illustrator and animated at its own depth factor. Nothing here is a stock photo — the ridge you scroll past is the ridge the trail crew knows.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot;&gt;&lt;h2&gt;Reserve a cabin&lt;/h2&gt;&lt;p&gt;Twelve cabins, wood-fired, book out by the season.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Check dates&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;span&gt;© 2026 Pinewood Ridge&lt;/span&gt;&lt;span class=&amp;quot;mono&amp;quot;&gt;OPEN YEAR-ROUND · LEAVE NO TRACE&lt;/span&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

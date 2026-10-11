@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ledger Precision Crypto — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050807;--surface:#0B1210;--fg:#D7E4DC;--muted:#5F7A6C;--accent:#00DC82;--accent2:#FF4D4D;--border:#1C2E26}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'IBM Plex Mono',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Ledger Precision Crypto</h1><div class="tagline">Monospaced numerals on a tick-grid, hash-green truth.</div>
+<div class="meta"><span class="tag">dark-tech</span><span class="tag">crypto</span><span class="tag">fintech</span><span class="tag">explorers</span><span class="tag">count-up-numbers</span><span class="tag">data-table</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/ledger-precision-crypto.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/ledger-precision-crypto.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/ledger-precision-crypto.png" alt="Ledger Precision Crypto preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#050807"></div><code>bg: #050807</code></div><div class="sw"><div class="chip" style="background:#0B1210"></div><code>surface: #0B1210</code></div><div class="sw"><div class="chip" style="background:#D7E4DC"></div><code>fg: #D7E4DC</code></div><div class="sw"><div class="chip" style="background:#5F7A6C"></div><code>muted: #5F7A6C</code></div><div class="sw"><div class="chip" style="background:#00DC82"></div><code>accent: #00DC82</code></div><div class="sw"><div class="chip" style="background:#FF4D4D"></div><code>accent2: #FF4D4D</code></div><div class="sw"><div class="chip" style="background:#1C2E26"></div><code>border: #1C2E26</code></div><p><code>linear-gradient(180deg,#050807 0%,#0A100D 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> IBM Plex Mono</p><p><strong>Body:</strong> IBM Plex Sans</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Mono numerals for figures; quiet sans carries the prose.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=IBM+Plex+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>balance-countup</strong></td><td>Balances count up 1.2s linear with tabular-nums so columns never shift.</td></tr><tr><td><strong>row-flash</strong></td><td>Updated table rows flash green/red background for 800ms then fade.</td></tr><tr><td><strong>tick-sweep</strong></td><td>Vertical tick-grid lines subtly scroll left, 20s linear infinite, 3% opacity.</td></tr><tr><td><strong>confirm-pulse</strong></td><td>Green confirmation chips pulse once (scale 1→1.06→1) on state change.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Faint tick-grid background</li><li>Monospaced tabular numeral columns</li><li>Hash-green confirmation chips</li><li>Block/tx data table with hex ids</li><li>Red negative-delta highlights</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">chart-suite</span><span class="tag">nav-bar</span><span class="tag">form-stack</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">font-variant-numeric: tabular-nums</span><span class="tag">vanilla JS count-up</span><span class="tag">CSS grid tables</span><span class="tag">no framework</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A cryptographer&#x27;s instrument panel: monospaced figures aligned to a faint tick-grid background, hash-green confirmations, red negative deltas and zero ornament. Trust is communicated through alignment, density and tabular truth. For block explorers, fintech rails and trading tools.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a block-explorer landing page in the Ledger Precision Crypto style — instrument-grade density where alignment is the only decoration.
+LOOK: near-black #050807 background with a faint green tick-grid pattern (repeating-linear-gradient, 3% opacity, slowly scrolling); text #D7E4DC, muted #5F7A6C, borders #1C2E26. Import: https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap — all figures, hashes and ids in JetBrains Mono with font-variant-numeric: tabular-nums; prose in IBM Plex Sans. Confirmations are #00DC82, negative deltas #FF4D4D.
+LAYOUT: minimal top bar with network status dot and chain height counter; hero as a giant live balance/height counter in monospace; stats band of four protocol metrics; the centerpiece is a block table — monospace hash columns, confirmation chips, gas and value columns right-aligned; chart-suite section with a line chart and mempool bars; a search form-stack styled like a query console; footer with protocol metadata.
+MOTION: balances count up 1.2s linear keeping columns stable; updated rows flash green/red backgrounds fading over 800ms; confirmation chips pulse scale 1→1.06→1 on state change; tick-grid scrolls left 20s linear infinite.
+SIGNATURE: (1) the tick-grid substrate; (2) perfectly aligned monospace columns — never centered, never ragged; (3) hash-green confirmation chips.
+CONSTRAINTS: semantic table elements with proper th scope, contrast at least 4.5:1, responsive tables become horizontal-scroll cards under 768px, prefers-reduced-motion disables flashes, no images needed.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/ledger-precision-crypto/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/ledger-precision-crypto/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Ledger Precision Crypto&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=IBM+Plex+Sans:wght@400;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#050807;--surface:#0B1210;--fg:#D7E4DC;--muted:#5F7A6C;--accent:#00DC82;--accent2:#FF4D4D;--border:#1C2E26;--grad:linear-gradient(180deg,#050807 0%,#0A100D 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;IBM Plex Sans&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#050807;border-radius:4px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;IBM Plex Mono&#x27;,monospace;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;IBM Plex Mono&#x27;,monospace;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.ticks{position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(0,220,130,.05) 0 1px,transparent 1px 48px);animation:tick 20s linear infinite}
+@keyframes tick{to{background-position:-48px 0}}
+.num{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-variant-numeric:tabular-nums}
+.confirm{display:inline-block;padding:2px 10px;border-radius:4px;background:rgba(0,220,130,.15);color:var(--accent);font-size:.75rem;font-family:&#x27;JetBrains Mono&#x27;,monospace}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:left;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);padding:10px 12px}
+td{border-bottom:1px solid var(--border);padding:10px 12px;font-family:&#x27;JetBrains Mono&#x27;,monospace}
+td.r{text-align:right}
+.neg{color:var(--accent2)}.pos{color:var(--accent)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Ledger&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;p style=&amp;quot;color:var(--muted);letter-spacing:.2em;font-size:.75rem&amp;quot;&gt;NETWORK: MAINNET · STATUS: &lt;span style=&amp;quot;color:var(--accent)&amp;quot;&gt;NOMINAL&lt;/span&gt;&lt;/p&gt;
+&lt;h1 class=&amp;quot;num&amp;quot; style=&amp;quot;font-size:clamp(2rem,6vw,4rem);margin-top:16px&amp;quot;&gt;BLOCK 21,408,331&lt;/h1&gt;
+&lt;p style=&amp;quot;margin-top:16px&amp;quot;&gt;Every satoshi accounted for. Every hash verifiable. The ledger speaks for itself — we just display it honestly.&lt;/p&gt;
+&lt;a class=&amp;quot;btn num&amp;quot; href=&amp;quot;#features&amp;quot;&gt;explore blocks →&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Verified from genesis&lt;/h3&gt;&lt;p&gt;Full-node archival data. Re-run any query back to block zero without trusting us.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Sub-second indexing&lt;/h3&gt;&lt;p&gt;New blocks appear in the table within 400ms of finality. Flash updates, no reloads.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Raw access&lt;/h3&gt;&lt;p&gt;Every row links to raw calldata, receipts and traces. No summaries, no spin.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;num&amp;quot;&gt;0x Trust is verifiable&lt;/h2&gt;&lt;p&gt;LedgerView runs 14 independent archival nodes and cross-checks every block before it renders. If our index ever disagrees with chain state, the page shows the disagreement instead of hiding it. Precision is the product.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;num&amp;quot;&gt;query the chain_&lt;/h2&gt;&lt;a class=&amp;quot;btn num&amp;quot; href=&amp;quot;#&amp;quot;&gt;open explorer →&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Ledger. All rights reserved.&lt;/span&gt;&lt;span&gt;block time 12.0s · p2p peers 1,204 · chain OK&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

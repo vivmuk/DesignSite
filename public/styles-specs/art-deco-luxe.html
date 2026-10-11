@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Art Deco Luxe — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Jost&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14110E;--surface:#1E1913;--fg:#F3E9D2;--muted:#9C8A63;--accent:#C9A227;--accent2:#E8D9A8;--border:#3A3226}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Jost',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cinzel',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Art Deco Luxe</h1><div class="tagline">Gatsby gold on black, symmetry as luxury.</div>
+<div class="meta"><span class="tag">classic</span><span class="tag">hotels</span><span class="tag">events</span><span class="tag">luxury goods</span><span class="tag">animated-svg-icons</span><span class="tag">text-mask-reveal</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/art-deco-luxe.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/art-deco-luxe.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/art-deco-luxe.png" alt="Art Deco Luxe preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#14110E"></div><code>bg: #14110E</code></div><div class="sw"><div class="chip" style="background:#1E1913"></div><code>surface: #1E1913</code></div><div class="sw"><div class="chip" style="background:#F3E9D2"></div><code>fg: #F3E9D2</code></div><div class="sw"><div class="chip" style="background:#9C8A63"></div><code>muted: #9C8A63</code></div><div class="sw"><div class="chip" style="background:#C9A227"></div><code>accent: #C9A227</code></div><div class="sw"><div class="chip" style="background:#E8D9A8"></div><code>accent2: #E8D9A8</code></div><div class="sw"><div class="chip" style="background:#3A3226"></div><code>border: #3A3226</code></div><p><code>linear-gradient(135deg,#C9A227 0%,#F3E9D2 50%,#C9A227 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cinzel</p><p><strong>Body:</strong> Jost</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Engraved caps display with geometric deco body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cinzel&family=Jost&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Sunburst Draw</strong></td><td>SVG sunburst rays stroke-draw 1s ease-out on hero enter, staggered 40ms per ray.</td></tr><tr><td><strong>Gold Shimmer Sweep</strong></td><td>Headlines carry a gradient sheen sweeping left to right every 6s (background-position keyframes).</td></tr><tr><td><strong>Fade-Up Stagger</strong></td><td>Content blocks fade up 24px, 700ms ease-out, 120ms stagger (GSAP ScrollTrigger).</td></tr><tr><td><strong>Marquee Monogram</strong></td><td>Footer monogram strip scrolls infinitely at 30px/s, pausing on hover.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Stepped ziggurat borders</li><li>Sunburst fan motifs</li><li>Gold hairline frames around images</li><li>Monogram crests</li><li>Letter-spaced engraved capitals</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">pricing-tiers</span><span class="tag">faq-accordion</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP + DrawSVGPlugin</span><span class="tag">pure CSS gradients</span><span class="tag">SVG ornaments</span><span class="tag">Lottie for micro-animations</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A near-black stage with champagne-gold ornament: stepped borders, sunburst motifs, engraved capitals, and perfect bilateral symmetry. Use it for boutique hotels, galas, and luxury goods. Distinctive because restraint and opulence are balanced to the millimeter — every flourish is symmetric.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a luxury hotel / event site in the Art Deco Luxe style — Gatsby gold, bilateral symmetry, candlelit restraint.
+LOOK: Palette — bg #14110E, surface #1E1913, fg #F3E9D2, muted #9C8A63, accent #C9A227, accent2 #E8D9A8, border #3A3226; gradient linear-gradient(135deg,#C9A227,#F3E9D2,#C9A227) reserved for text sheens and dividers. Load fonts via https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Jost:wght@300;400;500&amp;display=swap — Cinzel engraved caps for display (letter-spacing .12em), Jost for body. All hero and section headings centered; body copy centered or justified.
+LAYOUT: (1) nav — centered links flanking a monogram crest, hairline gold bottom border; (2) hero — SVG sunburst behind the headline, engraved capitals, two gold-outline buttons; (3) stepped-border suite cards (pricing-tiers style) with gold-framed imagery; (4) experience story section; (5) FAQ accordion with chevron ornaments; (6) reservation CTA; (7) footer-mega with a monogram marquee strip.
+MOTION: GSAP + DrawSVG — sunburst rays draw 1s ease-out, 40ms stagger; headline sheen sweeps via background-position keyframes every 6s; content fades up 24px, 700ms, 120ms stagger; monogram marquee 30px/s pausing on hover.
+SIGNATURE: Stepped ziggurat borders on cards and section rules; the sunburst motif recurring in nav, hero, and footer; letter-spaced engraved capitals everywhere.
+CONSTRAINTS: Semantic HTML, focus-visible outlines in #C9A227, AA contrast (#F3E9D2 on #14110E passes; never set #9C8A63 below 1rem), responsive to single column under 720px, SVG ornaments under 20KB total.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/art-deco-luxe/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/art-deco-luxe/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Hôtel Aurelle — Art Deco Luxe&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Jost:wght@300;400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#14110E;--surface:#1E1913;--fg:#F3E9D2;--muted:#9C8A63;--accent:#C9A227;--accent2:#E8D9A8;--border:#3A3226;--grad:linear-gradient(135deg,#C9A227 0%,#F3E9D2 50%,#C9A227 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&amp;quot;Jost&amp;quot;,sans-serif;line-height:1.6}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&amp;quot;Cinzel&amp;quot;,serif;font-weight:700;font-size:1.2rem;color:var(--fg);text-decoration:none;letter-spacing:.02em}
+nav a{margin-left:22px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+nav .cta-link{color:var(--accent);font-weight:600}
+.hero{padding:96px 0 72px}
+.kicker{color:var(--accent);font-weight:600;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-family:&amp;quot;Cinzel&amp;quot;,serif;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.08;letter-spacing:-.02em;max-width:820px}
+.hero .lede{max-width:600px;margin:22px 0 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:13px 30px;background:var(--accent);color:#fff;border-radius:2px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--accent) 35%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.section-h{font-family:&amp;quot;Cinzel&amp;quot;,serif;font-size:2rem;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&amp;quot;Cinzel&amp;quot;,serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:80px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&amp;quot;Cinzel&amp;quot;,serif;font-size:1.9rem;margin-bottom:18px}
+.about p{color:var(--muted);max-width:680px;margin-bottom:14px}
+.cta{padding:88px 0;text-align:center}
+.cta h2{font-family:&amp;quot;Cinzel&amp;quot;,serif;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px}
+.cta p{color:var(--muted);max-width:560px;margin:0 auto 28px}
+footer{border-top:1px solid var(--border);padding:34px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer h4{font-family:&amp;quot;Cinzel&amp;quot;,serif;color:var(--fg);margin-bottom:8px;font-size:.95rem}
+footer nav a{display:block;margin:0 0 6px}
+
+.ziggurat{height:12px;background:repeating-linear-gradient(90deg,var(--accent) 0 14px,var(--bg) 14px 28px);border-block:1px solid var(--accent)}
+.sunburst{width:96px;height:48px;margin:0 auto 20px;background:conic-gradient(from -90deg at 50% 100%,var(--accent) 0deg 6deg,var(--bg) 6deg 14deg,var(--accent) 14deg 20deg,var(--bg) 20deg 28deg,var(--accent) 28deg 34deg,var(--bg) 34deg 42deg,var(--accent) 42deg 48deg,var(--bg) 48deg 56deg,var(--accent) 56deg 62deg,var(--bg) 62deg 70deg,var(--accent) 70deg 76deg,var(--bg) 76deg 84deg);border-radius:96px 96px 0 0/48px 48px 0 0}
+.gold-frame{position:relative;background:var(--surface);border:1px solid var(--border);padding:28px}
+.gold-frame::before{content:&#x27;&#x27;;position:absolute;inset:6px;border:1px solid var(--accent);pointer-events:none;transition:inset .3s ease}
+.gold-frame:hover::before{inset:2px}
+.gold-frame h3{font-family:var(--font-display);font-weight:600;letter-spacing:.06em;color:var(--accent2);font-size:1.2rem;text-transform:uppercase;margin-bottom:.6rem}
+.gold-frame p{color:var(--muted)}
+.hero h1{color:var(--fg)}
+.btn{background:transparent;border:1px solid var(--accent);color:var(--accent);letter-spacing:.14em;text-transform:uppercase}
+.btn:hover{background:var(--accent);color:var(--bg)}
+.kicker{font-family:var(--font-display);letter-spacing:.3em;text-transform:uppercase;font-size:.8rem;color:var(--accent)}
+
+.sunburst{height:90px;margin:0 auto 1.5rem;width:min(420px,80%);background:repeating-conic-gradient(from -90deg at 50% 100%,var(--accent) 0deg 3deg,transparent 3deg 9deg);opacity:.5}
+.hero,footer{text-align:center}
+.hero h1{background:linear-gradient(135deg,#C9A227 0%,#F3E9D2 50%,#C9A227 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:sheen 6s ease-in-out infinite;letter-spacing:.06em}
+@keyframes sheen{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
+.card{background:var(--surface);border:1px solid var(--border);position:relative}
+.card::before{content:&amp;quot;&amp;quot;;position:absolute;inset:6px;border:1px solid var(--accent);pointer-events:none;clip-path:polygon(0 0,100% 0,100% 65%,92% 65%,92% 100%,0 100%)}
+.btn{border-radius:0;border:1px solid var(--accent);color:var(--accent)}
+.btn-primary{background:transparent;color:var(--accent)}
+.btn-primary:hover{background:var(--accent);color:var(--bg);box-shadow:none}
+.logo,.card h3{letter-spacing:.12em}
+.suite-price{font-size:2rem;color:var(--accent);font-family:var(--font-display)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.stats-band{grid-template-columns:repeat(2,1fr)}.side-cap{display:none}.tategaki{display:none}.hero{padding:64px 0 48px}.cols{column-count:1}nav a{margin-left:12px}footer .cols3{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;HÔTEL AURELLE&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Suites&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;Dining&lt;/a&gt;&lt;a href=&amp;quot;#journal&amp;quot;&gt;Events&lt;/a&gt;&lt;a class=&amp;quot;cta-link&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Reserve&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;sunburst&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;ziggurat&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+
+&lt;p class=&amp;quot;kicker&amp;quot;&gt;Est. 1929 · Rue de la Paix&lt;/p&gt;
+&lt;h1&gt;An Evening in Gold and Geometry.&lt;/h1&gt;
+&lt;p class=&amp;quot;lede&amp;quot;&gt;Thirty-eight suites behind a façade of black marble and brass. Candlelit dinners, a jazz salon, and stairs built for arriving slowly.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#features&amp;quot;&gt;View suites&lt;/a&gt;&lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;The salon&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;section-h&amp;quot;&gt;The house offers&lt;/h2&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Grand Suite&lt;/h3&gt;&lt;p&gt;Ninety square meters of walnut, velvet, and stepped moldings.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Jazz Salon&lt;/h3&gt;&lt;p&gt;Live quartet Thursday through Sunday, midnight cap recommended.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Private Dining&lt;/h3&gt;&lt;p&gt;A twelve-seat table behind an unmarked brass door.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;A house of symmetry&lt;/h2&gt;&lt;p&gt;Everything here mirrors: the sconces, the staircases, the way the maître d&#x27; greets you. Symmetry is our form of hospitality — nothing accidental, nothing missed.&lt;/p&gt;&lt;p&gt;Restored over four years to its 1929 drawings, the hotel keeps its stepped cornices, its fanlights, and its opinions about hats indoors.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Reserve your evening&lt;/h2&gt;&lt;p&gt;Suites from €420 nightly. The salon is complimentary for guests, legendary for everyone else.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Check availability&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot; style=&amp;quot;font-size:1rem&amp;quot;&gt;HÔTEL AURELLE&lt;/a&gt;&lt;p style=&amp;quot;margin-top:6px&amp;quot;&gt;Symmetry is our hospitality&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;cols3&amp;quot; style=&amp;quot;display:grid;grid-template-columns:repeat(3,auto);gap:32px&amp;quot;&gt;
+&lt;nav&gt;&lt;h4&gt;Stay&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Suites&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Rates&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Offers&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;Dine&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Restaurant&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Salon&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Cellar&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;House&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;History&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Events&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Contact&lt;/a&gt;&lt;/nav&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" sandbox="allow-same-origin"></iframe>
+</div></body></html>

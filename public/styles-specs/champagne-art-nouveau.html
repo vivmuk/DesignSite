@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Champagne Art Nouveau — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7EFDC;--surface:#FDFAF1;--fg:#3B2E1E;--muted:#93855F;--accent:#B98A2F;--accent2:#6E7F4E;--border:#E3D5B4}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Cormorant Garamond',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cinzel Decorative',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Champagne Art Nouveau</h1><div class="tagline">Whiplash lines, gold on cream, Mucha ornament</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">spirits</span><span class="tag">cosmetics</span><span class="tag">weddings</span><span class="tag">svg-draw-on-scroll</span><span class="tag">animated-svg-icons</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/champagne-art-nouveau.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/champagne-art-nouveau.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/champagne-art-nouveau.png" alt="Champagne Art Nouveau preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F7EFDC"></div><code>bg: #F7EFDC</code></div><div class="sw"><div class="chip" style="background:#FDFAF1"></div><code>surface: #FDFAF1</code></div><div class="sw"><div class="chip" style="background:#3B2E1E"></div><code>fg: #3B2E1E</code></div><div class="sw"><div class="chip" style="background:#93855F"></div><code>muted: #93855F</code></div><div class="sw"><div class="chip" style="background:#B98A2F"></div><code>accent: #B98A2F</code></div><div class="sw"><div class="chip" style="background:#6E7F4E"></div><code>accent2: #6E7F4E</code></div><div class="sw"><div class="chip" style="background:#E3D5B4"></div><code>border: #E3D5B4</code></div><p><code>linear-gradient(160deg,#F7EFDC 0%,#F2E4C4 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cinzel Decorative</p><p><strong>Body:</strong> Cormorant Garamond</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Ornamental capitals with flowing old-style serif body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Vine draw</strong></td><td>Ornamental border vines draw on over 2s ease-in-out, stroke-dashoffset, when frame enters viewport</td></tr><tr><td><strong>Petal sway</strong></td><td>Botanical corner ornaments sway rotate ±2° over 5s ease-in-out infinite</td></tr><tr><td><strong>Gold shimmer</strong></td><td>Accent text shimmer sweeps via background-position 3s ease-in-out every 6s</td></tr><tr><td><strong>Arch reveal</strong></td><td>Arched image frames unmask with clip-path ellipse expanding 700ms cubic-bezier(0.65,0,0.35,1)</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Arched (window-frame) image masks with gold outlines</li><li>Whiplash corner ornaments in SVG drawn on scroll</li><li>Floral swash capital opening each paragraph</li><li>Medallion badges with laurel wreath borders</li><li>Letter-spaced small caps with ornamental dividers</li><li>Botanical border framing the entire page</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">product-card</span><span class="tag">timeline</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG stroke-dashoffset draw-on-scroll</span><span class="tag">GSAP ScrollTrigger</span><span class="tag">pure CSS clip-path arch masks</span><span class="tag">Lottie ornamental flourishes</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Alphonse Mucha energy for the web: whiplash organic lines in gold, arched frames, botanical ornament, and cream fields that feel like vintage champagne labels. Serif display with floral swash capitals. Every corner blooms; symmetry and ornament are the brand.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are an ornamental web artisan. Build a single-page champagne/spirits site in the Champagne Art Nouveau style.
+
+LOOK: Cream bg #F7EFDC, lighter surface #FDFAF1, warm ink #3B2E1E, muted gold #93855F, gold accent #B98A2F, botanical sage #6E7F4E, border #E3D5B4, soft cream gradient `linear-gradient(160deg,#F7EFDC,#F2E4C4)`. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Cinzel Decorative for display capitals, Cormorant Garamond for body.
+
+LAYOUT: 1) Nav with medallion wordmark center. 2) Hero: arched image mask of the bottle, ornamental corners, headline in decorated capitals. 3) Heritage timeline as vertical vine with node medallions. 4) Cuvée product cards in arched frames. 5) Tasting-notes section with botanical dividers. 6) Ceremonial CTA band. 7) Ornamental footer with gold rule crest.
+
+MOTION: SVG vines draw on over 2s ease-in-out via stroke-dashoffset (ScrollTrigger). Corner botanicals sway ±2° over 5s infinite. Gold shimmer sweeps background-position 3s every 6s on accent text. Arched frames unmask via expanding clip-path ellipse, 700ms cubic-bezier(0.65,0,0.35,1).
+
+SIGNATURE: (a) arched window-frame image masks with double gold outline, (b) floral swash capital at each section opening, (c) laurel medallion badges.
+
+CONSTRAINTS: Semantic HTML, AA contrast (ink on cream passes; gold only for large text/decor), responsive: arches keep aspect-ratio, border ornament hidden under 480px; SVG ornaments inline for zero requests; reduced-motion stops sway/shimmer.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/champagne-art-nouveau/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/champagne-art-nouveau/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Clos Fleuri — Champagnes&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Cinzel+Decorative&amp;family=Cormorant+Garamond:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#F7EFDC; --surface:#FDFAF1; --fg:#3B2E1E; --muted:#93855F;
+  --accent:#B98A2F; --accent2:#6E7F4E; --border:#E3D5B4;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Cormorant Garamond&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Cinzel Decorative&#x27;,Georgia, serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Cinzel Decorative&#x27;,Georgia, serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#111111; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw; }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Cinzel Decorative&#x27;,Georgia, serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#3B2E1E; color:#F7EFDC; text-align:center; }
+.cta .btn { background:#6E7F4E; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;CLOS FLEURI&lt;/span&gt;
+  &lt;nav&gt;Cuvées&lt;br&gt;Vines&lt;br&gt;Maison&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Est. 1874&lt;/span&gt;
+  &lt;h1&gt;The vine writes in gold&lt;/h1&gt;
+  &lt;p&gt;Three cuvées from a single walled vineyard, drawn in whiplash lines and aged on lees far longer than fashion requires.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Taste the Cuvées&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;The cellars&lt;/span&gt;
+  &lt;h2&gt;Our offerings&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Cuvée Fleuri&lt;/h3&gt;&lt;p&gt;Chardonnay alone. Six years on lees. White flowers and chalk.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Cuvée Ombelle&lt;/h3&gt;&lt;p&gt;Pinot Noir in the rose. A whiplash of red currant.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Cuvée Centenaire&lt;/h3&gt;&lt;p&gt;From the 1902 walled parcel. Released in decades only.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;The Maison&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;1874&lt;/b&gt;&lt;br&gt;&lt;span&gt;Founded&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;6y&lt;/b&gt;&lt;br&gt;&lt;span&gt;Minimum lees age&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;1&lt;/b&gt;&lt;br&gt;&lt;span&gt;Walled vineyard&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;A tasting in the orangery&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Private visits by appointment, Thursday to Sunday.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Book a Tasting&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 CLOS FLEURI. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Contact · Trade · Provenance&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

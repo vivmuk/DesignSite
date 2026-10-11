@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metaball Gooey Nav — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Baloo+2&family=Nunito&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF6F0;--surface:#FFFFFF;--fg:#2B2140;--muted:#8A7FA8;--accent:#7B5CFF;--accent2:#FF8AC2;--border:#EBE0F5}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Baloo 2',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Metaball Gooey Nav</h1><div class="tagline">Nav items that melt, merge and bounce like goo.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">creative tools</span><span class="tag">kids brands</span><span class="tag">music</span><span class="tag">metaball-gooey-blob</span><span class="tag">physics-spring-motion</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/metaball-gooey-nav.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/metaball-gooey-nav.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/metaball-gooey-nav.png" alt="Metaball Gooey Nav preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFF6F0"></div><code>bg: #FFF6F0</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2B2140"></div><code>fg: #2B2140</code></div><div class="sw"><div class="chip" style="background:#8A7FA8"></div><code>muted: #8A7FA8</code></div><div class="sw"><div class="chip" style="background:#7B5CFF"></div><code>accent: #7B5CFF</code></div><div class="sw"><div class="chip" style="background:#FF8AC2"></div><code>accent2: #FF8AC2</code></div><div class="sw"><div class="chip" style="background:#EBE0F5"></div><code>border: #EBE0F5</code></div><p><code>radial-gradient(700px 400px at 20% 10%, rgba(255,138,194,0.25), transparent 60%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Baloo 2</p><p><strong>Body:</strong> Nunito</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Round-friendly pairing that matches the gooey forms.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Baloo+2&family=Nunito&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>gooey-merge</strong></td><td>SVG goo filter (blur+contrast) makes hover pills merge with a 250ms blob transition.</td></tr><tr><td><strong>spring-stretch</strong></td><td>Buttons squash/stretch (scaleX 1.15, scaleY .9) on press, spring back 400ms elastic.</td></tr><tr><td><strong>blob-loader</strong></td><td>Loader is 3 metaballs orbiting a center point, 1.4s linear infinite.</td></tr><tr><td><strong>wobble-idle</strong></td><td>Hero blob slowly morphs border-radius between organic shapes, 8s ease-in-out infinite.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Gooey SVG-filter nav merge</li><li>Squash-and-stretch buttons</li><li>Liquid blob hero shapes</li><li>Metaball loading animation</li><li>Rounded everything (24px+)</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">hero-section</span><span class="tag">product-card</span><span class="tag">toast-system</span><span class="tag">onboarding-steps</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG gooey filter (feGaussianBlur+feColorMatrix)</span><span class="tag">CSS keyframe morphing</span><span class="tag">spring easing curves</span><span class="tag">no framework needed</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Interface elements are gooey SVG-metaball blobs: nav pills merge when hovered, buttons split with spring physics, loaders wobble like liquid. Saturated but soft, rounded and elastic everywhere. For creative tools, kids brands and music products that hug.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a creative-tool landing page in the Metaball Gooey Nav style — everything melts, merges and bounces with liquid physics.
+LOOK: warm cream #FFF6F0 background with a soft pink radial wash; surfaces white #FFFFFF, borders #EBE0F5; text #2B2140, muted #8A7FA8; goo colors are #7B5CFF and #FF8AC2. Import: https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&amp;family=Nunito:wght@400;600;700&amp;display=swap. Corners never drop below 24px radius; shadows are soft and colored, never gray.
+LAYOUT: gooey pill nav where hovering a link makes adjacent pills bulge toward it (SVG goo filter: feGaussianBlur stdDeviation 10 + feColorMatrix contrast); hero with a large morphing blob behind the headline; product cards that wobble on hover; onboarding steps as connected droplets; a metaball loader demo section; footer with rounded link blobs.
+MOTION: nav merge uses the goo filter with a 250ms transition; buttons squash to scaleX(1.15)/scaleY(.9) on press and spring back 400ms with elastic easing; the hero blob morphs border-radius between organic shapes every 8s ease-in-out infinite; loader is three metaballs orbiting a center, 1.4s linear infinite.
+SIGNATURE: (1) adjacent nav pills visibly merge like mercury; (2) squash-and-stretch on every press; (3) the ever-morphing hero blob.
+CONSTRAINTS: goo filter can be GPU-heavy — apply only to nav and small elements, never full sections; provide non-goo fallback under prefers-reduced-motion; semantic nav/ul/li structure; contrast at least 4.5:1 (#2B2140 on cream passes); test on Safari where feColorMatrix needs explicit values.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/metaball-gooey-nav/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/metaball-gooey-nav/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Metaball Gooey Nav&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&amp;family=Nunito:wght@400;600;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#FFF6F0;--surface:#FFFFFF;--fg:#2B2140;--muted:#8A7FA8;--accent:#7B5CFF;--accent2:#FF8AC2;--border:#EBE0F5;--grad:radial-gradient(700px 400px at 20% 10%, rgba(255,138,194,0.25), transparent 60%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Nunito&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#FFF6F0;border-radius:32px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:32px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Baloo 2&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+h1,h2,.logo,.btn,.card h3{font-family:&#x27;Baloo 2&#x27;,sans-serif}
+.blob{position:absolute;top:-40px;right:-60px;width:420px;height:420px;background:radial-gradient(circle at 35% 35%,#FF8AC2,#7B5CFF 70%);border-radius:62% 38% 55% 45%/55% 48% 52% 45%;animation:morph 8s ease-in-out infinite;opacity:.85;filter:blur(2px)}
+@keyframes morph{0%,100%{border-radius:62% 38% 55% 45%/55% 48% 52% 45%}33%{border-radius:45% 55% 38% 62%/48% 62% 38% 52%}66%{border-radius:55% 45% 62% 38%/38% 55% 45% 62%}}
+.hero{position:relative;overflow:hidden}
+.btn:active{transform:scaleX(1.15) scaleY(.9)}
+.loader{display:inline-flex;gap:6px}
+.loader span{width:14px;height:14px;border-radius:50%;background:var(--accent);animation:orbit 1.4s linear infinite}
+.loader span:nth-child(2){animation-delay:.2s;background:var(--accent2)}
+.loader span:nth-child(3){animation-delay:.4s}
+@keyframes orbit{50%{transform:translateY(-10px)}}
+.drops{display:flex;align-items:center;gap:0}
+.drop{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#FFF6F0;display:grid;place-items:center;font-weight:700;margin-right:-10px}
+.drop.link{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Metaball&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;blob&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;text-align:left;padding:90px 0 70px;position:relative&amp;quot;&gt;&lt;h1 style=&amp;quot;font-size:clamp(2.4rem,6vw,4.2rem)&amp;quot;&gt;Ideas deserve&lt;br/&gt;squishy tools&lt;/h1&gt;
+&lt;p style=&amp;quot;max-width:480px&amp;quot;&gt;Blob Studio is the drawing app where every tool bends with you — literally. Made for kids 6–106.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Try it free&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Wobble brush&lt;/h3&gt;&lt;p&gt;Strokes with actual weight and bounce. Physics-based, endlessly fun. &lt;span class=&amp;quot;loader&amp;quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Merge layers&lt;/h3&gt;&lt;p&gt;Drag two layers together and watch them goo into one. Undo always works.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Parent-safe&lt;/h3&gt;&lt;p&gt;No ads, no external links, one honest subscription. Certified boring for grown-ups.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Soft where it counts&lt;/h2&gt;&lt;p&gt;Blob Studio started when our founder&#x27;s daughter asked why drawing apps felt like spreadsheets. Three years later: 2 million young artists, zero dark patterns, and the squishiest undo button on the internet.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Get squishing.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Download free — iPad &amp;amp; Mac&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Metaball. All rights reserved.&lt;/span&gt;&lt;span&gt;COPPA compliant · 2M artists · Made with love and goo&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

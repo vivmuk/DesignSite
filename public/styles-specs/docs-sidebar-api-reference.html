@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Docs Sidebar API Reference — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--surface:#F7F8FA;--fg:#101828;--muted:#667085;--accent:#7C3AED;--accent2:#0E9384;--border:#E7EAF0}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Sora',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Docs Sidebar API Reference</h1><div class="tagline">Persistent sidebar, scrollspy TOC, try-it console</div>
+<div class="meta"><span class="tag">component-kit</span><span class="tag">APIs</span><span class="tag">developer tools</span><span class="tag">open source</span><span class="tag">scroll-driven-animations</span><span class="tag">command-palette-focus</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/docs-sidebar-api-reference.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/docs-sidebar-api-reference.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/docs-sidebar-api-reference.png" alt="Docs Sidebar API Reference preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>bg: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#F7F8FA"></div><code>surface: #F7F8FA</code></div><div class="sw"><div class="chip" style="background:#101828"></div><code>fg: #101828</code></div><div class="sw"><div class="chip" style="background:#667085"></div><code>muted: #667085</code></div><div class="sw"><div class="chip" style="background:#7C3AED"></div><code>accent: #7C3AED</code></div><div class="sw"><div class="chip" style="background:#0E9384"></div><code>accent2: #0E9384</code></div><div class="sw"><div class="chip" style="background:#E7EAF0"></div><code>border: #E7EAF0</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Sora</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Sora headers, Inter prose, Plex Mono code</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Sora&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>scrollspy rail</strong></td><td>TOC active dot glides to the current heading over 200ms ease-out, heading text bolds 150ms</td></tr><tr><td><strong>sidebar branch</strong></td><td>nav tree branches expand max-height over 220ms ease-out with 30ms item stagger</td></tr><tr><td><strong>code tab slide</strong></td><td>code tabs crossfade with a 4px upward slide, 200ms ease</td></tr><tr><td><strong>response pop</strong></td><td>try-it console response panel fades in with 150ms ease and a left accent bar</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>persistent left sidebar tree with active state</li><li>right-rail scrollspy TOC</li><li>code tabs with language + copy buttons</li><li>parameter tables with type badges</li><li>embedded try-it console</li><li>method badges (GET/POST) color-coded</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">tab-system</span><span class="tag">breadcrumb</span><span class="tag">command-palette</span><span class="tag">data-table</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">IntersectionObserver scrollspy</span><span class="tag">CSS max-height tree animations</span><span class="tag">Prism.js for code highlighting</span><span class="tag">Google Fonts (Sora, Inter, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A documentation kit that developers trust: persistent sidebar tree, right-rail TOC with scrollspy, code tabs with copy buttons, parameter tables, and an embedded try-it console that actually fires requests. For APIs, developer tools, and open source. The signature is precision density — every pixel of the reading column works.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page API documentation site in the Docs Sidebar API Reference style. LOOK: background #FFFFFF, panels #F7F8FA, text #101828, muted #667085, accents #7C3AED (violet) and #0E9384 (teal), border #E7EAF0. Load https://fonts.googleapis.com/css2?family=Sora:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap — Sora for headings, Inter for prose, IBM Plex Mono for code. LAYOUT: three-zone shell — (1) persistent left sidebar tree of endpoints with expandable branches and active state; (2) center reading column: breadcrumb, Sora endpoint title with method badge (GET green, POST violet), description, parameter table with type badges, code tabs (cURL/JS/Python) with copy buttons, response schema block; (3) right-rail TOC with scrollspy. Below the fold: an embedded try-it console — method + URL row, send button, and a response panel showing JSON. MOTION: the TOC active dot glides to the current heading over 200ms ease-out while heading text bolds in 150ms; sidebar branches expand with max-height 220ms and 30ms item stagger; code tabs crossfade with a 4px upward slide over 200ms; the console response fades in with a left accent bar in 150ms. SIGNATURE: (a) scrollspy TOC rail, (b) try-it console, (c) color-coded method badges. CONSTRAINTS: semantic HTML (nav/aside/main, table for params), keyboard-navigable tabs and tree, 4.5:1 contrast, sidebar collapses below 900px into a details drawer, Prism.js only dependency.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/docs-sidebar-api-reference/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/docs-sidebar-api-reference/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Pulsar API — Reference&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Sora:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#FFFFFF; --surface:#F7F8FA; --fg:#101828; --muted:#667085;
+  --accent:#7C3AED; --accent2:#0E9384; --border:#E7EAF0;
+  --grad:none;
+  --display:&#x27;Sora&#x27;, serif; --body:&#x27;Inter&#x27;, sans-serif;
+  --mono:&#x27;IBM Plex Mono&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.code-demo{max-width:420px;margin:0 auto;text-align:left;background:#101828;border-radius:10px;overflow:hidden}.ctabs{display:flex;gap:2px;padding:8px 10px 0;background:#0B1120}.ct{font-family:var(--mono);font-size:.72rem;padding:6px 12px;border-radius:6px 6px 0 0;color:#667085}.ct.active{background:#101828;color:#7C3AED}.code-demo pre{margin:0;padding:14px;font-family:var(--mono);font-size:.78rem;color:#D9E2EC;line-height:1.5}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;Pulsar API&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Docs&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Reference&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Changelog&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Support&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Get API Key&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;v2.4 · REST + Webhooks&lt;/p&gt;
+    &lt;h1&gt;Authentication&lt;/h1&gt;
+    &lt;p&gt;Every request needs a bearer token. Keys are scoped per environment and rotate gracefully.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Try it&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;View schemas&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;code-demo&amp;quot;&gt;&lt;div class=&amp;quot;ctabs&amp;quot;&gt;&lt;span class=&amp;quot;ct active&amp;quot;&gt;cURL&lt;/span&gt;&lt;span class=&amp;quot;ct&amp;quot;&gt;JavaScript&lt;/span&gt;&lt;span class=&amp;quot;ct&amp;quot;&gt;Python&lt;/span&gt;&lt;/div&gt;&lt;pre&gt;curl https://api.pulsar.dev/v2/pings -H &amp;quot;Authorization: Bearer pk_live_…&amp;quot;&lt;/pre&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Scoped keys&lt;/h3&gt;&lt;p&gt;Per-environment tokens with rotation.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Live console&lt;/h3&gt;&lt;p&gt;Fire real requests from the page.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;OpenAPI synced&lt;/h3&gt;&lt;p&gt;Reference generated from the spec.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Built for reading&lt;/h2&gt;
+    &lt;p&gt;Copy-ready examples in three languages, live console, and parameter tables that stay in sync with the OpenAPI spec.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Get your key&lt;/h2&gt;
+      &lt;p&gt;Sandbox is free forever.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Pulsar&lt;/span&gt;
+  &lt;span&gt;APIs · Developer tools · Open source&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

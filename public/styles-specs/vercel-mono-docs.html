@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vercel Mono Docs — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Geist+Mono&family=Geist+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000000;--surface:#0A0A0A;--fg:#FFFFFF;--muted:#888888;--accent:#FFFFFF;--accent2:#EAEAEA;--border:#333333}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Geist Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Geist Mono',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Vercel Mono Docs</h1><div class="tagline">Black, white, mono. Nothing else survives.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">docs</span><span class="tag">APIs</span><span class="tag">infra</span><span class="tag">command-palette-focus</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/vercel-mono-docs.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/vercel-mono-docs.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/vercel-mono-docs.png" alt="Vercel Mono Docs preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#000000"></div><code>bg: #000000</code></div><div class="sw"><div class="chip" style="background:#0A0A0A"></div><code>surface: #0A0A0A</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>fg: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#888888"></div><code>muted: #888888</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>accent: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#EAEAEA"></div><code>accent2: #EAEAEA</code></div><div class="sw"><div class="chip" style="background:#333333"></div><code>border: #333333</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Geist Mono</p><p><strong>Body:</strong> Geist Mono</p>
+<p><strong>Monospace:</strong> Geist Mono</p><p class="tagline">One mono face carries the entire page.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Geist+Mono&family=Geist+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>cursor-blink-headings</strong></td><td>Section headings end with a mono block cursor blinking 1.06s steps(2) infinite — the only &#x27;decoration&#x27; on the page.</td></tr><tr><td><strong>link-underline-slide</strong></td><td>Links carry a 1px underline that grows from left 0→100% over 160ms linear on hover; color never changes.</td></tr><tr><td><strong>copy-flash-confirm</strong></td><td>Code-block copy button swaps label to &#x27;COPIED&#x27; for 1.2s with no animation — instant swap, instant revert.</td></tr><tr><td><strong>section-reveal-fade</strong></td><td>Sections fade+rise 8px over 220ms ease-out when IntersectionObserver crosses 10% visibility; fires once.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Single monospace voice for all text</li><li>$ prompt-prefixed command lines</li><li>ASCII-fence code blocks with filename headers</li><li>Black/white only — color exists nowhere</li><li>Block cursor after section headings</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">command-palette</span><span class="tag">nav-bar</span><span class="tag">data-table</span><span class="tag">faq-accordion</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Geist Mono webfont</span><span class="tag">vanilla JS copy buttons</span><span class="tag">IntersectionObserver reveals</span><span class="tag">pure CSS, zero framework</span><span class="tag">View-source-friendly semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Documentation reduced to its atoms: pure black, pure white, and a single monospace voice carrying every heading, paragraph and terminal block. Zero decoration, zero color — hierarchy comes entirely from weight, size and spacing. Built for API docs, infrastructure products and developer platforms where clarity is the whole brand.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building documentation for an infrastructure API in the Vercel Mono Docs style — monochrome, monospace-only, ruthlessly minimal.
+LOOK: pure #000000 background, #0A0A0A code surfaces, white #FFFFFF headings, #888888 body text, #333333 hairline borders. NO accent color exists — hierarchy comes from size, weight and spacing only. Import fonts: https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;display=swap — Geist Mono is the display, body AND mono face; set body at 15px/1.7, headings at -0.02em tracking.
+LAYOUT: 56px top bar with wordmark left, ⌘K search trigger right; below, a 3-pane docs shell — 220px mono TOC list, fluid article column (max 720px), 200px right rail of section anchors; article anatomy: h2 sections with block-cursor suffix, code fences with filename header bars ($ deploy.config.yaml), parameter tables with 1px #333333 row rules, callout blocks prefixed &#x27;NOTE:&#x27;. Marketing hero is optional; when present keep it three mono lines and one white button.
+MOTION: deliberately sparse — link underlines grow left-to-right 160ms linear; copy buttons swap label instantly (no fade) and revert after 1.2s; sections fade+rise 8px over 220ms ease-out via IntersectionObserver, firing once; heading cursors blink 1.06s steps(2) infinite. No transforms beyond the reveal, no easing curves beyond linear/ease-out.
+SIGNATURE: (1) every text element in the same mono face; (2) $ prompt-prefixed terminal blocks with filename bars; (3) blinking block cursor terminating h2s; (4) pure black-white discipline — audit and reject any color.
+CONSTRAINTS: semantic HTML (nav, main, article, aside); WCAG AAA body contrast (#888888 on black is 7:1+ — verify); keyboard-first TOC navigation; responsive: rails collapse under 900px, article goes full-width with sticky top bar under 640px; prefers-reduced-motion kills blinks and reveals; zero images, zero icon fonts — ASCII glyphs only; ship under 10KB CSS+JS.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/vercel-mono-docs/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/vercel-mono-docs/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;gridplane — API Docs&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#000;--surface:#0A0A0A;--fg:#fff;--muted:#888;--accent:#fff;--accent2:#EAEAEA;--border:#333}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Geist Mono&#x27;,monospace;font-size:15px;line-height:1.7}
+a{color:var(--fg);text-decoration:none;position:relative}
+a::after{content:&#x27;&#x27;;position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--fg);transition:width .16s linear}
+a:hover::after{width:100%}
+.shell{max-width:1180px;margin:0 auto;padding:0 24px}
+header{border-bottom:1px solid var(--border)}
+header .shell{display:flex;align-items:center;height:56px;justify-content:space-between}
+.logo{font-weight:600;font-size:.9rem}
+.search{color:var(--muted);border:1px solid var(--border);padding:6px 12px;font-size:.8rem;cursor:pointer}
+.body{display:grid;grid-template-columns:220px minmax(0,720px) 200px;gap:48px;padding:48px 0}
+.toc{font-size:.8rem;color:var(--muted);position:sticky;top:24px;align-self:start}
+.toc a{display:block;padding:4px 0;color:var(--muted)}
+.toc a:hover{color:var(--fg)}
+.toc .grp{color:var(--fg);font-weight:600;margin-top:16px}
+article h1{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+article h2{font-size:1.05rem;font-weight:600;margin:40px 0 12px}
+article h2::after{content:&#x27;█&#x27;;margin-left:8px;animation:blink 1.06s steps(2) infinite;font-weight:400}
+@keyframes blink{50%{opacity:0}}
+article p{color:var(--muted);margin-bottom:14px}
+.fence{border:1px solid var(--border);border-radius:0;margin:20px 0}
+.fence .head{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);font-size:.75rem;color:var(--muted);background:var(--surface)}
+.fence pre{padding:14px;font-size:.8rem;overflow-x:auto;color:var(--fg)}
+.fence pre .p{color:var(--muted)}
+.copy{background:none;border:none;color:var(--muted);font-family:inherit;font-size:.75rem;cursor:pointer}
+.copy:hover{color:var(--fg)}
+table{width:100%;border-collapse:collapse;font-size:.8rem;margin:20px 0}
+th{text-align:left;color:var(--muted);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--border)}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted)}
+td:first-child{color:var(--fg)}
+.note{border-left:1px solid var(--fg);padding:2px 0 2px 14px;color:var(--muted);font-size:.8rem;margin:20px 0}
+.anchors{font-size:.75rem;color:var(--muted);position:sticky;top:24px;align-self:start}
+.anchors a{color:var(--muted);display:block;padding:3px 0}
+footer{border-top:1px solid var(--border);margin-top:64px}
+footer .shell{display:flex;justify-content:space-between;padding:24px 24px;color:var(--muted);font-size:.75rem;flex-wrap:wrap;gap:8px}
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .22s ease-out,transform .22s ease-out}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){.body{grid-template-columns:1fr}.toc,.anchors{position:static}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;shell&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;gridplane_&lt;/a&gt;&lt;span class=&amp;quot;search&amp;quot;&gt;⌘K — search docs&lt;/span&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;div class=&amp;quot;body shell&amp;quot;&gt;
+&lt;nav class=&amp;quot;toc&amp;quot;&gt;&lt;span class=&amp;quot;grp&amp;quot;&gt;GETTING STARTED&lt;/span&gt;&lt;a href=&amp;quot;#install&amp;quot;&gt;Installation&lt;/a&gt;&lt;a href=&amp;quot;#auth&amp;quot;&gt;Authentication&lt;/a&gt;&lt;span class=&amp;quot;grp&amp;quot;&gt;REFERENCE&lt;/span&gt;&lt;a href=&amp;quot;#deploy&amp;quot;&gt;POST /deploy&lt;/a&gt;&lt;a href=&amp;quot;#status&amp;quot;&gt;GET /status&lt;/a&gt;&lt;a href=&amp;quot;#errors&amp;quot;&gt;Error codes&lt;/a&gt;&lt;/nav&gt;
+&lt;main&gt;
+&lt;article&gt;
+&lt;h1&gt;gridplane API&lt;/h1&gt;
+&lt;p&gt;Edge-deployed compute with a two-endpoint surface. Everything below is the entire API — there is no version 2 behind a waitlist.&lt;/p&gt;
+&lt;section class=&amp;quot;reveal&amp;quot; id=&amp;quot;install&amp;quot;&gt;&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;One binary, statically linked. No runtime, no daemon.&lt;/p&gt;
+&lt;div class=&amp;quot;fence&amp;quot;&gt;&lt;div class=&amp;quot;head&amp;quot;&gt;&lt;span&gt;terminal&lt;/span&gt;&lt;button class=&amp;quot;copy&amp;quot;&gt;COPY&lt;/button&gt;&lt;/div&gt;&lt;pre&gt;&lt;span class=&amp;quot;p&amp;quot;&gt;$&lt;/span&gt; curl -fsSL gridplane.sh | sh&lt;/pre&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;reveal&amp;quot; id=&amp;quot;auth&amp;quot;&gt;&lt;h2&gt;Authentication&lt;/h2&gt;
+&lt;p&gt;Bearer token from the dashboard, scoped per environment.&lt;/p&gt;
+&lt;div class=&amp;quot;fence&amp;quot;&gt;&lt;div class=&amp;quot;head&amp;quot;&gt;&lt;span&gt;headers&lt;/span&gt;&lt;button class=&amp;quot;copy&amp;quot;&gt;COPY&lt;/button&gt;&lt;/div&gt;&lt;pre&gt;Authorization: Bearer gp_live_9f2e…&lt;/pre&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;reveal&amp;quot; id=&amp;quot;deploy&amp;quot;&gt;&lt;h2&gt;POST /deploy&lt;/h2&gt;
+&lt;p&gt;Ships a build and returns the edge assignment map.&lt;/p&gt;
+&lt;table&gt;&lt;tr&gt;&lt;th&gt;field&lt;/th&gt;&lt;th&gt;type&lt;/th&gt;&lt;th&gt;notes&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;region&lt;/td&gt;&lt;td&gt;string&lt;/td&gt;&lt;td&gt;iata code, e.g. fra&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;artifact&lt;/td&gt;&lt;td&gt;string&lt;/td&gt;&lt;td&gt;sha256 of bundle&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;drain&lt;/td&gt;&lt;td&gt;bool&lt;/td&gt;&lt;td&gt;graceful cutover, default true&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;div class=&amp;quot;note&amp;quot;&gt;NOTE: deploys are atomic. a failed health check auto-rolls back in under 2s.&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;reveal&amp;quot; id=&amp;quot;errors&amp;quot;&gt;&lt;h2&gt;Error codes&lt;/h2&gt;
+&lt;table&gt;&lt;tr&gt;&lt;th&gt;code&lt;/th&gt;&lt;th&gt;meaning&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;40901&lt;/td&gt;&lt;td&gt;artifact hash mismatch&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;40902&lt;/td&gt;&lt;td&gt;health check timeout&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/section&gt;
+&lt;/article&gt;
+&lt;/main&gt;
+&lt;aside class=&amp;quot;anchors&amp;quot;&gt;&lt;a href=&amp;quot;#install&amp;quot;&gt;↑ install&lt;/a&gt;&lt;a href=&amp;quot;#auth&amp;quot;&gt;↑ auth&lt;/a&gt;&lt;a href=&amp;quot;#deploy&amp;quot;&gt;↑ deploy&lt;/a&gt;&lt;a href=&amp;quot;#errors&amp;quot;&gt;↑ errors&lt;/a&gt;&lt;/aside&gt;
+&lt;/div&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;shell&amp;quot;&gt;&lt;span&gt;© 2026 gridplane systems&lt;/span&gt;&lt;span&gt;status: all systems nominal&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+document.querySelectorAll(&#x27;.copy&#x27;).forEach(b=&gt;b.addEventListener(&#x27;click&#x27;,()=&gt;{const o=b.textContent;b.textContent=&#x27;COPIED&#x27;;setTimeout(()=&gt;b.textContent=o,1200)}));
+const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.classList.add(&#x27;in&#x27;);io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll(&#x27;.reveal&#x27;).forEach(el=&gt;io.observe(el));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clinical White Medical — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3&family=Source+Sans+3&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFCFD;--surface:#FFFFFF;--fg:#16323B;--muted:#5E7A85;--accent:#0E7C9E;--accent2:#3BA272;--border:#D7E4EA}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Source Sans 3',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Clinical White Medical</h1><div class="tagline">Precise whites, calm teal, iconographic clarity, zero risk</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">healthtech</span><span class="tag">medtech</span><span class="tag">insurance</span><span class="tag">animated-svg-icons</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/clinical-white-medical.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/clinical-white-medical.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/clinical-white-medical.png" alt="Clinical White Medical preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FAFCFD"></div><code>bg: #FAFCFD</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#16323B"></div><code>fg: #16323B</code></div><div class="sw"><div class="chip" style="background:#5E7A85"></div><code>muted: #5E7A85</code></div><div class="sw"><div class="chip" style="background:#0E7C9E"></div><code>accent: #0E7C9E</code></div><div class="sw"><div class="chip" style="background:#3BA272"></div><code>accent2: #3BA272</code></div><div class="sw"><div class="chip" style="background:#D7E4EA"></div><code>border: #D7E4EA</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Source Sans 3</p><p><strong>Body:</strong> Source Sans 3</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Single humanist sans family, weight does the hierarchy</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Source+Sans+3&family=Source+Sans+3&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Icon draw</strong></td><td>Medical line icons (stethoscope, heart, calendar) stroke-draw 800ms ease-in-out on reveal</td></tr><tr><td><strong>Step advance</strong></td><td>Onboarding steps progress with a 300ms width-ease of the connector bar</td></tr><tr><td><strong>Status settle</strong></td><td>Status pills pop from scale 0.9 to 1 with 200ms ease-out when state changes</td></tr><tr><td><strong>Gentle float</strong></td><td>Info cards bob translateY ±4px over 6s — imperceptible reassurance</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Animated stroke-drawn medical icon set</li><li>Stepped patient-flow diagram with connector lines</li><li>Status pill system: scheduled/confirmed/complete</li><li>Large-touchpoint CTA buttons (min 48px)</li><li>Plain-language callout boxes with teal left rules</li><li>Trust footer with certifications and accreditations</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">onboarding-steps</span><span class="tag">form-stack</span><span class="tag">stats-band</span><span class="tag">faq-accordion</span><span class="tag">nav-bar</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG stroke-dashoffset icon animation</span><span class="tag">pure CSS transitions</span><span class="tag">native HTML form validation UI</span><span class="tag">zero-dependency vanilla build</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Healthcare-grade clarity: crisp whites, a single calming teal, animated line icons that explain procedures in one glance, and copy vetted for plain language. Every state is explicit — scheduled, confirmed, complete. Accessibility is not a checkbox here; it is the design language.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a healthtech UI engineer with an accessibility mandate. Build a single-page clinic site in the Clinical White Medical style.
+
+LOOK: Near-white bg #FAFCFD, white surface #FFFFFF, deep teal-ink #16323B, muted #5E7A85, clinical teal #0E7C9E, confirmation green #3BA272, border #D7E4EA, no gradients. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Source Sans 3 only; hierarchy via weight and size.
+
+LAYOUT: 1) Accessible nav with skip-link. 2) Hero: stroke-drawn icon + headline + single BOOK APPOINTMENT CTA. 3) Patient-flow stepper (3 steps with connectors). 4) Services grid of line-icon cards. 5) Insurance &amp; billing callouts with teal left rules. 6) FAQ accordion. 7) Trust footer: accreditations, privacy, contact.
+
+MOTION: Icons stroke-draw 800ms ease-in-out via dashoffset on intersection. Stepper connector eases width 300ms per step. Status pills pop scale 0.9→1 200ms. Cards float ±4px 6s (disable on reduced-motion).
+
+SIGNATURE: (a) stroke-drawn icon system, (b) status pill vocabulary (scheduled/confirmed/complete), (c) teal left-rule callouts in plain language.
+
+CONSTRAINTS: WCAG 2.2 AA minimum: 4.5:1 body contrast, focus-visible rings, 48px touch targets, aria-live for status changes; semantic headings h1→h2→h3; forms with labels + inline errors; responsive: stepper becomes vertical under 640px; zero decorative animation without reduced-motion support.
+
+EXTRA: Add a printable visit-prep checklist section; phone numbers are tel: links; every service card links to a plain-language detail page stub; ensure headings skip no levels; test with keyboard only.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/clinical-white-medical/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/clinical-white-medical/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Meridian Health — Patient Portal&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;800&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#FAFCFD; --surface:#FFFFFF; --fg:#16323B; --muted:#5E7A85;
+  --accent:#0E7C9E; --accent2:#3BA272; --border:#D7E4EA;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Source Sans 3&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Source Sans 3&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Source Sans 3&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw; }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Source Sans 3&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#16323B; color:#FAFCFD; text-align:center; }
+.cta .btn { background:#3BA272; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;MERIDIAN HEALTH&lt;/span&gt;
+  &lt;nav&gt;Services&lt;br&gt;Providers&lt;br&gt;Portal&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Same-week appointments&lt;/span&gt;
+  &lt;h1&gt;Care that explains itself&lt;/h1&gt;
+  &lt;p&gt;Book in three steps, see every status plainly, and never wonder what happens next.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Book an Appointment&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Services&lt;/span&gt;
+  &lt;h2&gt;What we treat&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Primary Care&lt;/h3&gt;&lt;p&gt;Annual visits, sick visits, and prescriptions — often same day.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Cardiology&lt;/h3&gt;&lt;p&gt;Imaging on-site, results within 48 hours, explained in plain words.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Physical Therapy&lt;/h3&gt;&lt;p&gt;Plans you can do at home, reviewed every two weeks.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;Our Standard&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;48h&lt;/b&gt;&lt;br&gt;&lt;span&gt;Results turnaround&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;93%&lt;/b&gt;&lt;br&gt;&lt;span&gt;Same-day slots&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;24/7&lt;/b&gt;&lt;br&gt;&lt;span&gt;Nurse line&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Your first visit&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Bring your insurance card and a list of medications. We handle the rest.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Book Now&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 MERIDIAN HEALTH. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Privacy · Insurance · Contact&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

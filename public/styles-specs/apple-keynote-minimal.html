@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apple Keynote Minimal — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000000;--surface:#0D0D0F;--fg:#F5F5F7;--muted:#86868B;--accent:#2997FF;--accent2:#B0B0B6;--border:#1D1D20}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Apple Keynote Minimal</h1><div class="tagline">Cinematic black stage, product as the only star.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">hardware</span><span class="tag">flagship product pages</span><span class="tag">scroll-driven-animations</span><span class="tag">video-background</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/apple-keynote-minimal.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/apple-keynote-minimal.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/apple-keynote-minimal.png" alt="Apple Keynote Minimal preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#000000"></div><code>bg: #000000</code></div><div class="sw"><div class="chip" style="background:#0D0D0F"></div><code>surface: #0D0D0F</code></div><div class="sw"><div class="chip" style="background:#F5F5F7"></div><code>fg: #F5F5F7</code></div><div class="sw"><div class="chip" style="background:#86868B"></div><code>muted: #86868B</code></div><div class="sw"><div class="chip" style="background:#2997FF"></div><code>accent: #2997FF</code></div><div class="sw"><div class="chip" style="background:#B0B0B6"></div><code>accent2: #B0B0B6</code></div><div class="sw"><div class="chip" style="background:#1D1D20"></div><code>border: #1D1D20</code></div><p><code>radial-gradient(ellipse at 50% 120%, rgba(41,151,255,0.14), transparent 60%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">SF-Pro stand-in: Inter at tight tracking, huge sizes.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>scroll-scale-reveal</strong></td><td>Product shots scale 0.92→1 and fade 0→1 tied to scroll progress (CSS scroll-driven animation, 100px range, linear).</td></tr><tr><td><strong>cinematic-crossfade</strong></td><td>Alternating sections crossfade text with 500ms opacity ease and 20px rise — like keynote slide transitions.</td></tr><tr><td><strong>ambient-video-drift</strong></td><td>Hero background video scales 1→1.06 over 20s ease-in-out infinite alternate for a living-camera feel.</td></tr><tr><td><strong>spec-numbers-fade</strong></td><td>Tech-spec table rows fade in sequentially 80ms apart, 400ms each, when the section crosses 50% viewport.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Pure black stage with single lit product</li><li>Weight-600 oversized headlines, one message per viewport</li><li>Scroll-driven product scale reveals</li><li>Blue #2997FF link-only accent discipline</li><li>Full-bleed product hero imagery/video</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">feature-grid</span><span class="tag">stats-band</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS scroll-driven animations</span><span class="tag">Inter webfont (SF stand-in)</span><span class="tag">video poster + lazy preload</span><span class="tag">IntersectionObserver fades</span><span class="tag">semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A keynote stage in browser form: pure black canvas, weight-600 display type in huge sizes, and the product floating as the only lit object. Scroll drives the story — sections fade and scale cinematically as if a film editor cut them. Restraint is total: one message per viewport, nothing competing for attention. The definitive style for flagship hardware and premium product reveals.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a flagship product page in the Apple Keynote Minimal style — a cinematic black stage where the product is the only star.
+LOOK: pure #000000 background, raised surface #0D0D0F, text #F5F5F7, muted #86868B, hairlines #1D1D20, single accent #2997FF used ONLY for links and one CTA — never for fills. Import fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap — Inter stands in for SF Pro: weight 600–700 display at clamp(3rem,7vw,5.5rem) with -0.02em tracking, body 17px/1.5 at weight 400. A faint radial blue glow (rgba(41,151,255,.14)) rises from the bottom of the hero.
+LAYOUT: slim 48px translucent nav (blur 20px, rgba(0,0,0,.7)) with tiny 12px links; full-viewport hero: headline top, product visual center (CSS-drawn device or gradient-lit panel — no external images), one sub-line, two text links (&#x27;Learn more &gt;&#x27; style); then alternating full-viewport sections — each with exactly ONE message: a short headline + one paragraph + product visual; a spec band (4 stats, thin dividers); closing CTA; minimal footer with 12px muted links.
+MOTION: scroll-driven animation — product visuals scale 0.92→1 with opacity 0→1 over 100px scroll range (CSS animation-timeline: view(); JS IntersectionObserver fallback); text crossfades with 500ms opacity + 20px rise; hero ambient visual scales 1→1.06 over 20s ease-in-out alternate; spec rows stagger 80ms apart fading 400ms each. Keep timings slow and cinematic — nothing under 400ms.
+SIGNATURE: (1) one-message-per-viewport discipline; (2) product lit by a single rim glow on pure black; (3) blue link-only accent; (4) scroll-linked scale reveals that make the page feel edited like film.
+CONSTRAINTS: semantic HTML5; WCAG AA (#86868B on black passes 4.5:1 — verify); responsive: hero type scales via clamp, sections keep full-viewport rhythm on mobile with reduced padding; prefers-reduced-motion renders final states statically; video/poster lazy-loaded below fold; cumulative layout shift zero — reserve media aspect boxes; total JS &lt; 8KB with CSS-only path preferred.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/apple-keynote-minimal/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/apple-keynote-minimal/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Aurel One — Keynote Minimal&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#000;--surface:#0D0D0F;--fg:#F5F5F7;--muted:#86868B;--accent:#2997FF;--accent2:#B0B0B6;--border:#1D1D20}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.7);backdrop-filter:blur(20px)}
+header nav{display:flex;justify-content:center;gap:36px;height:48px;align-items:center}
+header nav a{font-size:.75rem;color:#D6D6D8}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;position:relative;overflow:hidden}
+.hero::after{content:&#x27;&#x27;;position:absolute;inset:auto 0 0 0;height:60%;background:radial-gradient(ellipse at 50% 120%, rgba(41,151,255,.14), transparent 60%);pointer-events:none}
+.hero h1{font-weight:700;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:-.02em;line-height:1.05}
+.hero .sub{color:var(--muted);font-size:1.4rem;font-weight:400;margin:14px 0 8px;max-width:620px}
+.hero .links{margin-top:20px;font-size:1.05rem}
+.hero .links a{margin:0 14px}
+.device{margin:48px auto 0;width:min(420px,80vw);aspect-ratio:16/10;border-radius:28px;background:linear-gradient(160deg,#2A2A30 0%,#0D0D0F 55%,#1A1A20 100%);border:1px solid #2A2A30;box-shadow:0 -30px 80px rgba(41,151,255,.15), inset 0 1px 1px rgba(255,255,255,.1);position:relative}
+.device::after{content:&#x27;AUREL&#x27;;position:absolute;inset:0;display:grid;place-items:center;color:#3A3A42;font-weight:700;letter-spacing:.3em;font-size:.8rem}
+.scene{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;opacity:0;transform:scale(.92) translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.scene.in{opacity:1;transform:none}
+.scene h2{font-weight:700;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.02em;max-width:800px}
+.scene p{color:var(--muted);font-size:1.15rem;max-width:560px;margin-top:14px}
+.scene .visual{margin-top:44px;width:min(560px,88vw);aspect-ratio:16/9;border-radius:24px;background:radial-gradient(ellipse at 50% 30%,#2C2C34 0%,#0D0D0F 70%);border:1px solid var(--border);position:relative;overflow:hidden}
+.scene .visual::before{content:&#x27;&#x27;;position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.06) 48%,transparent 62%)}
+.scene .visual::after{content:&#x27;⌁&#x27;;position:absolute;inset:0;display:grid;place-items:center;font-size:4rem;color:#2E2E36}
+.specs{padding:100px 24px;border-top:1px solid var(--border);max-width:900px;margin:0 auto}
+.specs h2{font-weight:600;font-size:1.8rem;text-align:center;margin-bottom:48px}
+.specgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.spec{background:var(--bg);padding:32px 20px;text-align:center;opacity:0;transition:opacity .4s ease}
+.spec.in{opacity:1}
+.spec .v{font-weight:700;font-size:2rem;letter-spacing:-.02em}
+.spec .k{color:var(--muted);font-size:.8rem;margin-top:8px}
+.final{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px}
+footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center}
+footer p{color:#6E6E73;font-size:.75rem;max-width:700px;margin:0 auto 16px}
+footer nav{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+footer nav a{color:#A1A1A6;font-size:.75rem}
+@media(max-width:640px){.specgrid{grid-template-columns:repeat(2,1fr)}header nav{gap:20px}header nav a:nth-child(n+5){display:none}}
+@media(prefers-reduced-motion:reduce){.scene,.spec{opacity:1;transform:none;transition:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;nav&gt;&lt;span style=&amp;quot;font-weight:700;font-size:.8rem;color:#F5F5F7&amp;quot;&gt;&lt;/span&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Overview&lt;/a&gt;&lt;a href=&amp;quot;#design&amp;quot;&gt;Design&lt;/a&gt;&lt;a href=&amp;quot;#specs&amp;quot;&gt;Specs&lt;/a&gt;&lt;a href=&amp;quot;#buy&amp;quot;&gt;Buy&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+&lt;h1&gt;Aurel One&lt;/h1&gt;
+&lt;p class=&amp;quot;sub&amp;quot;&gt;Titanium. Unibody. Silence you can feel.&lt;/p&gt;
+&lt;div class=&amp;quot;links&amp;quot;&gt;&lt;a href=&amp;quot;#design&amp;quot;&gt;Learn more &amp;gt;&lt;/a&gt;&lt;a href=&amp;quot;#buy&amp;quot;&gt;Pre-order &amp;gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;device&amp;quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;scene&amp;quot; id=&amp;quot;design&amp;quot;&gt;&lt;h2&gt;Milled from a single block.&lt;/h2&gt;&lt;p&gt;Six hours of machining. Fourteen passes of polishing. Zero visible seams. Pick it up and the first thing you notice is the absence of everything else.&lt;/p&gt;&lt;div class=&amp;quot;visual&amp;quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;scene&amp;quot;&gt;&lt;h2&gt;Battery that outlasts the day. Then some.&lt;/h2&gt;&lt;p&gt;32 hours of continuous use. A 5-minute charge buys you a workday. Efficiency is the quietest feature of all.&lt;/p&gt;&lt;div class=&amp;quot;visual&amp;quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;specs&amp;quot; id=&amp;quot;specs&amp;quot;&gt;
+&lt;h2&gt;Technical specifications&lt;/h2&gt;
+&lt;div class=&amp;quot;specgrid&amp;quot;&gt;
+&lt;div class=&amp;quot;spec&amp;quot;&gt;&lt;div class=&amp;quot;v&amp;quot;&gt;32 hr&lt;/div&gt;&lt;div class=&amp;quot;k&amp;quot;&gt;battery life&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;spec&amp;quot;&gt;&lt;div class=&amp;quot;v&amp;quot;&gt;1.2 kg&lt;/div&gt;&lt;div class=&amp;quot;k&amp;quot;&gt;total weight&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;spec&amp;quot;&gt;&lt;div class=&amp;quot;v&amp;quot;&gt;6 nm&lt;/div&gt;&lt;div class=&amp;quot;k&amp;quot;&gt;silicon process&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;spec&amp;quot;&gt;&lt;div class=&amp;quot;v&amp;quot;&gt;100%&lt;/div&gt;&lt;div class=&amp;quot;k&amp;quot;&gt;recycled aluminum&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;final&amp;quot; id=&amp;quot;buy&amp;quot;&gt;&lt;h1 style=&amp;quot;font-weight:700;font-size:clamp(2.4rem,5vw,4rem);letter-spacing:-.02em&amp;quot;&gt;Aurel One.&lt;/h1&gt;&lt;p style=&amp;quot;color:var(--muted);margin:12px 0 20px&amp;quot;&gt;From $1,299. Ships October 24.&lt;/p&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Pre-order &amp;gt;&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;Values vary by configuration. Battery claims based on internal testing, October 2026.&lt;/p&gt;&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Privacy&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Terms&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Recycling&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Accessibility&lt;/a&gt;&lt;/nav&gt;&lt;/footer&gt;
+&lt;script&gt;
+const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.classList.add(&#x27;in&#x27;);if(e.target.classList.contains(&#x27;spec&#x27;)){const sibs=[...e.target.parentElement.children];const d=sibs.indexOf(e.target)*80;e.target.style.transitionDelay=d+&#x27;ms&#x27;}io.unobserve(e.target)}}),{threshold:.3});
+document.querySelectorAll(&#x27;.scene,.spec&#x27;).forEach(el=&gt;io.observe(el));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

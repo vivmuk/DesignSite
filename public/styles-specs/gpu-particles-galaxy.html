@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GPU Particles Galaxy — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#020208;--surface:#0B0B18;--fg:#EAEAFF;--muted:#6E6E96;--accent:#5B8CFF;--accent2:#C77DFF;--border:#1A1A30}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Space Grotesk',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>GPU Particles Galaxy</h1><div class="tagline">A million particles obey your cursor&#x27;s gravity.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">AI</span><span class="tag">web3</span><span class="tag">launch pages</span><span class="tag">gpu-particles</span><span class="tag">mouse-parallax</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/gpu-particles-galaxy.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/gpu-particles-galaxy.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/gpu-particles-galaxy.png" alt="GPU Particles Galaxy preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#020208"></div><code>bg: #020208</code></div><div class="sw"><div class="chip" style="background:#0B0B18"></div><code>surface: #0B0B18</code></div><div class="sw"><div class="chip" style="background:#EAEAFF"></div><code>fg: #EAEAFF</code></div><div class="sw"><div class="chip" style="background:#6E6E96"></div><code>muted: #6E6E96</code></div><div class="sw"><div class="chip" style="background:#5B8CFF"></div><code>accent: #5B8CFF</code></div><div class="sw"><div class="chip" style="background:#C77DFF"></div><code>accent2: #C77DFF</code></div><div class="sw"><div class="chip" style="background:#1A1A30"></div><code>border: #1A1A30</code></div><p><code>radial-gradient(900px 600px at 50% 40%, rgba(91,140,255,0.12), transparent 65%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Space Grotesk</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Techy grotesk keeps the cosmic scale feeling engineered.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Space+Grotesk&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>gravity-cursor</strong></td><td>Cursor exerts inverse-square attraction (radius 180px) on particle field, 60fps GPGPU.</td></tr><tr><td><strong>morph-targets</strong></td><td>Particles lerp between logo/text/galaxy shapes over 1.8s ease-in-out on scroll.</td></tr><tr><td><strong>twinkle</strong></td><td>Point size and alpha shimmer per-particle via noise, 2s cycle, subtle.</td></tr><tr><td><strong>launch-burst</strong></td><td>CTA hover triggers a 600ms outward particle shockwave from button center.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-bleed GPU particle field</li><li>Cursor gravity well</li><li>Shape-morphing particle text</li><li>Twinkling depth fog</li><li>Particle shockwave on CTA</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">stats-band</span><span class="tag">form-stack</span><span class="tag">nav-bar</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GPGPU particles (FBO ping-pong)</span><span class="tag">three.js + custom shader</span><span class="tag">scroll-driven morph targets</span><span class="tag">instanced points, DPR cap 1.5</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>GPU-driven particle fields assemble into logos, text and galaxies — hundreds of thousands of points flowing as one organism. The cursor acts as a gravity well, bending streams as it passes. Cinematic on black with a single electric accent. For AI, web3 and launch pages.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building an AI/web3 launch page in the GPU Particles Galaxy style — the hero is a living particle organism with hundreds of thousands of points.
+LOOK: void-black #020208 background with a faint #5B8CFF radial nebula; surfaces #0B0B18, borders #1A1A30; text #EAEAFF, muted #6E6E96; particle colors blend #5B8CFF and #C77DFF with per-particle noise variance and distance fog. Import: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap.
+LAYOUT: transparent nav; full-viewport hero canvas where particles morph between three targets — galaxy spiral (load), brand wordmark (scroll 25%), product diagram (scroll 50%); floating headline + email-capture form-stack over the canvas; stats band (nodes, TPS, countries) counting up; a quiet feature grid; footer. Everything below the hero is calm so the field stays special.
+MOTION: GPGPU simulation (FBO ping-pong) at 60fps; the cursor is a gravity well — inverse-square attraction within 180px radius; morph targets lerp over 1.8s ease-in-out driven by scroll progress; per-particle twinkle (size + alpha, 2s noise cycle); CTA hover emits a 600ms radial shockwave through nearby particles.
+SIGNATURE: (1) the cursor visibly bends the field — gravity is felt immediately; (2) scroll morphs the same particles between wordmark and diagram; (3) CTA shockwave.
+CONSTRAINTS: instanced Points with a single draw call, DPR capped at 1.5, pause offscreen/hidden tab, static nebula-poster fallback for no-WebGL and prefers-reduced-motion, semantic HTML, contrast at least 4.5:1.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/gpu-particles-galaxy/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/gpu-particles-galaxy/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;GPU Particles Galaxy&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#020208;--surface:#0B0B18;--fg:#EAEAFF;--muted:#6E6E96;--accent:#5B8CFF;--accent2:#C77DFF;--border:#1A1A30;--grad:radial-gradient(900px 600px at 50% 40%, rgba(91,140,255,0.12), transparent 65%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#020208;border-radius:6px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Space Grotesk&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Space Grotesk&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.cosmos{position:relative;min-height:80vh;overflow:hidden;display:grid;place-items:center;text-align:center}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,#5B8CFF,transparent),radial-gradient(1px 1px at 70% 20%,#C77DFF,transparent),radial-gradient(2px 2px at 50% 60%,#5B8CFF,transparent),radial-gradient(1px 1px at 80% 70%,#EAEAFF,transparent),radial-gradient(1px 1px at 30% 80%,#C77DFF,transparent);background-size:400px 400px;animation:tw 2s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.5}to{opacity:1}}
+.neb{position:absolute;top:10%;left:50%;width:520px;height:520px;transform:translateX(-50%);background:radial-gradient(circle,rgba(91,140,255,.14) 0%,rgba(199,125,255,.08) 40%,transparent 70%);border-radius:50%;filter:blur(10px)}
+.spiral{position:absolute;top:50%;left:50%;width:340px;height:340px;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(91,140,255,.35);box-shadow:0 0 40px rgba(91,140,255,.15),inset 0 0 40px rgba(199,125,255,.1)}
+.spiral::before{content:&#x27;&#x27;;position:absolute;inset:40px;border-radius:50%;border:1px solid rgba(199,125,255,.3)}
+.cosmos .inner{position:relative;z-index:2}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;GPU&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;cosmos&amp;quot;&gt;&lt;div class=&amp;quot;stars&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;neb&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;spiral&amp;quot;&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;inner&amp;quot;&gt;&lt;h1&gt;Compute that thinks&lt;br/&gt;in galaxies&lt;/h1&gt;
+&lt;p&gt;Orbit distributes inference across 40,000 GPUs so your model scales like gravity — invisibly, everywhere.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Join the waitlist&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;40,000 GPUs&lt;/h3&gt;&lt;p&gt;One virtual accelerator. Schedule across regions like it&#x27;s one box.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Sub-50ms cold start&lt;/h3&gt;&lt;p&gt;Weights streamed on demand. Your model wakes before the request finishes blinking.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Gravity routing&lt;/h3&gt;&lt;p&gt;Load flows toward idle capacity like matter toward mass. Zero config.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Built at escape velocity&lt;/h2&gt;&lt;p&gt;Orbit came out of a research cluster that kept outgrowing its scheduler. So we rebuilt the scheduler. Today Orbit runs inference for three of the ten most-downloaded AI apps on earth — and we still deploy on Fridays, because the system catches itself.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Get early orbit&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Request access&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 GPU. All rights reserved.&lt;/span&gt;&lt;span&gt;Series B · SOC2 · 40k GPUs online&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

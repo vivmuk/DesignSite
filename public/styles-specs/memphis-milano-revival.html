@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Memphis Milano Revival — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Baloo+2&family=DM+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF6E9;--surface:#FFFFFF;--fg:#2B2B2B;--muted:#7A6E63;--accent:#FF4B3E;--accent2:#2D46FF;--border:#2B2B2B}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Baloo 2',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Memphis Milano Revival</h1><div class="tagline">Squiggles, terrazzo, 1981 energy — geometry misbehaves beautifully.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">creative tools</span><span class="tag">kids</span><span class="tag">events</span><span class="tag">animated-svg-icons</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/memphis-milano-revival.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/memphis-milano-revival.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/memphis-milano-revival.png" alt="Memphis Milano Revival preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFF6E9"></div><code>bg: #FFF6E9</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2B2B2B"></div><code>fg: #2B2B2B</code></div><div class="sw"><div class="chip" style="background:#7A6E63"></div><code>muted: #7A6E63</code></div><div class="sw"><div class="chip" style="background:#FF4B3E"></div><code>accent: #FF4B3E</code></div><div class="sw"><div class="chip" style="background:#2D46FF"></div><code>accent2: #2D46FF</code></div><div class="sw"><div class="chip" style="background:#2B2B2B"></div><code>border: #2B2B2B</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Baloo 2</p><p><strong>Body:</strong> DM Sans</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Chunky rounded display over crisp neutral body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Baloo+2&family=DM+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>squiggle-draw-on</strong></td><td>SVG squiggle underlines draw themselves (stroke-dashoffset 100%→0) over 600ms ease-out when their heading scrolls into view.</td></tr><tr><td><strong>shape-wiggle-idle</strong></td><td>Decorative Memphis shapes (triangle/zigzag/dot) wiggle rotate ±10deg with squish on a 4s ease-in-out loop, each phase-offset.</td></tr><tr><td><strong>confetti-bounce-hover</strong></td><td>Cards bounce translateY(-8px) with 350ms cubic-bezier(.34,1.56,.64,1) on hover and their terrazzo speckles briefly scatter (4px random translate).</td></tr><tr><td><strong>marquee-blob-hop</strong></td><td>Footer blob characters hop along a marquee path 8s linear infinite, rotating 360° per hop.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Hand-drawn SVG squiggle underlines</li><li>Terrazzo speckle fills on panels</li><li>Primary clashes: red/blue/yellow on cream</li><li>Shapes that lean and wiggle off-grid</li><li>Chunky black outlines on everything</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">feature-grid</span><span class="tag">hero-section</span><span class="tag">badge-system</span><span class="tag">nav-bar</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Baloo 2 + DM Sans webfonts</span><span class="tag">animated SVG (stroke-dashoffset)</span><span class="tag">pure CSS wiggle keyframes</span><span class="tag">terrazzo via multiple background dots</span><span class="tag">semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The Memphis Milano group&#x27;s joyful rebellion: squiggle lines, terrazzo speckles, and confident clashes of primary red, Klein blue and bumblebee yellow on flat pastel grounds. Shapes have no respect for grid gravity — they lean, bounce and wiggle with animated SVG energy. Perfect for creative tools, kids&#x27; products and events that mistake fun for a strategy (correctly).</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a creative-tool landing page in the Memphis Milano Revival style — 1981 Memphis group energy, shapes misbehaving on a strict grid.
+LOOK: warm cream #FFF6E9 base, white #FFFFFF cards, near-black #2B2B2B ink AND borders (chunky 3px outlines everywhere), muted #7A6E63, primary red #FF4B3E and Klein blue #2D46FF as the clash pair, plus bumblebee #FFD23F and mint #7FDBCA as supporting splashes. Import fonts: https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&amp;family=DM+Sans:wght@400;500;700&amp;display=swap — Baloo 2 700–800 for display, DM Sans for body. No gradients — flat color only, Memphis never gradiented.
+LAYOUT: nav with chunky-outlined logo and a red blocky CTA; hero: big Baloo headline with an SVG squiggle underline, geometric shapes (triangle/circle/zigzag/dot cluster) scattered at ±15deg angles around it; feature cards in a 3-col grid with 3px black borders, hard 8px offset shadows, terrazzo-speckle panel headers (CSS multiple radial-gradient dots); an events/workshop strip as tilted tickets; footer with blob-character marquee.
+MOTION: squiggle underlines draw via stroke-dashoffset 100%→0 over 600ms ease-out on scroll into view; decorative shapes wiggle rotate ±10deg with a squish on 4s ease-in-out infinite, phase-offset per shape; cards bounce translateY(-8px) 350ms cubic-bezier(.34,1.56,.64,1) on hover with speckle scatter (background-position jitter); footer blobs hop a marquee 8s linear with 360° rotation per hop. Vanilla JS only for the squiggle observer.
+SIGNATURE: (1) squiggle underlines that draw themselves; (2) terrazzo speckle fills; (3) everything outlined in 3px black with offset shadows; (4) deliberately unaligned decorative shapes.
+CONSTRAINTS: semantic HTML; WCAG AA — #7A6E63 on cream for body, shapes always decorative (aria-hidden); cards remain readable when tilted (≤1deg tilt on interactive elements); responsive: shapes reduce in count and size under 800px, grid single column under 640px; prefers-reduced-motion freezes wiggles and draws squiggles instantly; inline SVG only, no icon fonts; total JS &lt; 8KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/memphis-milano-revival/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/memphis-milano-revival/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Squiggle Studio — make joyful things&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&amp;family=DM+Sans:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#FFF6E9;--surface:#fff;--fg:#2B2B2B;--muted:#7A6E63;--accent:#FF4B3E;--accent2:#2D46FF;--sun:#FFD23F;--mint:#7FDBCA;--border:#2B2B2B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;DM Sans&#x27;,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--fg);text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{padding:20px 0;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:3px solid var(--border)}
+header .wrap{display:flex;align-items:center;gap:24px}
+.logo{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:800;font-size:1.2rem}
+nav{display:flex;gap:18px;font-weight:700;font-size:.9rem}
+nav a:hover{color:var(--accent)}
+.btn{margin-left:auto;background:var(--accent);color:#fff;border:3px solid var(--border);border-radius:12px;padding:10px 22px;font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:800;box-shadow:4px 4px 0 var(--border);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--border)}
+.shape{position:absolute;animation:wig 4s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg) scale(1.06)}}
+.hero{position:relative;padding:80px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:800;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.1;position:relative;display:inline-block}
+.squig{position:absolute;left:10%;bottom:-18px;width:80%;height:24px}
+.squig path{stroke:var(--accent);stroke-width:6;fill:none;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset .6s ease-out}
+.squig.on path{stroke-dashoffset:0}
+.hero p{color:var(--muted);max-width:480px;margin:28px auto 28px;font-size:1.05rem}
+.features{padding:64px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:3px solid var(--border);border-radius:16px;box-shadow:8px 8px 0 var(--border);overflow:hidden;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.card:hover{transform:translateY(-8px) rotate(-.5deg)}
+.terrazzo{height:90px;position:relative;background-color:var(--surface);background-image:radial-gradient(circle at 12% 30%,var(--accent) 5px,transparent 6px),radial-gradient(circle at 78% 22%,var(--accent2) 7px,transparent 8px),radial-gradient(circle at 40% 70%,var(--sun) 4px,transparent 5px),radial-gradient(circle at 88% 65%,var(--mint) 5px,transparent 6px),radial-gradient(circle at 22% 80%,var(--accent2) 3px,transparent 4px),radial-gradient(circle at 62% 15%,var(--accent) 3px,transparent 4px);border-bottom:3px solid var(--border)}
+.card .inner{padding:22px}
+.card h3{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.925rem}
+.tickets{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;padding:56px 0}
+.ticket{background:var(--sun);border:3px solid var(--border);border-radius:12px;box-shadow:6px 6px 0 var(--border);padding:22px;transform:rotate(-1.2deg)}
+.ticket:nth-child(2){background:var(--mint);transform:rotate(1.2deg)}
+.ticket h4{font-family:&#x27;Baloo 2&#x27;,sans-serif;font-weight:800;margin-bottom:6px}
+.ticket p{font-size:.9rem;color:var(--fg)}
+.ticket .d{font-size:.8rem;font-weight:700;margin-top:10px}
+footer{border-top:3px solid var(--border);background:var(--surface);overflow:hidden}
+.blobm{white-space:nowrap;overflow:hidden;padding:14px 0}
+.blobm div{display:inline-block;animation:hop 8s linear infinite}
+.blobm span{display:inline-block;font-size:1.6rem;margin:0 24px;animation:spin 8s linear infinite}
+@keyframes hop{0%,100%{transform:translateY(0)}10%,30%,50%,70%,90%{transform:translateY(-10px)}20%,40%,60%,80%{transform:translateY(0)}to{transform:translateX(-50%) translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fnav{padding:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--muted);border-top:3px solid var(--border)}
+@media(max-width:800px){.grid,.tickets{grid-template-columns:1fr}.shape{display:none}nav{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.squig path{stroke-dashoffset:0}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;✏️ Squiggle Studio&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Tools&lt;/a&gt;&lt;a href=&amp;quot;#events&amp;quot;&gt;Workshops&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Gallery&lt;/a&gt;&lt;/nav&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Try free&lt;/a&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;position:relative&amp;quot;&gt;
+&lt;span class=&amp;quot;shape&amp;quot; style=&amp;quot;top:0;left:4%;color:var(--accent);font-size:2.4rem&amp;quot;&gt;▲&lt;/span&gt;
+&lt;span class=&amp;quot;shape&amp;quot; style=&amp;quot;top:10%;right:8%;color:var(--accent2);font-size:2rem;animation-delay:1s&amp;quot;&gt;●&lt;/span&gt;
+&lt;span class=&amp;quot;shape&amp;quot; style=&amp;quot;bottom:20%;left:10%;color:var(--sun);font-size:2.2rem;animation-delay:2s&amp;quot;&gt;〰&lt;/span&gt;
+&lt;span class=&amp;quot;shape&amp;quot; style=&amp;quot;bottom:10%;right:12%;color:var(--mint);font-size:2.4rem;animation-delay:.5s&amp;quot;&gt;✦&lt;/span&gt;
+&lt;h1&gt;Make joyful things,&lt;br/&gt;seriously well.&lt;svg class=&amp;quot;squig&amp;quot; id=&amp;quot;sq&amp;quot; viewBox=&amp;quot;0 0 300 24&amp;quot; preserveAspectRatio=&amp;quot;none&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;path d=&amp;quot;M0 12 q 15 -12 30 0 t 30 0 t 30 0 t 30 0 t 30 0 t 30 0 t 30 0 t 30 0 t 30 0 t 30 0&amp;quot;/&gt;&lt;/svg&gt;&lt;/h1&gt;
+&lt;p&gt;Squiggle Studio is the drawing and prototyping tool for people who believe playful and professional belong in the same sentence. 2 million makers can&#x27;t be wrong.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Start drawing&lt;/a&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;terrazzo&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;inner&amp;quot;&gt;&lt;h3&gt;Wiggle tools 🖍️&lt;/h3&gt;&lt;p&gt;Brushes that bounce back. Every stroke has personality settings — squish, wobble and snap.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;terrazzo&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;inner&amp;quot;&gt;&lt;h3&gt;Pattern engine ✳️&lt;/h3&gt;&lt;p&gt;Turn one doodle into infinite wallpapers. Terrazzo, confetti and squiggle modes built in.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;terrazzo&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;inner&amp;quot;&gt;&lt;h3&gt;Team playrooms 👥&lt;/h3&gt;&lt;p&gt;Shared canvases where the cursor has a face. Meetings on a whiteboard that wiggles.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;tickets&amp;quot; id=&amp;quot;events&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;display:contents&amp;quot;&gt;
+&lt;div class=&amp;quot;ticket&amp;quot;&gt;&lt;h4&gt;🎪 Squiggle Saturday — live draw&lt;/h4&gt;&lt;p&gt;One hour, one weird prompt, 400 people drawing badly together. All levels, maximum joy.&lt;/p&gt;&lt;div class=&amp;quot;d&amp;quot;&gt;SAT NOV 14 · 11:00 CET · FREE&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;ticket&amp;quot;&gt;&lt;h4&gt;🎨 Terrazzo Masterclass&lt;/h4&gt;&lt;p&gt;Learn speckle theory from people who take dots very seriously. Materials shipped to you.&lt;/p&gt;&lt;div class=&amp;quot;d&amp;quot;&gt;SUN NOV 22 · €45 · 20 SEATS&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; style=&amp;quot;text-align:center;padding:48px 24px 80px&amp;quot;&gt;&lt;h2 style=&amp;quot;font-family:&#x27;Baloo 2&#x27;,sans-serif;font-size:1.8rem;font-weight:800&amp;quot;&gt;Ready to squiggle?&lt;/h2&gt;&lt;p style=&amp;quot;color:var(--muted)&amp;quot;&gt;Free forever for one canvas. No account needed to try.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; style=&amp;quot;display:inline-block;margin-top:16px&amp;quot; href=&amp;quot;#&amp;quot;&gt;Open a canvas →&lt;/a&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;blobm&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;div&gt;&lt;span&gt;🟡&lt;/span&gt;&lt;span&gt;🔺&lt;/span&gt;&lt;span&gt;🔵&lt;/span&gt;&lt;span&gt;✳️&lt;/span&gt;&lt;span&gt;🟠&lt;/span&gt;&lt;span&gt;🔺&lt;/span&gt;&lt;span&gt;🔵&lt;/span&gt;&lt;span&gt;✳️&lt;/span&gt;&lt;span&gt;🟡&lt;/span&gt;&lt;span&gt;🔺&lt;/span&gt;&lt;span&gt;🔵&lt;/span&gt;&lt;span&gt;✳️&lt;/span&gt;&lt;span&gt;🟠&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;fnav&amp;quot;&gt;&lt;span&gt;© 2026 Squiggle Studio&lt;/span&gt;&lt;span&gt;Made in Milan-ish 🇮🇹&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.classList.add(&#x27;on&#x27;);io.unobserve(e.target)}}),{threshold:.6});
+io.observe(document.getElementById(&#x27;sq&#x27;));
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

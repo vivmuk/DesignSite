@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raymarch Tunnel Dive — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Michroma&family=Space+Grotesk&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030308;--surface:#101021;--fg:#F0EFFF;--muted:#8282B8;--accent:#FF3D68;--accent2:#38F2C8;--border:#232346}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Michroma',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Raymarch Tunnel Dive</h1><div class="tagline">Scroll dives through an infinite raymarched tunnel.</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">games</span><span class="tag">web3</span><span class="tag">launch events</span><span class="tag">raymarch-shader</span><span class="tag">scroll-driven-animations</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/raymarch-tunnel-dive.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/raymarch-tunnel-dive.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/raymarch-tunnel-dive.png" alt="Raymarch Tunnel Dive preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#030308"></div><code>bg: #030308</code></div><div class="sw"><div class="chip" style="background:#101021"></div><code>surface: #101021</code></div><div class="sw"><div class="chip" style="background:#F0EFFF"></div><code>fg: #F0EFFF</code></div><div class="sw"><div class="chip" style="background:#8282B8"></div><code>muted: #8282B8</code></div><div class="sw"><div class="chip" style="background:#FF3D68"></div><code>accent: #FF3D68</code></div><div class="sw"><div class="chip" style="background:#38F2C8"></div><code>accent2: #38F2C8</code></div><div class="sw"><div class="chip" style="background:#232346"></div><code>border: #232346</code></div><p><code>linear-gradient(180deg,#030308 0%,#14062B 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Michroma</p><p><strong>Body:</strong> Space Grotesk</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Wide techno display matches the tunnel&#x27;s engineered geometry.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Michroma&family=Space+Grotesk&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>scroll-velocity</strong></td><td>Scroll delta drives tunnel z-speed (damped 0.9/frame); stop scrolling to hover mid-tunnel.</td></tr><tr><td><strong>ring-pulse</strong></td><td>Structural rings brighten as they approach camera, 60fps shader, glow falloff.</td></tr><tr><td><strong>station-dock</strong></td><td>Content sections dock into view (scale .92→1, 400ms) when velocity reaches zero.</td></tr><tr><td><strong>warp-burst</strong></td><td>CTA click fires a 2x speed burst for 1.5s with FOV widening 60→75.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Full-bleed raymarched tunnel</li><li>Velocity-reactive speed streaks</li><li>Docking station content panels</li><li>Fov-pulse warp on CTA</li><li>Speed readout HUD</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">onboarding-steps</span><span class="tag">stats-band</span><span class="tag">modal-system</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GLSL raymarch fragment shader (SDF tunnel)</span><span class="tag">scroll velocity → uniform</span><span class="tag">FOV warp post effect</span><span class="tag">static poster fallback</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Scrolling is propulsion: a full-screen raymarched shader tunnel — rings, struts and light streaks — flies the visitor through hyperspace toward the product. Content appears as station signage between velocity segments. For games, web3 launches and event reveals.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a game/web3 launch page in the Raymarch Tunnel Dive style — the page is a hyperspace tunnel and scroll is the throttle.
+LOOK: void #030308 base with a #14062B depth gradient; panels #101021, borders #232346; text #F0EFFF, muted #8282B8; tunnel geometry glows hot pink #FF3D68 with teal #38F2C8 counter-glow. Import: https://fonts.googleapis.com/css2?family=Michroma&amp;family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap — Michroma for display, everything techno.
+LAYOUT: full-viewport shader hero rendering an SDF tunnel (rings + longitudinal struts) flying toward the camera; a speed HUD readout bottom-right (in mono); between velocity segments, &#x27;docking stations&#x27; — solid panels that scale from .92 to 1 when the tunnel decelerates; content order: hero title over the tunnel, three station sections (story, specs, access), final CTA that triggers warp.
+MOTION: scroll delta drives a z-velocity uniform (damped 0.9 per frame); rings brighten with proximity via glow falloff in the shader; when velocity ≈ 0 for 400ms, the nearest station docks into view (400ms scale+fade); CTA click fires warp — velocity ×2 and FOV widens 60→75 for 1.5s.
+SIGNATURE: (1) scroll literally propels you — stop and you hover; (2) station-dock reveal rhythm; (3) the warp burst on CTA.
+CONSTRAINTS: single fullscreen quad shader (no geometry), DPR cap 1.25 (raymarching is expensive), throttle to 30fps on integrated GPUs via adaptive resolution, static poster + normal scroll fallback for reduced-motion/no-WebGL, semantic HTML over the canvas.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/raymarch-tunnel-dive/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/raymarch-tunnel-dive/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Raymarch Tunnel Dive&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Michroma&amp;family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#030308;--surface:#101021;--fg:#F0EFFF;--muted:#8282B8;--accent:#FF3D68;--accent2:#38F2C8;--border:#232346;--grad:linear-gradient(180deg,#030308 0%,#14062B 100%);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Space Grotesk&#x27;,sans-serif;line-height:1.6}
+a{color:var(--accent)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&#x27;Michroma&#x27;,sans-serif;font-weight:700;font-size:1.25rem;color:var(--fg);text-decoration:none}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+.hero{padding:96px 0 72px;text-align:center}
+.hero h1{font-family:&#x27;Michroma&#x27;,sans-serif;font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+.hero p{max-width:560px;margin:20px auto 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#030308;border-radius:4px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px color-mix(in srgb,var(--accent) 40%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&#x27;Michroma&#x27;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:72px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&#x27;Michroma&#x27;,sans-serif;font-size:2rem;margin-bottom:16px}
+.about p{color:var(--muted);max-width:680px}
+.cta{padding:96px 0;text-align:center}
+.cta h2{font-family:&#x27;Michroma&#x27;,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:16px}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.tunnelbg{position:fixed;inset:0;z-index:-2;background:radial-gradient(120% 90% at 50% 50%,#14062B 0%,#030308 70%);overflow:hidden}
+.tunnelbg::before{content:&#x27;&#x27;;position:absolute;inset:-50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 60px,rgba(255,61,104,.13) 60px 63px,transparent 63px 120px,rgba(56,242,200,.09) 120px 122px);animation:zoom 1.2s linear infinite}
+@keyframes zoom{to{transform:scale(1.28)}}
+.hud{position:fixed;bottom:16px;right:16px;font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:.7rem;color:var(--accent2);letter-spacing:.15em}
+.station{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:40px;margin:40px auto;max-width:640px;transform:scale(.92);opacity:.85;transition:transform .4s ease,opacity .4s ease}
+.station:hover{transform:scale(1);opacity:1}
+h1,h2{font-family:&#x27;Michroma&#x27;,sans-serif;letter-spacing:.04em}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Raymarch&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;About&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Get Started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot; style=&amp;quot;text-align:center;padding-top:120px&amp;quot;&gt;&lt;p style=&amp;quot;color:var(--accent2);font-family:&#x27;JetBrains Mono&#x27;,monospace;letter-spacing:.3em;font-size:.75rem&amp;quot;&gt;ENTRY SEQUENCE INITIALIZED&lt;/p&gt;
+&lt;h1 style=&amp;quot;font-size:clamp(2rem,6vw,4.2rem);margin:24px 0&amp;quot;&gt;DESCEND INTO&lt;br/&gt;THE VOID ENGINE&lt;/h1&gt;
+&lt;p&gt;The game that runs at the speed of your scroll. Keep scrolling. Don&#x27;t look back.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; style=&amp;quot;background:var(--accent)&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;BEGIN DIVE ↓&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card station&amp;quot; style=&amp;quot;margin:0&amp;quot;&gt;&lt;h3&gt;STATION 01 — STORY&lt;/h3&gt;&lt;p&gt;Twenty years after the grid collapsed, one pilot still carries the last uncorrupted core. You are that pilot. The tunnel is not empty.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card station&amp;quot; style=&amp;quot;margin:0&amp;quot;&gt;&lt;h3&gt;STATION 02 — SPECS&lt;/h3&gt;&lt;p&gt;Raymarched volumes at 120fps on consumer hardware. Zero loading screens — the tunnel never stops rendering.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card station&amp;quot; style=&amp;quot;margin:0&amp;quot;&gt;&lt;h3&gt;STATION 03 — ACCESS&lt;/h3&gt;&lt;p&gt;Wave-one keys drop to dive-list members only. 10,000 seats. Velocity favors the early.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Built at terminal velocity&lt;/h2&gt;&lt;p&gt;Void Engine renders every frame as an SDF raymarch — no meshes, no textures, pure math at 120fps. It shouldn&#x27;t be possible. We shipped it anyway, and the demo hit 4M views in a weekend. The dive is real.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Ignition in T-minus nothing.&lt;/h2&gt;&lt;a class=&amp;quot;btn&amp;quot; style=&amp;quot;background:var(--accent)&amp;quot; href=&amp;quot;#&amp;quot;&gt;Join the dive list&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Raymarch. All rights reserved.&lt;/span&gt;&lt;span&gt;WAVE 01 · 10,000 SEATS · WORMHOLE STABLE&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

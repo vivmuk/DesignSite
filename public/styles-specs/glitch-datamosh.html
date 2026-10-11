@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glitch Datamosh — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--surface:#101010;--fg:#E8FFE8;--muted:#5C7A5C;--accent:#FF2A6D;--accent2:#05D9E8;--border:#1E3A1E}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'IBM Plex Mono',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Rubik Mono One',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Glitch Datamosh</h1><div class="tagline">Corrupted on purpose: frames bleed, channels split, signal degrades.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">music</span><span class="tag">games</span><span class="tag">crypto</span><span class="tag">glitch-hover</span><span class="tag">noise-displacement-shader</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/glitch-datamosh.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/glitch-datamosh.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/glitch-datamosh.png" alt="Glitch Datamosh preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#050505"></div><code>bg: #050505</code></div><div class="sw"><div class="chip" style="background:#101010"></div><code>surface: #101010</code></div><div class="sw"><div class="chip" style="background:#E8FFE8"></div><code>fg: #E8FFE8</code></div><div class="sw"><div class="chip" style="background:#5C7A5C"></div><code>muted: #5C7A5C</code></div><div class="sw"><div class="chip" style="background:#FF2A6D"></div><code>accent: #FF2A6D</code></div><div class="sw"><div class="chip" style="background:#05D9E8"></div><code>accent2: #05D9E8</code></div><div class="sw"><div class="chip" style="background:#1E3A1E"></div><code>border: #1E3A1E</code></div><p><code>linear-gradient(90deg,#FF2A6D 0%,#050505 45%,#05D9E8 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Rubik Mono One</p><p><strong>Body:</strong> IBM Plex Mono</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">All-mono corrupted-terminal typography.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>rgb-split-tear</strong></td><td>Headline ::before/::after clones in magenta/cyan shear ±3→±14px in steps(2) bursts every 2.4-2.9s, clip-path sliced bands — classic datamosh tear.</td></tr><tr><td><strong>mosh-band-slide</strong></td><td>Card &#x27;video&#x27; areas are stacked gradient bands sliding at different speeds (background-position, 3.2s steps(3)) with 55% opacity — frame bleed.</td></tr><tr><td><strong>scanline-crawl</strong></td><td>Full-page scanline overlay (2% white lines) crawls downward 8s linear infinite under 5% opacity.</td></tr><tr><td><strong>log-type-on</strong></td><td>Corrupted log lines type on character-by-character (30ms/char) with occasional ✗-then-fix character flicker.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>RGB channel-split headline tears</li><li>Datamosh gradient band blocks</li><li>Full-page scanline crawl</li><li>Corrupted-terminal log typography</li><li>Chunk-sliced clip-path section dividers</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">data-table</span><span class="tag">badge-system</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Rubik Mono One + IBM Plex Mono webfonts</span><span class="tag">CSS clip-path slice glitch</span><span class="tag">steps() keyframe mosh bands</span><span class="tag">scanline overlay technique</span><span class="tag">typewriter JS log effect</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The aesthetics of broken video as a design system: RGB channel splits that tear headlines apart on hover, datamosh gradients that slide between keyframes, scanline crawls and corrupted-file log typography. Nothing renders cleanly — and that&#x27;s the craft. For music, games and crypto projects that want digital decay as a brand asset.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a music/games/crypto site in the Glitch Datamosh style — corrupted-video aesthetics as a design system, decay executed with precision.
+LOOK: near-black #050505 base, raised #101010 surfaces, phosphor-mint #E8FFE8 text, muted #5C7A5C, border #1E3A1E, channel pair: hot magenta #FF2A6D and digital cyan #05D9E8. Import fonts: https://fonts.googleapis.com/css2?family=Rubik+Mono+One&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap — Rubik Mono One for display, IBM Plex Mono for ALL body/UI/logs. Headline glitch: two absolute ::before/::after clones with content:attr(data-t), colored magenta/cyan, offset ±3px, each clipped to a horizontal band via clip-path polygon and animated with steps(2).
+LAYOUT: nav with channel-split hover on links and a buffer% status readout; hero = giant datamoshing headline with data-t attribute, sub in terminal style, magenta CTA; 3-col grid of &#x27;corrupted media&#x27; cards — each has a datamosh gradient band area animating background-position in steps(3); a terminal log panel with typed lines; mega footer as an end-of-broadcast card.
+MOTION: headline clones shear ±3→±14px in steps(2) bursts at 2.4s and 2.9s loops (offset phases so tears feel random); card mosh bands slide background-position 0→120% over 3.2s steps(3), saturate+blur 1px on hover; scanline overlay (repeating-linear-gradient 4% white) crawls down 8s linear infinite; log lines type on 30ms/char with a ✗ character that flickers to ✓. Vanilla JS ~30 lines for the typewriter.
+SIGNATURE: (1) RGB channel-split tears; (2) datamosh gradient bands; (3) scanline crawl; (4) corrupted-terminal log typography; (5) sliced clip-path dividers.
+CONSTRAINTS: semantic HTML; WCAG AA — #E8FFE8 on #050505 passes hugely, #5C7A5C only for captions; glitch clones aria-hidden and pointer-events:none; glitch bursts ≤150ms and ≤3% viewport displacement (photosensitivity safe); body text NEVER glitches; responsive: disable clone animation under 760px, keep static offsets; prefers-reduced-motion renders single-color static headlines.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/glitch-datamosh/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/glitch-datamosh/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;SIGNAL LOST — corrupted transmissions&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Rubik+Mono+One&amp;family=IBM+Plex+Mono:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#050505;--surface:#101010;--fg:#E8FFE8;--muted:#5C7A5C;--accent:#FF2A6D;--accent2:#05D9E8;--border:#1E3A1E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;IBM Plex Mono&#x27;,monospace;line-height:1.6;overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}
+a:hover{color:var(--accent)}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px)}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+header{display:flex;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid var(--border)}
+.logo{font-family:&#x27;Rubik Mono One&#x27;;font-size:1.05rem;color:var(--fg);text-shadow:2px 0 var(--accent),-2px 0 var(--accent2)}
+nav{display:flex;gap:16px;font-size:.8rem}
+nav a:hover{text-shadow:2px 0 var(--accent),-2px 0 var(--accent2)}
+.sig{margin-left:auto;font-size:.7rem;color:var(--muted)}
+.hero{padding:80px 24px 60px;text-align:center;position:relative}
+h1{font-family:&#x27;Rubik Mono One&#x27;;font-size:clamp(2.2rem,7vw,4.6rem);line-height:1.05;position:relative;display:inline-block}
+h1::before,h1::after{content:attr(data-t);position:absolute;inset:0;overflow:hidden}
+h1::before{color:var(--accent);transform:translate(-3px,0);animation:sl1 2.4s steps(2) infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);z-index:-1}
+h1::after{color:var(--accent2);transform:translate(3px,0);animation:sl2 2.9s steps(2) infinite;clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);z-index:-2}
+@keyframes sl1{0%,89%,100%{transform:translate(-3px,0)}90%{transform:translate(-14px,2px)}94%{transform:translate(6px,-2px)}}
+@keyframes sl2{0%,91%,100%{transform:translate(3px,0)}92%{transform:translate(12px,-3px)}96%{transform:translate(-8px,2px)}}
+.sub{color:var(--muted);font-size:.85rem;margin-top:14px}
+.glitch-btn{display:inline-block;margin-top:26px;background:var(--accent);color:#050505;font-weight:700;padding:12px 30px;border:none;font-family:inherit;position:relative;transition:transform .1s}
+.glitch-btn:hover{transform:translate(2px,1px);text-shadow:2px 0 var(--accent2)}
+.mosh{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;padding:30px 0 70px}
+.cell{background:var(--surface);border:1px solid var(--border);padding:18px;position:relative;overflow:hidden}
+.cell .datamosh{height:110px;margin:-18px -18px 12px;background:linear-gradient(180deg,var(--accent2) 0%,var(--accent) 30%,var(--surface) 31%,var(--accent2) 55%,var(--accent) 100%);background-size:100% 300%;opacity:.55;animation:moshSlide 3.2s steps(3) infinite}
+@keyframes moshSlide{0%{background-position:0 0}50%{background-position:0 55%}100%{background-position:0 120%}}
+.cell:hover .datamosh{filter:blur(1px) saturate(1.6)}
+.cell b{font-weight:700}
+.cell .meta{font-size:.72rem;color:var(--muted)}
+.log{border:1px solid var(--border);background:var(--surface);padding:18px;font-size:.78rem;margin-bottom:70px}
+.log .ln{display:flex;gap:14px;padding:3px 0;color:var(--muted)}
+.log .ln b{color:var(--fg);font-weight:500}
+.log .ok{color:var(--accent2)}.log .err{color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:28px 0;font-size:.72rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){.mosh{grid-template-columns:1fr}h1::before,h1::after{transform:none;animation:none;color:transparent}}
+&lt;/style&gt;&lt;body&gt;
+&lt;div class=&amp;quot;scan&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;
+&lt;header&gt;
+&lt;span class=&amp;quot;logo&amp;quot;&gt;SIGNAL L0ST&lt;/span&gt;
+&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;FEED&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;ARCHIVE&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;CORRUPT&lt;/a&gt;&lt;/nav&gt;
+&lt;span class=&amp;quot;sig&amp;quot;&gt;CH.04 · 480p · BUFFER 12%&lt;/span&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+&lt;h1 data-t=&amp;quot;DATAMOSH&amp;quot;&gt;DATAMOSH&lt;/h1&gt;
+&lt;p class=&amp;quot;sub&amp;quot;&gt;&amp;gt;_ transmission corrupted at frame 0x1F4 — we kept it anyway.&lt;/p&gt;
+&lt;a class=&amp;quot;glitch-btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;INJECT SIGNAL&lt;/a&gt;
+&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;mosh&amp;quot;&gt;
+&lt;article class=&amp;quot;cell&amp;quot;&gt;&lt;div class=&amp;quot;datamosh&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Frame Bleed&lt;/b&gt;&lt;div class=&amp;quot;meta&amp;quot;&gt;I-FRAME MISSING · P-FRAMES 0x2A-0xFF&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;cell&amp;quot;&gt;&lt;div class=&amp;quot;datamosh&amp;quot; style=&amp;quot;animation-delay:-1.1s&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Channel Split&lt;/b&gt;&lt;div class=&amp;quot;meta&amp;quot;&gt;R+2px · B-2px · G INTACT&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;cell&amp;quot;&gt;&lt;div class=&amp;quot;datamosh&amp;quot; style=&amp;quot;animation-delay:-2.2s&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;&lt;/div&gt;&lt;b&gt;Buffer Mosh&lt;/b&gt;&lt;div class=&amp;quot;meta&amp;quot;&gt;KEYFRAME LOSS · MOTION VECTORS WILD&lt;/div&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;log&amp;quot;&gt;
+&lt;div class=&amp;quot;ln&amp;quot;&gt;&lt;b&gt;00:00:01&lt;/b&gt;&lt;span class=&amp;quot;ok&amp;quot;&gt;SIGNAL ACQUIRED&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;ln&amp;quot;&gt;&lt;b&gt;00:00:07&lt;/b&gt;&lt;span class=&amp;quot;err&amp;quot;&gt;I-FRAME CORRUPT — MOSHING&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;ln&amp;quot;&gt;&lt;b&gt;00:00:09&lt;/b&gt;&lt;span class=&amp;quot;ok&amp;quot;&gt;EMBRACING THE ARTIFACT&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© SIGNAL L0ST COLLECTIVE&lt;/span&gt;&lt;span&gt;RENDERED IN BROKEN H.264 SPIRIT&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

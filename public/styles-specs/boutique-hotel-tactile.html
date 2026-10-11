@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boutique Hotel Tactile — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F1EA;--surface:#FDFBF7;--fg:#2E2A24;--muted:#8F877B;--accent:#A8683C;--accent2:#6B7257;--border:#E0D8CB}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Boutique Hotel Tactile</h1><div class="tagline">Linen textures, warm neutrals, editorial calm booking</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">hospitality</span><span class="tag">travel</span><span class="tag">wellness</span><span class="tag">parallax-depth-layers</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/boutique-hotel-tactile.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/boutique-hotel-tactile.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/boutique-hotel-tactile.png" alt="Boutique Hotel Tactile preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F5F1EA"></div><code>bg: #F5F1EA</code></div><div class="sw"><div class="chip" style="background:#FDFBF7"></div><code>surface: #FDFBF7</code></div><div class="sw"><div class="chip" style="background:#2E2A24"></div><code>fg: #2E2A24</code></div><div class="sw"><div class="chip" style="background:#8F877B"></div><code>muted: #8F877B</code></div><div class="sw"><div class="chip" style="background:#A8683C"></div><code>accent: #A8683C</code></div><div class="sw"><div class="chip" style="background:#6B7257"></div><code>accent2: #6B7257</code></div><div class="sw"><div class="chip" style="background:#E0D8CB"></div><code>border: #E0D8CB</code></div><p><code>linear-gradient(180deg,#F5F1EA 0%,#EFE7DA 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Soft serif warmth with humanist sans support</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Karla&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Daylight parallax</strong></td><td>Photography layers drift at 0.85/1.0/1.15 speeds via ScrollTrigger scrub for depth</td></tr><tr><td><strong>Linen settle</strong></td><td>Section images scale 1.05→1 over 1.2s ease-out with slow opacity ramp</td></tr><tr><td><strong>Availability breathe</strong></td><td>Date-chip row gently breathes scale 1→1.01 over 4s to invite interaction</td></tr><tr><td><strong>Rate reveal</strong></td><td>Room rates count up softly over 700ms ease-out when cards enter</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Grain-textured linen background wash</li><li>Full-bleed room photography with parallax depth</li><li>Booking bar with date range + guests inline</li><li>Editorial captions in italic serif</li><li>Sage/terracotta amenity icon set</li><li>Wide footer with directions, hours, phone in serif</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">calendar-picker</span><span class="tag">form-stack</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">GSAP ScrollTrigger (parallax)</span><span class="tag">lenis smooth scroll</span><span class="tag">CSS noise-texture data URI</span><span class="tag">flatpickr (date range)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A hotel page that feels like linen: warm neutral textures, soft daylight photography with slow parallax, and a booking flow that never raises its voice. Earth tones, generous spacing, editorial pacing. Luxury expressed as comfort — every section exhales.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a hospitality web designer. Build a single-page boutique hotel site in the Boutique Hotel Tactile style.
+
+LOOK: Linen bg #F5F1EA, surface #FDFBF7, warm ink #2E2A24, muted #8F877B, terracotta accent #A8683C, sage #6B7257, border #E0D8CB, gradient `linear-gradient(180deg,#F5F1EA,#EFE7DA)`. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&amp;family=Karla:wght@300;400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Fraunces display, Karla body.
+
+LAYOUT: 1) Serif nav with room-key icon. 2) Hero: full-bleed sunlit suite photo, booking capsule bar (check-in/out, guests, CHECK AVAILABILITY). 3) Rooms: three editorial cards with parallax images and italic captions. 4) Dining &amp; spa: alternating image/text spreads. 5) Neighborhood strip with illustrated map hints. 6) Guest note (single quote). 7) Wide serif footer with address, hours, phone.
+
+MOTION: GSAP ScrollTrigger parallax — photo layers drift at 0.85/1.0/1.15 speeds. Images settle 1.05→1 scale over 1.2s ease-out. Booking date chips breathe scale 1→1.01 over 4s. Rates count up 700ms ease-out. Use Lenis for scroll smoothing (disabled on touch).
+
+SIGNATURE: (a) linen grain texture background (SVG noise data-URI at 3%), (b) floating booking capsule, (c) italic serif editorial captions.
+
+CONSTRAINTS: Semantic HTML, AA contrast, responsive: booking capsule stacks vertically under 720px, parallax reduced to static on mobile; flatpickr date-range with min 1-night validation; lazy images; prefers-reduced-motion honored.
+
+EXTRA: Include a tide-timetable strip in the footer as a signature nod; rooms section uses alternating text/image order; add aria-labels on the booking capsule fields; fallback poster images for all photography.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/boutique-hotel-tactile/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/boutique-hotel-tactile/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Fen House — Boutique Stay&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Fraunces&amp;family=Karla:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#F5F1EA; --surface:#FDFBF7; --fg:#2E2A24; --muted:#8F877B;
+  --accent:#A8683C; --accent2:#6B7257; --border:#E0D8CB;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Karla&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Fraunces&#x27;,Georgia, serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Fraunces&#x27;,Georgia, serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#FFFFFF; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;background:linear-gradient(180deg,var(--bg),#EFE7DA) }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Fraunces&#x27;,Georgia, serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#2E2A24; color:#F5F1EA; text-align:center; }
+.cta .btn { background:#6B7257; color:#FFFFFF; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;FEN HOUSE&lt;/span&gt;
+  &lt;nav&gt;Rooms&lt;br&gt;Dining&lt;br&gt;Book&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Eleven rooms in the fens&lt;/span&gt;
+  &lt;h1&gt;A slow house on slow water&lt;/h1&gt;
+  &lt;p&gt;Linen sheets, low light, and a tide timetable by the door. Breakfast is whenever you wake.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Check Availability&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;The house&lt;/span&gt;
+  &lt;h2&gt;Stay well&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Reeds Room&lt;/h3&gt;&lt;p&gt;East-facing, linen walls, a writing desk facing the water.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Long Table Dining&lt;/h3&gt;&lt;p&gt;One seating, one menu, whatever the garden gave.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;The Boathouse Sauna&lt;/h3&gt;&lt;p&gt;Wood-fired, cold plunge after, towels warmed on the stove.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;The Property&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;11&lt;/b&gt;&lt;br&gt;&lt;span&gt;Rooms&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;40&lt;/b&gt;&lt;br&gt;&lt;span&gt;Acres of fen&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;2h&lt;/b&gt;&lt;br&gt;&lt;span&gt;From London&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Dates fill slowly, gladly&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Two-night minimum. Well-behaved dogs welcome.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Check Dates&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 FEN HOUSE. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Directions · FAQ · Gift Stays&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

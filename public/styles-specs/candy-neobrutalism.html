@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Candy Neobrutalism — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF1F7;--surface:#FFFFFF;--fg:#111111;--muted:#5C5C5C;--accent:#FF5CA8;--accent2:#7C6CFF;--border:#111111}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Archivo Black',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Candy Neobrutalism</h1><div class="tagline">Chunky borders, hard shadows, candy colors, radius zero forever.</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">startups</span><span class="tag">tools</span><span class="tag">communities</span><span class="tag">hover-invert</span><span class="tag">physics-spring-motion</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/candy-neobrutalism.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/candy-neobrutalism.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/candy-neobrutalism.png" alt="Candy Neobrutalism preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FFF1F7"></div><code>bg: #FFF1F7</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#111111"></div><code>fg: #111111</code></div><div class="sw"><div class="chip" style="background:#5C5C5C"></div><code>muted: #5C5C5C</code></div><div class="sw"><div class="chip" style="background:#FF5CA8"></div><code>accent: #FF5CA8</code></div><div class="sw"><div class="chip" style="background:#7C6CFF"></div><code>accent2: #7C6CFF</code></div><div class="sw"><div class="chip" style="background:#111111"></div><code>border: #111111</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Archivo Black</p><p><strong>Body:</strong> Space Grotesk</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">Heavy grotesque display over clean geometric body.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>shadow-travel-press</strong></td><td>Buttons and cards press INTO their shadow on click: translate(6px,6px) while shadow collapses 6px→0 over 100ms — physical, tactile.</td></tr><tr><td><strong>lift-hover-slide</strong></td><td>Hover lifts elements the other way: translate(-4px,-4px) with shadow growing 8→12px over 150ms linear — pre-press tension.</td></tr><tr><td><strong>highlight-flash-hover</strong></td><td>Nav links flash a lime highlighter block (background snap, 0ms) on hover — brutalist instant feedback.</td></tr><tr><td><strong>stagger-rise-in</strong></td><td>Sections rise translateY(24px)→0 with 400ms ease-out, staggered 80ms per element when scrolled into view.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>4px solid black borders on every element</li><li>Hard offset shadows (6-8px, no blur)</li><li>Zero border-radius anywhere</li><li>Candy highlight blocks behind headline words</li><li>Press-into-shadow button physics</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">nav-bar</span><span class="tag">hero-section</span><span class="tag">feature-grid</span><span class="tag">stats-band</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Archivo Black + Space Grotesk webfonts</span><span class="tag">hard box-shadow press physics</span><span class="tag">pure CSS hover states</span><span class="tag">IntersectionObserver stagger reveals</span><span class="tag">semantic HTML</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Neobrutalism with a sugar rush: 4px black borders on everything, hard offset shadows that travel when pressed, and a candy palette of bubblegum pink, grape purple and lime over cream. Zero border-radius anywhere — the honesty of brutalism with the energy of a candy store. For startups, tools and communities that want personality without pretension.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior front-end engineer building a startup/tools landing page in the Candy Neobrutalism style — brutalist structure, candy palette, tactile press physics.
+LOOK: pale pink #FFF1F7 background, white #FFFFFF surfaces, ink #111111 used as BOTH text and border, muted #5C5C5C, bubblegum #FF5CA8 and grape #7C6CFF as the candy pair, lime #B8F135 for highlights. Import fonts: https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap — Archivo Black for display (uppercase), Space Grotesk for body/UI. RULES: border-radius 0 on everything, borders 4px solid #111, shadows 6-8px 8px 0 #111 (never blurred), no gradients.
+LAYOUT: sticky nav with bottom border 4px; hero = uppercase Archivo headline with lime highlight blocks behind key words, big purple CTA; 3-col feature grid of bordered cards with colored tag chips; a full-black stats band with lime Archivo numbers; mega footer with bordered columns.
+MOTION: buttons press INTO their shadow on :active — translate(6px,6px) while box-shadow collapses 6px→0 in 100ms; hover lifts translate(-4px,-4px) with shadow growing to 12px over 150ms; nav links flash lime background instantly (0ms) on hover; sections rise translateY(24px)→0 400ms ease-out staggered 80ms via IntersectionObserver. No easing curves fancier than ease-out — brutalism distrusts smoothness.
+SIGNATURE: (1) 4px borders + hard shadows everywhere; (2) zero radius discipline; (3) highlight blocks behind headline words; (4) press-into-shadow physics.
+CONSTRAINTS: semantic HTML; WCAG AA — #111 on #FFF1F7 passes hugely, #111 on lime and bubblegum passes for large/bold text, white text on grape passes for UI; no radius means focus outlines stay visible — keep outline-offset 2px; responsive: grid collapses to 1 col under 760px, shadows shrink to 4px; prefers-reduced-motion kills press/lift transforms.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/candy-neobrutalism/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/candy-neobrutalism/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;CANDY CRUNCH — zero-radius tools&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#FFF1F7;--surface:#FFFFFF;--fg:#111111;--muted:#5C5C5C;--accent:#FF5CA8;--accent2:#7C6CFF;--lime:#B8F135;--border:#111111}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&#x27;Space Grotesk&#x27;,sans-serif;line-height:1.6}
+a{color:var(--fg);text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:4px solid var(--border)}
+header .wrap{display:flex;align-items:center;gap:24px;padding:16px 24px}
+.logo{font-family:&#x27;Archivo Black&#x27;;font-size:1.2rem}
+nav{display:flex;gap:18px;font-weight:700;font-size:.9rem}
+nav a:hover{background:var(--lime)}
+.btn{margin-left:auto;background:var(--accent);color:#111;border:4px solid var(--border);padding:12px 24px;font-weight:700;box-shadow:6px 6px 0 var(--border);transition:transform .15s,box-shadow .15s}
+.btn:hover{background:var(--accent2);color:#fff}
+.btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--border)}
+.hero{padding:84px 0 76px;text-align:center}
+h1{font-family:&#x27;Archivo Black&#x27;;font-size:clamp(2.5rem,6.5vw,4.6rem);line-height:1.05;text-transform:uppercase}
+h1 .hl{background:var(--lime);padding:0 12px;box-shadow:6px 6px 0 var(--border)}
+.hero p{max-width:540px;margin:20px auto 30px;color:var(--muted);font-weight:500}
+.btn2{display:inline-block;background:var(--accent2);color:#fff;border:4px solid var(--border);padding:14px 34px;font-weight:700;box-shadow:6px 6px 0 var(--border);transition:transform .15s,box-shadow .15s}
+.btn2:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--border)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:30px 0 80px}
+.card{background:var(--surface);border:4px solid var(--border);padding:22px;box-shadow:8px 8px 0 var(--border);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translate(-4px,-4px);box-shadow:12px 12px 0 var(--border)}
+.card .tag{display:inline-block;background:var(--accent);color:#111;border:3px solid var(--border);font-weight:700;font-size:.72rem;padding:3px 10px;margin-bottom:12px}
+.card h3{font-family:&#x27;Archivo Black&#x27;;font-size:1.05rem;margin-bottom:8px}
+.card p{font-size:.9rem;color:var(--muted)}
+.band{background:var(--fg);color:var(--bg);padding:30px 0;text-align:center;font-weight:700}
+.band .wrap{display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px}
+.band b{font-family:&#x27;Archivo Black&#x27;;font-size:1.6rem;display:block;color:var(--lime)}
+footer{border-top:4px solid var(--border);padding:34px 0;font-size:.85rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.btn{margin-left:0}}
+&lt;/style&gt;&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;span class=&amp;quot;logo&amp;quot;&gt;CANDY CRUNCH&lt;/span&gt;
+&lt;nav&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Tools&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Pricing&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Blog&lt;/a&gt;&lt;/nav&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Sign up&lt;/a&gt;
+&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h1&gt;Loud tools for &lt;span class=&amp;quot;hl&amp;quot;&gt;loud people&lt;/span&gt;&lt;/h1&gt;
+&lt;p&gt;No gradients. No glassmorphism. Just borders you can feel and candy colors that mean it.&lt;/p&gt;
+&lt;a class=&amp;quot;btn2&amp;quot; href=&amp;quot;#&amp;quot;&gt;Start free →&lt;/a&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot;&gt;FEATURE&lt;/span&gt;&lt;h3&gt;Zero-radius everything&lt;/h3&gt;&lt;p&gt;Sharp corners, thick borders, shadows with real offset. Cards behave like paper slabs.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot; style=&amp;quot;background:var(--accent2);color:#fff&amp;quot;&gt;SPEED&lt;/span&gt;&lt;h3&gt;Instant everything&lt;/h3&gt;&lt;p&gt;Press a button and it physically travels into the page. Tactile feedback, zero latency.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;span class=&amp;quot;tag&amp;quot; style=&amp;quot;background:var(--lime)&amp;quot;&gt;FREE&lt;/span&gt;&lt;h3&gt;Community first&lt;/h3&gt;&lt;p&gt;Templates, sticker packs and a Discord that never sleeps. Bring your loudest ideas.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;band&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div&gt;&lt;b&gt;12k+&lt;/b&gt;teams crunching&lt;/div&gt;
+&lt;div&gt;&lt;b&gt;99.9%&lt;/b&gt;uptime&lt;/div&gt;
+&lt;div&gt;&lt;b&gt;4ms&lt;/b&gt;median press&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© CANDY CRUNCH INC.&lt;/span&gt;&lt;span&gt;BUILT WITH BORDER: 4PX SOLID #111&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

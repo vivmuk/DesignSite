@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grotesk Type Poster — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F0EC;--surface:#FFFFFF;--fg:#0C0C0C;--muted:#6E6A64;--accent:#FF3B00;--accent2:#1414FF;--border:#DEDBD3}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Archivo',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Anton',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Grotesk Type Poster</h1><div class="tagline">Type so big it becomes architecture.</div>
+<div class="meta"><span class="tag">classic</span><span class="tag">campaigns</span><span class="tag">posters</span><span class="tag">music</span><span class="tag">typographic-hero</span><span class="tag">variable-font-animation</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/grotesk-type-poster.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/grotesk-type-poster.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/grotesk-type-poster.png" alt="Grotesk Type Poster preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F2F0EC"></div><code>bg: #F2F0EC</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#0C0C0C"></div><code>fg: #0C0C0C</code></div><div class="sw"><div class="chip" style="background:#6E6A64"></div><code>muted: #6E6A64</code></div><div class="sw"><div class="chip" style="background:#FF3B00"></div><code>accent: #FF3B00</code></div><div class="sw"><div class="chip" style="background:#1414FF"></div><code>accent2: #1414FF</code></div><div class="sw"><div class="chip" style="background:#DEDBD3"></div><code>border: #DEDBD3</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Anton</p><p><strong>Body:</strong> Archivo</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Ultra-condensed display, compact grotesk body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Variable Width Squeeze</strong></td><td>Headline variable-font wght axis animates 400-900 with scroll velocity.</td></tr><tr><td><strong>Line Mask Reveal</strong></td><td>Each headline line slides up from behind a mask, 700ms, 120ms stagger on load.</td></tr><tr><td><strong>Velocity Ticker</strong></td><td>Bottom ticker speed multiplies with scroll velocity, reversing direction on upscroll.</td></tr><tr><td><strong>Hover Invert Block</strong></td><td>List rows invert to black/white instantly on hover — poster logic, 0ms.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Viewport-filling condensed headline</li><li>Rotated vertical side captions</li><li>Oversized outline numerals</li><li>Velocity-reactive bottom ticker</li><li>Hairline table of contents</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">nav-bar</span><span class="tag">stats-band</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Anton + variable fonts</span><span class="tag">CSS clamp() typography</span><span class="tag">GSAP ScrollTrigger velocity</span><span class="tag">SplitType</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>One enormous condensed grotesk headline fills the viewport edge to edge; everything else — captions, indexes, links — shrinks to whisper-size around it. Use it for campaigns, poster series, and music releases. Distinctive because there is no imagery: type carries all hierarchy and emotion.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a campaign / music release site in the Grotesk Type Poster style — type is the entire design; no photography.
+LOOK: Palette — bg #F2F0EC, surface #FFFFFF, fg #0C0C0C, muted #6E6A64, accent #FF3B00, accent2 #1414FF, border #DEDBD3, no gradient. Load fonts via https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap — Anton for the poster headline, Archivo for everything else, IBM Plex Mono for captions. Headlines: uppercase, line-height 0.9, letter-spacing -0.01em, sized with clamp(4rem,14vw,13rem) so they bleed to the margins.
+LAYOUT: (1) nav — hairline bottom border, mono links; (2) hero — one viewport-filling Anton word or phrase, rotated vertical caption on the right edge, oversized outline numeral behind; (3) hairline index table (dates/venues/links) with instant hover-invert rows; (4) quote wall — large pull lines in Anton at 3rem; (5) stats band in condensed numerals; (6) footer-mega with a velocity ticker strip.
+MOTION: Variable-font squeeze — headline font-variation-settings &#x27;wght&#x27; maps to scroll velocity via GSAP ScrollTrigger getVelocity; lines mask-reveal upward 700ms, 120ms stagger on load; ticker speed = base 60px/s multiplied by scroll velocity, direction flips on upscroll; table rows invert instantly (0ms) on hover.
+SIGNATURE: The headline literally touching all four viewport edges; rotated side captions; exactly one blue #1414FF link on the page.
+CONSTRAINTS: Semantic HTML, headline remains selectable text (no SVG outline text), clamp() prevents overflow at any width, reduced-motion freezes the ticker, AA contrast, no images shipped at all.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/grotesk-type-poster/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/grotesk-type-poster/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;VOLUME ONE — Type Poster Campaign&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#F2F0EC;--surface:#FFFFFF;--fg:#0C0C0C;--muted:#6E6A64;--accent:#FF3B00;--accent2:#1414FF;--border:#DEDBD3;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:&amp;quot;Archivo&amp;quot;,sans-serif;line-height:1.6}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;position:relative}
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:&amp;quot;Anton&amp;quot;,sans-serif;font-weight:700;font-size:1.2rem;color:var(--fg);text-decoration:none;letter-spacing:.02em}
+nav a{margin-left:22px;color:var(--muted);text-decoration:none;font-size:.9rem;transition:color .2s}
+nav a:hover{color:var(--accent)}
+nav .cta-link{color:var(--accent);font-weight:600}
+.hero{padding:96px 0 72px}
+.kicker{color:var(--accent);font-weight:600;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-family:&amp;quot;Anton&amp;quot;,sans-serif;font-size:clamp(2.2rem,5.5vw,4rem);line-height:1.08;letter-spacing:-.02em;max-width:820px}
+.hero .lede{max-width:600px;margin:22px 0 32px;color:var(--muted);font-size:1.125rem}
+.btn{display:inline-block;padding:13px 30px;background:var(--accent);color:#fff;border-radius:2px;font-weight:600;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px color-mix(in srgb,var(--accent) 35%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border);margin-left:12px}
+.features{padding:72px 0}
+.section-h{font-family:&amp;quot;Anton&amp;quot;,sans-serif;font-size:2rem;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:28px;transition:transform .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.card h3{font-family:&amp;quot;Anton&amp;quot;,sans-serif;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:80px 0;border-top:1px solid var(--border)}
+.about h2{font-family:&amp;quot;Anton&amp;quot;,sans-serif;font-size:1.9rem;margin-bottom:18px}
+.about p{color:var(--muted);max-width:680px;margin-bottom:14px}
+.cta{padding:88px 0;text-align:center}
+.cta h2{font-family:&amp;quot;Anton&amp;quot;,sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px}
+.cta p{color:var(--muted);max-width:560px;margin:0 auto 28px}
+footer{border-top:1px solid var(--border);padding:34px 0;color:var(--muted);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer h4{font-family:&amp;quot;Anton&amp;quot;,sans-serif;color:var(--fg);margin-bottom:8px;font-size:.95rem}
+footer nav a{display:block;margin:0 0 6px}
+
+.poster-h{font-family:var(--font-display);font-size:clamp(4rem,18vw,15rem);line-height:.88;text-transform:uppercase;letter-spacing:-.01em;margin:0}
+.side-cap{position:absolute;right:24px;top:120px;writing-mode:vertical-rl;font-family:var(--font-mono);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.outline-num{font-family:var(--font-display);font-size:7rem;line-height:1;color:transparent;-webkit-text-stroke:2px var(--fg)}
+.outline-num.red{-webkit-text-stroke:2px var(--accent)}
+.card{background:var(--surface);border:1px solid var(--border);padding:28px;transition:transform .25s ease}
+.card:hover{transform:translateY(-6px)}
+.card:hover .outline-num{-webkit-text-stroke-color:var(--accent)}
+.card h3{font-family:var(--font-body);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin:.8rem 0 .4rem}
+.card p{color:var(--muted);font-size:.95rem}
+.btn{background:var(--accent);color:#fff;text-transform:uppercase;font-weight:600;letter-spacing:.06em}
+.btn:hover{background:var(--fg)}
+.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--fg)}
+
+.hero{padding:4rem 3% 3rem}
+.hero h1{font-size:clamp(4rem,14vw,13rem);line-height:.9;text-transform:uppercase;letter-spacing:-.01em}
+.side{position:absolute;right:1.2rem;top:50%;transform:rotate(90deg) translateX(-50%);transform-origin:right top;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.2em;color:var(--muted);white-space:nowrap}
+.outline-num{position:absolute;left:2%;top:8%;font-family:var(--font-display);font-size:clamp(6rem,18vw,16rem);color:transparent;-webkit-text-stroke:2px var(--accent);opacity:.55;line-height:1;pointer-events:none}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{border-bottom:1px solid var(--border);padding:.9rem .5rem;text-align:left}
+th{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+td a{color:var(--accent2)}
+tr:hover{background:var(--fg);color:#fff;transition:none}
+tr:hover a{color:#FFD9CC}
+.tickerbar{background:var(--fg);color:var(--bg);font-family:var(--font-mono);font-size:.85rem;overflow:hidden;white-space:nowrap;padding:.7rem 0}
+.tickerbar span{display:inline-block;animation:tick 14s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.quote{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem);text-transform:uppercase;line-height:1;border-bottom:1px solid var(--border);padding:2rem 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border-block:1px solid var(--border)}
+.stats div{background:var(--bg);padding:1.6rem}
+.stats strong{font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);display:block;line-height:1;color:var(--accent)}
+@media(max-width:768px){.grid{grid-template-columns:1fr}.stats-band{grid-template-columns:repeat(2,1fr)}.side-cap{display:none}.tategaki{display:none}.hero{padding:64px 0 48px}.cols{column-count:1}nav a{margin-left:12px}footer .cols3{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;VOLUME ONE&lt;/a&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Tour&lt;/a&gt;&lt;a href=&amp;quot;#about&amp;quot;&gt;Posters&lt;/a&gt;&lt;a href=&amp;quot;#journal&amp;quot;&gt;Shop&lt;/a&gt;&lt;a class=&amp;quot;cta-link&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Tickets&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span class=&amp;quot;side-cap&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&gt;N°07 — CAMPAIGN — 2026 — SILKSCREEN&lt;/span&gt;
+
+&lt;p class=&amp;quot;kicker&amp;quot;&gt;N°07 — A campaign in five posters&lt;/p&gt;
+&lt;h1 class=&amp;quot;poster-h&amp;quot;&gt;MAKE IT LOUD.&lt;/h1&gt;
+&lt;p class=&amp;quot;lede&amp;quot;&gt;A poster series about volume: in sound, in type, in public space. Five prints, one typeface, no apologies.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#features&amp;quot;&gt;See the posters&lt;/a&gt;&lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Tour dates&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2 class=&amp;quot;section-h&amp;quot;&gt;The series&lt;/h2&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;outline-num red&amp;quot;&gt;No.1&lt;/div&gt;&lt;h3&gt;Poster No.1 — Volume&lt;/h3&gt;&lt;p&gt;Red on bone, six kilograms of ink, 70×100 centimeters.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;outline-num&amp;quot;&gt;No.2&lt;/div&gt;&lt;h3&gt;Poster No.2 — Frequency&lt;/h3&gt;&lt;p&gt;The waveform of a scream, redrawn in condensed caps.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;div class=&amp;quot;outline-num red&amp;quot;&gt;No.3&lt;/div&gt;&lt;h3&gt;Poster No.3 — Mass&lt;/h3&gt;&lt;p&gt;Letters weighted until they need structural support.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;about&amp;quot; id=&amp;quot;about&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;Notes on volume&lt;/h2&gt;&lt;p&gt;Every poster in the series is set in a single condensed grotesk. When type is this large, hierarchy stops being decoration and becomes structure — the word IS the image.&lt;/p&gt;&lt;p&gt;Printed by hand in an edition of two hundred. Sold at the shows, then gone.&lt;/p&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h2&gt;The posters sell out at every stop.&lt;/h2&gt;&lt;p&gt;Join the list for the next drop. Prints are numbered, stamped, and never reprinted.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Join the list&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot; style=&amp;quot;font-size:1rem&amp;quot;&gt;VOLUME ONE&lt;/a&gt;&lt;p style=&amp;quot;margin-top:6px&amp;quot;&gt;One typeface. Five posters.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;cols3&amp;quot; style=&amp;quot;display:grid;grid-template-columns:repeat(3,auto);gap:32px&amp;quot;&gt;
+&lt;nav&gt;&lt;h4&gt;Series&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Posters&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Process&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Film&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;Tour&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Dates&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Venues&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Tickets&lt;/a&gt;&lt;/nav&gt;
+&lt;nav&gt;&lt;h4&gt;Elsewhere&lt;/h4&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Instagram&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Are.na&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Email&lt;/a&gt;&lt;/nav&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" sandbox="allow-same-origin"></iframe>
+</div></body></html>

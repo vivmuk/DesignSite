@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logistics Network Map — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Barlow&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0C1524;--surface:#13233A;--fg:#E8EEF5;--muted:#7A8CA5;--accent:#FF8A3D;--accent2:#3FC1C9;--border:#22354F}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Barlow',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Barlow Condensed',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Logistics Network Map</h1><div class="tagline">Living route arcs between hubs, fleet status sidebars</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">logistics</span><span class="tag">supply chain</span><span class="tag">aviation</span><span class="tag">map-view</span><span class="tag">svg-draw-on-scroll</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/logistics-network-map.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/logistics-network-map.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/logistics-network-map.png" alt="Logistics Network Map preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#0C1524"></div><code>bg: #0C1524</code></div><div class="sw"><div class="chip" style="background:#13233A"></div><code>surface: #13233A</code></div><div class="sw"><div class="chip" style="background:#E8EEF5"></div><code>fg: #E8EEF5</code></div><div class="sw"><div class="chip" style="background:#7A8CA5"></div><code>muted: #7A8CA5</code></div><div class="sw"><div class="chip" style="background:#FF8A3D"></div><code>accent: #FF8A3D</code></div><div class="sw"><div class="chip" style="background:#3FC1C9"></div><code>accent2: #3FC1C9</code></div><div class="sw"><div class="chip" style="background:#22354F"></div><code>border: #22354F</code></div><p><code>radial-gradient(ellipse at 30% 20%, #14294a 0%, #0C1524 70%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Barlow Condensed</p><p><strong>Body:</strong> Barlow</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Industrial condensed display, mono for telemetry</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&family=Barlow&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Arc draw</strong></td><td>Route arcs draw between hubs over 1.4s ease-in-out, then dash-flow animates 2s linear infinite</td></tr><tr><td><strong>Hub pulse</strong></td><td>Hub nodes pulse ring scale 1→1.8 fading out, 2.4s, staggered by activity</td></tr><tr><td><strong>Fleet tick</strong></td><td>Sidebar ETA/telemetry values tick with 200ms mono digit updates</td></tr><tr><td><strong>Container glide</strong></td><td>Clicking a route sends a cargo dot gliding along the arc path 3s linear</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Animated great-circle route arcs with flowing dashes</li><li>Hub nodes with pulsing throughput rings</li><li>Fleet status sidebar with live ETA countdowns</li><li>Port/warehouse legend with capacity bars</li><li>Scan-a-route interaction (click arc → cargo dot runs)</li><li>Status vocabulary: IN TRANSIT / CLEARED / DELAYED</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">map-view</span><span class="tag">data-table</span><span class="tag">stats-band</span><span class="tag">badge-system</span><span class="tag">notification-center</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">D3 + d3-geo (great-circle arcs)</span><span class="tag">SVG stroke-dashoffset + dash-flow animation</span><span class="tag">GSAP ScrollTrigger</span><span class="tag">rAF telemetry loop</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A supply chain alive on screen: animated arcs drawing between ports and warehouses, hub nodes pulsing with throughput, and a fleet status sidebar ticking with ETAs. Deep navy chartroom aesthetic with signal orange for movement. The map is the product; everything else supports it.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a supply-chain visualization engineer. Build a single-page logistics network page in the Logistics Network Map style.
+
+LOOK: Deep navy bg #0C1524, panel #13233A, light text #E8EEF5, muted #7A8CA5, signal orange #FF8A3D, cyan #3FC1C9, border #22354F, gradient `radial-gradient(ellipse at 30% 20%, #14294a, #0C1524 70%)`. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&amp;family=Barlow:wght@400;500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Barlow Condensed display, Barlow body, JetBrains Mono telemetry.
+
+LAYOUT: 1) Top bar with network name + global clock. 2) Main split: left 70% map (world, hub nodes, arcs), right 30% fleet sidebar with ETA rows. 3) Below map: legend with capacity bars, status badge row. 4) Stats band: on-time %, shipments in flight, ports active. 5) Footer with API/ops links.
+
+MOTION: Arcs draw 1.4s ease-in-out then dash-flow animates 2s linear infinite. Hub pulses: ring scale 1→1.8 fade 2.4s staggered. Cargo dot glides along clicked arc 3s linear. Sidebar values tick 200ms mono updates via rAF (throttled 1s).
+
+SIGNATURE: (a) flowing-dash great-circle arcs, (b) pulsing hub throughput rings, (c) live ETA countdown sidebar with status badges.
+
+CONSTRAINTS: Semantic HTML, map aria-labeled with data-table fallback listing routes; AA contrast on dark; pause dash-flow under prefers-reduced-motion; throttle updates; virtualize sidebar past 100 rows; total JS &lt; 200KB.
+
+EXTRA: Add a lane-detail modal on node click listing vessel, draft, and next port; sidebar rows highlight amber when an ETA slips past threshold; the global clock ticks each second in mono.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/logistics-network-map/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/logistics-network-map/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Meridian Freight — Network Ops&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Barlow+Condensed&amp;family=Barlow:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#0C1524; --surface:#13233A; --fg:#E8EEF5; --muted:#7A8CA5;
+  --accent:#FF8A3D; --accent2:#3FC1C9; --border:#22354F;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Barlow&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Barlow Condensed&#x27;,sans-serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Barlow Condensed&#x27;,sans-serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#111111; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;background:radial-gradient(ellipse at 30% 20%, #14294a 0%, var(--bg) 70%) }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Barlow Condensed&#x27;,sans-serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#E8EEF5; color:#0C1524; text-align:center; }
+.cta .btn { background:#3FC1C9; color:#111111; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;MERIDIAN FREIGHT&lt;/span&gt;
+  &lt;nav&gt;Network&lt;br&gt;Fleet&lt;br&gt;API&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;LIVE NETWORK&lt;/span&gt;
+  &lt;h1&gt;214 shipments in flight right now&lt;/h1&gt;
+  &lt;p&gt;Great-circle arcs to 38 ports, hub rings pulsing with throughput, ETAs ticking in mono.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;View the Network&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Corridors&lt;/span&gt;
+  &lt;h2&gt;Active lanes&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Transpacific — SEA to LGB&lt;/h3&gt;&lt;p&gt;12 knots avg · on-time 96.4%&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Transatlantic — RTM to NYC&lt;/h3&gt;&lt;p&gt;Ice-class routing · on-time 94.1%&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Intra-Asia — SIN to SHA&lt;/h3&gt;&lt;p&gt;Daily sailings · on-time 98.9%&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;The Network&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;38&lt;/b&gt;&lt;br&gt;&lt;span&gt;Ports active&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;96.4%&lt;/b&gt;&lt;br&gt;&lt;span&gt;On-time&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;214&lt;/b&gt;&lt;br&gt;&lt;span&gt;In flight&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Plug into the network&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;A REST and streaming API for every milestone.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Get API Keys&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 MERIDIAN FREIGHT. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Status · Docs · SLA&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

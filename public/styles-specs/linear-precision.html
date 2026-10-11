@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Linear Precision — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08090D;--surface:#101218;--fg:#E2E4ED;--muted:#8A8F98;--accent:#5E6AD2;--accent2:#9CA1F0;--border:#23252E}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Inter',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Linear Precision</h1><div class="tagline">Keyboard-first density on deep lavender-gray glass.</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">devtools</span><span class="tag">project mgmt</span><span class="tag">SaaS</span><span class="tag">command-palette-focus</span><span class="tag">page-view-transitions</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/linear-precision.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/linear-precision.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/linear-precision.png" alt="Linear Precision preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#08090D"></div><code>bg: #08090D</code></div><div class="sw"><div class="chip" style="background:#101218"></div><code>surface: #101218</code></div><div class="sw"><div class="chip" style="background:#E2E4ED"></div><code>fg: #E2E4ED</code></div><div class="sw"><div class="chip" style="background:#8A8F98"></div><code>muted: #8A8F98</code></div><div class="sw"><div class="chip" style="background:#5E6AD2"></div><code>accent: #5E6AD2</code></div><div class="sw"><div class="chip" style="background:#9CA1F0"></div><code>accent2: #9CA1F0</code></div><div class="sw"><div class="chip" style="background:#23252E"></div><code>border: #23252E</code></div><p><code>radial-gradient(ellipse at 50% -20%, rgba(94,106,210,0.18), transparent 60%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Inter</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">Inter tight-tracked everywhere; JetBrains Mono for keys and code.</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Inter&family=Inter&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>view-transition-slide</strong></td><td>Page swaps use View Transitions API: outgoing view fades 90ms ease-out, incoming slides up 12px over 180ms cubic-bezier(.2,.8,.2,1).</td></tr><tr><td><strong>palette-spring-in</strong></td><td>Command palette scales from 0.97 + translateY(6px) to identity over 160ms ease-out; backdrop fades 120ms; ESC closes with reverse 100ms.</td></tr><tr><td><strong>row-hover-sweep</strong></td><td>List rows get background rgba(255,255,255,.03) in 70ms linear and a 2px accent left-bar that scaleY(0→1) over 140ms ease-out.</td></tr><tr><td><strong>count-up-metrics</strong></td><td>Dashboard stats animate value 0→target over 700ms ease-out with tabular-nums so digits never shift width.</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>⌘K command palette as primary navigation</li><li>Keyboard-shortcut kbd chips beside every action</li><li>Ultra-tight 6px radius cards on lavender-gray</li><li>Left accent bar that grows on active rows</li><li>Monochrome avatar dots with subtle 1px ring</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">command-palette</span><span class="tag">nav-bar</span><span class="tag">data-table</span><span class="tag">kanban-board</span><span class="tag">breadcrumb</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">Inter variable font</span><span class="tag">View Transitions API</span><span class="tag">vanilla JS command palette</span><span class="tag">CSS custom properties theming</span><span class="tag">tabular-nums metric counters</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The Linear school of product design: muted lavender-gray surfaces floating on a near-black background, tight 6px radii, and typography tuned for dense information. Every interaction assumes a keyboard — a command palette is the primary navigation, and shortcuts are printed everywhere. The result is software that feels fast, quiet, and obsessively organized.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a senior product engineer building a marketing and app surface for a project-management tool in the Linear Precision style — quiet, dense, keyboard-first, obsessively organized.
+LOOK: near-black #08090D background, panels in #101218, primary text #E2E4ED, secondary #8A8F98, hairlines #23252E, indigo accent #5E6AD2 with lighter #9CA1F0 for hovers. Radii are tight: 6px on cards, 4px on buttons — nothing pill-shaped. Import fonts: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap — Inter at -0.01em letter-spacing for UI, JetBrains Mono for keyboard chips, IDs and code. A faint radial lavender glow (rgba(94,106,210,.18)) sits behind the hero.
+LAYOUT: slim 56px sticky top bar with product mark, breadcrumb center, avatar cluster right; below it a two-pane layout — 240px icon+label sidebar, main column with a filter row of kbd chips, then a dense issue table (32px rows, hover reveals accent bar); a marketing hero above with headline, one paragraph, dual CTAs and a screenshot frame.
+MOTION: View Transitions API for route swaps (90ms fade out, 180ms cubic-bezier(.2,.8,.2,1) slide up in); command palette springs from 0.97 scale + 6px offset over 160ms ease-out; row hover tint rgba(255,255,255,.03) at 70ms; stat counters count up 700ms ease-out with tabular-nums. Use no animation library — CSS transitions plus 30 lines of vanilla JS suffice.
+SIGNATURE: (1) a working ⌘K palette with fuzzy filter and grouped results; (2) kbd chips (1px border, 4px radius, JetBrains Mono 11px) beside every action; (3) left accent bar scaleY animation on active/hover rows; (4) tabular-nums everywhere numbers appear.
+CONSTRAINTS: semantic HTML5 with proper nav/main/table landmarks; WCAG AA contrast (verify #8A8F98 on #101218); responsive — sidebar collapses to icon rail under 900px, single column under 640px; prefers-reduced-motion disables palette spring and counters; all keyboard navigation works (Tab, arrows in palette); no layout shift from font loading (font-display: swap + metric fallbacks); images lazy-loaded, total JS under 15KB.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/linear-precision/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/linear-precision/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;/&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;/&gt;
+&lt;title&gt;Trackline — Linear Precision&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;/&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin/&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;/&gt;
+&lt;style&gt;
+:root{--bg:#08090D;--surface:#101218;--fg:#E2E4ED;--muted:#8A8F98;--accent:#5E6AD2;--accent2:#9CA1F0;--border:#23252E;--grad:radial-gradient(ellipse at 50% -20%, rgba(94,106,210,0.18), transparent 60%);--r:6px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);background-image:var(--grad);color:var(--fg);font-family:&#x27;Inter&#x27;,sans-serif;letter-spacing:-.01em;line-height:1.55}
+a{color:var(--accent2);text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:10;background:rgba(8,9,13,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+header .wrap{display:flex;align-items:center;gap:24px;height:56px}
+.logo{font-weight:700;font-size:.95rem;color:var(--fg)}
+.crumbs{color:var(--muted);font-size:.85rem}
+kbd{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:2px 6px;background:var(--surface)}
+nav{margin-left:auto;display:flex;gap:18px;align-items:center}
+nav a{color:var(--muted);font-size:.85rem;transition:color .15s}
+nav a:hover{color:var(--fg)}
+.avatars{display:flex}
+.avatars span{width:24px;height:24px;border-radius:50%;background:var(--surface);border:1px solid var(--border);margin-left:-6px;display:grid;place-items:center;font-size:.6rem;color:var(--muted)}
+.hero{padding:88px 0 64px;text-align:center}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
+.hero p{color:var(--muted);max-width:520px;margin:18px auto 28px}
+.btn{display:inline-block;padding:10px 20px;border-radius:4px;font-size:.875rem;font-weight:500;background:var(--accent);color:#fff;transition:background .15s,transform .15s}
+.btn:hover{background:var(--accent2)}
+.btn.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--border);margin-left:10px}
+.shot{margin:40px auto 0;max-width:820px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px;text-align:left}
+.shot .bar{display:flex;gap:6px;padding:4px 6px 10px}
+.shot .bar i{width:10px;height:10px;border-radius:50%;background:var(--border)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.col h4{font-size:.7rem;text-transform:uppercase;color:var(--muted);letter-spacing:.06em;padding:8px 6px;border-left:2px solid var(--accent)}
+.issue{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin-bottom:8px;font-size:.8rem;position:relative;transition:background .15s}
+.issue:hover{background:rgba(255,255,255,.03)}
+.issue b{font-family:&#x27;JetBrains Mono&#x27;,monospace;font-weight:500;color:var(--muted);font-size:.7rem}
+.issue .tag{margin-left:auto;font-size:.65rem;color:var(--accent2);border:1px solid var(--border);border-radius:4px;padding:1px 6px}
+.features{padding:64px 0;border-top:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;position:relative}
+.card::before{content:&#x27;&#x27;;position:absolute;left:0;top:20px;bottom:20px;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .18s ease-out}
+.card:hover::before{transform:scaleY(1)}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.875rem}
+.stats{padding:56px 0;text-align:center;border-top:1px solid var(--border)}
+.stat{font-size:2.6rem;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat-label{color:var(--muted);font-size:.8rem;margin-top:4px}
+.cta{padding:80px 0;text-align:center;border-top:1px solid var(--border)}
+footer{border-top:1px solid var(--border);padding:28px 0;color:var(--muted);font-size:.8rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:768px){.grid,.cols{grid-template-columns:1fr}.crumbs{display:none}.hero{padding:64px 0 48px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;a class=&amp;quot;logo&amp;quot; href=&amp;quot;#&amp;quot;&gt;Trackline&lt;/a&gt;&lt;span class=&amp;quot;crumbs&amp;quot;&gt;Product / Roadmap &lt;kbd&gt;G&lt;/kbd&gt; then &lt;kbd&gt;I&lt;/kbd&gt;&lt;/span&gt;&lt;nav&gt;&lt;a href=&amp;quot;#features&amp;quot;&gt;Features&lt;/a&gt;&lt;a href=&amp;quot;#stats&amp;quot;&gt;Changelog&lt;/a&gt;&lt;a href=&amp;quot;#cta&amp;quot;&gt;Pricing&lt;/a&gt;&lt;span class=&amp;quot;avatars&amp;quot;&gt;&lt;span&gt;A&lt;/span&gt;&lt;span&gt;K&lt;/span&gt;&lt;span&gt;M&lt;/span&gt;&lt;/span&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;h1&gt;Plan with precision,&lt;br/&gt;ship without ceremony.&lt;/h1&gt;
+&lt;p&gt;Trackline keeps every issue, spec and sprint in one dense, quiet workspace. Press &lt;kbd&gt;⌘K&lt;/kbd&gt; anywhere and just type.&lt;/p&gt;
+&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Start free&lt;/a&gt;&lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#features&amp;quot;&gt;Watch demo&lt;/a&gt;
+&lt;div class=&amp;quot;shot&amp;quot;&gt;&lt;div class=&amp;quot;bar&amp;quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;&lt;div class=&amp;quot;cols&amp;quot;&gt;
+&lt;div class=&amp;quot;col&amp;quot;&gt;&lt;h4&gt;In Progress&lt;/h4&gt;&lt;div class=&amp;quot;issue&amp;quot;&gt;&lt;b&gt;TL-142&lt;/b&gt; Command palette fuzzy ranking&lt;span class=&amp;quot;tag&amp;quot;&gt;P1&lt;/span&gt;&lt;/div&gt;&lt;div class=&amp;quot;issue&amp;quot;&gt;&lt;b&gt;TL-138&lt;/b&gt; View transitions for board&lt;span class=&amp;quot;tag&amp;quot;&gt;P2&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;col&amp;quot;&gt;&lt;h4&gt;Review&lt;/h4&gt;&lt;div class=&amp;quot;issue&amp;quot;&gt;&lt;b&gt;TL-129&lt;/b&gt; Keyboard nav in tables&lt;span class=&amp;quot;tag&amp;quot;&gt;P1&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;col&amp;quot;&gt;&lt;h4&gt;Done&lt;/h4&gt;&lt;div class=&amp;quot;issue&amp;quot;&gt;&lt;b&gt;TL-121&lt;/b&gt; Tabular-num metrics&lt;span class=&amp;quot;tag&amp;quot;&gt;P3&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;features&amp;quot; id=&amp;quot;features&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;div class=&amp;quot;grid&amp;quot;&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;&lt;kbd&gt;⌘K&lt;/kbd&gt; everything&lt;/h3&gt;&lt;p&gt;One palette navigates, filters and creates. Your hands never leave the keys.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Cycles, not chaos&lt;/h3&gt;&lt;p&gt;Automatic scoping shows exactly what fits this week — and what slipped.&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Sub-50ms everything&lt;/h3&gt;&lt;p&gt;Optimistic UI, local-first sync. The interface never makes you wait.&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;stats&amp;quot; id=&amp;quot;stats&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;
+&lt;div class=&amp;quot;stat&amp;quot; data-target=&amp;quot;98.2&amp;quot;&gt;0&lt;/div&gt;&lt;div class=&amp;quot;stat-label&amp;quot;&gt;% of keystrokes answered under 50ms&lt;/div&gt;
+&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&amp;quot;cta&amp;quot; id=&amp;quot;cta&amp;quot;&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;h1&gt;Press &lt;kbd&gt;⌘K&lt;/kbd&gt;. Start shipping.&lt;/h1&gt;&lt;p style=&amp;quot;color:var(--muted);margin:12px 0 24px&amp;quot;&gt;Free for teams up to 10. No card required.&lt;/p&gt;&lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Create workspace&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;div class=&amp;quot;wrap&amp;quot;&gt;&lt;span&gt;© 2026 Trackline Systems&lt;/span&gt;&lt;span&gt;Press &lt;kbd&gt;?&lt;/kbd&gt; for shortcuts&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;script&gt;
+const el=document.querySelector(&#x27;.stat&#x27;),t=+el.dataset.target,s=performance.now();
+(function step(n){const p=Math.min((n-s)/700,1);el.textContent=(t*p).toFixed(1);if(p&lt;1)requestAnimationFrame(step)})(s);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

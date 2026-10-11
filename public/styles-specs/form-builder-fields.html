@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Form Builder Fields — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8F9FB;--surface:#FFFFFF;--fg:#1C2130;--muted:#6E7688;--accent:#6C5CE7;--accent2:#00B8A9;--border:#E4E7EE}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'DM Sans',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Form Builder Fields</h1><div class="tagline">Every input state, inline validation, array fields</div>
+<div class="meta"><span class="tag">component-kit</span><span class="tag">SaaS</span><span class="tag">admin tools</span><span class="tag">fintech</span><span class="tag">micro-interactions</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/form-builder-fields.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/form-builder-fields.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/form-builder-fields.png" alt="Form Builder Fields preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F8F9FB"></div><code>bg: #F8F9FB</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1C2130"></div><code>fg: #1C2130</code></div><div class="sw"><div class="chip" style="background:#6E7688"></div><code>muted: #6E7688</code></div><div class="sw"><div class="chip" style="background:#6C5CE7"></div><code>accent: #6C5CE7</code></div><div class="sw"><div class="chip" style="background:#00B8A9"></div><code>accent2: #00B8A9</code></div><div class="sw"><div class="chip" style="background:#E4E7EE"></div><code>border: #E4E7EE</code></div><p><code>linear-gradient(180deg,#F8F9FB 0%,#EFF1F6 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> DM Sans</p><p><strong>Body:</strong> DM Sans</p>
+<p><strong>Monospace:</strong> JetBrains Mono</p><p class="tagline">One DM Sans family, mono for field tokens</p>
+<p><a href="https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>focus ring draw</strong></td><td>focus rings animate stroke-dashoffset around the field over 200ms ease-out</td></tr><tr><td><strong>error slide</strong></td><td>error messages slide down 6px with fade over 180ms and the border transitions to red 150ms</td></tr><tr><td><strong>array reorder</strong></td><td>dragged rows lift with shadow and siblings part with 260ms spring cubic-bezier(0.34,1.56,0.64,1)</td></tr><tr><td><strong>submit success</strong></td><td>button morphs to a check with 400ms ease; toast rises 8px 250ms</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>state-gallery row showing every input state</li><li>floating-label inputs with animated labels</li><li>repeatable array field rows with drag handles</li><li>inline validation with helper + error text</li><li>stepped logical fieldset grouping</li><li>submission summary receipt panel</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">form-stack</span><span class="tag">settings-panel</span><span class="tag">onboarding-steps</span><span class="tag">toast-system</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS state classes (.is-error, .is-focus)</span><span class="tag">vanilla JS validation controller</span><span class="tag">HTML5 Drag and Drop for array fields</span><span class="tag">Google Fonts (DM Sans, JetBrains Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>An exhaustive form-system kit: every input variant and state — default, focus, filled, error, disabled, loading — plus inline validation, repeatable array fields with reorder handles, and a submission summary. For SaaS, admin tools, and fintech that need forms to feel engineered. The signature is state completeness — nothing is left undefined.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page form-system showcase in the Form Builder Fields style. LOOK: background #F8F9FB with a soft gradient, white cards, text #1C2130, muted #6E7688, accents #6C5CE7 (violet) and #00B8A9 (teal success), border #E4E7EE, error #D64545. Load https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap — DM Sans for UI, mono for field tokens like FN-014. LAYOUT in order: (1) header with kit name and version badge; (2) state gallery: one text input rendered in five states — default, focus, filled, error, disabled — each labeled; (3) input variant grid: text, select, textarea, checkbox group, radio cards, file dropzone; (4) repeatable array field with three rows, drag handles, add/remove; (5) inline validation demo with helper and error copy; (6) submission summary receipt; (7) footer. MOTION: focus rings draw via stroke-dashoffset over 200ms; error messages slide down 6px with fade over 180ms as borders transition red in 150ms; dragged array rows lift with shadow while siblings part with 260ms spring cubic-bezier(0.34,1.56,0.64,1); submit morphs the button to a check over 400ms and raises a toast 8px in 250ms. SIGNATURE: (a) the five-state gallery, (b) array rows with drag reorder, (c) labeled field tokens. CONSTRAINTS: semantic HTML with label-for everywhere, aria-invalid and aria-describedby on errors, 4.5:1 contrast, single column below 700px, no frameworks.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/form-builder-fields/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/form-builder-fields/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;utf-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1&amp;quot;&gt;
+&lt;title&gt;Formkit UI — Field System&lt;/title&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.googleapis.com&amp;quot;&gt;
+&lt;link rel=&amp;quot;preconnect&amp;quot; href=&amp;quot;https://fonts.gstatic.com&amp;quot; crossorigin&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root{
+  --bg:#F8F9FB; --surface:#FFFFFF; --fg:#1C2130; --muted:#6E7688;
+  --accent:#6C5CE7; --accent2:#00B8A9; --border:#E4E7EE;
+  --grad:linear-gradient(180deg,#F8F9FB 0%,#EFF1F6 100%);
+  --display:&#x27;DM Sans&#x27;, serif; --body:&#x27;DM Sans&#x27;, sans-serif;
+  --mono:&#x27;JetBrains Mono&#x27;, monospace; --radius:10px;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.site-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
+.brand{font-family:var(--display);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+.nav{display:flex;gap:22px;font-size:.9rem;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:12px 26px;border-radius:var(--radius);background:var(--accent);color:var(--on-accent,#fff);font-weight:600;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,filter .25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.hero{padding:88px 0 64px;text-align:center}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700}
+.hero h1{font-family:var(--display);font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:16px auto;max-width:16ch}
+.hero p{max-width:560px;margin:0 auto 28px;color:var(--muted)}
+.sig{padding:56px 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:48px 0}
+.card{background:var(--surface);border:1px solid var(--border);padding:26px;border-radius:var(--radius);transition:transform .3s,box-shadow .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.10);border-color:var(--accent)}
+.card h3{font-family:var(--display);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+.about{padding:64px 0;border-top:1px solid var(--border)}
+.about h2{font-family:var(--display);margin-bottom:12px}
+.about p{color:var(--muted);max-width:640px}
+.cta{margin:64px 0;padding:56px 24px;text-align:center;background:var(--accent);color:var(--on-accent,#fff);border-radius:var(--radius)}
+.cta h2{font-family:var(--display);margin-bottom:10px}
+.cta p{opacity:.9;margin-bottom:20px}
+.site-foot{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:760px){
+  .features{grid-template-columns:1fr}
+  .nav{display:none}
+}
+.state-demo{max-width:360px;margin:0 auto;display:flex;flex-direction:column;gap:14px;text-align:left}.fld label{display:block;font-size:.75rem;font-weight:700;margin-bottom:4px;color:var(--muted)}.fld input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;transition:border-color .15s,box-shadow .15s}.fld.focus input{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,92,231,.18)}.fld.error input{border-color:#D64545}.fld .err{color:#D64545;font-size:.75rem;margin-top:4px;display:block;animation:slideDown .18s ease-out forwards}@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&amp;quot;wrap site-head&amp;quot;&gt;
+  &lt;a class=&amp;quot;brand&amp;quot; href=&amp;quot;#&amp;quot;&gt;Formkit UI&lt;/a&gt;
+  &lt;nav class=&amp;quot;nav&amp;quot; aria-label=&amp;quot;Primary&amp;quot;&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Components&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Docs&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Playground&lt;/a&gt;&lt;a href=&amp;quot;#&amp;quot;&gt;Changelog&lt;/a&gt;&lt;/nav&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Get the Kit&lt;/a&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&amp;quot;hero wrap&amp;quot;&gt;
+    &lt;p class=&amp;quot;kicker&amp;quot;&gt;v3.2 · 48 fields&lt;/p&gt;
+    &lt;h1&gt;Every field state, engineered&lt;/h1&gt;
+    &lt;p&gt;A complete form system: 48 inputs, all states, validation logic, and zero visual drift.&lt;/p&gt;
+    &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Browse fields&lt;/a&gt;
+    &lt;a class=&amp;quot;btn ghost&amp;quot; href=&amp;quot;#about&amp;quot;&gt;Read docs&lt;/a&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;sig&amp;quot; aria-label=&amp;quot;Signature&amp;quot;&gt;
+&lt;div class=&amp;quot;state-demo&amp;quot;&gt;&lt;div class=&amp;quot;fld&amp;quot;&gt;&lt;label&gt;Default&lt;/label&gt;&lt;input placeholder=&amp;quot;Your name&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;fld focus&amp;quot;&gt;&lt;label&gt;Focus&lt;/label&gt;&lt;input value=&amp;quot;Focused&amp;quot;&gt;&lt;/div&gt;&lt;div class=&amp;quot;fld error&amp;quot;&gt;&lt;label&gt;Error&lt;/label&gt;&lt;input value=&amp;quot;@@@&amp;quot;&gt;&lt;span class=&amp;quot;err&amp;quot;&gt;Enter letters only&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;features wrap&amp;quot; id=&amp;quot;features&amp;quot;&gt;
+&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;48 field types&lt;/h3&gt;&lt;p&gt;Every input you&#x27;ll ever need.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Validation built-in&lt;/h3&gt;&lt;p&gt;Rules, messages, and timing included.&lt;/p&gt;&lt;/article&gt;&lt;article class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Accessible core&lt;/h3&gt;&lt;p&gt;ARIA wired on every variant.&lt;/p&gt;&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;about wrap&amp;quot; id=&amp;quot;about&amp;quot;&gt;
+    &lt;h2&gt;Nothing left undefined&lt;/h2&gt;
+    &lt;p&gt;Focus, hover, error, loading, disabled — if a state can exist, it&#x27;s designed, documented, and tested.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class=&amp;quot;wrap&amp;quot; id=&amp;quot;cta&amp;quot;&gt;
+    &lt;div class=&amp;quot;cta&amp;quot;&gt;
+      &lt;h2&gt;Install with npm&lt;/h2&gt;
+      &lt;p&gt;One package, tree-shakeable.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&amp;quot;wrap site-foot&amp;quot;&gt;
+  &lt;span&gt;© 2026 Formkit UI&lt;/span&gt;
+  &lt;span&gt;SaaS · Admin tools · Fintech&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>

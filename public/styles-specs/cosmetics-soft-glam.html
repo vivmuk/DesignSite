@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cosmetics Soft Glam — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Italiana&family=Nunito+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF1EE;--surface:#FFFFFF;--fg:#3D2A2A;--muted:#A08A88;--accent:#D77A8C;--accent2:#C9A24B;--border:#F0DED8}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Italiana',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Cosmetics Soft Glam</h1><div class="tagline">Blush gradients, glass product shots, fluid serif loops</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">beauty</span><span class="tag">skincare</span><span class="tag">fashion</span><span class="tag">gradient-mesh-bg</span><span class="tag">video-background</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images/cosmetics-soft-glam.png" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/cosmetics-soft-glam.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images/cosmetics-soft-glam.png" alt="Cosmetics Soft Glam preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FBF1EE"></div><code>bg: #FBF1EE</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#3D2A2A"></div><code>fg: #3D2A2A</code></div><div class="sw"><div class="chip" style="background:#A08A88"></div><code>muted: #A08A88</code></div><div class="sw"><div class="chip" style="background:#D77A8C"></div><code>accent: #D77A8C</code></div><div class="sw"><div class="chip" style="background:#C9A24B"></div><code>accent2: #C9A24B</code></div><div class="sw"><div class="chip" style="background:#F0DED8"></div><code>border: #F0DED8</code></div><p><code>linear-gradient(135deg,#FBF1EE 0%,#F6DDE2 55%,#F1E7D3 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Italiana</p><p><strong>Body:</strong> Nunito Sans</p>
+<p><strong>Monospace:</strong> —</p><p class="tagline">High-contrast fashion serif with rounded friendly body</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Italiana&family=Nunito+Sans&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>Gradient breathe</strong></td><td>Blush mesh gradient shifts background-position over 12s ease-in-out infinite</td></tr><tr><td><strong>Glass tilt</strong></td><td>Product cards tilt ±6° toward cursor with 400ms spring and specular highlight tracking</td></tr><tr><td><strong>Shade cross-fade</strong></td><td>Swatch selection cross-fades product imagery 500ms ease-in-out</td></tr><tr><td><strong>Loop vignette</strong></td><td>Tutorial videos loop with 1s fade in/out at edges, autoplay muted</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>Blush-to-cream mesh gradient background</li><li>Glass-effect product cards with specular highlights</li><li>Circular shade swatch chips with selected ring</li><li>Silent looping tutorial video behind content</li><li>Fluid high-contrast serif headlines</li><li>Review stars + skin-type badges on cards</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">product-card</span><span class="tag">hero-section</span><span class="tag">filter-sidebar</span><span class="tag">shopping-cart-drawer</span><span class="tag">testimonial-wall</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS gradient-mesh animation</span><span class="tag">GSAP (tilt spring)</span><span class="tag">video muted-loop backgrounds</span><span class="tag">Swiper.js (shade carousel)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Beauty-page softness: blush-to-cream gradients melt behind glass-finished product shots, a fluid serif with high contrast strokes headlines each shade, and muted tutorial video loops play silently in the background. Feminine but engineered — swatch chips, shade finders, and reviews keep it commercial.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: You are a beauty-brand web stylist. Build a single-page cosmetics site in the Cosmetics Soft Glam style.
+
+LOOK: Blush bg #FBF1EE, white surface #FFFFFF, deep rosewood text #3D2A2A, muted #A08A88, rose accent #D77A8C, champagne gold #C9A24B, border #F0DED8, signature gradient `linear-gradient(135deg,#FBF1EE,#F6DDE2 55%,#F1E7D3)`. Import: &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Italiana&amp;family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;. Italiana display, Nunito Sans body.
+
+LAYOUT: 1) Glassy sticky nav with cart count. 2) Hero: product in glass card over gradient, fluid serif headline, one gold word. 3) Shade finder: swatch chips row + cross-fading product image. 4) Bestsellers grid with review stars and skin badges. 5) Tutorial strip: three silent looping videos. 6) Ingredient story with soft icons. 7) Footer with newsletter in rounded input.
+
+MOTION: Gradient background shifts position over 12s ease-in-out infinite. Cards tilt ±6° toward cursor (400ms spring, GSAP) with tracking specular highlight. Swatch clicks cross-fade imagery 500ms. Videos loop with 1s edge fades, autoplay muted playsinline.
+
+SIGNATURE: (a) glass-effect cards with specular tracking, (b) ring-selected circular swatch chips, (c) one gold word per headline.
+
+CONSTRAINTS: Semantic HTML, AA contrast (rose accents only for large text/buttons with white text OK), videos: no audio, data-saver poster images, reduced-motion kills tilt/gradient animation; cart drawer focus-trapped; images lazy with aspect-ratio boxes.
+
+EXTRA: Shade chips must announce selection via aria-pressed; gradient background lives on a fixed pseudo-element to avoid repaints; review stars are text glyphs with aria-label, not images; cart badge counts persist via localStorage.</div>
+<p style="margin-top:12px"><a class="btn primary" href="/api/styles/cosmetics-soft-glam/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="/api/styles/cosmetics-soft-glam/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&amp;quot;en&amp;quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&amp;quot;UTF-8&amp;quot;&gt;
+&lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&gt;
+&lt;title&gt;Petal &amp; Glass — Beauty&lt;/title&gt;
+&lt;link href=&amp;quot;https://fonts.googleapis.com/css2?family=Italiana&amp;family=Nunito+Sans:wght@400;600&amp;display=swap&amp;quot; rel=&amp;quot;stylesheet&amp;quot;&gt;
+&lt;style&gt;
+:root {
+  --bg:#FBF1EE; --surface:#FFFFFF; --fg:#3D2A2A; --muted:#A08A88;
+  --accent:#D77A8C; --accent2:#C9A24B; --border:#F0DED8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font-family:&#x27;Nunito Sans&#x27;,sans-serif; line-height:1.6; }
+h1,h2 { font-family:&#x27;Italiana&#x27;,Georgia, serif; line-height:1.1; }
+a { color:var(--accent); }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 6vw; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+.logo { font-family:&#x27;Italiana&#x27;,Georgia, serif; font-size:1.3rem; letter-spacing:.08em; }
+nav a { margin-left:24px; text-decoration:none; font-size:.9rem; }
+.btn { display:inline-block; background:var(--accent); color:#111111; padding:14px 32px; border:none; font-size:1rem; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease;;border-radius:2px }
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.hero { min-height:72vh; display:flex; flex-direction:column; justify-content:center; padding:8vh 6vw;;background:linear-gradient(135deg,#FBF1EE 0%,#F6DDE2 55%,#F1E7D3 100%) }
+.hero h1 { font-size:clamp(2.4rem,6vw,4.8rem); max-width:16ch; }
+.hero p { color:var(--muted); max-width:52ch; margin:20px 0 32px; font-size:1.1rem; }
+section { padding:72px 6vw; }
+.kicker { color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.card { background:var(--surface); border:1px solid var(--border); padding:32px; transition:transform .3s ease, box-shadow .3s ease; }
+.card:hover { transform:translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,.14); }
+.card h3 { margin-bottom:10px; }
+.card p { color:var(--muted); font-size:.95rem; }
+.stats { display:flex; gap:8vw; flex-wrap:wrap; }
+.stat b { font-size:2.6rem; font-family:&#x27;Italiana&#x27;,Georgia, serif; }
+.stat span { color:var(--muted); font-size:.85rem; text-transform:uppercase; letter-spacing:.12em; }
+.cta { background:#3D2A2A; color:#FBF1EE; text-align:center; }
+.cta .btn { background:#C9A24B; color:#111111; }
+footer { padding:48px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.sig { margin-top:56px; }
+@media (max-width:768px) {
+  header { flex-direction:column; gap:12px; }
+  nav a { margin:0 10px; }
+  .hero { min-height:60vh; }
+  .stats { gap:32px; }
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+  &lt;span class=&amp;quot;logo&amp;quot;&gt;PETAL &amp; GLASS&lt;/span&gt;
+  &lt;nav&gt;Shop&lt;br&gt;Shades&lt;br&gt;Rituals&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class=&amp;quot;hero&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;New: The Velvet Six&lt;/span&gt;
+  &lt;h1&gt;Six shades, one whisper of color&lt;/h1&gt;
+  &lt;p&gt;A lip veil that wears like a tint and builds like a stain. Dermatologist-tested, fragrance-free.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#cta&amp;quot;&gt;Shop the Six&lt;/a&gt;
+
+&lt;/section&gt;
+&lt;section id=&amp;quot;features&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;Bestsellers&lt;/span&gt;
+  &lt;h2&gt;Loved and repurchased&lt;/h2&gt;
+  &lt;div class=&amp;quot;grid&amp;quot;&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Velvet Rose&lt;/h3&gt;&lt;p&gt;The signature: a just-bitten rose that flatters everyone.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Glass Primer&lt;/h3&gt;&lt;p&gt;A weightless base that blurs without drying.&lt;/p&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;card&amp;quot;&gt;&lt;h3&gt;Petal Balm&lt;/h3&gt;&lt;p&gt;Overnight repair with squalane and rosehip.&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;about&amp;quot;&gt;
+  &lt;span class=&amp;quot;kicker&amp;quot;&gt;By the numbers&lt;/span&gt;
+  &lt;h2&gt;Proof&lt;/h2&gt;
+  &lt;div class=&amp;quot;stats sig&amp;quot;&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;6&lt;/b&gt;&lt;br&gt;&lt;span&gt;Shades&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;93%&lt;/b&gt;&lt;br&gt;&lt;span&gt;Repurchase rate&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&amp;quot;stat&amp;quot;&gt;&lt;b&gt;0&lt;/b&gt;&lt;br&gt;&lt;span&gt;Fragrance&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+&lt;section id=&amp;quot;cta&amp;quot; class=&amp;quot;cta&amp;quot;&gt;
+  &lt;h2&gt;Find your shade in 60 seconds&lt;/h2&gt;
+  &lt;p style=&amp;quot;opacity:.85;max-width:52ch;margin:12px auto 28px;&amp;quot;&gt;Answer three questions. We&#x27;ll match your undertone.&lt;/p&gt;
+  &lt;a class=&amp;quot;btn&amp;quot; href=&amp;quot;#&amp;quot;&gt;Take the Quiz&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;span&gt;© 2026 PETAL &amp; GLASS. All rights reserved.&lt;/span&gt;
+  &lt;span&gt;Ingredients · Shipping · Reviews&lt;/span&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" sandbox="allow-same-origin"></iframe>
+</div></body></html>
