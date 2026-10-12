@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0;font:12px monospace;color:#8f8}</style></head>
+<body><div id="log">starting</div>
+<iframe id="f" style="width:800px;height:600px;border:0"></iframe>
+<script>
+const IDS = ["modern-css-reset", "attribute-selectors", "pseudo-class-ui-states", "css-custom-properties", "cascade-layers", "css-nesting", "container-queries", "container-query-units", "has-relational-selector", "property-at-rule", "style-queries", "css-grid-auto-placement", "subgrid", "css-masonry", "anchor-positioning", "scroll-driven-animations-css", "view-transitions-css", "houdini-paint-worklet", "logical-properties", "min-max-clamp-sizing", "is-where-selectors", "text-wrap-balance", "scope-at-rule", "over-scroll-behavior", "flexbox-centering", "flex-wrap-toolbar", "grid-twelve-column", "grid-template-areas", "grid-auto-fit-cards", "sticky-sidebar-split", "sticky-section-stacking", "split-screen-panel", "bento-grid", "full-bleed-breakout", "magazine-multicol", "overlapping-layout", "intrinsic-ratio-media", "app-shell-layout", "css-columns-masonry-hybrid", "centering-abs-inset", "fluid-type-clamp", "modular-type-scale", "variable-fonts", "font-optical-sizing", "font-feature-settings", "drop-cap-initial-letter", "kinetic-typography", "split-text-reveal", "vertical-writing-modes", "mixed-script-typography", "gradient-text-clip", "variable-font-animation", "text-box-trim", "hyphenation-justification", "oklch-color", "color-mix", "relative-color-syntax", "light-dark-function", "linear-gradient", "conic-gradient", "radial-gradient", "mesh-gradients", "blend-modes", "duotone-images", "grain-noise-texture", "css-filters", "masks", "clip-paths", "gradient-borders", "image-art-direction", "forced-colors-adaptation", "css-keyframes", "easing-curves", "transitions-vs-animations", "individual-transform-properties", "spring-physics-motion", "flip-technique", "stagger-orchestration", "scroll-triggered-reveals", "parallax-layering", "hover-micro-interactions", "3d-card-tilt", "morphing-blobs-shapes", "page-transitions", "shared-element-transition-js", "smooth-scroll-inertia", "scroll-scrubbing", "motion-choreography-system", "marquee-loop", "count-up-number-animations", "text-scramble-decode", "drag-to-reorder", "file-drag-drop-zone", "virtualized-lists", "optimistic-ui", "command-palette", "undo-redo-pattern", "keyboard-navigation", "focus-management", "touch-gestures", "pull-to-refresh", "infinite-scroll-pagination", "multi-select-bulk-actions", "inline-edit-in-place", "three-scene-setup", "gltf-model-loading", "custom-shaders-glsl", "noise-displacement", "raymarching", "gpu-particles-instancing", "post-processing", "fluid-simulation", "webgpu-compute", "product-viewer-3d", "scrollytelling-3d", "environment-reflections", "physics-in-3d", "react-three-fiber", "css-3d-transforms", "canvas-2d-fundamentals", "canvas-particle-systems", "generative-art-systems", "perlin-flow-fields", "fractal-trees-lsystems", "noise-terrain-visualization", "svg-path-animation", "svg-filters", "data-driven-svg-d3", "lottie-animations", "canvas-pixel-manipulation", "canvas-scene-graph", "pixi-webgl-2d", "voronoi-delaunay-generative", "web-audio-graph", "audio-reactive-visuals", "waveform-rendering", "video-scrubbing-frame", "canvas-video-compositing", "webgl-video-textures", "picture-in-picture-document", "speech-synthesis-recognition", "media-session-metadata", "screen-capture-recording", "bar-line-charts", "interactive-tooltips-crosshair", "animated-chart-transitions", "hierarchical-visualizations", "network-graphs", "sankey-flow-diagrams", "geo-interactive-maps", "d3-scales-axes-mastery", "realtime-data-streams", "gantt-timelines", "data-viz-accessibility", "word-clouds-semantic-zoom", "transformersjs-inference", "webgpu-inference", "face-landmark-detection", "pose-detection", "background-removal", "object-detection-overlay", "streaming-llm-ui", "streaming-markdown-render", "semantic-search-embeddings", "ai-image-generation-canvas", "smart-text-magic-wand", "view-transitions-api-cross-doc", "popover-api", "native-dialog-element", "details-accordion", "custom-elements", "shadow-dom-encapsulation", "pwa-offline-first", "service-worker-strategies", "web-transport-streams", "webhid-serial-bluetooth", "gamepad-api", "webxr-immersive", "shared-workers-broadcast", "opfs-local-first", "crdt-collaboration", "edge-rendering-streams", "islands-partial-hydration", "web-midi-haptics-nfc", "file-system-access", "web-clipboard-sharing", "signals-reactivity", "vdom-mastery", "code-splitting", "prefetch-strategies", "image-optimization-pipeline", "font-loading-strategy", "critical-css-inlining", "streaming-ssr-rsc", "bfcache-mastery", "web-workers-offloading", "compositor-only-animations", "content-visibility", "performance-profiling-workflow", "micro-frontends-module-federation", "state-management-patterns", "url-state-deep-linking", "semantic-landmarks", "aria-patterns", "skip-links-focus-order", "reduced-motion-respect", "prefers-contrast-transparency", "color-contrast-auditing", "rtl-layout-mirroring", "internationalization-locale", "form-accessibility", "live-regions-announcements", "zoom-responsive-a11y", "audit-automation-a11y", "debug-outlines", "devtools-overlays-mastery", "design-tokens-system", "theme-switching-strategies", "dark-mode-strategies", "custom-scrollbar-styling", "selection-focus-styling", "console-driven-debugging", "feature-detection-graceful", "css-print-stylesheet", "error-boundary-empty-states", "localstorage-persistence-patterns"];
+const out = {};
+let i = 0;
+const f = document.getElementById('f');
+const log = document.getElementById('log');
+
+function loadNext() {
+  if (i >= IDS.length) {
+    window.__AUDIT_DONE__ = JSON.stringify(out);
+    log.textContent = 'DONE ' + Object.keys(out).length;
+    return;
+  }
+  const id = IDS[i];
+  f.src = '/techniques-demos/' + id + '.html';
+}
+
+f.addEventListener('load', () => {
+  const id = IDS[i];
+  try {
+    const d = f.contentDocument;
+    const errs = d.__errors || [];
+    const text = d.body ? d.body.innerText.trim().length : 0;
+    const elems = d.body ? d.body.querySelectorAll('*').length : 0;
+    out[id] = {text, elems, errs: errs.slice(0,3)};
+  } catch(e) {
+    out[id] = {text: -1, elems: -1, errs: ['frame-access: ' + e.message]};
+  }
+  i++;
+  setTimeout(loadNext, 350);
+});
+
+// inject error capture into frames via same-origin injection on load start
+f.addEventListener('load', () => {
+  try {
+    const w = f.contentWindow, d = f.contentDocument;
+    w.__errors = w.__errors || [];
+    w.addEventListener('error', e => (w.__errors = w.__errors || []).push(e.message));
+  } catch(e){}
+});
+
+loadNext();
+</script></body></html>
