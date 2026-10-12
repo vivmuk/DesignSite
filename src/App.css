@@ -4927,3 +4927,76 @@ body {
 .tech-btn { display: inline-block; margin: 0 8px 8px 0; padding: 8px 16px; border-radius: 8px; border: 1px solid #333; color: #ddd; text-decoration: none; font-size: .85rem; }
 .tech-btn.primary { background: #7fffd4; color: #000; border-color: #7fffd4; font-weight: 600; }
 @media (max-width: 900px) { .tech-detail-grid { grid-template-columns: 1fr; } }
+
+/* ==== TECHNIQUES TAB ==== */
+.tech-page { max-width: 1280px; margin: 0 auto; padding: 24px 20px 80px; }
+.tech-head h1, .tech-page-head h1 { font-size: 28px; letter-spacing: -0.5px; margin: 8px 0; }
+.db-count-badge { background: #0ff2; border: 1px solid #0ff5; border-radius: 12px; padding: 2px 10px; font-size: 14px; color: #4dd0e1; vertical-align: middle; }
+.tech-head > p { color: #9aa; max-width: 720px; font-size: 14px; }
+.tech-level-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 10px; }
+.tech-level-chip { display: inline-flex; align-items: center; gap: 7px; background: #16181d; border: 1px solid #2a2e35; color: #cdd; padding: 7px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.tech-level-chip i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.tech-level-chip.on { border-color: #4dd0e1; color: #fff; background: #4dd0e115; }
+.tech-search { width: 100%; max-width: 480px; background: #101216; border: 1px solid #2a2e35; color: #eef; padding: 10px 14px; border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 20px; }
+.tech-search:focus { border-color: #4dd0e1; }
+
+.tech-list { display: flex; flex-direction: column; gap: 22px; }
+.tech-card-row { display: grid; grid-template-columns: 1fr 560px; gap: 20px; background: #121419; border: 1px solid #23272e; border-radius: 14px; overflow: hidden; transition: border-color .15s; }
+.tech-card-row:hover { border-color: #4dd0e180; }
+.tech-card-info { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.tech-card-meta { display: flex; gap: 8px; align-items: center; }
+.tech-lvl-badge { color: #000; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 3px 9px; border-radius: 10px; letter-spacing: .5px; }
+.tech-dom-tag { color: #778; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; }
+.tech-card-info h2 { font-size: 19px; margin: 0; letter-spacing: -0.3px; }
+.tech-card-info h2:hover { color: #4dd0e1; }
+.tech-card-info p { color: #9aa; font-size: 13px; margin: 0; line-height: 1.45; }
+.tech-whypro { color: #d8b65a !important; }
+.tech-libs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { background: #1c1f26; border: 1px solid #2e333c; color: #8ac; font-size: 11px; padding: 2px 8px; border-radius: 8px; }
+.tech-card-actions { display: flex; gap: 14px; margin-top: auto; padding-top: 8px; align-items: center; }
+.tech-card-actions button { background: #4dd0e118; border: 1px solid #4dd0e155; color: #4dd0e1; padding: 7px 14px; border-radius: 9px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.tech-card-actions button:hover { background: #4dd0e130; }
+.tech-card-actions a { color: #89a; font-size: 13px; text-decoration: none; }
+.tech-card-actions a:hover { color: #bcd; }
+.tech-card-demo { position: relative; min-height: 320px; background: #0d0d0d; border-left: 1px solid #23272e; cursor: zoom-in; }
+.tech-demo-thumb { width: 100%; height: 100%; min-height: 320px; border: 0; position: absolute; inset: 0; }
+.tech-demo-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #445; font-size: 12px; letter-spacing: 1px; }
+
+.tech-pager { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+.tech-pager button { background: #16181d; border: 1px solid #2a2e35; color: #cdd; padding: 8px 14px; border-radius: 9px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.tech-pager button:hover:not(:disabled) { border-color: #4dd0e1; color: #fff; }
+.tech-pager button:disabled { opacity: .35; cursor: default; }
+.tech-pager-num.on { border-color: #4dd0e1; color: #4dd0e1; background: #4dd0e115; }
+.tech-dots { color: #445; }
+.tech-pager-info { color: #667; font-size: 12px; margin-left: 8px; }
+
+/* ---- technique detail page ---- */
+.tech-page-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.tech-back, .tech-page-nav button { background: #16181d; border: 1px solid #2a2e35; color: #cdd; padding: 8px 14px; border-radius: 9px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.tech-back:hover, .tech-page-nav button:hover { border-color: #4dd0e1; color: #fff; }
+.tech-page-nav { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tech-posn { color: #556; font-size: 12px; }
+.tech-page-head { margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+.tech-page-head h1 { margin: 2px 0; }
+.tech-oneline { color: #9ab; font-size: 15px; margin: 0; }
+.tech-whypro { color: #d8b65a; font-size: 13px; margin: 0; }
+.tech-page-demo { border: 1px solid #2a2e35; border-radius: 14px; overflow: hidden; background: #0d0d0d; }
+.tech-demo-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #14161b; border-bottom: 1px solid #23272e; gap: 10px; flex-wrap: wrap; }
+.tech-demo-live { color: #3ddc84; font-size: 11px; letter-spacing: 1.5px; display: inline-flex; align-items: center; gap: 6px; }
+.tech-demo-live i { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; animation: techpulse 1.4s infinite; }
+@keyframes techpulse { 50% { opacity: .3; } }
+.tech-demo-bar > div { display: flex; gap: 8px; flex-wrap: wrap; }
+.tech-btn { background: #16181d; border: 1px solid #2a2e35; color: #cdd; padding: 7px 13px; border-radius: 9px; font-size: 12.5px; text-decoration: none; cursor: pointer; }
+.tech-btn:hover { border-color: #4dd0e1; color: #fff; }
+.tech-btn.primary { background: #3ddc8422; border-color: #3ddc8466; color: #3ddc84; }
+.tech-page-demo iframe.tech-demo-frame { width: 100%; height: 640px; border: 0; display: block; background: #0d0d0d; }
+.tech-page-idea { margin-top: 18px; background: #121419; border: 1px solid #23272e; border-radius: 14px; padding: 16px 20px; }
+.tech-page-idea h3 { font-size: 12px; letter-spacing: 1.5px; color: #567; margin: 0 0 8px; }
+.tech-page-idea p { color: #9ab; font-size: 14px; line-height: 1.55; margin: 0; }
+.tab-loading { padding: 80px 20px; color: #667; text-align: center; }
+
+@media (max-width: 900px) {
+  .tech-card-row { grid-template-columns: 1fr; }
+  .tech-card-demo { min-height: 280px; border-left: 0; border-top: 1px solid #23272e; }
+}
+/* ==== /TECHNIQUES ==== */

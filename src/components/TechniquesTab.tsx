@@ -1,28 +1,20 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface Technique {
   id: string; name: string; domain: string;
   level: 'core' | 'intermediate' | 'advanced' | 'innovative';
-  one_line: string; why_pro: string; demo_idea: string;
-  libraries?: string[]; spec_url?: string;
-  demo_url?: string; prompt_url?: string;
+  one_line: string; why_pro?: string; demo_idea?: string;
+  libraries?: unknown; spec_url?: string; demo_url?: string; prompt_url?: string;
 }
 
-const LEVELS = ['core','intermediate','advanced','innovative'] as const;
-const LEVEL_META: Record<string, {label: string; color: string; desc: string}> = {
-  core:        { label: 'Core',        color: '#3dd68c', desc: 'The fundamentals every pro knows cold' },
-  intermediate:{ label: 'Intermediate', color: '#5566ff', desc: 'The working toolkit of production teams' },
-  advanced:    { label: 'Advanced',    color: '#e07c3c', desc: 'Specialist techniques that separate great from good' },
-  innovative:  { label: 'Innovative',  color: '#e935c1', desc: 'Cutting-edge — new APIs, GPU, AI in the browser' },
-};
+const LEVELS = [
+  { key: 'core', label: 'Core', color: '#3ddc84' },
+  { key: 'intermediate', label: 'Intermediate', color: '#4d9fff' },
+  { key: 'advanced', label: 'Advanced', color: '#ff9f43' },
+  { key: 'innovative', label: 'Innovative', color: '#ff5c8a' },
+] as const;
 
-const DOMAIN_LABELS: Record<string,string> = {
-  'css-foundations': 'CSS Foundations', 'layout': 'Layout Systems', 'typography': 'Typography',
-  'color-image': 'Color & Image', 'motion': 'Motion & Animation', 'interaction': 'Interaction Patterns',
-  'webgl-3d': '3D / WebGL', 'canvas-svg': 'Canvas / SVG / Generative', 'media': 'Audio / Video / Media',
-  'data-viz': 'Data Visualization', 'ai-ml': 'AI / ML in Browser', 'emerging': 'Emerging Platform',
-  'architecture': 'Architecture & Perf', 'a11y': 'Accessibility & i18n', 'dev-tricks': 'Pro Workflow Tricks',
-};
+const PER_PAGE = 5;
 
 const libsOf = (t: Technique): string[] => {
   const lib = t.libraries as unknown;
@@ -31,122 +23,213 @@ const libsOf = (t: Technique): string[] => {
   return [];
 };
 
-// Loads from the live styles-api /techniques endpoint; falls back to static catalog.json
+const levelColor = (lv: string) => LEVELS.find(l => l.key === lv)?.color || '#888';
+const demoUrl = (t: Technique) => t.demo_url || `/techniques-demos/${t.id}.html`;
+const promptUrl = (t: Technique) => t.prompt_url || `https://styles-api-production.up.railway.app/techniques/${t.id}/prompt`;
+
+/** Hash router: #/techniques?p=3&lv=core&q=... | #/techniques/{id}?p=3 — state survives navigation */
+function parseHash(): { id: string | null; page: number; level: string | null; q: string } {
+  const h = window.location.hash;
+  if (h.startsWith('#/techniques/')) {
+    const id = h.slice('#/techniques/'.length).split('?')[0].split('/')[0];
+    const usp = new URLSearchParams(h.split('?')[1] || '');
+    return { id: decodeURIComponent(id), page: +(usp.get('p') || 1), level: usp.get('lv'), q: usp.get('q') || '' };
+  }
+  if (h.startsWith('#/techniques')) {
+    const usp = new URLSearchParams(h.split('?')[1] || '');
+    return { id: null, page: +(usp.get('p') || 1), level: usp.get('lv'), q: usp.get('q') || '' };
+  }
+  return { id: null, page: 1, level: null, q: '' };
+}
+
 export function TechniquesTab() {
   const [techniques, setTechniques] = useState<Technique[]>([]);
-  const [level, setLevel] = useState<string>('all');
-  const [domain, setDomain] = useState<string>('all');
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState<Technique | null>(null);
+  const [route, setRoute] = useState(parseHash());
+  const [visibleDemos, setVisibleDemos] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    const decorate = (arr: any[]) => arr.map(t => ({
+      ...t,
+      demo_url: t.demo_url || `/techniques-demos/${t.id}.html`,
+      prompt_url: t.prompt_url || `https://styles-api-production.up.railway.app/techniques/${t.id}/prompt`,
+    }));
     (async () => {
-      const decorate = (arr: any[]) => arr.map(t => ({
-        ...t,
-        demo_url: t.demo_url || `/techniques-demos/${t.id}.html`,
-        prompt_url: t.prompt_url || `https://styles-api-production.up.railway.app/techniques/${t.id}/prompt`,
-      }));
       try {
         const r = await fetch('https://styles-api-production.up.railway.app/techniques');
         if (!r.ok) throw new Error('api down');
         setTechniques(decorate(await r.json()));
       } catch {
-        const r = await fetch('/techniques-catalog.json');
-        setTechniques(decorate(await r.json()));
+        try {
+          const r = await fetch('/techniques-catalog.json');
+          setTechniques(decorate(await r.json()));
+        } catch { /* offline */ }
       } finally { setLoading(false); }
     })();
   }, []);
 
-  const domains = useMemo(() => Array.from(new Set(techniques.map(t => t.domain))), [techniques]);
+  useEffect(() => {
+    const onHash = () => { setRoute(parseHash()); window.scrollTo(0, 0); };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
 
-  const filtered = useMemo(() => techniques.filter(t =>
-    (level === 'all' || t.level === level) &&
-    (domain === 'all' || t.domain === domain) &&
-    (!search || t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.one_line.toLowerCase().includes(search.toLowerCase()) ||
-      t.demo_idea.toLowerCase().includes(search.toLowerCase()))
-  ), [techniques, level, domain, search]);
+  const filtered = techniques.filter(t =>
+    (!route.level || t.level === route.level) &&
+    (!route.q || (t.name + ' ' + t.one_line + ' ' + t.domain).toLowerCase().includes(route.q.toLowerCase()))
+  );
 
-  if (loading) return <div className="tech-loading">Loading the technique compendium…</div>;
+  const pages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const page = Math.min(Math.max(1, route.page), pages);
+  const pageItems = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
-  if (selected) {
-    const meta = LEVEL_META[selected.level];
+  const setHash = useCallback((id: string | null, p: number, lv: string | null, q: string) => {
+    const usp = new URLSearchParams();
+    if (p !== 1) usp.set('p', String(p));
+    if (lv) usp.set('lv', lv);
+    if (q) usp.set('q', q);
+    const qs = usp.toString() ? '?' + usp.toString() : '';
+    window.location.hash = id ? `#/techniques/${encodeURIComponent(id)}${qs}` : `#/techniques${qs}`;
+  }, []);
+
+  // Lazy-activate demos: IntersectionObserver so iframes only load when scrolled into view
+  useEffect(() => {
+    if (route.id) { setVisibleDemos(new Set([route.id])); return; }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const id = (e.target as HTMLElement).dataset.tid;
+        if (e.isIntersecting && id) setVisibleDemos(prev => { const n = new Set(prev); n.add(id); return n; });
+      });
+    }, { rootMargin: '300px' });
+    document.querySelectorAll('[data-tid]').forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, [route, pageItems.length]);
+
+  if (loading) return <div className="tab-loading">Loading techniques…</div>;
+
+  /* ---------- DETAIL PAGE: each technique gets its own full page ---------- */
+  if (route.id) {
+    const idx = techniques.findIndex(t => t.id === route.id);
+    const t = techniques[idx];
+    if (!t) return <div className="tab-loading">Technique not found. <a href="#/techniques" style={{color:'#4dd0e1'}}>← All techniques</a></div>;
+    const prev = techniques[idx - 1], next = techniques[idx + 1];
     return (
-      <div className="tech-detail">
-        <button className="tech-back" onClick={()=>setSelected(null)}>← All techniques</button>
-        <div className="tech-detail-head">
-          <span className="tag" style={{background: meta.color, color: '#000'}}>{meta.label}</span>
-          <span className="tag tag-system">{DOMAIN_LABELS[selected.domain] || selected.domain}</span>
-          <h1>{selected.name}</h1>
-          <p className="tech-oneline">{selected.one_line}</p>
-        </div>
-        <div className="tech-detail-grid">
-          <div className="tech-card">
-            <h3>Live demo</h3>
-            <p className="tech-why">{selected.why_pro}</p>
-            {selected.demo_url
-              ? <iframe className="tech-demo-frame" src={selected.demo_url} title={selected.name} loading="lazy" sandbox="allow-scripts allow-same-origin" />
-              : <div className="tech-demo-frame tech-demo-empty">Demo generating…</div>}
-            {selected.demo_url && <a className="tech-btn primary" href={selected.demo_url} target="_blank" rel="noopener">↗ Open demo full-screen</a>}
-          </div>
-          <div className="tech-card">
-            <h3>Build it with an agent</h3>
-            <p className="tech-demo-idea">{selected.demo_idea}</p>
-            {libsOf(selected).length > 0 && (
-              <div className="tech-libs">{libsOf(selected).map(l => <span key={l} className="tag">{l}</span>)}</div>
-            )}
-            {selected.prompt_url
-              ? <a className="tech-btn" href={selected.prompt_url} target="_blank" rel="noopener">🔌 Agent prompt (JSON) ↗</a>
-              : null}
-            {selected.spec_url && <a className="tech-btn" href={selected.spec_url} target="_blank" rel="noopener">📖 Spec / docs ↗</a>}
+      <div className="tech-page">
+        <div className="tech-page-top">
+          <button className="tech-back" onClick={() => setHash(null, page, route.level, route.q)}>← Back to list (page {page})</button>
+          <div className="tech-page-nav">
+            {prev && <button onClick={() => setHash(prev.id, page, route.level, route.q)}>← {prev.name}</button>}
+            <span className="tech-posn">{idx + 1} / {techniques.length}</span>
+            {next && <button onClick={() => setHash(next.id, page, route.level, route.q)}>{next.name} →</button>}
           </div>
         </div>
+        <div className="tech-page-head">
+          <span className="tech-lvl-badge" style={{ background: levelColor(t.level) }}>{t.level}</span>
+          <span className="tech-dom-tag">{t.domain}</span>
+          <h1>{t.name}</h1>
+          <p className="tech-oneline">{t.one_line}</p>
+          {t.why_pro && <p className="tech-whypro">⚡ {t.why_pro}</p>}
+          {libsOf(t).length > 0 && <div className="tech-libs">{libsOf(t).map(l => <span key={l} className="tag">{l}</span>)}</div>}
+        </div>
+        <div className="tech-page-demo">
+          <div className="tech-demo-bar">
+            <span className="tech-demo-live"><i />LIVE DEMO</span>
+            <div>
+              <a className="tech-btn primary" href={demoUrl(t)} target="_blank" rel="noreferrer">↗ Full-screen</a>
+              <a className="tech-btn" href={promptUrl(t)} target="_blank" rel="noreferrer">🪄 Agent prompt (JSON)</a>
+              {t.spec_url && <a className="tech-btn" href={t.spec_url} target="_blank" rel="noreferrer">📖 Spec / docs</a>}
+            </div>
+          </div>
+          <iframe
+            className="tech-demo-frame"
+            src={demoUrl(t)}
+            sandbox="allow-scripts allow-same-origin allow-popups"
+            loading="lazy"
+            title={t.name}
+          />
+        </div>
+        {t.demo_idea && (
+          <div className="tech-page-idea">
+            <h3>WHAT YOU'RE LOOKING AT</h3>
+            <p>{t.demo_idea}</p>
+          </div>
+        )}
       </div>
     );
   }
 
+  /* ---------- LIST: 5 per page, live demos embedded in cards ---------- */
   return (
-    <div className="techniques-tab">
-      <h1>Techniques <span className="db-count">{techniques.length}</span></h1>
-      <p className="db-sub">The complete compendium of front-end techniques pros use — from first principles to the most innovative work shipping today. Every entry has a live demo and an agent-ready build prompt.</p>
-      <div className="tech-levels">
-        {LEVELS.map(l => (
-          <button key={l} className={`tech-level-chip ${level===l?'active':''}`} style={level===l?{background:LEVEL_META[l].color,borderColor:LEVEL_META[l].color,color:'#000'}:{}} onClick={()=>setLevel(level===l?'all':l)}>
-            <span className="dot" style={{background:LEVEL_META[l].color}} /> {LEVEL_META[l].label}
-            <span className="db-n">{techniques.filter(t=>t.level===l).length}</span>
+    <div className="tech-page">
+      <div className="tech-head">
+        <h1>Techniques <span className="db-count-badge">{filtered.length}</span></h1>
+        <p>The complete compendium of front-end techniques — every one with a live demo embedded and an agent-ready build prompt.</p>
+        <div className="tech-level-chips">
+          <button className={`tech-level-chip ${!route.level ? 'on' : ''}`} onClick={() => setHash(null, 1, null, route.q)}>
+            <i style={{ background: '#aaa' }} /> All {techniques.length}
           </button>
-        ))}
-        {level !== 'all' && <button className="tech-level-chip" onClick={()=>setLevel('all')}>✕ clear</button>}
+          {LEVELS.map(l => {
+            const n = techniques.filter(t => t.level === l.key).length;
+            return (
+              <button key={l.key} className={`tech-level-chip ${route.level === l.key ? 'on' : ''}`} onClick={() => setHash(null, 1, l.key, route.q)}>
+                <i style={{ background: l.color }} /> {l.label} {n}
+              </button>
+            );
+          })}
+        </div>
+        <input
+          className="tech-search"
+          placeholder="Search techniques…"
+          defaultValue={route.q}
+          onKeyDown={e => { if (e.key === 'Enter') setHash(null, 1, route.level, (e.target as HTMLInputElement).value); }}
+        />
       </div>
-      <p className="tech-level-desc">{level === 'all' ? 'Every technique, simple to innovative.' : LEVEL_META[level].desc}</p>
-      <div className="db-controls">
-        <input className="search-input" placeholder="Search techniques…" value={search} onChange={e=>setSearch(e.target.value)} />
-      </div>
-      <div className="tech-domains">
-        <button className={`db-cat ${domain==='all'?'active':''}`} onClick={()=>setDomain('all')}>🌐 all <span className="db-n">{techniques.length}</span></button>
-        {domains.map(d => (
-          <button key={d} className={`db-cat ${domain===d?'active':''}`} onClick={()=>setDomain(domain===d?'all':d)}>
-            {DOMAIN_LABELS[d] || d} <span className="db-n">{techniques.filter(t=>t.domain===d).length}</span>
-          </button>
-        ))}
-      </div>
-      <div className="tech-grid">
-        {filtered.map(t => {
-          const meta = LEVEL_META[t.level];
-          return (
-            <div key={t.id} className="tech-card tech-gridcard" onClick={()=>setSelected(t)}>
-              <div className="tech-card-top">
-                <span className="tag" style={{background: meta.color, color: '#000'}}>{meta.label}</span>
-                <span className="tech-domain">{DOMAIN_LABELS[t.domain] || t.domain}</span>
+
+      <div className="tech-list">
+        {pageItems.map(t => (
+          <div key={t.id} className="tech-card-row" data-tid={t.id}>
+            <div className="tech-card-info">
+              <div className="tech-card-meta">
+                <span className="tech-lvl-badge" style={{ background: levelColor(t.level) }}>{t.level}</span>
+                <span className="tech-dom-tag">{t.domain}</span>
               </div>
-              <h3>{t.name}</h3>
-              <p className="tech-oneline">{t.one_line}</p>
+              <h2 onClick={() => setHash(t.id, page, route.level, route.q)} style={{ cursor: 'pointer' }}>{t.name}</h2>
+              <p>{t.one_line}</p>
+              {t.why_pro && <p className="tech-whypro">⚡ {t.why_pro}</p>}
+              {libsOf(t).length > 0 && <div className="tech-libs">{libsOf(t).slice(0, 4).map(l => <span key={l} className="tag">{l}</span>)}</div>}
+              <div className="tech-card-actions">
+                <button onClick={() => setHash(t.id, page, route.level, route.q)}>Open full page →</button>
+                <a href={promptUrl(t)} target="_blank" rel="noreferrer">🪄 Agent prompt</a>
+              </div>
             </div>
-          );
-        })}
+            <div className="tech-card-demo" onClick={() => setHash(t.id, page, route.level, route.q)}>
+              {visibleDemos.has(t.id) ? (
+                <iframe
+                  src={demoUrl(t)}
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                  loading="lazy"
+                  title={t.name}
+                  className="tech-demo-thumb"
+                />
+              ) : <div className="tech-demo-placeholder">demo loads on scroll…</div>}
+            </div>
+          </div>
+        ))}
       </div>
-      {filtered.length === 0 && <p className="tech-loading">No techniques match that filter.</p>}
+
+      <div className="tech-pager">
+        <button disabled={page <= 1} onClick={() => setHash(null, page - 1, route.level, route.q)}>← Prev</button>
+        {Array.from({ length: pages }, (_, i) => i + 1)
+          .filter(p2 => p2 === 1 || p2 === pages || Math.abs(p2 - page) <= 2)
+          .map((p2, i, arr) => (
+            <span key={p2} className="tech-pager-num-wrap">
+              {i > 0 && arr[i - 1] !== p2 - 1 && <span className="tech-dots">…</span>}
+              <button className={`tech-pager-num ${p2 === page ? 'on' : ''}`} onClick={() => setHash(null, p2, route.level, route.q)}>{p2}</button>
+            </span>
+          ))}
+        <button disabled={page >= pages} onClick={() => setHash(null, page + 1, route.level, route.q)}>Next →</button>
+        <span className="tech-pager-info">{(page - 1) * PER_PAGE + 1}–{Math.min(page * PER_PAGE, filtered.length)} of {filtered.length}</span>
+      </div>
     </div>
   );
 }
