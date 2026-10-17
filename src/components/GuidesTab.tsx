@@ -123,7 +123,7 @@ function ResourcesGuide() {
 
       <h2>What this resource hub is for</h2>
       <p>
-        OpenDesignStudio is built for people who use AI agents to ship product UI. The problem is rarely whether the
+        vivDesign is built for people who use AI agents to ship product UI. The problem is rarely whether the
         agent can write React, Tailwind, or CSS. The problem is that it starts from weak visual assumptions.
       </p>
       <p>

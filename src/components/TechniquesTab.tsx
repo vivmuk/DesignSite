@@ -14,7 +14,7 @@ const LEVELS = [
   { key: 'innovative', label: 'Innovative', color: '#ff5c8a' },
 ] as const;
 
-const PER_PAGE = 5;
+const PER_PAGE = 50;
 
 const libsOf = (t: Technique): string[] => {
   const lib = t.libraries as unknown;

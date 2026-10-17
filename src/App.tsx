@@ -1581,7 +1581,7 @@ function App() {
     <div className="root-app">
       <header className="root-header">
         <div className="root-header-inner">
-          <div className="root-logo">OpenDesign<span>Studio</span></div>
+          <div className="root-logo">viv<span>Design</span></div>
           <nav className="root-tabs">
             {TABS.map(t => (
               <button key={t.id} className={`root-tab ${activeTab===t.id?'active':''}`} onClick={()=>{ setActiveTab(t.id); setSelectedStyle(null); setSelectedSite(null); }}>

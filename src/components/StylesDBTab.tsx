@@ -4,7 +4,7 @@ interface DBStyle {
   n: number; id: string; name: string; category: string; tagline: string;
   techniques: string[]; best_for: string[]; component_focus: string[];
   palette: Record<string, string>; image_url: string; spec_url: string;
-  agent_prompt?: string; fonts?: Record<string, string>;
+  agent_prompt?: string; fonts?: Record<string, string>; html_shell?: string;
 }
 
 const CATS = ['all','classic','contemporary','dark-tech','immersive-3d','scrollcraft','expressive','luxe-brand','data-pro','cultural','component-kit'];
@@ -78,6 +78,7 @@ export function StylesDBTab() {
           techniques: s.techniques, best_for: s.best_for, component_focus: s.component_focus,
           palette: s.palette, fonts: s.fonts,
           agent_prompt: s.agent_prompt,
+          html_shell: s.html_shell,
           image_url: `/styles-images-jpg/${s.id}.jpg`, spec_url: `/styles-specs/${s.id}.html`,
         })));
         setSource('static');
@@ -146,6 +147,8 @@ export function StylesDBTab() {
     if (shellHtml || !selected) return;
     setShellLoading(true);
     try {
+      // Bundled shell first (works for all 150 styles, offline) — API as fallback
+      if (selected.html_shell) { setShellHtml(selected.html_shell); return; }
       const r = await fetch(`${API}/styles/${selected.id}/html`);
       if (!r.ok) throw new Error();
       setShellHtml(await r.text());

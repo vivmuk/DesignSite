@@ -100,7 +100,7 @@ ${style.characteristics.map(c => `- ${c}`).join('\n')}
 ${style.tags.map(t => `\`${t}\``).join(' ')}
 
 ---
-*Generated from OpenDesignStudio*
+*Generated from vivDesign*
 `;
 }
 
