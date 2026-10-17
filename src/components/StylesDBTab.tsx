@@ -126,6 +126,14 @@ export function StylesDBTab() {
     if (!prompt) return;
     const ok = await copyText(prompt);
     if (ok) { setCopied(true); setTimeout(() => setCopied(false), 2000); }
+    else {
+      // Last resort: select the prompt text so a manual Cmd/Ctrl+C copies it
+      const range = document.createRange();
+      range.selectNodeContents(promptBoxRef.current!);
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
   };
 
   const onCopyFromCard = async (e: ReactMouseEvent, s: DBStyle) => {
