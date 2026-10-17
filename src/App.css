@@ -4891,6 +4891,34 @@ body {
 .db-gradient { display: block; margin-top: 12px; color: #7fffd4; font-size: .75rem; }
 .db-btn { display: inline-block; margin: 6px 8px 6px 0; padding: 8px 16px; border-radius: 8px; border: 1px solid #333; color: #ddd; text-decoration: none; font-size: .85rem; }
 .db-btn.primary { background: #7fffd4; color: #000; border-color: #7fffd4; font-weight: 600; }
+button.db-btn { cursor: pointer; font-family: inherit; }
+button.db-btn:disabled { opacity: .5; cursor: default; }
+button.db-btn.db-copy-btn.copied { background: #2ea04340; color: #7fffd4; border-color: #2ea043; }
+
+/* ── Styles DB: inline build prompt panel ───── */
+.db-prompt-panel { margin-top: 20px; background: #141414; border: 1px solid #2a2a2a; border-radius: 12px; padding: 18px 20px; }
+.db-prompt-panel h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 6px; }
+.db-prompt-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.db-prompt-meta { display: flex; gap: 8px; align-items: center; font-size: .72rem; color: #777; }
+.db-src { padding: 2px 9px; border-radius: 999px; border: 1px solid #333; }
+.db-src.api { color: #7fffd4; border-color: #7fffd455; }
+.db-src.static { color: #f0c674; border-color: #f0c67455; }
+.db-src.gen { color: #9aa; border-color: #444; }
+.db-prompt-sub { color: #888; font-size: .82rem; margin: 2px 0 12px; }
+.db-prompt-box { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; line-height: 1.55; color: #c5cdd3; background: #0d0d0d; border: 1px solid #262626; border-radius: 10px; padding: 16px; max-height: 340px; overflow: auto; }
+.db-prompt-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+
+/* ── Styles DB: live HTML shell preview ─────── */
+.db-shell-preview { margin-top: 20px; }
+.db-shell-preview h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #888; margin-bottom: 10px; }
+.db-shell-frame { width: 100%; height: 520px; border: 1px solid #2a2a2a; border-radius: 12px; background: #fff; }
+.db-shell-note { color: #888; font-size: .85rem; }
+
+/* ── Styles DB: card quick copy ─────────────── */
+.db-copy-mini { margin-left: auto; background: #1a1a1a; border: 1px solid #333; color: #9aa; border-radius: 999px; font-size: .68rem; padding: 3px 10px; cursor: pointer; font-family: inherit; transition: all .15s; }
+.db-copy-mini:hover { color: #7fffd4; border-color: #7fffd455; }
+.db-tags.db-tags-row { align-items: center; }
+
 @media (max-width: 800px) { .db-detail-grid { grid-template-columns: 1fr; } }
 
 /* ── Techniques tab ─────────────────────────── */

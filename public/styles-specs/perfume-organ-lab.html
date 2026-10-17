@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perfume Organ Lab — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Karla&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F2EA;--surface:#FFFFFF;--fg:#2E2620;--muted:#8D8172;--accent:#B0713E;--accent2:#5E6B4F;--border:#E6DFD1}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Karla',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Perfume Organ Lab</h1><div class="tagline">Tiered essences, accord diagrams, blotter strips</div>
+<div class="meta"><span class="tag">luxe-brand</span><span class="tag">fragrance houses</span><span class="tag">apothecary</span><span class="tag">beauty labs</span><span class="tag">svg-path-animation</span><span class="tag">hover-micro-interactions</span><span class="tag">stagger-orchestration</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/perfume-organ-lab.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/perfume-organ-lab.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/perfume-organ-lab.jpg" alt="Perfume Organ Lab preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F6F2EA"></div><code>bg: #F6F2EA</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2E2620"></div><code>fg: #2E2620</code></div><div class="sw"><div class="chip" style="background:#8D8172"></div><code>muted: #8D8172</code></div><div class="sw"><div class="chip" style="background:#B0713E"></div><code>accent: #B0713E</code></div><div class="sw"><div class="chip" style="background:#5E6B4F"></div><code>accent2: #5E6B4F</code></div><div class="sw"><div class="chip" style="background:#E6DFD1"></div><code>border: #E6DFD1</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cormorant Garamond</p><p><strong>Body:</strong> Karla</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Cormorant for essence names in italic, Karla body, Plex Mono for concentrations</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Karla&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>organ arc</strong></td><td>bottle tier arcs fan open from center over 900ms ease-out, 40ms stagger per bottle</td></tr><tr><td><strong>accord draw</strong></td><td>chord diagram strokes draw between notes over 1s ease when a formula is selected</td></tr><tr><td><strong>blotter pull</strong></td><td>blotter strips pull out 20px with a slight paper wave on hover, 300ms</td></tr><tr><td><strong>note bloom</strong></td><td>top/heart/base note labels bloom scale 0.9 to 1 with opacity in sequence, 250ms apart</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>semicircular tiered organ of essence bottles</li><li>chord diagrams mapping accords</li><li>blotter strips for each note</li><li>formula cards with concentration percentages</li><li>top/heart/base structure labels</li><li>apothecary labels in italic Cormorant</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">pdp-gallery</span><span class="tag">feature-grid</span><span class="tag">pricing-tiers</span><span class="tag">product-card</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG chord diagrams with stroke draw</span><span class="tag">flexbox fan-out arcs</span><span class="tag">CSS paper wave on hover</span><span class="tag">Google Fonts (Cormorant Garamond, Karla, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The perfumer&#x27;s organ as interface: a tiered semicircle of essence bottles, accord diagrams showing how notes combine, blotter strips you can pull for each note, and formula cards with concentration percentages. For fragrance houses, apothecary, and beauty labs where scent needs structure to be discussed. The signature is the accord diagram — every fragrance is drawn as a chord diagram of its notes.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Perfume Organ Lab style — Tiered essences, accord diagrams, blotter strips. Audience: fragrance houses, apothecary, beauty labs.
+LOOK: Palette — bg #F6F2EA, surface #FFFFFF, fg #2E2620, muted #8D8172, accent #B0713E, accent2 #5E6B4F, border #E6DFD1. Typography — display Cormorant Garamond, body Karla, mono IBM Plex Mono (Cormorant for essence names in italic, Karla body, Plex Mono for concentrations). Load https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Karla:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) three-part masthead — est. line, centered crest, maison line; (2) centered hero — est. kicker, italic display headline, ornament rule, lede, letterspaced CTA; (3) three-pillar band with roman numerals; (4) split plate band with image and text; (5) footer with mirrored mono lines
+MOTION: organ arc: bottle tier arcs fan open from center over 900ms ease-out, 40ms stagger per bottle. accord draw: chord diagram strokes draw between notes over 1s ease when a formula is selected. blotter pull: blotter strips pull out 20px with a slight paper wave on hover, 300ms. note bloom: top/heart/base note labels bloom scale 0.9 to 1 with opacity in sequence, 250ms apart. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) semicircular tiered organ of essence bottles; (b) chord diagrams mapping accords; (c) blotter strips for each note; (d) formula cards with concentration percentages; (e) top/heart/base structure labels; (f) apothecary labels in italic Cormorant. Components to build in-style: hero-section, pdp-gallery, feature-grid, pricing-tiers, product-card.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/perfume-organ-lab/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/perfume-organ-lab/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Perfume Organ Lab — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Karla:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#F6F2EA;--surface:#FFFFFF;--fg:#2E2620;--muted:#8D8172;--accent:#B0713E;--accent2:#5E6B4F;--border:#E6DFD1;--display:&#x27;Cormorant Garamond&#x27;,serif;--body:&#x27;Karla&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+body{letter-spacing:.01em}
+.mast{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:22px 0;border-bottom:1px solid var(--border)}
+.mast .l{font-family:var(--mono);font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+.mast .crest{font-family:var(--display);font-size:1.14rem;letter-spacing:.28em;text-transform:uppercase;text-align:center}
+.mast .l:last-child{text-align:right}
+.hero{padding:110px 0 90px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:&#x27;&#x27;;position:absolute;inset:0;background:radial-gradient(50% 38% at 50% 0%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 72%)}
+.hero .est{font-family:var(--mono);font-size:.62rem;letter-spacing:.5em;text-transform:uppercase;color:var(--muted)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,6.8vw,4.6rem);letter-spacing:.06em;line-height:1.04;margin:22px 0 20px;animation:fadeUp 1s ease-out both}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.rule-orn{display:flex;align-items:center;gap:14px;justify-content:center;margin:8px 0 18px;color:var(--accent)}
+.rule-orn::before,.rule-orn::after{content:&#x27;&#x27;;width:90px;height:1px;background:var(--border)}
+.rule-orn span{font-size:.7rem;letter-spacing:.4em;text-transform:uppercase}
+.hero p{color:var(--muted);max-width:44ch;margin:0 auto 34px;font-size:1rem}
+.btn-luxe{display:inline-block;padding:15px 42px;border:1px solid var(--accent);color:var(--accent);font-family:var(--mono);font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;transition:background .3s,color .3s,letter-spacing .3s}
+.btn-luxe:hover{background:var(--accent);color:var(--bg);letter-spacing:.38em}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-block:1px solid var(--border)}
+.tri article{padding:56px 34px;text-align:center;border-right:1px solid var(--border)}
+.tri article:last-child{border-right:0}
+.tri .orn{font-family:var(--display);font-size:1.6rem;color:var(--accent);font-style:italic}
+.tri h3{font-family:var(--display);font-weight:400;font-size:1.28rem;margin:14px 0 10px;letter-spacing:.04em}
+.tri p{color:var(--muted);font-size:.88rem;max-width:30ch;margin:0 auto}
+.plate-band{display:grid;grid-template-columns:1fr 1fr;min-height:340px;border-bottom:1px solid var(--border)}
+.plate-band .img{background:linear-gradient(135deg,color-mix(in srgb,var(--fg) 88%,var(--accent)),color-mix(in srgb,var(--fg) 94%,var(--accent2)));position:relative;overflow:hidden}
+.plate-band .img::after{content:&#x27;PLATE I&#x27;;position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:2.4rem;letter-spacing:.3em;color:color-mix(in srgb,var(--bg) 72%,transparent)}
+.plate-band .txt{padding:64px 48px;display:grid;align-content:center;gap:12px}
+.plate-band .txt h2{font-family:var(--display);font-weight:400;font-size:2rem;letter-spacing:.03em}
+.plate-band .txt p{color:var(--muted);max-width:40ch}
+.mono-line{font-family:var(--mono);font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent)}
+.site-foot{border-top:1px solid var(--border)}
+.foot-in{display:grid;grid-template-columns:1fr auto 1fr;padding:26px 0;font-family:var(--mono);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.foot-in span:last-child{text-align:right}
+@media(max-width:860px){.tri{grid-template-columns:1fr}.tri article{border-right:0;border-bottom:1px solid var(--border)}.plate-band{grid-template-columns:1fr}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;header class=&#x27;wrap mast&#x27;&gt;
+&lt;span class=&#x27;l&#x27;&gt;est. mmxxvi&lt;/span&gt;
+&lt;span class=&#x27;crest&#x27;&gt;PERFUME ORGAN&lt;/span&gt;
+&lt;span class=&#x27;l&#x27;&gt;maison / luxe-brand&lt;/span&gt;
+&lt;/header&gt;
+&lt;main id=&#x27;main&#x27;&gt;
+&lt;section class=&#x27;hero&#x27;&gt;
+&lt;p class=&#x27;est&#x27;&gt;a specimen in restraint&lt;/p&gt;
+&lt;h1&gt;The &lt;em&gt;quiet&lt;/em&gt; art&lt;br&gt;of presence&lt;/h1&gt;
+&lt;div class=&#x27;rule-orn&#x27;&gt;&lt;span&gt;Tiered essences, accord diagrams, blotter strips&lt;/span&gt;&lt;/div&gt;
+&lt;p&gt;Everything rare in this idiom is subtractive: fewer weights, fewer colors, more air between the letters.&lt;/p&gt;
+&lt;a class=&#x27;btn-luxe&#x27; href=&#x27;#main&#x27;&gt;Request access&lt;/a&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;tri&#x27; aria-label=&#x27;Pillars&#x27;&gt;
+&lt;article&gt;&lt;div class=&#x27;orn&#x27;&gt;i.&lt;/div&gt;&lt;h3&gt;Provenance&lt;/h3&gt;&lt;p&gt;Every piece carries its making in the details — no logos shouting, only craft speaking.&lt;/p&gt;&lt;/article&gt;
+&lt;article&gt;&lt;div class=&#x27;orn&#x27;&gt;ii.&lt;/div&gt;&lt;h3&gt;Patience&lt;/h3&gt;&lt;p&gt;Motion eases over full seconds; nothing hurries, nothing blinks.&lt;/p&gt;&lt;/article&gt;
+&lt;article&gt;&lt;div class=&#x27;orn&#x27;&gt;iii.&lt;/div&gt;&lt;h3&gt;Light&lt;/h3&gt;&lt;p&gt;A single warm glow at the crown of the page, falling off into honest shadow.&lt;/p&gt;&lt;/article&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;plate-band&#x27;&gt;
+&lt;div class=&#x27;img&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;/div&gt;
+&lt;div class=&#x27;txt&#x27;&gt;
+&lt;p class=&#x27;mono-line&#x27;&gt;the collection / plate i&lt;/p&gt;
+&lt;h2&gt;Set apart by what is absent&lt;/h2&gt;
+&lt;p&gt;One rule governs: if it does not serve the object, it is not on the page.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;© PERFUME ORGAN&lt;/span&gt;&lt;span&gt;specimen no. 101–150&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" title="Perfume Organ Lab shell"></iframe>
+</div></body></html>

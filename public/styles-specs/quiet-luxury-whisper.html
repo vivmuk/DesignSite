@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiet Luxury Whisper — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EF;--surface:#FFFFFF;--fg:#26221C;--muted:#8A8177;--accent:#9A7B4F;--accent2:#5C564D;--border:#E8E2D9}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Cormorant Garamond',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Quiet Luxury Whisper</h1><div class="tagline">Vast whitespace, whisper-thin type, no logos</div>
+<div class="meta"><span class="tag">contemporary</span><span class="tag">fashion houses</span><span class="tag">skincare</span><span class="tag">interior studios</span><span class="tag">hover-micro-interactions</span><span class="tag">scroll-triggered-reveals</span><span class="tag">image-art-direction</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/quiet-luxury-whisper.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/quiet-luxury-whisper.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/quiet-luxury-whisper.jpg" alt="Quiet Luxury Whisper preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F7F4EF"></div><code>bg: #F7F4EF</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#26221C"></div><code>fg: #26221C</code></div><div class="sw"><div class="chip" style="background:#8A8177"></div><code>muted: #8A8177</code></div><div class="sw"><div class="chip" style="background:#9A7B4F"></div><code>accent: #9A7B4F</code></div><div class="sw"><div class="chip" style="background:#5C564D"></div><code>accent2: #5C564D</code></div><div class="sw"><div class="chip" style="background:#E8E2D9"></div><code>border: #E8E2D9</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Cormorant Garamond</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Cormorant at 300 for display, Inter 300/400 body, Plex Mono only for size labels</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Inter&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>breath fade</strong></td><td>hero elements fade in over 1.4s ease-out with 200ms stagger — slower than usual, calm on purpose</td></tr><tr><td><strong>whisper tracking</strong></td><td>CTA letterspacing widens .02em to .06em over 600ms ease on hover, plus underline draw</td></tr><tr><td><strong>image drift</strong></td><td>full-bleed imagery scales 1.05 to 1.0 over 2s ease-out on reveal (slow ken-burns)</td></tr><tr><td><strong>cursor veil</strong></td><td>a translucent veil 140px follows pointer at 12% opacity over imagery, blend-mode soft-light, 300ms lag</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>whisper CTAs in letterspaced small caps</li><li>type at 300 weight everywhere it can be</li><li>no logo, no badge, no banner</li><li>bone and taupe cashmere palette</li><li>full-bleed photography with slow scale</li><li>size/price labels in tiny mono</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">pdp-gallery</span><span class="tag">product-card</span><span class="tag">testimonial-wall</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">pointer-follow veil with rAF lerp</span><span class="tag">slow ken-burns via CSS scale transitions</span><span class="tag">letterspacing transitions on hover</span><span class="tag">Google Fonts (Cormorant Garamond, Inter, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The quiet luxury movement as interface: vast whitespace, type set at 300 weight, bone and taupe cashmere tones, no logo wall, tiny serif moments, and CTAs that whisper rather than shout. For fashion houses, skincare, and interior studios where confidence is the absence of effort. The signature is the whisper CTA — letterspaced small caps that breathe.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Quiet Luxury Whisper style — Vast whitespace, whisper-thin type, no logos. Audience: fashion houses, skincare, interior studios.
+LOOK: Palette — bg #F7F4EF, surface #FFFFFF, fg #26221C, muted #8A8177, accent #9A7B4F, accent2 #5C564D, border #E8E2D9. Typography — display Cormorant Garamond, body Inter, mono IBM Plex Mono (Cormorant at 300 for display, Inter 300/400 body, Plex Mono only for size labels). Load https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) sticky glass nav with pill links; (2) hero — tagline pill, display headline, lede, two CTAs, mini-card stack; (3) stats band of four; (4) three feature cards with icon chips; (5) CTA section; (6) footer
+MOTION: breath fade: hero elements fade in over 1.4s ease-out with 200ms stagger — slower than usual, calm on purpose. whisper tracking: CTA letterspacing widens .02em to .06em over 600ms ease on hover, plus underline draw. image drift: full-bleed imagery scales 1.05 to 1.0 over 2s ease-out on reveal (slow ken-burns). cursor veil: a translucent veil 140px follows pointer at 12% opacity over imagery, blend-mode soft-light, 300ms lag. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) whisper CTAs in letterspaced small caps; (b) type at 300 weight everywhere it can be; (c) no logo, no badge, no banner; (d) bone and taupe cashmere palette; (e) full-bleed photography with slow scale; (f) size/price labels in tiny mono. Components to build in-style: hero-section, pdp-gallery, product-card, testimonial-wall, footer-mega.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/quiet-luxury-whisper/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/quiet-luxury-whisper/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Quiet Luxury Whisper — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#F7F4EF;--surface:#FFFFFF;--fg:#26221C;--muted:#8A8177;--accent:#9A7B4F;--accent2:#5C564D;--border:#E8E2D9;--display:&#x27;Cormorant Garamond&#x27;,serif;--body:&#x27;Inter&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+.brand{font-family:var(--display);font-weight:700;font-size:1rem}
+.pill{display:flex;gap:6px}
+.pill a{font-size:.82rem;padding:8px 14px;border-radius:999px;border:1px solid var(--border);transition:all .2s}
+.pill a:hover{border-color:var(--accent);color:var(--accent)}
+.hero{padding:96px 0 72px;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(2.2rem,5.4vw,3.6rem);line-height:1.08;letter-spacing:-.02em;margin:14px 0 18px}
+.tagline{font-size:.8rem;font-weight:600;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);padding:5px 13px;border-radius:999px;display:inline-block}
+.hero p.lede{color:var(--muted);font-size:1.04rem;max-width:50ch}
+.cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{padding:12px 26px;border-radius:12px;font-weight:600;font-size:.92rem;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--bg);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -12px color-mix(in srgb,var(--accent) 55%,transparent)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--border)}
+.card-stack{display:grid;gap:14px}
+.mini{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;display:flex;gap:14px;align-items:center}
+.mini .dot{width:38px;height:38px;border-radius:12px;background:color-mix(in srgb,var(--accent2) 18%,var(--surface));display:grid;place-items:center;flex-shrink:0}
+.mini b{font-size:.9rem}
+.mini p{font-size:.78rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:26px 0 60px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;animation:fadeUp .6s ease-out both}
+.stat:nth-child(2){animation-delay:.08s}.stat:nth-child(3){animation-delay:.16s}.stat:nth-child(4){animation-delay:.24s}
+.stat .v{font-family:var(--display);font-size:1.9rem;font-weight:700}
+.stat .k{font-size:.74rem;color:var(--muted)}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:26px 0 80px}
+.feat{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;transition:transform .25s cubic-bezier(.2,.9,.2,1),border-color .25s}
+.feat:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.feat .ic{width:44px;height:44px;border-radius:14px;background:color-mix(in srgb,var(--accent) 14%,var(--surface));display:grid;place-items:center;margin-bottom:14px}
+.feat h3{font-size:1.02rem;margin-bottom:8px}
+.feat p{font-size:.86rem;color:var(--muted)}
+.site-foot{border-top:1px solid var(--border)}
+.foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:22px 0;font-size:.8rem;color:var(--muted)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.features{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;header class=&#x27;nav&#x27;&gt;&lt;div class=&#x27;wrap nav-in&#x27;&gt;&lt;div class=&#x27;brand&#x27;&gt;◆ Quiet&lt;/div&gt;&lt;nav class=&#x27;pill&#x27; aria-label=&#x27;Primary&#x27;&gt;&lt;a href=&#x27;#features&#x27;&gt;Features&lt;/a&gt;&lt;a href=&#x27;#stats&#x27;&gt;Numbers&lt;/a&gt;&lt;a href=&#x27;#contact&#x27;&gt;Get started&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main id=&#x27;main&#x27;&gt;
+&lt;section class=&#x27;wrap hero&#x27;&gt;
+&lt;div&gt;
+&lt;span class=&#x27;tagline&#x27;&gt;Vast whitespace, whisper-thin type, no logos&lt;/span&gt;
+&lt;h1&gt;Quiet Luxury Whisper, shipped as a page&lt;/h1&gt;
+&lt;p class=&#x27;lede&#x27;&gt;A working specimen: soft surfaces, decisive accents, motion with easing curves that feel physical.&lt;/p&gt;
+&lt;div class=&#x27;cta-row&#x27;&gt;&lt;button class=&#x27;btn&#x27; type=&#x27;button&#x27;&gt;Primary action&lt;/button&gt;&lt;button class=&#x27;btn ghost&#x27; type=&#x27;button&#x27;&gt;See it live&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#x27;card-stack&#x27;&gt;
+&lt;div class=&#x27;mini&#x27;&gt;&lt;div class=&#x27;dot&#x27;&gt;✦&lt;/div&gt;&lt;div&gt;&lt;b&gt;Surface one&lt;/b&gt;&lt;p&gt;Something quietly useful&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&#x27;mini&#x27;&gt;&lt;div class=&#x27;dot&#x27;&gt;◈&lt;/div&gt;&lt;div&gt;&lt;b&gt;Surface two&lt;/b&gt;&lt;p&gt;Something quietly useful&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&#x27;mini&#x27;&gt;&lt;div class=&#x27;dot&#x27;&gt;⬡&lt;/div&gt;&lt;div&gt;&lt;b&gt;Surface three&lt;/b&gt;&lt;p&gt;Something quietly useful&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;wrap stats&#x27; id=&#x27;stats&#x27; aria-label=&#x27;Stats&#x27;&gt;
+&lt;div class=&#x27;stat&#x27;&gt;&lt;div class=&#x27;v&#x27;&gt;12k&lt;/div&gt;&lt;div class=&#x27;k&#x27;&gt;Something counted&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&#x27;stat&#x27;&gt;&lt;div class=&#x27;v&#x27;&gt;99.9%&lt;/div&gt;&lt;div class=&#x27;k&#x27;&gt;Something measured&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&#x27;stat&#x27;&gt;&lt;div class=&#x27;v&#x27;&gt;40ms&lt;/div&gt;&lt;div class=&#x27;k&#x27;&gt;Something fast&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&#x27;stat&#x27;&gt;&lt;div class=&#x27;v&#x27;&gt;4.9★&lt;/div&gt;&lt;div class=&#x27;k&#x27;&gt;Something loved&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;wrap features&#x27; id=&#x27;features&#x27;&gt;
+&lt;article class=&#x27;feat&#x27;&gt;&lt;div class=&#x27;ic&#x27;&gt;◐&lt;/div&gt;&lt;h3&gt;Feature one&lt;/h3&gt;&lt;p&gt;Built the way this style intends — restrained surface, one accent doing the talking.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&#x27;feat&#x27;&gt;&lt;div class=&#x27;ic&#x27;&gt;◑&lt;/div&gt;&lt;h3&gt;Feature two&lt;/h3&gt;&lt;p&gt;Interactions ease on cubic-bezier curves; nothing snaps, nothing lags.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&#x27;feat&#x27;&gt;&lt;div class=&#x27;ic&#x27;&gt;◒&lt;/div&gt;&lt;h3&gt;Feature three&lt;/h3&gt;&lt;p&gt;Every color is a token on :root — theme it by changing six variables.&lt;/p&gt;&lt;/article&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;◆ Quiet&lt;/span&gt;&lt;span&gt;Contemporary specimen&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;&lt;script&gt;
+document.querySelectorAll(&#x27;.feat,.stat&#x27;).forEach(el=&gt;{
+  const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.style.animationPlayState=&#x27;running&#x27;;e.target.style.opacity=1;io.unobserve(e.target)}}),{threshold:.3});
+  el.style.opacity=0;io.observe(el);
+});
+&lt;/script&gt;
+" title="Quiet Luxury Whisper shell"></iframe>
+</div></body></html>

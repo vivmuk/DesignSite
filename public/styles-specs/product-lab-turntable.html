@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Lab Turntable — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDEEF0;--surface:#FFFFFF;--fg:#14161A;--muted:#5F6570;--accent:#B23A00;--accent2:#1D4ED8;--border:#D6D9DE}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Archivo',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Product Lab Turntable</h1><div class="tagline">Turntable stage, studio light, spec callouts</div>
+<div class="meta"><span class="tag">immersive-3d</span><span class="tag">product launches</span><span class="tag">hardware brands</span><span class="tag">industrial design</span><span class="tag">product-viewer-3d</span><span class="tag">css-3d-transforms</span><span class="tag">stagger-orchestration</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/product-lab-turntable.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/product-lab-turntable.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/product-lab-turntable.jpg" alt="Product Lab Turntable preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#EDEEF0"></div><code>bg: #EDEEF0</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#14161A"></div><code>fg: #14161A</code></div><div class="sw"><div class="chip" style="background:#5F6570"></div><code>muted: #5F6570</code></div><div class="sw"><div class="chip" style="background:#B23A00"></div><code>accent: #B23A00</code></div><div class="sw"><div class="chip" style="background:#1D4ED8"></div><code>accent2: #1D4ED8</code></div><div class="sw"><div class="chip" style="background:#D6D9DE"></div><code>border: #D6D9DE</code></div><p><code>linear-gradient(180deg,#F6F7F9 0%,#EDEEF0 100%)</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Archivo</p><p><strong>Body:</strong> Inter</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Archivo headlines for industrial authority, Inter body, IBM Plex Mono for spec figures</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Archivo&family=Inter&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>turntable orbit</strong></td><td>degree-tick ring rotates 360deg over 18s linear infinite while the product holds its angle</td></tr><tr><td><strong>material swap crossfade</strong></td><td>stage finish cross-fades 250ms ease-in-out as the active chip springs to 1.06 scale over 200ms cubic-bezier(0.34,1.56,0.64,1)</td></tr><tr><td><strong>exploded view stagger</strong></td><td>parts separate along the Y axis 60ms apart over 500ms cubic-bezier(0.2,0.9,0.2,1), reassembling on toggle-off</td></tr><tr><td><strong>studio light sweep</strong></td><td>specular highlight band sweeps across the product every 4s ease-in-out infinite</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>circular turntable stage with degree tick ring</li><li>material swap chips under the stage</li><li>exploded-view toggle with leader lines</li><li>dimension callout pins on the product</li><li>mono spec readout band with engineering tolerances</li><li>hairline registration marks in section corners</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">stats-band</span><span class="tag">pdp-gallery</span><span class="tag">feature-grid</span><span class="tag">tab-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS 3D transforms + conic-gradient degree ring</span><span class="tag">CSS custom properties for material states</span><span class="tag">IntersectionObserver count-up reveals</span><span class="tag">Google Fonts (Archivo, Inter, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A cyclorama-white product lab where the hero is a rotating turntable stage ringed with degree ticks, lit by a sweeping studio highlight, and driven by material-swap chips and an exploded-view toggle. Built for hardware launches and industrial design studios that want the object treated like evidence. The signature is instrumentation: every claim about the product is pinned to it with dimension callouts, mono spec readouts, and leader lines instead of marketing prose.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page launch site for a precision audio hardware brand in the Product Lab Turntable style. LOOK: cyclorama background #EDEEF0, white panels #FFFFFF, ink #14161A, muted #5F6570, industrial orange #B23A00 for actions, blueprint blue #1D4ED8 for data, border #D6D9DE, gradient linear-gradient(180deg,#F6F7F9,#EDEEF0). Load https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap - Archivo display, Inter body, IBM Plex Mono for figures. LAYOUT in order: (1) sticky lab header, wordmark plus mono nav; (2) hero on the gradient: kicker, Archivo headline, two CTAs, then a centered turntable stage - a degree-tick ring with the product puck on it, dimension callout pins, four material chips, an exploded-view toggle; (3) stats band of four mono readouts with count-up; (4) three annotation-style feature cards; (5) exploded-view explainer with leader lines; (6) CTA band; (7) footer. MOTION: the degree ring spins 360deg over 18s linear; chip swaps cross-fade the stage finish in 250ms while the active chip springs to 1.06 over 200ms; exploded parts separate along Y with 60ms stagger over 500ms cubic-bezier(0.2,0.9,0.2,1); a specular band sweeps the product every 4s. SIGNATURE: (a) circular turntable stage with degree ticks, (b) material swap chips, (c) exploded-view toggle with leader lines, (d) dimension callout pins, (e) mono spec readout band. CONSTRAINTS: semantic HTML, 4.5:1 contrast on body text, single column below 780px with the stage capped at 88vw, CSS-first motion, all ambient loops wrapped in prefers-reduced-motion. DELIVERY: one self-contained index.html with CSS custom properties --bg:#EDEEF0, --surface:#FFFFFF, --fg:#14161A, --muted:#5F6570, --accent:#B23A00, --accent2:#1D4ED8, --border:#D6D9DE on :root, preconnect plus font link with system fallbacks, the four recipes implemented in CSS/vanilla JS, then verify heading order, focus-visible outlines, and zero horizontal overflow at 360px.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/product-lab-turntable/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/product-lab-turntable/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Meridian One - Product Lab&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&amp;family=IBM+Plex+Mono:wght@500&amp;family=Inter:wght@400;500;600&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{
+  --bg:#EDEEF0; --surface:#FFFFFF; --fg:#14161A; --muted:#5F6570;
+  --accent:#B23A00; --accent2:#1D4ED8; --border:#D6D9DE;
+  --gradient:linear-gradient(180deg,#F6F7F9 0%,#EDEEF0 100%);
+  --display:&#x27;Archivo&#x27;,system-ui,sans-serif; --body:&#x27;Inter&#x27;,system-ui,sans-serif;
+  --mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace;
+  --mat:#B9BDC5; --mat-deep:#8E939C; --radius:6px;
+}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.lab-head{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border)}
+.head-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.brand{font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.16em;text-transform:uppercase}
+.brand b{color:var(--accent)}
+.nav{display:flex;gap:22px;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.nav a{transition:color .2s}
+.nav a:hover,.nav a:focus-visible{color:var(--accent)}
+.hero{background:var(--gradient);padding:70px 0 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:&#x27;&#x27;;position:absolute;width:18px;height:18px;border:1px solid var(--border)}
+.hero::before{top:22px;left:22px;border-right:0;border-bottom:0}
+.hero::after{bottom:22px;right:22px;border-left:0;border-top:0}
+.kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.3rem,6vw,4rem);letter-spacing:-.02em;text-transform:uppercase;text-wrap:balance;margin:14px auto 14px;max-width:15ch}
+.lede{max-width:54ch;margin:0 auto;color:var(--muted)}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:26px 0 46px}
+.btn{font:600 .95rem var(--body);padding:13px 28px;border:1px solid var(--accent);background:var(--accent);color:#FFF;border-radius:var(--radius);cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(178,58,0,.45)}
+.btn.ghost{background:transparent;color:var(--accent2);border-color:var(--accent2)}
+.btn.ghost:hover{box-shadow:0 10px 22px -10px rgba(29,78,216,.4)}
+.stage{position:relative;width:min(420px,86vw);aspect-ratio:1;margin:0 auto}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--border);background:repeating-conic-gradient(from 0deg,var(--border) 0deg .9deg,transparent .9deg 9deg);-webkit-mask:radial-gradient(circle,transparent 0 88%,#000 89%);mask:radial-gradient(circle,transparent 0 88%,#000 89%);animation:orbit 18s linear infinite}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.deg{position:absolute;font:500 .68rem var(--mono);color:var(--muted);letter-spacing:.06em}
+.deg.d0{top:-20px;left:50%;transform:translateX(-50%)}
+.deg.d90{right:-30px;top:50%;transform:translateY(-50%)}
+.deg.d180{bottom:-20px;left:50%;transform:translateX(-50%)}
+.deg.d270{left:-30px;top:50%;transform:translateY(-50%)}
+.product{position:absolute;inset:21%}
+.part{position:absolute;left:0;right:0;height:36%;border-radius:50%;border:1px solid rgba(255,255,255,.7);background:radial-gradient(circle at 34% 24%,#FFFFFF 0%,var(--mat) 58%,var(--mat-deep) 100%);box-shadow:0 18px 30px -16px rgba(20,22,26,.5);transition:transform .5s cubic-bezier(.2,.9,.2,1),background .25s ease-in-out}
+.p1{top:0;z-index:3}
+.p2{top:32%;z-index:2;transition-delay:.06s}
+.p3{top:64%;z-index:1;transition-delay:.12s;background:radial-gradient(circle at 34% 30%,var(--mat) 0%,var(--mat-deep) 70%)}
+.stage.exploded .p1{transform:translateY(-56px)}
+.stage.exploded .p3{transform:translateY(56px)}
+.sweep{position:absolute;inset:21%;border-radius:50%;overflow:hidden;pointer-events:none}
+.sweep::after{content:&#x27;&#x27;;position:absolute;inset:-20%;background:linear-gradient(112deg,transparent 42%,rgba(255,255,255,.85) 50%,transparent 58%);background-size:260% 100%;mix-blend-mode:overlay;animation:sweep 4s ease-in-out infinite}
+@keyframes sweep{0%{background-position:130% 0}55%{background-position:-30% 0}100%{background-position:-30% 0}}
+.pin{position:absolute;display:flex;align-items:center;gap:6px;font:500 .66rem var(--mono);color:var(--fg);letter-spacing:.05em}
+.pin::before{content:&#x27;&#x27;;width:34px;height:1px;background:var(--accent)}
+.pin.pl1{top:26%;right:-6px}
+.pin.pl2{bottom:24%;left:-6px;flex-direction:row-reverse}
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.chip{font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:99px;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),border-color .2s,color .2s}
+.chip:hover{color:var(--fg)}
+.chip[aria-pressed=&#x27;true&#x27;]{border-color:var(--accent);color:var(--accent);transform:scale(1.06)}
+.explode-toggle{margin-top:16px;font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--accent2);color:var(--accent2);cursor:pointer;padding:4px 2px;transition:opacity .2s}
+.explode-toggle:hover{opacity:.7}
+.specs{background:var(--surface);border-block:1px solid var(--border)}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border)}
+.spec{background:var(--surface);padding:26px 22px}
+.spec .val{font:500 1.7rem var(--mono);color:var(--accent2);letter-spacing:-.02em}
+.spec .lbl{font:500 .7rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+section.block{padding:66px 0}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:32px}
+.sec-head h2{font-family:var(--display);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;text-transform:uppercase;letter-spacing:-.01em}
+.sec-head span{font:500 .7rem var(--mono);letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 22px;transition:transform .25s cubic-bezier(.2,.9,.2,1),box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -22px rgba(20,22,26,.45)}
+.card .idx{font:500 .7rem var(--mono);letter-spacing:.16em;color:var(--accent)}
+.card h3{font-family:var(--display);font-size:1.12rem;font-weight:700;margin:12px 0 8px;text-transform:uppercase;letter-spacing:.01em}
+.card p{color:var(--muted);font-size:.93rem}
+.card ul{list-style:none;margin-top:14px;border-top:1px dashed var(--border);padding-top:12px;font:500 .74rem var(--mono);color:var(--fg)}
+.card li{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
+.card li b{color:var(--fg);font-weight:500}
+.cta-band{background:var(--fg);color:#F4F5F7;text-align:center;padding:56px 24px;border-radius:var(--radius);margin:0 0 66px}
+.cta-band h2{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2.3rem);text-transform:uppercase;font-weight:800;letter-spacing:-.01em}
+.cta-band p{color:#B6BAC2;margin:10px auto 22px;max-width:46ch;font-size:.95rem}
+.site-foot{border-top:1px solid var(--border);background:var(--surface)}
+.foot-in{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding:22px 0;font:500 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.foot-in a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+@media (max-width:780px){
+  .nav{display:none}
+  .pin{display:none}
+  .deg.d90,.deg.d270{display:none}
+  section.block{padding:48px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  .ring,.sweep::after{animation:none}
+  *{transition-duration:.01ms!important}
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&#x27;lab-head&#x27;&gt;
+  &lt;div class=&#x27;wrap head-in&#x27;&gt;
+    &lt;div class=&#x27;brand&#x27;&gt;Meridian &lt;b&gt;Lab&lt;/b&gt;&lt;/div&gt;
+    &lt;nav class=&#x27;nav&#x27; aria-label=&#x27;Primary&#x27;&gt;
+      &lt;a href=&#x27;#stage&#x27;&gt;Stage&lt;/a&gt;&lt;a href=&#x27;#specs&#x27;&gt;Specs&lt;/a&gt;&lt;a href=&#x27;#detail&#x27;&gt;Detail&lt;/a&gt;&lt;a href=&#x27;#order&#x27;&gt;Order&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section class=&#x27;hero&#x27; id=&#x27;stage&#x27;&gt;
+    &lt;div class=&#x27;wrap&#x27;&gt;
+      &lt;p class=&#x27;kicker&#x27;&gt;Meridian One / rev. C&lt;/p&gt;
+      &lt;h1&gt;Measured, not marketed&lt;/h1&gt;
+      &lt;p class=&#x27;lede&#x27;&gt;A 40mm beryllium-driver monitor machined from a single billet. Rotate the stage, swap the finish, pull it apart - every figure below was taken off the part itself.&lt;/p&gt;
+      &lt;div class=&#x27;cta-row&#x27;&gt;
+        &lt;button class=&#x27;btn&#x27; type=&#x27;button&#x27;&gt;Pre-order - $420&lt;/button&gt;
+        &lt;button class=&#x27;btn ghost&#x27; type=&#x27;button&#x27;&gt;Download spec sheet&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&#x27;stage&#x27; id=&#x27;turntable&#x27;&gt;
+        &lt;div class=&#x27;ring&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;/div&gt;
+        &lt;span class=&#x27;deg d0&#x27; aria-hidden=&#x27;true&#x27;&gt;000&lt;/span&gt;&lt;span class=&#x27;deg d90&#x27; aria-hidden=&#x27;true&#x27;&gt;090&lt;/span&gt;
+        &lt;span class=&#x27;deg d180&#x27; aria-hidden=&#x27;true&#x27;&gt;180&lt;/span&gt;&lt;span class=&#x27;deg d270&#x27; aria-hidden=&#x27;true&#x27;&gt;270&lt;/span&gt;
+        &lt;div class=&#x27;product&#x27; aria-label=&#x27;Meridian One monitor, three-quarter view&#x27;&gt;
+          &lt;div class=&#x27;part p1&#x27;&gt;&lt;/div&gt;&lt;div class=&#x27;part p2&#x27;&gt;&lt;/div&gt;&lt;div class=&#x27;part p3&#x27;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&#x27;sweep&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;/div&gt;
+        &lt;span class=&#x27;pin pl1&#x27; aria-hidden=&#x27;true&#x27;&gt;H 96.0mm&lt;/span&gt;
+        &lt;span class=&#x27;pin pl2&#x27; aria-hidden=&#x27;true&#x27;&gt;0 40mm&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&#x27;chips&#x27; role=&#x27;group&#x27; aria-label=&#x27;Material finish&#x27;&gt;
+        &lt;button class=&#x27;chip&#x27; type=&#x27;button&#x27; data-mat=&#x27;#B9BDC5&#x27; data-deep=&#x27;#8E939C&#x27; aria-pressed=&#x27;true&#x27;&gt;Anodized silver&lt;/button&gt;
+        &lt;button class=&#x27;chip&#x27; type=&#x27;button&#x27; data-mat=&#x27;#4A4E56&#x27; data-deep=&#x27;#26292F&#x27; aria-pressed=&#x27;false&#x27;&gt;Graphite&lt;/button&gt;
+        &lt;button class=&#x27;chip&#x27; type=&#x27;button&#x27; data-mat=&#x27;#C08A45&#x27; data-deep=&#x27;#8A5C22&#x27; aria-pressed=&#x27;false&#x27;&gt;Raw brass&lt;/button&gt;
+        &lt;button class=&#x27;chip&#x27; type=&#x27;button&#x27; data-mat=&#x27;#F1EFEA&#x27; data-deep=&#x27;#C9C5BC&#x27; aria-pressed=&#x27;false&#x27;&gt;Bone white&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;button class=&#x27;explode-toggle&#x27; type=&#x27;button&#x27; id=&#x27;explodeBtn&#x27; aria-pressed=&#x27;false&#x27;&gt;Exploded view: off&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&#x27;specs&#x27; id=&#x27;specs&#x27; aria-label=&#x27;Specifications&#x27;&gt;
+    &lt;div class=&#x27;wrap spec-grid&#x27;&gt;
+      &lt;div class=&#x27;spec&#x27;&gt;&lt;div class=&#x27;val&#x27; data-count=&#x27;40&#x27;&gt;0&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;mm driver&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&#x27;spec&#x27;&gt;&lt;div class=&#x27;val&#x27; data-count=&#x27;96&#x27; data-suffix=&#x27;mm&#x27;&gt;0&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;height&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&#x27;spec&#x27;&gt;&lt;div class=&#x27;val&#x27; data-count=&#x27;384&#x27; data-suffix=&#x27;kHz&#x27;&gt;0&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;decode&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&#x27;spec&#x27;&gt;&lt;div class=&#x27;val&#x27; data-count=&#x27;118&#x27; data-suffix=&#x27;dB&#x27;&gt;0&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;max SPL&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&#x27;block wrap&#x27; id=&#x27;detail&#x27;&gt;
+    &lt;div class=&#x27;sec-head&#x27;&gt;&lt;h2&gt;Annotated detail&lt;/h2&gt;&lt;span&gt;fig. 01-03&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&#x27;cards&#x27;&gt;
+      &lt;article class=&#x27;card&#x27;&gt;
+        &lt;div class=&#x27;idx&#x27;&gt;FIG. 01&lt;/div&gt;&lt;h3&gt;Single-billet housing&lt;/h3&gt;
+        &lt;p&gt;Five-axis machined, bead-blasted, then anodized. No seams, no fasteners on the visible face.&lt;/p&gt;
+        &lt;ul&gt;&lt;li&gt;Tolerance &lt;b&gt;0.02mm&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Ra finish &lt;b&gt;0.4um&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&#x27;card&#x27;&gt;
+        &lt;div class=&#x27;idx&#x27;&gt;FIG. 02&lt;/div&gt;&lt;h3&gt;Beryllium dome&lt;/h3&gt;
+        &lt;p&gt;A 40mm dome stiff enough to break up well past hearing, suspended in a double-roll surround.&lt;/p&gt;
+        &lt;ul&gt;&lt;li&gt;Resonance &lt;b&gt;1.1kHz&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Travel &lt;b&gt;+/-4mm&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&#x27;card&#x27;&gt;
+        &lt;div class=&#x27;idx&#x27;&gt;FIG. 03&lt;/div&gt;&lt;h3&gt;Damped rear port&lt;/h3&gt;
+        &lt;p&gt;A labyrinth port tuned for near-field work, so the low end stays honest at desk distance.&lt;/p&gt;
+        &lt;ul&gt;&lt;li&gt;F3 &lt;b&gt;48Hz&lt;/b&gt;&lt;/li&gt;&lt;li&gt;Port &lt;b&gt;18mm&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&#x27;wrap&#x27; id=&#x27;order&#x27;&gt;
+    &lt;div class=&#x27;cta-band&#x27;&gt;
+      &lt;h2&gt;Built in batches of 200&lt;/h2&gt;
+      &lt;p&gt;Each unit is measured, numbered, and shipped with its own response plot. Rev. C opens November.&lt;/p&gt;
+      &lt;button class=&#x27;btn&#x27; type=&#x27;button&#x27;&gt;Reserve a unit&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;
+  &lt;div class=&#x27;wrap foot-in&#x27;&gt;
+    &lt;span&gt;Meridian Lab / Precision audio instruments&lt;/span&gt;
+    &lt;span&gt;&lt;a href=&#x27;#stage&#x27;&gt;Back to stage&lt;/a&gt; / (c) 2026&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+&lt;script&gt;
+(function(){
+  var stage=document.getElementById(&#x27;turntable&#x27;);
+  var root=document.documentElement;
+  document.querySelectorAll(&#x27;.chip&#x27;).forEach(function(chip){
+    chip.addEventListener(&#x27;click&#x27;,function(){
+      document.querySelectorAll(&#x27;.chip&#x27;).forEach(function(c){c.setAttribute(&#x27;aria-pressed&#x27;,&#x27;false&#x27;);});
+      chip.setAttribute(&#x27;aria-pressed&#x27;,&#x27;true&#x27;);
+      root.style.setProperty(&#x27;--mat&#x27;,chip.dataset.mat);
+      root.style.setProperty(&#x27;--mat-deep&#x27;,chip.dataset.deep);
+    });
+  });
+  var btn=document.getElementById(&#x27;explodeBtn&#x27;);
+  btn.addEventListener(&#x27;click&#x27;,function(){
+    var on=stage.classList.toggle(&#x27;exploded&#x27;);
+    btn.setAttribute(&#x27;aria-pressed&#x27;,String(on));
+    btn.textContent=&#x27;Exploded view: &#x27;+(on?&#x27;on&#x27;:&#x27;off&#x27;);
+  });
+  var reduce=window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+  var specs=document.querySelectorAll(&#x27;[data-count]&#x27;);
+  function count(el){
+    var target=+el.dataset.count,suffix=el.dataset.suffix||&#x27;&#x27;,t0=null;
+    if(reduce){el.textContent=target+suffix;return;}
+    function step(t){
+      if(!t0)t0=t;
+      var p=Math.min((t-t0)/900,1);
+      el.textContent=Math.round(target*(1-Math.pow(1-p,3)))+suffix;
+      if(p&lt;1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if(&#x27;IntersectionObserver&#x27; in window){
+    var io=new IntersectionObserver(function(en){
+      en.forEach(function(e){if(e.isIntersecting){count(e.target);io.unobserve(e.target);}});
+    },{threshold:.6});
+    specs.forEach(function(s){io.observe(s);});
+  }else{specs.forEach(count);}
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;" title="Product Lab Turntable shell"></iframe>
+</div></body></html>

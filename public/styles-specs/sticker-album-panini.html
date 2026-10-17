@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sticker Album Panini — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito+Sans&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FDF8EC;--surface:#FFFFFF;--fg:#2A2118;--muted:#8A8070;--accent:#E52D27;--accent2:#1F7AC4;--border:#E8DFC8}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Titan One',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Sticker Album Panini</h1><div class="tagline">Shiny slots, checklists, packet reveals</div>
+<div class="meta"><span class="tag">expressive</span><span class="tag">communities</span><span class="tag">collectibles</span><span class="tag">sports fans</span><span class="tag">3d-card-tilt</span><span class="tag">stagger-orchestration</span><span class="tag">count-up-number-animations</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/sticker-album-panini.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/sticker-album-panini.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/sticker-album-panini.jpg" alt="Sticker Album Panini preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FDF8EC"></div><code>bg: #FDF8EC</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2A2118"></div><code>fg: #2A2118</code></div><div class="sw"><div class="chip" style="background:#8A8070"></div><code>muted: #8A8070</code></div><div class="sw"><div class="chip" style="background:#E52D27"></div><code>accent: #E52D27</code></div><div class="sw"><div class="chip" style="background:#1F7AC4"></div><code>accent2: #1F7AC4</code></div><div class="sw"><div class="chip" style="background:#E8DFC8"></div><code>border: #E8DFC8</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Titan One</p><p><strong>Body:</strong> Nunito Sans</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Titan One for album title and numbers, Nunito Sans body, Plex Mono for checklist figures</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito+Sans&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>packet tear</strong></td><td>foil packet tears open: two halves rotate apart 25deg with a shine sweep, 600ms, sticker pops out scale 0.6 to 1.1 to 1</td></tr><tr><td><strong>foil shimmer</strong></td><td>rare stickers shimmer a diagonal light sweep across their surface every 4s ease-in-out</td></tr><tr><td><strong>slot fill</strong></td><td>empty slots fill with a stamp-down scale 1.3 to 1 and 150ms ring pulse when earned</td></tr><tr><td><strong>checklist tick</strong></td><td>checklist rows tick with a drawn checkmark stroke 300ms and counter increments</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>numbered slot grid with silhouettes for missing stickers</li><li>foil shimmer on rare tiers</li><li>checklist panel with completion percentage</li><li>swap badges on duplicates</li><li>packet-opening reveal animation</li><li>shininess legend (common/rare/very rare)</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">stats-band</span><span class="tag">product-card</span><span class="tag">feature-grid</span><span class="tag">badge-system</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">CSS shine sweep keyframes</span><span class="tag">3D packet tear via rotate transforms</span><span class="tag">SVG checkmark stroke draw</span><span class="tag">Google Fonts (Titan One, Nunito Sans, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The sticker album as interface: a grid of numbered slots, shiny foil rarities, checklist progress, swap badges, and a packet-opening reveal animation for new content. For communities, collectibles, and sports fans where completion is the game. The signature is the packet tear — new items arrive by ripping open a foil packet.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Sticker Album Panini style — Shiny slots, checklists, packet reveals. Audience: communities, collectibles, sports fans.
+LOOK: Palette — bg #FDF8EC, surface #FFFFFF, fg #2A2118, muted #8A8070, accent #E52D27, accent2 #1F7AC4, border #E8DFC8. Typography — display Titan One, body Nunito Sans, mono IBM Plex Mono (Titan One for album title and numbers, Nunito Sans body, Plex Mono for checklist figures). Load https://fonts.googleapis.com/css2?family=Titan+One:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) ticker tape strip; (2) masthead with sticker-brand and shadowed nav buttons; (3) hero with rotated tilt words and drifting stickers; (4) three hard-shadow cards; (5) accent CTA band rotated -0.4deg; (6) footer
+MOTION: packet tear: foil packet tears open: two halves rotate apart 25deg with a shine sweep, 600ms, sticker pops out scale 0.6 to 1.1 to 1. foil shimmer: rare stickers shimmer a diagonal light sweep across their surface every 4s ease-in-out. slot fill: empty slots fill with a stamp-down scale 1.3 to 1 and 150ms ring pulse when earned. checklist tick: checklist rows tick with a drawn checkmark stroke 300ms and counter increments. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) numbered slot grid with silhouettes for missing stickers; (b) foil shimmer on rare tiers; (c) checklist panel with completion percentage; (d) swap badges on duplicates; (e) packet-opening reveal animation; (f) shininess legend (common/rare/very rare). Components to build in-style: hero-section, stats-band, product-card, feature-grid, badge-system.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/sticker-album-panini/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/sticker-album-panini/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Sticker Album Panini — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Titan+One:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#FDF8EC;--surface:#FFFFFF;--fg:#2A2118;--muted:#8A8070;--accent:#E52D27;--accent2:#1F7AC4;--border:#E8DFC8;--display:&#x27;Titan One&#x27;,serif;--body:&#x27;Nunito Sans&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.tape{background:var(--fg);color:var(--bg);font-family:var(--mono);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;padding:8px 0;overflow:hidden;white-space:nowrap}
+.tape span{display:inline-block;animation:ticker 16s linear infinite}
+.mast{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:3px solid var(--fg)}
+.mast .brand{font-family:var(--display);font-weight:900;font-size:1.3rem;letter-spacing:-.02em;transform:rotate(-1.2deg)}
+.mast .brand em{color:var(--accent);font-style:normal}
+.mast nav{display:flex;gap:14px;font-family:var(--mono);font-size:.72rem;text-transform:uppercase}
+.mast nav a{background:var(--surface);border:2px solid var(--fg);padding:6px 12px;box-shadow:3px 3px 0 var(--fg);transition:transform .15s,box-shadow .15s}
+.mast nav a:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--fg)}
+.hero{padding:70px 0 50px;position:relative}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,7.2vw,5rem);line-height:.96;letter-spacing:-.03em;text-transform:uppercase;margin:12px 0 18px}
+.hero h1 .tilt{display:inline-block;color:var(--accent);transform:rotate(-2deg)}
+.hero h1 .tilt2{display:inline-block;color:var(--accent2);transform:rotate(1.6deg)}
+.hero .sub{font-size:1.06rem;max-width:52ch;font-weight:500}
+.sticker{position:absolute;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;background:var(--accent);color:var(--bg);padding:8px 14px;border-radius:999px;transform:rotate(-8deg);animation:drift 6s ease-in-out infinite}
+.sticker.s1{top:8%;right:8%}.sticker.s2{top:42%;right:20%;background:var(--accent2);transform:rotate(6deg);animation-delay:-3s}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0 70px}
+.cut{background:var(--surface);border:3px solid var(--fg);border-radius:18px;padding:24px;box-shadow:6px 6px 0 var(--fg);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+.cut:hover{transform:translate(-3px,-3px) rotate(-.6deg);box-shadow:9px 9px 0 var(--fg)}
+.cut:nth-child(2){transform:rotate(.8deg)}.cut:nth-child(3){transform:rotate(-.5deg)}
+.cut .no{font-family:var(--mono);font-size:.66rem;background:var(--fg);color:var(--bg);display:inline-block;padding:3px 9px;margin-bottom:12px}
+.cut h3{font-family:var(--display);font-size:1.3rem;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:8px}
+.cut p{color:var(--muted);font-size:.9rem}
+.band{background:var(--accent);color:var(--fg);padding:54px 24px;text-align:center;transform:rotate(-.4deg)}
+.band h2{font-family:var(--display);font-size:clamp(1.8rem,4.6vw,2.8rem);text-transform:uppercase;font-weight:900}
+.band p{margin:10px 0 22px;font-weight:600}
+.band a{display:inline-block;background:var(--fg);color:var(--bg);padding:13px 30px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;box-shadow:4px 4px 0 var(--bg);transition:transform .15s}
+.band a:hover{transform:translate(-2px,-2px)}
+.site-foot{border-top:3px solid var(--fg);background:var(--surface)}
+.foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px 0;font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.18em}
+@media(max-width:860px){.cards{grid-template-columns:1fr}.sticker.s2{display:none}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;div class=&#x27;tape&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;span&gt;★ SHINY SLOTS, CHECKLISTS, PACKET REVEALS ★ HANDMADE ENERGY ★ PRINT-DERIVED CHAOS ★ ZERO APOLOGY ★ SHINY SLOTS, CHECKLISTS, PACKET REVEALS ★ HANDMADE ENERGY ★ PRINT-DERIVED CHAOS ★ ZERO APOLOGY ★&lt;/span&gt;&lt;/div&gt;
+&lt;header class=&#x27;wrap mast&#x27;&gt;&lt;div class=&#x27;brand&#x27;&gt;Sticker&lt;em&gt;★&lt;/em&gt;&lt;/div&gt;&lt;nav aria-label=&#x27;Primary&#x27;&gt;&lt;a href=&#x27;#goods&#x27;&gt;Goods&lt;/a&gt;&lt;a href=&#x27;#pitch&#x27;&gt;Pitch&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main id=&#x27;main&#x27;&gt;
+&lt;section class=&#x27;wrap hero&#x27; style=&#x27;position:relative&#x27;&gt;
+&lt;span class=&#x27;sticker s1&#x27; aria-hidden=&#x27;true&#x27;&gt;fresh drop&lt;/span&gt;&lt;span class=&#x27;sticker s2&#x27; aria-hidden=&#x27;true&#x27;&gt;no. 04&lt;/span&gt;
+&lt;h1&gt;Make it &lt;span class=&#x27;tilt&#x27;&gt;loud&lt;/span&gt;,&lt;br&gt;make it &lt;span class=&#x27;tilt2&#x27;&gt;move&lt;/span&gt;&lt;/h1&gt;
+&lt;p class=&#x27;sub&#x27;&gt;Shiny slots, checklists, packet reveals — a specimen with its collar up: stickered, taped, and set in display type that refuses to sit straight.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;wrap cards&#x27; id=&#x27;goods&#x27;&gt;
+&lt;article class=&#x27;cut&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;NO. 01&lt;/span&gt;&lt;h3&gt;Tilt on purpose&lt;/h3&gt;&lt;p&gt;Everything rotates a degree or two — never enough to break reading, enough to feel hand-placed.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&#x27;cut&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;NO. 02&lt;/span&gt;&lt;h3&gt;Sticker wayfinding&lt;/h3&gt;&lt;p&gt;Badges and stickers act as signposts; they drift on slow loops so the page never sits still.&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&#x27;cut&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;NO. 03&lt;/span&gt;&lt;h3&gt;Hard shadows&lt;/h3&gt;&lt;p&gt;Offset shadows give physical weight; hover states push cards further into the room.&lt;/p&gt;&lt;/article&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;band&#x27; id=&#x27;pitch&#x27;&gt;
+&lt;h2&gt;Join the loud page&lt;/h2&gt;&lt;p&gt;Expressive does not mean unusable — contrast and order hold underneath the noise.&lt;/p&gt;
+&lt;a href=&#x27;#main&#x27;&gt;Take the sticker&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;Sticker&lt;/span&gt;&lt;span&gt;★ specimen ★ expressive&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" title="Sticker Album Panini shell"></iframe>
+</div></body></html>

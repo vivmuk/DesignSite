@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe Scroll Kitchen — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces&family=Nunito+Sans&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FDFAF4;--surface:#FFFFFF;--fg:#2D2118;--muted:#8A7A66;--accent:#D95D39;--accent2:#5B8C5A;--border:#EDE4D4}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Nunito Sans',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Fraunces',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Recipe Scroll Kitchen</h1><div class="tagline">Ingredients sync to steps, doneness meters</div>
+<div class="meta"><span class="tag">scrollcraft</span><span class="tag">recipes</span><span class="tag">food brands</span><span class="tag">cooking classes</span><span class="tag">scroll-driven-animations-css</span><span class="tag">sticky-sidebar-split</span><span class="tag">count-up-number-animations</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/recipe-scroll-kitchen.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/recipe-scroll-kitchen.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/recipe-scroll-kitchen.jpg" alt="Recipe Scroll Kitchen preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#FDFAF4"></div><code>bg: #FDFAF4</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#2D2118"></div><code>fg: #2D2118</code></div><div class="sw"><div class="chip" style="background:#8A7A66"></div><code>muted: #8A7A66</code></div><div class="sw"><div class="chip" style="background:#D95D39"></div><code>accent: #D95D39</code></div><div class="sw"><div class="chip" style="background:#5B8C5A"></div><code>accent2: #5B8C5A</code></div><div class="sw"><div class="chip" style="background:#EDE4D4"></div><code>border: #EDE4D4</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Fraunces</p><p><strong>Body:</strong> Nunito Sans</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Fraunces for recipe title, Nunito Sans body (warm and readable), Plex Mono for timers and quantities</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Fraunces&family=Nunito+Sans&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>ingredient sync</strong></td><td>current-step ingredients highlight in green with a 200ms slide as their step centers in view</td></tr><tr><td><strong>doneness fill</strong></td><td>doneness meters fill left-to-right tracking step completion across the page, 400ms ease</td></tr><tr><td><strong>timer chip</strong></td><td>clicking a timer chip starts a live countdown in mono with a pulsing ring until done</td></tr><tr><td><strong>plating reveal</strong></td><td>final plating photo scales 1.08 to 1 and brightens over 800ms ease-out as the finale arrives</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>ingredient sidebar synced to current step</li><li>doneness meters per technique checkpoint</li><li>startable inline timer chips</li><li>step numbers as big Fraunces numerals</li><li>plating finale with slow reveal</li><li>quantity chips in mono</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">timeline</span><span class="tag">form-stack</span><span class="tag">stats-band</span><span class="tag">footer-mega</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">IntersectionObserver step tracking</span><span class="tag">rAF countdown timers</span><span class="tag">scroll-linked meter fills</span><span class="tag">Google Fonts (Fraunces, Nunito Sans, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>A recipe that scrolls like a guided cook-along: an ingredient sidebar that highlights the ones used by the current step, doneness meters that fill as you pass checkpoints, timer chips you can start inline, and a plating finale at the bottom. For recipes, food brands, and cooking classes where the page is the sous-chef. The signature is the sync — the ingredient list always knows where you are.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Recipe Scroll Kitchen style — Ingredients sync to steps, doneness meters. Audience: recipes, food brands, cooking classes.
+LOOK: Palette — bg #FDFAF4, surface #FFFFFF, fg #2D2118, muted #8A7A66, accent #D95D39, accent2 #5B8C5A, border #EDE4D4. Typography — display Fraunces, body Nunito Sans, mono IBM Plex Mono (Fraunces for recipe title, Nunito Sans body (warm and readable), Plex Mono for timers and quantities). Load https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) progress ribbon fixed top; (2) sticky masthead; (3) three full-height chapters, each with kicker, display title, body, visual; (4) dark final chapter with single CTA; (5) footer
+MOTION: ingredient sync: current-step ingredients highlight in green with a 200ms slide as their step centers in view. doneness fill: doneness meters fill left-to-right tracking step completion across the page, 400ms ease. timer chip: clicking a timer chip starts a live countdown in mono with a pulsing ring until done. plating reveal: final plating photo scales 1.08 to 1 and brightens over 800ms ease-out as the finale arrives. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) ingredient sidebar synced to current step; (b) doneness meters per technique checkpoint; (c) startable inline timer chips; (d) step numbers as big Fraunces numerals; (e) plating finale with slow reveal; (f) quantity chips in mono. Components to build in-style: hero-section, timeline, form-stack, stats-band, footer-mega.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/recipe-scroll-kitchen/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/recipe-scroll-kitchen/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Recipe Scroll Kitchen — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&amp;family=Nunito+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#FDFAF4;--surface:#FFFFFF;--fg:#2D2118;--muted:#8A7A66;--accent:#D95D39;--accent2:#5B8C5A;--border:#EDE4D4;--display:&#x27;Fraunces&#x27;,serif;--body:&#x27;Nunito Sans&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;background:transparent}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.mast{position:sticky;top:0;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:30}
+.mast-in{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+.mast .brand{font-family:var(--display);font-weight:700}
+.mast nav{display:flex;gap:18px;font-size:.8rem;color:var(--muted)}
+.chapter{min-height:92vh;display:grid;align-content:center;padding:80px 0;position:relative;border-bottom:1px solid var(--border)}
+.chapter .no{position:absolute;top:26px;right:26px;font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.3em}
+.chapter h2{font-family:var(--display);font-size:clamp(2rem,5vw,3.4rem);line-height:1.06;margin:10px 0 18px;letter-spacing:-.015em}
+.chapter .kicker{font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+.chapter p{max-width:56ch;color:var(--muted);font-size:1.02rem;margin-bottom:14px}
+.drop::first-letter{font-family:var(--display);font-size:3.4em;float:left;line-height:.82;padding:4px 10px 0 0;color:var(--accent)}
+.pin-visual{margin:26px 0;background:var(--surface);border:1px solid var(--border);border-radius:14px;height:180px;position:relative;overflow:hidden}
+.pin-visual .layer{position:absolute;inset:12px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;color:var(--muted)}
+.pin-visual .l1{background:color-mix(in srgb,var(--accent) 10%,var(--surface));transform:translate(-18px,-12px)}
+.pin-visual .l2{background:color-mix(in srgb,var(--accent2) 12%,var(--surface));transform:translate(18px,12px)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease-out,transform .7s ease-out}
+.reveal.in{opacity:1;transform:none}
+.quote{border-left:3px solid var(--accent);padding:6px 0 6px 22px;font-family:var(--display);font-size:1.5rem;font-style:italic;max-width:40ch;margin:34px 0}
+.final{background:var(--fg);color:var(--bg);text-align:center}
+.final h2{color:var(--bg)}
+.final p{color:color-mix(in srgb,var(--bg) 70%,transparent);margin:0 auto 24px}
+.final a{display:inline-block;background:var(--accent);color:#fff;padding:12px 30px;border-radius:10px;font-weight:600}
+.site-foot{border-top:1px solid var(--border)}
+.foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px 0;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;div class=&#x27;progress&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;i id=&#x27;pbar&#x27;&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;header class=&#x27;mast&#x27;&gt;&lt;div class=&#x27;wrap mast-in&#x27;&gt;&lt;span class=&#x27;brand&#x27;&gt;Recipe&lt;/span&gt;&lt;nav aria-label=&#x27;Chapters&#x27;&gt;&lt;a href=&#x27;#ch1&#x27;&gt;01&lt;/a&gt;&lt;a href=&#x27;#ch2&#x27;&gt;02&lt;/a&gt;&lt;a href=&#x27;#ch3&#x27;&gt;03&lt;/a&gt;&lt;/nav&gt;&lt;/div&gt;&lt;/header&gt;
+&lt;main id=&#x27;main&#x27;&gt;
+&lt;article class=&#x27;chapter&#x27; id=&#x27;ch1&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;CH. 01 / 03&lt;/span&gt;
+&lt;div class=&#x27;wrap&#x27;&gt;
+&lt;p class=&#x27;kicker&#x27;&gt;Chapter one&lt;/p&gt;
+&lt;h2&gt;Recipe Scroll Kitchen&lt;/h2&gt;
+&lt;p class=&#x27;drop&#x27;&gt;Scroll is the verb here. The page moves like a printed object being pulled through a reader — chapters lock, layers hand off, and a progress ribbon keeps the place.&lt;/p&gt;
+&lt;div class=&#x27;pin-visual&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;div class=&#x27;layer l1&#x27;&gt;LAYER 01&lt;/div&gt;&lt;div class=&#x27;layer l2&#x27;&gt;LAYER 02&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&#x27;chapter&#x27; id=&#x27;ch2&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;CH. 02 / 03&lt;/span&gt;
+&lt;div class=&#x27;wrap reveal&#x27;&gt;
+&lt;p class=&#x27;kicker&#x27;&gt;Chapter two&lt;/p&gt;
+&lt;h2&gt;Motion on the vertical axis&lt;/h2&gt;
+&lt;p&gt;Reveals arrive at 70 percent ease-out; the ribbon above tracks the whole document. Nothing animates that the reader has not earned by scrolling.&lt;/p&gt;
+&lt;blockquote class=&#x27;quote&#x27;&gt;The scroll is the timeline; every panel a keyframe.&lt;/blockquote&gt;
+&lt;/div&gt;&lt;/article&gt;
+&lt;article class=&#x27;chapter final&#x27; id=&#x27;ch3&#x27;&gt;&lt;span class=&#x27;no&#x27;&gt;CH. 03 / 03&lt;/span&gt;
+&lt;div class=&#x27;wrap reveal&#x27;&gt;
+&lt;p class=&#x27;kicker&#x27; style=&#x27;color:var(--accent)&#x27;&gt;Chapter three&lt;/p&gt;
+&lt;h2&gt;The end of the reel&lt;/h2&gt;
+&lt;p&gt;One last locked panel — dark ink, one accent, a single action.&lt;/p&gt;
+&lt;a href=&#x27;#main&#x27;&gt;Back to the top&lt;/a&gt;
+&lt;/div&gt;&lt;/article&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;Recipe&lt;/span&gt;&lt;span&gt;scrolled specimen&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;&lt;script&gt;
+(function(){
+  var bar=document.querySelector(&#x27;.progress i&#x27;);
+  function upd(){var h=document.documentElement;var p=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(p*100)+&#x27;%&#x27;;}
+  addEventListener(&#x27;scroll&#x27;,upd,{passive:true});upd();
+  var reduce=window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
+  document.querySelectorAll(&#x27;.reveal&#x27;).forEach(function(el){
+    if(reduce){el.classList.add(&#x27;in&#x27;);return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){el.classList.add(&#x27;in&#x27;);io.unobserve(el);}})},{threshold:.2});
+    io.observe(el);
+  });
+})();
+&lt;/script&gt;
+" title="Recipe Scroll Kitchen shell"></iframe>
+</div></body></html>

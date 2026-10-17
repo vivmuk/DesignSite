@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deco Streamline Moderne — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Jost&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F1E8;--surface:#FFFFFF;--fg:#1E2A32;--muted:#66707A;--accent:#2E7E78;--accent2:#B08D3E;--border:#DCD6C6}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Jost',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Poiret One',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Deco Streamline Moderne</h1><div class="tagline">Chrome bands, portholes, horizontal speed</div>
+<div class="meta"><span class="tag">classic</span><span class="tag">heritage hotels</span><span class="tag">classic motoring</span><span class="tag">diners</span><span class="tag">clip-paths</span><span class="tag">scroll-triggered-reveals</span><span class="tag">gradient-borders</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/deco-streamline-moderne.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/deco-streamline-moderne.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/deco-streamline-moderne.jpg" alt="Deco Streamline Moderne preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#F4F1E8"></div><code>bg: #F4F1E8</code></div><div class="sw"><div class="chip" style="background:#FFFFFF"></div><code>surface: #FFFFFF</code></div><div class="sw"><div class="chip" style="background:#1E2A32"></div><code>fg: #1E2A32</code></div><div class="sw"><div class="chip" style="background:#66707A"></div><code>muted: #66707A</code></div><div class="sw"><div class="chip" style="background:#2E7E78"></div><code>accent: #2E7E78</code></div><div class="sw"><div class="chip" style="background:#B08D3E"></div><code>accent2: #B08D3E</code></div><div class="sw"><div class="chip" style="background:#DCD6C6"></div><code>border: #DCD6C6</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Poiret One</p><p><strong>Body:</strong> Jost</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Poiret One for deco display, Jost geometric body, Plex Mono for room/rate numbers</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Jost&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>speed line streak</strong></td><td>horizontal three-line speed streaks translate 60px and fade behind headlines over 900ms ease-out on reveal</td></tr><tr><td><strong>porthole iris</strong></td><td>porthole frames iris open via clip-path circle from 20% to 100% over 700ms cubic-bezier(0.2,0.9,0.2,1)</td></tr><tr><td><strong>chrome shimmer</strong></td><td>gold and teal band backgrounds shimmer via background-position shift 1% over 3s ease-in-out infinite</td></tr><tr><td><strong>marquee glide</strong></td><td>rate cards glide in from alternating sides 40px over 600ms ease-out, 100ms stagger</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>porthole circular image frames with chrome rings</li><li>triple horizontal speed lines behind headlines</li><li>gold-teal chrome banding on section dividers</li><li>wide-tracked uppercase geometric display</li><li>sunburst corner motifs at 8% opacity</li><li>room/rate numbers in mono plaques</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">hero-section</span><span class="tag">pricing-tiers</span><span class="tag">feature-grid</span><span class="tag">timeline</span><span class="tag">image-lightbox</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">clip-path circle reveals</span><span class="tag">CSS keyframe shimmer on gradients</span><span class="tag">flexbox alternating glides</span><span class="tag">Google Fonts (Poiret One, Jost, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>Late deco streamlined like a 1936 locomotive: chrome horizontal bands, porthole windows as image frames, muted teal and cream, speed lines streaking behind headlines, geometric sans with wide tracking. For heritage hotels, classic motoring brands, diners, and any product that wants vintage motion without camp. The signature is the porthole — circular frames everywhere the eye lands.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Deco Streamline Moderne style — Chrome bands, portholes, horizontal speed. Audience: heritage hotels, classic motoring, diners.
+LOOK: Palette — bg #F4F1E8, surface #FFFFFF, fg #1E2A32, muted #66707A, accent #2E7E78, accent2 #B08D3E, border #DCD6C6. Typography — display Poiret One, body Jost, mono IBM Plex Mono (Poiret One for deco display, Jost geometric body, Plex Mono for room/rate numbers). Load https://fonts.googleapis.com/css2?family=Poiret+One:wght@400;500;600;700&amp;family=Jost:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) masthead with thick top rule and mono uppercase nav; (2) hero — kicker, display headline, drawn accent rule, lede; (3) four-column figure band with oversized numerals; (4) two-column method section with plate visual; (5) full-bleed CTA band; (6) footer with mono link columns
+MOTION: speed line streak: horizontal three-line speed streaks translate 60px and fade behind headlines over 900ms ease-out on reveal. porthole iris: porthole frames iris open via clip-path circle from 20% to 100% over 700ms cubic-bezier(0.2,0.9,0.2,1). chrome shimmer: gold and teal band backgrounds shimmer via background-position shift 1% over 3s ease-in-out infinite. marquee glide: rate cards glide in from alternating sides 40px over 600ms ease-out, 100ms stagger. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) porthole circular image frames with chrome rings; (b) triple horizontal speed lines behind headlines; (c) gold-teal chrome banding on section dividers; (d) wide-tracked uppercase geometric display; (e) sunburst corner motifs at 8% opacity; (f) room/rate numbers in mono plaques. Components to build in-style: hero-section, pricing-tiers, feature-grid, timeline, image-lightbox.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/deco-streamline-moderne/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/deco-streamline-moderne/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Deco Streamline Moderne — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Poiret+One:wght@400;500;600;700&amp;family=Jost:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#F4F1E8;--surface:#FFFFFF;--fg:#1E2A32;--muted:#66707A;--accent:#2E7E78;--accent2:#B08D3E;--border:#DCD6C6;--display:&#x27;Poiret One&#x27;,serif;--body:&#x27;Jost&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.top-rule{border-top:6px solid var(--accent)}
+.mast{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--border)}
+.mast .brand{font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.mast nav{display:flex;gap:20px;font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em}
+.mast nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:border-color .2s}
+.mast nav a:hover{border-color:var(--accent)}
+.hero{padding:84px 0 64px;animation:fadeUp .7s ease-out both}
+.kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.02;letter-spacing:-.015em;max-width:16ch}
+.hero .rule{width:84px;height:4px;background:var(--accent);margin:26px 0;transform-origin:left;animation:ruleGrow .6s .25s cubic-bezier(.77,0,.18,1) both}
+@keyframes ruleGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hero p.lede{max-width:52ch;color:var(--muted);font-size:1.05rem}
+.folio{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-block:1px solid var(--border)}
+.folio div{background:var(--bg);padding:26px 18px}
+.folio .num{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1}
+.folio .lbl{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:72px 0}
+.cols h2{font-family:var(--display);font-size:1.9rem;font-weight:700;margin-bottom:16px}
+.cols p{color:var(--muted);margin-bottom:14px}
+.cols .idx{font-family:var(--mono);color:var(--accent);font-size:.72rem;letter-spacing:.2em}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease-out,transform .6s ease-out}
+.reveal.in{opacity:1;transform:none}
+.plate{background:var(--surface);border:1px solid var(--border);padding:34px;display:flex;align-items:center;justify-content:center;min-height:200px;position:relative;overflow:hidden}
+.plate::after{content:&#x27;&#x27;;position:absolute;inset:0;background:var(--accent);opacity:.06;transform:translateX(-120%);animation:sweep 5s ease-in-out infinite}
+.band{background:var(--fg);color:var(--bg);text-align:center;padding:64px 24px}
+.band h2{font-family:var(--display);font-size:2rem;margin-bottom:10px}
+.band p{opacity:.75;margin-bottom:22px}
+.band a{display:inline-block;background:var(--accent);color:#fff;padding:12px 30px;font-weight:600;transition:transform .2s}
+.band a:hover{transform:translateY(-2px)}
+.site-foot{border-top:1px solid var(--border);margin-top:0}
+.foot-in{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:20px 0;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:860px){.folio{grid-template-columns:repeat(2,1fr)}.cols{grid-template-columns:1fr}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;div class=&#x27;top-rule&#x27;&gt;&lt;/div&gt;
+&lt;header class=&#x27;wrap mast&#x27;&gt;&lt;div class=&#x27;brand&#x27;&gt;Deco&lt;/div&gt;&lt;nav aria-label=&#x27;Primary&#x27;&gt;&lt;a href=&#x27;#work&#x27;&gt;Index&lt;/a&gt;&lt;a href=&#x27;#method&#x27;&gt;Method&lt;/a&gt;&lt;a href=&#x27;#contact&#x27;&gt;Contact&lt;/a&gt;&lt;/nav&gt;&lt;/header&gt;
+&lt;main id=&#x27;main&#x27;&gt;
+&lt;section class=&#x27;wrap hero&#x27;&gt;
+&lt;p class=&#x27;kicker&#x27;&gt;Chrome bands, portholes, horizontal speed&lt;/p&gt;
+&lt;h1&gt;Deco Streamline Moderne&lt;/h1&gt;
+&lt;div class=&#x27;rule&#x27;&gt;&lt;/div&gt;
+&lt;p class=&#x27;lede&#x27;&gt;A specimen page in this idiom — grid-true, typographically disciplined, and printed with intent.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;wrap folio&#x27; aria-label=&#x27;Figures&#x27;&gt;
+&lt;div&gt;&lt;div class=&#x27;num&#x27;&gt;01&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;Figures&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div class=&#x27;num&#x27;&gt;04&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;Columns&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div class=&#x27;num&#x27;&gt;12&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;Grid&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;div class=&#x27;num&#x27;&gt;01&lt;/div&gt;&lt;div class=&#x27;lbl&#x27;&gt;Accent&lt;/div&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;wrap cols&#x27; id=&#x27;method&#x27;&gt;
+&lt;div class=&#x27;reveal&#x27;&gt;
+&lt;p class=&#x27;idx&#x27;&gt;METHOD / 01&lt;/p&gt;
+&lt;h2&gt;Composed, not decorated&lt;/h2&gt;
+&lt;p&gt;Every measure derives from the grid; the palette holds to its single decisive accent, used like a stamp.&lt;/p&gt;
+&lt;p&gt;Whitespace is structural. Nothing is centered that should be flush left.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#x27;plate reveal&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;span style=&#x27;font-family:var(--mono);font-size:.75rem;letter-spacing:.3em;color:var(--muted)&#x27;&gt;PLATE 01&lt;/span&gt;&lt;/div&gt;
+&lt;/section&gt;
+&lt;section class=&#x27;band&#x27; id=&#x27;contact&#x27;&gt;
+&lt;h2&gt;Set in this style&lt;/h2&gt;
+&lt;p&gt;One page, one voice, no ornament without purpose.&lt;/p&gt;
+&lt;a href=&#x27;#main&#x27;&gt;Request the specimen&lt;/a&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;Deco&lt;/span&gt;&lt;span&gt;Specimen page / classic&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;&lt;script&gt;
+document.querySelectorAll(&#x27;.reveal&#x27;).forEach(el=&gt;{
+  const io=new IntersectionObserver(es=&gt;es.forEach(e=&gt;{if(e.isIntersecting){e.target.classList.add(&#x27;in&#x27;);io.unobserve(e.target)}}),{threshold:.25});
+  io.observe(el);
+});
+&lt;/script&gt;
+" title="Deco Streamline Moderne shell"></iframe>
+</div></body></html>

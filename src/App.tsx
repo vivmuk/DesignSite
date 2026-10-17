@@ -1557,7 +1557,7 @@ function WebsitePreview({
 // ─────────────────────────────────────────────────────────────────────────────────
 const TABS = [
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
-  { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 100 },
+  { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 150 },
   { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];

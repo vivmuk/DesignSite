@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statecraft Briefing Room — Design Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&family=Source+Sans+3&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12140D;--surface:#1B1E14;--fg:#EDEFE2;--muted:#939B7F;--accent:#D4A017;--accent2:#4E7A9B;--border:#2C3120}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+header{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:24px}
+h1{font-family:'Libre Franklin',serif;font-size:2.2rem}.tagline{color:var(--muted);font-style:italic}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0}.chip{width:36px;height:36px;border-radius:8px;border:1px solid var(--border)}
+img.hero{width:100%;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
+.prompt{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:.85rem;max-height:420px;overflow:auto}
+.buttons{display:flex;gap:12px;margin:16px 0}
+.btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--border);color:var(--fg)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+iframe{width:100%;height:720px;border:1px solid var(--border);border-radius:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<header>
+<h1>Statecraft Briefing Room</h1><div class="tagline">World map dossiers, flag chips, cable telex</div>
+<div class="meta"><span class="tag">data-pro</span><span class="tag">think tanks</span><span class="tag">geopolitics</span><span class="tag">analysis products</span><span class="tag">geo-interactive-maps</span><span class="tag">realtime-data-streams</span><span class="tag">text-scramble-decode</span></div>
+</header>
+<div class="buttons">
+<a class="btn primary" href="https://designviv.up.railway.app/styles-images-jpg/statecraft-briefing-room.jpg" download>⬇ Download preview image</a>
+<a class="btn" href="/styles-specs/statecraft-briefing-room.html">Permalink</a>
+</div>
+<img class="hero" src="https://designviv.up.railway.app/styles-images-jpg/statecraft-briefing-room.jpg" alt="Statecraft Briefing Room preview" loading="lazy">
+<div class="grid">
+<div class="card"><h2>Palette</h2><div class="sw"><div class="chip" style="background:#12140D"></div><code>bg: #12140D</code></div><div class="sw"><div class="chip" style="background:#1B1E14"></div><code>surface: #1B1E14</code></div><div class="sw"><div class="chip" style="background:#EDEFE2"></div><code>fg: #EDEFE2</code></div><div class="sw"><div class="chip" style="background:#939B7F"></div><code>muted: #939B7F</code></div><div class="sw"><div class="chip" style="background:#D4A017"></div><code>accent: #D4A017</code></div><div class="sw"><div class="chip" style="background:#4E7A9B"></div><code>accent2: #4E7A9B</code></div><div class="sw"><div class="chip" style="background:#2C3120"></div><code>border: #2C3120</code></div><p><code>None</code></p></div>
+<div class="card"><h2>Typography</h2>
+<p><strong>Display:</strong> Libre Franklin</p><p><strong>Body:</strong> Source Sans 3</p>
+<p><strong>Monospace:</strong> IBM Plex Mono</p><p class="tagline">Libre Franklin for dossier headings, Source Sans 3 body, IBM Plex Mono for cables and timestamps</p>
+<p><a href="https://fonts.googleapis.com/css2?family=Libre+Franklin&family=Source+Sans+3&family=IBM+Plex+Mono&display=swap" target="_blank">Google Fonts import ↗</a></p></div>
+</div>
+<div class="grid">
+<div class="card"><h2>Motion recipes</h2><table><tr><td><strong>pin drop</strong></td><td>map dossier pins drop with scale 1.4 to 1 and a 200ms ripple ring, 80ms stagger</td></tr><tr><td><strong>cable type</strong></td><td>cable telex lines type at 30ms per char with GMT timestamps, autoscrolling</td></tr><tr><td><strong>stamp slam</strong></td><td>classification stamps slam in rotated -8deg with opacity 0.6 at section tops, 250ms</td></tr><tr><td><strong>flag wave</strong></td><td>flag chips lift 2px with a subtle skew wave on hover, 200ms</td></tr></table></div>
+<div class="card"><h2>Signature elements</h2><ul><li>world map with dossier pins and threads</li><li>flag chips for all entities</li><li>cable telex feed with dispatch numbers</li><li>classification stamps (UNCLASS//FOUO)</li><li>GMT timestamps everywhere in mono</li><li>dossier cards with reliability grades</li></ul>
+<h2 style="margin-top:16px">Components</h2><div class="meta"><span class="tag">map-view</span><span class="tag">data-table</span><span class="tag">timeline</span><span class="tag">chart-suite</span><span class="tag">notification-center</span></div>
+<h2 style="margin-top:16px">Tech stack</h2><div class="meta"><span class="tag">SVG map with positioned pins</span><span class="tag">typewriter cable feed</span><span class="tag">CSS stamp animations</span><span class="tag">Google Fonts (Libre Franklin, Source Sans 3, IBM Plex Mono)</span></div></div>
+</div>
+<div class="card" style="margin-bottom:24px"><h2>Description</h2><p>The situation room as a website: a world map with dossier pins, flag chips for country entities, classification stamps, and a cable telex feed streaming diplomatic traffic in mono. For think tanks, geopolitical analysis, and intelligence-adjacent products that want gravitas with density. The signature is the cable — analysis arrives as telex-style dispatches, timestamped and numbered.</p></div>
+<div class="card"><h2>Agent build prompt — copy this into any AI agent</h2><div class="prompt">ROLE: Build a single-page site in the Statecraft Briefing Room style — World map dossiers, flag chips, cable telex. Audience: think tanks, geopolitics, analysis products.
+LOOK: Palette — bg #12140D, surface #1B1E14, fg #EDEFE2, muted #939B7F, accent #D4A017, accent2 #4E7A9B, border #2C3120. Typography — display Libre Franklin, body Source Sans 3, mono IBM Plex Mono (Libre Franklin for dossier headings, Source Sans 3 body, IBM Plex Mono for cables and timestamps). Load https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap with display=swap and system fallbacks; preconnect to fonts.googleapis.com and fonts.gstatic.com.
+LAYOUT: (1) masthead with cursor brand and rev meta; (2) four-figure strip with deltas; (3) left series rail; (4) main — headline, sub, chart with animated bars and sparkline; (5) ranked table with state pills; (6) footer with data timestamp
+MOTION: pin drop: map dossier pins drop with scale 1.4 to 1 and a 200ms ripple ring, 80ms stagger. cable type: cable telex lines type at 30ms per char with GMT timestamps, autoscrolling. stamp slam: classification stamps slam in rotated -8deg with opacity 0.6 at section tops, 250ms. flag wave: flag chips lift 2px with a subtle skew wave on hover, 200ms. Wrap every ambient loop in @media (prefers-reduced-motion: reduce) to disable.
+SIGNATURE: (a) world map with dossier pins and threads; (b) flag chips for all entities; (c) cable telex feed with dispatch numbers; (d) classification stamps (UNCLASS//FOUO); (e) GMT timestamps everywhere in mono; (f) dossier cards with reliability grades. Components to build in-style: map-view, data-table, timeline, chart-suite, notification-center.
+CONSTRAINTS: Semantic HTML (header/main/section/footer), WCAG AA contrast on body text, responsive single column under 760px, no horizontal overflow at 360px, focus-visible outlines on all interactive elements, no layout shift, defer JS.
+DELIVERY: One self-contained index.html — inline CSS with custom properties for every palette color on :root (no hard-coded hex outside :root), vanilla JS under 8KB, images lazy-loaded with width/height attributes. Verify before delivery: heading order h1 to h3, every motion recipe implemented, reduced-motion respected.</div>
+<p style="margin-top:12px"><a class="btn primary" href="https://styles-api-production.up.railway.app/styles/statecraft-briefing-room/prompt" target="_blank">Fetch as JSON ↗</a>
+<a class="btn" href="https://styles-api-production.up.railway.app/styles/statecraft-briefing-room/html" target="_blank">Fetch HTML shell ↗</a></p></div>
+<h2 style="margin:24px 0">Live HTML shell demo</h2>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&#x27;en&#x27;&gt;
+&lt;head&gt;
+&lt;meta charset=&#x27;utf-8&#x27;&gt;
+&lt;meta name=&#x27;viewport&#x27; content=&#x27;width=device-width, initial-scale=1&#x27;&gt;
+&lt;title&gt;Statecraft Briefing Room — Sample&lt;/title&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.googleapis.com&#x27;&gt;
+&lt;link rel=&#x27;preconnect&#x27; href=&#x27;https://fonts.gstatic.com&#x27; crossorigin&gt;
+&lt;link href=&#x27;https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap&#x27; rel=&#x27;stylesheet&#x27;&gt;
+&lt;style&gt;
+:root{--bg:#12140D;--surface:#1B1E14;--fg:#EDEFE2;--muted:#939B7F;--accent:#D4A017;--accent2:#4E7A9B;--border:#2C3120;--display:&#x27;Libre Franklin&#x27;,serif;--body:&#x27;Source Sans 3&#x27;,system-ui,sans-serif;--mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace}
+*{margin:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px 12px;z-index:99}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+body{font-family:var(--body)}
+.mast{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:2px solid var(--fg);font-family:var(--mono)}
+.mast .brand{font-weight:700;letter-spacing:.12em}
+.mast .brand::after{content:&#x27; ▍&#x27;;color:var(--accent);animation:blink 1.4s steps(1) infinite}
+.mast .meta{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);font-family:var(--mono)}
+.strip div{padding:14px 18px;border-right:1px solid var(--border);font-size:.7rem}
+.strip b{display:block;font-size:1.35rem;font-weight:600;color:var(--accent2)}
+.strip .up{color:var(--accent)}
+main{display:grid;grid-template-columns:220px 1fr;min-height:70vh}
+aside{border-right:1px solid var(--border);padding:18px 12px;font-family:var(--mono);font-size:.72rem}
+aside h3{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+aside a{display:block;padding:6px 10px;color:var(--muted);border-left:2px solid transparent}
+aside a.on{color:var(--fg);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.content{padding:28px 30px}
+.content h1{font-family:var(--display);font-size:1.8rem;margin-bottom:4px}
+.content .sub{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:26px}
+.chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:22px;position:relative}
+.chart h3{font-size:.72rem;font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:170px}
+.bars i{flex:1;background:linear-gradient(180deg,var(--accent2),color-mix(in srgb,var(--accent2) 40%,var(--surface)));border-radius:4px 4px 0 0;transform-origin:bottom;animation:grow .8s cubic-bezier(.2,.9,.2,1) both}
+.bars i:nth-child(2){animation-delay:.06s}.bars i:nth-child(3){animation-delay:.12s}.bars i:nth-child(4){animation-delay:.18s}.bars i:nth-child(5){animation-delay:.24s}.bars i:nth-child(6){animation-delay:.3s}.bars i:nth-child(7){animation-delay:.36s}.bars i:nth-child(8){animation-delay:.42s}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.spark{display:flex;gap:2px;height:40px;align-items:flex-end;margin-top:14px}
+.spark i{flex:1;background:var(--accent);opacity:.7;min-height:8%}
+table{width:100%;border-collapse:collapse;font-size:.8rem;font-family:var(--mono)}
+th{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:2px solid var(--fg);padding:8px 10px}
+td{border-bottom:1px solid var(--border);padding:9px 10px}
+td.chg{color:var(--accent);font-weight:600}
+td.chg.dn{color:var(--accent2)}
+.pill{font-size:.6rem;padding:2px 9px;border-radius:999px;border:1px solid currentColor;letter-spacing:.12em}
+.site-foot{border-top:2px solid var(--fg)}
+.foot-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 0;font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:860px){main{grid-template-columns:1fr}aside{display:none}.strip{grid-template-columns:repeat(2,1fr)}}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;a class=&#x27;skip&#x27; href=&#x27;#main&#x27;&gt;Skip to content&lt;/a&gt;
+&lt;header class=&#x27;wrap mast&#x27;&gt;&lt;span class=&#x27;brand&#x27;&gt;STATECRAFT-DATA&lt;/span&gt;&lt;span class=&#x27;meta&#x27;&gt;fig. 101–150 / rev 2&lt;/span&gt;&lt;/header&gt;
+&lt;div class=&#x27;wrap strip&#x27; aria-label=&#x27;Key figures&#x27;&gt;
+&lt;div&gt;&lt;b class=&#x27;up&#x27;&gt;+4.2%&lt;/b&gt;figure a&lt;/div&gt;
+&lt;div&gt;&lt;b&gt;18.4k&lt;/b&gt;figure b&lt;/div&gt;
+&lt;div&gt;&lt;b class=&#x27;up&#x27;&gt;+0.8σ&lt;/b&gt;figure c&lt;/div&gt;
+&lt;div&gt;&lt;b&gt;99.2%&lt;/b&gt;figure d&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#x27;wrap&#x27; style=&#x27;display:grid;grid-template-columns:220px 1fr&#x27;&gt;
+&lt;aside aria-label=&#x27;Series&#x27;&gt;
+&lt;h3&gt;Series&lt;/h3&gt;&lt;a class=&#x27;on&#x27; href=&#x27;#main&#x27;&gt;primary&lt;/a&gt;&lt;a href=&#x27;#main&#x27;&gt;secondary&lt;/a&gt;&lt;a href=&#x27;#main&#x27;&gt;derived&lt;/a&gt;&lt;h3&gt;Cuts&lt;/h3&gt;&lt;a href=&#x27;#main&#x27;&gt;by region&lt;/a&gt;&lt;a href=&#x27;#main&#x27;&gt;by cohort&lt;/a&gt;&lt;a href=&#x27;#main&#x27;&gt;by period&lt;/a&gt;
+&lt;/aside&gt;
+&lt;main id=&#x27;main&#x27; class=&#x27;content&#x27;&gt;
+&lt;h1&gt;Statecraft Briefing Room&lt;/h1&gt;
+&lt;p class=&#x27;sub&#x27;&gt;World map dossiers, flag chips, cable telex — instrument-grade specimen&lt;/p&gt;
+&lt;div class=&#x27;chart&#x27;&gt;
+&lt;h3&gt;Figure 1 — primary series, trailing 8 periods&lt;/h3&gt;
+&lt;div class=&#x27;bars&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;i style=&#x27;height:38%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:52%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:44%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:66%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:58%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:74%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:62%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:88%&#x27;&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;div class=&#x27;spark&#x27; aria-hidden=&#x27;true&#x27;&gt;&lt;i style=&#x27;height:30%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:48%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:36%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:60%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:44%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:70%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:56%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:82%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:64%&#x27;&gt;&lt;/i&gt;&lt;i style=&#x27;height:90%&#x27;&gt;&lt;/i&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#x27;chart&#x27;&gt;
+&lt;h3&gt;Figure 2 — ranked table&lt;/h3&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;series&lt;/th&gt;&lt;th&gt;period&lt;/th&gt;&lt;th&gt;value&lt;/th&gt;&lt;th&gt;Δ&lt;/th&gt;&lt;th&gt;state&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;alpha&lt;/td&gt;&lt;td&gt;2026-09&lt;/td&gt;&lt;td&gt;1,204&lt;/td&gt;&lt;td class=&#x27;chg&#x27;&gt;+3.1%&lt;/td&gt;&lt;td&gt;&lt;span class=&#x27;pill&#x27;&gt;rise&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;beta&lt;/td&gt;&lt;td&gt;2026-09&lt;/td&gt;&lt;td&gt;986&lt;/td&gt;&lt;td class=&#x27;chg dn&#x27;&gt;−0.8%&lt;/td&gt;&lt;td&gt;&lt;span class=&#x27;pill&#x27;&gt;fall&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;gamma&lt;/td&gt;&lt;td&gt;2026-09&lt;/td&gt;&lt;td&gt;1,447&lt;/td&gt;&lt;td class=&#x27;chg&#x27;&gt;+6.4%&lt;/td&gt;&lt;td&gt;&lt;span class=&#x27;pill&#x27;&gt;rise&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;delta&lt;/td&gt;&lt;td&gt;2026-09&lt;/td&gt;&lt;td&gt;733&lt;/td&gt;&lt;td class=&#x27;chg dn&#x27;&gt;−2.2%&lt;/td&gt;&lt;td&gt;&lt;span class=&#x27;pill&#x27;&gt;fall&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/main&gt;
+&lt;/div&gt;
+&lt;footer class=&#x27;site-foot&#x27;&gt;&lt;div class=&#x27;wrap foot-in&#x27;&gt;&lt;span&gt;STATECRAFT-DATA&lt;/span&gt;&lt;span&gt;data as of 2026-10&lt;/span&gt;&lt;/div&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;" title="Statecraft Briefing Room shell"></iframe>
+</div></body></html>
