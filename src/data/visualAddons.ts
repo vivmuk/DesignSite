@@ -6,13 +6,18 @@
  * 150 Styles DB directions rather than replacing them.
  */
 
-export type AddonCategory = 'atmosphere' | 'surface' | 'motion' | 'type' | 'interaction';
+export type AddonCategory =
+  | 'atmosphere' | 'surface' | 'motion' | 'type' | 'interaction'
+  | 'generative' | 'pointer' | 'spatial' | 'typefx' | 'play';
+
+export type AddonGroup = 'visual' | 'interactive';
 
 export interface VisualAddon {
   n: number;
   id: string;
   name: string;
   category: AddonCategory;
+  group?: AddonGroup;
   tagline: string;
   what: string;
   why: string;
@@ -925,7 +930,9 @@ btn.addEventListener('click', () => {
 ];
 
 export const addonsByCategory = (cat: AddonCategory | 'all') =>
-  cat === 'all' ? visualAddons : visualAddons.filter(a => a.category === cat);
+  cat === 'all'
+    ? visualAddons
+    : visualAddons.filter(a => a.category === cat);
 
 /** Styles DB categories → the add-ons that suit them. */
 export const addonsForStyleCategory = (styleCategory: string): VisualAddon[] => {

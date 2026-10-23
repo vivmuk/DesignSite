@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ASCII Portrait — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+#cv{position:fixed;inset:0;touch-action:none;cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:14px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 16px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:90px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 20 · ASCII PORTRAIT</span>move for gamma · <b id="chars">0</b> glyphs</div>
+<div class="panel">
+  <label>SIZE <input id="cell" type="range" min="5" max="16" value="8"></label>
+  <label>GAMMA <input id="gam" type="range" min="40" max="220" value="110"></label>
+  <button id="mono">Colour / Mono</button><button id="upload">Use my image</button>
+  <input type="file" id="file" accept="image/*" hidden>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2),scene=null,mono=false;
+function makeScene(){
+  const c=document.createElement('canvas');c.width=1200;c.height=900;const x=c.getContext('2d');
+  const g=x.createRadialGradient(600,380,60,600,450,700);
+  g.addColorStop(0,'#ffd9a0');g.addColorStop(.4,'#ff6b35');g.addColorStop(.7,'#5a2a6b');g.addColorStop(1,'#07080c');
+  x.fillStyle=g;x.fillRect(0,0,1200,900);
+  // abstract head silhouette
+  x.fillStyle='#0b0c12';x.beginPath();x.ellipse(600,430,230,300,0,0,Math.PI*2);x.fill();
+  x.fillStyle='#ffb08a';x.beginPath();x.ellipse(600,400,150,210,0,0,Math.PI*2);x.fill();
+  x.fillStyle='#0b0c12';
+  x.beginPath();x.ellipse(545,380,26,14,-.2,0,Math.PI*2);x.fill();
+  x.beginPath();x.ellipse(655,380,26,14,.2,0,Math.PI*2);x.fill();
+  x.beginPath();x.ellipse(600,400,7,18,0,0,Math.PI*2);x.fill();
+  x.beginPath();x.ellipse(600,505,52,10,0,0,Math.PI*2);x.fill();
+  x.strokeStyle='#0b0c12';x.lineWidth=14;x.beginPath();x.arc(600,470,90,.25,Math.PI-.25);x.stroke();
+  x.fillStyle='#3ddc84';x.fillRect(250,140,18,18);x.fillStyle='#7fb2ff';x.fillRect(930,700,18,18);
+  x.fillStyle='#f4f0e6';x.font='500 20px ui-monospace,monospace';x.fillText('SUBJECT / 20',60,80);x.fillText('ASCII STUDY',60,110);
+  return c;
+}
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);if(!scene)scene=makeScene();}
+fit();addEventListener('resize',fit);
+const cell=document.getElementById('cell'),gam=document.getElementById('gam');
+let mx=.5;
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth});
+const CH=' .:-=+*#%@';
+let raf=null;
+function render(){
+  const cs=+cell.value, gamma=+gam.value/100 + (mx-.5)*.5;
+  const cols=Math.floor(W/cs), rows=Math.floor(H/cs*.95);
+  const off=document.createElement('canvas');off.width=cols;off.height=rows;
+  const oc=off.getContext('2d');oc.drawImage(scene,0,0,cols,rows);
+  const data=oc.getImageData(0,0,cols,rows).data;
+  ctx.fillStyle='#06070b';ctx.fillRect(0,0,W,H);
+  ctx.font='600 '+Math.round(cs*1.15)+'px ui-monospace,monospace';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const i=(y*cols+x)*4;
+    const r=data[i],g=data[i+1],b=data[i+2];
+    const lum=Math.pow((r*.299+g*.587+b*.114)/255,gamma);
+    const ch=CH[Math.min(CH.length-1,Math.floor(lum*CH.length))];
+    if(ch===' ')continue;
+    ctx.fillStyle=mono?'rgba(230,236,246,'+(0.25+lum*.75)+')':'rgba('+Math.min(255,r*1.4)+','+Math.min(255,g*1.3)+','+Math.min(255,b*1.5)+',.9)';
+    ctx.fillText(ch,x*cs+cs/2,y*cs+cs/2);
+  }
+  document.getElementById('chars').textContent=(cols*rows).toLocaleString();
+}
+function queue(){if(raf)return;raf=requestAnimationFrame(()=>{raf=null;render()})}
+cell.addEventListener('input',queue);gam.addEventListener('input',queue);addEventListener('pointermove',queue);
+document.getElementById('mono').onclick=()=>{mono=!mono;queue()};
+document.getElementById('upload').onclick=()=>document.getElementById('file').click();
+document.getElementById('file').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const img=new Image();img.onload=()=>{
+    const c=document.createElement('canvas');c.width=1200;c.height=Math.round(1200*img.height/img.width);
+    const x=c.getContext('2d');const r=Math.max(c.width/img.width,c.height/img.height);
+    x.drawImage(img,(c.width-img.width*r)/2,(c.height-img.height*r)/2,img.width*r,img.height*r);
+    scene=c;render();
+  };img.src=URL.createObjectURL(f);
+});
+render();
+</script>
+</body>
+</html>

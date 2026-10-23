@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dot Globe — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:radial-gradient(60% 60% at 50% 45%,#0e1626,#04050a 70%)}
+#cv{position:fixed;inset:0;touch-action:none;cursor:grab}
+#cv.drag{cursor:grabbing}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:16px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 18px;backdrop-filter:blur(10px)}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:100px;accent-color:#7fb2ff}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 12 · DOT GLOBE</span>nodes <b id="n">0</b> · drag to rotate</div>
+<div class="panel">
+  <label>DENSITY <input id="dens" type="range" min="600" max="4000" value="2200"></label>
+  <label>SPREAD <input id="spread" type="range" min="0" max="100" value="55"></label>
+  <button id="auto">Pause spin</button>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+let pts=[];
+function build(n){
+  pts=[];
+  const ga=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){
+    const y=1-(i/(n-1))*2, r=Math.sqrt(1-y*y), th=ga*i;
+    pts.push({x:Math.cos(th)*r,y:y,z:Math.sin(th)*r});
+  }
+  document.getElementById('n').textContent=n;
+}
+build(2200);
+let yaw=.4,pitch=-.15,auto=true,drag=false,lx=0,ly=0,vy=0,vp=0;
+cv.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;cv.classList.add('drag');cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  vy=(e.clientX-lx)*.006;vp=(e.clientY-ly)*.006;
+  yaw+=vy;pitch=Math.max(-1.2,Math.min(1.2,pitch+vp));
+  lx=e.clientX;ly=e.clientY;
+});
+addEventListener('pointerup',()=>{drag=false;cv.classList.remove('drag')});
+const dens=document.getElementById('dens');
+dens.addEventListener('input',()=>build(+dens.value));
+document.getElementById('auto').onclick=()=>{auto=!auto;document.getElementById('auto').textContent=auto?'Pause spin':'Resume spin'};
+const spread=document.getElementById('spread');
+function frame(t){
+  const time=t/1000;
+  if(auto&&!drag)yaw+=.0035;
+  ctx.fillStyle='rgba(4,5,10,.35)';ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)*.34;
+  const cyaw=Math.cos(yaw),syaw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  const S=+spread.value/100;
+  const bucket={};
+  for(const p of pts){
+    let x=p.x*cyaw-p.z*syaw, z=p.x*syaw+p.z*cyaw;
+    let y=p.y*cp-z*sp; z=p.y*sp+z*cp;
+    const d=(z+1)/2;
+    if(z<-.15)continue;
+    const sx=cx+x*R*(1+S*.4), sy=cy+y*R;
+    const b=Math.floor(d*8);
+    (bucket[b]||(bucket[b]=[])).push([sx,sy,d]);
+  }
+  Object.keys(bucket).sort((a,b)=>a-b).forEach(k=>{
+    for(const [x,y,d] of bucket[k]){
+      const a=.06+Math.pow(d,3)*.85;
+      ctx.fillStyle='rgba('+(120+d*80)+','+(170+d*60)+',255,'+a+')';
+      const s=.7+d*1.9;
+      ctx.fillRect(x-s/2,y-s/2,s,s);
+    }
+  });
+  const g=ctx.createRadialGradient(cx,cy,R*.55,cx,cy,R*1.22);
+  g.addColorStop(0,'rgba(90,140,255,0)');
+  g.addColorStop(.78,'rgba(90,140,255,.08)');
+  g.addColorStop(.94,'rgba(150,195,255,.22)');
+  g.addColorStop(1,'rgba(90,140,255,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R*1.22,0,Math.PI*2);ctx.fill();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

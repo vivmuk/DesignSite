@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Image Lens — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+#base{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:none}
+.lens{position:fixed;left:0;top:0;width:220px;height:220px;border-radius:50%;pointer-events:none;z-index:5;
+box-shadow:0 0 0 1px #ffffff66,0 30px 70px -10px #000;overflow:hidden;transform:translate(-50%,-50%);
+opacity:0;transition:opacity .2s}
+.lens.on{opacity:1}
+.lens canvas{width:100%;height:100%;display:block}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:16px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 18px;backdrop-filter:blur(10px)}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:100px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<canvas id="base"></canvas>
+<div class="lens" id="lens"><canvas id="zoom" width="440" height="440"></canvas></div>
+<div class="hud"><span class="t">INTERACTIVE 10 · IMAGE LENS</span>move to inspect · <b id="z">2.4×</b></div>
+<div class="panel">
+  <label>ZOOM <input id="zoomR" type="range" min="12" max="50" value="24"></label>
+  <label>SIZE <input id="size" type="range" min="120" max="340" value="220"></label>
+  <button id="upload">Use my image</button>
+  <input type="file" id="file" accept="image/*" hidden>
+</div>
+<script>
+const base=document.getElementById('base'),bctx=base.getContext('2d');
+const lens=document.getElementById('lens'),zoom=document.getElementById('zoom'),zctx=zoom.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2),scene=null;
+function paintScene(w,h){
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  const sky=x.createLinearGradient(0,0,0,h);
+  sky.addColorStop(0,'#1a2240');sky.addColorStop(.38,'#6b4760');sky.addColorStop(.62,'#e07a4f');sky.addColorStop(.72,'#3a2b3c');sky.addColorStop(1,'#0a0d16');
+  x.fillStyle=sky;x.fillRect(0,0,w,h);
+  const sun=x.createRadialGradient(w*.62,h*.52,2,w*.62,h*.52,w*.16);
+  sun.addColorStop(0,'#ffe9c4');sun.addColorStop(.35,'#ffb066');sun.addColorStop(1,'#ff6b3500');
+  x.fillStyle=sun;x.beginPath();x.arc(w*.62,h*.52,w*.16,0,Math.PI*2);x.fill();
+  x.fillStyle='#ffeccb';x.beginPath();x.arc(w*.62,h*.52,w*.045,0,Math.PI*2);x.fill();
+  // mountains
+  const ranges=[{y:.58,amp:.12,col:'#241d2c'},{y:.64,amp:.10,col:'#171525'},{y:.71,amp:.075,col:'#0d0e18'}];
+  ranges.forEach((r,ri)=>{
+    x.beginPath();x.moveTo(0,h);
+    for(let i=0;i<=40;i++){const px=i/40*w;const py=h*r.y+Math.sin(i*.55+ri*2.1)*h*r.amp*.5+Math.cos(i*.21+ri)*h*r.amp*.35;x.lineTo(px,py)}
+    x.lineTo(w,h);x.closePath();x.fillStyle=r.col;x.fill();
+  });
+  // water + reflections
+  x.fillStyle='#0a0d16';x.fillRect(0,h*.78,w,h*.22);
+  for(let i=0;i<70;i++){
+    const y=h*.78+Math.random()*h*.22, ww=20+Math.random()*90;
+    x.fillStyle='rgba(255,150,90,'+(0.03+Math.random()*.09)+')';
+    x.fillRect(w*.62-ww/2+(Math.random()-.5)*60,y,ww,1.4);
+  }
+  // stars
+  for(let i=0;i<90;i++){x.fillStyle='rgba(255,255,255,'+(Math.random()*.5)+')';x.fillRect(Math.random()*w,Math.random()*h*.4,1.2,1.2)}
+  return c;
+}
+function fit(){
+  W=innerWidth;H=innerHeight;base.width=W*DPR;base.height=H*DPR;base.style.width=W+'px';base.style.height=H+'px';
+  bctx.setTransform(DPR,0,0,DPR,0,0);
+  if(!scene||scene.dataset==='gen')scene=paintScene(1600,1000);
+  bctx.drawImage(scene,0,0,W,H);
+}
+fit();addEventListener('resize',fit);
+const lensEl=document.getElementById('lens'),zoomR=document.getElementById('zoomR'),sizeR=document.getElementById('size');
+let z=2.4,s=220;
+function move(e){
+  const x=e.clientX,y=e.clientY;
+  lens.style.left=x+'px';lens.style.top=y+'px';lens.classList.add('on');
+  const d=Math.min(innerWidth,innerHeight);
+  zctx.fillStyle='#0a0d16';zctx.fillRect(0,0,440,440);
+  const sx=(x/innerWidth)*scene.width, sy=(y/innerHeight)*scene.height;
+  const sw=(s/z)/innerWidth*scene.width, sh=(s/z)/innerHeight*scene.height;
+  zctx.drawImage(scene,sx-sw/2,sy-sh/2,sw,sh,0,0,440,440);
+  zctx.strokeStyle='rgba(255,255,255,.12)';zctx.lineWidth=1;
+  zctx.beginPath();zctx.moveTo(220,0);zctx.lineTo(220,440);zctx.moveTo(0,220);zctx.lineTo(440,220);zctx.stroke();
+}
+addEventListener('pointermove',move);
+addEventListener('pointerleave',()=>lens.classList.remove('on'));
+zoomR.addEventListener('input',()=>{z=+zoomR.value/10;document.getElementById('z').textContent=z.toFixed(1)+'×'});
+sizeR.addEventListener('input',()=>{s=+sizeR.value;lens.style.width=lens.style.height=s+'px'});
+document.getElementById('upload').onclick=()=>document.getElementById('file').click();
+document.getElementById('file').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const img=new Image();img.onload=()=>{
+    const c=document.createElement('canvas');c.width=1600;c.height=Math.round(1600*img.height/img.width);c.dataset='gen';
+    const x=c.getContext('2d');const r=Math.max(c.width/img.width,c.height/img.height);
+    x.drawImage(img,(c.width-img.width*r)/2,(c.height-img.height*r)/2,img.width*r,img.height*r);
+    scene=c;fit();
+  };img.src=URL.createObjectURL(f);
+});
+</script>
+</body>
+</html>

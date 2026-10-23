@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>3D Carousel — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:radial-gradient(70% 60% at 50% 45%,#151a28,#05060a 72%)}
+.stage{position:fixed;inset:0;display:grid;place-items:center;perspective:1300px;touch-action:none;cursor:grab}
+.stage.drag{cursor:grabbing}
+.ring{position:relative;width:260px;height:360px;transform-style:preserve-3d;transition:transform .12s linear}
+.card{position:absolute;inset:0;border-radius:16px;border:1px solid #ffffff26;overflow:hidden;
+box-shadow:0 40px 80px -30px #000;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;
+backface-visibility:hidden}
+.card .no{position:absolute;top:14px;left:16px;font:600 11px/1 ui-monospace,monospace;letter-spacing:.16em;color:#ffffffb0}
+.card b{font-size:22px;letter-spacing:-.02em;text-shadow:0 2px 20px #0008}
+.card span{font:500 10px/1.5 ui-monospace,monospace;letter-spacing:.12em;color:#ffffffa8;margin-top:4px}
+.card .orb{position:absolute;width:170px;height:170px;border-radius:50%;top:70px;left:45px;filter:blur(2px);opacity:.9}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:10px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:9px 12px;backdrop-filter:blur(10px)}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:8px 14px;
+font:500 11px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<div class="stage" id="stage"><div class="ring" id="ring"></div></div>
+<div class="hud"><span class="t">INTERACTIVE 11 · 3D CAROUSEL</span>drag to spin · <b id="idx">01</b> / 08</div>
+<div class="panel"><button id="prev">←</button><button id="auto">Pause spin</button><button id="next">→</button></div>
+<script>
+const ring=document.getElementById('ring'),stage=document.getElementById('stage');
+const items=[
+ ['Mercury','01','#ff8a5c','#5b1c00'],['Venus','02','#ffd166','#6b4a00'],['Earth','03','#5ec8ff','#003a5b'],
+ ['Mars','04','#ff5a1f','#4a1200'],['Jupiter','05','#e0b48a','#4a2c14'],['Saturn','06','#d9c9a3','#4a3d1f'],
+ ['Uranus','07','#7ff5e0','#004a40'],['Neptune','08','#5a6bff','#0a124a']
+];
+const n=items.length, step=360/n;
+items.forEach((it,i)=>{
+  const c=document.createElement('div');c.className='card';
+  c.style.transform='rotateY('+(i*step)+'deg) translateZ(430px)';
+  c.style.background='linear-gradient(160deg,'+it[2]+'33,#0a0c12 60%)';
+  c.innerHTML='<span class="no">'+it[1]+'</span><div class="orb" style="background:radial-gradient(circle at 35% 30%,'+it[2]+','+it[3]+' 70%)"></div><b>'+it[0]+'</b><span>'+it[1]+' / 08 · SECTOR</span>';
+  ring.appendChild(c);
+});
+let angle=0,target=0,auto=true,last=performance.now();
+let down=false,startX=0,startAngle=0,vel=0;
+stage.addEventListener('pointerdown',e=>{down=true;startX=e.clientX;startAngle=target;stage.classList.add('drag');stage.setPointerCapture(e.pointerId)});
+stage.addEventListener('pointermove',e=>{
+  if(!down)return;
+  target=startAngle+(e.clientX-startX)*.32;
+});
+addEventListener('pointerup',()=>{if(down){vel=(target-startAngle)*.02}down=false;stage.classList.remove('drag')});
+function frame(t){
+  const dt=(t-last)/1000;last=t;
+  if(auto&&!down)target+=dt*9;
+  if(!down&&Math.abs(vel)>.02){target+=vel;vel*=.94}
+  angle+=(target-angle)*.09;
+  ring.style.transform='rotateY('+angle+'deg)';
+  const idx=((Math.round(angle/step)%n)+n)%n;
+  document.getElementById('idx').textContent=String(idx+1).padStart(2,'0');
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+document.getElementById('next').onclick=()=>{target+=step;auto=false;document.getElementById('auto').textContent='Resume spin'};
+document.getElementById('prev').onclick=()=>{target-=step;auto=false;document.getElementById('auto').textContent='Resume spin'};
+document.getElementById('auto').onclick=()=>{auto=!auto;document.getElementById('auto').textContent=auto?'Pause spin':'Resume spin'};
+</script>
+</body>
+</html>

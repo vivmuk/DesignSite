@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Text to Particles — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#05060a}
+#cv{position:fixed;inset:0;touch-action:none}
+.bar{position:fixed;left:50%;top:22px;transform:translateX(-50%);z-index:10;display:flex;gap:8px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:7px 8px 7px 16px;backdrop-filter:blur(10px)}
+.bar label{color:#6d778c;font:500 9.5px/1 ui-monospace,monospace;letter-spacing:.14em}
+.bar input{background:none;border:0;outline:none;color:#eef1f7;font:600 13px/1 ui-monospace,monospace;letter-spacing:.06em;width:180px}
+.bar button{background:#f2f4f8;color:#0a0a0e;border:0;border-radius:999px;padding:8px 13px;font:700 10px/1 ui-monospace,monospace;cursor:pointer}
+.bar button.ghost{background:#171b24;color:#cdd4e1;border:1px solid #2a3040;font-weight:500}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 16 · TEXT PARTICLES</span>particles <b id="n">0</b> · move to scatter</div>
+<div class="bar"><label>TEXT</label><input id="txt" value="FORM" maxlength="12" spellcheck="false"><button id="explode">Explode</button><button class="ghost" id="reset">Reset</button></div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),input=document.getElementById('txt');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);ctx.fillStyle='#05060a';ctx.fillRect(0,0,W,H);}
+fit();addEventListener('resize',fit);
+const mouse={x:-9999,y:-9999};
+addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+addEventListener('pointerleave',()=>{mouse.x=-9999});
+let parts=[],built='';
+function targetPoints(text){
+  const off=document.createElement('canvas');off.width=W;off.height=H;
+  const x=off.getContext('2d');
+  const size=Math.min(W/(text.length*.62),H*.42);
+  x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';
+  x.font='900 '+size+'px system-ui,sans-serif';
+  x.fillText(text,W/2,H/2);
+  const data=x.getImageData(0,0,W,H).data, pts=[];
+  const gap=Math.max(3,Math.round(size/36));
+  for(let y=0;y<H;y+=gap)for(let xx=0;xx<W;xx+=gap){
+    if(data[(y*W+xx)*4+3]>128)pts.push([xx,y]);
+  }
+  return pts;
+}
+function build(text,animate){
+  const pts=targetPoints(text);
+  const max=7000;const step=Math.max(1,Math.floor(pts.length/max));
+  const chosen=pts.filter((_,i)=>i%step===0);
+  if(!animate||!parts.length){
+    parts=chosen.map((p,i)=>({x:Math.random()*W,y:Math.random()*H,tx:p[0],ty:p[1],vx:0,vy:0,
+      h:205+Math.random()*40,s:1+Math.random()*1.4}));
+  }else{
+    parts.forEach((p,i)=>{const t=chosen[i%chosen.length];p.tx=t[0];p.ty=t[1]});
+  }
+  built=text;
+  document.getElementById('n').textContent=parts.length;
+}
+build('FORM',false);
+input.addEventListener('input',()=>{if(input.value.trim())build(input.value.toUpperCase().slice(0,12),true)});
+document.getElementById('explode').onclick=()=>parts.forEach(p=>{p.vx=(Math.random()-.5)*44;p.vy=(Math.random()-.5)*44});
+document.getElementById('reset').onclick=()=>{parts.forEach(p=>{p.x=Math.random()*W;p.y=Math.random()*H;p.vx=0;p.vy=0})};
+function frame(){
+  ctx.fillStyle='rgba(5,6,10,.20)';ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(const p of parts){
+    const dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);
+    if(d<90&&d>1){p.vx+=dx/d*(90-d)*.14;p.vy+=dy/d*(90-d)*.14}
+    p.vx+=(p.tx-p.x)*.028;p.vy+=(p.ty-p.y)*.028;
+    p.vx*=.90;p.vy*=.90;p.x+=p.vx;p.y+=p.vy;
+    ctx.fillStyle='hsla('+p.h+',90%,66%,.55)';
+    ctx.fillRect(p.x,p.y,p.s,p.s);
+  }
+  ctx.globalCompositeOperation='source-over';
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

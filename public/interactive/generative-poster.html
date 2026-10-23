@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Generative Poster Studio — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#0b0b0e}
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding:52px 20px 112px}
+.poster{width:min(66vh,88vw);aspect-ratio:3/4;background:#f4f0e6;border-radius:4px;box-shadow:0 40px 100px -30px #000;
+position:relative;overflow:hidden}
+#cv{width:100%;height:100%;display:block}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:10px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:9px 12px;backdrop-filter:blur(10px)}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:8px 14px;
+font:500 11px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}
+.panel button.primary{background:#f2f4f8;color:#0a0a0e;border-color:#f2f4f8;font-weight:700}</style>
+</head>
+<body>
+<div class="stage"><div class="poster"><canvas id="cv" width="900" height="1200"></canvas></div></div>
+<div class="hud"><span class="t">INTERACTIVE 03 · POSTER STUDIO</span>seed <b id="seed">000</b> · click the poster for a variation</div>
+<div class="panel"><button class="primary" id="gen">Generate</button><button id="download">Download PNG</button></div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const P={bg:'#f4f0e6',ink:'#14120f',a:'#ff5a1f',b:'#2b3cff',c:'#00a884'};
+let seed=Math.floor(Math.random()*999);
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function draw(){
+  const r=rng(seed+7);
+  ctx.fillStyle=P.bg;ctx.fillRect(0,0,900,1200);
+  const variant=Math.floor(r()*4);
+  const accents=[P.a,P.b,P.c];
+  ctx.save();
+  if(variant===0){
+    ctx.fillStyle=P.ink;ctx.fillRect(60,60,780,4);
+    for(let i=0;i<7;i++){ctx.beginPath();ctx.arc(450,470,60+i*54+r()*20,0,Math.PI*2);ctx.strokeStyle=i%3===0?P.a:'#14120f33';ctx.lineWidth=i%3===0?22:2;ctx.stroke();}
+    ctx.fillStyle=P.ink;ctx.font='800 150px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText('FORM',450,930);
+    ctx.fillStyle=P.a;ctx.fillText(String(seed).padStart(3,'0'),450,1070);
+  }else if(variant===1){
+    const cols=5,rows=7,gw=780/cols,gh=900/rows;
+    for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+      const v=r();
+      if(v>.42){
+        ctx.fillStyle=v>.8?accents[Math.floor(r()*3)]:P.ink;
+        const pad=6;ctx.beginPath();ctx.roundRect(60+x*gw+pad,60+y*gh+pad,gw-pad*2,gh-pad*2,v>.9?999:0);ctx.fill();
+      }
+    }
+    ctx.fillStyle=P.ink;ctx.font='700 44px system-ui,sans-serif';ctx.textAlign='left';ctx.fillText('GENERATIVE / '+String(seed).padStart(3,'0'),60,1050);
+    ctx.fillStyle='#14120f88';ctx.font='500 18px ui-monospace,monospace';ctx.fillText('SYSTEMS · TYPE · COLOUR',60,1090);
+  }else if(variant===2){
+    ctx.fillStyle=accents[0];ctx.fillRect(0,0,900,700);
+    for(let i=0;i<26;i++){
+      ctx.beginPath();ctx.arc(r()*900,r()*700,20+r()*90,0,Math.PI*2);
+      ctx.fillStyle=i%2?'#f4f0e6':'#14120f';ctx.globalAlpha=.9;ctx.fill();
+    }
+    ctx.globalAlpha=1;ctx.fillStyle=P.ink;ctx.font='800 120px system-ui,sans-serif';ctx.fillText('MORE',60,900);ctx.fillText('IS MORE',60,1020);
+    ctx.fillStyle=accents[1];ctx.font='600 24px ui-monospace,monospace';ctx.fillText('EDITION '+String(seed).padStart(3,'0')+' / 250',62,1080);
+  }else{
+    for(let i=0;i<16;i++){
+      ctx.save();ctx.translate(450,560);ctx.rotate(r()*Math.PI);
+      ctx.fillStyle=i%3===0?accents[0]:(i%3===1?P.ink:accents[1]);
+      ctx.fillRect(-360+(r()*140),-8,720,16);ctx.restore();
+    }
+    ctx.fillStyle=P.bg;ctx.beginPath();ctx.arc(450,560,190,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=P.ink;ctx.font='800 190px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText('24',450,630);
+    ctx.fillStyle=P.ink;ctx.font='700 32px system-ui,sans-serif';ctx.fillText('A STUDY IN ROTATION',450,1100);
+  }
+  ctx.restore();
+  ctx.fillStyle='#14120f';ctx.font='500 16px ui-monospace,monospace';ctx.textAlign='left';
+  ctx.fillText('VIV/POSTER PRESS · 2026',60,1150);
+  document.getElementById('seed').textContent=String(seed).padStart(3,'0');
+}
+function generate(){seed=Math.floor(Math.random()*999);draw()}
+document.getElementById('gen').onclick=generate;
+document.getElementById('download').onclick=()=>{const a=document.createElement('a');a.download='poster-'+seed+'.png';a.href=cv.toDataURL('image/png');a.click()};
+cv.addEventListener('click',generate);
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gravity Sandbox — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+#cv{position:fixed;inset:0;touch-action:none;cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:14px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 16px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:90px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 08 · GRAVITY SANDBOX</span>balls <b id="n">0</b> · drag empty space to fling</div>
+<div class="panel">
+  <label>GRAVITY <input id="grav" type="range" min="0" max="160" value="60"></label>
+  <label>BOUNCE <input id="bounce" type="range" min="20" max="95" value="72"></label>
+  <button id="add">+ 8 balls</button><button id="clear">Clear</button>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const balls=[];
+const colors=['#ff5a1f','#ffd166','#3ddc84','#7fb2ff','#c084fc','#f4f0e6'];
+function add(n){
+  for(let i=0;i<n;i++){
+    const r=6+Math.random()*16;
+    balls.push({x:Math.random()*W,y:Math.random()*H*.5,r,vx:(Math.random()-.5)*6,vy:Math.random()*2,h:colors[Math.floor(Math.random()*colors.length)],trail:[]});
+  }
+  document.getElementById('n').textContent=balls.length;
+}
+add(16);
+let drag=null,lastP=null;
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,t:performance.now()};lastP={x:e.clientX,y:e.clientY}});
+cv.addEventListener('pointermove',e=>{
+  if(!lastP)return;
+  const vx=e.clientX-lastP.x,vy=e.clientY-lastP.y;
+  lastP={x:e.clientX,y:e.clientY};
+  drag.vx=vx;drag.vy=vy;
+});
+addEventListener('pointerup',()=>{
+  if(drag&&Math.hypot(drag.vx||0,drag.vy||0)>2){
+    balls.push({x:drag.x,y:drag.y,r:13,vx:(drag.vx||0)*.7,vy:(drag.vy||0)*.7,h:colors[Math.floor(Math.random()*colors.length)],trail:[]});
+    document.getElementById('n').textContent=balls.length;
+  }
+  drag=null;lastP=null;
+});
+const grav=document.getElementById('grav'),bounce=document.getElementById('bounce');
+document.getElementById('clear').onclick=()=>{balls.length=0;document.getElementById('n').textContent=0};
+document.getElementById('add').onclick=()=>add(8);
+function frame(){
+  ctx.fillStyle='rgba(6,7,11,.22)';ctx.fillRect(0,0,W,H);
+  const g=+grav.value/100, e=+bounce.value/100;
+  for(const b of balls){
+    b.vy+=g;b.x+=b.vx;b.y+=b.vy;
+    if(b.x<b.r){b.x=b.r;b.vx=Math.abs(b.vx)*e}
+    if(b.x>W-b.r){b.x=W-b.r;b.vx=-Math.abs(b.vx)*e}
+    if(b.y>H-b.r){b.y=H-b.r;b.vy=-Math.abs(b.vy)*e;b.vx*=.99}
+    if(b.y<b.r){b.y=b.r;b.vy=Math.abs(b.vy)*e}
+    b.trail.push([b.x,b.y]);if(b.trail.length>14)b.trail.shift();
+    ctx.fillStyle=b.h+'18';
+    for(let i=0;i<b.trail.length;i++){ctx.beginPath();ctx.arc(b.trail[i][0],b.trail[i][1],b.r*(i/b.trail.length)*.7,0,Math.PI*2);ctx.fill()}
+    ctx.fillStyle=b.h;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#ffffff26';ctx.beginPath();ctx.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.28,0,Math.PI*2);ctx.fill();
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lightbox Gallery — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{background:#07080c;overflow:hidden}
+.grid{position:fixed;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:6px;padding:6px}
+.tile{position:relative;overflow:hidden;cursor:pointer;border-radius:3px;border:0;padding:0;background:#111}
+.tile .art{position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.tile:hover .art{transform:scale(1.06)}
+.tile .cap{position:absolute;left:12px;bottom:10px;z-index:2;font:600 9.5px/1 ui-monospace,monospace;letter-spacing:.16em;
+color:#fff;text-shadow:0 2px 10px #000;opacity:0;transform:translateY(4px);transition:.25s}
+.tile:hover .cap{opacity:1;transform:none}
+.tile:focus-visible{outline:2px solid #fff;outline-offset:-3px}
+.hud{position:fixed;top:14px;left:14px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:9px 12px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:2px}
+.hud b{color:#ff8a5c}
+.lb{position:fixed;inset:0;z-index:50;background:#04050af2;backdrop-filter:blur(14px);display:none;place-items:center;padding:56px 20px}
+.lb.on{display:grid}
+.lb-art{width:min(86vw,1100px);height:min(72vh,720px);border-radius:6px;position:relative;overflow:hidden;box-shadow:0 50px 120px -30px #000}
+.lb-art .art{position:absolute;inset:0}
+.lb-title{position:absolute;left:0;right:0;bottom:-58px;display:flex;justify-content:space-between;align-items:baseline;color:#eef1f7}
+.lb-title b{font-size:18px;letter-spacing:-.01em}
+.lb-title span{font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7f889c}
+.lb-close{position:absolute;top:18px;right:20px;background:#ffffff12;border:1px solid #ffffff26;color:#fff;
+width:38px;height:38px;border-radius:50%;font-size:15px;cursor:pointer;z-index:3}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;
+background:#ffffff12;border:1px solid #ffffff26;color:#fff;font-size:15px;cursor:pointer;z-index:3}
+.lb-nav.prev{left:18px}.lb-nav.next{right:18px}
+.lb-count{position:absolute;top:24px;left:24px;font:500 10px/1 ui-monospace,monospace;letter-spacing:.18em;color:#8b95a8}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr)}.tile:nth-child(9){display:none}}</style>
+</head>
+<body>
+<div class="hud"><span class="t">INTERACTIVE 25 · LIGHTBOX</span>click a work · <b id="c">01</b> / 09</div>
+<div class="grid" id="grid"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Artwork viewer">
+  <span class="lb-count" id="lbcount">01 / 09</span>
+  <button class="lb-close" id="close" aria-label="Close">✕</button>
+  <button class="lb-nav prev" id="prev" aria-label="Previous">←</button>
+  <button class="lb-nav next" id="next" aria-label="Next">→</button>
+  <div class="lb-art" id="lbart"><div class="art" id="art"></div>
+    <div class="lb-title"><b id="title"></b><span id="meta"></span></div>
+  </div>
+</div>
+<script>
+const works=[
+ ['Salt Flats','LANDSCAPE · 01','linear-gradient(165deg,#ffe6bb,#e6a15c 45%,#7a3f2a)'],
+ ['Night Swim','STUDY · 02','linear-gradient(160deg,#9fc4ff,#263f7a 55%,#060b16)'],
+ ['Red Room','INTERIOR · 03','linear-gradient(150deg,#ff9c72,#8e241c 60%,#180708)'],
+ ['Greenhouse','BOTANY · 04','linear-gradient(155deg,#d2f7d9,#25855a 55%,#06170f)'],
+ ['Concrete','ARCHIVE · 05','linear-gradient(160deg,#e3ded3,#85807a 55%,#161513)'],
+ ['Ultraviolet','COLOUR · 06','linear-gradient(150deg,#d8b4fe,#5b21b6 55%,#0d0616)'],
+ ['Paper Moon','STILL · 07','linear-gradient(160deg,#f6f2e8,#b3a692 55%,#262019)'],
+ ['Signal','GRAPHIC · 08','linear-gradient(145deg,#ff5a1f,#5a1a8a 55%,#08060e)'],
+ ['Tide','COAST · 09','linear-gradient(160deg,#9fe8e0,#2a7a86 55%,#041418)']
+];
+const grid=document.getElementById('grid'),lb=document.getElementById('lb');let idx=0,lastTile=null;
+works.forEach((w,i)=>{
+  const b=document.createElement('button');b.className='tile';b.type='button';b.setAttribute('aria-label','Open '+w[0]);
+  b.innerHTML='<div class="art" style="background:'+w[2]+'"></div><span class="cap">'+w[0].toUpperCase()+'</span>';
+  b.addEventListener('click',()=>openLB(i,b));
+  grid.appendChild(b);
+});
+function paint(){
+  const w=works[idx];
+  document.getElementById('art').style.background=w[2];
+  document.getElementById('title').textContent=w[0];
+  document.getElementById('meta').textContent=w[1];
+  document.getElementById('lbcount').textContent=String(idx+1).padStart(2,'0')+' / 09';
+  document.getElementById('c').textContent=String(idx+1).padStart(2,'0');
+}
+function openLB(i,tile){idx=i;lastTile=tile;paint();lb.classList.add('on');document.getElementById('close').focus()}
+function closeLB(){lb.classList.remove('on');if(lastTile)lastTile.focus()}
+function step(d){idx=(idx+d+works.length)%works.length;paint()}
+document.getElementById('close').onclick=closeLB;
+document.getElementById('prev').onclick=()=>step(-1);
+document.getElementById('next').onclick=()=>step(1);
+lb.addEventListener('pointerdown',e=>{if(e.target===lb)closeLB()});
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('on'))return;
+  if(e.key==='Escape')closeLB();
+  if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);
+});
+</script>
+</body>
+</html>

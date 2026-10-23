@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pixel Studio — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#0a0b10}
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding:44px 20px 100px}
+.grid{display:grid;grid-template-columns:repeat(32,1fr);aspect-ratio:32/20;width:min(92vw,1100px);
+border:1px solid #ffffff1a;background:#0d0f16;box-shadow:0 30px 90px -30px #000;touch-action:none}
+.cell{background:transparent;border-right:1px solid #ffffff05;border-bottom:1px solid #ffffff05;cursor:crosshair}
+.cell:hover{outline:1px solid #ffffff44;outline-offset:-1px}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:12px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:9px 13px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.sw{width:24px;height:24px;border-radius:6px;border:1px solid #ffffff26;cursor:pointer;padding:0}
+.sw.on{outline:2px solid #fff;outline-offset:2px}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<div class="stage"><div class="grid" id="grid" aria-label="32 by 20 pixel canvas"></div></div>
+<div class="hud"><span class="t">INTERACTIVE 05 · PIXEL STUDIO</span>32 × 20 · <b id="count">0</b> px painted</div>
+<div class="panel" id="palette">
+  <button class="sw on" data-c="#ff5a1f" style="background:#ff5a1f" aria-label="Orange"></button>
+  <button class="sw" data-c="#ffd166" style="background:#ffd166" aria-label="Yellow"></button>
+  <button class="sw" data-c="#3ddc84" style="background:#3ddc84" aria-label="Green"></button>
+  <button class="sw" data-c="#7fb2ff" style="background:#7fb2ff" aria-label="Blue"></button>
+  <button class="sw" data-c="#c084fc" style="background:#c084fc" aria-label="Purple"></button>
+  <button class="sw" data-c="#f4f0e6" style="background:#f4f0e6" aria-label="Cream"></button>
+  <button class="sw" data-c="erase" style="background:#15171f" aria-label="Eraser">⌫</button>
+  <button id="random">Random</button><button id="clear">Clear</button>
+</div>
+<script>
+const grid=document.getElementById('grid');
+const cols=32,rows=20;let color='#ff5a1f',painting=false;
+const cells=[];
+for(let i=0;i<cols*rows;i++){
+  const d=document.createElement('div');d.className='cell';d.dataset.on='0';
+  grid.appendChild(d);cells.push(d);
+}
+function paint(c){c.style.background=color==='erase'?'transparent':color;c.dataset.on=color==='erase'?'0':'1';count()}
+function count(){document.getElementById('count').textContent=cells.filter(c=>c.dataset.on==='1').length}
+grid.addEventListener('pointerdown',e=>{painting=true;if(e.target.classList.contains('cell'))paint(e.target);grid.setPointerCapture(e.pointerId)});
+grid.addEventListener('pointermove',e=>{
+  if(!painting)return;
+  const el=document.elementFromPoint(e.clientX,e.clientY);
+  if(el&&el.classList.contains('cell'))paint(el);
+});
+addEventListener('pointerup',()=>painting=false);
+document.querySelectorAll('.sw').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.sw').forEach(x=>x.classList.remove('on'));b.classList.add('on');color=b.dataset.c;
+}));
+document.getElementById('clear').onclick=()=>cells.forEach(c=>{c.style.background='transparent';c.dataset.on='0'});count();
+document.getElementById('random').onclick=()=>{
+  const pal=['#ff5a1f','#ffd166','#3ddc84','#7fb2ff','#c084fc','#f4f0e6'];
+  cells.forEach(c=>{if(Math.random()<.3){c.style.background=pal[Math.floor(Math.random()*pal.length)];c.dataset.on='1'}});count();
+};
+count();
+</script>
+</body>
+</html>

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './AddonsTab.css';
 import {
-  visualAddons, addonCategories, addonsByCategory,
-  type AddonCategory, type VisualAddon,
+  visualAddons, addonCategories,
+  type AddonCategory, type VisualAddon, type AddonGroup,
 } from '../data/visualAddons';
+import { interactiveAddons, interactiveCategories } from '../data/interactiveAddons';
 
 const INTENSITY_DOTS: Record<VisualAddon['intensity'], number> = { subtle: 1, medium: 2, bold: 3 };
 
@@ -31,19 +32,20 @@ function copyText(text: string): Promise<boolean> {
   );
 }
 
-function parseHash(): { id: string | null; cat: AddonCategory | 'all'; q: string } {
+function parseHash(base: string): { id: string | null; cat: AddonCategory | 'all'; q: string } {
   const h = window.location.hash;
   const usp = new URLSearchParams(h.split('?')[1] || '');
   const cat = (usp.get('cat') || 'all') as AddonCategory | 'all';
   const q = usp.get('q') || '';
-  if (h.startsWith('#/addons/')) {
-    return { id: decodeURIComponent(h.slice('#/addons/'.length).split('?')[0].split('/')[0]), cat, q };
+  const prefix = base + '/';
+  if (h.startsWith(prefix)) {
+    return { id: decodeURIComponent(h.slice(prefix.length).split('?')[0].split('/')[0]), cat, q };
   }
   return { id: null, cat, q };
 }
 
-/** Renders a demo at a real 1280×800 desktop viewport, scaled to the card.
- *  This keeps the preview honest: the add-on is designed for desktop, and a
+/** Renders a demo at a real 960×800 desktop viewport, scaled to the card.
+ *  This keeps the preview honest: the piece is designed for desktop, and a
  *  300px-wide iframe would silently switch every demo into its mobile layout. */
 function ScaledPreview({ src, title }: { src: string; title: string }) {
   const wrap = useRef<HTMLDivElement>(null);
@@ -83,31 +85,119 @@ function useCopy() {
   return { copied, copy };
 }
 
-export function AddonsTab() {
-  const [route, setRoute] = useState(parseHash);
+type GroupConfig = {
+  base: string;
+  list: VisualAddon[];
+  cats: typeof addonCategories;
+  noun: string;
+  kicker: string;
+  headline: React.ReactNode;
+  lede: string;
+  stats: [string, string][];
+  howto: [string, string][];
+  howtoTitle: string;
+  searchPlaceholder: string;
+  snippetNote: string;
+  principles: [string, string, string][];
+  other: { href: string; label: string; blurb: string };
+};
+
+const CONFIG: Record<AddonGroup, GroupConfig> = {
+  visual: {
+    base: '#/addons',
+    list: visualAddons,
+    cats: addonCategories,
+    noun: 'add-on',
+    kicker: 'Visual add-ons · 25 drop-ins',
+    headline: <>The finish,<br /><em>not the direction.</em></>,
+    lede: 'The Styles DB decides what a page is. These are the layers that make it feel made: grain, light, depth, motion and the small interactions at the edges. Every one is a self-contained snippet that drops into any of the 150 directions.',
+    stats: [['25', 'add-ons'], ['5', 'categories'], ['0', 'dependencies'], ['1', 'snippet each']],
+    howtoTitle: 'HOW TO USE THEM',
+    howto: [
+      ['Pick a direction', 'Start in the Styles DB — one style, not a pile.'],
+      ['Add two or three', 'One atmosphere, one surface, one motion. Stop there.'],
+      ['Copy the snippet', 'Swap the accent values for the style’s palette.'],
+      ['Check the edges', 'Reduced motion, AA contrast, touch fallback.'],
+    ],
+    searchPlaceholder: 'Search effects, surfaces, snippets…',
+    snippetNote: 'Self-contained CSS + markup. Paste into the page, then swap the accent values for your brand tokens.',
+    principles: [
+      ['01', 'One light source', 'Never run a cursor spotlight and a section glow in the same viewport. The eye can only believe one.'],
+      ['02', 'Two per page, three max', 'Atmosphere + surface is a page. Add motion only if something actually enters or moves.'],
+      ['03', 'Motion earns its keep', 'Every effect gets a prefers-reduced-motion branch and a static fallback that still looks designed.'],
+      ['04', 'Contrast is not negotiable', 'Grain, glass and duotone all reduce legibility. Check body text at AA after the effect, not before.'],
+    ],
+    other: {
+      href: '#/interactive',
+      label: 'Interactive elements →',
+      blurb: 'Want the visitor to touch something? The 25 playgrounds.',
+    },
+  },
+  interactive: {
+    base: '#/interactive',
+    list: interactiveAddons,
+    cats: interactiveCategories,
+    noun: 'element',
+    kicker: 'Interactive elements · 25 playgrounds',
+    headline: <>Not a picture.<br /><em>A playground.</em></>,
+    lede: 'These are the parts a visitor can grab: generative canvases, pointer physics, 3D rings, type that bends, sound that draws itself. Each one is a single HTML file with no libraries — open it, drag it, then copy the core loop into the page.',
+    stats: [['25', 'playgrounds'], ['5', 'families'], ['0', 'libraries'], ['60', 'fps target']],
+    howtoTitle: 'HOW TO USE THEM',
+    howto: [
+      ['Pick the moment', 'Hero, product reveal, success state, gallery. One job per piece.'],
+      ['Keep it contained', 'One interactive canvas per viewport. It should not fight the copy.'],
+      ['Start from the loop', 'Copy the core loop, then add your palette and real content.'],
+      ['Design the edges', 'Touch, reduced motion, keyboard and a paused fallback.'],
+    ],
+    searchPlaceholder: 'Search canvases, physics, 3D, type…',
+    snippetNote: 'The core loop, stripped to the essentials. The live demo adds the artwork, controls and polish — open it full screen to see the full file.',
+    principles: [
+      ['01', 'One playground per viewport', 'Two animated canvases compete for the same attention. Pick the one that carries the message.'],
+      ['02', 'The pointer is not the only input', 'Every draggable piece needs a keyboard or button equivalent, and a touch path.'],
+      ['03', 'Cheap beats clever', 'Canvas at 60fps, capped DPR, no libraries. If it cannot hold 60, cut particle count before cutting frames.'],
+      ['04', 'Always have a still', 'Pause the loop when off-screen and give reduced-motion visitors the same composition, frozen.'],
+    ],
+    other: {
+      href: '#/addons',
+      label: 'Visual add-ons →',
+      blurb: 'Need the finishing layer? Grain, light, borders and depth.',
+    },
+  },
+};
+
+export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
+  const cfg = CONFIG[group];
+  const [route, setRoute] = useState(() => parseHash(cfg.base));
   const [visible, setVisible] = useState<Set<string>>(new Set());
+  const [query, setQuery] = useState(route.q);
   const { copied, copy } = useCopy();
 
   useEffect(() => {
-    const onHash = () => { setRoute(parseHash()); window.scrollTo(0, 0); };
+    const onHash = () => {
+      const next = parseHash(cfg.base);
+      setRoute(next);
+      setQuery(next.q);
+      window.scrollTo(0, 0);
+    };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+  }, [cfg.base]);
 
   const setHash = useCallback((id: string | null, cat: AddonCategory | 'all', q: string) => {
     const usp = new URLSearchParams();
     if (cat !== 'all') usp.set('cat', cat);
     if (q) usp.set('q', q);
     const qs = usp.toString() ? '?' + usp.toString() : '';
-    window.location.hash = id ? `#/addons/${encodeURIComponent(id)}${qs}` : `#/addons${qs}`;
-  }, []);
+    window.location.hash = id ? `${cfg.base}/${encodeURIComponent(id)}${qs}` : `${cfg.base}${qs}`;
+  }, [cfg.base]);
 
   const filtered = useMemo(() => {
     const q = route.q.toLowerCase();
-    return addonsByCategory(route.cat).filter(a =>
+    const byCat = route.cat === 'all' ? cfg.list : cfg.list.filter(a => a.category === route.cat);
+    return byCat.filter(a =>
       !q || (a.name + ' ' + a.tagline + ' ' + a.what + ' ' + a.surface.join(' ')).toLowerCase().includes(q),
     );
-  }, [route.cat, route.q]);
+  }, [cfg.list, route.cat, route.q]);
 
   /* lazy iframes: only mount previews when the card is near the viewport */
   useEffect(() => {
@@ -122,36 +212,36 @@ export function AddonsTab() {
           return n;
         });
       });
-    }, { rootMargin: '400px' });
+    }, { rootMargin: '320px' });
     document.querySelectorAll('[data-aid]').forEach(el => io.observe(el));
     return () => io.disconnect();
   }, [route.id, filtered.length]);
 
   /* ── DETAIL ─────────────────────────────────────────────── */
   if (route.id) {
-    const idx = visualAddons.findIndex(a => a.id === route.id);
-    const a = visualAddons[idx];
+    const idx = cfg.list.findIndex(a => a.id === route.id);
+    const a = cfg.list[idx];
     if (!a) {
       return (
         <div className="av-missing">
-          Add-on not found. <a href="#/addons">← All 25 add-ons</a>
+          Not found. <a href={cfg.base}>← All {cfg.list.length} {cfg.noun}s</a>
         </div>
       );
     }
-    const cat = addonCategories.find(c => c.id === a.category)!;
-    const prev = visualAddons[idx - 1];
-    const next = visualAddons[idx + 1];
-    const pairs = visualAddons
+    const cat = cfg.cats.find(c => c.id === a.category)!;
+    const prev = cfg.list[idx - 1];
+    const next = cfg.list[idx + 1];
+    const pairs = cfg.list
       .filter(x => x.id !== a.id && (x.category === a.category || x.worksWith.some(w => a.worksWith.includes(w))))
       .slice(0, 3);
 
     return (
       <div className="av-detail">
         <div className="av-detail-top">
-          <button className="av-back" onClick={() => setHash(null, route.cat, route.q)}>← All 25 add-ons</button>
+          <button className="av-back" onClick={() => setHash(null, route.cat, route.q)}>← All {cfg.list.length} {cfg.noun}s</button>
           <div className="av-detail-nav">
             {prev && <button onClick={() => setHash(prev.id, route.cat, route.q)}>← {prev.name}</button>}
-            <span className="av-posn">{a.n} / {visualAddons.length}</span>
+            <span className="av-posn">{a.n} of {cfg.list.length}</span>
             {next && <button onClick={() => setHash(next.id, route.cat, route.q)}>{next.name} →</button>}
           </div>
         </div>
@@ -174,7 +264,7 @@ export function AddonsTab() {
 
         <div className="av-demo">
           <div className="av-demo-bar">
-            <span className="av-live"><i />LIVE DEMO</span>
+            <span className="av-live"><i />LIVE DEMO — INTERACT WITH IT</span>
             <div>
               <button className="av-btn primary" onClick={() => copy('prompt', a.prompt)}>
                 {copied === 'prompt' ? '✓ Prompt copied' : '🪄 Copy agent prompt'}
@@ -206,11 +296,11 @@ export function AddonsTab() {
         <section className="av-code-block">
           <div className="av-code-head">
             <div>
-              <h3>Drop-in snippet</h3>
-              <p>Self-contained CSS + markup. Paste into the page, then swap the accent values for your brand tokens.</p>
+              <h3>{group === 'interactive' ? 'Core loop' : 'Drop-in snippet'}</h3>
+              <p>{cfg.snippetNote}</p>
             </div>
             <button className={`av-btn primary ${copied === 'snippet' ? 'ok' : ''}`} onClick={() => copy('snippet', a.snippet)}>
-              {copied === 'snippet' ? '✓ Copied' : '⧉ Copy snippet'}
+              {copied === 'snippet' ? '✓ Copied' : '⧉ Copy code'}
             </button>
           </div>
           <pre className="av-pre"><code>{a.snippet}</code></pre>
@@ -220,7 +310,7 @@ export function AddonsTab() {
           <div className="av-code-head">
             <div>
               <h3>Agent prompt</h3>
-              <p>Paste this into the coding agent that is building the page. It carries the layout, motion and accessibility constraints.</p>
+              <p>Paste this into the coding agent that is building the page. It carries the interaction, performance and accessibility constraints.</p>
             </div>
             <button className="av-btn" onClick={() => copy('prompt2', a.prompt)}>
               {copied === 'prompt2' ? '✓ Copied' : '⧉ Copy prompt'}
@@ -233,7 +323,7 @@ export function AddonsTab() {
           <h3>Pairs well with</h3>
           <div className="av-pairs-grid">
             {pairs.map(p => {
-              const pc = addonCategories.find(c => c.id === p.category)!;
+              const pc = cfg.cats.find(c => c.id === p.category)!;
               return (
                 <button key={p.id} className="av-pair" onClick={() => setHash(p.id, route.cat, route.q)}>
                   <span className="av-cat-chip small" style={{ color: pc.color, borderColor: pc.color + '55', background: pc.color + '16' }}>
@@ -249,7 +339,7 @@ export function AddonsTab() {
 
         <div className="av-foot-nav">
           {prev ? <button onClick={() => setHash(prev.id, route.cat, route.q)}>← {prev.name}</button> : <span />}
-          <a href="#/stylesdb">Browse the Styles DB →</a>
+          <a href={cfg.other.href}>{cfg.other.label}</a>
           {next ? <button onClick={() => setHash(next.id, route.cat, route.q)}>{next.name} →</button> : <span />}
         </div>
       </div>
@@ -261,27 +351,25 @@ export function AddonsTab() {
     <div className="av-index">
       <header className="av-hero">
         <div className="av-hero-copy">
-          <p className="av-kicker">Visual add-ons · 25 drop-ins</p>
-          <h1>The finish,<br /><em>not the direction.</em></h1>
-          <p className="av-lede">
-            The Styles DB decides what a page is. These are the layers that make it feel made:
-            grain, light, depth, motion and the small interactions at the edges. Every one is a
-            self-contained snippet that drops into any of the 150 directions.
-          </p>
+          <p className="av-kicker">{cfg.kicker}</p>
+          <h1>{cfg.headline}</h1>
+          <p className="av-lede">{cfg.lede}</p>
           <div className="av-stats">
-            <div><b>25</b><span>add-ons</span></div>
-            <div><b>5</b><span>categories</span></div>
-            <div><b>0</b><span>dependencies</span></div>
-            <div><b>1</b><span>snippet each</span></div>
+            {cfg.stats.map(([n, label]) => (
+              <div key={label}><b>{n}</b><span>{label}</span></div>
+            ))}
           </div>
+          <a className="av-crosslink" href={cfg.other.href}>
+            <span>{cfg.other.blurb}</span>
+            <b>{cfg.other.label}</b>
+          </a>
         </div>
         <aside className="av-howto">
-          <h3>HOW TO USE THEM</h3>
+          <h3>{cfg.howtoTitle}</h3>
           <ol>
-            <li><b>Pick a direction</b><span>Start in the Styles DB — one style, not a pile.</span></li>
-            <li><b>Add two or three</b><span>One atmosphere, one surface, one motion. Stop there.</span></li>
-            <li><b>Copy the snippet</b><span>Swap the accent values for the style’s palette.</span></li>
-            <li><b>Check the edges</b><span>Reduced motion, AA contrast, touch fallback.</span></li>
+            {cfg.howto.map(([b, span]) => (
+              <li key={b}><b>{b}</b><span>{span}</span></li>
+            ))}
           </ol>
         </aside>
       </header>
@@ -289,9 +377,9 @@ export function AddonsTab() {
       <div className="av-controls">
         <div className="av-cats">
           <button className={`av-cat ${route.cat === 'all' ? 'on' : ''}`} onClick={() => setHash(null, 'all', route.q)}>
-            🌐 All <span>{visualAddons.length}</span>
+            🌐 All <span>{cfg.list.length}</span>
           </button>
-          {addonCategories.map(c => (
+          {cfg.cats.map(c => (
             <button
               key={c.id}
               className={`av-cat ${route.cat === c.id ? 'on' : ''}`}
@@ -299,25 +387,26 @@ export function AddonsTab() {
               style={route.cat === c.id ? { borderColor: c.color + '88', color: c.color } : undefined}
             >
               <i className="av-dot" style={{ background: c.color }} />
-              {c.label} <span>{addonsByCategory(c.id).length}</span>
+              {c.label} <span>{cfg.list.filter(a => a.category === c.id).length}</span>
             </button>
           ))}
         </div>
         <input
           className="av-search"
-          placeholder="Search effects, surfaces, snippets…"
-          defaultValue={route.q}
-          onKeyDown={e => { if (e.key === 'Enter') setHash(null, route.cat, (e.target as HTMLInputElement).value); }}
+          placeholder={cfg.searchPlaceholder}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') setHash(null, route.cat, query); }}
         />
       </div>
 
       {route.cat !== 'all' && (
-        <p className="av-cat-blurb">{addonCategories.find(c => c.id === route.cat)!.blurb}</p>
+        <p className="av-cat-blurb">{cfg.cats.find(c => c.id === route.cat)!.blurb}</p>
       )}
 
       <div className="av-grid">
         {filtered.map(a => {
-          const cat = addonCategories.find(c => c.id === a.category)!;
+          const cat = cfg.cats.find(c => c.id === a.category)!;
           return (
             <article key={a.id} className="av-card" data-aid={a.id} onClick={() => setHash(a.id, route.cat, route.q)}>
               <div className="av-thumb-wrap">
@@ -344,7 +433,7 @@ export function AddonsTab() {
                 <h3>{a.name}</h3>
                 <p>{a.tagline}</p>
                 <div className="av-card-foot">
-                  <span>Open add-on →</span>
+                  <span>Open {cfg.noun} →</span>
                   <span className="av-surfaces">{a.surface.slice(0, 2).join(' · ')}</span>
                 </div>
               </div>
@@ -354,16 +443,15 @@ export function AddonsTab() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="av-empty">No add-ons match “{route.q}”. <button onClick={() => setHash(null, 'all', '')}>Clear</button></div>
+        <div className="av-empty">No {cfg.noun}s match “{route.q}”. <button onClick={() => { setQuery(''); setHash(null, 'all', ''); }}>Clear</button></div>
       )}
 
       <section className="av-principles">
-        <h2>Rules that keep add-ons from becoming noise</h2>
+        <h2>{group === 'interactive' ? 'Rules that keep interaction from becoming a gimmick' : 'Rules that keep add-ons from becoming noise'}</h2>
         <div className="av-principles-grid">
-          <div><b>01</b><h3>One light source</h3><p>Never run a cursor spotlight and a section glow in the same viewport. The eye can only believe one.</p></div>
-          <div><b>02</b><h3>Two per page, three max</h3><p>Atmosphere + surface is a page. Add motion only if something actually enters or moves.</p></div>
-          <div><b>03</b><h3>Motion earns its keep</h3><p>Every effect gets a prefers-reduced-motion branch and a static fallback that still looks designed.</p></div>
-          <div><b>04</b><h3>Contrast is not negotiable</h3><p>Grain, glass and duotone all reduce legibility. Check body text at AA after the effect, not before.</p></div>
+          {cfg.principles.map(([n, h, p]) => (
+            <div key={n}><b>{n}</b><h3>{h}</h3><p>{p}</p></div>
+          ))}
         </div>
       </section>
     </div>

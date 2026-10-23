@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dither Lab — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+#out{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair;image-rendering:pixelated}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:14px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 16px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:90px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<canvas id="out"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 18 · DITHER LAB</span>move to change threshold · <b id="mode">BAYER 8×8</b></div>
+<div class="panel">
+  <label>GRAIN <input id="px" type="range" min="2" max="16" value="6"></label>
+  <label>CONTRAST <input id="th" type="range" min="-40" max="40" value="0"></label>
+  <button id="invert">Invert</button><button id="upload">Use my image</button>
+  <input type="file" id="file" accept="image/*" hidden>
+</div>
+<script>
+const out=document.getElementById('out'),octx=out.getContext('2d');
+let W,H,scene=null,DPR=1;
+const BAYER=[[0,32,8,40,2,34,10,42],[48,16,56,24,50,18,58,26],[12,44,4,36,14,46,6,38],[60,28,52,20,62,30,54,22],[3,35,11,43,1,33,9,41],[51,19,59,27,49,17,57,25],[15,47,7,39,13,45,5,37],[63,31,55,23,61,29,53,21]];
+function sceneCanvas(w,h){
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,w,h);
+  g.addColorStop(0,'#ffd9a0');g.addColorStop(.4,'#ff6b35');g.addColorStop(.7,'#6b2f5a');g.addColorStop(1,'#0a0d16');
+  x.fillStyle=g;x.fillRect(0,0,w,h);
+  x.fillStyle='#0a0d16';x.beginPath();
+  for(let i=0;i<=40;i++){const px=i/40*w;const py=h*.62+Math.sin(i*.6)*h*.08+Math.cos(i*.23)*h*.05;x.lineTo(px,py)}
+  x.lineTo(w,h);x.lineTo(0,h);x.fill();
+  x.globalAlpha=.85;
+  for(let i=0;i<5;i++){
+    x.beginPath();x.arc(w*(.2+i*.15),h*(.3+ (i%2)*.08),w*.09*(1+i*.12),0,Math.PI*2);
+    x.fillStyle=['#f4f0e6','#ffb08a','#c084fc','#7fb2ff','#3ddc84'][i];x.fill();
+  }
+  x.globalAlpha=1;
+  return c;
+}
+function fit(){
+  W=innerWidth;H=innerHeight;DPR=Math.min(devicePixelRatio||1,2);
+  out.width=W;out.height=H;out.style.width=W+'px';out.style.height=H+'px';
+  if(!scene)scene=sceneCanvas(1600,1000);
+}
+fit();addEventListener('resize',fit);
+const pxEl=document.getElementById('px'),thEl=document.getElementById('th');
+let invert=false, mx=.5;
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth});
+const off=document.createElement('canvas'),offc=off.getContext('2d');
+function render(){
+  const block=+pxEl.value;
+  const cols=Math.max(40,Math.round(W/block)), rows=Math.max(24,Math.round(H/block));
+  off.width=cols;off.height=rows;
+  offc.drawImage(scene,0,0,cols,rows);
+  const data=offc.getImageData(0,0,cols,rows).data;
+  out.width=cols;out.height=rows;out.style.width=W+'px';out.style.height=H+'px';
+  const img=octx.createImageData(cols,rows);
+  const tint=[255,138,92];
+  const thBase=+thEl.value/100 + (mx-.5)*.5;
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const i=(y*cols+x)*4;
+    const lum=(data[i]*.299+data[i+1]*.587+data[i+2]*.114)/255;
+    const t=(BAYER[y%8][x%8]/64-.5)*.5;
+    let on=lum+t> .5-thBase;
+    if(invert)on=!on;
+    const o=i;
+    if(on){
+      const k=.55+lum*.6;
+      img.data[o]=tint[0]*k;img.data[o+1]=tint[1]*k;img.data[o+2]=tint[2]*k;img.data[o+3]=255;
+    }else{img.data[o]=8;img.data[o+1]=9;img.data[o+2]=14;img.data[o+3]=255;}
+  }
+  octx.putImageData(img,0,0);
+}
+let raf=null;
+function queue(){if(raf)return;raf=requestAnimationFrame(()=>{raf=null;render()})}
+pxEl.addEventListener('input',queue);thEl.addEventListener('input',queue);
+addEventListener('pointermove',queue);
+document.getElementById('invert').onclick=()=>{invert=!invert;queue()};
+document.getElementById('upload').onclick=()=>document.getElementById('file').click();
+document.getElementById('file').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const img=new Image();img.onload=()=>{
+    const c=document.createElement('canvas');c.width=1600;c.height=Math.round(1600*img.height/img.width);
+    const x=c.getContext('2d');const r=Math.max(c.width/img.width,c.height/img.height);
+    x.drawImage(img,(c.width-img.width*r)/2,(c.height-img.height*r)/2,img.width*r,img.height*r);
+    scene=c;fit();render();
+  };img.src=URL.createObjectURL(f);
+});
+render();
+</script>
+</body>
+</html>

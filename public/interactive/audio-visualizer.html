@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Audio Visualizer — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#04050a}
+#cv{position:fixed;inset:0}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:14px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 16px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:95px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:8px 14px;
+font:600 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button.primary{background:#f2f4f8;color:#0a0a0e;border-color:#f2f4f8}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 21 · AUDIO VISUALIZER</span><b id="state">PAUSED</b> · click play to enable audio</div>
+<div class="panel">
+  <label>FREQ <input id="freq" type="range" min="60" max="900" value="220"></label>
+  <label>LEVEL <input id="gain" type="range" min="0" max="100" value="45"></label>
+  <button class="primary" id="play">▶ Play tone</button>
+  <button id="wave">Sine ▸</button>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+let audio=null,osc=null,analyser=null,data=null,playing=false,type='sine';
+const types=['sine','triangle','sawtooth','square'];
+function start(){
+  if(!audio){
+    audio=new (window.AudioContext||window.webkitAudioContext)();
+    osc=audio.createOscillator();analyser=audio.createAnalyser();
+    analyser.fftSize=2048;data=new Uint8Array(analyser.frequencyBinCount);
+    const g=audio.createGain();g.gain.value=+document.getElementById('gain').value/100*.08;
+    osc.type=type;osc.frequency.value=+document.getElementById('freq').value;
+    osc.connect(g);g.connect(analyser);analyser.connect(audio.destination);osc.start();
+    window.__gain=g;
+  }
+  audio.resume();playing=true;
+  document.getElementById('state').textContent='PLAYING';
+  document.getElementById('play').textContent='■ Stop';
+}
+function stop(){
+  if(audio)audio.suspend();
+  playing=false;
+  document.getElementById('state').textContent='PAUSED';
+  document.getElementById('play').textContent='▶ Play tone';
+}
+document.getElementById('play').onclick=()=>playing?stop():start();
+document.getElementById('wave').onclick=()=>{
+  type=types[(types.indexOf(type)+1)%types.length];
+  if(osc)osc.type=type;
+  document.getElementById('wave').textContent=type[0].toUpperCase()+type.slice(1)+' ▸';
+};
+document.getElementById('freq').addEventListener('input',e=>{if(osc)osc.frequency.value=+e.target.value});
+document.getElementById('gain').addEventListener('input',e=>{if(window.__gain)window.__gain.gain.value=+e.target.value/100*.08});
+let t=0;
+function frame(){
+  t+=.016;
+  ctx.fillStyle='rgba(4,5,10,.35)';ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2,R=Math.min(W,H)*.19;
+  if(analyser&&playing)analyser.getByteFrequencyData(data);
+  const bars=128;
+  ctx.globalCompositeOperation='lighter';
+  for(let i=0;i<bars;i++){
+    const idx=Math.floor(Math.pow(i/bars,1.7)*(data?data.length:256)*.7);
+    const v=playing&&data?data[idx]/255:(.08+.05*Math.sin(t*2+i*.3));
+    const a=(i/bars)*Math.PI*2;
+    const len=12+v*Math.min(W,H)*.28;
+    const x1=cx+Math.cos(a)*R,y1=cy+Math.sin(a)*R;
+    const x2=cx+Math.cos(a)*(R+len),y2=cy+Math.sin(a)*(R+len);
+    const hue=200+v*120;
+    ctx.strokeStyle='hsla('+hue+',90%,62%,'+(0.25+v*.7)+')';
+    ctx.lineWidth=2.2;
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  }
+  ctx.globalCompositeOperation='source-over';
+  const g=ctx.createRadialGradient(cx,cy,R*.2,cx,cy,R);
+  g.addColorStop(0,'rgba(90,140,255,.16)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.10)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

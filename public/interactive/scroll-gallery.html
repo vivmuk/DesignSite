@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Scroll 3D Gallery — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{background:#05060a;overflow-x:hidden}
+.spacer{height:360vh}
+.stage{position:sticky;top:0;height:100vh;display:grid;place-items:center;perspective:1400px;overflow:hidden}
+.ring{position:relative;width:280px;height:380px;transform-style:preserve-3d;will-change:transform}
+.card{position:absolute;inset:0;border-radius:14px;overflow:hidden;border:1px solid #ffffff26;
+box-shadow:0 40px 100px -40px #000;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+.card .art{position:absolute;inset:0}
+.card b{position:relative;font-size:19px;letter-spacing:-.01em;text-shadow:0 2px 18px #000}
+.card span{position:relative;font:500 9.5px/1.4 ui-monospace,monospace;letter-spacing:.16em;color:#ffffffb0;margin-top:5px}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.prog{position:fixed;left:0;top:0;height:2px;background:#ff6b35;z-index:30;width:0;box-shadow:0 0 12px #ff6b35}
+.hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);color:#5e687c;font:500 9.5px/1 ui-monospace,monospace;letter-spacing:.18em;z-index:10}</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div class="stage"><div class="ring" id="ring"></div></div>
+<div class="spacer"></div>
+<div class="hud"><span class="t">INTERACTIVE 13 · SCROLL GALLERY</span>scroll or drag · <b id="idx">01</b> / 07</div>
+<div class="hint">SCROLL ↓</div>
+<script>
+const ring=document.getElementById('ring');
+const works=[
+ ['Salt Flats','LANDSCAPE · 01','linear-gradient(160deg,#ffd9a0,#c97b4a 45%,#2b1a22)'],
+ ['Night Swim','STUDY · 02','linear-gradient(150deg,#7fb2ff,#1b2a5e 55%,#050811)'],
+ ['Red Room','INTERIOR · 03','linear-gradient(160deg,#ff8a5c,#7a1f1a 60%,#160608)'],
+ ['Greenhouse','BOTANY · 04','linear-gradient(150deg,#b7f5c8,#1f7a4d 55%,#06140d)'],
+ ['Concrete','ARCHIVE · 05','linear-gradient(160deg,#d7d2c8,#6b6760 55%,#141312)'],
+ ['Ultraviolet','COLOUR · 06','linear-gradient(150deg,#c084fc,#4a1d7a 55%,#0d0616)'],
+ ['Paper Moon','STILL · 07','linear-gradient(160deg,#f4f0e6,#a89a86 55%,#241f1a)']
+];
+const n=works.length,step=360/n;
+works.forEach((w,i)=>{
+  const c=document.createElement('div');c.className='card';
+  c.style.transform='rotateY('+(i*step)+'deg) translateZ(460px)';
+  c.innerHTML='<div class="art" style="background:'+w[2]+'"></div><b>'+w[0]+'</b><span>'+w[1]+'</span>';
+  ring.appendChild(c);
+});
+let angle=0,drag=false,lx=0,offset=0;
+addEventListener('pointerdown',e=>{drag=true;lx=e.clientX});
+addEventListener('pointermove',e=>{if(drag){angle+=(e.clientX-lx)*.3;lx=e.clientX}});
+addEventListener('pointerup',()=>drag=false);
+function frame(){
+  const max=document.body.scrollHeight-innerHeight;
+  const p=max>0?scrollY/max:0;
+  document.getElementById('prog').style.width=(p*100)+'%';
+  const target=p*(n-1)*step;
+  offset+=(target-offset)*.08;
+  ring.style.transform='rotateY('+(angle+offset)+'deg)';
+  const idx=((Math.round(-(angle+offset)/step)%n)+n)%n;
+  document.getElementById('idx').textContent=String(idx+1).padStart(2,'0');
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

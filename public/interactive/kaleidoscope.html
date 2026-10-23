@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kaleidoscope Painter — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#05060a;cursor:crosshair}
+#cv{position:fixed;inset:0;touch-action:none}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:14px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 16px;backdrop-filter:blur(10px);flex-wrap:wrap;justify-content:center}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:90px;accent-color:#ff6b35}
+.panel button{background:#171b24;border:1px solid #2a3040;color:#cdd4e1;border-radius:999px;padding:7px 11px;
+font:500 10px/1 ui-monospace,monospace;cursor:pointer}
+.panel button:hover{border-color:#ff8a5c;color:#fff}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 23 · KALEIDOSCOPE</span>draw anywhere · <b id="seg">8</b> mirrors · hue <b id="hue">0</b>°</div>
+<div class="panel">
+  <label>MIRRORS <input id="mirrors" type="range" min="3" max="16" value="8"></label>
+  <label>WIDTH <input id="w" type="range" min="1" max="26" value="9"></label>
+  <button id="clear">Clear</button>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);ctx.fillStyle='#05060a';ctx.fillRect(0,0,W,H);}
+fit();addEventListener('resize',fit);
+let drawing=false,lx=0,ly=0,hue=0;
+cv.addEventListener('pointerdown',e=>{drawing=true;lx=e.clientX;ly=e.clientY;draw(e)});
+cv.addEventListener('pointermove',e=>{if(drawing)draw(e)});
+addEventListener('pointerup',()=>drawing=false);
+const mirrors=document.getElementById('mirrors'),wEl=document.getElementById('w');
+function draw(e){
+  const x=e.clientX,y=e.clientY,cx=W/2,cy=H/2;
+  const n=+mirrors.value, seg=Math.PI*2/n;
+  hue=(hue+1.4)%360;
+  ctx.globalCompositeOperation='lighter';
+  ctx.lineCap='round';
+  for(let i=0;i<n;i++){
+    for(const flip of [1,-1]){
+      ctx.save();
+      ctx.translate(cx,cy);ctx.rotate(i*seg);ctx.scale(flip,1);
+      const x1=lx-cx,y1=ly-cy,x2=x-cx,y2=y-cy;
+      ctx.strokeStyle='hsla('+((hue+i*14)%360)+',90%,64%,.5)';
+      ctx.lineWidth=+wEl.value;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+      ctx.restore();
+    }
+  }
+  ctx.globalCompositeOperation='source-over';
+  lx=x;ly=y;
+  document.getElementById('hue').textContent=Math.round(hue);
+  document.getElementById('seg').textContent=n;
+}
+mirrors.addEventListener('input',()=>{document.getElementById('seg').textContent=mirrors.value});
+document.getElementById('clear').onclick=()=>{ctx.fillStyle='#05060a';ctx.fillRect(0,0,W,H)};
+</script>
+</body>
+</html>

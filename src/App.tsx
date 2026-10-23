@@ -1560,6 +1560,7 @@ const TABS = [
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 150 },
   { id: 'addons', label: 'Visual Add-ons', emoji: '✨', count: 25 },
+  { id: 'interactive', label: 'Interactive', emoji: '🕹️', count: 25 },
   { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];
@@ -1575,6 +1576,7 @@ function App() {
     const sync = () => {
       const h = window.location.hash;
       if (h.startsWith('#/addons')) setActiveTab('addons');
+      else if (h.startsWith('#/interactive')) setActiveTab('interactive');
       else if (h.startsWith('#/techniques')) setActiveTab('techniques');
       else if (h === '#/stylesdb') setActiveTab('stylesdb');
       else if (h === '#/styles') setActiveTab('styles');
@@ -1617,6 +1619,7 @@ function App() {
         {activeTab === 'styles' && <DesignStylesTab />}
         {activeTab === 'stylesdb' && <StylesDBTab />}
         {activeTab === 'addons' && <AddonsTab />}
+        {activeTab === 'interactive' && <AddonsTab group="interactive" />}
         {activeTab === 'techniques' && <TechniquesTab />}
       </main>
     </div>

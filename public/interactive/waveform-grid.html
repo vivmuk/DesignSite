@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Waveform Grid — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+#cv{position:fixed;inset:0;touch-action:none}
+.hud{position:fixed;top:16px;left:16px;z-index:10;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}
+.panel{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;display:flex;gap:16px;align-items:center;
+background:#0b0d13d9;border:1px solid #ffffff1f;border-radius:999px;padding:10px 18px;backdrop-filter:blur(10px)}
+.panel label{display:flex;align-items:center;gap:8px;color:#8b95a8;font:500 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+.panel input{width:100px;accent-color:#7fb2ff}</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="hud"><span class="t">INTERACTIVE 04 · WAVEFORM GRID</span>lines <b id="n">48</b> · <b id="fps">60</b> fps</div>
+<div class="panel">
+  <label>AMPLITUDE <input id="amp" type="range" min="0" max="100" value="46"></label>
+  <label>FREQUENCY <input id="freq" type="range" min="4" max="40" value="14"></label>
+</div>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mouse={x:-9999,y:-9999};
+addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+addEventListener('pointerleave',()=>{mouse.x=-9999});
+const amp=document.getElementById('amp'),freq=document.getElementById('freq');
+let t=0,last=performance.now(),fps=60;
+function frame(now){
+  const dt=Math.min((now-last)/1000,.05);last=now;t+=dt;
+  fps+=(1/Math.max(dt,.001)-fps)*.05;
+  ctx.fillStyle='#06070b';ctx.fillRect(0,0,W,H);
+  const lines=48, gap=H/(lines+1), A=+amp.value/100, F=+freq.value*.001;
+  for(let l=0;l<lines;l++){
+    const y0=gap*(l+1);
+    const near=mouse.y<0?0:Math.max(0,1-Math.abs(y0-mouse.y)/260);
+    ctx.beginPath();
+    for(let x=-20;x<=W+20;x+=8){
+      const wave=Math.sin(x*F+t*1.1+l*.22)*A*46 + Math.sin(x*F*.47-t*.7)*A*22;
+      const dy=mouse.x<0?0:Math.exp(-Math.pow((x-mouse.x)/160,2))*near*Math.sin(t*4+x*.01)*54;
+      const y=y0+wave+dy;
+      x===-20?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    const hot=near>.15;
+    ctx.strokeStyle=hot?'rgba(160,200,255,1)':'rgba(150,165,192,.62)';
+    ctx.lineWidth=hot?1.9:1.35;
+    ctx.stroke();
+  }
+  ctx.fillStyle='rgba(255,138,92,.9)';
+  if(mouse.x>=0){ctx.beginPath();ctx.arc(mouse.x,mouse.y,2.4,0,Math.PI*2);ctx.fill();}
+  document.getElementById('fps').textContent=fps|0;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

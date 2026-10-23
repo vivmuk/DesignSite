@@ -132,6 +132,39 @@ Each add-on record carries: `id`, `n`, `name`, `category`, `tagline`, `what`, `w
 6. ✅ Every animated add-on has a `prefers-reduced-motion` branch
 7. ✅ No runtime errors across the 25 demos at 960×800
 
+## Interactive Elements Tab (25)
+
+The Visual Add-ons tab is the finishing layer; the Interactive tab is the part a visitor can grab. These are 25 full-bleed playgrounds — generative canvases, pointer physics, CSS 3D, type experiments, sound and reveal mechanics — each a single self-contained HTML file with no libraries.
+
+### Structure
+
+- **Route**: `#/interactive`, `#/interactive?cat=spatial`, `#/interactive/<id>`
+- **Families**: Generative Art, Pointer & Physics, 3D & Depth, Type & Image, Play & Reveal — five elements each.
+- **Card**: lazy live preview of the actual running piece at a 960×800 desktop viewport, scaled to fit; family chip, intensity dots, tagline, best-on surfaces.
+- **Detail**: full live demo with its own controls, "what it is" / "why it works", surfaces, compatible Styles DB categories, copyable core loop, copyable agent prompt, three related elements, prev/next.
+- **Navigation**: the Interactive tab sits beside Visual Add-ons and cross-links back to it; the Styles DB still recommends the visual finishing layer.
+
+### Data
+
+Each element record carries: `id`, `n`, `name`, `category`, `group: 'interactive'`, `tagline`, `what`, `why`, `surface[]`, `intensity`, `worksWith[]`, a `snippet` holding the core loop, a `prompt`, and a `demo` path under `/interactive/`.
+
+### Performance
+
+- Previews mount only when near the viewport and unmount off-screen.
+- Every canvas caps `devicePixelRatio` at 2 and clears with a low-alpha fill instead of allocating per frame.
+- The Voronoi mosaic is O(n²) and capped at 110 seeds to hold 60fps.
+- Audio only starts after a user gesture; no autoplay.
+
+### Interactive Acceptance Criteria
+
+1. ✅ 25 elements across 5 families, all reachable by filter and search
+2. ✅ Every card runs a live preview that loads lazily and unmounts off-screen
+3. ✅ Every detail page has a working full-size demo, core-loop copy and prompt copy
+4. ✅ All 25 demos interact: drag, click, keyboard or sliders change the output
+5. ✅ Demos are self-contained: no external fonts, images, libraries or network calls
+6. ✅ No runtime errors across the 25 demos at 1280×633 and 960×800
+7. ✅ Touch and pointer input both work; controls remain reachable on narrow viewports
+
 ## Acceptance Criteria
 
 1. ✅ All 30 styles accessible via tabs

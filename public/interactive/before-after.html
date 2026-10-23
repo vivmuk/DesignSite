@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Before / After Slider — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+canvas{display:block}
+button,input{font-family:inherit}
+::selection{background:#ff6b3555}
+body{overflow:hidden;background:#06070b}
+.frame{position:fixed;inset:0}
+.half{position:absolute;inset:0;overflow:hidden}
+.half .art{position:absolute;inset:0;display:grid;place-items:center}
+.after{clip-path:inset(0 0 0 50%)}
+.shot{width:min(70vw,900px);aspect-ratio:16/10;border-radius:8px;position:relative;overflow:hidden;box-shadow:0 40px 100px -30px #000}
+.shot .sun{position:absolute;width:42%;aspect-ratio:1;border-radius:50%;left:12%;top:16%;filter:blur(1px)}
+.shot .hill{position:absolute;left:-10%;right:-10%;bottom:-20%;height:62%;border-radius:50% 50% 0 0/70% 70% 0 0}
+.shot .hill.two{bottom:-32%;height:70%;left:-30%;right:20%;opacity:.9}
+.shot .word{position:absolute;left:6%;bottom:7%;font:900 clamp(30px,6vw,84px)/.9 system-ui,sans-serif;letter-spacing:-.05em}
+.grade-warm .sun{background:radial-gradient(circle at 40% 35%,#fff3d0,#ffb066 60%,#ff5a1f 100%)}
+.grade-warm .hill{background:linear-gradient(180deg,#b8552f,#5a1e12)}
+.grade-warm .hill.two{background:#3a140d}
+.grade-warm .word{color:#f7e9d2}
+.grade-warm{background:linear-gradient(170deg,#ffe0b0,#e0875a 55%,#7a3520)}
+.grade-cool .sun{background:radial-gradient(circle at 40% 35%,#eaf6ff,#8fd0ff 60%,#3d6bff 100%)}
+.grade-cool .hill{background:linear-gradient(180deg,#2f5f8a,#0d2238)}
+.grade-cool .hill.two{background:#081726}
+.grade-cool .word{color:#e8f4ff}
+.grade-cool{background:linear-gradient(170deg,#b8dcff,#5f8fc4 55%,#14263d)}
+.tag{position:absolute;top:18px;font:600 9.5px/1 ui-monospace,monospace;letter-spacing:.2em;color:#ffffffcc;
+background:#00000055;border:1px solid #ffffff2e;border-radius:999px;padding:6px 10px;backdrop-filter:blur(6px)}
+.before .tag{left:18px}
+.after .tag{right:18px}
+.divider{position:absolute;top:0;bottom:0;width:2px;background:#fff;left:50%;z-index:5;box-shadow:0 0 24px #000}
+.handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;
+background:#fff;color:#090a0e;display:grid;place-items:center;font:600 14px/1 ui-monospace,monospace;box-shadow:0 8px 30px #0007;z-index:6}
+#range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:10;margin:0}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;
+padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#8b95a8;backdrop-filter:blur(8px)}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hud b{color:#ff8a5c}</style>
+</head>
+<body>
+<div class="frame" id="frame">
+  <div class="half before"><div class="art"><div class="shot grade-warm"><div class="sun"></div><div class="hill"></div><div class="hill two"></div><div class="word">DUSK</div></div></div><span class="tag">BEFORE · RAW</span></div>
+  <div class="half after" id="after"><div class="art"><div class="shot grade-cool"><div class="sun"></div><div class="hill"></div><div class="hill two"></div><div class="word">DUSK</div></div></div><span class="tag">AFTER · GRADED</span></div>
+  <div class="divider" id="line"><span class="handle">↔</span></div>
+  <input type="range" id="range" min="0" max="100" value="50" aria-label="Comparison position">
+</div>
+<div class="hud"><span class="t">INTERACTIVE 22 · BEFORE / AFTER</span>drag or use arrow keys · <b id="pct">50%</b></div>
+<script>
+const range=document.getElementById('range'),after=document.getElementById('after'),line=document.getElementById('line'),pct=document.getElementById('pct'),frame=document.getElementById('frame');
+function set(v){
+  range.value=v;
+  after.style.clipPath='inset(0 0 0 '+v+'%)';
+  line.style.left=v+'%';
+  pct.textContent=Math.round(v)+'%';
+}
+range.addEventListener('input',()=>set(+range.value));
+frame.addEventListener('pointerdown',e=>{
+  if(e.target===range)return;
+  const r=frame.getBoundingClientRect();
+  set(Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100)));
+});
+</script>
+</body>
+</html>
