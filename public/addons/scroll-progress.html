@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll Progress Rail — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.prog-scene{min-height:260vh;background:linear-gradient(#08090d,#0b0d14 40%,#08090d);padding:0 0 20vh}
+.prog-bar{position:fixed;top:0;left:0;right:0;height:3px;background:#ffffff0d;z-index:20}
+.prog-bar i{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);
+background:linear-gradient(90deg,#ff6b35,#ff2d78,#7a5cff,#4d9fff);box-shadow:0 0 18px #ff6b3588}
+.rail{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:16px;align-items:flex-end}
+.rail button{appearance:none;border:0;background:none;display:flex;align-items:center;gap:9px;color:#6b768c;font:500 10px/1 ui-monospace,monospace;letter-spacing:.12em;cursor:pointer;padding:4px 0}
+.rail button i{width:18px;height:1px;background:#ffffff33;transition:.25s}
+.rail button.on{color:#ffb08a}
+.rail button.on i{width:34px;background:#ff8a5c;box-shadow:0 0 10px #ff6b3588}
+.prog-copy{padding:18vh 8vw 0;max-width:900px}
+.prog-copy .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#ff8a5c;text-transform:uppercase;margin-bottom:22px}
+.prog-copy h1{font-size:clamp(40px,6.4vw,80px);line-height:.97;letter-spacing:-.05em}
+.prog-copy p{color:#9fa8bb;line-height:1.75;font-size:15.5px;max-width:54ch;margin-top:24px}
+.chapter{margin:26vh 8vw 0;max-width:640px;border-left:1px solid #ffffff14;padding-left:26px}
+.chapter .n{font:600 10px/1 ui-monospace,monospace;letter-spacing:.18em;color:#6d7890;margin-bottom:12px}
+.chapter h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.03em;margin-bottom:10px}
+.chapter p{color:#8f99ae;line-height:1.7;font-size:14.5px}
+@media(max-width:700px){.rail{display:none}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 22</b> Scroll Progress Rail</div>
+<main class="prog-scene" id="prog">
+  <div class="prog-bar"><i id="bar"></i></div>
+  <nav class="rail">
+    <button data-to="0" class="on"><span>Intro</span><i></i></button>
+    <button data-to="1"><span>Surface</span><i></i></button>
+    <button data-to="2"><span>Motion</span><i></i></button>
+    <button data-to="3"><span>End note</span><i></i></button>
+  </nav>
+  <section class="prog-copy">
+    <p class="kicker">Interaction / 22 · wayfinding</p>
+    <h1>You always know<br>how far you are.</h1>
+    <p>A 3px gradient rail fills from the top edge and a right-hand chapter list tracks the section in view. Both are driven by one scroll listener.</p>
+  </section>
+  <section class="chapter" id="c1"><p class="n">01 — Surface</p><h2>Progress is reassurance.</h2><p>Long pages lose people at the second fold. A visible measure of remaining distance is the cheapest retention tool on the page.</p></section>
+  <section class="chapter" id="c2"><p class="n">02 — Motion</p><h2>The bar should never stutter.</h2><p>Write scroll position in a rAF callback, not inside the event. The rail stays composited on its own layer.</p></section>
+  <section class="chapter" id="c3"><p class="n">03 — End note</p><h2>Finish the thought.</h2><p>When the bar is full, the reader is exactly where you asked them to be. That is the whole contract.</p></section>
+</main>
+<div class="demo-hint">Scroll — the top rail fills and the chapter list follows the section in view.</div>
+<script>const bar=document.getElementById('bar'), chapters=[...document.querySelectorAll('.chapter')], railBtns=[...document.querySelectorAll('.rail button')];
+let tick=false;
+function upd(){
+  const max=document.documentElement.scrollHeight-innerHeight;
+  bar.style.transform='scaleX('+(max>0?scrollY/max:0)+')';
+  let idx=0;chapters.forEach((c,i)=>{if(c.getBoundingClientRect().top<innerHeight*.45)idx=i+1;});
+  railBtns.forEach((b,i)=>b.classList.toggle('on',i===Math.min(idx,3)));
+  tick=false;
+}
+addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(upd);tick=true;}},{passive:true});
+railBtns.forEach(b=>b.addEventListener('click',()=>{
+  const i=+b.dataset.to;
+  (i===0?document.body:chapters[i-1]).scrollIntoView({behavior:'smooth'});
+}));
+upd();</script>
+</body>
+</html>

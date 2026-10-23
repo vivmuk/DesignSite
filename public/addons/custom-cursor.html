@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Cursor — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.cursor-scene{min-height:100vh;padding:10vh 7vw;background:#07080c;cursor:none;overflow:hidden}
+.cursor-scene a,.cursor-scene button,.cursor-scene .target{cursor:none}
+.cursor-scene .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#ff8a5c;text-transform:uppercase;margin-bottom:22px}
+.cursor-scene h1{font-size:clamp(38px,6vw,72px);line-height:.98;letter-spacing:-.05em;max-width:16ch}
+.cursor-scene p.lede{color:#a0a9bb;max-width:50ch;line-height:1.7;margin-top:20px;font-size:15px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:44px}
+.links a{text-decoration:none;color:#dfe4ee;border:1px solid #ffffff1f;background:#ffffff0a;padding:13px 20px;border-radius:999px;font-size:13px;transition:.2s}
+.links a:hover{background:#ff6b351a;border-color:#ff6b3566;color:#ffb08a}
+.dot,.ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:9999;translate:-50% -50%}
+.dot{width:6px;height:6px;background:#ff8a5c}
+.ring{width:34px;height:34px;border:1px solid #ffffff66;transition:width .2s,height .2s,background .2s,border-color .2s}
+.ring.hot{width:58px;height:58px;background:#ff6b3522;border-color:#ff8a5c99}
+.cursor-note{position:fixed;right:22px;bottom:20px;font:500 10px/1 ui-monospace,monospace;letter-spacing:.12em;color:#5e687d}
+@media(pointer:coarse){.cursor-scene{cursor:auto}.cursor-scene a,.cursor-scene button{cursor:pointer}.dot,.ring{display:none}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 21</b> Custom Cursor</div>
+<main class="cursor-scene" id="scene">
+  <p class="kicker">Interaction / 21 · pointer identity</p>
+  <h1>A cursor with a<br>little gravity.</h1>
+  <p class="lede">A 6px dot tracks the pointer exactly; a 34px ring follows on a lerp and swells to 58px over anything clickable. Disabled on touch devices.</p>
+  <div class="links">
+    <a href="#" class="target">See the work</a>
+    <a href="#" class="target">Read the studio notes</a>
+    <a href="#" class="target">Start a project</a>
+  </div>
+  <span class="cursor-note">POINTER: FINE</span>
+</main>
+<div class="ring" id="ring"></div><div class="dot" id="dot"></div>
+<div class="demo-hint">Move the pointer — the dot is exact, the ring lags and expands over links.</div>
+<script>if(matchMedia('(pointer:fine)').matches){
+  const dot=document.getElementById('dot'), ring=document.getElementById('ring'), scene=document.getElementById('scene');
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener('pointermove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+    const t=e.target.closest('a,button,.target');
+    ring.classList.toggle('hot',!!t);
+  });
+  (function loop(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+  scene.addEventListener('pointerleave',()=>{ring.style.opacity=0;dot.style.opacity=0});
+  scene.addEventListener('pointerenter',()=>{ring.style.opacity=1;dot.style.opacity=1});
+}</script>
+</body>
+</html>

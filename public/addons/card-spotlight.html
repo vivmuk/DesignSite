@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Spotlight — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.cs-scene{min-height:100vh;padding:8vh 6vw;background:#06070a}
+.cs-inner{max-width:1120px;margin:0 auto}
+.cs-head{margin-bottom:40px}
+.cs-head .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#ff8a5c;text-transform:uppercase;margin-bottom:18px}
+.cs-head h1{font-size:clamp(34px,5.2vw,60px);letter-spacing:-.045em;line-height:1}
+.cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cs-card{--mx:50%;--my:0%;position:relative;border-radius:18px;padding:26px;background:#0b0d13;border:1px solid #ffffff12;overflow:hidden;transition:transform .25s,border-color .25s}
+.cs-card::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .25s;
+background:radial-gradient(260px circle at var(--mx) var(--my),#ff6b3526,transparent 65%)}
+.cs-card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;opacity:0;transition:opacity .25s;
+background:radial-gradient(220px circle at var(--mx) var(--my),#ff8a5c99,transparent 70%);
+-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.cs-card:hover{transform:translateY(-3px)}
+.cs-card:hover::before,.cs-card:hover::after{opacity:1}
+.cs-card .ico{position:relative;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#ffffff0a;border:1px solid #ffffff14;color:#ff9b74;margin-bottom:20px;font-size:15px}
+.cs-card h3{position:relative;font-size:17px;letter-spacing:-.02em;margin-bottom:8px}
+.cs-card p{position:relative;color:#8f99ae;font-size:13px;line-height:1.6;margin:0}
+.cs-card .go{position:relative;display:inline-block;margin-top:18px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#69738a}
+.cs-card:hover .go{color:#ffb08a}
+@media(max-width:880px){.cs-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.cs-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 24</b> Card Spotlight</div>
+<main class="cs-scene">
+  <div class="cs-inner">
+    <div class="cs-head"><p class="kicker">Interaction / 24 · hover light</p><h1>Each card lights<br>where you point.</h1></div>
+    <section class="cs-grid">
+      <article class="cs-card"><div class="ico">◈</div><h3>Vector export</h3><p>Pointer position writes two percentages per card. The fill and the border glow share them.</p><span class="go">LEARN MORE →</span></article>
+      <article class="cs-card"><div class="ico">⌗</div><h3>Token mapping</h3><p>One radial gradient at 260px; the border uses the same stops through a mask compositing trick.</p><span class="go">LEARN MORE →</span></article>
+      <article class="cs-card"><div class="ico">✳</div><h3>Motion budget</h3><p>No layout reads in the move handler — only custom properties. The browser keeps it on the compositor.</p><span class="go">LEARN MORE →</span></article>
+      <article class="cs-card"><div class="ico">◐</div><h3>Dark by default</h3><p>The effect is tuned for near-black surfaces, where a 15% warm wash reads as light.</p><span class="go">LEARN MORE →</span></article>
+      <article class="cs-card"><div class="ico">◇</div><h3>Touch fallback</h3><p>Without a fine pointer the cards keep a static top-edge highlight instead of chasing.</p><span class="go">LEARN MORE →</span></article>
+      <article class="cs-card"><div class="ico">⌁</div><h3>Zero dependencies</h3><p>Fourteen lines of pointer handling. No library, no canvas, no request.</p><span class="go">LEARN MORE →</span></article>
+    </section>
+  </div>
+</main>
+<div class="demo-hint">Move across the grid — every card carries its own light.</div>
+<script>document.querySelectorAll('.cs-card').forEach(card=>{
+  card.addEventListener('pointermove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+  });
+});</script>
+</body>
+</html>

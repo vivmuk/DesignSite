@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbital Aura — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.orbital{position:relative;min-height:100vh;display:grid;place-items:center;padding:10vh 6vw;background:#05060a;overflow:hidden}
+.orbital .stars{position:absolute;inset:0;background-image:radial-gradient(#ffffff24 .7px,transparent .7px);background-size:38px 38px;mask-image:radial-gradient(circle at 50% 50%,#000 10%,transparent 72%)}
+.aura-wrap{position:relative;width:min(420px,86vw);isolation:isolate}
+.halo{position:absolute;inset:-26%;z-index:-1;border-radius:50%;
+background:conic-gradient(from 0deg,#ff6b35,#ff2d78,#7a5cff,#4d9fff,#00d4aa,#ff6b35);
+filter:blur(46px);opacity:.8;animation:spin 10s linear infinite}
+.halo2{position:absolute;inset:-8%;z-index:-1;border-radius:50%;border:1px solid #ffffff1f;animation:spin 18s linear infinite reverse}
+.halo2::after{content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 16px #fff}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb-card{position:relative;border-radius:24px;padding:34px 30px 30px;background:#0a0c12f2;border:1px solid #ffffff1a;box-shadow:0 40px 90px -30px #000,inset 0 1px 0 #ffffff1f;backdrop-filter:blur(8px)}
+.orb-card .tag{font:600 10px/1 ui-monospace,monospace;letter-spacing:.2em;color:#ff9b74;text-transform:uppercase}
+.orb-card h2{font-size:30px;letter-spacing:-.03em;margin:16px 0 8px}
+.orb-card .sub{color:#9aa3b6;font-size:13.5px;line-height:1.65;margin-bottom:26px}
+.orb-row{display:flex;align-items:baseline;gap:8px;margin-bottom:24px}
+.orb-row b{font:650 46px/1 ui-monospace,monospace;letter-spacing:-.04em}
+.orb-row span{color:#7f889d;font-size:13px}
+.orb-cta{display:flex;gap:10px}
+.orb-cta a{flex:1;text-align:center;text-decoration:none;border-radius:12px;padding:12px;font-size:13px;font-weight:600;background:#f2f4f8;color:#090a0e}
+.orb-cta a.ghost{background:#ffffff0d;color:#e7ebf3;border:1px solid #ffffff1f}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 05</b> Orbital Aura</div>
+<main class="orbital">
+  <div class="stars"></div>
+  <div class="aura-wrap">
+    <div class="halo"></div><div class="halo2"></div>
+    <article class="orb-card">
+      <p class="tag">Professional · annual</p>
+      <h2>Everything, unlocked.</h2>
+      <p class="sub">A conic gradient rotates behind the card at 10 seconds per turn, blurred into an aura.</p>
+      <div class="orb-row"><b>$24</b><span>/ month, billed yearly</span></div>
+      <div class="orb-cta"><a href="#">Choose plan</a><a href="#" class="ghost">Compare</a></div>
+    </article>
+  </div>
+</main>
+<div class="demo-hint">A rotating conic gradient, blurred to 46px, sits one layer behind the card.</div>
+<script>/* none — pure CSS */</script>
+</body>
+</html>

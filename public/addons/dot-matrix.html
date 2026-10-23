@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dot Matrix — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.matrix{position:relative;min-height:100vh;padding:11vh 7vw;background:#07080c;overflow:hidden;display:grid;align-content:center}
+.matrix::before{content:"";position:absolute;inset:0;
+background-image:radial-gradient(#ffffff55 1.8px,transparent 1.95px);background-size:28px 28px;
+-webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 10%,transparent 72%);
+mask-image:radial-gradient(120% 90% at 50% 0%,#000 10%,transparent 72%)}
+.matrix::after{content:"";position:absolute;inset:0;background:radial-gradient(64% 52% at 50% 4%,#ff6b3530,transparent 72%)}
+.matrix-inner{position:relative;z-index:2;max-width:1120px;margin:0 auto}
+.matrix .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#7f8aa3;text-transform:uppercase;margin-bottom:22px}
+.matrix h1{font-size:clamp(44px,6.6vw,84px);line-height:.96;letter-spacing:-.045em;max-width:14ch}
+.matrix .row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:64px}
+.matrix .cell{border:1px solid #ffffff14;background:#0b0d13cc;border-radius:16px;padding:22px;backdrop-filter:blur(6px);transition:.25s}
+.matrix .cell:hover{border-color:#ff6b3566;transform:translateY(-3px);background:#10131acc}
+.matrix .cell b{display:block;font:600 24px/1 ui-monospace,monospace;color:#ff8a5c;margin-bottom:10px}
+.matrix .cell span{color:#98a1b5;font-size:13px;line-height:1.6}
+@media(max-width:820px){.matrix .row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 03</b> Dot Matrix</div>
+<main class="matrix">
+  <div class="matrix-inner">
+    <p class="kicker">Atmosphere / 03 · technical grid</p>
+    <h1>Precision you can see.</h1>
+    <div class="row">
+      <div class="cell"><b>24px</b><span>The dot pitch. It matches the 8pt spacing scale, so content sits on the grid.</span></div>
+      <div class="cell"><b>72%</b><span>A radial mask fades the field out before it reaches the edges — no hard seam.</span></div>
+      <div class="cell"><b>0 KB</b><span>One repeating radial-gradient. No texture image, no canvas, no request.</span></div>
+    </div>
+  </div>
+</main>
+<div class="demo-hint">One repeating radial-gradient plus a radial mask. Zero image weight.</div>
+<script>/* none — pure CSS */</script>
+</body>
+</html>

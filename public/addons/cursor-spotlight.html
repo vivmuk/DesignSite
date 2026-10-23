@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursor Spotlight — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.spot{--mx:50%;--my:30%;position:relative;min-height:100vh;padding:11vh 7vw;background:#06070a;overflow:hidden}
+.spot::before{content:"";position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(620px circle at var(--mx) var(--my),#ff6b3526,transparent 62%);
+transition:background .08s linear}
+.spot::after{content:"";position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(900px circle at var(--mx) var(--my),#4d9fff12,transparent 60%)}
+.spot-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto}
+.spot .eyebrow{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;text-transform:uppercase;color:#6f7a91;margin-bottom:22px}
+.spot h1{font-size:clamp(40px,6vw,76px);line-height:1;letter-spacing:-.04em;max-width:16ch}
+.spot p.lede{color:#aab2c4;margin-top:22px;max-width:52ch;line-height:1.7;font-size:16px}
+.spot .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:70px}
+.spot .card{position:relative;background:#0b0e14b8;border:1px solid #ffffff12;border-radius:18px;padding:26px 22px;overflow:hidden}
+.spot .card h3{font-size:16px;margin-bottom:9px}
+.spot .card p{color:#8f99ae;font-size:13px;line-height:1.6;margin:0}
+.spot .card .ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#ff6b351f;color:#ff9b74;margin-bottom:18px;font-size:15px}
+@media(max-width:820px){.spot .cards{grid-template-columns:1fr}.spot::before{background:radial-gradient(420px circle at var(--mx) var(--my),#ff6b3522,transparent 62%)}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 04</b> Cursor Spotlight</div>
+<main class="spot" id="spot">
+  <div class="spot-inner">
+    <p class="eyebrow">Atmosphere / 04 · pointer-linked light</p>
+    <h1>Light that follows attention.</h1>
+    <p class="lede">A 620px radial wash tracks your pointer across the section. It is two custom properties and two gradients — and it makes a static page feel responsive to a human.</p>
+    <div class="cards">
+      <article class="card"><div class="ico">◐</div><h3>One listener</h3><p>A single pointermove handler writes --mx and --my on the section. Nothing else re-renders.</p></article>
+      <article class="card"><div class="ico">✳</div><h3>Two temperatures</h3><p>A warm orange core layered over a cool blue bloom keeps the light from looking like a flashlight.</p></article>
+      <article class="card"><div class="ico">⌁</div><h3>Touch-safe</h3><p>The light parks at 50% / 30% on coarse pointers, so mobile users see a composed gradient.</p></article>
+    </div>
+  </div>
+</main>
+<div class="demo-hint">Move your cursor — one listener, two radial gradients, zero re-renders.</div>
+<script>const spot=document.getElementById('spot');
+const fine=matchMedia('(pointer:fine)').matches;
+if(fine){
+  spot.addEventListener('pointermove',e=>{
+    const r=spot.getBoundingClientRect();
+    spot.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(2)+'%');
+    spot.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(2)+'%');
+  });
+}</script>
+</body>
+</html>

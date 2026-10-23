@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halftone Overlay — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.half-scene{position:relative;min-height:100vh;display:grid;place-items:center;overflow:hidden;background:#08090d;padding:8vh 6vw}
+.half-art{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
+.half-art svg{width:min(78vh,90vw);height:min(78vh,90vw);filter:grayscale(1) contrast(1.15)}
+.half-dots{position:absolute;inset:0;pointer-events:none;
+background-image:radial-gradient(#ff6b35 1.6px,transparent 1.7px);
+background-size:var(--pitch,7px) var(--pitch,7px);
+mix-blend-mode:multiply;opacity:.72;
+-webkit-mask-image:radial-gradient(60% 60% at 50% 50%,#000 8%,#0000 76%);
+mask-image:radial-gradient(60% 60% at 50% 50%,#000 8%,#0000 76%);
+transition:background-size .2s}
+.half-copy{position:relative;z-index:3;text-align:center;pointer-events:none}
+.half-copy .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#ff8a5c;text-transform:uppercase;margin-bottom:20px}
+.half-copy h1{font-size:clamp(40px,7vw,84px);line-height:.94;letter-spacing:-.05em;text-shadow:0 6px 40px #000}
+.half-bar{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:12px;background:#0b0d13e6;border:1px solid #ffffff1f;border-radius:999px;padding:9px 16px;font:500 11px/1 ui-monospace,monospace;color:#aab3c4;backdrop-filter:blur(8px)}
+.half-bar input{accent-color:#ff6b35}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 17</b> Halftone Overlay</div>
+<main class="half-scene">
+  <div class="half-art">
+    <svg viewBox="0 0 600 600" aria-label="Abstract face study">
+      <defs><radialGradient id="glow" cx=".42" cy=".36" r=".7"><stop offset="0" stop-color="#f7f3e8"/><stop offset="1" stop-color="#6c7787"/></radialGradient></defs>
+      <rect width="600" height="600" fill="#0d1118"/>
+      <circle cx="300" cy="300" r="235" fill="url(#glow)"/>
+      <ellipse cx="300" cy="285" rx="128" ry="160" fill="#d8d2c4"/>
+      <path d="M172 300 Q152 150 300 126 Q448 150 428 300 Q420 210 300 196 Q180 210 172 300Z" fill="#1a222e"/>
+      <ellipse cx="252" cy="276" rx="17" ry="10" fill="#141a22"/><ellipse cx="348" cy="276" rx="17" ry="10" fill="#141a22"/>
+      <path d="M266 344 Q300 372 334 344" stroke="#141a22" stroke-width="9" fill="none" stroke-linecap="round"/>
+      <path d="M300 292 L286 332 Q300 340 314 332" stroke="#8d8575" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <path d="M120 600 Q180 470 300 462 Q420 470 480 600Z" fill="#232c3a"/>
+    </svg>
+  </div>
+  <div class="half-dots" id="dots"></div>
+  <div class="half-copy">
+    <p class="kicker">Texture / 17 · print screen</p>
+    <h1>Dot gain,<br>on purpose.</h1>
+  </div>
+  <div class="half-bar"><span>PITCH</span><input id="pitch" type="range" min="4" max="14" value="7"><span id="pv">7px</span></div>
+</main>
+<div class="demo-hint">Drag the pitch slider — the dot screen is a single masked radial-gradient.</div>
+<script>const dots=document.getElementById('dots'), pitch=document.getElementById('pitch'), pv=document.getElementById('pv');
+pitch.addEventListener('input',()=>{dots.style.setProperty('--pitch',pitch.value+'px');pv.textContent=pitch.value+'px';});</script>
+</body>
+</html>

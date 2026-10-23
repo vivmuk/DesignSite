@@ -7,6 +7,7 @@ import { ExploreTab } from './components/ExploreTab';
 import { StyleDetailPage } from './components/StyleDetailPage';
 import { GuidesTab } from './components/GuidesTab';
 import { StylesDBTab } from './components/StylesDBTab';
+import { AddonsTab } from './components/AddonsTab';
 import { TechniquesTab } from './components/TechniquesTab';
 import { Top200Tab } from './components/Top200Tab';
 import { TopSiteDetail } from './components/TopSiteDetail';
@@ -1558,6 +1559,7 @@ function WebsitePreview({
 const TABS = [
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 150 },
+  { id: 'addons', label: 'Visual Add-ons', emoji: '✨', count: 25 },
   { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];
@@ -1566,6 +1568,21 @@ function App() {
   const [activeTab, setActiveTab] = useState<string>('styles');
   const [selectedStyle, setSelectedStyle] = useState<EnrichedStyle | null>(null);
   const [selectedSite, setSelectedSite] = useState<any | null>(null);
+
+  // Deep links from the Styles DB detail page (and from add-on cross-links)
+  // switch the visible tab even though tab state is local.
+  useEffect(() => {
+    const sync = () => {
+      const h = window.location.hash;
+      if (h.startsWith('#/addons')) setActiveTab('addons');
+      else if (h.startsWith('#/techniques')) setActiveTab('techniques');
+      else if (h === '#/stylesdb') setActiveTab('stylesdb');
+      else if (h === '#/styles') setActiveTab('styles');
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
 
   const handleSelectStyle = (style: EnrichedStyle) => {
     setSelectedStyle(style);
@@ -1599,6 +1616,7 @@ function App() {
           : <Top200Tab onSelectSite={handleSelectSite} />)}
         {activeTab === 'styles' && <DesignStylesTab />}
         {activeTab === 'stylesdb' && <StylesDBTab />}
+        {activeTab === 'addons' && <AddonsTab />}
         {activeTab === 'techniques' && <TechniquesTab />}
       </main>
     </div>

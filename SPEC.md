@@ -106,6 +106,32 @@ Each style includes:
 }
 ```
 
+## Visual Add-ons Tab (25)
+
+The Styles DB defines a page's direction. The Visual Add-ons library is the finishing layer that sits on top: atmosphere, surface depth, motion, type treatments, and interaction chrome. Every add-on is style-agnostic — it drops into any of the 150 directions.
+
+### Structure
+
+- **Route**: `#/addons`, `#/addons?cat=motion`, `#/addons/<id>`
+- **Categories**: Atmosphere, Surface & Depth, Motion, Type & Texture, Chrome & Interaction — five add-ons each.
+- **Card**: lazy live preview rendered at a 960×800 desktop viewport and scaled to fit, category chip, intensity dots, tagline, best-on surfaces.
+- **Detail**: full live demo, "what it is" / "why it works", surfaces, compatible Styles DB categories, copyable drop-in snippet, copyable agent prompt, three related add-ons, prev/next.
+- **Styles DB integration**: each style detail page lists six add-ons that suit its category, deep-linking to the add-on detail.
+
+### Data
+
+Each add-on record carries: `id`, `n`, `name`, `category`, `tagline`, `what`, `why`, `surface[]`, `intensity`, `worksWith[]` (Styles DB categories), a self-contained `snippet`, an `agentPrompt`, and a `demo` path under `/addons/`.
+
+### Acceptance Criteria
+
+1. ✅ 25 add-ons across 5 categories, all reachable by filter and search
+2. ✅ Every card has a live preview that loads lazily and unmounts off-screen
+3. ✅ Every detail page has a working full-size demo, snippet copy and prompt copy
+4. ✅ Styles DB detail pages recommend add-ons for the selected style
+5. ✅ Demos are self-contained: no external fonts, images, libraries or network calls
+6. ✅ Every animated add-on has a `prefers-reduced-motion` branch
+7. ✅ No runtime errors across the 25 demos at 960×800
+
 ## Acceptance Criteria
 
 1. ✅ All 30 styles accessible via tabs

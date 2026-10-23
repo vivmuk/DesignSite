@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora Mesh — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.aurora{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:12vh 6vw;overflow:hidden;background:#06070b}
+.aurora .blob{position:absolute;width:52vw;height:52vw;min-width:420px;min-height:420px;border-radius:50%;filter:blur(70px);opacity:.68;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite alternate}
+.b1{background:#ff5a1f;top:-18%;left:-8%}
+.b2{background:#3b5bff;bottom:-26%;right:-6%;animation-duration:28s;animation-delay:-7s}
+.b3{background:#00d4aa;top:22%;right:18%;width:34vw;height:34vw;opacity:.4;animation-duration:19s;animation-delay:-12s}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(7vw,5vh,0) scale(1.16)}100%{transform:translate3d(-5vw,-4vh,0) scale(.94)}}
+.aurora::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 50%,transparent 20%,#06070bee 100%)}
+.aurora-copy{position:relative;z-index:2;max-width:780px}
+.aurora .eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid #ffffff22;background:#ffffff0d;border-radius:999px;padding:8px 14px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#c8cede;margin-bottom:28px}
+.aurora .eyebrow i{width:6px;height:6px;border-radius:50%;background:#3ddc84;box-shadow:0 0 12px #3ddc84}
+.aurora h1{font-size:clamp(48px,8.4vw,104px);line-height:.92;letter-spacing:-.05em;font-weight:620;text-shadow:0 2px 40px #00000066}
+.aurora p{margin:26px auto 0;max-width:52ch;color:#b9c0d0;font-size:16.5px;line-height:1.7}
+.aurora .cta{margin-top:36px;display:inline-flex;gap:10px}
+.aurora .cta a{color:#0a0b0f;background:#f4f6fa;border-radius:999px;padding:14px 24px;font-size:13.5px;font-weight:650;text-decoration:none}
+.aurora .cta a.ghost{background:#ffffff10;color:#eef1f7;border:1px solid #ffffff26}
+@media(max-width:700px){.b3{display:none}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 02</b> Aurora Mesh</div>
+<main class="aurora">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="aurora-copy">
+    <span class="eyebrow"><i></i>System operational</span>
+    <h1>Infrastructure<br>that glows.</h1>
+    <p>Three blurred light sources drift behind the headline at different speeds. No images, no video — four divs and one keyframe.</p>
+    <div class="cta"><a href="#">Start building</a><a href="#" class="ghost">Read the docs</a></div>
+  </div>
+</main>
+<div class="demo-hint">Four blurred radial blobs, 19–28s drift cycles, screen blend. Pure CSS.</div>
+<script>/* none — pure CSS */</script>
+</body>
+</html>

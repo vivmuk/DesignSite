@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
+import { addonsForStyleCategory, addonCategories } from '../data/visualAddons';
 
 interface DBStyle {
   n: number; id: string; name: string; category: string; tagline: string;
@@ -217,6 +218,30 @@ export function StylesDBTab() {
             <a className="db-btn primary" href={selected.spec_url} target="_blank" rel="noopener">📄 Open spec sheet ↗</a>
             <a className="db-btn" href={`${API}/styles/${selected.id}/prompt`} target="_blank" rel="noopener">🔌 Agent prompt (JSON) ↗</a>
             <a className="db-btn" href={`${API}/styles/${selected.id}/html`} target="_blank" rel="noopener">🏗️ HTML shell ↗</a>
+          </div>
+        </div>
+
+        <div className="db-addons">
+          <div className="db-addons-head">
+            <div>
+              <h3>Visual add-ons for this direction</h3>
+              <p>These layer on top of the style rather than changing it — pick one atmosphere, one surface, one motion at most.</p>
+            </div>
+            <a className="db-btn" href="#/addons">All 25 add-ons ↗</a>
+          </div>
+          <div className="db-addons-grid">
+            {addonsForStyleCategory(selected.category).map(ad => {
+              const ac = addonCategories.find(c => c.id === ad.category)!;
+              return (
+                <a key={ad.id} className="db-addon" href={`#/addons/${ad.id}`}>
+                  <span className="db-addon-num" style={{ color: ac.color, borderColor: ac.color + '44', background: ac.color + '14' }}>
+                    {String(ad.n).padStart(2, '0')}
+                  </span>
+                  <span className="db-addon-copy"><b>{ad.name}</b><span>{ad.tagline}</span></span>
+                  <span className="db-addon-cat">{ac.emoji}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
 

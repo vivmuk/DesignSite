@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Success Burst — vivDesign add-on</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#08090c;color:#eceef2;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+scrollbar-width:thin;scrollbar-color:#2a3140 #0b0d13;overscroll-behavior:contain;
+-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img,svg{max-width:100%}
+a,button{font-family:inherit}
+::selection{background:#ff6b35;color:#140803}
+.demo-tag{position:fixed;top:14px;left:14px;z-index:9000;display:inline-flex;align-items:center;gap:8px;
+font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;
+color:#98a2b6;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:999px;padding:8px 12px;
+backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none}
+.demo-tag b{color:#ff8a5c;letter-spacing:.14em}
+.demo-hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9000;
+font-size:11.5px;line-height:1.45;color:#a2abbd;background:#0b0d13e0;border:1px solid #ffffff17;
+padding:9px 15px;border-radius:999px;backdrop-filter:blur(10px);text-align:center;max-width:90vw;pointer-events:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:#0b0d13}
+::-webkit-scrollbar-thumb{background:#2a3140;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+@media(max-width:600px){.demo-hint{font-size:10.5px;padding:7px 12px}.demo-tag{font-size:8.5px;padding:7px 10px}}
+
+
+.burst-scene{min-height:100vh;display:grid;place-items:center;padding:10vh 6vw;background:radial-gradient(70% 60% at 50% 30%,#12151f,#06070a 70%);text-align:center}
+.burst-copy{max-width:620px}
+.burst-copy .kicker{font:600 10px/1 ui-monospace,monospace;letter-spacing:.24em;color:#ff8a5c;text-transform:uppercase;margin-bottom:22px}
+.burst-copy h1{font-size:clamp(34px,5.6vw,62px);line-height:1;letter-spacing:-.05em}
+.burst-copy p{color:#9fa8bb;line-height:1.7;margin:20px auto 38px;max-width:44ch;font-size:15px}
+.burst-wrap{position:relative;display:inline-block}
+.save{border:0;cursor:pointer;border-radius:999px;padding:17px 30px;background:#ff6b35;color:#160a04;font:700 14px/1 inherit;transition:.25s;box-shadow:0 16px 46px -16px #ff6b35aa;position:relative;z-index:2}
+.save:hover{background:#ff8256;transform:translateY(-1px)}
+.save.done{background:#3ddc84;color:#04220f;box-shadow:0 16px 46px -16px #3ddc84aa}
+.particles{position:absolute;inset:0;pointer-events:none;z-index:3}
+.p{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:2px;opacity:0;
+animation:fly .95s cubic-bezier(.12,.7,.2,1) forwards}
+@keyframes fly{
+  0%{opacity:1;transform:translate(-50%,-50%) rotate(0) scale(1)}
+  70%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(.4)}
+}
+.burst-note{margin-top:26px;color:#5f6a80;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em}
+@media(prefers-reduced-motion:reduce){.p{animation:none;display:none}}
+</style>
+</head>
+<body>
+<div class="demo-tag"><b>ADD-ON 25</b> Success Burst</div>
+<main class="burst-scene">
+  <div class="burst-copy">
+    <p class="kicker">Interaction / 25 · micro-celebration</p>
+    <h1>Small win,<br>made visible.</h1>
+    <p>On success, 26 particles leave the button at randomised angles and gravity, while the control itself changes state and colour.</p>
+    <div class="burst-wrap" id="wrap">
+      <button class="save" id="save">Save changes</button>
+      <div class="particles" id="particles"></div>
+    </div>
+    <p class="burst-note" id="note">CLICK TO COMPLETE</p>
+  </div>
+</main>
+<div class="demo-hint">Click save — randomised particles, then the button settles into its success state.</div>
+<script>const btn=document.getElementById('save'), wrap=document.getElementById('wrap'), field=document.getElementById('particles'), note=document.getElementById('note');
+const colors=['#ff6b35','#ff2d78','#7a5cff','#4d9fff','#3ddc84','#ffd166'];
+btn.addEventListener('click',()=>{
+  if(btn.classList.contains('done')){btn.classList.remove('done');btn.textContent='Save changes';note.textContent='CLICK TO COMPLETE';return;}
+  btn.classList.add('done');btn.textContent='✓ Saved';
+  note.textContent='26 PARTICLES · 950MS';
+  for(let i=0;i<26;i++){
+    const p=document.createElement('i');p.className='p';
+    const a=Math.random()*Math.PI*2, d=60+Math.random()*110;
+    p.style.setProperty('--x',(Math.cos(a)*d).toFixed(1)+'px');
+    p.style.setProperty('--y',(Math.sin(a)*d+30).toFixed(1)+'px');
+    p.style.setProperty('--r',(Math.random()*540-270|0)+'deg');
+    p.style.background=colors[i%colors.length];
+    p.style.animationDelay=(Math.random()*.08).toFixed(2)+'s';
+    field.appendChild(p);
+    setTimeout(()=>p.remove(),1200);
+  }
+});</script>
+</body>
+</html>
