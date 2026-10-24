@@ -67,7 +67,7 @@ function frame(dt){
   if(mx.x>0){m.beginPath();m.arc(mx.x,mx.y,52,0,TAU);m.fill();}
   m.globalCompositeOperation='source-over';ctx.drawImage(mask,0,0);
   if(mx.x>0)erased=Math.min(1,erased+dt*.25);
-  ctx.fillStyle=P[4];ctx.font='600 12px ui-monospace,monospace';ctx.fillText('scratch ' + Math.round(erased*100) + '%',16,H-18);
+  ctx.fillStyle=P[4];ctx.font='600 12px ui-monospace,monospace';ctx.fillText('keep scratching',16,H-18);
   stat('scratch to reveal');return;}
  if(V==='constellation'){if(mx.down){if(dragIdx<0){let best=40;stars.forEach((s,i)=>{const d=Math.hypot(s.x-mx.x,s.y-mx.y);if(d<best){best=d;dragIdx=i;}});}if(dragIdx>=0){stars[dragIdx].x=mx.x;stars[dragIdx].y=mx.y;}}else dragIdx=-1;
   for(const s of stars){s.x+=Math.sin(t+s.ph)*6*dt;s.y+=Math.cos(t*1.2+s.ph)*6*dt;const dx=s.x-mx.x,dy=s.y-mx.y,d=Math.hypot(dx,dy)||1;if(d<130&&s!==stars[dragIdx]){s.x+=dx/d*40*dt;s.y+=dy/d*40*dt;}}

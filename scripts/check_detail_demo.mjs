@@ -19,8 +19,11 @@ for (const id of ids) {
   if (!box || box.height < 300) { console.log(`FAIL ${id}: iframe too small ${JSON.stringify(box)}`); failed++; continue; }
   const before = await frame.evaluate(() => document.querySelector('canvas')?.toDataURL().length || 0);
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
   await page.mouse.move(box.x + box.width * .7, box.y + box.height * .35, { steps: 8 });
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(250);
+  await page.mouse.up();
+  await page.waitForTimeout(500);
   const after = await frame.evaluate(() => document.querySelector('canvas')?.toDataURL().length || 0);
   const stat = await frame.evaluate(() => document.querySelector('#stat')?.textContent || null);
   const ok = after > 6000 && before !== after;

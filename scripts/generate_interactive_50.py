@@ -271,7 +271,7 @@ DEMOS = [
      ["Launch", "Sale", "Game"], "bold", ["expressive", "immersive-3d", "dark-tech"]),
     ("scratch-to-reveal", "Scratch to Reveal", "grid", "play", "sunset",
      "Scratch a surface away to uncover the image behind it.",
-     "A dot mask is erased around the pointer with a soft brush; coverage is sampled to show a percentage.",
+     "A foil mask is erased around the pointer with a soft brush, revealing the artwork underneath.",
      "Reveal mechanics create participation — the visitor does the work and remembers the result.",
      ["Promo", "Announcement", "Gallery"], "bold", ["cultural", "expressive", "contemporary"]),
     ("slot-machine-glyphs", "Slot Machine Glyphs", "type", "play", "candy",
