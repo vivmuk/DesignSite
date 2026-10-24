@@ -44,14 +44,21 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-const COLS=46,ROWS=27;let pts=[];
+const V='interference';
+const COLS=46,ROWS=27;let pts=[],imp=0,impX=0,impY=0,pressure=0;
 function reset(){pts=[];for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)pts.push({hx:x/(COLS-1),hy:y/(ROWS-1),x:0,y:0});}
-reset();addEventListener('resize',()=>{});
-function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);
+reset();
+function frame(dt){
+ ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);
  const s1=[W*.3+Math.cos(t*.4)*W*.15,H*.35+Math.sin(t*.5)*H*.15],s2=[W*.72,H*.62+Math.cos(t*.35)*H*.2];
+ if(V==='seismo'){const mx0=mx.x,my0=mx.y;if(Math.hypot(mx0-impX,my0-impY)>6){imp=Math.min(1,imp+dt*8);impX=mx0;impY=my0;}imp=Math.max(0,imp-dt*1.5);}
+ if(V==='pressure'){pressure+=((mx.down?1:0)-pressure)*Math.min(1,dt*6);}
  for(const p of pts){const bx=p.hx*W,by=p.hy*H;
-  const d1=Math.hypot(bx-s1[0],by-s1[1]),d2=Math.hypot(bx-s2[0],by-s2[1]),dm=Math.hypot(bx-mx.x,by-mx.y);
-  const w=Math.sin(d1*.03-t*2)*10+Math.sin(d2*.026+t*1.6)*8+Math.sin(dm*.05-t*3)*14*Math.max(0,1-dm/300);
+  const d1=Math.hypot(bx-s1[0],by-s1[1]),d2=Math.hypot(bx-s2[0],by-s2[1]);
+  let w=Math.sin(d1*.03-t*2)*10+Math.sin(d2*.026+t*1.6)*8;
+  if(V==='seismo'){const dm=Math.hypot(bx-impX,by-impY);w+=Math.sin(dm*.06-t*8)*40*imp*Math.max(0,1-dm/520);}
+  else if(V==='pressure'){const dm=Math.hypot(bx-mx.x,by-mx.y);w+=Math.cos(dm*.04-t*3)*70*pressure*Math.max(0,1-dm/460);}
+  else{const dm=Math.hypot(bx-mx.x,by-mx.y);w+=Math.sin(dm*.05-t*3)*14*Math.max(0,1-dm/300);}
   p.x=bx;p.y=by+w;}
  ctx.lineWidth=1;
  for(let r=0;r<ROWS;r++){ctx.strokeStyle=P[2];ctx.globalAlpha=.35;ctx.beginPath();for(let c=0;c<COLS;c++){const p=pts[r*COLS+c];c?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);}ctx.stroke();}

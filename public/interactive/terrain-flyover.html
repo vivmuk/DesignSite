@@ -44,14 +44,21 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-const LAYERS=9;
+const V='flyover',LAYERS=9;
 function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);
+ if(V==='scan'){for(let l=LAYERS-1;l>=0;l--){const y0=H*(.16+l*.09),amp=16+l*5;
+  const pts=[];for(let x=0;x<=W;x+=8){const y=y0+Math.sin(x*.0028+t*.7+l)*amp+Math.cos(x*.006-t*.4)*amp*.4;pts.push([x,y]);}
+  ctx.beginPath();ctx.moveTo(0,H);pts.forEach(p=>ctx.lineTo(p[0],p[1]));ctx.lineTo(W,H);ctx.closePath();
+  ctx.fillStyle=P[1+Math.min(P.length-2,l%3)];ctx.globalAlpha=.10+l*.02;ctx.fill();
+  ctx.strokeStyle=P[3];ctx.globalAlpha=.5;ctx.lineWidth=1;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();}
+  const sx=(t*140)%W;ctx.globalAlpha=.7;ctx.strokeStyle=P[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,0);ctx.lineTo(sx,H);ctx.stroke();
+  ctx.globalAlpha=1;stat('scanning');return;}
  for(let l=LAYERS-1;l>=0;l--){const y0=H*(.22+l*.085),amp=18+l*5,sp=.0018+l*.0007;
-  ctx.beginPath();for(let x=0;x<=W;x+=8){const dm=Math.hypot(x-mx.x,y0-mx.y);const dent=Math.max(0,1-dm/240)*60;
-   const y=y0+Math.sin(x*sp+t*(.6+l*.08)+l)*amp+Math.cos(x*sp*2.3-t*.4)*amp*.4+dent;
-   x?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+  const off=V==='flyover'?t*(40+l*28):0;
+  ctx.beginPath();for(let x=0;x<=W;x+=8){const xx=x+off;const dm=Math.hypot(x-mx.x,y0-mx.y);const dent=Math.max(0,1-dm/240)*(V==='flyover'?20:60);
+   const y=y0+Math.sin(xx*sp+l)*amp+Math.cos(xx*sp*2.3-t*.4)*amp*.4+dent;x?ctx.lineTo(x,y):ctx.moveTo(x,y);}
   ctx.strokeStyle=P[1+Math.min(P.length-2,l%3)];ctx.globalAlpha=.35+l*.05;ctx.lineWidth=1+l*.18;ctx.stroke();}
- ctx.globalAlpha=1;stat(LAYERS+' contours');}
+ ctx.globalAlpha=1;stat(LAYERS+(V==='flyover'?' parallax layers':' contours'));}
 
 function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
  if(!paused){t+=dt;frame(dt);}

@@ -44,15 +44,29 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-const ps=[];const MAX=1100;
-function spawn(x,y,n){for(let i=0;i<n;i++){if(ps.length>=MAX)ps.shift();const a=rnd(TAU);const sp=rnd(260,20);ps.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-rnd(90),life:1,r:rnd(3.4,.8),c:P[1+Math.floor(Math.random()*(P.length-2))]});}}
-function frame(dt){ctx.fillStyle='rgba(6,6,10,.16)';ctx.fillRect(0,0,W,H);
- if(mx.x>0&&mx.y>0)spawn(mx.x,mx.y,mx.down?7:2);
- if(Math.random()<.5)spawn(W/2,H+10,1);
- for(let i=ps.length-1;i>=0;i--){const p=ps[i];p.vy+=240*dt;p.vx*=1-dt*.7;p.vy*=1-dt*.25;p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt*.5;
-  if(p.life<=0||p.y>H+40){ps.splice(i,1);continue;}
-  ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r*p.life,0,TAU);ctx.fill();}
- ctx.globalAlpha=1;stat(ps.length+' particles');}
+const V='fountain';
+const ps=[];const MAX=1400;let pmx=mx.x,pmy=mx.y,hist=[],amb=0,idle=0;
+function spawn(x,y,n,opts){for(let i=0;i<n;i++){if(ps.length>=MAX)ps.shift();const a=opts?.a??rnd(TAU),sp=opts?.sp??rnd(260,20);
+ ps.push({x,y,vx:Math.cos(a)*sp+(opts?.vx||0),vy:Math.sin(a)*sp+(opts?.vy||0),life:opts?.life??1,r:opts?.r??rnd(3.4,.8),rot:rnd(TAU),vr:rnd(8,-8),c:P[1+Math.floor(Math.random()*(P.length-2))],rect:opts?.rect});}}
+function frame(dt){ctx.fillStyle='rgba(6,6,10,'+(V==='sparkler'?.22:.16)+')';ctx.fillRect(0,0,W,H);
+ if(V==='comet'){const ix=mx.x>0?mx.x:W/2+Math.cos(t*.8)*W*.24,iy=mx.y>0?mx.y:H/2+Math.sin(t*1.1)*H*.2;
+  hist.push({x:ix,y:iy});if(hist.length>22)hist.shift();
+  const p=hist[Math.floor(Math.random()*hist.length)];if(isFinite(p.x))spawn(p.x+rnd(6,-6),p.y+rnd(6,-6),5,{sp:rnd(60,6),life:rnd(1.4,.7),r:rnd(4.6,2)});}
+ else if(V==='confetti'){amb+=dt;const rate=mx.down?.12:.3;
+  if(Math.floor(t*2)!==Math.floor((t-dt)*2)){for(let i=0;i<18;i++)spawn(W/2+Math.cos(t*3)*30,H-14,1,{sp:rnd(420,180),a:rnd(-Math.PI*.82,-Math.PI*.18),vy:-80,rect:true,r:rnd(10,5),life:rnd(2.4,1.4)});}
+  while(amb>rate){amb-=rate;for(let i=0;i<9;i++)spawn(rnd(W),-10,1,{sp:rnd(90,20),a:rnd(Math.PI*.15,Math.PI*.85),vy:rnd(10,-40),rect:true,r:rnd(11,6),life:rnd(2.6,1.6)});}
+  if(mx.x>0)spawn(mx.x,mx.y,mx.down?8:3,{sp:rnd(360,140),a:rnd(-Math.PI*.9,-Math.PI*.1),vy:-140,rect:true,r:rnd(11,6),life:rnd(2.2,1.2)});}
+ else if(V==='sparkler'){idle+=dt;const spd=Math.hypot(mx.x-pmx,mx.y-pmy)/Math.max(dt,.001);const n=Math.min(6,Math.floor(spd/90));
+  if(mx.x>0)spawn(mx.x,mx.y,n,{sp:rnd(60,10),life:rnd(.8,.3),r:rnd(2.4,.8)});
+  else if(idle>.02){idle=0;const ix=W/2+Math.cos(t*.9)*W*.22,iy=H/2+Math.sin(t*1.3)*H*.18;spawn(ix,iy,6,{sp:rnd(80,12),life:rnd(1.3,.5),r:rnd(4.6,2)});}}
+ else{if(mx.x>0)spawn(mx.x,mx.y,mx.down?7:2,{sp:rnd(260,20),a:rnd(TAU),vy:-60,life:1});if(Math.random()<.5)spawn(W/2,H+10,1,{sp:rnd(60,-60),vy:-rnd(160,80)});}
+ pmx=mx.x;pmy=mx.y;
+ for(let i=ps.length-1;i>=0;i--){const p=ps[i];p.vy+=240*dt;p.vx*=1-dt*.7;p.vy*=1-dt*(p.rect?.8:.25);p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt*(p.rect?.35:.5);p.rot+=p.vr*dt;
+  if(p.life<=0||p.y>H+60){ps.splice(i,1);continue;}
+  ctx.globalAlpha=Math.max(0,Math.min(1,p.life));ctx.fillStyle=p.c;
+  if(p.rect){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.fillRect(-p.r,-p.r*.55,p.r*2,p.r*1.1);ctx.restore();}
+  else{ctx.beginPath();ctx.arc(p.x,p.y,p.r*Math.max(.2,p.life),0,TAU);ctx.fill();}}
+ ctx.globalAlpha=1;stat(ps.length+(V==='comet'?' comet tails':V==='confetti'?' confetti':V==='sparkler'?' sparks':' particles'));}
 
 function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
  if(!paused){t+=dt;frame(dt);}

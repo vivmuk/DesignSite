@@ -45,8 +45,10 @@ pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
 const trail=[];
+for(let i=0;i<700;i++){const tt=-12+i*.017;trail.push({x:W/2+Math.sin(tt*.73)*W*.28+Math.sin(tt*1.91)*W*.09,y:H/2+Math.cos(tt*.61)*H*.3+Math.cos(tt*2.23)*H*.08});}
 function frame(dt){ctx.fillStyle='rgba(5,6,10,.055)';ctx.fillRect(0,0,W,H);
- const cx=W/2,cy=H/2;const p={x:cx+Math.sin(t*.73)*W*.28+Math.sin(t*1.91)*W*.09,y:cy+Math.cos(t*.61)*H*.3+Math.cos(t*2.23)*H*.08};
+ const cx=W/2+(mx.x-W/2)*.1,cy=H/2+(mx.y-H/2)*.1;
+ const p={x:cx+Math.sin(t*.73)*W*.28+Math.sin(t*1.91)*W*.09,y:cy+Math.cos(t*.61)*H*.3+Math.cos(t*2.23)*H*.08};
  trail.push(p);if(trail.length>2600)trail.shift();
  for(let i=1;i<trail.length;i++){const a=i/trail.length;ctx.strokeStyle=P[1+Math.floor(a*(P.length-2))];ctx.globalAlpha=a*.55;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(trail[i-1].x,trail[i-1].y);ctx.lineTo(trail[i].x,trail[i].y);ctx.stroke();}
  ctx.globalAlpha=1;ctx.fillStyle=P[4];ctx.beginPath();ctx.arc(p.x,p.y,2.6,0,TAU);ctx.fill();stat(trail.length+' points');}

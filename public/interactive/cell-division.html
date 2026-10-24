@@ -44,13 +44,16 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-const bs=[];for(let i=0;i<11;i++)bs.push({x:rnd(W),y:rnd(H),r:rnd(150,70),vx:rnd(30,-30),vy:rnd(30,-30),c:P[2+i%3]});
+const V='division';
+let bs=[];for(let i=0;i<11;i++)bs.push({x:rnd(W),y:rnd(H),r:rnd(150,70),vx:rnd(30,-30),vy:rnd(30,-30),c:P[2+i%2],split:0});
 function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);ctx.globalCompositeOperation='lighter';
- const all=bs.concat([{x:mx.x,y:mx.y,r:mx.down?190:120,c:P[3]}]);
- for(const b of all){if(b!==all[all.length-1]){b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.x<0||b.x>W)b.vx*=-1;if(b.y<0||b.y>H)b.vy*=-1;}
+ if(V==='division'&&mx.down&&bs.length<26){for(const b of bs){if(Math.hypot(b.x-mx.x,b.y-mx.y)<b.r&&b.split<=0&&Math.random()<.08){b.split=2;b.r*=.55;bs.push({x:b.x+rnd(40,-40),y:b.y+rnd(40,-40),r:b.r,vx:rnd(30,-30),vy:rnd(30,-30),c:P[2],split:1});}}}
+ const all=bs.concat([{x:mx.x,y:mx.y,r:mx.down?180:110,c:P[3]}]);
+ for(const b of all){const free=b!==all[all.length-1];
+  if(free){b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.x<0||b.x>W)b.vx*=-1;if(b.y<0||b.y>H)b.vy*=-1;if(b.split>0)b.split-=dt;}
   const g=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);g.addColorStop(0,b.c+'cc');g.addColorStop(.55,b.c+'44');g.addColorStop(1,b.c+'00');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,TAU);ctx.fill();}
- ctx.globalCompositeOperation='source-over';stat(all.length+' fields');}
+ ctx.globalCompositeOperation='source-over';stat(all.length+(V==='division'?' cells':' fields'));}
 
 function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
  if(!paused){t+=dt;frame(dt);}

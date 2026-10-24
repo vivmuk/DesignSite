@@ -44,8 +44,7 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);const cx=W/2,cy=H/2;
- const S=6;ctx.save();ctx.translate(cx,cy);
+function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);const cx=W/2,cy=H/2;const S=6;ctx.save();ctx.translate(cx,cy);
  for(let s=0;s<S;s++){ctx.save();ctx.rotate(s*TAU/S+t*.06);if(s%2)ctx.scale(1,-1);
   for(let i=0;i<5;i++){const r=Math.min(W,H)*.16+i*14;const a=t*.5+i*.7;
    ctx.fillStyle=P[2+(i%3)];ctx.globalAlpha=.4;ctx.beginPath();ctx.ellipse(Math.cos(a)*r,Math.sin(a*.8)*r,r*.28,r*.12,a,0,TAU);ctx.fill();

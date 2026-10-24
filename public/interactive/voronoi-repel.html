@@ -44,18 +44,21 @@ function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseB
 pauseBtn.addEventListener('click',()=>setPaused(!paused));
 addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
 
-let sites=[];const N=190;
-for(let i=0;i<N;i++)sites.push({x:rnd(W),y:rnd(H),ph:rnd(TAU)});
+const V='repel';
+let sites=[];for(let i=0;i<190;i++)sites.push({x:rnd(W),y:rnd(H),ph:rnd(TAU)});
 function clip(poly,ax,ay,nx,ny){const out=[];for(let i=0;i<poly.length;i++){const p=poly[i],q=poly[(i+1)%poly.length];const dp=(p[0]-ax)*nx+(p[1]-ay)*ny,dq=(q[0]-ax)*nx+(q[1]-ay)*ny;if(dp<=0)out.push(p);if(dp*dq<0){const k=dp/(dp-dq);out.push([p[0]+(q[0]-p[0])*k,p[1]+(q[1]-p[1])*k]);}}return out;}
 function cell(s){let poly=[[0,0],[W,0],[W,H],[0,H]];for(const o of sites){if(o===s)continue;poly=clip(poly,(s.x+o.x)/2,(s.y+o.y)/2,o.x-s.x,o.y-s.y);if(poly.length<3)break;}return poly;}
 function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);let n=0;
- for(const s of sites){s.ph+=dt*.7;s.x+=Math.sin(s.ph)*7*dt;s.y+=Math.cos(s.ph*1.3)*7*dt;
-  const dx=s.x-mx.x,dy=s.y-mx.y,d=Math.hypot(dx,dy);if(d<150&&d>1){const f=(1-d/150)*300;s.x+=dx/d*f*dt;s.y+=dy/d*f*dt;}
+ for(const s of sites){const slow=V==='crystal'?.2:.7,jit=V==='crystal'?2:8;
+  s.ph+=dt*slow;s.x+=Math.sin(s.ph)*jit*dt;s.y+=Math.cos(s.ph*1.3)*jit*dt;
+  if(V!=='crystal'){const dx=s.x-mx.x,dy=s.y-mx.y,d=Math.hypot(dx,dy);if(d<160&&d>1){const f=(1-d/160)*340;s.x+=dx/d*f*dt;s.y+=dy/d*f*dt;}}
   s.x=Math.max(0,Math.min(W,s.x));s.y=Math.max(0,Math.min(H,s.y));}
  for(const s of sites){const p=cell(s);if(p.length<3)continue;let a=0;for(let i=0;i<p.length;i++){const q=p[i],r=p[(i+1)%p.length];a+=q[0]*r[1]-r[0]*q[1];}a=Math.abs(a/2);
-  const k=Math.min(1,Math.log10(a+1)/4.2),c=P[1+Math.floor(k*(P.length-2))];
-  ctx.fillStyle=c;ctx.strokeStyle=P[0];ctx.lineWidth=1.2;ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fill();ctx.stroke();n++;}
- stat(n+' cells');}
+  const k=Math.min(1,Math.log10(a+1)/4.2);
+  const c=V==='crystal'?(a>12000?P[4]:a>6000?P[3]:P[2]):P[1+Math.floor(k*(P.length-2))];
+  ctx.fillStyle=c;ctx.strokeStyle=V==='crystal'?P[4]:P[0];ctx.lineWidth=V==='crystal'?1.5:1.2;
+  ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fill();ctx.stroke();n++;}
+ stat(n+(V==='crystal'?' crystal cells':' cells'));}
 
 function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
  if(!paused){t+=dt;frame(dt);}
