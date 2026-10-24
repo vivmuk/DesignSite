@@ -940,8 +940,9 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
     e.currentTarget.style.setProperty('--ry', '0deg');
   };
 
-  const renderCard = (a: VisualAddon, feature = false) => {
+  const renderCard = (a: VisualAddon, feature = false, number?: number) => {
     const cat = cfg.cats.find(c => c.id === a.category)!;
+    const displayN = number ?? a.n;
     // Interactive cards ship an animated GIF illustration of the engine.
     const thumb = a.thumb || (isInteractive ? `/interactive/thumbs/${a.id}.gif` : null);
     return (
@@ -960,7 +961,7 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
               className="av-thumb-gif"
               src={thumb}
               alt={`${a.name} animated preview`}
-              loading={a.n <= 8 ? 'eager' : 'lazy'}
+              loading={displayN <= 8 ? 'eager' : 'lazy'}
               decoding="async"
             />
           ) : visible.has(a.id) ? (
@@ -970,12 +971,12 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
               <div className="av-thumb-placeholder">PREVIEW LOADS ON SCROLL</div>
             </div>
           )}
-          <span className="av-num">{String(a.n).padStart(2, '0')}</span>
+          <span className="av-num">{String(displayN).padStart(2, '0')}</span>
           <ShareLink section={isInteractive ? 'interactive' : 'addons'} id={a.id} label={a.name} compact className="corner" />
           {isInteractive && (
             <>
               <div className="av-thumb-head">
-                <span className="av-thumb-kind">{String(a.n).padStart(2, '0')} · {cat.emoji} {cat.label}</span>
+                <span className="av-thumb-kind">{String(displayN).padStart(2, '0')} · {cat.emoji} {cat.label}</span>
                 {feature && <span className="av-live-chip"><i />LIVE DEMO</span>}
               </div>
             </>
@@ -1007,6 +1008,7 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
     );
   };
 
+  let cardNo = 0;
   return (
     <div className={`av-index${isInteractive ? ' is-interactive' : ''}`}>
       <header className={`av-hero${isInteractive ? ' av-hero-interactive' : ''}`}>
@@ -1097,12 +1099,12 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
                 </div>
                 <span className="av-family-count">{String(items.length).padStart(2, '0')}</span>
               </header>
-              <div className="av-grid">{items.map((a, i) => renderCard(a, i === 0))}</div>
+              <div className="av-grid">{items.map((a, i) => { cardNo += 1; return renderCard(a, i === 0, cardNo); })}</div>
             </section>
           );
         })
       ) : (
-        <div className="av-grid">{filtered.map(a => renderCard(a))}</div>
+        <div className="av-grid">{filtered.map((a, i) => renderCard(a, false, i + 1))}</div>
       )}
 
       {filtered.length === 0 && (
