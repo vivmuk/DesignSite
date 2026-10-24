@@ -1560,7 +1560,7 @@ const TABS = [
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 150 },
   { id: 'addons', label: 'Visual Add-ons', emoji: '✨', count: 25 },
-  { id: 'interactive', label: 'Interactive', emoji: '🕹️', count: 25 },
+  { id: 'interactive', label: 'Interactive', emoji: '🕹️', count: 75 },
   { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];

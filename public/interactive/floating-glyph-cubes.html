@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Letter blocks floating in isometric space.">
+<title>Floating Glyph Cubes — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#08080a}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none;cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#a9adba;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:5;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #a9adba;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.hint{display:none}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-label="Floating Glyph Cubes interactive canvas"></canvas>
+<div class="hud"><span class="t">3D / DEPTH · Floating Glyph Cubes</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const P=["#08080a", "#1c1d22", "#4a4d57", "#a9adba", "#f2f3f7"],TAU=Math.PI*2;
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:-1e4,y:-1e4,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=-1e4;mx.y=-1e4;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='ready';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const G=12;let hs=[];function reset(){hs=[];for(let y=0;y<G;y++)for(let x=0;x<G;x++)hs.push({x,y,h:0});}
+reset();addEventListener('resize',reset);
+function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);
+ const size=Math.min(W,H)/(G*1.9),ox=W/2,oy=H*.2;
+ for(const c of hs){const bx=(c.x-G/2)*size,by=(c.y-G/2)*size*.5;const d=Math.hypot(ox+bx-mx.x,oy+by-mx.y);
+  const target=.5+.5*Math.sin(c.x*.55+t*.8)+.35*Math.cos(c.y*.42-t*.6)+Math.max(0,1-d/220)*1.7;
+  c.h+=(target-c.h)*Math.min(1,dt*3);}
+ const sorted=hs.slice().sort((a,b)=>(a.x+a.y)-(b.x+b.y));
+ for(const c of sorted){const bx=ox+(c.x-G/2)*size,by=oy+(c.y-G/2)*size*.5,h=Math.max(2,c.h*size*.9);
+  const top=[[bx,by-h-size*.5],[bx+size,by-h],[bx,by-h+size*.5],[bx-size,by-h]];
+  ctx.fillStyle=P[2];ctx.beginPath();top.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fill();
+  ctx.fillStyle=P[1];ctx.beginPath();ctx.moveTo(bx-size,by-h);ctx.lineTo(bx,by-h+size*.5);ctx.lineTo(bx,by);ctx.lineTo(bx-size,by+size*.5);ctx.closePath();ctx.fill();
+  ctx.fillStyle=P[3];ctx.beginPath();ctx.moveTo(bx+size,by-h);ctx.lineTo(bx,by-h+size*.5);ctx.lineTo(bx,by);ctx.lineTo(bx+size,by+size*.5);ctx.closePath();ctx.fill();}
+ stat(G*G+' columns');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

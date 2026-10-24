@@ -5,6 +5,11 @@ import {
   type AddonCategory, type VisualAddon, type AddonGroup,
 } from '../data/visualAddons';
 import { interactiveAddons, interactiveCategories } from '../data/interactiveAddons';
+import { interactiveAddonsExtra } from '../data/interactiveAddonsExtra';
+
+/** The Interactive tab grew from 25 to 75 playgrounds; the original 25 keep
+ *  their order and the batch of 50 appends after them. */
+const allInteractive = [...interactiveAddons, ...interactiveAddonsExtra];
 
 const INTENSITY_DOTS: Record<VisualAddon['intensity'], number> = { subtle: 1, medium: 2, bold: 3 };
 
@@ -130,18 +135,18 @@ const CONFIG: Record<AddonGroup, GroupConfig> = {
     other: {
       href: '#/interactive',
       label: 'Interactive elements →',
-      blurb: 'Want the visitor to touch something? The 25 playgrounds.',
+      blurb: 'Want the visitor to touch something? The 75 playgrounds.',
     },
   },
   interactive: {
     base: '#/interactive',
-    list: interactiveAddons,
+    list: allInteractive,
     cats: interactiveCategories,
     noun: 'element',
-    kicker: 'Interactive elements · 25 playgrounds',
+    kicker: 'Interactive elements · 75 playgrounds',
     headline: <>Not a picture.<br /><em>A playground.</em></>,
-    lede: 'These are the parts a visitor can grab: generative canvases, pointer physics, 3D rings, type that bends, sound that draws itself. Each one is a single HTML file with no libraries — open it, drag it, then copy the core loop into the page.',
-    stats: [['25', 'playgrounds'], ['5', 'families'], ['0', 'libraries'], ['60', 'fps target']],
+    lede: 'These are the parts a visitor can grab: generative canvases, pointer physics, 3D depth, type that bends, sound that draws itself. Each one is a single HTML file with no libraries — open it, drag it, then copy the core loop into the page.',
+    stats: [['75', 'playgrounds'], ['5', 'families'], ['0', 'libraries'], ['60', 'fps target']],
     howtoTitle: 'HOW TO USE THEM',
     howto: [
       ['Pick the moment', 'Hero, product reveal, success state, gallery. One job per piece.'],
@@ -407,10 +412,14 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
       <div className="av-grid">
         {filtered.map(a => {
           const cat = cfg.cats.find(c => c.id === a.category)!;
+          // Interactive cards ship an animated GIF illustration of the engine.
+          const thumb = a.thumb || (group === 'interactive' ? `/interactive/thumbs/${a.id}.gif` : null);
           return (
             <article key={a.id} className="av-card" data-aid={a.id} onClick={() => setHash(a.id, route.cat, route.q)}>
               <div className="av-thumb-wrap">
-                {visible.has(a.id) ? (
+                {thumb ? (
+                  <img className="av-thumb-gif" src={thumb} alt={`${a.name} animated preview`} loading="lazy" decoding="async" />
+                ) : visible.has(a.id) ? (
                   <ScaledPreview src={a.demo} title={a.name} />
                 ) : (
                   <div className="av-thumb" style={{ height: 248 }}>

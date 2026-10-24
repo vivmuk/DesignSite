@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Dots scatter from the cursor and reassemble.">
+<title>Repulsion Dots — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#120a1c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none;cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#ff5c8a;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:5;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #ff5c8a;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.hint{display:none}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-label="Repulsion Dots interactive canvas"></canvas>
+<div class="hud"><span class="t">POINTER · Repulsion Dots</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const P=["#120a1c", "#3a1250", "#a12bb8", "#ff5c8a", "#ffd1e6"],TAU=Math.PI*2;
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:-1e4,y:-1e4,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=-1e4;mx.y=-1e4;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='ready';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const STEP=22;let dots=[];function reset(){dots=[];for(let y=STEP/2;y<H;y+=STEP)for(let x=STEP/2;x<W;x+=STEP)dots.push({x,y,dx:0,dy:0});}
+reset();addEventListener('resize',reset);
+function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);
+ for(const d of dots){const tx=mx.x-d.x,ty=mx.y-d.y,dist=Math.hypot(tx,ty)||1,fall=Math.max(0,1-dist/190);
+  const k=fall*fall*46;d.dx+=((tx/dist)*k-d.dx)*Math.min(1,dt*10);d.dy+=((ty/dist)*k-d.dy)*Math.min(1,dt*10);
+  const m=Math.hypot(d.dx,d.dy),ci=Math.min(P.length-1,1+Math.floor(m/16));
+  ctx.fillStyle=P[ci];ctx.globalAlpha=.45+Math.min(.55,m/40);
+  ctx.beginPath();ctx.arc(d.x+d.dx,d.y+d.dy,1.6+m*.045,0,TAU);ctx.fill();
+  if(m>3){ctx.strokeStyle=P[2];ctx.globalAlpha=.22;ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x+d.dx,d.y+d.dy);ctx.stroke();}}
+ ctx.globalAlpha=1;stat(dots.length+' points');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

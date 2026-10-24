@@ -27,6 +27,8 @@ export interface VisualAddon {
   snippet: string;
   prompt: string;
   demo: string;
+  /** Optional animated GIF illustration of the demo, used on the card. */
+  thumb?: string;
 }
 
 export const addonCategories: { id: AddonCategory; label: string; emoji: string; color: string; blurb: string }[] = [

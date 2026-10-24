@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A slow tessellation that looks like frost forming.">
+<title>Crystal Growth — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#04120f}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none;cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#4dffd2;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:5;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:5;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #4dffd2;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.hint{display:none}}
+</style>
+</head>
+<body>
+<canvas id="cv" aria-label="Crystal Growth interactive canvas"></canvas>
+<div class="hud"><span class="t">GENERATIVE · Crystal Growth</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const P=["#04120f", "#0b3b34", "#16a085", "#4dffd2", "#c8fff2"],TAU=Math.PI*2;
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=W*DPR;cv.height=H*DPR;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:-1e4,y:-1e4,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=-1e4;mx.y=-1e4;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='ready';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+let sites=[];const N=150;
+for(let i=0;i<N;i++)sites.push({x:rnd(W),y:rnd(H),ph:rnd(TAU)});
+function clip(poly,ax,ay,nx,ny){const out=[];for(let i=0;i<poly.length;i++){const p=poly[i],q=poly[(i+1)%poly.length];const dp=(p[0]-ax)*nx+(p[1]-ay)*ny,dq=(q[0]-ax)*nx+(q[1]-ay)*ny;if(dp<=0)out.push(p);if(dp*dq<0){const k=dp/(dp-dq);out.push([p[0]+(q[0]-p[0])*k,p[1]+(q[1]-p[1])*k]);}}return out;}
+function cell(s){let poly=[[0,0],[W,0],[W,H],[0,H]];for(const o of sites){if(o===s)continue;poly=clip(poly,(s.x+o.x)/2,(s.y+o.y)/2,o.x-s.x,o.y-s.y);if(poly.length<3)break;}return poly;}
+function frame(dt){ctx.fillStyle=P[0];ctx.fillRect(0,0,W,H);let n=0;
+ for(const s of sites){s.ph+=dt*.7;s.x+=Math.sin(s.ph)*7*dt;s.y+=Math.cos(s.ph*1.3)*7*dt;
+  const dx=s.x-mx.x,dy=s.y-mx.y,d=Math.hypot(dx,dy);if(d<150&&d>1){const f=(1-d/150)*300;s.x+=dx/d*f*dt;s.y+=dy/d*f*dt;}
+  s.x=Math.max(0,Math.min(W,s.x));s.y=Math.max(0,Math.min(H,s.y));}
+ for(const s of sites){const p=cell(s);if(p.length<3)continue;let a=0;for(let i=0;i<p.length;i++){const q=p[i],r=p[(i+1)%p.length];a+=q[0]*r[1]-r[0]*q[1];}a=Math.abs(a/2);
+  const k=Math.min(1,Math.log10(a+1)/4.2),c=P[1+Math.floor(k*(P.length-2))];
+  ctx.fillStyle=c;ctx.strokeStyle=P[0];ctx.lineWidth=1.2;ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fill();ctx.stroke();n++;}
+ stat(n+' cells');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

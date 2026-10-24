@@ -612,3 +612,13 @@
   .av-cat { padding: 7px 11px; font-size: 10px; }
   .av-thumb-wrap { max-height: 240px; }
 }
+
+/* Animated GIF thumbnails: the card shows the idea in motion before the
+ * live demo is opened. 320x200 keeps a decade of cards cheap to load. */
+.av-thumb-gif {
+  display: block;
+  width: 100%;
+  aspect-ratio: 320 / 200;
+  object-fit: cover;
+  background: #080a0e;
+}
