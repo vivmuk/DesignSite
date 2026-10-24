@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Lit spheres you can orbit by moving the cursor.">
+<title>Raymarched Spheres — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Raymarched Spheres interactive canvas"></canvas>
+<div class="hud"><span class="t">3D / DEPTH · Raymarched Spheres</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE THE CURSOR · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const gl=cv.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+ if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){console.error(gl.getShaderInfoLog(s));return null;}return s;}
+const vs=sh(gl.VERTEX_SHADER,'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}');
+const fs=sh(gl.FRAGMENT_SHADER,"\nprecision highp float;\nuniform vec2 u_res;\nuniform float u_t;\nuniform vec2 u_m;\n#define PI 3.14159265\nfloat hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}\nfloat vnoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);\n  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}\nfloat fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*vnoise(p);p*=2.02;a*=.5;}return v;}\nvec3 pal(float t){return .5+.5*cos(6.28318*(vec3(.0,.33,.67)+t));}\nmat2 rot(float a){return mat2(cos(a),-sin(a),sin(a),cos(a));}\nfloat sdSphere(vec3 p,float r){return length(p)-r;}\n\nfloat map(vec3 p){\n  float d=1e9;\n  for(int i=0;i<5;i++){\n    float fi=float(i);\n    vec3 q=p-vec3(sin(u_t*.5+fi*1.7)*1.1,cos(u_t*.4+fi)*.55,sin(u_t*.3+fi*2.1)*.5);\n    d=min(d,sdSphere(q,.28+fi*.05));\n  }\n  d=min(d,p.y+.9);\n  return d;\n}\nvec3 nrm(vec3 p){vec2 e=vec2(.001,0.);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}\nvoid main(){\n  vec2 uv=(gl_FragCoord.xy-.5*u_res)/u_res.y;\n  vec3 ro=vec3(0.,0.,3.2),rd=normalize(vec3(uv,-1.6));\n  float d=0.;\n  for(int i=0;i<72;i++){float h=map(ro+rd*d);if(h<.001||d>8.)break;d+=h;}\n  vec3 p=ro+rd*d;\n  vec3 n=nrm(p);\n  float dif=max(dot(n,normalize(vec3(.6,.8,.4))),0.);\n  float rim=pow(1.-max(dot(n,-rd),0.),2.5);\n  vec3 col=pal(.55+sin(u_t*.1)*.1)*dif*.8+vec3(.1,.2,.3)*rim;\n  col+=vec3(.9,.4,.15)*pow(max(dot(reflect(-rd,n),normalize(vec3(-.4,.6,.5))),0.),24.)*.6;\n  vec3 bg=mix(vec3(.02,.03,.06),vec3(.06,.08,.14),uv.y+.5);\n  col=mix(bg,col,smoothstep(8.,7.2,d));\n  gl_FragColor=vec4(col,1.);\n}");
+let prog=null;
+if(gl&&vs&&fs){prog=gl.createProgram();gl.attachShader(prog,vs);gl.attachShader(prog,fs);gl.linkProgram(prog);
+ if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){console.error(gl.getProgramInfoLog(prog));prog=null;}}
+if(gl&&prog){gl.useProgram(prog);const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);
+ gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+ const a=gl.getAttribLocation(prog,'a');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);}
+const uRes=prog&&gl.getUniformLocation(prog,'u_res'),uT=prog&&gl.getUniformLocation(prog,'u_t'),uM=prog&&gl.getUniformLocation(prog,'u_m');
+function frame(){
+ if(!gl||!prog){stat('WebGL unavailable');return;}
+ gl.viewport(0,0,cv.width,cv.height);
+ gl.uniform2f(uRes,cv.width,cv.height);
+ gl.uniform1f(uT,t);
+ gl.uniform2f(uM,mx.x/W,1-mx.y/H);
+ gl.drawArrays(gl.TRIANGLES,0,3);
+ stat('');
+}
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame();}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+frame();requestAnimationFrame(loop);
+</script></body></html>

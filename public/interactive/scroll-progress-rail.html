@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A rail that draws itself as the story advances.">
+<title>Scroll Progress Rail — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+
+body{overflow:hidden;background:#07080c}
+#cv{z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;min-height:100vh;display:grid;place-items:center;padding:34px}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(28px,5vw,64px);line-height:.95;letter-spacing:-.04em;margin:10px 0 0;font-weight:650}
+p.sub{max-width:44ch;color:#98a1b3;font-size:14px;line-height:1.6}
+.card{background:#0d1018;border:1px solid #ffffff1a;border-radius:18px;box-shadow:0 30px 80px #0008}
+button{font:inherit;color:inherit}
+@media (max-height:520px){#ui{padding:10px}h2{font-size:clamp(22px,7vh,36px)}p.sub{font-size:10.5px;max-width:38ch}.k{font-size:8px}}
+
+body{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+body::-webkit-scrollbar{display:none}
+#cv{position:fixed;inset:0;z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;display:block;min-height:100vh;padding:0}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(30px,7vw,78px);line-height:.92;letter-spacing:-.045em;margin:10px 0;font-weight:650}
+h2 em{font-style:normal;color:#8fd8ff}
+p{color:#98a1b3;font-size:13px;line-height:1.6}
+
+.rail-page{height:400vh}
+.rail-fixed{position:fixed;left:max(22px,4vw);top:50%;transform:translateY(-50%);z-index:6;display:flex;gap:14px;align-items:flex-start}
+.rail-line{width:2px;height:220px;background:#ffffff18;position:relative}.rail-line i{position:absolute;left:0;top:0;width:100%;background:#8fd8ff;height:0}
+.rail-dots{display:flex;flex-direction:column;justify-content:space-between;height:220px}
+.rail-dots b{width:6px;height:6px;border-radius:50%;background:#3a4152;display:block;transition:transform .2s,background .2s}.rail-dots b.on{background:#8fd8ff;transform:scale(1.8)}
+.rail-label{font:600 9px/1.4 ui-monospace,monospace;color:#8fd8ff;letter-spacing:.14em;writing-mode:vertical-rl;text-orientation:mixed}
+.rail-section{height:100vh;display:grid;align-content:center;padding-left:24vw}
+.rail-section h2{font-size:clamp(30px,5vw,62px)}
+@media (max-width:700px){.rail-section{padding-left:18vw}}
+</style></head>
+<body data-canvas="0" data-scroll="1">
+<canvas id="cv" aria-hidden="true"></canvas>
+<div id="ui">
+<div class="rail-page"><div class="rail-fixed"><div class="rail-line"><i id="fill"></i></div><div class="rail-dots" id="dots"></div><span class="rail-label" id="label">01 / OPEN</span></div>
+<section class="rail-section"><p class="k">PLAY / PROGRESS RAIL</p><h2>Long pages<br>need a spine.</h2><p>Scroll. The rail is the page's pulse.</p></section>
+<section class="rail-section"><h2>Orientation</h2><p>The reader always knows how far in they are.</p></section>
+<section class="rail-section"><h2>Rhythm</h2><p>Dots break a long scroll into chapters.</p></section>
+<section class="rail-section"><h2>Ending</h2><p>And a clear arrival, not an infinite feed.</p></section></div>
+</div>
+<div class="hud"><span class="t">PLAY / REVEAL · Scroll Progress Rail</span><b id="stat">ready</b></div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;});
+addEventListener('pointerup',()=>{mx.down=false;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat');
+let statText='4 sections';const stat=v=>{statText=v};
+const ui=document.getElementById('ui');
+
+const dots=document.getElementById('dots');for(let i=0;i<4;i++){const b=document.createElement('b');dots.appendChild(b);}
+function prog(){return Math.max(0,Math.min(1,scrollY/(document.body.scrollHeight-innerHeight)));}
+function frame(dt){const p=prog();document.getElementById('fill').style.height=(p*100)+'%';const sec=Math.min(3,Math.floor(p*4));[...dots.children].forEach((b,i)=>b.classList.toggle('on',i<=sec));document.getElementById('label').textContent=String(sec+1).padStart(2,'0')+' / '+['OPEN','ORIENT','RHYTHM','END'][sec];
+ ctx.fillStyle='#06070b';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(143,216,255,.08)';for(let i=0;i<6;i++){ctx.beginPath();ctx.arc(W*.72,H*.5,90+i*50+p*60,0,7);ctx.stroke();}
+ stat('progress '+(p*100).toFixed(0)+'%');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!window.__paused){t+=dt;frame(dt);}
+ statEl.textContent=statText;requestAnimationFrame(loop);}
+let t=0,last=performance.now();window.__paused=false;
+frame(0);requestAnimationFrame(loop);
+</script></body></html>

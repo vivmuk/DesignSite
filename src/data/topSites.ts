@@ -96,7 +96,7 @@ export const topSites: TopSite[] = [
   { rank: 82, name: 'Disney+', url: 'https://disneyplus.com', category: 'media', description: 'Streaming — dark blue, magical, brand-forward' },
   { rank: 83, name: 'HBO Max', url: 'https://max.com', category: 'media', description: 'Streaming — dark, purple accent, premium' },
   { rank: 84, name: 'Apple TV', url: 'https://tv.apple.com', category: 'media', description: 'Streaming — black canvas, Apple clean, cinematic' },
-  { rank: 85, name: 'Twitch', url: 'https://twitch.tv', category: 'media', description: 'Live streaming — purple, dark, gaming' },
+  { rank: 85, name: 'Kick', url: 'https://kick.com', category: 'media', description: 'Live streaming — neon green accent, dark, creator-first' },
   { rank: 86, name: 'SoundCloud', url: 'https://soundcloud.com', category: 'media', description: 'Music — orange waveform, dark, creator-focused' },
   { rank: 87, name: 'Pandora', url: 'https://pandora.com', category: 'media', description: 'Music — blue accent, clean, radio-style' },
   { rank: 88, name: 'Audible', url: 'https://audible.com', category: 'media', description: 'Audiobooks — orange accent, dark, editorial' },

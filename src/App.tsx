@@ -11,6 +11,7 @@ import { AddonsTab } from './components/AddonsTab';
 import { TechniquesTab } from './components/TechniquesTab';
 import { Top200Tab } from './components/Top200Tab';
 import { TopSiteDetail } from './components/TopSiteDetail';
+import { ShareLink } from './components/ShareLink';
 import './App.css';
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -545,9 +546,16 @@ function DirectionsTab() {
 // ──────────────────────────────────────────────────────────────────────────────
 // Original Design Styles Tab (renamed from App)
 // ──────────────────────────────────────────────────────────────────────────────
+function styleIdFromHash(): string | null {
+  const h = window.location.hash;
+  return h.startsWith('#/styles/') ? decodeURIComponent(h.slice('#/styles/'.length).split('?')[0].split('/')[0]) : null;
+}
+
 function DesignStylesTab() {
-  const [activeStyle, setActiveStyle] = useState<string>('swiss');
-  const [activeCategory, setActiveCategory] = useState<string>('classic');
+  const initialStyleId = styleIdFromHash();
+  const initialStyle = designStyles.find(s => s.id === initialStyleId) || mixedStyles.find(m => m.id === initialStyleId);
+  const [activeStyle, setActiveStyle] = useState<string>(initialStyle ? initialStyle.id : 'swiss');
+  const [activeCategory, setActiveCategory] = useState<string>(initialStyle ? ('category' in initialStyle ? initialStyle.category : 'mixed') : 'classic');
   const [copiedColor, setCopiedColor] = useState<string | null>(null);
   const [activeModel, setActiveModel] = useState<'nano_banana_pro' | 'recraft_v4'>('nano_banana_pro');
 
@@ -562,6 +570,29 @@ function DesignStylesTab() {
     navigator.clipboard.writeText(color);
     setCopiedColor(color);
     setTimeout(() => setCopiedColor(null), 1500);
+  };
+
+  // Deep link: #/styles/<id> opens that exact style, and selecting a style
+  // rewrites the hash so the address bar is always copyable.
+  useEffect(() => {
+    const sync = () => {
+      const id = styleIdFromHash();
+      if (!id) return;
+      const ds = designStyles.find(s => s.id === id);
+      const ms = mixedStyles.find(m => m.id === id);
+      if (ds) { setActiveStyle(ds.id); setActiveCategory(ds.category); }
+      if (ms) { setActiveStyle(ms.id); setActiveCategory('mixed'); }
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
+
+  const pickStyle = (id: string, category?: string) => {
+    setActiveStyle(id);
+    if (category) setActiveCategory(category);
+    const next = `#/styles/${encodeURIComponent(id)}`;
+    if (window.location.hash !== next) window.history.replaceState(null, '', next);
   };
 
   return (
@@ -582,9 +613,9 @@ function DesignStylesTab() {
                   setActiveCategory(cat.id);
                   if (cat.id !== 'mixed') {
                     const firstStyle = designStyles.find(s => s.category === cat.id);
-                    if (firstStyle) setActiveStyle(firstStyle.id);
+                    if (firstStyle) pickStyle(firstStyle.id, cat.id);
                   } else {
-                    setActiveStyle(mixedStyles[0].id);
+                    pickStyle(mixedStyles[0].id, 'mixed');
                   }
                 }}
               >
@@ -598,7 +629,7 @@ function DesignStylesTab() {
                     <button
                       key={style.id}
                       className={`style-item ${activeStyle === style.id ? 'active' : ''}`}
-                      onClick={() => setActiveStyle(style.id)}
+                      onClick={() => pickStyle(style.id, cat.id)}
                     >
                       <span className="style-number">{designStyles.indexOf(style) + 1}</span>
                       <span className="style-name">{style.name.split(' / ')[0]}</span>
@@ -613,7 +644,7 @@ function DesignStylesTab() {
                     <button
                       key={mixed.id}
                       className={`style-item mixed-item ${activeStyle === mixed.id ? 'active' : ''}`}
-                      onClick={() => setActiveStyle(mixed.id)}
+                      onClick={() => pickStyle(mixed.id, 'mixed')}
                     >
                       <span className="style-number mixed-num">{idx + 1}</span>
                       <span className="style-name">{mixed.name}</span>
@@ -668,6 +699,7 @@ function StyleDisplay({
           <h2>{style.name}</h2>
           <p className="style-mood">{style.mood}</p>
         </div>
+        <ShareLink section="styles" id={style.id} label={style.name} />
       </header>
 
       <div className="style-content">
@@ -786,6 +818,7 @@ function MixedStyleDisplay({
           <h2>{mixed.name}</h2>
           <p className="style-mood">Hybrid Style Combination</p>
         </div>
+        <ShareLink section="styles" id={mixed.id} label={mixed.name} />
       </header>
 
       <div className="style-content">
@@ -1560,7 +1593,7 @@ const TABS = [
   { id: 'styles', label: 'Design Styles', emoji: '🎨' },
   { id: 'stylesdb', label: 'Styles DB', emoji: '🗂️', count: 150 },
   { id: 'addons', label: 'Visual Add-ons', emoji: '✨', count: 25 },
-  { id: 'interactive', label: 'Interactive', emoji: '🕹️', count: 75 },
+  { id: 'interactive', label: 'Interactive', emoji: '🕹️', count: 125 },
   { id: 'techniques', label: 'Techniques', emoji: '⚗️' },
   { id: 'top200', label: 'Top 200 Sites', emoji: '🏆', count: 200 },
 ];
@@ -1578,8 +1611,10 @@ function App() {
       if (h.startsWith('#/addons')) setActiveTab('addons');
       else if (h.startsWith('#/interactive')) setActiveTab('interactive');
       else if (h.startsWith('#/techniques')) setActiveTab('techniques');
-      else if (h === '#/stylesdb') setActiveTab('stylesdb');
-      else if (h === '#/styles') setActiveTab('styles');
+      else if (h === '#/stylesdb' || h.startsWith('#/stylesdb/')) setActiveTab('stylesdb');
+      else if (h === '#/styles' || h.startsWith('#/styles/')) setActiveTab('styles');
+      else if (h === '#/top200') { setActiveTab('top200'); setSelectedSite(null); }
+      else if (h.startsWith('#/top200/')) setActiveTab('top200');
     };
     sync();
     window.addEventListener('hashchange', sync);
@@ -1610,12 +1645,25 @@ function App() {
               </button>
             ))}
           </nav>
+          <a className="root-catalog" href="/catalog.json" target="_blank" rel="noreferrer" title="One JSON index of every component and its permanent link">Agent catalog ↗</a>
         </div>
       </header>
       <main className="root-main">
-        {activeTab === 'top200' && (selectedSite
-          ? <TopSiteDetail site={selectedSite} onBack={() => setSelectedSite(null)} />
-          : <Top200Tab onSelectSite={handleSelectSite} />)}
+        {activeTab === 'top200' && (
+          <>
+            {/* Keep the list mounted so its hash listener still updates the
+                detail when a second #/top200/<slug> link is pasted. */}
+            <div style={{ display: selectedSite ? 'none' : 'block' }}>
+              <Top200Tab onSelectSite={handleSelectSite} />
+            </div>
+            {selectedSite && (
+              <TopSiteDetail
+                site={selectedSite}
+                onBack={() => { setSelectedSite(null); window.history.replaceState(null, '', '#/top200'); }}
+              />
+            )}
+          </>
+        )}
         {activeTab === 'styles' && <DesignStylesTab />}
         {activeTab === 'stylesdb' && <StylesDBTab />}
         {activeTab === 'addons' && <AddonsTab />}

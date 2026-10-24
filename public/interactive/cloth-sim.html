@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A pinned sheet that ripples when you drag through it.">
+<title>Cloth Simulation — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Cloth Simulation interactive canvas"></canvas>
+
+<div class="hud"><span class="t">POINTER · Cloth Simulation</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='176 points · cloth';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const C=16,R=11,pts=[],links=[];
+for(let y=0;y<R;y++)for(let x=0;x<C;x++){const px=W*.5+(x-(C-1)/2)*Math.min(W*.045,26),py=H*.16+y*Math.min(H*.055,26);
+ pts.push({x:px,y:py,px,py,pin:y===0});}
+for(let y=0;y<R;y++)for(let x=0;x<C;x++){const i=y*C+x;if(x<C-1)links.push([i,i+1,Math.min(W*.045,26)]);if(y<R-1)links.push([i,i+C,Math.min(H*.055,26)]);if(x<C-1&&y<R-1){const dg=Math.hypot(Math.min(W*.045,26),Math.min(H*.055,26));links.push([i,i+C+1,dg]);links.push([i+1,i+C,dg]);}}
+function frame(dt){ctx.fillStyle='#06070b';ctx.fillRect(0,0,W,H);
+ for(const p of pts){if(p.pin)continue;const vx=(p.x-p.px)*.97,vy=(p.y-p.py)*.97;p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+900*dt*dt;
+  const dx=p.x-mx.x,dy=p.y-mx.y,d=Math.hypot(dx,dy)||1;if(d<110){const f=(1-d/110)*55*dt;p.x+=dx/d*f;p.y+=dy/d*f;}}
+ for(let k=0;k<10;k++)for(const [i,j,rest] of links){const a=pts[i],b=pts[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,diff=(d-rest)/d*.5;
+  if(!a.pin){a.x+=dx*diff;a.y+=dy*diff;}if(!b.pin){b.x-=dx*diff;b.y-=dy*diff;}}
+ ctx.strokeStyle='rgba(143,216,255,.45)';ctx.lineWidth=.7;
+ for(const [i,j] of links){const a=pts[i],b=pts[j];ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+ ctx.fillStyle='#ffd166';for(const p of pts)if(p.pin){ctx.beginPath();ctx.arc(p.x,p.y,2,0,7);ctx.fill();}
+ stat('176 points · cloth');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

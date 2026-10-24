@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Branches find the nearest light and race toward it.">
+<title>Space Colonization — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Space Colonization interactive canvas"></canvas>
+
+<div class="hud"><span class="t">GENERATIVE · Space Colonization</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='space colonization';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const nodes=[{x:W/2,y:H*.94,px:W/2,py:H*.98}];for(let i=1;i<6;i++)nodes.push({x:W/2,y:H*.94-i*8,px:W/2,py:H*.94-(i-1)*8});let att=[];for(let i=0;i<220;i++)att.push({x:rnd(W*.9,W*.05),y:rnd(H*.72,H*.06)});
+let growT=0;
+function frame(dt){growT+=dt;
+ if(nodes.length<620&&growT>.028){growT=0;
+  const pull=new Map();
+  for(const a of att){let bi=-1,bd=1e9;for(let i=0;i<nodes.length;i++){const d=Math.hypot(nodes[i].x-a.x,nodes[i].y-a.y);if(d<bd){bd=d;bi=i;}}
+   if(bd<130&&bi>=0){const cur=pull.get(bi)||{dx:0,dy:0,n:0};cur.dx+=a.x-nodes[bi].x;cur.dy+=a.y-nodes[bi].y;cur.n++;pull.set(bi,cur);}}
+  for(const [bi,v] of pull){const d=Math.hypot(v.dx,v.dy)||1;const step=Math.min(14,8+v.n*1.5);const nx=nodes[bi].x+v.dx/d*step+rnd(1.4,-1.4);const ny=nodes[bi].y+v.dy/d*step+rnd(1.4,-1.4);
+   nodes.push({x:nx,y:ny,px:nodes[bi].x,py:nodes[bi].y});}
+  att=att.filter(a=>!nodes.some(n=>Math.hypot(n.x-a.x,n.y-a.y)<18));}
+ ctx.fillStyle='#05060a';ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='#9fe8c8';ctx.lineWidth=1.4;ctx.globalAlpha=.9;
+ for(const n of nodes){ctx.beginPath();ctx.moveTo(n.px,n.py);ctx.lineTo(n.x,n.y);ctx.stroke();}
+ ctx.fillStyle='#ffd166';for(const a of att){ctx.beginPath();ctx.arc(a.x,a.y,1.4,0,7);ctx.fill();}
+ ctx.globalAlpha=1;stat(nodes.length+' nodes · '+att.length+' lights');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

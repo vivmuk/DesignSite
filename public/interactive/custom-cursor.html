@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A lagging blob cursor that reacts to what it is over.">
+<title>Custom Cursor — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+
+body{overflow:hidden;background:#07080c}
+#cv{z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;min-height:100vh;display:grid;place-items:center;padding:34px}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(28px,5vw,64px);line-height:.95;letter-spacing:-.04em;margin:10px 0 0;font-weight:650}
+p.sub{max-width:44ch;color:#98a1b3;font-size:14px;line-height:1.6}
+.card{background:#0d1018;border:1px solid #ffffff1a;border-radius:18px;box-shadow:0 30px 80px #0008}
+button{font:inherit;color:inherit}
+@media (max-height:520px){#ui{padding:10px}h2{font-size:clamp(22px,7vh,36px)}p.sub{font-size:10.5px;max-width:38ch}.k{font-size:8px}}
+
+body{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+body::-webkit-scrollbar{display:none}
+#cv{position:fixed;inset:0;z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;display:block;min-height:100vh;padding:0}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(30px,7vw,78px);line-height:.92;letter-spacing:-.045em;margin:10px 0;font-weight:650}
+h2 em{font-style:normal;color:#8fd8ff}
+p{color:#98a1b3;font-size:13px;line-height:1.6}
+
+.cur-stage{max-width:900px;text-align:center}
+.cur-stage h2 em{font-style:normal;color:#8fd8ff}
+.cur-row{display:flex;gap:10px;justify-content:center;margin-top:26px;flex-wrap:wrap}
+.chip{border:1px solid #ffffff24;background:#ffffff08;border-radius:999px;padding:12px 20px;font:600 12px/1 ui-monospace,monospace;letter-spacing:.08em;cursor:none;transition:background .2s}
+.chip:hover{background:#8fd8ff18;border-color:#8fd8ff66}
+.cur-blob{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:50%;background:#8fd8ff;color:#061018;display:grid;place-items:center;pointer-events:none;z-index:99;mix-blend-mode:screen;transition:width .18s,height .18s,background .18s;transform:translate(-50%,-50%)}
+.cur-blob span{font:700 9px/1 ui-monospace,monospace;opacity:0;text-transform:uppercase}
+.cur-blob.grow{width:76px;height:76px;background:#ffd166}
+.cur-blob.grow span{opacity:1}
+.cur-body{cursor:none}
+@media (max-height:520px){.cur-blob{width:22px;height:22px}.cur-row{margin-top:12px}}
+</style></head>
+<body data-canvas="0" data-scroll="0">
+<canvas id="cv" aria-hidden="true"></canvas>
+<div id="ui">
+<div class="cur-stage">
+  <div class="cur-blob" id="blob"><span id="blab">drag</span></div>
+  <p class="k">POINTER / CUSTOM CURSOR</p>
+  <h2>Move like<br><em>you mean it.</em></h2>
+  <p class="sub">Hover the chips. The blob should lead, lag, and never lie about what is clickable.</p>
+  <div class="cur-row"><button class="chip" data-label="view">View work</button><button class="chip" data-label="play">Play reel</button><a class="chip" href="#" onclick="return false" data-label="mail">Say hello</a></div>
+</div>
+</div>
+<div class="hud"><span class="t">POINTER · Custom Cursor</span><b id="stat">ready</b></div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;});
+addEventListener('pointerup',()=>{mx.down=false;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat');
+let statText='custom cursor';const stat=v=>{statText=v};
+const ui=document.getElementById('ui');
+
+ui.classList.add('cur-body');
+const blob=document.getElementById('blob'),blab=document.getElementById('blab');let bx=W/2,by=H/2,idle=0;
+for(const el of ui.querySelectorAll('[data-label]')){el.addEventListener('pointerenter',()=>{blob.classList.add('grow');blab.textContent=el.dataset.label;});el.addEventListener('pointerleave',()=>{blob.classList.remove('grow');blab.textContent='drag';});}
+ui.addEventListener('pointermove',()=>idle=0);
+function frame(dt){const tx=mx.x,ty=mx.y;bx+=(tx-bx)*Math.min(1,dt*12);by+=(ty-by)*Math.min(1,dt*12);
+ blob.style.transform='translate('+(bx-13)+'px,'+(by-13)+'px) translate(-50%,-50%)';
+ ctx.clearRect(0,0,W,H);const g=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.7);g.addColorStop(0,'#0d1422');g.addColorStop(1,'#06070b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ for(let i=0;i<40;i++){const x=(i*97+t*9)%W,y=(i*61+Math.sin(i+t*.4)*40+H*.5)%H;ctx.fillStyle='rgba(143,216,255,.12)';ctx.fillRect(x,y,1.6,1.6);}
+ stat('custom cursor');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!window.__paused){t+=dt;frame(dt);}
+ statEl.textContent=statText;requestAnimationFrame(loop);}
+let t=0,last=performance.now();window.__paused=false;
+frame(0);requestAnimationFrame(loop);
+</script></body></html>

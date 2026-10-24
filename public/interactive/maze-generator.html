@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A recursive backtracker carving a new maze live.">
+<title>Maze Generator — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Maze Generator interactive canvas"></canvas>
+
+<div class="hud"><span class="t">PLAY / REVEAL · Maze Generator</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='recursive backtracker';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const C=31,R=19,cw=W/C,chh=H/R,walls=[],vis=new Uint8Array(C*R),stack=[],path=[];
+for(let i=0;i<C*R;i++)walls.push([1,1,1,1]);vis[0]=1;stack.push([0,0]);let done=false,hold=0;
+function carve(){if(done){hold+=1;if(hold>240){vis.fill(0);walls.forEach(w=>{w[0]=w[1]=w[2]=w[3]=1});stack.length=0;path.length=0;stack.push([0,0]);vis[0]=1;done=false;hold=0;}return;}
+ const [x,y]=stack[stack.length-1];const dirs=[[1,0],[-1,0],[0,1],[0,-1]].sort(()=>Math.random()-.5);let moved=false;
+ for(const [dx,dy] of dirs){const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=C||ny>=R||vis[ny*C+nx])continue;
+  walls[y*C+x][dx>0?1:dx<0?3:dy>0?2:0]=0;walls[ny*C+nx][dx>0?3:dx<0?1:dy>0?0:2]=0;
+  vis[ny*C+nx]=1;stack.push([nx,ny]);moved=true;break;}
+ if(!moved){stack.pop();if(!stack.length)done=true;}
+}
+function frame(dt){for(let i=0;i<4;i++)carve();
+ ctx.fillStyle='#07080d';ctx.fillRect(0,0,W,H);
+ for(let y=0;y<R;y++)for(let x=0;x<C;x++){const w=walls[y*C+x],px=x*cw,py=y*chh;
+  ctx.strokeStyle='#2b5a70';ctx.lineWidth=1.4;ctx.beginPath();
+  if(w[0]){ctx.moveTo(px,py);ctx.lineTo(px+cw,py);}if(w[2]){ctx.moveTo(px,py+chh);ctx.lineTo(px+cw,py+chh);}
+  if(w[3]){ctx.moveTo(px,py);ctx.lineTo(px,py+chh);}if(w[1]){ctx.moveTo(px+cw,py);ctx.lineTo(px+cw,py+chh);}ctx.stroke();}
+ const tip=stack[stack.length-1];if(tip){ctx.fillStyle='#8fd8ff';ctx.fillRect(tip[0]*cw+cw*.3,tip[1]*chh+chh*.3,cw*.4,chh*.4);}
+ stat(done?'solved · resetting':stack.length+' cells carving');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

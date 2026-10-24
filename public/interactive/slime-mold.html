@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Ten thousand agents leaving a living map.">
+<title>Slime Mold — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Slime Mold interactive canvas"></canvas>
+
+<div class="hud"><span class="t">GENERATIVE · Slime Mold</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='4000 agents';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const cw=240,ch=150,trail=new Float32Array(cw*ch),tmp=new Float32Array(cw*ch),oc=document.createElement('canvas');
+oc.width=cw;oc.height=ch;const octx=oc.getContext('2d'),img=octx.createImageData(cw,ch);
+const A=[];for(let i=0;i<4000;i++)A.push({x:rnd(cw),y:rnd(ch),a:rnd(Math.PI*2)});
+function sense(x,y,a){const xx=Math.floor(x+Math.cos(a)*3),yy=Math.floor(y+Math.sin(a)*3);if(xx<0||yy<0||xx>=cw||yy>=ch)return -1;return trail[yy*cw+xx];}
+function frame(dt){const speed=1.15;
+ for(const p of A){const fl=sense(p.x,p.y,p.a-.5),f=sense(p.x,p.y,p.a),fr=sense(p.x,p.y,p.a+.5);
+  if(f>fl&&f>fr)p.a+=rnd(.25,-.25);else if(fl>fr)p.a-=.3;else if(fr>fl)p.a+=.3;else p.a+=rnd(.2,-.2);
+  p.x+=Math.cos(p.a)*speed;p.y+=Math.sin(p.a)*speed;
+  if(p.x<0||p.y<0||p.x>=cw||p.y>=ch){p.x=rnd(cw);p.y=rnd(ch);p.a=rnd(Math.PI*2);}
+  const i=Math.floor(p.y)*cw+Math.floor(p.x);trail[i]=Math.min(1.6,trail[i]+.22);}
+ if(mx.down){for(let i=0;i<200;i++){const x=Math.floor(mx.x/W*cw+rnd(9,-9)),y=Math.floor(mx.y/H*ch+rnd(9,-9));if(x>=0&&y>=0&&x<cw&&y<ch)trail[y*cw+x]=1.5;}}
+ for(let y=0;y<ch;y++)for(let x=0;x<cw;x++){const i=y*cw+x;let s=0,n=0;
+  for(let yy=-1;yy<=1;yy++)for(let xx=-1;xx<=1;xx++){const j=(y+yy+ch)%ch*cw+(x+xx+cw)%cw;s+=trail[j];n++;}
+  tmp[i]=s/n*.92;}
+ trail.set(tmp);
+ const d=img.data;for(let i=0;i<cw*ch;i++){const v=Math.min(1,trail[i]*1.5);d[i*4]=20+v*210;d[i*4+1]=40+v*230;d[i*4+2]=50+v*150;d[i*4+3]=255;}
+ octx.putImageData(img,0,0);ctx.drawImage(oc,0,0,W,H);stat('4000 agents · '+cw+'×'+ch);}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

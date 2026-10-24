@@ -622,3 +622,10 @@
   object-fit: cover;
   background: #080a0e;
 }
+
+/* Share links on cards and detail pages */
+.av-card{position:relative}
+.av-thumb-wrap .share-link.corner{top:12px;right:12px}
+.av-detail-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.db-detail-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.db-detail-topbar .db-back{margin-bottom:0}

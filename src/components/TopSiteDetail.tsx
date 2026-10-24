@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { SiteData } from './Top200Tab';
+import { ShareLink, slugify } from './ShareLink';
 
 interface TopSiteDetailProps {
   site: SiteData;
@@ -33,7 +34,10 @@ export function TopSiteDetail({ site, onBack }: TopSiteDetailProps) {
 
   return (
     <div className="top200-detail">
-      <button className="detail-back" onClick={onBack}>← Back to Top 200</button>
+      <div className="db-detail-topbar">
+        <button className="detail-back" onClick={onBack}>← Back to Top 200</button>
+        <ShareLink section="top200" id={slugify(site.name)} label={site.name} />
+      </div>
 
       {/* Header */}
       <header className="top200-detail-header">

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A flock that separates, aligns, coheres and dodges your cursor.">
+<title>Boids Flock — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Boids Flock interactive canvas"></canvas>
+
+<div class="hud"><span class="t">GENERATIVE · Boids Flock</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='220 boids';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+const P=['#05060a','#7fe3ff','#9d7bff','#ffd166'];
+const B=[];for(let i=0;i<220;i++)B.push({x:rnd(W),y:rnd(H),vx:rnd(70,-70),vy:rnd(70,-70)});
+function frame(dt){ctx.fillStyle='rgba(5,6,10,.10)';ctx.fillRect(0,0,W,H);
+ for(const b of B){let ax=0,ay=0,cx=0,cy=0,alx=0,aly=0,n=0;
+  for(const o of B){if(o===b)continue;const dx=o.x-b.x,dy=o.y-b.y,d2=dx*dx+dy*dy;if(d2<2600){const d=Math.sqrt(d2)||1;ax-=dx/d/d*70;ay-=dy/d/d*70;alx+=o.vx;aly+=o.vy;cx+=o.x;cy+=o.y;n++;}}
+  if(n){b.vx+=((alx/n)-b.vx)*dt*1.7+(cx/n-b.x)*dt*.55;b.vy+=((aly/n)-b.vy)*dt*1.7+(cy/n-b.y)*dt*.55;}
+  const dx=b.x-mx.x,dy=b.y-mx.y,d=Math.hypot(dx,dy)||1;if(d<80){const f=1-d/80;b.vx+=dx/d*f*260*dt;b.vy+=dy/d*f*260*dt;}
+  b.vx+=ax*dt*26;b.vy+=ay*dt*26;
+  const sp=Math.hypot(b.vx,b.vy)||1;if(sp>110){b.vx=b.vx/sp*110;b.vy=b.vy/sp*110;}
+  b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.x<0)b.x=W;if(b.x>W)b.x=0;if(b.y<0)b.y=H;if(b.y>H)b.y=0;
+  ctx.fillStyle=b.vx>0?P[1]:P[2];ctx.globalAlpha=.9;ctx.beginPath();ctx.arc(b.x,b.y,1.8,0,7);ctx.fill();
+  ctx.globalAlpha=.28;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-b.vx*.05,b.y-b.vy*.05);ctx.strokeStyle=ctx.fillStyle;ctx.stroke();}
+ ctx.globalAlpha=1;stat('220 boids');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

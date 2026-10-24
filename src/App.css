@@ -5034,3 +5034,13 @@ button.db-btn.db-copy-btn.copied { background: #2ea04340; color: #7fffd4; border
   .tech-card-demo { min-height: 280px; border-left: 0; border-top: 1px solid #23272e; }
 }
 /* ==== /TECHNIQUES ==== */
+
+/* Agent catalog + per-component links */
+.root-catalog{font:600 10px/1 ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em;text-transform:uppercase;color:oklch(.8 .12 155);border:1px solid oklch(.35 .08 155);border-radius:999px;padding:7px 10px;white-space:nowrap;text-decoration:none;transition:background .18s,color .18s}
+.root-catalog:hover{background:oklch(.2 .04 155);color:#fff}
+@media (max-width:760px){.root-catalog{display:none}}
+.style-header{display:flex;align-items:flex-start;gap:16px}
+.style-header .share-link{margin-left:auto;flex:none}
+.av-detail-actions{display:flex;align-items:center}
+.tech-page-head .share-link{margin-top:12px}
+.tech-card-actions .share-link{margin-left:2px}

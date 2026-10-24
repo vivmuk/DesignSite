@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A product card with real depth, tilted by your hand.">
+<title>CSS 3D Product — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+
+body{overflow:hidden;background:#07080c}
+#cv{z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;min-height:100vh;display:grid;place-items:center;padding:34px}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(28px,5vw,64px);line-height:.95;letter-spacing:-.04em;margin:10px 0 0;font-weight:650}
+p.sub{max-width:44ch;color:#98a1b3;font-size:14px;line-height:1.6}
+.card{background:#0d1018;border:1px solid #ffffff1a;border-radius:18px;box-shadow:0 30px 80px #0008}
+button{font:inherit;color:inherit}
+@media (max-height:520px){#ui{padding:10px}h2{font-size:clamp(22px,7vh,36px)}p.sub{font-size:10.5px;max-width:38ch}.k{font-size:8px}}
+
+body{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+body::-webkit-scrollbar{display:none}
+#cv{position:fixed;inset:0;z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;display:block;min-height:100vh;padding:0}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(30px,7vw,78px);line-height:.92;letter-spacing:-.045em;margin:10px 0;font-weight:650}
+h2 em{font-style:normal;color:#8fd8ff}
+p{color:#98a1b3;font-size:13px;line-height:1.6}
+
+.p3-stage{text-align:center}
+.p3-scene{perspective:900px;margin-top:10px}
+.p3-card{position:relative;width:min(330px,70vw);height:min(300px,48vh);margin:0 auto;transform-style:preserve-3d;border-radius:22px;border:1px solid #ffffff22;background:linear-gradient(150deg,#151b27,#0a0d14);box-shadow:0 40px 80px #000a;transition:transform .12s;cursor:grab;overflow:hidden}
+.p3-glow{position:absolute;inset:18% 22%;background:radial-gradient(circle,#8fd8ff44,transparent 70%);filter:blur(20px);transform:translateZ(10px)}
+.p3-disc{position:absolute;width:110px;height:110px;border-radius:50%;border:1px solid #8fd8ff55;left:50%;top:38%;transform:translate(-50%,-50%) translateZ(36px);background:radial-gradient(circle at 40% 35%,#8fd8ff33,transparent 65%)}
+.p3-copy{position:absolute;left:18px;bottom:16px;text-align:left;transform:translateZ(24px)}
+.p3-copy b{font:600 9px/1 ui-monospace,monospace;color:#8fd8ff;letter-spacing:.16em}.p3-copy h3{font-size:30px;line-height:.9;margin:8px 0 6px;letter-spacing:-.04em}.p3-copy span{font:500 9px/1 ui-monospace,monospace;color:#7e8799}
+.p3-shine{position:absolute;inset:0;background:radial-gradient(circle at var(--x,50%) var(--y,30%),#ffffff28,transparent 45%);transform:translateZ(40px);pointer-events:none}
+</style></head>
+<body data-canvas="0" data-scroll="0">
+<canvas id="cv" aria-hidden="true"></canvas>
+<div id="ui">
+<div class="p3-stage"><p class="k">3D / CSS PRODUCT</p><div class="p3-scene"><div class="p3-card" id="card"><div class="p3-glow"></div><div class="p3-disc"></div><div class="p3-copy"><b>ORBIT / 01</b><h3>Field<br>Speaker</h3><span>360° sound · 18h</span></div><div class="p3-shine" id="shine"></div></div></div><p class="sub">Drag to tilt. The object, shadow and highlight sit at different depths.</p></div>
+</div>
+<div class="hud"><span class="t">3D / DEPTH · CSS 3D Product</span><b id="stat">ready</b></div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;});
+addEventListener('pointerup',()=>{mx.down=false;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat');
+let statText='CSS preserve-3d';const stat=v=>{statText=v};
+const ui=document.getElementById('ui');
+
+const card=document.getElementById('card');let rx=0,ry=0,vx=0,vy=0,drag=false,sx=0,sy=0;
+card.addEventListener('pointerdown',e=>{drag=true;sx=e.clientX;sy=e.clientY;card.setPointerCapture(e.pointerId);});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-sx,dy=e.clientY-sy;sx=e.clientX;sy=e.clientY;vy=dx*.4;vx=-dy*.4;ry+=dx*.4;rx-=dy*.4;});
+addEventListener('pointerup',()=>drag=false);
+function frame(dt){if(!drag){ry+=vx*dt*4;rx+=vy*dt*4;vx*=.94;vy*=.94;ry+=6*dt;}
+ rx=Math.max(-28,Math.min(28,rx));ry=Math.max(-34,Math.min(34,ry));
+ card.style.transform='rotateX('+rx+'deg) rotateY('+ry+'deg)';
+ card.style.setProperty('--x',(50+ry*1.4)+'%');card.style.setProperty('--y',(30-rx*1.4)+'%');
+ ctx.fillStyle='#06070b';ctx.fillRect(0,0,W,H);stat('rotate '+Math.round(ry)+'deg');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!window.__paused){t+=dt;frame(dt);}
+ statEl.textContent=statText;requestAnimationFrame(loop);}
+let t=0,last=performance.now();window.__paused=false;
+frame(0);requestAnimationFrame(loop);
+</script></body></html>

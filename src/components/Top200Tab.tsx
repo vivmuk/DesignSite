@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { topSites, type TopSite } from '../data/topSites';
+import { ShareLink, slugify } from './ShareLink';
 
 export interface SiteData {
   rank: number;
@@ -68,6 +69,42 @@ export function Top200Tab({ onSelectSite }: Top200TabProps) {
   }, []);
 
   useEffect(() => { setVisibleCount(PAGE_SIZE); }, [search, category]);
+
+  const siteDataFor = (site: TopSite): SiteData => {
+    const slug = slugify(site.name);
+    return sitesData[slug] || {
+      ...site,
+      colors: [],
+      fonts: [],
+      themeColor: '',
+      isDark: false,
+      title: site.name,
+      screenshotUrl: `https://s.wordpress.com/mshots/v1/${encodeURIComponent(site.url)}?w=1280&h=800`,
+      designMdPath: `${slug}.md`,
+    };
+  };
+
+  const openSite = (site: TopSite) => {
+    const slug = slugify(site.name);
+    const next = `#/top200/${encodeURIComponent(slug)}`;
+    if (window.location.hash !== next) window.history.replaceState(null, '', next);
+    onSelectSite(siteDataFor(site));
+  };
+
+  // Deep link: #/top200/<slug> opens that exact site.
+  useEffect(() => {
+    const sync = () => {
+      const h = window.location.hash;
+      if (!h.startsWith('#/top200/')) return;
+      const slug = decodeURIComponent(h.slice('#/top200/'.length).split('?')[0].split('/')[0]);
+      const site = topSites.find(s => slugify(s.name) === slug);
+      if (site) onSelectSite(siteDataFor(site));
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sitesData, loading]);
 
   const filtered = useMemo(() => {
     let items = [...topSites];
@@ -146,16 +183,7 @@ export function Top200Tab({ onSelectSite }: Top200TabProps) {
               key={site.rank}
               site={site}
               data={sitesData[site.name.toLowerCase().replace(/[^a-z0-9]/g, '-')]}
-              onClick={() => onSelectSite(sitesData[site.name.toLowerCase().replace(/[^a-z0-9]/g, '-')] || {
-                ...site,
-                colors: [],
-                fonts: [],
-                themeColor: '',
-                isDark: false,
-                title: site.name,
-                screenshotUrl: `https://s.wordpress.com/mshots/v1/${encodeURIComponent(site.url)}?w=1280&h=800`,
-                designMdPath: `${site.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`,
-              })}
+              onClick={() => openSite(site)}
             />
           ))}
         </div>
@@ -167,12 +195,7 @@ export function Top200Tab({ onSelectSite }: Top200TabProps) {
               <div
                 key={site.rank}
                 className="top200-list-item"
-                onClick={() => onSelectSite(data || {
-                  ...site,
-                  colors: [], fonts: [], themeColor: '', isDark: false, title: site.name,
-                  screenshotUrl: `https://s.wordpress.com/mshots/v1/${encodeURIComponent(site.url)}?w=1280&h=800`,
-                  designMdPath: `${site.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`,
-                })}
+                onClick={() => openSite(site)}
               >
                 <span className="list-rank">#{site.rank}</span>
                 <img
@@ -191,6 +214,7 @@ export function Top200Tab({ onSelectSite }: Top200TabProps) {
                     ))}
                   </div>
                 )}
+                <ShareLink section="top200" id={slugify(site.name)} label={site.name} compact />
                 <span className="list-arrow">→</span>
               </div>
             );
@@ -229,6 +253,7 @@ function SiteCard({ site, data, onClick }: { site: TopSite; data?: SiteData; onC
           }}
         />
         <div className="card-rank-badge">#{site.rank}</div>
+        <ShareLink section="top200" id={slugify(site.name)} label={site.name} compact className="corner" />
         {data?.error && <div className="card-error-badge">⚠️</div>}
       </div>
 

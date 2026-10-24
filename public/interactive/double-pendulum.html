@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Chaos you can nudge with a fingertip.">
+<title>Double Pendulum — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+</style></head>
+<body data-canvas="1">
+<canvas id="cv" aria-label="Double Pendulum interactive canvas"></canvas>
+
+<div class="hud"><span class="t">PLAY / REVEAL · Double Pendulum</span><b id="stat">ready</b> · <b id="fps">60</b> fps</div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<button class="pause" id="pause" type="button" aria-pressed="false">PAUSE</button>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;mx.x=e.clientX;mx.y=e.clientY;});
+addEventListener('pointerup',()=>mx.down=false);
+addEventListener('pointerleave',()=>{mx.x=W/2;mx.y=H/2;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat'),fpsEl=document.getElementById('fps');
+let statText='double pendulum · chaotic';const stat=v=>{statText=v};
+let t=0,paused=false,last=performance.now(),acc=0,frames=0;
+const pauseBtn=document.getElementById('pause');
+function setPaused(v){paused=v;pauseBtn.textContent=paused?'PLAY':'PAUSE';pauseBtn.setAttribute('aria-pressed',String(paused));}
+pauseBtn.addEventListener('click',()=>setPaused(!paused));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();setPaused(!paused);}});
+
+let a1=Math.PI*.92,a2=Math.PI*.42,w1=0,w2=0,L1=Math.min(W,H)*.22,L2=L1*.8;const trail=[];
+function frame(dt){const g=9.81,steps=2,dt2=dt/steps;
+ for(let s=0;s<steps;s++){
+  const num1=-g*(2*Math.sin(a1)+Math.sin(a1-2*a2))-2*Math.sin(a1-a2)*(w2*w2*L2+w1*w1*L1*Math.cos(a1-a2));
+  const den1=L1*(2*Math.cos(a1-a2)-Math.cos(2*a1-2*a2)+2);
+  const num2=2*Math.sin(a1-a2)*(w1*w1*L1+w2*w2*L2*Math.cos(a1-a2)+g*Math.cos(a1));
+  const den2=L2*(2*Math.cos(a1-a2)-Math.cos(2*a1-2*a2)+2);
+  w1+=num1/den1*dt2;w2+=num2/den2*dt2;a1+=w1*dt2;a2+=w2*dt2;
+  if(mx.down){w2+=((mx.x-W/2)/W)*.03;w1+=((mx.y-H/2)/H)*.02;}}
+ const x1=W/2+Math.sin(a1)*L1,y1=H*.34+Math.cos(a1)*L1,x2=x1+Math.sin(a2)*L2,y2=y1+Math.cos(a2)*L2;
+ trail.push([x2,y2]);if(trail.length>420)trail.shift();
+ ctx.fillStyle='rgba(7,8,13,.2)';ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='rgba(143,216,255,.35)';ctx.lineWidth=1;ctx.beginPath();trail.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();
+ ctx.strokeStyle='#8fd8ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W/2,H*.34);ctx.lineTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+ ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(x1,y1,4,0,7);ctx.fill();ctx.beginPath();ctx.arc(x2,y2,6,0,7);ctx.fill();ctx.fillStyle='#0b0d13';ctx.beginPath();ctx.arc(W/2,H*.34,3,0,7);ctx.fill();
+ stat('double pendulum · chaotic');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;
+ if(!paused){t+=dt;frame(dt);}
+ acc+=dt;frames++;if(acc>.5){statEl.textContent=statText;fpsEl.textContent=Math.round(frames/acc);frames=0;acc=0;}
+ requestAnimationFrame(loop);}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){frame(0);statEl.textContent=statText;setPaused(true);}
+requestAnimationFrame(loop);
+</script></body></html>

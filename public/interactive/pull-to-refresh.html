@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A phone gesture you can try with a mouse.">
+<title>Pull to Refresh — Interactive</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#07080c}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#eef1f7;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;position:fixed;inset:0;touch-action:none}
+#cv{cursor:crosshair}
+.hud{position:fixed;top:16px;left:16px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff1c;border-radius:10px;padding:10px 13px;font:500 10px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:#939caf;backdrop-filter:blur(8px)}
+.hud b{color:#8fd8ff;font-weight:600}
+.hud .t{display:block;color:#eef1f7;font-size:11px;letter-spacing:.16em;margin-bottom:3px}
+.hint{position:fixed;left:16px;bottom:14px;margin:0;z-index:20;font:500 10px/1 ui-monospace,monospace;letter-spacing:.14em;color:#7e8799;text-transform:uppercase}
+.pause{position:fixed;right:16px;bottom:12px;z-index:20;background:#0b0d13cc;border:1px solid #ffffff22;color:#cfd6e2;border-radius:999px;padding:8px 12px;font:600 10px/1 ui-monospace,monospace;letter-spacing:.1em;cursor:pointer}
+.pause:focus-visible{outline:2px solid #8fd8ff;outline-offset:2px}
+
+body{overflow:hidden;background:#07080c}
+#cv{z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;min-height:100vh;display:grid;place-items:center;padding:34px}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(28px,5vw,64px);line-height:.95;letter-spacing:-.04em;margin:10px 0 0;font-weight:650}
+p.sub{max-width:44ch;color:#98a1b3;font-size:14px;line-height:1.6}
+.card{background:#0d1018;border:1px solid #ffffff1a;border-radius:18px;box-shadow:0 30px 80px #0008}
+button{font:inherit;color:inherit}
+@media (max-height:520px){#ui{padding:10px}h2{font-size:clamp(22px,7vh,36px)}p.sub{font-size:10.5px;max-width:38ch}.k{font-size:8px}}
+
+body{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+body::-webkit-scrollbar{display:none}
+#cv{position:fixed;inset:0;z-index:0;opacity:.9}
+#ui{position:relative;z-index:3;display:block;min-height:100vh;padding:0}
+.k{font:600 10px/1.4 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:#8fd8ff}
+h2{font-size:clamp(30px,7vw,78px);line-height:.92;letter-spacing:-.045em;margin:10px 0;font-weight:650}
+h2 em{font-style:normal;color:#8fd8ff}
+p{color:#98a1b3;font-size:13px;line-height:1.6}
+
+.ptr-stage{text-align:center}
+.ptr-stage .k{display:block;margin-bottom:18px}
+.phone{width:min(330px,86vw);height:min(560px,70vh);margin:0 auto;background:#0d1018;border:1px solid #ffffff1a;border-radius:34px;position:relative;overflow:hidden;box-shadow:0 30px 90px #000a}
+.ptr-ind{position:absolute;top:0;left:0;right:0;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#8fd8ff;font:700 9px/1 ui-monospace,monospace;letter-spacing:.14em;opacity:.9}
+.ptr-ind span{font-size:18px;transition:transform .2s}
+.sheet{position:absolute;inset:0;background:#0d1018;border-radius:34px;padding:20px 18px;transform:translateY(26px);transition:transform .25s cubic-bezier(.2,.8,.2,1);touch-action:none;cursor:grab}
+.sheet.drag{transition:none;cursor:grabbing}
+.ptr-top{display:flex;justify-content:space-between;align-items:baseline;margin:34px 0 18px}
+.ptr-top b{font-size:18px}.ptr-top span{font:500 10px/1 ui-monospace,monospace;color:#7e8799}
+#feed{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#feed li{display:flex;gap:11px;align-items:center;padding:13px 12px;background:#ffffff07;border:1px solid #ffffff10;border-radius:12px}
+#feed li i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#8fd8ff33,#9d7bff44);flex:none}
+#feed li div{display:grid;gap:3px;text-align:left}#feed li b{font-size:11.5px;font-weight:600}#feed li span{font:500 9px/1 ui-monospace,monospace;color:#727d91}
+@media (max-height:520px){.phone{height:min(330px,62vh)}.ptr-top{margin:16px 0 10px}#feed li{padding:9px 10px}.ptr-hint{display:none}}
+.ptr-hint{position:absolute;left:0;right:0;bottom:18px;text-align:center;font:600 8px/1 ui-monospace,monospace;letter-spacing:.18em;color:#4f5868}
+</style></head>
+<body data-canvas="0" data-scroll="0">
+<canvas id="cv" aria-hidden="true"></canvas>
+<div id="ui">
+<div class="ptr-stage">
+  <p class="k">PLAY / PULL TO REFRESH</p>
+  <div class="phone">
+    <div class="ptr-ind" id="ind"><span id="spin">↓</span><b id="ptext">PULL</b></div>
+    <div class="sheet" id="sheet">
+      <div class="ptr-top"><b>Inbox</b><span>3 unread</span></div>
+      <ul id="feed"><li><i></i><div><b>New study on spatial UI</b><span>2m ago</span></div></li><li><i></i><div><b>Your export is ready</b><span>14m ago</span></div></li><li><i></i><div><b>Weekly design digest</b><span>1h ago</span></div></li></ul>
+      <p class="ptr-hint">PULL THE SHEET DOWN</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="hud"><span class="t">PLAY / REVEAL · Pull to Refresh</span><b id="stat">ready</b></div>
+<p class="hint">MOVE · DRAG · SPACE TO PAUSE</p>
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,DPR=Math.min(devicePixelRatio||1,2);
+function fit(){W=innerWidth;H=innerHeight;cv.width=Math.floor(W*DPR);cv.height=Math.floor(H*DPR);cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0);}
+fit();addEventListener('resize',fit);
+const mx={x:W/2,y:H/2,down:false};
+addEventListener('pointermove',e=>{mx.x=e.clientX;mx.y=e.clientY;},{passive:true});
+addEventListener('pointerdown',e=>{mx.down=true;});
+addEventListener('pointerup',()=>{mx.down=false;});
+const rnd=(a=1,b=0)=>b+Math.random()*(a-b);
+const statEl=document.getElementById('stat');
+let statText='pull to refresh';const stat=v=>{statText=v};
+const ui=document.getElementById('ui');
+
+const sheet=document.getElementById('sheet'),ind=document.getElementById('ind'),spin=document.getElementById('spin'),ptext=document.getElementById('ptext'),feed=document.getElementById('feed');
+let sy=0,drag=false,base=26,auto=0;
+sheet.addEventListener('pointerdown',e=>{drag=true;sy=e.clientY;sheet.classList.add('drag');sheet.setPointerCapture(e.pointerId);});
+sheet.addEventListener('pointermove',e=>{if(!drag)return;const dy=Math.max(0,e.clientY-sy);const pull=Math.min(120,dy*.55);sheet.style.transform='translateY('+(base+pull)+'px)';spin.style.transform='rotate('+pull*2.4+'deg)';ptext.textContent=pull>70?'RELEASE':'PULL';ind.style.opacity=String(.55+pull/200);});
+sheet.addEventListener('pointerup',()=>{if(!drag)return;drag=false;sheet.classList.remove('drag');const cur=parseFloat(sheet.style.transform.match(/-?[\d.]+/)?.[0]||base);const pull=cur-base;
+ if(pull>70){ptext.textContent='REFRESHING';spin.textContent='↻';spin.style.animation='spin 1s linear infinite';setTimeout(()=>{const li=document.createElement('li');li.innerHTML='<i></i><div><b>Fresh item at '+new Date().toLocaleTimeString()+'</b><span>just now</span></div>';feed.prepend(li);spin.textContent='↓';spin.style.animation='';ptext.textContent='PULL';},900);}
+ sheet.style.transform='translateY('+base+'px)';setTimeout(()=>{if(!drag)sheet.style.transform='translateY(26px)';},900);});
+setInterval(()=>{if(drag)return;sheet.style.transform='translateY(96px)';spin.style.transform='rotate(160deg)';ptext.textContent='RELEASE';setTimeout(()=>{sheet.style.transform='translateY(26px)';spin.style.transform='';ptext.textContent='PULL';},1200);},3200);
+const st=document.createElement('style');st.textContent='@keyframes spin{to{transform:rotate(360deg)}}';document.head.appendChild(st);
+function frame(dt){ctx.fillStyle='#07080c';ctx.fillRect(0,0,W,H);for(let i=0;i<3;i++){ctx.strokeStyle='rgba(143,216,255,.08)';ctx.beginPath();ctx.arc(W/2,H*.5,160+i*60+Math.sin(t+i)*10,0,7);ctx.stroke();}stat('pull to refresh');}
+
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!window.__paused){t+=dt;frame(dt);}
+ statEl.textContent=statText;requestAnimationFrame(loop);}
+let t=0,last=performance.now();window.__paused=false;
+frame(0);requestAnimationFrame(loop);
+</script></body></html>

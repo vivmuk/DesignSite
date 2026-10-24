@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { ShareLink } from './ShareLink';
 
 interface Technique {
   id: string; name: string; domain: string;
@@ -128,6 +129,7 @@ export function TechniquesTab() {
           <span className="tech-dom-tag">{t.domain}</span>
           <h1>{t.name}</h1>
           <p className="tech-oneline">{t.one_line}</p>
+          <ShareLink section="techniques" id={t.id} label={t.name} />
           {t.why_pro && <p className="tech-whypro">⚡ {t.why_pro}</p>}
           {libsOf(t).length > 0 && <div className="tech-libs">{libsOf(t).map(l => <span key={l} className="tag">{l}</span>)}</div>}
         </div>
@@ -199,6 +201,7 @@ export function TechniquesTab() {
               {libsOf(t).length > 0 && <div className="tech-libs">{libsOf(t).slice(0, 4).map(l => <span key={l} className="tag">{l}</span>)}</div>}
               <div className="tech-card-actions">
                 <button onClick={() => setHash(t.id, page, route.level, route.q)}>Open full page →</button>
+                <ShareLink section="techniques" id={t.id} label={t.name} compact />
                 <a href={promptUrl(t)} target="_blank" rel="noreferrer">🪄 Agent prompt</a>
               </div>
             </div>

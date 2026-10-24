@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import { addonsForStyleCategory, addonCategories } from '../data/visualAddons';
+import { ShareLink } from './ShareLink';
 
 interface DBStyle {
   n: number; id: string; name: string; category: string; tagline: string;
@@ -165,13 +166,42 @@ export function StylesDBTab() {
       (s.techniques||[]).some(t => t.toLowerCase().includes(search.toLowerCase())))
   );
 
+  // Deep link: #/stylesdb/<id> opens that exact style; selecting rewrites the hash.
+  useEffect(() => {
+    const sync = () => {
+      const h = window.location.hash;
+      if (h === '#/stylesdb') { setSelected(null); return; }
+      if (!h.startsWith('#/stylesdb/')) return;
+      const id = decodeURIComponent(h.slice('#/stylesdb/'.length).split('?')[0].split('/')[0]);
+      const match = styles.find(s => s.id === id);
+      if (match) setSelected(match);
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, [styles]);
+
   if (loading) return <div className="db-loading">Loading 150-style database…</div>;
+
+  const openStyle = (s: DBStyle) => {
+    setSelected(s);
+    const next = `#/stylesdb/${encodeURIComponent(s.id)}`;
+    if (window.location.hash !== next) window.history.replaceState(null, '', next);
+  };
+
+  const closeStyle = () => {
+    setSelected(null);
+    if (window.location.hash !== '#/stylesdb') window.history.replaceState(null, '', '#/stylesdb');
+  };
 
   if (selected) {
     const p = selected.palette || {} as any;
     return (
       <div className="db-detail">
-        <button className="db-back" onClick={()=>setSelected(null)}>← Back to Styles DB</button>
+        <div className="db-detail-topbar">
+          <button className="db-back" onClick={closeStyle}>← Back to Styles DB</button>
+          <ShareLink section="stylesdb" id={selected.id} label={selected.name} />
+        </div>
         <img className="db-hero" src={selected.image_url.replace('/styles-images/','/styles-images-jpg/').replace('.png','.jpg')} alt={selected.name} />
         <div className="db-detail-head">
           <h1>{selected.name}</h1>
@@ -271,8 +301,11 @@ export function StylesDBTab() {
       </div>
       <div className="db-grid">
         {filtered.map(s => (
-          <div key={s.id} className="db-card" onClick={()=>setSelected(s)}>
-            <div className="db-thumb"><img src={s.image_url.replace('/styles-images/','/styles-images-jpg/').replace('.png','.jpg')} alt={s.name} loading="lazy" /></div>
+          <div key={s.id} className="db-card" onClick={()=>openStyle(s)} data-dbid={s.id}>
+            <div className="db-thumb">
+              <img src={s.image_url.replace('/styles-images/','/styles-images-jpg/').replace('.png','.jpg')} alt={s.name} loading="lazy" />
+              <ShareLink section="stylesdb" id={s.id} label={s.name} compact className="corner" />
+            </div>
             <div className="db-info">
               <div className="db-tags"><span className="tag tag-system">{s.category}</span></div>
               <h3>{s.name}</h3>
