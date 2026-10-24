@@ -81,6 +81,541 @@ function ScaledPreview({ src, title }: { src: string; title: string }) {
   );
 }
 
+function CountUp({ value }: { value: string }) {
+  const target = Number(value);
+  const [shown, setShown] = useState<number | string>(Number.isFinite(target) ? 0 : value);
+
+  useEffect(() => {
+    if (!Number.isFinite(target)) { setShown(value); return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setShown(target); return; }
+    let raf = 0;
+    const started = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - started) / 950);
+      setShown(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, value]);
+
+  return <>{shown}</>;
+}
+
+/** A quiet field of family-coloured points that leans toward the pointer.
+ *  It is the one moving thing in the hero — deliberately cheap (no library). */
+function HeroField() {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+    const colours = ['#ff8a5c', '#7fb2ff', '#c084fc', '#3ddc84', '#ffd166'];
+    const pointer = { x: -9999, y: -9999 };
+    let hasPointer = false;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let width = 0;
+    let height = 0;
+    let raf = 0;
+
+    const resize = () => {
+      const box = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = box.width;
+      height = box.height;
+      canvas.width = Math.max(1, Math.round(width * dpr));
+      canvas.height = Math.max(1, Math.round(height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const move = (e: PointerEvent) => {
+      const box = canvas.getBoundingClientRect();
+      hasPointer = true;
+      pointer.x = e.clientX - box.left;
+      pointer.y = e.clientY - box.top;
+    };
+
+    const draw = (now: number) => {
+      ctx.clearRect(0, 0, width, height);
+      const phase = reduce ? 0 : now;
+      const target = hasPointer
+        ? pointer
+        : {
+            x: width * (0.5 + Math.sin(phase * 0.00055) * 0.28),
+            y: height * (0.5 + Math.cos(phase * 0.00042) * 0.22),
+          };
+
+      // Five slow ribbons — motion even before the pointer arrives.
+      ctx.globalCompositeOperation = 'lighter';
+      for (let band = 0; band < colours.length; band++) {
+        ctx.beginPath();
+        for (let x = 0; x <= width; x += 8) {
+          const y =
+            height * (0.24 + band * 0.13) +
+            Math.sin(x * 0.008 + phase * 0.00045 + band * 0.9) * 20 +
+            Math.sin(x * 0.021 - phase * 0.0003 + band) * 6;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = colours[band];
+        ctx.globalAlpha = 0.65;
+        ctx.lineWidth = 2;
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = colours[band];
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+      const glow = ctx.createRadialGradient(target.x, target.y, 0, target.x, target.y, 240);
+      glow.addColorStop(0, 'rgba(255, 210, 186, .7)');
+      glow.addColorStop(0.42, 'rgba(192, 132, 252, .18)');
+      glow.addColorStop(1, 'rgba(255, 107, 53, 0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(target.x - 240, target.y - 240, 480, 480);
+      ctx.globalCompositeOperation = 'source-over';
+
+      const gap = 22;
+      for (let y = gap / 2; y < height; y += gap) {
+        for (let x = gap / 2; x < width; x += gap) {
+          const dx = x - target.x;
+          const dy = y - target.y;
+          const dist = Math.hypot(dx, dy) || 1;
+          const pull = Math.max(0, 1 - dist / 180);
+          const wobble = reduce ? 0 : Math.sin(now * 0.0011 + x * 0.016 + y * 0.01) * 2.2;
+          const px = x - (dx / dist) * pull * 13 + wobble;
+          const py = y - (dy / dist) * pull * 13 + wobble * 0.6;
+          const colour = colours[Math.min(colours.length - 1, Math.floor((px / Math.max(width, 1)) * colours.length))];
+          const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+          const frac = seed - Math.floor(seed);
+          const pulse = reduce ? 0.5 : 0.5 + 0.5 * Math.sin(now * 0.0018 + frac * 6.283);
+          const base = 1.15 + frac * 1.5;
+          ctx.beginPath();
+          ctx.arc(px, py, base * 3.4 + pull * 8 + pulse * 1.4, 0, Math.PI * 2);
+          ctx.fillStyle = colour;
+          ctx.globalAlpha = 0.1 + pull * 0.22 + pulse * 0.1;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(px, py, base + pull * 2.4 + pulse * 0.7, 0, Math.PI * 2);
+          ctx.fillStyle = colour;
+          ctx.globalAlpha = 1;
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      if (!reduce) raf = requestAnimationFrame(draw);
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('pointermove', move);
+    const observer = new ResizeObserver(() => {
+      resize();
+      if (reduce) draw(0);
+    });
+    if (canvas.parentElement) observer.observe(canvas.parentElement);
+    raf = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('pointermove', move);
+      observer.disconnect();
+    };
+  }, []);
+
+  return <canvas ref={ref} className="av-hero-field" aria-hidden="true" />;
+}
+
+type UserPicture = { id: string; name: string; src: string; addedAt: number };
+
+const PICTURES_KEY = 'vivdesign.user-pictures.v1';
+const MAX_PICTURES = 12;
+
+function readStoredPictures(): UserPicture[] {
+  try {
+    const raw = localStorage.getItem(PICTURES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((p): p is UserPicture => !!p?.src && !!p?.id) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Downscale and compress in the browser. Keeps localStorage from filling up. */
+function fileToPicture(file: File): Promise<UserPicture> {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith('image/')) { reject(new Error('That file is not an image.')); return; }
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Could not read that file.'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Could not decode that image.'));
+      img.onload = () => {
+        try {
+          const max = 1400;
+          const scale = Math.min(1, max / Math.max(img.width, img.height));
+          const w = Math.max(1, Math.round(img.width * scale));
+          const h = Math.max(1, Math.round(img.height * scale));
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          const x = c.getContext('2d');
+          if (!x) { reject(new Error('Canvas is unavailable.')); return; }
+          x.fillStyle = '#080a0e'; x.fillRect(0, 0, w, h);
+          x.imageSmoothingQuality = 'high';
+          x.drawImage(img, 0, 0, w, h);
+          resolve({
+            id: (crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`),
+            name: file.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').slice(0, 60) || 'Untitled picture',
+            src: c.toDataURL('image/jpeg', 0.84),
+            addedAt: Date.now(),
+          });
+        } catch {
+          reject(new Error('Could not process that image.'));
+        }
+      };
+      img.src = String(reader.result);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/** Halftone portrait: the uploaded picture is rebuilt out of dots, then the
+ *  pointer opens a clean window onto the original. No server, no upload. */
+function PicturePreview({ src, dotScale = 1, contrast = 1.15, reveal = 68 }: {
+  src: string;
+  dotScale?: number;
+  contrast?: number;
+  reveal?: number;
+}) {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const img = new Image();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pointer = { x: -1, y: -1 };
+    let hasPointer = false;
+    let width = 0, height = 0, raf = 0, dead = false;
+    let cells: { r: number; g: number; b: number; l: number }[] = [];
+    const tile = 7;
+
+    const cover = (iw: number, ih: number, w: number, h: number) => {
+      const s = Math.max(w / iw, h / ih);
+      const dw = iw * s, dh = ih * s;
+      return { x: (w - dw) / 2, y: (h - dh) / 2, w: dw, h: dh };
+    };
+
+    const build = () => {
+      const box = canvas.getBoundingClientRect();
+      width = Math.max(1, box.width); height = Math.max(1, box.height);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const cols = Math.max(1, Math.ceil(width / tile));
+      const rows = Math.max(1, Math.ceil(height / tile));
+      const off = document.createElement('canvas');
+      off.width = cols; off.height = rows;
+      const offCtx = off.getContext('2d', { willReadFrequently: true });
+      if (!offCtx) return;
+      const cr = cover(img.width, img.height, cols, rows);
+      offCtx.drawImage(img, cr.x, cr.y, cr.w, cr.h);
+      const data = offCtx.getImageData(0, 0, cols, rows).data;
+      cells = [];
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        cells.push({ r, g, b, l: (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 });
+      }
+    };
+
+    const draw = (now: number) => {
+      if (dead || !img.complete || !img.naturalWidth) return;
+      if (!width) build();
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#080a0e'; ctx.fillRect(0, 0, width, height);
+      const cols = Math.ceil(width / tile);
+      for (let i = 0; i < cells.length; i++) {
+        const c = cells[i];
+        const row = Math.floor(i / cols);
+        const cx = (i % cols) * tile + tile / 2 + (row % 2 ? tile * 0.5 : 0);
+        const cy = row * tile + tile / 2;
+        const tone = Math.max(0, Math.min(1, (c.l - 0.5) * contrast + 0.5));
+        if (tone < 0.045) continue;
+        // One ordered ramp (violet → orange → cream) keeps the photograph legible.
+        const a = tone < 0.5 ? [95, 75, 216] : [255, 154, 108];
+        const b = tone < 0.5 ? [255, 154, 108] : [255, 243, 224];
+        const t = (tone < 0.5 ? tone * 2 : (tone - 0.5) * 2);
+        const r = Math.round(a[0] + (b[0] - a[0]) * t);
+        const g = Math.round(a[1] + (b[1] - a[1]) * t);
+        const bl = Math.round(a[2] + (b[2] - a[2]) * t);
+        const radius = Math.min(tile * 0.72, tile * (0.06 + tone * 0.5) * dotScale);
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${r}, ${g}, ${bl})`;
+        ctx.globalAlpha = 0.96;
+        ctx.fill();
+      }
+      // Warm print tint + scanlines.
+      ctx.globalCompositeOperation = 'soft-light';
+      ctx.fillStyle = 'rgba(255, 122, 66, .34)';
+      ctx.fillRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(8, 10, 14, .14)';
+      for (let y = 0; y < height; y += 4) ctx.fillRect(0, y, width, 1);
+
+      const tx = hasPointer ? pointer.x : width * (0.5 + Math.sin(now * 0.0007) * 0.22);
+      const ty = hasPointer ? pointer.y : height * (0.48 + Math.cos(now * 0.00055) * 0.16);
+      ctx.save();
+      ctx.beginPath(); ctx.arc(tx, ty, reveal, 0, Math.PI * 2); ctx.clip();
+      const cr = cover(img.width, img.height, width, height);
+      ctx.globalAlpha = 1;
+      ctx.drawImage(img, cr.x, cr.y, cr.w, cr.h);
+      ctx.restore();
+      // A real cut-out: dark halo, crisp rim, dashed outer handle.
+      ctx.save();
+      ctx.beginPath(); ctx.arc(tx, ty, reveal + 1, 0, Math.PI * 2);
+      ctx.shadowColor = 'rgba(0, 0, 0, .95)'; ctx.shadowBlur = 26;
+      ctx.strokeStyle = 'rgba(255, 255, 255, .95)'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.restore();
+      ctx.save();
+      ctx.beginPath(); ctx.arc(tx, ty, reveal + 9, 0, Math.PI * 2);
+      ctx.setLineDash([3, 6]);
+      ctx.strokeStyle = 'rgba(255, 191, 157, .62)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.restore();
+      ctx.beginPath();
+      ctx.arc(tx + reveal * 0.72, ty - reveal * 0.72, 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffbf9d'; ctx.fill();
+      ctx.strokeStyle = '#080a0e'; ctx.lineWidth = 1.5; ctx.stroke();
+      if (!reduce) raf = requestAnimationFrame(draw);
+    };
+
+    const measure = () => {
+      build();
+      if (reduce) draw(performance.now());
+    };
+    const move = (e: PointerEvent) => {
+      const box = canvas.getBoundingClientRect();
+      pointer.x = e.clientX - box.left; pointer.y = e.clientY - box.top; hasPointer = true;
+      if (reduce) draw(performance.now());
+    };
+    const leave = () => { hasPointer = false; if (reduce) draw(performance.now()); };
+
+    img.onload = () => {
+      if (dead) return;
+      measure();
+      raf = requestAnimationFrame(draw);
+    };
+    img.src = src;
+    const ro = new ResizeObserver(measure);
+    ro.observe(canvas);
+    canvas.addEventListener('pointermove', move);
+    canvas.addEventListener('pointerleave', leave);
+    return () => {
+      dead = true; cancelAnimationFrame(raf); ro.disconnect();
+      canvas.removeEventListener('pointermove', move);
+      canvas.removeEventListener('pointerleave', leave);
+    };
+  }, [src, dotScale, contrast, reveal]);
+
+  return <canvas ref={ref} className="av-picture-canvas" aria-label="Your picture as an interactive halftone" />;
+}
+
+function ImageLab({ pictures, activeId, note, onSelect, onAdd, onRemove, onClose }: {
+  pictures: UserPicture[];
+  activeId: string | null;
+  note: string;
+  onSelect: (id: string) => void;
+  onAdd: (p: UserPicture) => void;
+  onRemove: (id: string) => void;
+  onClose: () => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [drag, setDrag] = useState(false);
+  const [dotScale, setDotScale] = useState(1);
+  const [contrast, setContrast] = useState(1.15);
+  const [reveal, setReveal] = useState(68);
+  const input = useRef<HTMLInputElement>(null);
+  const active = pictures.find(p => p.id === activeId) || pictures[0] || null;
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener('keydown', onKey); };
+  }, [onClose]);
+
+  const takeFiles = async (files: FileList | File[]) => {
+    const list = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if (!list.length) { setError('Choose an image file — JPG, PNG, WebP or GIF.'); return; }
+    if (pictures.length >= MAX_PICTURES) { setError(`You can keep ${MAX_PICTURES} pictures here. Remove one first.`); return; }
+    setBusy(true); setError('');
+    const room = MAX_PICTURES - pictures.length;
+    for (const file of list.slice(0, room)) {
+      try { onAdd(await fileToPicture(file)); }
+      catch (e) { setError(e instanceof Error ? e.message : 'Could not add that picture.'); }
+    }
+    setBusy(false);
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault(); setDrag(false);
+    if (e.dataTransfer.files.length) void takeFiles(e.dataTransfer.files);
+  };
+
+  useEffect(() => {
+    const onPaste = (e: ClipboardEvent) => {
+      const files = Array.from(e.clipboardData?.files || []).filter(f => f.type.startsWith('image/'));
+      if (files.length) void takeFiles(files);
+    };
+    window.addEventListener('paste', onPaste);
+    return () => window.removeEventListener('paste', onPaste);
+  });
+
+  return (
+    <div className="av-lab-backdrop" onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="av-lab" role="dialog" aria-modal="true" aria-label="Add your pictures">
+        <header className="av-lab-head">
+          <div>
+            <p className="av-kicker">PICTURE LAB · YOUR OWN WORK</p>
+            <h2>Put a picture in the field.</h2>
+            <p>Drop an image and it becomes a halftone you can move through. Your pictures appear on this page, in a private row above the catalogue.</p>
+          </div>
+          <button className="av-lab-close" onClick={onClose} aria-label="Close picture lab">✕</button>
+        </header>
+
+        <div className="av-lab-body">
+          <div
+            className={`av-lab-stage${drag ? ' is-drag' : ''}${active ? '' : ' is-empty'}`}
+            onDragOver={e => { e.preventDefault(); setDrag(true); }}
+            onDragLeave={() => setDrag(false)}
+            onDrop={onDrop}
+            onClick={() => { if (!active) input.current?.click(); }}
+          >
+            {active ? (
+              <>
+                <PicturePreview key={active.id} src={active.src} dotScale={dotScale} contrast={contrast} reveal={reveal} />
+                <span className="av-lab-badge"><i />MOVE TO REVEAL</span>
+              </>
+            ) : (
+              <div className="av-lab-empty">
+                <span>＋</span>
+                <b>Drop a picture here.</b>
+                <p>Or click to choose a file.</p>
+                <em>JPG · PNG · WEBP · GIF · up to {MAX_PICTURES} images</em>
+              </div>
+            )}
+          </div>
+
+          <aside className="av-lab-side">
+            <input
+              ref={input}
+              type="file"
+              accept="image/*"
+              multiple
+              className="av-lab-file"
+              onChange={e => { if (e.target.files) void takeFiles(e.target.files); e.target.value = ''; }}
+            />
+            <div className="av-lab-actions">
+              <button className="av-drop-btn" onClick={() => input.current?.click()} disabled={busy}>
+                {busy ? 'Adding…' : active ? 'Add another' : 'Choose pictures'}
+              </button>
+              <p>Drop or paste anywhere in the frame.</p>
+            </div>
+
+            {active && (
+              <p className="av-lab-caption"><b>{active.name}</b><span>{pictures.length} / {MAX_PICTURES} pictures</span></p>
+            )}
+
+            {pictures.length > 0 && (
+              <div className="av-lab-gallery">
+                <p className="av-kicker">YOUR PICTURES · {pictures.length}</p>
+                <div>
+                  {pictures.map(p => (
+                    <div key={p.id} className={`av-lab-thumb${p.id === active?.id ? ' on' : ''}`}>
+                      <button onClick={() => onSelect(p.id)} aria-label={`Preview ${p.name}`}>
+                        <img src={p.src} alt="" />
+                      </button>
+                      <button className="av-lab-remove" onClick={() => onRemove(p.id)} aria-label={`Remove ${p.name}`}>×</button>
+                    </div>
+                  ))}
+                  {pictures.length < MAX_PICTURES && (
+                    <button className="av-lab-add-tile" onClick={() => input.current?.click()} aria-label="Add another picture">
+                      <span>＋</span><b>Add</b>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {active && (
+              <div className="av-lab-controls">
+                <label>
+                  <span>DOT SIZE</span>
+                  <input type="range" min="0.6" max="1.45" step="0.05" value={dotScale} onChange={e => setDotScale(Number(e.target.value))} />
+                  <b>{dotScale.toFixed(2)}×</b>
+                </label>
+                <label>
+                  <span>CONTRAST</span>
+                  <input type="range" min="0.7" max="2" step="0.05" value={contrast} onChange={e => setContrast(Number(e.target.value))} />
+                  <b>{contrast.toFixed(2)}</b>
+                </label>
+                <label>
+                  <span>REVEAL</span>
+                  <input type="range" min="34" max="130" step="2" value={reveal} onChange={e => setReveal(Number(e.target.value))} />
+                  <b>{reveal}px</b>
+                </label>
+              </div>
+            )}
+
+            {(error || note) && <p className="av-lab-error">{error || note}</p>}
+            <div className="av-lab-foot">
+              <p className="av-lab-note">Saved in this browser only. Nothing is uploaded to a server, so each visitor builds their own private row.</p>
+              <button className="av-lab-done" onClick={onClose} disabled={!pictures.length}>Done</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function YourPictures({ pictures, onOpen, onRemove }: {
+  pictures: UserPicture[];
+  onOpen: (id?: string) => void;
+  onRemove: (id: string) => void;
+}) {
+  if (!pictures.length) return null;
+  return (
+    <section className="av-your-strip" aria-label="Your pictures">
+      <div className="av-your-strip-title">
+        <span>＋</span>
+        <div>
+          <h2>Your pictures</h2>
+          <p>Private to this browser</p>
+        </div>
+        <b>{String(pictures.length).padStart(2, '0')}</b>
+      </div>
+      <div className="av-your-strip-thumbs">
+        {pictures.map(p => (
+          <div key={p.id} className="av-your-thumb">
+            <button onClick={() => onOpen(p.id)} title={p.name} aria-label={`Open ${p.name} in the picture lab`}>
+              <img src={p.src} alt={p.name} loading="lazy" />
+            </button>
+            <button className="av-your-remove" onClick={() => onRemove(p.id)} aria-label={`Remove ${p.name}`}>×</button>
+          </div>
+        ))}
+        <button className="av-your-add" onClick={() => onOpen()} aria-label="Add another picture">
+          <span>＋</span><b>Add</b>
+        </button>
+      </div>
+      <button className="av-your-open" onClick={() => onOpen()}>Open lab →</button>
+    </section>
+  );
+}
+
 function useCopy() {
   const [copied, setCopied] = useState<string | null>(null);
   const copy = useCallback(async (key: string, text: string) => {
@@ -177,7 +712,37 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
   const [route, setRoute] = useState(() => parseHash(cfg.base));
   const [visible, setVisible] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState(route.q);
+  const [pictures, setPictures] = useState<UserPicture[]>(readStoredPictures);
+  const [labOpen, setLabOpen] = useState(false);
+  const [activePicture, setActivePicture] = useState<string | null>(null);
+  const [pictureNote, setPictureNote] = useState('');
   const { copied, copy } = useCopy();
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(PICTURES_KEY, JSON.stringify(pictures));
+      setPictureNote('');
+    } catch {
+      setPictureNote('This browser is out of storage. Remove a picture to keep adding.');
+    }
+  }, [pictures]);
+
+  const addPicture = useCallback((p: UserPicture) => {
+    setPictures(prev => [p, ...prev].slice(0, MAX_PICTURES));
+    setActivePicture(p.id);
+  }, []);
+
+  const removePicture = useCallback((id: string) => {
+    setPictures(prev => prev.filter(p => p.id !== id));
+    setActivePicture(current => current === id ? null : current);
+  }, []);
+
+  const closeLab = useCallback(() => setLabOpen(false), []);
+
+  const openLab = useCallback((id?: string) => {
+    setActivePicture(id || pictures[0]?.id || null);
+    setLabOpen(true);
+  }, [pictures]);
 
   useEffect(() => {
     const onHash = () => {
@@ -357,31 +922,126 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
   }
 
   /* ── INDEX ──────────────────────────────────────────────── */
+  const isInteractive = group === 'interactive';
+  const grouped = isInteractive && route.cat === 'all' && !route.q;
+
+  const track = (e: React.PointerEvent<HTMLElement>) => {
+    const box = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - box.left) / box.width;
+    const py = (e.clientY - box.top) / box.height;
+    e.currentTarget.style.setProperty('--mx', `${px * 100}%`);
+    e.currentTarget.style.setProperty('--my', `${py * 100}%`);
+    e.currentTarget.style.setProperty('--rx', `${(0.5 - py) * 3.2}deg`);
+    e.currentTarget.style.setProperty('--ry', `${(px - 0.5) * 3.2}deg`);
+  };
+
+  const resetTrack = (e: React.PointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
+  };
+
+  const renderCard = (a: VisualAddon, feature = false) => {
+    const cat = cfg.cats.find(c => c.id === a.category)!;
+    // Interactive cards ship an animated GIF illustration of the engine.
+    const thumb = a.thumb || (isInteractive ? `/interactive/thumbs/${a.id}.gif` : null);
+    return (
+      <article
+        key={a.id}
+        className={`av-card${feature ? ' is-feature' : ''}`}
+        data-aid={a.id}
+        style={{ '--cat': cat.color } as React.CSSProperties}
+        onClick={() => setHash(a.id, route.cat, route.q)}
+        onPointerMove={track}
+        onPointerLeave={resetTrack}
+      >
+        <div className="av-thumb-wrap">
+          {thumb ? (
+            <img
+              className="av-thumb-gif"
+              src={thumb}
+              alt={`${a.name} animated preview`}
+              loading={a.n <= 8 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          ) : visible.has(a.id) ? (
+            <ScaledPreview src={a.demo} title={a.name} />
+          ) : (
+            <div className="av-thumb" style={{ height: 248 }}>
+              <div className="av-thumb-placeholder">PREVIEW LOADS ON SCROLL</div>
+            </div>
+          )}
+          <span className="av-num">{String(a.n).padStart(2, '0')}</span>
+          <ShareLink section={isInteractive ? 'interactive' : 'addons'} id={a.id} label={a.name} compact className="corner" />
+          {isInteractive && (
+            <>
+              <div className="av-thumb-head">
+                <span className="av-thumb-kind">{String(a.n).padStart(2, '0')} · {cat.emoji} {cat.label}</span>
+                {feature && <span className="av-live-chip"><i />LIVE DEMO</span>}
+              </div>
+            </>
+          )}
+          {isInteractive && <span className="av-play-btn" aria-hidden="true">↗</span>}
+        </div>
+        <div className="av-card-body">
+          <div className="av-card-meta">
+            {!isInteractive && (
+              <span className="av-cat-chip small" style={{ color: cat.color, borderColor: cat.color + '55', background: cat.color + '16' }}>
+                {cat.emoji} {cat.label}
+              </span>
+            )}
+            <span className="av-intensity" title={`${a.intensity} intensity`}>
+              {[0, 1, 2].map(i => (
+                <i key={i} style={{ background: i < INTENSITY_DOTS[a.intensity] ? cat.color : '#2a303c' }} />
+              ))}
+            </span>
+          </div>
+          <h3>{a.name}</h3>
+          <p>{a.tagline}</p>
+          {feature && <p className="av-card-what">{a.what}</p>}
+          <div className="av-card-foot">
+            <span>Open {cfg.noun} →</span>
+            <span className="av-surfaces">{a.surface.slice(0, 2).join(' · ')}</span>
+          </div>
+        </div>
+      </article>
+    );
+  };
+
   return (
-    <div className="av-index">
-      <header className="av-hero">
+    <div className={`av-index${isInteractive ? ' is-interactive' : ''}`}>
+      <header className={`av-hero${isInteractive ? ' av-hero-interactive' : ''}`}>
         <div className="av-hero-copy">
           <p className="av-kicker">{cfg.kicker}</p>
           <h1>{cfg.headline}</h1>
           <p className="av-lede">{cfg.lede}</p>
           <div className="av-stats">
             {cfg.stats.map(([n, label]) => (
-              <div key={label}><b>{n}</b><span>{label}</span></div>
+              <div key={label}><b>{isInteractive ? <CountUp value={n} /> : n}</b><span>{label}</span></div>
             ))}
           </div>
-          <a className="av-crosslink" href={cfg.other.href}>
-            <span>{cfg.other.blurb}</span>
-            <b>{cfg.other.label}</b>
-          </a>
+          {!isInteractive && (
+            <a className="av-crosslink" href={cfg.other.href}>
+              <span>{cfg.other.blurb}</span>
+              <b>{cfg.other.label}</b>
+            </a>
+          )}
         </div>
-        <aside className="av-howto">
-          <h3>{cfg.howtoTitle}</h3>
-          <ol>
-            {cfg.howto.map(([b, span]) => (
-              <li key={b}><b>{b}</b><span>{span}</span></li>
-            ))}
-          </ol>
-        </aside>
+        {isInteractive ? (
+          <div className="av-hero-stage">
+            <HeroField />
+            <span className="av-hero-stage-top"><i />LIVE FIELD <em>MOVE TO PLAY</em></span>
+            <span className="av-hero-stage-bottom">DRAG · SWIPE · PLAY</span>
+          </div>
+        ) : (
+          <aside className="av-howto">
+            <h3>{cfg.howtoTitle}</h3>
+            <ol>
+              {cfg.howto.map(([b, span]) => (
+                <li key={b}><b>{b}</b><span>{span}</span></li>
+              ))}
+            </ol>
+          </aside>
+        )}
       </header>
 
       <div className="av-controls">
@@ -401,6 +1061,11 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
             </button>
           ))}
         </div>
+        {isInteractive && (
+          <button className="av-add-pic" onClick={() => openLab()}>
+            <span>＋</span> Add pictures {pictures.length > 0 && <b>{pictures.length}</b>}
+          </button>
+        )}
         <input
           className="av-search"
           placeholder={cfg.searchPlaceholder}
@@ -410,55 +1075,51 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
         />
       </div>
 
+      {isInteractive && <YourPictures pictures={pictures} onOpen={openLab} onRemove={removePicture} />}
+
       {route.cat !== 'all' && (
         <p className="av-cat-blurb">{cfg.cats.find(c => c.id === route.cat)!.blurb}</p>
       )}
 
-      <div className="av-grid">
-        {filtered.map(a => {
-          const cat = cfg.cats.find(c => c.id === a.category)!;
-          // Interactive cards ship an animated GIF illustration of the engine.
-          const thumb = a.thumb || (group === 'interactive' ? `/interactive/thumbs/${a.id}.gif` : null);
+      {grouped ? (
+        cfg.cats.map(c => {
+          const items = filtered.filter(a => a.category === c.id);
+          if (!items.length) return null;
           return (
-            <article key={a.id} className="av-card" data-aid={a.id} onClick={() => setHash(a.id, route.cat, route.q)}>
-              <div className="av-thumb-wrap">
-                {thumb ? (
-                  <img className="av-thumb-gif" src={thumb} alt={`${a.name} animated preview`} loading="lazy" decoding="async" />
-                ) : visible.has(a.id) ? (
-                  <ScaledPreview src={a.demo} title={a.name} />
-                ) : (
-                  <div className="av-thumb" style={{ height: 248 }}>
-                    <div className="av-thumb-placeholder">PREVIEW LOADS ON SCROLL</div>
-                  </div>
-                )}
-                <ShareLink section={group === 'interactive' ? 'interactive' : 'addons'} id={a.id} label={a.name} compact className="corner" />
-                <span className="av-num">{String(a.n).padStart(2, '0')}</span>
-              </div>
-              <div className="av-card-body">
-                <div className="av-card-meta">
-                  <span className="av-cat-chip small" style={{ color: cat.color, borderColor: cat.color + '55', background: cat.color + '16' }}>
-                    {cat.emoji} {cat.label}
-                  </span>
-                  <span className="av-intensity" title={`${a.intensity} intensity`}>
-                    {[0, 1, 2].map(i => (
-                      <i key={i} style={{ background: i < INTENSITY_DOTS[a.intensity] ? cat.color : '#2a303c' }} />
-                    ))}
-                  </span>
+            <section className="av-family" key={c.id}>
+              <header className="av-family-head">
+                <span className="av-family-mark" style={{ color: c.color, borderColor: c.color + '55', background: c.color + '12' }}>
+                  {c.emoji}
+                </span>
+                <div>
+                  <h2>{c.label}</h2>
+                  <p>{c.blurb}</p>
                 </div>
-                <h3>{a.name}</h3>
-                <p>{a.tagline}</p>
-                <div className="av-card-foot">
-                  <span>Open {cfg.noun} →</span>
-                  <span className="av-surfaces">{a.surface.slice(0, 2).join(' · ')}</span>
-                </div>
-              </div>
-            </article>
+                <span className="av-family-count">{String(items.length).padStart(2, '0')}</span>
+              </header>
+              <div className="av-grid">{items.map((a, i) => renderCard(a, i === 0))}</div>
+            </section>
           );
-        })}
-      </div>
+        })
+      ) : (
+        <div className="av-grid">{filtered.map(a => renderCard(a))}</div>
+      )}
 
       {filtered.length === 0 && (
         <div className="av-empty">No {cfg.noun}s match “{route.q}”. <button onClick={() => { setQuery(''); setHash(null, 'all', ''); }}>Clear</button></div>
+      )}
+
+      {isInteractive && (
+        <div className="av-howto-strip av-howto-strip-bottom">
+          <div className="av-howto-strip-head">
+            <p className="av-kicker">{cfg.howtoTitle}</p>
+          </div>
+          <ol>
+            {cfg.howto.map(([b, span]) => (
+              <li key={b}><b>{b}</b><span>{span}</span></li>
+            ))}
+          </ol>
+        </div>
       )}
 
       <section className="av-principles">
@@ -469,6 +1130,18 @@ export function AddonsTab({ group = 'visual' }: { group?: AddonGroup }) {
           ))}
         </div>
       </section>
+
+      {isInteractive && labOpen && (
+        <ImageLab
+          pictures={pictures}
+          activeId={activePicture}
+          note={pictureNote}
+          onSelect={setActivePicture}
+          onAdd={addPicture}
+          onRemove={removePicture}
+          onClose={closeLab}
+        />
+      )}
     </div>
   );
 }
